@@ -1,0 +1,12 @@
+package: generated
+output: ../pkg/generated/client.gen.go
+generate:
+  models: true
+  client: true
+  embedded-spec: false
+  strict-server: false
+  echo-server: false
+compatibility:
+  apply-chi-middleware-first-to-last: false
+output-options:
+  skip-prune: true
