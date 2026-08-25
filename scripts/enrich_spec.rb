@@ -19,11 +19,19 @@ module EnrichSpec
     ["/api/work_orders/{id}", "get"] => "Show a single work order by ID."
   }.freeze
 
+  RESOURCE_SCHEMAS = {
+    "customers" => "Customer",
+    "vehicles" => "Vehicle",
+    "work_orders" => "WorkOrder"
+  }.freeze
+
   def self.call(input)
     spec = Marshal.load(Marshal.dump(input)) # deep copy
 
     spec["servers"] = [{ "url" => "https://app.wenmarpro.com" }]
     spec["paths"] ||= {}
+
+    extract_components!(spec)
 
     spec["paths"].each do |path, methods|
       resource = path.split("/")[2] # "/api/customers" => "customers"
@@ -32,6 +40,63 @@ module EnrichSpec
         operation["operationId"] = OPERATION_IDS[key] if OPERATION_IDS[key]
         operation["tags"] = [resource] if resource
         operation["description"] = DESCRIPTIONS[key] if DESCRIPTIONS[key]
+      end
+    end
+
+    spec
+  end
+
+  def self.extract_components!(spec)
+    spec["components"] ||= {}
+    spec["components"]["schemas"] ||= {}
+
+    spec["paths"].each do |path, methods|
+      resource = path.split("/")[2]
+      schema_name = RESOURCE_SCHEMAS[resource]
+      next unless schema_name
+
+      methods.each do |_method, operation|
+        responses = operation["responses"] || {}
+        responses.each do |_status, response|
+          content = response["content"]
+          next unless content && content["application/json"]
+
+          schema = content["application/json"]["schema"]
+          next unless schema && schema["properties"] && schema["properties"]["data"]
+
+          data = schema["properties"]["data"]
+          if data["type"] == "array" && data["items"] && data["items"]["properties"]
+            unless spec["components"]["schemas"][schema_name]
+              spec["components"]["schemas"][schema_name] = data["items"].dup
+            end
+            data["items"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+          elsif data["properties"]
+            unless spec["components"]["schemas"][schema_name]
+              spec["components"]["schemas"][schema_name] = data.dup
+            end
+            schema["properties"]["data"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+          end
+        end
+      end
+    end
+
+    # Extract error schema
+    spec["paths"].each do |_path, methods|
+      methods.each do |_method, operation|
+        responses = operation["responses"] || {}
+        responses.each do |status, response|
+          next unless status.to_s.start_with?("4") || status.to_s.start_with?("5")
+          content = response["content"]
+          next unless content && content["application/json"]
+
+          schema = content["application/json"]["schema"]
+          next unless schema && schema["properties"] && schema["properties"]["error"]
+
+          unless spec["components"]["schemas"]["Error"]
+            spec["components"]["schemas"]["Error"] = schema["properties"]["error"].dup
+          end
+          schema["properties"]["error"] = { "$ref" => "#/components/schemas/Error" }
+        end
       end
     end
 

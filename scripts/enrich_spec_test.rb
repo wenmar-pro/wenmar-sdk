@@ -8,20 +8,20 @@ class EnrichSpecTest < Minitest::Test
       "info" => { "title" => "Wenmar Pro API", "version" => "1.0.0" },
       "paths" => {
         "/api/customers" => {
-          "get" => { "summary" => "index", "responses" => {} },
-          "post" => { "summary" => "create", "responses" => {} }
+          "get" => { "summary" => "index", "responses" => { "200" => customer_list_response } },
+          "post" => { "summary" => "create", "responses" => { "200" => customer_show_response } }
         },
         "/api/customers/{id}" => {
-          "get" => { "summary" => "show", "responses" => {} }
+          "get" => { "summary" => "show", "responses" => { "200" => customer_show_response, "404" => error_response } }
         },
         "/api/vehicles/{id}" => {
-          "get" => { "summary" => "show", "responses" => {} }
+          "get" => { "summary" => "show", "responses" => { "200" => vehicle_show_response, "404" => error_response } }
         },
         "/api/work_orders" => {
-          "get" => { "summary" => "index", "responses" => {} }
+          "get" => { "summary" => "index", "responses" => { "200" => work_order_list_response } }
         },
         "/api/work_orders/{id}" => {
-          "get" => { "summary" => "show", "responses" => {} }
+          "get" => { "summary" => "show", "responses" => { "200" => work_order_show_response } }
         }
       }
     }
@@ -63,10 +63,115 @@ class EnrichSpecTest < Minitest::Test
     assert_equal original, @input
   end
 
+  def test_extracts_reusable_schema_components
+    result = enrich(@input)
+    refute_nil result["components"]
+    refute_nil result["components"]["schemas"]
+    refute_nil result["components"]["schemas"]["Customer"]
+    refute_nil result["components"]["schemas"]["Vehicle"]
+    refute_nil result["components"]["schemas"]["WorkOrder"]
+    refute_nil result["components"]["schemas"]["Error"]
+  end
+
+  def test_replaces_inline_schemas_with_ref
+    result = enrich(@input)
+    customer_schema = result["paths"]["/api/customers"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]
+    refute_nil customer_schema["properties"]["data"]["items"]["$ref"]
+    assert_equal "#/components/schemas/Customer", customer_schema["properties"]["data"]["items"]["$ref"]
+  end
+
+  def test_error_responses_use_error_component_ref
+    result = enrich(@input)
+    error_schema = result["paths"]["/api/customers/{id}"]["get"]["responses"]["404"]["content"]["application/json"]["schema"]
+    assert_equal "#/components/schemas/Error", error_schema["properties"]["error"]["$ref"]
+  end
+
   private
 
   def enrich(spec)
     require_relative "enrich_spec"
     EnrichSpec.call(spec)
+  end
+
+  def json_response(schema)
+    { "description" => "response", "content" => { "application/json" => { "schema" => schema } } }
+  end
+
+  def customer_list_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "data" => {
+          "type" => "array",
+          "items" => {
+            "type" => "object",
+            "properties" => { "id" => { "type" => "integer" }, "full_name" => { "type" => "string" } }
+          }
+        }
+      }
+    )
+  end
+
+  def customer_show_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "data" => {
+          "type" => "object",
+          "properties" => { "id" => { "type" => "integer" }, "full_name" => { "type" => "string" } }
+        }
+      }
+    )
+  end
+
+  def vehicle_show_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "data" => {
+          "type" => "object",
+          "properties" => { "id" => { "type" => "integer" }, "make" => { "type" => "string" } }
+        }
+      }
+    )
+  end
+
+  def work_order_list_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "data" => {
+          "type" => "array",
+          "items" => {
+            "type" => "object",
+            "properties" => { "id" => { "type" => "integer" }, "status" => { "type" => "string" } }
+          }
+        }
+      }
+    )
+  end
+
+  def work_order_show_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "data" => {
+          "type" => "object",
+          "properties" => { "id" => { "type" => "integer" }, "status" => { "type" => "string" } }
+        }
+      }
+    )
+  end
+
+  def error_response
+    json_response(
+      "type" => "object",
+      "properties" => {
+        "error" => {
+          "type" => "object",
+          "properties" => { "code" => { "type" => "string" }, "message" => { "type" => "string" }, "details" => { "type" => "object" } }
+        }
+      }
+    )
   end
 end
