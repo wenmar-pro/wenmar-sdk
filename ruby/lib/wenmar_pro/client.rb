@@ -65,6 +65,7 @@ module WenmarPro
         conn.headers["Authorization"] = "Bearer #{@token}"
         conn.headers["Content-Type"] = "application/json"
         conn.request :retry, max: 3, interval: 0.5, backoff_factor: 2,
+                    retry_statuses: [500, 502, 503, 504],
                     exceptions: [Faraday::Error, Faraday::ServerError]
       end
     end
