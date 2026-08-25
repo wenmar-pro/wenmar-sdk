@@ -16,6 +16,45 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
+// Customer defines model for Customer.
+type Customer struct {
+	Email    *string `json:"email,omitempty"`
+	FullName *string `json:"full_name,omitempty"`
+	Id       *int    `json:"id,omitempty"`
+	Phone    *string `json:"phone,omitempty"`
+}
+
+// Error defines model for Error.
+type Error struct {
+	Code    *string                 `json:"code,omitempty"`
+	Details *map[string]interface{} `json:"details,omitempty"`
+	Message *string                 `json:"message,omitempty"`
+}
+
+// Vehicle defines model for Vehicle.
+type Vehicle struct {
+	Id    *int    `json:"id,omitempty"`
+	Make  *string `json:"make,omitempty"`
+	Model *string `json:"model,omitempty"`
+	Vin   *string `json:"vin,omitempty"`
+	Year  *int    `json:"year,omitempty"`
+}
+
+// WorkOrder defines model for WorkOrder.
+type WorkOrder struct {
+	Customer *struct {
+		FullName *string `json:"full_name,omitempty"`
+		Id       *int    `json:"id,omitempty"`
+	} `json:"customer,omitempty"`
+	Id      *int    `json:"id,omitempty"`
+	Status  *string `json:"status,omitempty"`
+	Vehicle *struct {
+		Id    *int    `json:"id,omitempty"`
+		Make  *string `json:"make,omitempty"`
+		Model *string `json:"model,omitempty"`
+	} `json:"vehicle,omitempty"`
+}
+
 // ListCustomersParams defines parameters for ListCustomers.
 type ListCustomersParams struct {
 	Page *int `form:"page,omitempty" json:"page,omitempty"`
@@ -146,7 +185,7 @@ type ClientInterface interface {
 
 	// ShowVehicle show
 	//
-	// Show a single vehicle by ID.
+	// Show a vehicle by ID.
 	//
 	// Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
 	ShowVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -160,7 +199,7 @@ type ClientInterface interface {
 
 	// ShowWorkOrder show
 	//
-	// Show a single work order by ID.
+	// Show a work order by ID.
 	//
 	// Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
 	ShowWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -240,7 +279,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int, reqEditors ...Request
 
 // ShowVehicle show
 //
-// Show a single vehicle by ID.
+// Show a vehicle by ID.
 //
 // Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
 func (c *Client) ShowVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -274,7 +313,7 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 
 // ShowWorkOrder show
 //
-// Show a single work order by ID.
+// Show a work order by ID.
 //
 // Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
 func (c *Client) ShowWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -621,7 +660,7 @@ type ClientWithResponsesInterface interface {
 
 	// ShowVehicleWithResponse show
 	//
-	// Show a single vehicle by ID.
+	// Show a vehicle by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -639,7 +678,7 @@ type ClientWithResponsesInterface interface {
 
 	// ShowWorkOrderWithResponse show
 	//
-	// Show a single work order by ID.
+	// Show a work order by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -657,12 +696,7 @@ type ListCustomersResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *[]struct {
-			Email    *string `json:"email,omitempty"`
-			FullName *string `json:"full_name,omitempty"`
-			Id       *int    `json:"id,omitempty"`
-			Phone    *string `json:"phone,omitempty"`
-		} `json:"data,omitempty"`
+		Data *[]Customer `json:"data,omitempty"`
 	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListCustomersResponse200Headers
@@ -670,12 +704,7 @@ type ListCustomersResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListCustomersResponse) GetJSON200() *struct {
-	Data *[]struct {
-		Email    *string `json:"email,omitempty"`
-		FullName *string `json:"full_name,omitempty"`
-		Id       *int    `json:"id,omitempty"`
-		Phone    *string `json:"phone,omitempty"`
-	} `json:"data,omitempty"`
+	Data *[]Customer `json:"data,omitempty"`
 } {
 	return r.JSON200
 }
@@ -714,23 +743,13 @@ type CreateCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *struct {
-		Data *struct {
-			Email    *string `json:"email,omitempty"`
-			FullName *string `json:"full_name,omitempty"`
-			Id       *int    `json:"id,omitempty"`
-			Phone    *string `json:"phone,omitempty"`
-		} `json:"data,omitempty"`
+		Data *Customer `json:"data,omitempty"`
 	}
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r CreateCustomerResponse) GetJSON201() *struct {
-	Data *struct {
-		Email    *string `json:"email,omitempty"`
-		FullName *string `json:"full_name,omitempty"`
-		Id       *int    `json:"id,omitempty"`
-		Phone    *string `json:"phone,omitempty"`
-	} `json:"data,omitempty"`
+	Data *Customer `json:"data,omitempty"`
 } {
 	return r.JSON201
 }
@@ -769,42 +788,24 @@ type ShowCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *struct {
-			Email    *string `json:"email,omitempty"`
-			FullName *string `json:"full_name,omitempty"`
-			Id       *int    `json:"id,omitempty"`
-			Phone    *string `json:"phone,omitempty"`
-		} `json:"data,omitempty"`
+		Data *Customer `json:"data,omitempty"`
 	}
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *struct {
-		Error *struct {
-			Code    *string                 `json:"code,omitempty"`
-			Details *map[string]interface{} `json:"details,omitempty"`
-			Message *string                 `json:"message,omitempty"`
-		} `json:"error,omitempty"`
+		Error *Error `json:"error,omitempty"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowCustomerResponse) GetJSON200() *struct {
-	Data *struct {
-		Email    *string `json:"email,omitempty"`
-		FullName *string `json:"full_name,omitempty"`
-		Id       *int    `json:"id,omitempty"`
-		Phone    *string `json:"phone,omitempty"`
-	} `json:"data,omitempty"`
+	Data *Customer `json:"data,omitempty"`
 } {
 	return r.JSON200
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r ShowCustomerResponse) GetJSON404() *struct {
-	Error *struct {
-		Code    *string                 `json:"code,omitempty"`
-		Details *map[string]interface{} `json:"details,omitempty"`
-		Message *string                 `json:"message,omitempty"`
-	} `json:"error,omitempty"`
+	Error *Error `json:"error,omitempty"`
 } {
 	return r.JSON404
 }
@@ -843,44 +844,24 @@ type ShowVehicleResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *struct {
-			Id    *int    `json:"id,omitempty"`
-			Make  *string `json:"make,omitempty"`
-			Model *string `json:"model,omitempty"`
-			Vin   *string `json:"vin,omitempty"`
-			Year  *int    `json:"year,omitempty"`
-		} `json:"data,omitempty"`
+		Data *Vehicle `json:"data,omitempty"`
 	}
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *struct {
-		Error *struct {
-			Code    *string                 `json:"code,omitempty"`
-			Details *map[string]interface{} `json:"details,omitempty"`
-			Message *string                 `json:"message,omitempty"`
-		} `json:"error,omitempty"`
+		Error *Error `json:"error,omitempty"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowVehicleResponse) GetJSON200() *struct {
-	Data *struct {
-		Id    *int    `json:"id,omitempty"`
-		Make  *string `json:"make,omitempty"`
-		Model *string `json:"model,omitempty"`
-		Vin   *string `json:"vin,omitempty"`
-		Year  *int    `json:"year,omitempty"`
-	} `json:"data,omitempty"`
+	Data *Vehicle `json:"data,omitempty"`
 } {
 	return r.JSON200
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r ShowVehicleResponse) GetJSON404() *struct {
-	Error *struct {
-		Code    *string                 `json:"code,omitempty"`
-		Details *map[string]interface{} `json:"details,omitempty"`
-		Message *string                 `json:"message,omitempty"`
-	} `json:"error,omitempty"`
+	Error *Error `json:"error,omitempty"`
 } {
 	return r.JSON404
 }
@@ -924,19 +905,7 @@ type ListWorkOrdersResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *[]struct {
-			Customer *struct {
-				FullName *string `json:"full_name,omitempty"`
-				Id       *int    `json:"id,omitempty"`
-			} `json:"customer,omitempty"`
-			Id      *int    `json:"id,omitempty"`
-			Status  *string `json:"status,omitempty"`
-			Vehicle *struct {
-				Id    *int    `json:"id,omitempty"`
-				Make  *string `json:"make,omitempty"`
-				Model *string `json:"model,omitempty"`
-			} `json:"vehicle,omitempty"`
-		} `json:"data,omitempty"`
+		Data *[]WorkOrder `json:"data,omitempty"`
 	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListWorkOrdersResponse200Headers
@@ -944,19 +913,7 @@ type ListWorkOrdersResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListWorkOrdersResponse) GetJSON200() *struct {
-	Data *[]struct {
-		Customer *struct {
-			FullName *string `json:"full_name,omitempty"`
-			Id       *int    `json:"id,omitempty"`
-		} `json:"customer,omitempty"`
-		Id      *int    `json:"id,omitempty"`
-		Status  *string `json:"status,omitempty"`
-		Vehicle *struct {
-			Id    *int    `json:"id,omitempty"`
-			Make  *string `json:"make,omitempty"`
-			Model *string `json:"model,omitempty"`
-		} `json:"vehicle,omitempty"`
-	} `json:"data,omitempty"`
+	Data *[]WorkOrder `json:"data,omitempty"`
 } {
 	return r.JSON200
 }
@@ -995,56 +952,24 @@ type ShowWorkOrderResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *struct {
-			Customer *struct {
-				FullName *string `json:"full_name,omitempty"`
-				Id       *int    `json:"id,omitempty"`
-			} `json:"customer,omitempty"`
-			Id      *int    `json:"id,omitempty"`
-			Status  *string `json:"status,omitempty"`
-			Vehicle *struct {
-				Id    *int    `json:"id,omitempty"`
-				Make  *string `json:"make,omitempty"`
-				Model *string `json:"model,omitempty"`
-			} `json:"vehicle,omitempty"`
-		} `json:"data,omitempty"`
+		Data *WorkOrder `json:"data,omitempty"`
 	}
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *struct {
-		Error *struct {
-			Code    *string                 `json:"code,omitempty"`
-			Details *map[string]interface{} `json:"details,omitempty"`
-			Message *string                 `json:"message,omitempty"`
-		} `json:"error,omitempty"`
+		Error *Error `json:"error,omitempty"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowWorkOrderResponse) GetJSON200() *struct {
-	Data *struct {
-		Customer *struct {
-			FullName *string `json:"full_name,omitempty"`
-			Id       *int    `json:"id,omitempty"`
-		} `json:"customer,omitempty"`
-		Id      *int    `json:"id,omitempty"`
-		Status  *string `json:"status,omitempty"`
-		Vehicle *struct {
-			Id    *int    `json:"id,omitempty"`
-			Make  *string `json:"make,omitempty"`
-			Model *string `json:"model,omitempty"`
-		} `json:"vehicle,omitempty"`
-	} `json:"data,omitempty"`
+	Data *WorkOrder `json:"data,omitempty"`
 } {
 	return r.JSON200
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
 func (r ShowWorkOrderResponse) GetJSON404() *struct {
-	Error *struct {
-		Code    *string                 `json:"code,omitempty"`
-		Details *map[string]interface{} `json:"details,omitempty"`
-		Message *string                 `json:"message,omitempty"`
-	} `json:"error,omitempty"`
+	Error *Error `json:"error,omitempty"`
 } {
 	return r.JSON404
 }
@@ -1140,7 +1065,7 @@ func (c *ClientWithResponses) ShowCustomerWithResponse(ctx context.Context, id i
 
 // ShowVehicleWithResponse show
 //
-// Show a single vehicle by ID.
+// Show a vehicle by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -1170,7 +1095,7 @@ func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, pa
 
 // ShowWorkOrderWithResponse show
 //
-// Show a single work order by ID.
+// Show a work order by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -1199,12 +1124,7 @@ func ParseListCustomersResponse(rsp *http.Response) (*ListCustomersResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *[]struct {
-				Email    *string `json:"email,omitempty"`
-				FullName *string `json:"full_name,omitempty"`
-				Id       *int    `json:"id,omitempty"`
-				Phone    *string `json:"phone,omitempty"`
-			} `json:"data,omitempty"`
+			Data *[]Customer `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1245,12 +1165,7 @@ func ParseCreateCustomerResponse(rsp *http.Response) (*CreateCustomerResponse, e
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			Data *struct {
-				Email    *string `json:"email,omitempty"`
-				FullName *string `json:"full_name,omitempty"`
-				Id       *int    `json:"id,omitempty"`
-				Phone    *string `json:"phone,omitempty"`
-			} `json:"data,omitempty"`
+			Data *Customer `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1278,12 +1193,7 @@ func ParseShowCustomerResponse(rsp *http.Response) (*ShowCustomerResponse, error
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *struct {
-				Email    *string `json:"email,omitempty"`
-				FullName *string `json:"full_name,omitempty"`
-				Id       *int    `json:"id,omitempty"`
-				Phone    *string `json:"phone,omitempty"`
-			} `json:"data,omitempty"`
+			Data *Customer `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1292,11 +1202,7 @@ func ParseShowCustomerResponse(rsp *http.Response) (*ShowCustomerResponse, error
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest struct {
-			Error *struct {
-				Code    *string                 `json:"code,omitempty"`
-				Details *map[string]interface{} `json:"details,omitempty"`
-				Message *string                 `json:"message,omitempty"`
-			} `json:"error,omitempty"`
+			Error *Error `json:"error,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1324,13 +1230,7 @@ func ParseShowVehicleResponse(rsp *http.Response) (*ShowVehicleResponse, error) 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *struct {
-				Id    *int    `json:"id,omitempty"`
-				Make  *string `json:"make,omitempty"`
-				Model *string `json:"model,omitempty"`
-				Vin   *string `json:"vin,omitempty"`
-				Year  *int    `json:"year,omitempty"`
-			} `json:"data,omitempty"`
+			Data *Vehicle `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1339,11 +1239,7 @@ func ParseShowVehicleResponse(rsp *http.Response) (*ShowVehicleResponse, error) 
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest struct {
-			Error *struct {
-				Code    *string                 `json:"code,omitempty"`
-				Details *map[string]interface{} `json:"details,omitempty"`
-				Message *string                 `json:"message,omitempty"`
-			} `json:"error,omitempty"`
+			Error *Error `json:"error,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1371,19 +1267,7 @@ func ParseListWorkOrdersResponse(rsp *http.Response) (*ListWorkOrdersResponse, e
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *[]struct {
-				Customer *struct {
-					FullName *string `json:"full_name,omitempty"`
-					Id       *int    `json:"id,omitempty"`
-				} `json:"customer,omitempty"`
-				Id      *int    `json:"id,omitempty"`
-				Status  *string `json:"status,omitempty"`
-				Vehicle *struct {
-					Id    *int    `json:"id,omitempty"`
-					Make  *string `json:"make,omitempty"`
-					Model *string `json:"model,omitempty"`
-				} `json:"vehicle,omitempty"`
-			} `json:"data,omitempty"`
+			Data *[]WorkOrder `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1424,19 +1308,7 @@ func ParseShowWorkOrderResponse(rsp *http.Response) (*ShowWorkOrderResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *struct {
-				Customer *struct {
-					FullName *string `json:"full_name,omitempty"`
-					Id       *int    `json:"id,omitempty"`
-				} `json:"customer,omitempty"`
-				Id      *int    `json:"id,omitempty"`
-				Status  *string `json:"status,omitempty"`
-				Vehicle *struct {
-					Id    *int    `json:"id,omitempty"`
-					Make  *string `json:"make,omitempty"`
-					Model *string `json:"model,omitempty"`
-				} `json:"vehicle,omitempty"`
-			} `json:"data,omitempty"`
+			Data *WorkOrder `json:"data,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1445,11 +1317,7 @@ func ParseShowWorkOrderResponse(rsp *http.Response) (*ShowWorkOrderResponse, err
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest struct {
-			Error *struct {
-				Code    *string                 `json:"code,omitempty"`
-				Details *map[string]interface{} `json:"details,omitempty"`
-				Message *string                 `json:"message,omitempty"`
-			} `json:"error,omitempty"`
+			Error *Error `json:"error,omitempty"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err

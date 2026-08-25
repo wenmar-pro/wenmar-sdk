@@ -86,7 +86,51 @@ class EnrichSpecTest < Minitest::Test
     assert_equal "#/components/schemas/Error", error_schema["properties"]["error"]["$ref"]
   end
 
+  def test_convention_based_operation_id_for_list
+    input = make_spec_with("/api/vehicles" => { "get" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "list_vehicles", result["paths"]["/api/vehicles"]["get"]["operationId"]
+  end
+
+  def test_convention_based_operation_id_for_show
+    input = make_spec_with("/api/vehicles/{id}" => { "get" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "show_vehicle", result["paths"]["/api/vehicles/{id}"]["get"]["operationId"]
+  end
+
+  def test_convention_based_operation_id_for_create
+    input = make_spec_with("/api/vehicles" => { "post" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "create_vehicle", result["paths"]["/api/vehicles"]["post"]["operationId"]
+  end
+
+  def test_convention_based_operation_id_for_update
+    input = make_spec_with("/api/customers/{id}" => { "patch" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "update_customer", result["paths"]["/api/customers/{id}"]["patch"]["operationId"]
+  end
+
+  def test_convention_based_operation_id_for_delete
+    input = make_spec_with("/api/customers/{id}" => { "delete" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "delete_customer", result["paths"]["/api/customers/{id}"]["delete"]["operationId"]
+  end
+
+  def test_convention_handles_work_orders_singularization
+    input = make_spec_with("/api/work_orders" => { "post" => { "responses" => {} } })
+    result = enrich(input)
+    assert_equal "create_work_order", result["paths"]["/api/work_orders"]["post"]["operationId"]
+  end
+
   private
+
+  def make_spec_with(paths)
+    {
+      "openapi" => "3.0.0",
+      "info" => { "title" => "Wenmar Pro API", "version" => "1.0.0" },
+      "paths" => paths
+    }
+  end
 
   def enrich(spec)
     require_relative "enrich_spec"

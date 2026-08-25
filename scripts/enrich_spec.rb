@@ -1,22 +1,8 @@
 require "yaml"
 
 module EnrichSpec
-  OPERATION_IDS = {
-    ["/api/customers", "get"] => "list_customers",
-    ["/api/customers", "post"] => "create_customer",
-    ["/api/customers/{id}", "get"] => "show_customer",
-    ["/api/vehicles/{id}", "get"] => "show_vehicle",
-    ["/api/work_orders", "get"] => "list_work_orders",
-    ["/api/work_orders/{id}", "get"] => "show_work_order"
-  }.freeze
-
-  DESCRIPTIONS = {
-    ["/api/customers", "get"] => "List all customers, paginated via the Link header.",
-    ["/api/customers", "post"] => "Create a customer.",
-    ["/api/customers/{id}", "get"] => "Show a customer by ID.",
-    ["/api/vehicles/{id}", "get"] => "Show a single vehicle by ID.",
-    ["/api/work_orders", "get"] => "List all work orders, paginated via the Link header.",
-    ["/api/work_orders/{id}", "get"] => "Show a single work order by ID."
+  SINGULAR_OVERRIDES = {
+    "work_orders" => "work_order"
   }.freeze
 
   RESOURCE_SCHEMAS = {
@@ -36,14 +22,44 @@ module EnrichSpec
     spec["paths"].each do |path, methods|
       resource = path.split("/")[2] # "/api/customers" => "customers"
       methods.each do |method, operation|
-        key = [path, method]
-        operation["operationId"] = OPERATION_IDS[key] if OPERATION_IDS[key]
+        operation["operationId"] = derive_operation_id(path, method)
         operation["tags"] = [resource] if resource
-        operation["description"] = DESCRIPTIONS[key] if DESCRIPTIONS[key]
+        operation["description"] = derive_description(operation["operationId"])
       end
     end
 
     spec
+  end
+
+  def self.derive_operation_id(path, method)
+    resource = path.split("/")[2] # "customers", "vehicles", "work_orders"
+    return nil unless resource
+
+    singularized = SINGULAR_OVERRIDES[resource] || resource.chomp("s")
+    has_id = path.include?("{id}")
+
+    case [method, has_id]
+    when ["get", false] then "list_#{resource}"
+    when ["get", true]  then "show_#{singularized}"
+    when ["post", false] then "create_#{singularized}"
+    when ["patch", true], ["put", true] then "update_#{singularized}"
+    when ["delete", true] then "delete_#{singularized}"
+    when ["delete", false] then "delete_#{resource}"
+    else "#{method}_#{resource}"
+    end
+  end
+
+  def self.derive_description(operation_id)
+    return nil unless operation_id
+    verb, resource = operation_id.split("_", 2)
+    readable = resource.tr("_", " ")
+    case verb
+    when "list"   then "List all #{readable}, paginated via the Link header."
+    when "show"   then "Show a #{readable} by ID."
+    when "create" then "Create a #{readable}."
+    when "update" then "Update a #{readable} by ID."
+    when "delete" then "Delete a #{readable} by ID."
+    end
   end
 
   def self.extract_components!(spec)
