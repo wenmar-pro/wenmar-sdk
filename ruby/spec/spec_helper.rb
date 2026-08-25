@@ -1,10 +1,10 @@
-require "wenmar_pro"
+require "wenmar"
 require "minitest/autorun"
 require "webmock/minitest"
 
 WebMock.disable_net_connect!
 
-module WenmarPro
+module Wenmar
   class TestCase < Minitest::Test
     def setup
       @base_url = "https://api.example.com"

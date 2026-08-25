@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/bendangelo/wenmar-sdk/go/pkg/generated"
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var linkRelRE = regexp.MustCompile(`<([^>]+)>;\s*rel="([^"]+)"`)

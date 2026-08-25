@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module WenmarPro
+module Wenmar
   class PaginationTest < TestCase
     def test_parse_link_header_next
       header = '<https://api.example.com/api/customers?page=2>; rel="next"'

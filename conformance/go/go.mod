@@ -1,10 +1,10 @@
-module github.com/bendangelo/wenmar-sdk/conformance/go
+module github.com/wenmar-pro/wenmar-sdk/conformance/go
 
 go 1.27.0
 
-replace github.com/bendangelo/wenmar-sdk/go => ../../go
+replace github.com/wenmar-pro/wenmar-sdk/go => ../../go
 
-require github.com/bendangelo/wenmar-sdk/go v0.0.0-00010101000000-000000000000
+require github.com/wenmar-pro/wenmar-sdk/go v0.0.0-00010101000000-000000000000
 
 require (
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect

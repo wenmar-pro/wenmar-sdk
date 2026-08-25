@@ -1,7 +1,7 @@
 require "minitest/autorun"
 require "json"
 require "webmock/minitest"
-require "wenmar_pro"
+require "wenmar"
 
 WebMock.disable_net_connect!
 
@@ -27,7 +27,7 @@ module Conformance
     def run_case(tc)
       WebMock.reset!
       stub_responses(tc)
-      client = WenmarPro::Client.new(token: "test-token", base_url: BASE_URL)
+      client = Wenmar::Client.new(token: "test-token", base_url: BASE_URL)
 
       begin
         result = execute_operation(client, tc)
@@ -36,7 +36,7 @@ module Conformance
         else
           flunk "[#{tc["name"]}] expected error, got success"
         end
-      rescue WenmarPro::Error => e
+      rescue Wenmar::Error => e
         if tc.dig("expect", "noError")
           flunk "[#{tc["name"]}] expected success, got error: #{e.message}"
         else

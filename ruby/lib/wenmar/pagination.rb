@@ -1,6 +1,6 @@
 require "uri"
 
-module WenmarPro
+module Wenmar
   class Paginator
     attr_reader :next_url, :client
 

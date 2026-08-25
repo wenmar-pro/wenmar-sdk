@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/bendangelo/wenmar-sdk/go/pkg/generated"
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 type Client struct {

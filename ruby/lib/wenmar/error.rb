@@ -1,6 +1,6 @@
 require "json"
 
-module WenmarPro
+module Wenmar
   class Error < StandardError
     attr_reader :code, :message, :details, :status
 

@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module WenmarPro
+module Wenmar
   class ClientTest < TestCase
     def test_initialize_requires_token
       assert_raises(ArgumentError) { Client.new(token: "") }
@@ -36,7 +36,7 @@ module WenmarPro
     def test_show_customer_not_found
       stub_api(:get, "/api/customers/999", { error: { code: "not_found", message: "Not found", details: {} } }, status: 404)
       client = Client.new(token: "test", base_url: @base_url)
-      err = assert_raises(WenmarPro::Error) { client.show_customer(999) }
+      err = assert_raises(Wenmar::Error) { client.show_customer(999) }
       assert_equal "not_found", err.code
       assert_equal 404, err.status
     end

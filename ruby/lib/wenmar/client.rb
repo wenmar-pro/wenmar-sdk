@@ -2,7 +2,7 @@ require "faraday"
 require "faraday/retry"
 require "json"
 
-module WenmarPro
+module Wenmar
   class Client
     attr_reader :base_url, :token
 
@@ -82,7 +82,7 @@ module WenmarPro
 
     def handle_response(response)
       if response.status >= 400
-        raise WenmarPro::Error.from_response(response)
+        raise Wenmar::Error.from_response(response)
       end
 
       JSON.parse(response.body)

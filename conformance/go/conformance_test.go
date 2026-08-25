@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	wenmar "github.com/bendangelo/wenmar-sdk/go/wenmar"
-	"github.com/bendangelo/wenmar-sdk/go/pkg/generated"
+	wenmar "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var ctx = context.Background()
