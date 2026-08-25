@@ -1,0 +1,14 @@
+{
+  "generatorName": "ruby-nextgen",
+  "gemName": "wenmar_pro",
+  "moduleName": "WenmarPro",
+  "openApiSpecPath": "../spec/openapi.enriched.yaml",
+  "outputDir": ".",
+  "gemVersion": "0.1.0",
+  "gemLicense": "MIT",
+  "gemHomepage": "https://github.com/bendangelo/wenmar-sdk",
+  "gemSummary": "Ruby SDK for the Wenmar Pro API",
+  "gemDescription": "Idiomatic Ruby client for the Wenmar Pro automotive shop management API.",
+  "gitUserId": "bendangelo",
+  "gitRepoId": "wenmar-sdk"
+}
