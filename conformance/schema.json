@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Wenmar SDK conformance test case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "operation", "method", "path", "mockResponses", "expect"],
+  "properties": {
+    "name": { "type": "string" },
+    "operation": {
+      "type": "string",
+      "enum": ["list_customers", "show_customer", "create_customer", "show_vehicle", "list_work_orders", "show_work_order", "list_customers_paginated", "list_work_orders_paginated"]
+    },
+    "method": { "type": "string", "enum": ["GET", "POST"] },
+    "path": { "type": "string" },
+    "pathParams": {
+      "type": "object",
+      "additionalProperties": { "type": ["integer", "string"] }
+    },
+    "requestBody": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "mockResponses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status"],
+        "properties": {
+          "status": { "type": "integer" },
+          "headers": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "body": {
+            "type": ["object", "array", "null"]
+          }
+        }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestCount": { "type": "integer" },
+        "noError": { "type": "boolean" },
+        "errorCode": { "type": "string" },
+        "errorStatus": { "type": "integer" },
+        "responseBody": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": { "type": "string" },
+            "equals": { "type": ["integer", "string", "boolean", "null"] }
+          },
+          "required": ["path", "equals"]
+        }
+      }
+    }
+  }
+}

@@ -43,22 +43,44 @@ func extractPageFromURL(url string) *int {
 
 type Paginator struct {
 	nextURL string
-	client  *Client
+	fetch   func(ctx context.Context, page *int) (any, error)
 }
 
 func (p *Paginator) HasNext() bool {
 	return p.nextURL != ""
 }
 
-func (p *Paginator) NextPage(ctx context.Context) (*generated.ListCustomersResponse, error) {
+func (p *Paginator) NextPage(ctx context.Context) (any, error) {
 	if !p.HasNext() {
 		return nil, nil
 	}
 	page := extractPageFromURL(p.nextURL)
-	return p.client.ListCustomers(ctx, page)
+	resp, err := p.fetch(ctx, page)
+	if err != nil {
+		return nil, err
+	}
+	// Advance to the next link from the response, if any.
+	switch r := resp.(type) {
+	case *generated.ListCustomersResponse:
+		p.nextURL = parseLinkHeader(r.HTTPResponse.Header.Get("Link"), "next")
+	case *generated.ListWorkOrdersResponse:
+		p.nextURL = parseLinkHeader(r.HTTPResponse.Header.Get("Link"), "next")
+	default:
+		p.nextURL = ""
+	}
+	return resp, nil
 }
 
 func newPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
 	next := parseLinkHeader(resp.Header.Get("Link"), "next")
-	return &Paginator{nextURL: next, client: client}
+	return &Paginator{nextURL: next, fetch: func(ctx context.Context, page *int) (any, error) {
+		return client.ListCustomers(ctx, page)
+	}}
+}
+
+func newWorkOrdersPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
+	next := parseLinkHeader(resp.Header.Get("Link"), "next")
+	return &Paginator{nextURL: next, fetch: func(ctx context.Context, page *int) (any, error) {
+		return client.ListWorkOrders(ctx, page)
+	}}
 }

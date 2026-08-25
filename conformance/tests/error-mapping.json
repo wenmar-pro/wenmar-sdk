@@ -1,0 +1,49 @@
+[
+  {
+    "name": "404_on_missing_customer",
+    "operation": "show_customer",
+    "method": "GET",
+    "path": "/api/customers/999999",
+    "pathParams": { "id": 999999 },
+    "mockResponses": [
+      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "not_found",
+      "errorStatus": 404
+    }
+  },
+  {
+    "name": "401_unauthorized",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/api/customers",
+    "mockResponses": [
+      { "status": 401, "body": { "error": { "code": "unauthorized", "message": "Invalid or missing API token", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "unauthorized",
+      "errorStatus": 401
+    }
+  },
+  {
+    "name": "422_validation_failed",
+    "operation": "create_customer",
+    "method": "POST",
+    "path": "/api/customers",
+    "requestBody": { "customer": { "full_name": "" } },
+    "mockResponses": [
+      {
+        "status": 422,
+        "body": { "error": { "code": "validation_failed", "message": "Full name can't be blank", "details": { "full_name": ["can't be blank"] } } }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "validation_failed",
+      "errorStatus": 422
+    }
+  }
+]

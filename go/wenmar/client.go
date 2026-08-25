@@ -115,6 +115,15 @@ func (c *Client) ListWorkOrders(ctx context.Context, page *int) (*generated.List
 	return resp, nil
 }
 
+func (c *Client) ListWorkOrdersWithPagination(ctx context.Context, page *int) (*generated.ListWorkOrdersResponse, *Paginator, error) {
+	resp, err := c.ListWorkOrders(ctx, page)
+	if err != nil {
+		return nil, nil, err
+	}
+	paginator := newWorkOrdersPaginatorFromResponse(resp.HTTPResponse, c)
+	return resp, paginator, nil
+}
+
 func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWorkOrderResponse, error) {
 	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
 	if err != nil {

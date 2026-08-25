@@ -1,0 +1,58 @@
+[
+  {
+    "name": "retry_on_500_then_200",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/api/customers",
+    "mockResponses": [
+      {
+        "status": 500,
+        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "details": {} } }
+      },
+      {
+        "status": 500,
+        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "details": {} } }
+      },
+      {
+        "status": 200,
+        "body": { "data": [ { "id": 1, "full_name": "Jane Doe" } ] }
+      }
+    ],
+    "expect": {
+      "requestCount": 3,
+      "noError": true
+    }
+  },
+  {
+    "name": "retry_max_retries_exceeded",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/api/customers",
+    "mockResponses": [
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 4,
+      "errorCode": "internal_error",
+      "errorStatus": 500
+    }
+  },
+  {
+    "name": "no_retry_on_404",
+    "operation": "show_customer",
+    "method": "GET",
+    "path": "/api/customers/999",
+    "pathParams": { "id": 999 },
+    "mockResponses": [
+      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "not_found",
+      "errorStatus": 404
+    }
+  }
+]
