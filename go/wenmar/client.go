@@ -53,7 +53,7 @@ func (c *Client) ListCustomers(ctx context.Context, page *int) (*generated.ListC
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }
@@ -73,7 +73,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCusto
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }
@@ -84,7 +84,7 @@ func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustom
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }
@@ -95,7 +95,7 @@ func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicl
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }
@@ -110,7 +110,7 @@ func (c *Client) ListWorkOrders(ctx context.Context, page *int) (*generated.List
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }
@@ -121,7 +121,7 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWork
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseError(resp.HTTPResponse)
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
 	}
 	return resp, nil
 }

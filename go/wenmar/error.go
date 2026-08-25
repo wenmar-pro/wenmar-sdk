@@ -18,13 +18,24 @@ func (e *APIError) Error() string {
 	return fmt.Sprintf("%s: %s (HTTP %d)", e.Code, e.Message, e.StatusCode)
 }
 
+// ParseError reads the error envelope from a failed response body.
 func ParseError(resp *http.Response) *APIError {
-	apiErr := &APIError{StatusCode: resp.StatusCode}
-
 	body, err := io.ReadAll(resp.Body)
-	if err != nil || len(body) == 0 {
+	if err != nil {
+		return &APIError{Code: "unknown", Message: "unreadable body", StatusCode: resp.StatusCode}
+	}
+	return ParseErrorBody(body, resp.StatusCode)
+}
+
+// ParseErrorBody parses the { "error": { code, message, details } } envelope
+// from an already-read response body. The generated oapi-codegen client drains
+// the body into a byte slice, so callers pass that slice here.
+func ParseErrorBody(body []byte, statusCode int) *APIError {
+	apiErr := &APIError{StatusCode: statusCode}
+
+	if len(body) == 0 {
 		apiErr.Code = "unknown"
-		apiErr.Message = fmt.Sprintf("HTTP %d with empty or unreadable body", resp.StatusCode)
+		apiErr.Message = fmt.Sprintf("HTTP %d with empty or unreadable body", statusCode)
 		return apiErr
 	}
 
@@ -38,7 +49,7 @@ func ParseError(resp *http.Response) *APIError {
 
 	if err := json.Unmarshal(body, &envelope); err != nil {
 		apiErr.Code = "unknown"
-		apiErr.Message = fmt.Sprintf("HTTP %d with malformed body", resp.StatusCode)
+		apiErr.Message = fmt.Sprintf("HTTP %d with malformed body", statusCode)
 		return apiErr
 	}
 
