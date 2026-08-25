@@ -58,6 +58,15 @@ func (c *Client) ListCustomers(ctx context.Context, page *int) (*generated.ListC
 	return resp, nil
 }
 
+func (c *Client) ListCustomersWithPagination(ctx context.Context, page *int) (*generated.ListCustomersResponse, *Paginator, error) {
+	resp, err := c.ListCustomers(ctx, page)
+	if err != nil {
+		return nil, nil, err
+	}
+	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
+	return resp, paginator, nil
+}
+
 func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCustomerResponse, error) {
 	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
 	if err != nil {
