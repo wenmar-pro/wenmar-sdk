@@ -1,0 +1,63 @@
+name: SDK Generate & Verify
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27"
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enrich spec
+        run: ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml
+
+      - name: Regenerate Go client
+        run: go generate ./...
+        working-directory: go
+
+      - name: Build Go SDK
+        run: go build ./...
+        working-directory: go
+
+      - name: Test Go SDK
+        run: go test ./...
+        working-directory: go
+
+      - name: Go conformance
+        run: go test ./...
+        working-directory: conformance/go
+
+      - name: Ruby SDK tests
+        run: |
+          bundle install
+          ruby -Ilib spec/client_spec.rb
+          ruby -Ilib spec/pagination_spec.rb
+        working-directory: ruby
+
+      - name: Ruby conformance
+        run: bundle install && bundle exec ruby conformance_spec.rb
+        working-directory: conformance/ruby
+
+      - name: Fixture coverage
+        run: ruby scripts/check_fixture_coverage.rb
+
+      - name: Verify no drift in generated Go client
+        run: |
+          go generate ./...
+          git diff --exit-code go/pkg/generated/client.gen.go
+        working-directory: go

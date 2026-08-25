@@ -1,0 +1,33 @@
+name: Spec Sync Validation
+
+on:
+  push:
+    branches: [main]
+    paths: [spec/openapi.yaml]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Enrich spec
+        run: ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml
+
+      - name: Validate enriched spec is OpenAPI 3.0
+        run: |
+          version=$(ruby -ryaml -e 'puts YAML.load_file("spec/openapi.enriched.yaml")["openapi"]')
+          echo "openapi version: $version"
+          test "${version#3.0}" != "$version"
+
+      - name: Run fixture coverage
+        run: ruby scripts/check_fixture_coverage.rb
+
+      - name: Comment if generation is needed
+        if: failure()
+        run: echo "::error::Spec changed — rerun the sdk-generate workflow to regenerate SDKs"
