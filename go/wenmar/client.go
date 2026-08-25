@@ -1,0 +1,114 @@
+package wenmar
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+
+	"github.com/bendangelo/wenmar-sdk/go/pkg/generated"
+)
+
+type Client struct {
+	BaseURL string
+	Token   string
+	http    *http.Client
+	gen     *generated.ClientWithResponses
+}
+
+func NewClient(baseURL, token string) (*Client, error) {
+	if token == "" {
+		return nil, fmt.Errorf("API token is required")
+	}
+
+	gen, err := generated.NewClientWithResponses(baseURL,
+		generated.WithHTTPClient(&http.Client{}),
+		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
+			req.Header.Set("Authorization", "Bearer "+token)
+			return nil
+		}),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create client: %w", err)
+	}
+
+	return &Client{
+		BaseURL: baseURL,
+		Token:   token,
+		http:    &http.Client{},
+		gen:     gen,
+	}, nil
+}
+
+func (c *Client) ListCustomers(ctx context.Context, page *int) (*generated.ListCustomersResponse, error) {
+	params := &generated.ListCustomersParams{}
+	if page != nil {
+		params.Page = page
+	}
+	resp, err := c.gen.ListCustomersWithResponse(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCustomerResponse, error) {
+	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustomerJSONRequestBody) (*generated.CreateCustomerResponse, error) {
+	resp, err := c.gen.CreateCustomerWithResponse(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicleResponse, error) {
+	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+func (c *Client) ListWorkOrders(ctx context.Context, page *int) (*generated.ListWorkOrdersResponse, error) {
+	params := &generated.ListWorkOrdersParams{}
+	if page != nil {
+		params.Page = page
+	}
+	resp, err := c.gen.ListWorkOrdersWithResponse(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWorkOrderResponse, error) {
+	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseError(resp.HTTPResponse)
+	}
+	return resp, nil
+}
