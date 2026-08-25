@@ -45,8 +45,8 @@ jobs:
       - name: Ruby SDK tests
         run: |
           bundle install
-          ruby -Ilib spec/client_spec.rb
-          ruby -Ilib spec/pagination_spec.rb
+          bundle exec ruby -Ilib spec/client_spec.rb
+          bundle exec ruby -Ilib spec/pagination_spec.rb
         working-directory: ruby
 
       - name: Ruby conformance
