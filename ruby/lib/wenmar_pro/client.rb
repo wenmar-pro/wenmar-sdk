@@ -18,7 +18,12 @@ module WenmarPro
       params = {}
       params[:page] = page if page
       response = get("/api/customers", params)
-      handle_response(response)
+      result = handle_response(response)
+      client = self
+      result.define_singleton_method(:paginator) do
+        Paginator.from_response(response, client)
+      end
+      result
     end
 
     def show_customer(id)
@@ -40,7 +45,12 @@ module WenmarPro
       params = {}
       params[:page] = page if page
       response = get("/api/work_orders", params)
-      handle_response(response)
+      result = handle_response(response)
+      client = self
+      result.define_singleton_method(:paginator) do
+        Paginator.from_response(response, client)
+      end
+      result
     end
 
     def show_work_order(id)
