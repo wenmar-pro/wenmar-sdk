@@ -1,0 +1,38 @@
+scenarios:
+  - name: paginate_through_customers
+    description: List customers and follow Link header to the next page
+    steps:
+      - action: list_customers
+        expect: status_200
+        expect_header: { Link: "rel=\"next\"" }
+      - action: next_page
+        expect: status_200
+        expect_data: non_empty
+
+  - name: 404_on_missing_customer
+    description: Show a non-existent customer and verify the typed error
+    steps:
+      - action: show_customer
+        params: { id: 999999 }
+        expect: error
+        error_code: not_found
+        error_status: 404
+
+  - name: retry_on_500
+    description: Server returns 500 twice then 200 — verify retry fires
+    mock_config:
+      fail_count: 2
+      fail_status: 500
+    steps:
+      - action: list_customers
+        expect: status_200
+        expect_retries: 2
+
+  - name: 401_on_missing_token
+    description: Request without auth token returns 401
+    auth: none
+    steps:
+      - action: list_customers
+        expect: error
+        error_code: unauthorized
+        error_status: 401
