@@ -1,0 +1,40 @@
+# Fixture-coverage manifest.
+#
+# Guarantees every operation's response schema has at least one live,
+# validated representative among the shared JSON fixtures, so a new required
+# field added to a response schema forces a fixture to carry it.
+#
+# Enforced by scripts/check_fixture_coverage.rb (wired into CI).
+#
+# Each `targets` entry is one of:
+#   operation entry — { id, operation: <operationId>, fixture: <path> }
+#     Validates the COMPLETE response body of `operation` (the `data` envelope
+#     unwrapped) against the fixture named by `fixture`.
+#   pointer entry    — { id, fixture, pointer, schema }
+#     Validates the object selected by JSON pointer `pointer` within `fixture`
+#     against the named inline schema. `pointer: ""` selects the whole document.
+
+targets:
+  - id: customer-get
+    operation: show_customer
+    fixture: customers/get.json
+  - id: customer-list
+    operation: list_customers
+    fixture: customers/list.json
+  - id: customer-create-request
+    operation: create_customer
+    fixture: customers/create-request.json
+  - id: vehicle-get
+    operation: show_vehicle
+    fixture: vehicles/get.json
+  - id: work-order-get
+    operation: show_work_order
+    fixture: work_orders/get.json
+  - id: work-order-list
+    operation: list_work_orders
+    fixture: work_orders/list.json
+
+covered_schemas:
+  customer: [customer-get, customer-list, customer-create-request]
+  vehicle: [vehicle-get]
+  work_order: [work-order-get, work-order-list]

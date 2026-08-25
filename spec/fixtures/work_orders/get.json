@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "status": "open",
+  "customer": {
+    "id": 1,
+    "full_name": "Jane Doe"
+  },
+  "vehicle": {
+    "id": 1,
+    "make": "Toyota",
+    "model": "Camry"
+  }
+}

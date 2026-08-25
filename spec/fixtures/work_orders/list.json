@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "status": "open",
+    "customer": {
+      "id": 1,
+      "full_name": "Jane Doe"
+    },
+    "vehicle": {
+      "id": 1,
+      "make": "Toyota",
+      "model": "Camry"
+    }
+  },
+  {
+    "id": 2,
+    "status": "in_progress",
+    "customer": {
+      "id": 2,
+      "full_name": "John Smith"
+    },
+    "vehicle": {
+      "id": 2,
+      "make": "Honda",
+      "model": "Civic"
+    }
+  }
+]
