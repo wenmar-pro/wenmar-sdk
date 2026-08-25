@@ -20,8 +20,12 @@ func NewClient(baseURL, token string) (*Client, error) {
 		return nil, fmt.Errorf("API token is required")
 	}
 
+	httpClient := &http.Client{
+		Transport: newRetryTransport(),
+	}
+
 	gen, err := generated.NewClientWithResponses(baseURL,
-		generated.WithHTTPClient(&http.Client{}),
+		generated.WithHTTPClient(httpClient),
 		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("Authorization", "Bearer "+token)
 			return nil
@@ -34,7 +38,7 @@ func NewClient(baseURL, token string) (*Client, error) {
 	return &Client{
 		BaseURL: baseURL,
 		Token:   token,
-		http:    &http.Client{},
+		http:    httpClient,
 		gen:     gen,
 	}, nil
 }
