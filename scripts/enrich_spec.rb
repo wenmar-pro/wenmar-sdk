@@ -11,6 +11,14 @@ module EnrichSpec
     "work_orders" => "WorkOrder"
   }.freeze
 
+  # Collection sub-actions that are NOT standard CRUD on a resource. The key is
+  # "METHOD path"; the value is the semantic operationId. The physical path may
+  # differ from the operation name (e.g. /vehicles/vin_decode -> decode_vin).
+  SUB_ACTION_IDS = {
+    "get /vehicles/vin_decode"       => "decode_vin",
+    "get /vehicles/check_duplicate"  => "check_duplicate"
+  }.freeze
+
   def self.call(input)
     spec = Marshal.load(Marshal.dump(input)) # deep copy
 
@@ -20,19 +28,26 @@ module EnrichSpec
     extract_components!(spec)
 
     spec["paths"].each do |path, methods|
-      resource = path.split("/")[2] # "/api/customers" => "customers"
+      resource = path.split("/")[1] # "/customers" => "customers"
       methods.each do |method, operation|
         operation["operationId"] = derive_operation_id(path, method)
         operation["tags"] = [resource] if resource
         operation["description"] = derive_description(operation["operationId"])
+        operation["x-curl-example"] = derive_curl_example(path, method)
       end
     end
+
+    apply_example_overrides!(spec)
 
     spec
   end
 
   def self.derive_operation_id(path, method)
-    resource = path.split("/")[2] # "customers", "vehicles", "work_orders"
+    # Sub-actions (e.g. /vehicles/vin_decode) map to a named operationId.
+    sub_action = SUB_ACTION_IDS["#{method} #{path}"]
+    return sub_action if sub_action
+
+    resource = path.split("/")[1] # "customers", "vehicles", "work_orders"
     return nil unless resource
 
     singularized = SINGULAR_OVERRIDES[resource] || resource.chomp("s")
@@ -62,35 +77,112 @@ module EnrichSpec
     end
   end
 
+  # Generates a copy-paste cURL command for a given path + method.
+  def self.derive_curl_example(path, method)
+    base = "https://app.wenmarpro.com"
+    url = if path.include?("{id}")
+      "#{base}#{path.split('{')[0]}<id>.json"
+    else
+      "#{base}#{path}.json"
+    end
+    headers = '-H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN"'
+    case method
+    when "get"
+      "curl #{headers} #{url}"
+    when "post", "patch"
+      "curl -X #{method.upcase} #{headers} -H \"Content-Type: application/json\" \\\n     -d '{\"...\":\"...\"}' #{url}"
+    when "delete"
+      "curl -X DELETE #{headers} #{url}"
+    end
+  end
+
+  # Realistic example values matching bc3's documentation quality bar. Applied
+  # to component schema `example` fields.
+  EXAMPLE_OVERRIDES = {
+    "Customer" => {
+      "id" => 7,
+      "full_name" => "Jane Doe",
+      "company_name" => "Acme Auto",
+      "emails" => [{ "id" => 42, "address" => "jane@acmeauto.com", "label" => "work", "primary" => true }]
+    },
+    "Vehicle" => {
+      "id" => 13,
+      "make" => "Honda",
+      "model" => "Civic",
+      "year" => 2020,
+      "vin" => "1HGCN2345ABC",
+      "odometer" => { "reading" => 182_340, "unit" => "km" }
+    },
+    "WorkOrder" => {
+      "id" => 42,
+      "status" => "in_progress",
+      "work_order_number" => "WO-0042",
+      "totals" => { "subtotal_cents" => 12_000, "currency" => "CAD" }
+    }
+  }.freeze
+
+  def self.apply_example_overrides!(spec)
+    schemas = spec.dig("components", "schemas")
+    return unless schemas
+
+    EXAMPLE_OVERRIDES.each do |name, example|
+      schema = schemas[name]
+      next unless schema
+
+      props = schema["properties"]
+      next unless props
+
+      props.each do |prop_name, prop_schema|
+        next unless example.key?(prop_name)
+
+        # Prefer the nested example for object-valued props; fall back to scalar.
+        value = example[prop_name]
+        if prop_schema["type"] == "object" && prop_schema["properties"] && value.is_a?(Hash)
+          prop_schema["properties"].each do |sub_name, sub_schema|
+            sub_schema["example"] = value[sub_name] if value.key?(sub_name)
+          end
+        else
+          prop_schema["example"] = value
+        end
+      end
+    end
+  end
+
   def self.extract_components!(spec)
     spec["components"] ||= {}
     spec["components"]["schemas"] ||= {}
 
     spec["paths"].each do |path, methods|
-      resource = path.split("/")[2]
+      resource = path.split("/")[1]
       schema_name = RESOURCE_SCHEMAS[resource]
       next unless schema_name
 
-      methods.each do |_method, operation|
+      methods.each do |method, operation|
+        # decode_vin / check_duplicate return free-form data, not a resource.
+        next if SUB_ACTION_IDS["#{method} #{path}"]
+
         responses = operation["responses"] || {}
-        responses.each do |_status, response|
+        responses.each do |status, response|
+          # Only 2xx responses carry the resource representation; error
+          # envelopes (4xx/5xx) are extracted separately below.
+          next unless status.to_s.start_with?("2")
+
           content = response["content"]
           next unless content && content["application/json"]
 
           schema = content["application/json"]["schema"]
-          next unless schema && schema["properties"] && schema["properties"]["data"]
+          next unless schema
 
-          data = schema["properties"]["data"]
-          if data["type"] == "array" && data["items"] && data["items"]["properties"]
+          if schema["type"] == "array" && schema["items"] && schema["items"]["properties"]
             unless spec["components"]["schemas"][schema_name]
-              spec["components"]["schemas"][schema_name] = data["items"].dup
+              spec["components"]["schemas"][schema_name] = schema["items"].dup
             end
-            data["items"] = { "$ref" => "#/components/schemas/#{schema_name}" }
-          elsif data["properties"]
+            schema["items"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+          elsif schema["properties"]
             unless spec["components"]["schemas"][schema_name]
-              spec["components"]["schemas"][schema_name] = data.dup
+              spec["components"]["schemas"][schema_name] = schema.dup
             end
-            schema["properties"]["data"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+            content["application/json"]["schema"] = { "$ref" => "#/components/schemas/#{schema_name}" }
           end
         end
       end

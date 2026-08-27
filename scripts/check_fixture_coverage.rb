@@ -37,8 +37,9 @@ def find_operation(spec, operation_id)
   nil
 end
 
-# Returns the schema for the `data` envelope of an operation's 2xx response.
-def response_data_schema(operation)
+# Returns the schema for a 2xx response's JSON body. No data wrapper — the
+# response body is the resource directly (bare object or bare array).
+def response_data_schema(spec, operation)
   responses = operation["responses"] || {}
   response = responses["200"] || responses["201"] || responses["default"]
   return nil unless response
@@ -46,8 +47,31 @@ def response_data_schema(operation)
   schema = response.dig("content", "application/json", "schema")
   return nil unless schema
 
-  # Unwrap the { "data": ... } envelope.
-  schema.dig("properties", "data") || schema
+  resolve_refs(spec, schema)
+end
+
+# Recursively resolves `$ref` pointers against the components section so the
+# validator works on a self-contained schema tree.
+def resolve_refs(spec, schema)
+  return schema unless schema.is_a?(Hash)
+
+  ref = schema["$ref"]
+  if ref && ref.start_with?("#/components/schemas/")
+    name = ref.split("/").last
+    target = spec.dig("components", "schemas", name)
+    return resolve_refs(spec, target) if target
+  end
+
+  resolved = schema.dup
+  if resolved["type"] == "array" && resolved["items"].is_a?(Hash)
+    resolved["items"] = resolve_refs(spec, resolved["items"])
+  end
+  if resolved["properties"].is_a?(Hash)
+    resolved["properties"] = resolved["properties"].each_with_object({}) do |(key, prop), acc|
+      acc[key] = resolve_refs(spec, prop)
+    end
+  end
+  resolved
 end
 
 # Structural validation: required fields present, types match, nullability.
@@ -106,7 +130,7 @@ def validate_target(spec, target)
     operation, _method = find_operation(spec, target["operation"])
     fail!("unknown operation '#{target["operation"]}' for fixture #{target["fixture"]}") unless operation
 
-    schema = response_data_schema(operation)
+    schema = response_data_schema(spec, operation)
     fail!("no 2xx response schema for operation '#{target["operation"]}'") unless schema
 
     validate_schema(fixture, schema, target["fixture"])
