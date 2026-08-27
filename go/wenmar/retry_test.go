@@ -18,12 +18,12 @@ func TestRetry_On500Then200(t *testing.T) {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"data":[]}`))
+		w.Write([]byte(`[]`))
 	}))
 	defer ts.Close()
 
 	c, _ := NewClient(ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx, nil)
+	_, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("expected success after retry, got error: %v", err)
 	}
@@ -42,7 +42,7 @@ func TestRetry_MaxRetriesExceeded(t *testing.T) {
 	defer ts.Close()
 
 	c, _ := NewClient(ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx, nil)
+	_, err := c.ListCustomers(ctx)
 	if err == nil {
 		t.Fatal("expected error after max retries")
 	}
@@ -61,7 +61,7 @@ func TestRetry_NoRetryOn4xx(t *testing.T) {
 	defer ts.Close()
 
 	c, _ := NewClient(ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx, nil)
+	_, err := c.ListCustomers(ctx)
 	if err == nil {
 		t.Fatal("expected error on 404")
 	}

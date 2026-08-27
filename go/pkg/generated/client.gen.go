@@ -18,64 +18,266 @@ import (
 
 // Customer defines model for Customer.
 type Customer struct {
-	Email    *string `json:"email,omitempty"`
-	FullName *string `json:"full_name,omitempty"`
-	Id       *int    `json:"id,omitempty"`
-	Phone    *string `json:"phone,omitempty"`
+	// CompanyName Example: Acme Auto
+	CompanyName interface{} `json:"company_name"`
+	CreatedAt   string      `json:"created_at"`
+	Currency    string      `json:"currency"`
+
+	// Emails Example: [{"address":"jane@acmeauto.com","id":42,"label":"work","primary":true}]
+	Emails          []interface{} `json:"emails"`
+	FirstName       string        `json:"first_name"`
+	FleetIdentifier interface{}   `json:"fleet_identifier"`
+
+	// FullName Example: Jane Doe
+	FullName string `json:"full_name"`
+
+	// Id Example: 7
+	Id                      int           `json:"id"`
+	LastName                string        `json:"last_name"`
+	LastVisitAt             interface{}   `json:"last_visit_at"`
+	MarketingOptIn          bool          `json:"marketing_opt_in"`
+	OutstandingBalanceCents int           `json:"outstanding_balance_cents"`
+	Phones                  []interface{} `json:"phones"`
+	StatementsCount         int           `json:"statements_count"`
+	StoreCreditCents        int           `json:"store_credit_cents"`
+	TaxExempt               bool          `json:"tax_exempt"`
+	TotalRevenueCents       int           `json:"total_revenue_cents"`
+	Type                    string        `json:"type"`
+	UpdatedAt               string        `json:"updated_at"`
+	Url                     string        `json:"url"`
+	VehiclesCount           int           `json:"vehicles_count"`
+	VehiclesUrl             string        `json:"vehicles_url"`
+	WorkOrdersUrl           string        `json:"work_orders_url"`
 }
 
 // Error defines model for Error.
 type Error struct {
-	Code    *string                 `json:"code,omitempty"`
-	Details *map[string]interface{} `json:"details,omitempty"`
-	Message *string                 `json:"message,omitempty"`
+	Code    string                 `json:"code"`
+	Details map[string]interface{} `json:"details"`
+	Message string                 `json:"message"`
 }
 
 // Vehicle defines model for Vehicle.
 type Vehicle struct {
-	Id    *int    `json:"id,omitempty"`
-	Make  *string `json:"make,omitempty"`
-	Model *string `json:"model,omitempty"`
-	Vin   *string `json:"vin,omitempty"`
-	Year  *int    `json:"year,omitempty"`
+	AnnualSafetyExpiresAt interface{} `json:"annual_safety_expires_at"`
+	AppointmentsCount     int         `json:"appointments_count"`
+	BodyStyle             interface{} `json:"body_style"`
+	Color                 interface{} `json:"color"`
+	CreatedAt             string      `json:"created_at"`
+	Customer              struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	Drivetrain      interface{} `json:"drivetrain"`
+	Engine          interface{} `json:"engine"`
+	FleetIdentifier interface{} `json:"fleet_identifier"`
+
+	// Id Example: 13
+	Id                   int         `json:"id"`
+	LastServicedAt       interface{} `json:"last_serviced_at"`
+	LicensePlate         interface{} `json:"license_plate"`
+	LicensePlateCountry  string      `json:"license_plate_country"`
+	LicensePlateState    interface{} `json:"license_plate_state"`
+	LifetimeRevenueCents int         `json:"lifetime_revenue_cents"`
+
+	// Make Example: Honda
+	Make string `json:"make"`
+
+	// Model Example: Civic
+	Model    string      `json:"model"`
+	Notes    interface{} `json:"notes"`
+	Odometer struct {
+		// Reading Example: 182340
+		Reading interface{} `json:"reading"`
+
+		// Unit Example: km
+		Unit string `json:"unit"`
+	} `json:"odometer"`
+	OpenWorkOrdersCount int         `json:"open_work_orders_count"`
+	ProductionDate      interface{} `json:"production_date"`
+	Submodel            interface{} `json:"submodel"`
+	Transmission        interface{} `json:"transmission"`
+	Type                string      `json:"type"`
+	UnitNumber          interface{} `json:"unit_number"`
+	UpdatedAt           string      `json:"updated_at"`
+	Url                 string      `json:"url"`
+	VehicleType         string      `json:"vehicle_type"`
+
+	// Vin Example: 1HGCN2345ABC
+	Vin             interface{} `json:"vin"`
+	WorkOrdersCount int         `json:"work_orders_count"`
+	WorkOrdersUrl   string      `json:"work_orders_url"`
+
+	// Year Example: 2020
+	Year int `json:"year"`
 }
 
 // WorkOrder defines model for WorkOrder.
 type WorkOrder struct {
-	Customer *struct {
-		FullName *string `json:"full_name,omitempty"`
-		Id       *int    `json:"id,omitempty"`
-	} `json:"customer,omitempty"`
-	Id      *int    `json:"id,omitempty"`
-	Status  *string `json:"status,omitempty"`
-	Vehicle *struct {
-		Id    *int    `json:"id,omitempty"`
-		Make  *string `json:"make,omitempty"`
-		Model *string `json:"model,omitempty"`
-	} `json:"vehicle,omitempty"`
-}
+	ActivityUrl          string      `json:"activity_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified      bool        `json:"customer_notified"`
+	CustomerNotifiedReady bool        `json:"customer_notified_ready"`
+	DeclineReason         interface{} `json:"decline_reason"`
+	DeclinedAt            interface{} `json:"declined_at"`
+	DiscountCents         int         `json:"discount_cents"`
+	FeesCents             int         `json:"fees_cents"`
 
-// ListCustomersParams defines parameters for ListCustomers.
-type ListCustomersParams struct {
-	Page *int `form:"page,omitempty" json:"page,omitempty"`
+	// Id Example: 42
+	Id                     int         `json:"id"`
+	InspectionReportsCount int         `json:"inspection_reports_count"`
+	IntakeMethod           string      `json:"intake_method"`
+	LaborCents             int         `json:"labor_cents"`
+	LocationId             int         `json:"location_id"`
+	MessagesUrl            string      `json:"messages_url"`
+	Notes                  interface{} `json:"notes"`
+	OdometerIn             interface{} `json:"odometer_in"`
+	OdometerOut            interface{} `json:"odometer_out"`
+	OdometerUnit           string      `json:"odometer_unit"`
+	Paid                   bool        `json:"paid"`
+	PartsCents             int         `json:"parts_cents"`
+	PaymentsUrl            string      `json:"payments_url"`
+	PurchaseOrderNumber    interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt       interface{} `json:"ready_for_pickup_at"`
+	ReturnMethod           string      `json:"return_method"`
+	ReturnMethodNotes      interface{} `json:"return_method_notes"`
+	SavedForLater          bool        `json:"saved_for_later"`
+	ScheduledFor           interface{} `json:"scheduled_for"`
+	ServiceAdvisorId       int         `json:"service_advisor_id"`
+	ServicesUrl            string      `json:"services_url"`
+
+	// Status Example: in_progress
+	Status            string `json:"status"`
+	SubcontractsCents int    `json:"subcontracts_cents"`
+	TiresCents        int    `json:"tires_cents"`
+	Totals            struct {
+		// Currency Example: CAD
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+
+		// SubtotalCents Example: 12000
+		SubtotalCents int `json:"subtotal_cents"`
+		TaxCents      int `json:"tax_cents"`
+		TotalCents    int `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt    string `json:"vehicle_arrived_at"`
+	VehicleKeysLocation string `json:"vehicle_keys_location"`
+	VehicleLocation     string `json:"vehicle_location"`
+
+	// WorkOrderNumber Example: WO-0042
+	WorkOrderNumber        int `json:"work_order_number"`
+	WorkOrderServicesCount int `json:"work_order_services_count"`
 }
 
 // CreateCustomerJSONBody defines parameters for CreateCustomer.
 type CreateCustomerJSONBody struct {
-	Customer *struct {
-		Email    *string `json:"email,omitempty"`
-		FullName string  `json:"full_name"`
-		Phone    *string `json:"phone,omitempty"`
-	} `json:"customer,omitempty"`
+	Customer struct {
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+	} `json:"customer"`
 }
 
-// ListWorkOrdersParams defines parameters for ListWorkOrders.
-type ListWorkOrdersParams struct {
-	Page *int `form:"page,omitempty" json:"page,omitempty"`
+// UpdateCustomerJSONBody defines parameters for UpdateCustomer.
+type UpdateCustomerJSONBody struct {
+	Customer struct {
+		EmailsAttributes *[]struct {
+			Email string  `json:"email"`
+			Id    *int    `json:"id,omitempty"`
+			Label *string `json:"label,omitempty"`
+		} `json:"emails_attributes,omitempty"`
+		PhonesAttributes *[]struct {
+			UnderscoreDestroy bool `json:"_destroy"`
+			Id                int  `json:"id"`
+		} `json:"phones_attributes,omitempty"`
+	} `json:"customer"`
+}
+
+// CreateVehicleJSONBody defines parameters for CreateVehicle.
+type CreateVehicleJSONBody struct {
+	Vehicle struct {
+		CustomerId int    `json:"customer_id"`
+		Make       string `json:"make"`
+		Model      string `json:"model"`
+		Year       int    `json:"year"`
+	} `json:"vehicle"`
+}
+
+// CheckDuplicateParams defines parameters for CheckDuplicate.
+type CheckDuplicateParams struct {
+	Vin *string `form:"vin,omitempty" json:"vin,omitempty"`
+}
+
+// DecodeVinParams defines parameters for DecodeVin.
+type DecodeVinParams struct {
+	Vin *string `form:"vin,omitempty" json:"vin,omitempty"`
+}
+
+// UpdateVehicleJSONBody defines parameters for UpdateVehicle.
+type UpdateVehicleJSONBody struct {
+	Vehicle struct {
+		Make string `json:"make"`
+	} `json:"vehicle"`
+}
+
+// CreateWorkOrderJSONBody defines parameters for CreateWorkOrder.
+type CreateWorkOrderJSONBody struct {
+	WorkOrder struct {
+		CustomerId int `json:"customer_id"`
+		VehicleId  int `json:"vehicle_id"`
+	} `json:"work_order"`
+}
+
+// UpdateWorkOrderJSONBody defines parameters for UpdateWorkOrder.
+type UpdateWorkOrderJSONBody struct {
+	WorkOrder struct {
+		IntakeMethod string `json:"intake_method"`
+	} `json:"work_order"`
 }
 
 // CreateCustomerJSONRequestBody defines body for CreateCustomer for application/json ContentType.
 type CreateCustomerJSONRequestBody CreateCustomerJSONBody
+
+// UpdateCustomerJSONRequestBody defines body for UpdateCustomer for application/json ContentType.
+type UpdateCustomerJSONRequestBody UpdateCustomerJSONBody
+
+// CreateVehicleJSONRequestBody defines body for CreateVehicle for application/json ContentType.
+type CreateVehicleJSONRequestBody CreateVehicleJSONBody
+
+// UpdateVehicleJSONRequestBody defines body for UpdateVehicle for application/json ContentType.
+type UpdateVehicleJSONRequestBody UpdateVehicleJSONBody
+
+// CreateWorkOrderJSONRequestBody defines body for CreateWorkOrder for application/json ContentType.
+type CreateWorkOrderJSONRequestBody CreateWorkOrderJSONBody
+
+// UpdateWorkOrderJSONRequestBody defines body for UpdateWorkOrder for application/json ContentType.
+type UpdateWorkOrderJSONRequestBody UpdateWorkOrderJSONBody
 
 // RequestEditorFn is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -151,12 +353,19 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 // The interface specification for the client above.
 type ClientInterface interface {
 
+	// ListAccount show
+	//
+	// List all account, paginated via the Link header.
+	//
+	// Corresponds with GET /account (the `ListAccount` operationId).
+	ListAccount(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListCustomers index
 	//
 	// List all customers, paginated via the Link header.
 	//
-	// Corresponds with GET /api/customers (the `ListCustomers` operationId).
-	ListCustomers(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /customers (the `ListCustomers` operationId).
+	ListCustomers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateCustomerWithBody create
 	//
@@ -164,7 +373,7 @@ type ClientInterface interface {
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateCustomer create
@@ -173,45 +382,190 @@ type ClientInterface interface {
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomer(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowCustomer show
 	//
 	// Show a customer by ID.
 	//
-	// Corresponds with GET /api/customers/{id} (the `ShowCustomer` operationId).
+	// Corresponds with GET /customers/{id} (the `ShowCustomer` operationId).
 	ShowCustomer(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerWithBody update
+	//
+	// Update a customer by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+	UpdateCustomerWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomer update
+	//
+	// Update a customer by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+	UpdateCustomer(ctx context.Context, id int, body UpdateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ShowLocation show
+	//
+	// Show a location by ID.
+	//
+	// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
+	ShowLocation(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListVehicles index
+	//
+	// List all vehicles, paginated via the Link header.
+	//
+	// Corresponds with GET /vehicles (the `ListVehicles` operationId).
+	ListVehicles(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateVehicleWithBody create
+	//
+	// Create a vehicle.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+	CreateVehicleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateVehicle create
+	//
+	// Create a vehicle.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+	CreateVehicle(ctx context.Context, body CreateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CheckDuplicate check_duplicate
+	//
+	// Corresponds with GET /vehicles/check_duplicate (the `CheckDuplicate` operationId).
+	CheckDuplicate(ctx context.Context, params *CheckDuplicateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DecodeVin vin_decode
+	//
+	// Corresponds with GET /vehicles/vin_decode (the `DecodeVin` operationId).
+	DecodeVin(ctx context.Context, params *DecodeVinParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteVehicle destroy
+	//
+	// Delete a vehicle by ID.
+	//
+	// Corresponds with DELETE /vehicles/{id} (the `DeleteVehicle` operationId).
+	DeleteVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowVehicle show
 	//
 	// Show a vehicle by ID.
 	//
-	// Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
+	// Corresponds with GET /vehicles/{id} (the `ShowVehicle` operationId).
 	ShowVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateVehicleWithBody update
+	//
+	// Update a vehicle by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+	UpdateVehicleWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateVehicle update
+	//
+	// Update a vehicle by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+	UpdateVehicle(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListWorkOrders index
 	//
 	// List all work orders, paginated via the Link header.
 	//
-	// Corresponds with GET /api/work_orders (the `ListWorkOrders` operationId).
-	ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
+	ListWorkOrders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderWithBody create
+	//
+	// Create a work order.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+	CreateWorkOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrder create
+	//
+	// Create a work order.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+	CreateWorkOrder(ctx context.Context, body CreateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteWorkOrder destroy
+	//
+	// Delete a work order by ID.
+	//
+	// Corresponds with DELETE /work_orders/{id} (the `DeleteWorkOrder` operationId).
+	DeleteWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowWorkOrder show
 	//
 	// Show a work order by ID.
 	//
-	// Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
+	// Corresponds with GET /work_orders/{id} (the `ShowWorkOrder` operationId).
 	ShowWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderWithBody update
+	//
+	// Update a work order by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+	UpdateWorkOrderWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrder update
+	//
+	// Update a work order by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+	UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+// ListAccount show
+//
+// List all account, paginated via the Link header.
+//
+// Corresponds with GET /account (the `ListAccount` operationId).
+func (c *Client) ListAccount(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
 }
 
 // ListCustomers index
 //
 // List all customers, paginated via the Link header.
 //
-// Corresponds with GET /api/customers (the `ListCustomers` operationId).
-func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListCustomersRequest(c.Server, params)
+// Corresponds with GET /customers (the `ListCustomers` operationId).
+func (c *Client) ListCustomers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomersRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +582,7 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams,
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+// Corresponds with POST /customers (the `CreateCustomer` operationId).
 func (c *Client) CreateCustomerWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateCustomerRequestWithBody(c.Server, contentType, body)
 	if err != nil {
@@ -247,7 +601,7 @@ func (c *Client) CreateCustomerWithBody(ctx context.Context, contentType string,
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+// Corresponds with POST /customers (the `CreateCustomer` operationId).
 func (c *Client) CreateCustomer(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateCustomerRequest(c.Server, body)
 	if err != nil {
@@ -264,9 +618,166 @@ func (c *Client) CreateCustomer(ctx context.Context, body CreateCustomerJSONRequ
 //
 // Show a customer by ID.
 //
-// Corresponds with GET /api/customers/{id} (the `ShowCustomer` operationId).
+// Corresponds with GET /customers/{id} (the `ShowCustomer` operationId).
 func (c *Client) ShowCustomer(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewShowCustomerRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerWithBody update
+//
+// Update a customer by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+func (c *Client) UpdateCustomerWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomer update
+//
+// Update a customer by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+func (c *Client) UpdateCustomer(ctx context.Context, id int, body UpdateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ShowLocation show
+//
+// Show a location by ID.
+//
+// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
+func (c *Client) ShowLocation(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowLocationRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListVehicles index
+//
+// List all vehicles, paginated via the Link header.
+//
+// Corresponds with GET /vehicles (the `ListVehicles` operationId).
+func (c *Client) ListVehicles(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListVehiclesRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateVehicleWithBody create
+//
+// Create a vehicle.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+func (c *Client) CreateVehicleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateVehicleRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateVehicle create
+//
+// Create a vehicle.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+func (c *Client) CreateVehicle(ctx context.Context, body CreateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateVehicleRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CheckDuplicate check_duplicate
+//
+// Corresponds with GET /vehicles/check_duplicate (the `CheckDuplicate` operationId).
+func (c *Client) CheckDuplicate(ctx context.Context, params *CheckDuplicateParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCheckDuplicateRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DecodeVin vin_decode
+//
+// Corresponds with GET /vehicles/vin_decode (the `DecodeVin` operationId).
+func (c *Client) DecodeVin(ctx context.Context, params *DecodeVinParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDecodeVinRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteVehicle destroy
+//
+// Delete a vehicle by ID.
+//
+// Corresponds with DELETE /vehicles/{id} (the `DeleteVehicle` operationId).
+func (c *Client) DeleteVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteVehicleRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -281,9 +792,47 @@ func (c *Client) ShowCustomer(ctx context.Context, id int, reqEditors ...Request
 //
 // Show a vehicle by ID.
 //
-// Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
+// Corresponds with GET /vehicles/{id} (the `ShowVehicle` operationId).
 func (c *Client) ShowVehicle(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewShowVehicleRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateVehicleWithBody update
+//
+// Update a vehicle by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+func (c *Client) UpdateVehicleWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateVehicleRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateVehicle update
+//
+// Update a vehicle by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateVehicleRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -298,9 +847,64 @@ func (c *Client) ShowVehicle(ctx context.Context, id int, reqEditors ...RequestE
 //
 // List all work orders, paginated via the Link header.
 //
-// Corresponds with GET /api/work_orders (the `ListWorkOrders` operationId).
-func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListWorkOrdersRequest(c.Server, params)
+// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
+func (c *Client) ListWorkOrders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListWorkOrdersRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderWithBody create
+//
+// Create a work order.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+func (c *Client) CreateWorkOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrder create
+//
+// Create a work order.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+func (c *Client) CreateWorkOrder(ctx context.Context, body CreateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteWorkOrder destroy
+//
+// Delete a work order by ID.
+//
+// Corresponds with DELETE /work_orders/{id} (the `DeleteWorkOrder` operationId).
+func (c *Client) DeleteWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteWorkOrderRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -315,7 +919,7 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 //
 // Show a work order by ID.
 //
-// Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
+// Corresponds with GET /work_orders/{id} (the `ShowWorkOrder` operationId).
 func (c *Client) ShowWorkOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewShowWorkOrderRequest(c.Server, id)
 	if err != nil {
@@ -328,8 +932,46 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int, reqEditors ...Reques
 	return c.Client.Do(req)
 }
 
-// NewListCustomersRequest constructs an http.Request for the ListCustomers method
-func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.Request, error) {
+// UpdateWorkOrderWithBody update
+//
+// Update a work order by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+func (c *Client) UpdateWorkOrderWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrder update
+//
+// Update a work order by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// NewListAccountRequest constructs an http.Request for the ListAccount method
+func NewListAccountRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -337,7 +979,7 @@ func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/customers")
+	operationPath := fmt.Sprintf("/account")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -347,31 +989,31 @@ func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.
 		return nil, err
 	}
 
-	if params != nil {
-		// queryValues collects non-styled parameters (passthrough, JSON)
-		// that are safe to round-trip through url.Values.Encode().
-		queryValues := queryURL.Query()
-		// rawQueryFragments collects pre-encoded query fragments from
-		// styled parameters, preserving literal commas as delimiters
-		// per the OpenAPI spec (e.g. "color=blue,black,brown").
-		var rawQueryFragments []string
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
-		if params.Page != nil {
+	return req, nil
+}
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
+// NewListCustomersRequest constructs an http.Request for the ListCustomers method
+func NewListCustomersRequest(server string) (*http.Request, error) {
+	var err error
 
-		}
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
 
-		if encoded := queryValues.Encode(); encoded != "" {
-			rawQueryFragments = append(rawQueryFragments, encoded)
-		}
-		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	operationPath := fmt.Sprintf("/customers")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -402,7 +1044,7 @@ func NewCreateCustomerRequestWithBody(server string, contentType string, body io
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/customers")
+	operationPath := fmt.Sprintf("/customers")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -438,7 +1080,7 @@ func NewShowCustomerRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/customers/%s", pathParam0)
+	operationPath := fmt.Sprintf("/customers/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -456,8 +1098,19 @@ func NewShowCustomerRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewShowVehicleRequest constructs an http.Request for the ShowVehicle method
-func NewShowVehicleRequest(server string, id int) (*http.Request, error) {
+// NewUpdateCustomerRequest calls the generic UpdateCustomer builder with application/json body
+func NewUpdateCustomerRequest(server string, id int, body UpdateCustomerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateCustomerRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateCustomerRequestWithBody constructs an http.Request for the UpdateCustomer method, with any body, and a specified content type
+func NewUpdateCustomerRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -472,7 +1125,43 @@ func NewShowVehicleRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/vehicles/%s", pathParam0)
+	operationPath := fmt.Sprintf("/customers/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewShowLocationRequest constructs an http.Request for the ShowLocation method
+func NewShowLocationRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -490,8 +1179,8 @@ func NewShowVehicleRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewListWorkOrdersRequest constructs an http.Request for the ListWorkOrders method
-func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*http.Request, error) {
+// NewListVehiclesRequest constructs an http.Request for the ListVehicles method
+func NewListVehiclesRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -499,7 +1188,74 @@ func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*htt
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/work_orders")
+	operationPath := fmt.Sprintf("/vehicles")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateVehicleRequest calls the generic CreateVehicle builder with application/json body
+func NewCreateVehicleRequest(server string, body CreateVehicleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateVehicleRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateVehicleRequestWithBody constructs an http.Request for the CreateVehicle method, with any body, and a specified content type
+func NewCreateVehicleRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCheckDuplicateRequest constructs an http.Request for the CheckDuplicate method
+func NewCheckDuplicateRequest(server string, params *CheckDuplicateParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/check_duplicate")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -518,9 +1274,9 @@ func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*htt
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
 
-		if params.Page != nil {
+		if params.Vin != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "vin", *params.Vin, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -544,6 +1300,276 @@ func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*htt
 	return req, nil
 }
 
+// NewDecodeVinRequest constructs an http.Request for the DecodeVin method
+func NewDecodeVinRequest(server string, params *DecodeVinParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/vin_decode")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Vin != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "vin", *params.Vin, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteVehicleRequest constructs an http.Request for the DeleteVehicle method
+func NewDeleteVehicleRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewShowVehicleRequest constructs an http.Request for the ShowVehicle method
+func NewShowVehicleRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateVehicleRequest calls the generic UpdateVehicle builder with application/json body
+func NewUpdateVehicleRequest(server string, id int, body UpdateVehicleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateVehicleRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateVehicleRequestWithBody constructs an http.Request for the UpdateVehicle method, with any body, and a specified content type
+func NewUpdateVehicleRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListWorkOrdersRequest constructs an http.Request for the ListWorkOrders method
+func NewListWorkOrdersRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateWorkOrderRequest calls the generic CreateWorkOrder builder with application/json body
+func NewCreateWorkOrderRequest(server string, body CreateWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrderRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrderRequestWithBody constructs an http.Request for the CreateWorkOrder method, with any body, and a specified content type
+func NewCreateWorkOrderRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteWorkOrderRequest constructs an http.Request for the DeleteWorkOrder method
+func NewDeleteWorkOrderRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewShowWorkOrderRequest constructs an http.Request for the ShowWorkOrder method
 func NewShowWorkOrderRequest(server string, id int) (*http.Request, error) {
 	var err error
@@ -560,7 +1586,7 @@ func NewShowWorkOrderRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/work_orders/%s", pathParam0)
+	operationPath := fmt.Sprintf("/work_orders/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -574,6 +1600,53 @@ func NewShowWorkOrderRequest(server string, id int) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewUpdateWorkOrderRequest calls the generic UpdateWorkOrder builder with application/json body
+func NewUpdateWorkOrderRequest(server string, id int, body UpdateWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrderRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrderRequestWithBody constructs an http.Request for the UpdateWorkOrder method, with any body, and a specified content type
+func NewUpdateWorkOrderRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -622,14 +1695,23 @@ func WithBaseURL(baseURL string) ClientOption {
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
 
+	// ListAccountWithResponse show
+	//
+	// List all account, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account (the `ListAccount` operationId).
+	ListAccountWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountResponse, error)
+
 	// ListCustomersWithResponse index
 	//
 	// List all customers, paginated via the Link header.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /api/customers (the `ListCustomers` operationId).
-	ListCustomersWithResponse(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error)
+	// Corresponds with GET /customers (the `ListCustomers` operationId).
+	ListCustomersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error)
 
 	// CreateCustomerWithBodyWithResponse create
 	//
@@ -637,7 +1719,7 @@ type ClientWithResponsesInterface interface {
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerResponse, error)
 
 	// CreateCustomerWithResponse create
@@ -646,7 +1728,7 @@ type ClientWithResponsesInterface interface {
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomerWithResponse(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerResponse, error)
 
 	// ShowCustomerWithResponse show
@@ -655,8 +1737,85 @@ type ClientWithResponsesInterface interface {
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /api/customers/{id} (the `ShowCustomer` operationId).
+	// Corresponds with GET /customers/{id} (the `ShowCustomer` operationId).
 	ShowCustomerWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCustomerResponse, error)
+
+	// UpdateCustomerWithBodyWithResponse update
+	//
+	// Update a customer by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+	UpdateCustomerWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerResponse, error)
+
+	// UpdateCustomerWithResponse update
+	//
+	// Update a customer by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+	UpdateCustomerWithResponse(ctx context.Context, id int, body UpdateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerResponse, error)
+
+	// ShowLocationWithResponse show
+	//
+	// Show a location by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
+	ShowLocationWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*ShowLocationResponse, error)
+
+	// ListVehiclesWithResponse index
+	//
+	// List all vehicles, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /vehicles (the `ListVehicles` operationId).
+	ListVehiclesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error)
+
+	// CreateVehicleWithBodyWithResponse create
+	//
+	// Create a vehicle.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+	CreateVehicleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateVehicleResponse, error)
+
+	// CreateVehicleWithResponse create
+	//
+	// Create a vehicle.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+	CreateVehicleWithResponse(ctx context.Context, body CreateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateVehicleResponse, error)
+
+	// CheckDuplicateWithResponse check_duplicate
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /vehicles/check_duplicate (the `CheckDuplicate` operationId).
+	CheckDuplicateWithResponse(ctx context.Context, params *CheckDuplicateParams, reqEditors ...RequestEditorFn) (*CheckDuplicateResponse, error)
+
+	// DecodeVinWithResponse vin_decode
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /vehicles/vin_decode (the `DecodeVin` operationId).
+	DecodeVinWithResponse(ctx context.Context, params *DecodeVinParams, reqEditors ...RequestEditorFn) (*DecodeVinResponse, error)
+
+	// DeleteVehicleWithResponse destroy
+	//
+	// Delete a vehicle by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /vehicles/{id} (the `DeleteVehicle` operationId).
+	DeleteVehicleWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteVehicleResponse, error)
 
 	// ShowVehicleWithResponse show
 	//
@@ -664,8 +1823,26 @@ type ClientWithResponsesInterface interface {
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
+	// Corresponds with GET /vehicles/{id} (the `ShowVehicle` operationId).
 	ShowVehicleWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowVehicleResponse, error)
+
+	// UpdateVehicleWithBodyWithResponse update
+	//
+	// Update a vehicle by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+	UpdateVehicleWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateVehicleResponse, error)
+
+	// UpdateVehicleWithResponse update
+	//
+	// Update a vehicle by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+	UpdateVehicleWithResponse(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateVehicleResponse, error)
 
 	// ListWorkOrdersWithResponse index
 	//
@@ -673,8 +1850,35 @@ type ClientWithResponsesInterface interface {
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /api/work_orders (the `ListWorkOrders` operationId).
-	ListWorkOrdersWithResponse(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error)
+	// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
+	ListWorkOrdersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error)
+
+	// CreateWorkOrderWithBodyWithResponse create
+	//
+	// Create a work order.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+	CreateWorkOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderResponse, error)
+
+	// CreateWorkOrderWithResponse create
+	//
+	// Create a work order.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+	CreateWorkOrderWithResponse(ctx context.Context, body CreateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderResponse, error)
+
+	// DeleteWorkOrderWithResponse destroy
+	//
+	// Delete a work order by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /work_orders/{id} (the `DeleteWorkOrder` operationId).
+	DeleteWorkOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrderResponse, error)
 
 	// ShowWorkOrderWithResponse show
 	//
@@ -682,31 +1886,121 @@ type ClientWithResponsesInterface interface {
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
+	// Corresponds with GET /work_orders/{id} (the `ShowWorkOrder` operationId).
 	ShowWorkOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowWorkOrderResponse, error)
+
+	// UpdateWorkOrderWithBodyWithResponse update
+	//
+	// Update a work order by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+	UpdateWorkOrderWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error)
+
+	// UpdateWorkOrderWithResponse update
+	//
+	// Update a work order by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+	UpdateWorkOrderWithResponse(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error)
 }
 
-// ListCustomersResponse200Headers the declared response headers of an HTTP 200 response for ListCustomers
-type ListCustomersResponse200Headers struct {
-	Link *string
+type ListAccountResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Id        int `json:"id"`
+		Locations []struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"locations"`
+		Name string `json:"name"`
+		Slug string `json:"slug"`
+		Url  string `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountResponse) GetJSON200() *struct {
+	Id        int `json:"id"`
+	Locations []struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"locations"`
+	Name string `json:"name"`
+	Slug string `json:"slug"`
+	Url  string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
 }
 
 type ListCustomersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Data *[]Customer `json:"data,omitempty"`
+	JSON200 *[]Customer
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *struct {
+		Error Error `json:"error"`
 	}
-	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *ListCustomersResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListCustomersResponse) GetJSON200() *struct {
-	Data *[]Customer `json:"data,omitempty"`
-} {
+func (r ListCustomersResponse) GetJSON200() *[]Customer {
 	return r.JSON200
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r ListCustomersResponse) GetJSON401() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON401
 }
 
 // GetBody returns the raw response body bytes
@@ -742,16 +2036,23 @@ type CreateCustomerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		Data *Customer `json:"data,omitempty"`
+	JSON201 *Customer
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
 	}
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateCustomerResponse) GetJSON201() *struct {
-	Data *Customer `json:"data,omitempty"`
-} {
+func (r CreateCustomerResponse) GetJSON201() *Customer {
 	return r.JSON201
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateCustomerResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
 }
 
 // GetBody returns the raw response body bytes
@@ -787,27 +2088,12 @@ type ShowCustomerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Data *Customer `json:"data,omitempty"`
-	}
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *struct {
-		Error *Error `json:"error,omitempty"`
-	}
+	JSON200 *Customer
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ShowCustomerResponse) GetJSON200() *struct {
-	Data *Customer `json:"data,omitempty"`
-} {
+func (r ShowCustomerResponse) GetJSON200() *Customer {
 	return r.JSON200
-}
-
-// GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r ShowCustomerResponse) GetJSON404() *struct {
-	Error *Error `json:"error,omitempty"`
-} {
-	return r.JSON404
 }
 
 // GetBody returns the raw response body bytes
@@ -839,31 +2125,384 @@ func (r ShowCustomerResponse) ContentType() string {
 	return ""
 }
 
-type ShowVehicleResponse struct {
+type UpdateCustomerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Customer
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateCustomerResponse) GetJSON200() *Customer {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateCustomerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateCustomerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateCustomerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateCustomerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowLocationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Data *Vehicle `json:"data,omitempty"`
+		Currency string `json:"currency"`
+		Dock     []struct {
+			Enabled bool    `json:"enabled"`
+			Name    string  `json:"name"`
+			Url     *string `json:"url"`
+		} `json:"dock"`
+		Id           int    `json:"id"`
+		LocationType string `json:"location_type"`
+		Name         string `json:"name"`
+		Url          string `json:"url"`
 	}
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *struct {
-		Error *Error `json:"error,omitempty"`
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ShowVehicleResponse) GetJSON200() *struct {
-	Data *Vehicle `json:"data,omitempty"`
+func (r ShowLocationResponse) GetJSON200() *struct {
+	Currency string `json:"currency"`
+	Dock     []struct {
+		Enabled bool    `json:"enabled"`
+		Name    string  `json:"name"`
+		Url     *string `json:"url"`
+	} `json:"dock"`
+	Id           int    `json:"id"`
+	LocationType string `json:"location_type"`
+	Name         string `json:"name"`
+	Url          string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ShowLocationResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ShowLocationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ShowLocationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ShowLocationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ShowLocationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListVehiclesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]Vehicle
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListVehiclesResponse) GetJSON200() *[]Vehicle {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListVehiclesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListVehiclesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListVehiclesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListVehiclesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Vehicle
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateVehicleResponse) GetJSON201() *Vehicle {
+	return r.JSON201
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateVehicleResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateVehicleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateVehicleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateVehicleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CheckDuplicateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Matches []struct {
+			DisplayName string   `json:"display_name"`
+			Id          int      `json:"id"`
+			Reasons     []string `json:"reasons"`
+			Url         string   `json:"url"`
+		} `json:"matches"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CheckDuplicateResponse) GetJSON200() *struct {
+	Matches []struct {
+		DisplayName string   `json:"display_name"`
+		Id          int      `json:"id"`
+		Reasons     []string `json:"reasons"`
+		Url         string   `json:"url"`
+	} `json:"matches"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CheckDuplicateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CheckDuplicateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CheckDuplicateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CheckDuplicateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DecodeVinResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Vin   string `json:"vin"`
+	}
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DecodeVinResponse) GetJSON200() *struct {
+	Make  string `json:"make"`
+	Model string `json:"model"`
+	Vin   string `json:"vin"`
 } {
 	return r.JSON200
 }
 
 // GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r ShowVehicleResponse) GetJSON404() *struct {
-	Error *Error `json:"error,omitempty"`
+func (r DecodeVinResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
 } {
 	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DecodeVinResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DecodeVinResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DecodeVinResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DecodeVinResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r DeleteVehicleResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteVehicleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteVehicleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteVehicleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Vehicle
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowVehicleResponse) GetJSON200() *Vehicle {
+	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
@@ -895,26 +2534,56 @@ func (r ShowVehicleResponse) ContentType() string {
 	return ""
 }
 
-// ListWorkOrdersResponse200Headers the declared response headers of an HTTP 200 response for ListWorkOrders
-type ListWorkOrdersResponse200Headers struct {
-	Link *string
+type UpdateVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Vehicle
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateVehicleResponse) GetJSON200() *Vehicle {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateVehicleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateVehicleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateVehicleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
 }
 
 type ListWorkOrdersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Data *[]WorkOrder `json:"data,omitempty"`
-	}
-	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *ListWorkOrdersResponse200Headers
+	JSON200 *[]WorkOrder
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersResponse) GetJSON200() *struct {
-	Data *[]WorkOrder `json:"data,omitempty"`
-} {
+func (r ListWorkOrdersResponse) GetJSON200() *[]WorkOrder {
 	return r.JSON200
 }
 
@@ -947,31 +2616,91 @@ func (r ListWorkOrdersResponse) ContentType() string {
 	return ""
 }
 
+type CreateWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *WorkOrder
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrderResponse) GetJSON201() *WorkOrder {
+	return r.JSON201
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowWorkOrderResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Data *WorkOrder `json:"data,omitempty"`
-	}
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *struct {
-		Error *Error `json:"error,omitempty"`
-	}
+	JSON200 *WorkOrder
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ShowWorkOrderResponse) GetJSON200() *struct {
-	Data *WorkOrder `json:"data,omitempty"`
-} {
+func (r ShowWorkOrderResponse) GetJSON200() *WorkOrder {
 	return r.JSON200
-}
-
-// GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r ShowWorkOrderResponse) GetJSON404() *struct {
-	Error *Error `json:"error,omitempty"`
-} {
-	return r.JSON404
 }
 
 // GetBody returns the raw response body bytes
@@ -1003,15 +2732,71 @@ func (r ShowWorkOrderResponse) ContentType() string {
 	return ""
 }
 
+type UpdateWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *WorkOrder
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateWorkOrderResponse) GetJSON200() *WorkOrder {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ListAccountWithResponse show
+//
+// List all account, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account (the `ListAccount` operationId).
+func (c *ClientWithResponses) ListAccountWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountResponse, error) {
+	rsp, err := c.ListAccount(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountResponse(rsp)
+}
+
 // ListCustomersWithResponse index
 //
 // List all customers, paginated via the Link header.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /api/customers (the `ListCustomers` operationId).
-func (c *ClientWithResponses) ListCustomersWithResponse(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error) {
-	rsp, err := c.ListCustomers(ctx, params, reqEditors...)
+// Corresponds with GET /customers (the `ListCustomers` operationId).
+func (c *ClientWithResponses) ListCustomersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error) {
+	rsp, err := c.ListCustomers(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -1024,7 +2809,7 @@ func (c *ClientWithResponses) ListCustomersWithResponse(ctx context.Context, par
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+// Corresponds with POST /customers (the `CreateCustomer` operationId).
 func (c *ClientWithResponses) CreateCustomerWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerResponse, error) {
 	rsp, err := c.CreateCustomerWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
@@ -1039,7 +2824,7 @@ func (c *ClientWithResponses) CreateCustomerWithBodyWithResponse(ctx context.Con
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /api/customers (the `CreateCustomer` operationId).
+// Corresponds with POST /customers (the `CreateCustomer` operationId).
 func (c *ClientWithResponses) CreateCustomerWithResponse(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerResponse, error) {
 	rsp, err := c.CreateCustomer(ctx, body, reqEditors...)
 	if err != nil {
@@ -1054,7 +2839,7 @@ func (c *ClientWithResponses) CreateCustomerWithResponse(ctx context.Context, bo
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /api/customers/{id} (the `ShowCustomer` operationId).
+// Corresponds with GET /customers/{id} (the `ShowCustomer` operationId).
 func (c *ClientWithResponses) ShowCustomerWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCustomerResponse, error) {
 	rsp, err := c.ShowCustomer(ctx, id, reqEditors...)
 	if err != nil {
@@ -1063,13 +2848,144 @@ func (c *ClientWithResponses) ShowCustomerWithResponse(ctx context.Context, id i
 	return ParseShowCustomerResponse(rsp)
 }
 
+// UpdateCustomerWithBodyWithResponse update
+//
+// Update a customer by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+func (c *ClientWithResponses) UpdateCustomerWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerResponse, error) {
+	rsp, err := c.UpdateCustomerWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerResponse(rsp)
+}
+
+// UpdateCustomerWithResponse update
+//
+// Update a customer by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customers/{id} (the `UpdateCustomer` operationId).
+func (c *ClientWithResponses) UpdateCustomerWithResponse(ctx context.Context, id int, body UpdateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerResponse, error) {
+	rsp, err := c.UpdateCustomer(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerResponse(rsp)
+}
+
+// ShowLocationWithResponse show
+//
+// Show a location by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
+func (c *ClientWithResponses) ShowLocationWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*ShowLocationResponse, error) {
+	rsp, err := c.ShowLocation(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseShowLocationResponse(rsp)
+}
+
+// ListVehiclesWithResponse index
+//
+// List all vehicles, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /vehicles (the `ListVehicles` operationId).
+func (c *ClientWithResponses) ListVehiclesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error) {
+	rsp, err := c.ListVehicles(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListVehiclesResponse(rsp)
+}
+
+// CreateVehicleWithBodyWithResponse create
+//
+// Create a vehicle.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+func (c *ClientWithResponses) CreateVehicleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateVehicleResponse, error) {
+	rsp, err := c.CreateVehicleWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateVehicleResponse(rsp)
+}
+
+// CreateVehicleWithResponse create
+//
+// Create a vehicle.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /vehicles (the `CreateVehicle` operationId).
+func (c *ClientWithResponses) CreateVehicleWithResponse(ctx context.Context, body CreateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateVehicleResponse, error) {
+	rsp, err := c.CreateVehicle(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateVehicleResponse(rsp)
+}
+
+// CheckDuplicateWithResponse check_duplicate
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /vehicles/check_duplicate (the `CheckDuplicate` operationId).
+func (c *ClientWithResponses) CheckDuplicateWithResponse(ctx context.Context, params *CheckDuplicateParams, reqEditors ...RequestEditorFn) (*CheckDuplicateResponse, error) {
+	rsp, err := c.CheckDuplicate(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCheckDuplicateResponse(rsp)
+}
+
+// DecodeVinWithResponse vin_decode
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /vehicles/vin_decode (the `DecodeVin` operationId).
+func (c *ClientWithResponses) DecodeVinWithResponse(ctx context.Context, params *DecodeVinParams, reqEditors ...RequestEditorFn) (*DecodeVinResponse, error) {
+	rsp, err := c.DecodeVin(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDecodeVinResponse(rsp)
+}
+
+// DeleteVehicleWithResponse destroy
+//
+// Delete a vehicle by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /vehicles/{id} (the `DeleteVehicle` operationId).
+func (c *ClientWithResponses) DeleteVehicleWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteVehicleResponse, error) {
+	rsp, err := c.DeleteVehicle(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteVehicleResponse(rsp)
+}
+
 // ShowVehicleWithResponse show
 //
 // Show a vehicle by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /api/vehicles/{id} (the `ShowVehicle` operationId).
+// Corresponds with GET /vehicles/{id} (the `ShowVehicle` operationId).
 func (c *ClientWithResponses) ShowVehicleWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowVehicleResponse, error) {
 	rsp, err := c.ShowVehicle(ctx, id, reqEditors...)
 	if err != nil {
@@ -1078,19 +2994,94 @@ func (c *ClientWithResponses) ShowVehicleWithResponse(ctx context.Context, id in
 	return ParseShowVehicleResponse(rsp)
 }
 
+// UpdateVehicleWithBodyWithResponse update
+//
+// Update a vehicle by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+func (c *ClientWithResponses) UpdateVehicleWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateVehicleResponse, error) {
+	rsp, err := c.UpdateVehicleWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateVehicleResponse(rsp)
+}
+
+// UpdateVehicleWithResponse update
+//
+// Update a vehicle by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
+func (c *ClientWithResponses) UpdateVehicleWithResponse(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateVehicleResponse, error) {
+	rsp, err := c.UpdateVehicle(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateVehicleResponse(rsp)
+}
+
 // ListWorkOrdersWithResponse index
 //
 // List all work orders, paginated via the Link header.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /api/work_orders (the `ListWorkOrders` operationId).
-func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error) {
-	rsp, err := c.ListWorkOrders(ctx, params, reqEditors...)
+// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
+func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error) {
+	rsp, err := c.ListWorkOrders(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseListWorkOrdersResponse(rsp)
+}
+
+// CreateWorkOrderWithBodyWithResponse create
+//
+// Create a work order.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+func (c *ClientWithResponses) CreateWorkOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderResponse, error) {
+	rsp, err := c.CreateWorkOrderWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderResponse(rsp)
+}
+
+// CreateWorkOrderWithResponse create
+//
+// Create a work order.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders (the `CreateWorkOrder` operationId).
+func (c *ClientWithResponses) CreateWorkOrderWithResponse(ctx context.Context, body CreateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderResponse, error) {
+	rsp, err := c.CreateWorkOrder(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderResponse(rsp)
+}
+
+// DeleteWorkOrderWithResponse destroy
+//
+// Delete a work order by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /work_orders/{id} (the `DeleteWorkOrder` operationId).
+func (c *ClientWithResponses) DeleteWorkOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrderResponse, error) {
+	rsp, err := c.DeleteWorkOrder(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteWorkOrderResponse(rsp)
 }
 
 // ShowWorkOrderWithResponse show
@@ -1099,13 +3090,88 @@ func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, pa
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /api/work_orders/{id} (the `ShowWorkOrder` operationId).
+// Corresponds with GET /work_orders/{id} (the `ShowWorkOrder` operationId).
 func (c *ClientWithResponses) ShowWorkOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowWorkOrderResponse, error) {
 	rsp, err := c.ShowWorkOrder(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseShowWorkOrderResponse(rsp)
+}
+
+// UpdateWorkOrderWithBodyWithResponse update
+//
+// Update a work order by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error) {
+	rsp, err := c.UpdateWorkOrderWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderResponse(rsp)
+}
+
+// UpdateWorkOrderWithResponse update
+//
+// Update a work order by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderWithResponse(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error) {
+	rsp, err := c.UpdateWorkOrder(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderResponse(rsp)
+}
+
+// ParseListAccountResponse parses an HTTP response from a ListAccountWithResponse call
+func ParseListAccountResponse(rsp *http.Response) (*ListAccountResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Id        int `json:"id"`
+			Locations []struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"locations"`
+			Name string `json:"name"`
+			Slug string `json:"slug"`
+			Url  string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
 }
 
 // ParseListCustomersResponse parses an HTTP response from a ListCustomersWithResponse call
@@ -1123,27 +3189,21 @@ func ParseListCustomersResponse(rsp *http.Response) (*ListCustomersResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *[]Customer `json:"data,omitempty"`
-		}
+		var dest []Customer
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
-	}
-
-	switch {
-	case rsp.StatusCode == 200:
-		var headers ListCustomersResponse200Headers
-		if values := rsp.Header.Values("Link"); len(values) > 0 {
-			var value string
-			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.Link = &value
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest struct {
+			Error Error `json:"error"`
 		}
-		response.Headers200 = &headers
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
 	}
 
 	return response, nil
@@ -1164,13 +3224,20 @@ func ParseCreateCustomerResponse(rsp *http.Response) (*CreateCustomerResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			Data *Customer `json:"data,omitempty"`
-		}
+		var dest Customer
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
 
 	}
 
@@ -1192,8 +3259,202 @@ func ParseShowCustomerResponse(rsp *http.Response) (*ShowCustomerResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Customer
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateCustomerResponse parses an HTTP response from a UpdateCustomerWithResponse call
+func ParseUpdateCustomerResponse(rsp *http.Response) (*UpdateCustomerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateCustomerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Customer
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseShowLocationResponse parses an HTTP response from a ShowLocationWithResponse call
+func ParseShowLocationResponse(rsp *http.Response) (*ShowLocationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ShowLocationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Data *Customer `json:"data,omitempty"`
+			Currency string `json:"currency"`
+			Dock     []struct {
+				Enabled bool    `json:"enabled"`
+				Name    string  `json:"name"`
+				Url     *string `json:"url"`
+			} `json:"dock"`
+			Id           int    `json:"id"`
+			LocationType string `json:"location_type"`
+			Name         string `json:"name"`
+			Url          string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListVehiclesResponse parses an HTTP response from a ListVehiclesWithResponse call
+func ParseListVehiclesResponse(rsp *http.Response) (*ListVehiclesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListVehiclesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Vehicle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateVehicleResponse parses an HTTP response from a CreateVehicleWithResponse call
+func ParseCreateVehicleResponse(rsp *http.Response) (*CreateVehicleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateVehicleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Vehicle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCheckDuplicateResponse parses an HTTP response from a CheckDuplicateWithResponse call
+func ParseCheckDuplicateResponse(rsp *http.Response) (*CheckDuplicateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CheckDuplicateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Matches []struct {
+				DisplayName string   `json:"display_name"`
+				Id          int      `json:"id"`
+				Reasons     []string `json:"reasons"`
+				Url         string   `json:"url"`
+			} `json:"matches"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDecodeVinResponse parses an HTTP response from a DecodeVinWithResponse call
+func ParseDecodeVinResponse(rsp *http.Response) (*DecodeVinResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DecodeVinResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Vin   string `json:"vin"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -1202,12 +3463,43 @@ func ParseShowCustomerResponse(rsp *http.Response) (*ShowCustomerResponse, error
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
 		var dest struct {
-			Error *Error `json:"error,omitempty"`
+			Error Error `json:"error"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteVehicleResponse parses an HTTP response from a DeleteVehicleWithResponse call
+func ParseDeleteVehicleResponse(rsp *http.Response) (*DeleteVehicleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteVehicleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
 
 	}
 
@@ -1229,22 +3521,37 @@ func ParseShowVehicleResponse(rsp *http.Response) (*ShowVehicleResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *Vehicle `json:"data,omitempty"`
-		}
+		var dest Vehicle
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest struct {
-			Error *Error `json:"error,omitempty"`
-		}
+	}
+
+	return response, nil
+}
+
+// ParseUpdateVehicleResponse parses an HTTP response from a UpdateVehicleWithResponse call
+func ParseUpdateVehicleResponse(rsp *http.Response) (*UpdateVehicleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateVehicleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Vehicle
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON404 = &dest
+		response.JSON200 = &dest
 
 	}
 
@@ -1266,9 +3573,7 @@ func ParseListWorkOrdersResponse(rsp *http.Response) (*ListWorkOrdersResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *[]WorkOrder `json:"data,omitempty"`
-		}
+		var dest []WorkOrder
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -1276,17 +3581,46 @@ func ParseListWorkOrdersResponse(rsp *http.Response) (*ListWorkOrdersResponse, e
 
 	}
 
+	return response, nil
+}
+
+// ParseCreateWorkOrderResponse parses an HTTP response from a CreateWorkOrderWithResponse call
+func ParseCreateWorkOrderResponse(rsp *http.Response) (*CreateWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
 	switch {
-	case rsp.StatusCode == 200:
-		var headers ListWorkOrdersResponse200Headers
-		if values := rsp.Header.Values("Link"); len(values) > 0 {
-			var value string
-			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.Link = &value
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
-		response.Headers200 = &headers
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteWorkOrderResponse parses an HTTP response from a DeleteWorkOrderWithResponse call
+func ParseDeleteWorkOrderResponse(rsp *http.Response) (*DeleteWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
 	}
 
 	return response, nil
@@ -1307,22 +3641,37 @@ func ParseShowWorkOrderResponse(rsp *http.Response) (*ShowWorkOrderResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *WorkOrder `json:"data,omitempty"`
-		}
+		var dest WorkOrder
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
 
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest struct {
-			Error *Error `json:"error,omitempty"`
-		}
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrderResponse parses an HTTP response from a UpdateWorkOrderWithResponse call
+func ParseUpdateWorkOrderResponse(rsp *http.Response) (*UpdateWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WorkOrder
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON404 = &dest
+		response.JSON200 = &dest
 
 	}
 

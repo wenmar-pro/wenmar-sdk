@@ -4,8 +4,6 @@ import (
 	"context"
 	"net/http"
 	"regexp"
-	"strconv"
-	"strings"
 
 	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
@@ -25,25 +23,9 @@ func parseLinkHeader(header, rel string) string {
 	return ""
 }
 
-func extractPageFromURL(url string) *int {
-	idx := strings.Index(url, "page=")
-	if idx == -1 {
-		return nil
-	}
-	pageStr := url[idx+5:]
-	if ampIdx := strings.Index(pageStr, "&"); ampIdx != -1 {
-		pageStr = pageStr[:ampIdx]
-	}
-	page, err := strconv.Atoi(pageStr)
-	if err != nil {
-		return nil
-	}
-	return &page
-}
-
 type Paginator struct {
 	nextURL string
-	fetch   func(ctx context.Context, page *int) (any, error)
+	fetch   func(ctx context.Context) (any, error)
 }
 
 func (p *Paginator) HasNext() bool {
@@ -54,8 +36,7 @@ func (p *Paginator) NextPage(ctx context.Context) (any, error) {
 	if !p.HasNext() {
 		return nil, nil
 	}
-	page := extractPageFromURL(p.nextURL)
-	resp, err := p.fetch(ctx, page)
+	resp, err := p.fetch(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -73,14 +54,14 @@ func (p *Paginator) NextPage(ctx context.Context) (any, error) {
 
 func newPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
 	next := parseLinkHeader(resp.Header.Get("Link"), "next")
-	return &Paginator{nextURL: next, fetch: func(ctx context.Context, page *int) (any, error) {
-		return client.ListCustomers(ctx, page)
+	return &Paginator{nextURL: next, fetch: func(ctx context.Context) (any, error) {
+		return client.ListCustomers(ctx)
 	}}
 }
 
 func newWorkOrdersPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
 	next := parseLinkHeader(resp.Header.Get("Link"), "next")
-	return &Paginator{nextURL: next, fetch: func(ctx context.Context, page *int) (any, error) {
-		return client.ListWorkOrders(ctx, page)
+	return &Paginator{nextURL: next, fetch: func(ctx context.Context) (any, error) {
+		return client.ListWorkOrders(ctx)
 	}}
 }

@@ -21,7 +21,7 @@ func NewClient(baseURL, token string) (*Client, error) {
 	}
 
 	httpClient := &http.Client{
-		Transport: newRetryTransport(),
+		Transport: newCachingTransport(newRetryTransport()),
 	}
 
 	gen, err := generated.NewClientWithResponses(baseURL,
@@ -43,12 +43,8 @@ func NewClient(baseURL, token string) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) ListCustomers(ctx context.Context, page *int) (*generated.ListCustomersResponse, error) {
-	params := &generated.ListCustomersParams{}
-	if page != nil {
-		params.Page = page
-	}
-	resp, err := c.gen.ListCustomersWithResponse(ctx, params)
+func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersResponse, error) {
+	resp, err := c.gen.ListCustomersWithResponse(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -58,8 +54,8 @@ func (c *Client) ListCustomers(ctx context.Context, page *int) (*generated.ListC
 	return resp, nil
 }
 
-func (c *Client) ListCustomersWithPagination(ctx context.Context, page *int) (*generated.ListCustomersResponse, *Paginator, error) {
-	resp, err := c.ListCustomers(ctx, page)
+func (c *Client) ListCustomersWithPagination(ctx context.Context) (*generated.ListCustomersResponse, *Paginator, error) {
+	resp, err := c.ListCustomers(ctx)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,6 +85,28 @@ func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustom
 	return resp, nil
 }
 
+func (c *Client) UpdateCustomer(ctx context.Context, id int, body generated.UpdateCustomerJSONRequestBody) (*generated.UpdateCustomerResponse, error) {
+	resp, err := c.gen.UpdateCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesResponse, error) {
+	resp, err := c.gen.ListVehiclesWithResponse(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
 func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicleResponse, error) {
 	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
 	if err != nil {
@@ -100,12 +118,8 @@ func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicl
 	return resp, nil
 }
 
-func (c *Client) ListWorkOrders(ctx context.Context, page *int) (*generated.ListWorkOrdersResponse, error) {
-	params := &generated.ListWorkOrdersParams{}
-	if page != nil {
-		params.Page = page
-	}
-	resp, err := c.gen.ListWorkOrdersWithResponse(ctx, params)
+func (c *Client) CreateVehicle(ctx context.Context, body generated.CreateVehicleJSONRequestBody) (*generated.CreateVehicleResponse, error) {
+	resp, err := c.gen.CreateVehicleWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
 	}
@@ -115,8 +129,65 @@ func (c *Client) ListWorkOrders(ctx context.Context, page *int) (*generated.List
 	return resp, nil
 }
 
-func (c *Client) ListWorkOrdersWithPagination(ctx context.Context, page *int) (*generated.ListWorkOrdersResponse, *Paginator, error) {
-	resp, err := c.ListWorkOrders(ctx, page)
+func (c *Client) UpdateVehicle(ctx context.Context, id int, body generated.UpdateVehicleJSONRequestBody) (*generated.UpdateVehicleResponse, error) {
+	resp, err := c.gen.UpdateVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) DeleteVehicle(ctx context.Context, id int) (*generated.DeleteVehicleResponse, error) {
+	resp, err := c.gen.DeleteVehicleWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) DecodeVin(ctx context.Context, vin string) (*generated.DecodeVinResponse, error) {
+	params := &generated.DecodeVinParams{Vin: &vin}
+	resp, err := c.gen.DecodeVinWithResponse(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) CheckDuplicate(ctx context.Context, vin string) (*generated.CheckDuplicateResponse, error) {
+	params := &generated.CheckDuplicateParams{Vin: &vin}
+	resp, err := c.gen.CheckDuplicateWithResponse(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) ListWorkOrders(ctx context.Context) (*generated.ListWorkOrdersResponse, error) {
+	resp, err := c.gen.ListWorkOrdersWithResponse(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*generated.ListWorkOrdersResponse, *Paginator, error) {
+	resp, err := c.ListWorkOrders(ctx)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -11,13 +11,31 @@
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "closed_at": null,
   "location_id": 1,
-  "service_advisor_id": null,
+  "service_advisor_id": 5,
   "assigned_technician_id": null,
   "work_order_services_count": 2,
   "inspection_reports_count": 0,
-  "customer": { "id": 1, "full_name": "Jane Doe", "url": "https://app.wenmarpro.com/customers/1.json" },
-  "vehicle": { "id": 1, "make": "Toyota", "model": "Camry", "year": 2020, "vin": "ABC123", "url": "https://app.wenmarpro.com/vehicles/1.json" },
-  "totals": { "subtotal_cents": 5000, "tax_cents": 650, "total_cents": 5650, "paid_cents": 0, "remaining_cents": 5650, "currency": "CAD" },
+  "customer": {
+    "id": 1,
+    "full_name": "Jane Doe",
+    "url": "https://app.wenmarpro.com/customers/1.json"
+  },
+  "vehicle": {
+    "id": 1,
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2020,
+    "vin": "ABC123",
+    "url": "https://app.wenmarpro.com/vehicles/1.json"
+  },
+  "totals": {
+    "subtotal_cents": 5000,
+    "tax_cents": 650,
+    "total_cents": 5650,
+    "paid_cents": 0,
+    "remaining_cents": 5650,
+    "currency": "CAD"
+  },
   "url": "https://app.wenmarpro.com/work_orders/1.json",
   "services_url": "https://app.wenmarpro.com/work_orders/1/services.json",
   "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",

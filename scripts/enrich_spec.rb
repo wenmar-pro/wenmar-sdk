@@ -173,15 +173,27 @@ module EnrichSpec
           schema = content["application/json"]["schema"]
           next unless schema
 
-          if schema["type"] == "array" && schema["items"] && schema["items"]["properties"]
-            unless spec["components"]["schemas"][schema_name]
-              spec["components"]["schemas"][schema_name] = schema["items"].dup
-            end
-            schema["items"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+          # Candidate component: the item schema of a bare array, or the bare
+          # object schema itself. Prefer the RICHEST representation (show
+          # responses carry metrics that list partials omit) so generated SDK
+          # types expose the full attribute surface.
+          candidate = if schema["type"] == "array" && schema["items"] && schema["items"]["properties"]
+            schema["items"].dup
           elsif schema["properties"]
-            unless spec["components"]["schemas"][schema_name]
-              spec["components"]["schemas"][schema_name] = schema.dup
-            end
+            schema.dup
+          else
+            nil
+          end
+          next unless candidate
+
+          existing = spec["components"]["schemas"][schema_name]
+          if existing.nil? || candidate["properties"].keys.length > existing["properties"].keys.length
+            spec["components"]["schemas"][schema_name] = candidate
+          end
+
+          if schema["type"] == "array"
+            schema["items"] = { "$ref" => "#/components/schemas/#{schema_name}" }
+          else
             content["application/json"]["schema"] = { "$ref" => "#/components/schemas/#{schema_name}" }
           end
         end
