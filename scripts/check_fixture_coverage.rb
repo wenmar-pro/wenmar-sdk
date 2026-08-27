@@ -84,9 +84,10 @@ def validate_schema(instance, schema, path = "$")
       fail!("expected object at #{path}, got #{instance.class}")
     end
     (schema["required"] || []).each do |key|
-      unless instance.key?(key) && !instance[key].nil?
-        fail!("missing required field '#{key}' at #{path}")
-      end
+      prop_schema = (schema["properties"] || {})[key] || {}
+      present = instance.key?(key) && !instance[key].nil?
+      present ||= instance.key?(key) && prop_schema["nullable"]
+      fail!("missing required field '#{key}' at #{path}") unless present
     end
     (schema["properties"] || {}).each do |key, prop_schema|
       next unless instance.key?(key)

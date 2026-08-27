@@ -1,14 +1,48 @@
 [
   {
+    "type": "Customer",
     "id": 1,
     "full_name": "Jane Doe",
-    "email": "jane@example.com",
-    "phone": "+15551234567"
+    "company_name": null,
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "fleet_identifier": null,
+    "marketing_opt_in": false,
+    "tax_exempt": false,
+    "vehicles_count": 2,
+    "emails": [
+      { "id": 1, "address": "jane@example.com", "label": "personal", "primary": true }
+    ],
+    "phones": [
+      { "id": 1, "number": "+15551234567", "label": "mobile", "primary": true }
+    ],
+    "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
+    "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+    "created_at": "2026-08-27T12:00:00.000-04:00",
+    "updated_at": "2026-08-27T12:00:00.000-04:00",
+    "url": "https://app.wenmarpro.com/customers/1.json"
   },
   {
+    "type": "Customer",
     "id": 2,
     "full_name": "John Smith",
-    "email": "john@example.com",
-    "phone": "+15559876543"
+    "company_name": null,
+    "first_name": "John",
+    "last_name": "Smith",
+    "fleet_identifier": null,
+    "marketing_opt_in": false,
+    "tax_exempt": false,
+    "vehicles_count": 1,
+    "emails": [
+      { "id": 2, "address": "john@example.com", "label": "personal", "primary": true }
+    ],
+    "phones": [
+      { "id": 2, "number": "+15559876543", "label": "mobile", "primary": true }
+    ],
+    "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=2",
+    "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=2",
+    "created_at": "2026-08-27T12:00:00.000-04:00",
+    "updated_at": "2026-08-27T12:00:00.000-04:00",
+    "url": "https://app.wenmarpro.com/customers/2.json"
   }
 ]
