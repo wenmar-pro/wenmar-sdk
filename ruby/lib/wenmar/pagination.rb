@@ -1,5 +1,3 @@
-require "uri"
-
 module Wenmar
   class Paginator
     attr_reader :next_url, :client
@@ -16,11 +14,10 @@ module Wenmar
     def next_page
       return nil unless has_next?
 
-      page = extract_page_param(@next_url)
-      if @next_url.include?("/api/customers")
-        @client.list_customers(page: page)
-      elsif @next_url.include?("/api/work_orders")
-        @client.list_work_orders(page: page)
+      if @next_url.include?("/customers")
+        @client.list_customers
+      elsif @next_url.include?("/work_orders")
+        @client.list_work_orders
       end
     end
 
@@ -38,14 +35,6 @@ module Wenmar
       link_header = response.headers["Link"]
       next_url = parse_link_header(link_header, "next")
       new(next_url: next_url, client: client)
-    end
-
-    private
-
-    def extract_page_param(url)
-      uri = URI(url)
-      params = URI.decode_www_form(uri.query.to_s).to_h
-      params["page"]&.to_i
     end
   end
 end
