@@ -6,5 +6,6 @@
   "dock": [
     { "name": "work_orders", "enabled": true, "url": "https://app.wenmarpro.com/work_orders.json" }
   ],
-  "url": "https://app.wenmarpro.com/locations/1.json"
+  "url": "https://app.wenmarpro.com/locations/1.json",
+  "app_url": "https://app.wenmarpro.com/locations/1"
 }

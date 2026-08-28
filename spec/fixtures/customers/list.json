@@ -10,17 +10,22 @@
     "marketing_opt_in": false,
     "tax_exempt": false,
     "vehicles_count": 2,
+    "emails_count": 1,
+    "phones_count": 1,
     "emails": [
       { "id": 1, "address": "jane@example.com", "label": "personal", "primary": true }
     ],
     "phones": [
       { "id": 1, "number": "+15551234567", "label": "mobile", "primary": true }
     ],
+    "addresses": [],
     "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
     "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/customers/1.json",
+    "app_url": "https://app.wenmarpro.com/customers/1",
+    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
     "outstanding_balance_cents": 0,
     "total_revenue_cents": 50000,
     "store_credit_cents": 0,
@@ -39,17 +44,22 @@
     "marketing_opt_in": false,
     "tax_exempt": false,
     "vehicles_count": 1,
+    "emails_count": 1,
+    "phones_count": 1,
     "emails": [
       { "id": 2, "address": "john@example.com", "label": "personal", "primary": true }
     ],
     "phones": [
       { "id": 2, "number": "+15559876543", "label": "mobile", "primary": true }
     ],
+    "addresses": [],
     "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=2",
     "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=2",
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/customers/2.json",
+    "app_url": "https://app.wenmarpro.com/customers/2",
+    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
     "outstanding_balance_cents": 0,
     "total_revenue_cents": 0,
     "store_credit_cents": 0,

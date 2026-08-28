@@ -38,6 +38,8 @@
       "currency": "CAD"
     },
     "url": "https://app.wenmarpro.com/work_orders/1.json",
+    "app_url": "https://app.wenmarpro.com/work_orders/1",
+    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
     "services_url": "https://app.wenmarpro.com/work_orders/1/services.json",
     "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",
     "messages_url": "https://app.wenmarpro.com/work_orders/1/messages.json",
@@ -69,7 +71,9 @@
     "return_method": "customer_pickup",
     "return_method_notes": null,
     "vehicle_keys_location": "front_desk",
-    "vehicle_location": "bay_2"
+    "vehicle_location": "bay_2",
+    "services": [],
+    "payments": []
   },
   {
     "type": "WorkOrder",
@@ -110,6 +114,8 @@
       "currency": "CAD"
     },
     "url": "https://app.wenmarpro.com/work_orders/2.json",
+    "app_url": "https://app.wenmarpro.com/work_orders/2",
+    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
     "services_url": "https://app.wenmarpro.com/work_orders/2/services.json",
     "payments_url": "https://app.wenmarpro.com/work_orders/2/payments.json",
     "messages_url": "https://app.wenmarpro.com/work_orders/2/messages.json",
@@ -141,6 +147,8 @@
     "return_method": "customer_pickup",
     "return_method_notes": null,
     "vehicle_keys_location": "front_desk",
-    "vehicle_location": "bay_2"
+    "vehicle_location": "bay_2",
+    "services": [],
+    "payments": []
   }
 ]

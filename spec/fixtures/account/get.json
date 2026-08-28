@@ -3,7 +3,8 @@
   "name": "Main Shop",
   "slug": "main-shop",
   "locations": [
-    { "id": 1, "name": "Bay 1", "url": "https://app.wenmarpro.com/locations/1.json" }
+    { "id": 1, "name": "Bay 1", "url": "https://app.wenmarpro.com/locations/1.json", "app_url": "https://app.wenmarpro.com/locations/1" }
   ],
-  "url": "https://app.wenmarpro.com/account.json"
+  "url": "https://app.wenmarpro.com/account.json",
+  "app_url": "https://app.wenmarpro.com/account"
 }
