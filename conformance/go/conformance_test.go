@@ -36,11 +36,12 @@ type MockResponse struct {
 }
 
 type Expectation struct {
-	RequestCount  int            `json:"requestCount"`
-	NoError       bool           `json:"noError"`
-	ErrorCode     string         `json:"errorCode"`
-	ErrorStatus   int            `json:"errorStatus"`
-	ResponseBody  *BodyAssertion `json:"responseBody"`
+	RequestCount          int            `json:"requestCount"`
+	NoError               bool           `json:"noError"`
+	ErrorCode             string         `json:"errorCode"`
+	ErrorStatus           int            `json:"errorStatus"`
+	AssertNoOutboundRequest bool          `json:"assertNoOutboundRequest"`
+	ResponseBody          *BodyAssertion `json:"responseBody"`
 }
 
 type BodyAssertion struct {
@@ -120,6 +121,12 @@ func runCase(t *testing.T, tc TestCase) {
 
 	if tc.Expect.RequestCount != 0 && requestCount != tc.Expect.RequestCount {
 		t.Errorf("expected %d requests, got %d", tc.Expect.RequestCount, requestCount)
+	}
+
+	if tc.Expect.AssertNoOutboundRequest {
+		if requestCount > len(tc.MockResponses) {
+			t.Errorf("expected no outbound request beyond mocks, got %d calls", requestCount)
+		}
 	}
 }
 

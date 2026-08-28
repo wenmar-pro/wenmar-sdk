@@ -54,5 +54,35 @@
       "errorCode": "not_found",
       "errorStatus": 404
     }
+  },
+  {
+    "name": "retry_post_on_500_not_retried",
+    "operation": "create_customer",
+    "method": "POST",
+    "path": "/customers",
+    "requestBody": { "customer": { "first_name": "Test", "last_name": "User" } },
+    "mockResponses": [
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "internal_error",
+      "errorStatus": 500
+    }
+  },
+  {
+    "name": "retry_post_on_429_retried",
+    "operation": "create_customer",
+    "method": "POST",
+    "path": "/customers",
+    "requestBody": { "customer": { "first_name": "Test", "last_name": "User" } },
+    "mockResponses": [
+      { "status": 429, "headers": { "Retry-After": "0" }, "body": { "error": { "code": "rate_limited", "message": "slow", "details": {} } } },
+      { "status": 201, "body": { "id": 1 } }
+    ],
+    "expect": {
+      "requestCount": 2,
+      "noError": true
+    }
   }
 ]

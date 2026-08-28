@@ -42,5 +42,23 @@
       "noError": true,
       "responseBody": { "path": "0.id", "equals": 2 }
     }
+  },
+  {
+    "name": "paginate_rejects_cross_origin",
+    "operation": "list_customers_paginated",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Link": "<https://attacker.example.com/customers?page=2>; rel=\"next\"" },
+        "body": [ { "id": 1 } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "assertNoOutboundRequest": true,
+      "errorCode": "invalid_pagination"
+    }
   }
 ]

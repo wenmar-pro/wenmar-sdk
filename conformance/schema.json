@@ -51,6 +51,7 @@
         "noError": { "type": "boolean" },
         "errorCode": { "type": "string" },
         "errorStatus": { "type": "integer" },
+        "assertNoOutboundRequest": { "type": "boolean" },
         "responseBody": {
           "type": "object",
           "additionalProperties": false,

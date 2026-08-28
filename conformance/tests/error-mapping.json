@@ -45,5 +45,19 @@
       "errorCode": "validation_failed",
       "errorStatus": 422
     }
+  },
+  {
+    "name": "507_limit_exceeded",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      { "status": 507, "body": { "error": { "code": "limit_exceeded", "message": "Account limit reached", "details": {} } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "errorCode": "limit_exceeded",
+      "errorStatus": 507
+    }
   }
 ]

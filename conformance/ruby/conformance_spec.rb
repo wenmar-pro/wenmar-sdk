@@ -46,6 +46,13 @@ module Conformance
       end
 
       assert_request_count(tc) if tc.dig("expect", "requestCount")
+      assert_no_outbound_request(tc) if tc.dig("expect", "assertNoOutboundRequest")
+    end
+
+    def assert_no_outbound_request(tc)
+      expected = tc["mockResponses"].length
+      actual = WebMock::RequestRegistry.instance.requested_signatures.hash.values.sum
+      assert_equal expected, actual, "[#{tc["name"]}] expected no outbound request beyond mocks (got #{actual} calls)"
     end
 
     def execute_operation(client, tc)
