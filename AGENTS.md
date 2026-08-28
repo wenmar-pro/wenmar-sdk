@@ -5,18 +5,22 @@ the OpenAPI spec and conformance suite.
 
 ## Architecture
 
-The public API surface spans three repos. The Rails app is the source of
-truth; this repo and the CLI are derived from it.
+The public API surface spans four repos. The Rails app is the source of
+truth; the API docs repo holds the spec; this repo and the CLI are derived.
 
 - `wenmar-pro` (`~/Projects/wenmar-pro`) — Rails app, **source of truth** for the API
-- `wenmar-sdk` (this repo) — OpenAPI spec + Go/Ruby SDKs + conformance suite
+- `wenmar-api` (`~/Projects/wenmar-api`) — OpenAPI spec + human-readable docs (CC BY-SA)
+- `wenmar-sdk` (this repo) — Go/Ruby SDKs + conformance suite (pulls spec from wenmar-api)
 - `wenmar-cli` (`~/Projects/wenmar-cli`) — Go CLI (Cobra) consuming the Go SDK
 
 ```
 wenmar-pro (Rails, source of truth)
    │  exports OpenAPI spec
    ▼
-wenmar-sdk (OpenAPI + Go/Ruby SDKs + conformance)
+wenmar-api (OpenAPI spec + docs, the contract)
+   │  spec consumed by
+   ▼
+wenmar-sdk (Go/Ruby SDKs + conformance)
    │  Go SDK consumed by
    ▼
 wenmar-cli (Go CLI, Cobra)
