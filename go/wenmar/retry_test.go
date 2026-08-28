@@ -24,7 +24,7 @@ func TestRetry_On500Then200(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("expected success after retry, got error: %v", err)
@@ -43,7 +43,7 @@ func TestRetry_MaxRetriesExceeded(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.ListCustomers(ctx)
 	if err == nil {
 		t.Fatal("expected error after max retries")
@@ -62,7 +62,7 @@ func TestRetry_PostOn500NotRetried(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody{})
 	if err == nil {
 		t.Fatal("expected error on POST 500")
@@ -88,7 +88,7 @@ func TestRetry_PostOn429Retried(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody{})
 	if err != nil {
 		t.Fatalf("expected success after 429 retry, got: %v", err)
@@ -114,7 +114,7 @@ func TestRetry_RetryAfterHTTPDate(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("expected success after HTTP-date Retry-After, got: %v", err)
@@ -133,7 +133,7 @@ func TestRetry_NoRetryOn4xx(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.ListCustomers(ctx)
 	if err == nil {
 		t.Fatal("expected error on 404")

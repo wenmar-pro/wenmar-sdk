@@ -26,12 +26,17 @@ type retryTransport struct {
 	baseDelay   time.Duration
 }
 
-func newRetryTransport() *retryTransport {
+func newRetryTransportWithRetries(maxRetries int) *retryTransport {
 	return &retryTransport{
 		transport:  http.DefaultTransport,
-		maxRetries: 3,
+		maxRetries: maxRetries,
 		baseDelay:  500 * time.Millisecond,
 	}
+}
+
+// Keep the old constructor for backwards compatibility within the package.
+func newRetryTransport() *retryTransport {
+	return newRetryTransportWithRetries(3)
 }
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {

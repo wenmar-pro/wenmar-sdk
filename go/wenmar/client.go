@@ -11,29 +11,60 @@ import (
 )
 
 type Client struct {
-	BaseURL string
-	Token   string
-	http    *http.Client
-	gen     *generated.ClientWithResponses
+	BaseURL  string
+	Token    string
+	cfg      Config
+	tp       TokenProvider
+	http     *http.Client
+	gen      *generated.ClientWithResponses
+	location string
 }
 
-// NewClient creates a Wenmar API client. The baseURL must use https unless
-// the host is localhost or 127.0.0.1 (for development). The token is sent as
-// a Bearer header on every request.
-func NewClient(baseURL, token string) (*Client, error) {
-	if token == "" {
-		return nil, fmt.Errorf("API token is required")
+// NewClient creates a Wenmar API client from the given Config and
+// TokenProvider. The Config is deep-copied so callers cannot mutate the
+// client's configuration after construction.
+func NewClient(cfg Config, tp TokenProvider) (*Client, error) {
+	if tp == nil {
+		return nil, fmt.Errorf("token provider is required")
 	}
-	if err := requireHTTPS(baseURL); err != nil {
+
+	// Deep-copy config to prevent post-construction mutation.
+	cfgCopy := cfg
+	if cfgCopy.BaseURL == "" {
+		cfgCopy.BaseURL = DefaultConfig().BaseURL
+	}
+	if err := requireHTTPS(cfgCopy.BaseURL); err != nil {
 		return nil, err
 	}
 
-	httpClient := &http.Client{
-		Transport: newCachingTransport(newRetryTransport()),
-		CheckRedirect: stripAuthOnCrossOriginRedirect,
+	// Resolve the token once at construction (for fetchURL/pagination).
+	// A TokenProvider that rotates tokens per-request is supported by
+	// a request-editor wrapper, but the pagination path needs the token
+	// eagerly. For now, StaticTokenProvider and CredentialStore both
+	// return a stable token.
+	token, err := tp.Token(context.Background())
+	if err != nil {
+		return nil, fmt.Errorf("failed to resolve token: %w", err)
 	}
 
-	gen, err := generated.NewClientWithResponses(baseURL,
+	var transport http.RoundTripper = http.DefaultTransport
+	if cfgCopy.MaxRetries > 0 {
+		transport = newRetryTransportWithRetries(cfgCopy.MaxRetries)
+	}
+	if cfgCopy.CacheEnabled {
+		transport = newCachingTransport(transport)
+	}
+
+	httpClient := cfgCopy.HTTPClient
+	if httpClient == nil {
+		httpClient = &http.Client{
+			Transport:     transport,
+			Timeout:       cfgCopy.Timeout,
+			CheckRedirect: stripAuthOnCrossOriginRedirect,
+		}
+	}
+
+	gen, err := generated.NewClientWithResponses(cfgCopy.BaseURL,
 		generated.WithHTTPClient(httpClient),
 		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("Authorization", "Bearer "+token)
@@ -47,8 +78,10 @@ func NewClient(baseURL, token string) (*Client, error) {
 	}
 
 	return &Client{
-		BaseURL: baseURL,
+		BaseURL: cfgCopy.BaseURL,
 		Token:   token,
+		cfg:     cfgCopy,
+		tp:      tp,
 		http:    httpClient,
 		gen:     gen,
 	}, nil

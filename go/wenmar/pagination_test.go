@@ -82,10 +82,7 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 	defer server.Close()
 	serverURLForTest = server.URL
 
-	client, err := NewClient(server.URL, "test-token")
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
+	client := newTestClient(t, server.URL, "test-token")
 
 	resp, paginator, err := client.ListCustomersWithPagination(context.Background())
 	if err != nil {
@@ -141,7 +138,7 @@ func TestPagination_RejectsCrossOriginNextURL(t *testing.T) {
 	}))
 	defer attacker.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	resp, paginator, err := c.ListCustomersWithPagination(ctx)
 	if err != nil {
 		t.Fatalf("first page fetch failed: %v", err)

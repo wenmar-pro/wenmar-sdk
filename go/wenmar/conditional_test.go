@@ -32,7 +32,7 @@ func TestConditionalGet_ReturnsCachedBodyOn304(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 
 	resp, err := c.ShowCustomer(context.Background(), 1)
 	if err != nil {

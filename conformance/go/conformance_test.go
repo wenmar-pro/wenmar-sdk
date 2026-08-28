@@ -88,7 +88,9 @@ func runCase(t *testing.T, tc TestCase) {
 	defer server.Close()
 	serverURL = server.URL
 
-	client, err := wenmar.NewClient(server.URL, "test-token")
+	cfg := wenmar.DefaultConfig()
+	cfg.BaseURL = server.URL
+	client, err := wenmar.NewClient(cfg, wenmar.NewStaticTokenProvider("test-token"))
 	if err != nil {
 		t.Fatalf("failed to create client: %v", err)
 	}

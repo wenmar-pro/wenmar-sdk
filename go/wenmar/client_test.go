@@ -12,13 +12,26 @@ import (
 
 var ctx = context.Background()
 
-func TestNewClient_SetsBaseURL(t *testing.T) {
-	c, err := NewClient("https://api.example.com", "test-token")
+func TestNewClient_WithConfigAndTokenProvider(t *testing.T) {
+	cfg := DefaultConfig()
+	cfg.BaseURL = "https://localhost" // will be overwritten by httptest below
+	tp := NewStaticTokenProvider("test-token")
+	c, err := NewClient(cfg, tp)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if c.BaseURL != "https://api.example.com" {
-		t.Errorf("expected BaseURL 'https://api.example.com', got '%s'", c.BaseURL)
+	if c.Token != "test-token" {
+		t.Errorf("expected token 'test-token', got %q", c.Token)
+	}
+}
+
+func TestNewClient_SetsBaseURL(t *testing.T) {
+	c, err := NewClient(DefaultConfig(), NewStaticTokenProvider("test-token"))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if c.BaseURL != "https://app.wenmarpro.com" {
+		t.Errorf("expected BaseURL 'https://app.wenmarpro.com', got '%s'", c.BaseURL)
 	}
 	if c.Token != "test-token" {
 		t.Errorf("expected Token 'test-token', got '%s'", c.Token)
@@ -26,7 +39,7 @@ func TestNewClient_SetsBaseURL(t *testing.T) {
 }
 
 func TestNewClient_EmptyToken(t *testing.T) {
-	_, err := NewClient("https://api.example.com", "")
+	_, err := NewClient(DefaultConfig(), NewStaticTokenProvider(""))
 	if err == nil {
 		t.Error("expected error for empty token")
 	}
@@ -42,7 +55,7 @@ func TestClient_AuthHeader(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "my-token")
+	c := newTestClient(t, ts.URL, "my-token")
 	_, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -60,7 +73,7 @@ func TestClient_ListCustomers(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	resp, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -84,7 +97,7 @@ func TestClient_CreateVehicle(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	body := generated.CreateVehicleJSONRequestBody{}
 	body.Vehicle.Make = "Honda"
 	body.Vehicle.Model = "Civic"
@@ -111,7 +124,7 @@ func TestClient_UpdateVehicle(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	body := generated.UpdateVehicleJSONRequestBody{}
 	body.Vehicle.Make = "Toyota"
 
@@ -133,7 +146,7 @@ func TestClient_DeleteVehicle(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.DeleteVehicle(ctx, 1)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -154,7 +167,7 @@ func TestClient_DecodeVin(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	resp, err := c.DecodeVin(ctx, "1HGCM82633A004352")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -175,7 +188,7 @@ func TestClient_CheckDuplicate(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	resp, err := c.CheckDuplicate(ctx, "ABC123")
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -196,7 +209,7 @@ func TestClient_UpdateCustomer(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	body := generated.UpdateCustomerJSONRequestBody{}
 
 	resp, err := c.UpdateCustomer(ctx, 1, body)
@@ -216,7 +229,7 @@ func TestClient_ListVehicles(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	resp, err := c.ListVehicles(ctx)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -240,10 +253,7 @@ func TestListAccount(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, "test-token")
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
+	client := newTestClient(t, server.URL, "test-token")
 
 	resp, err := client.ListAccount(context.Background())
 	if err != nil {
@@ -265,10 +275,7 @@ func TestShowLocation(t *testing.T) {
 	}))
 	defer server.Close()
 
-	client, err := NewClient(server.URL, "test-token")
-	if err != nil {
-		t.Fatalf("failed to create client: %v", err)
-	}
+	client := newTestClient(t, server.URL, "test-token")
 
 	resp, err := client.ShowLocation(context.Background(), "1")
 	if err != nil {
@@ -287,7 +294,7 @@ func TestClient_ErrorMapping(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	c, _ := NewClient(ts.URL, "test-token")
+	c := newTestClient(t, ts.URL, "test-token")
 	_, err := c.ShowCustomer(ctx, 999)
 	if err == nil {
 		t.Fatal("expected error on 404")
@@ -302,7 +309,9 @@ func TestClient_ErrorMapping(t *testing.T) {
 }
 
 func TestNewClient_RejectsHTTP(t *testing.T) {
-	_, err := NewClient("http://app.wenmarpro.com", "test-token")
+	cfg := DefaultConfig()
+	cfg.BaseURL = "http://app.wenmarpro.com"
+	_, err := NewClient(cfg, NewStaticTokenProvider("test-token"))
 	if err == nil {
 		t.Fatal("expected error for http:// base URL, got nil")
 	}
@@ -312,18 +321,23 @@ func TestNewClient_RejectsHTTP(t *testing.T) {
 }
 
 func TestNewClient_AcceptsHTTPS(t *testing.T) {
-	_, err := NewClient("https://app.wenmarpro.com", "test-token")
+	cfg := DefaultConfig()
+	cfg.BaseURL = "https://app.wenmarpro.com"
+	_, err := NewClient(cfg, NewStaticTokenProvider("test-token"))
 	if err != nil {
 		t.Fatalf("expected success for https://, got: %v", err)
 	}
 }
 
 func TestNewClient_AcceptsLocalhostHTTP(t *testing.T) {
-	_, err := NewClient("http://localhost:3000", "test-token")
+	cfg := DefaultConfig()
+	cfg.BaseURL = "http://localhost:3000"
+	_, err := NewClient(cfg, NewStaticTokenProvider("test-token"))
 	if err != nil {
 		t.Fatalf("expected success for http://localhost, got: %v", err)
 	}
-	_, err = NewClient("http://127.0.0.1:3000", "test-token")
+	cfg.BaseURL = "http://127.0.0.1:3000"
+	_, err = NewClient(cfg, NewStaticTokenProvider("test-token"))
 	if err != nil {
 		t.Fatalf("expected success for http://127.0.0.1, got: %v", err)
 	}
@@ -345,7 +359,7 @@ func TestClient_StripsAuthOnCrossOriginRedirect(t *testing.T) {
 	}))
 	defer origin.Close()
 
-	c, _ := NewClient(origin.URL, "test-token")
+	c := newTestClient(t, origin.URL, "test-token")
 	_, err := c.ListCustomers(ctx)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
