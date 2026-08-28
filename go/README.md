@@ -43,12 +43,24 @@ error mapping, and bearer-token auth built in. An empty token is an error.
 
 | Operation | Method |
 |---|---|
+| List account | `ListAccount(ctx)` |
 | List customers | `ListCustomers(ctx, page *int)` |
 | Create customer | `CreateCustomer(ctx, body)` |
 | Show customer | `ShowCustomer(ctx, id)` |
+| Update customer | `UpdateCustomer(ctx, id, body)` |
+| List vehicles | `ListVehicles(ctx)` |
+| Create vehicle | `CreateVehicle(ctx, body)` |
 | Show vehicle | `ShowVehicle(ctx, id)` |
+| Update vehicle | `UpdateVehicle(ctx, id, body)` |
+| Delete vehicle | `DeleteVehicle(ctx, id)` |
+| Decode VIN | `DecodeVin(ctx, vin)` |
+| Check duplicates | `CheckDuplicate(ctx, vin)` |
 | List work orders | `ListWorkOrders(ctx, page *int)` |
+| Create work order | `CreateWorkOrder(ctx, body)` |
 | Show work order | `ShowWorkOrder(ctx, id)` |
+| Update work order | `UpdateWorkOrder(ctx, id, body)` |
+| Delete work order | `DeleteWorkOrder(ctx, id)` |
+| Show location | `ShowLocation(ctx, id)` |
 
 The `*generated.*Response` values carry `.Body` (raw JSON), `.HTTPResponse`,
 and parsed `.JSON200` / `.JSON404` fields.

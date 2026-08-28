@@ -25,11 +25,11 @@ client = Wenmar::Client.new(token: "YOUR_API_TOKEN")
 
 # List customers (paginated)
 customers = client.list_customers
-customers["data"] # => [{ "id" => 1, "full_name" => "Jane Doe", ... }]
+customers # => [{ "id" => 1, "full_name" => "Jane Doe", ... }]
 
 # Show a customer
 customer = client.show_customer(1)
-customer["data"] # => { "id" => 1, "full_name" => "Jane Doe", ... }
+customer # => { "id" => 1, "full_name" => "Jane Doe", ... }
 
 # Create a customer
 created = client.create_customer(full_name: "Jane Doe")
@@ -47,12 +47,24 @@ client = Wenmar::Client.new(token: "YOUR_API_KEY", base_url: "https://app.wenmar
 
 | Operation | Method |
 |---|---|
+| List account | `list_account` |
 | List customers | `list_customers(page: nil)` |
 | Create customer | `create_customer(full_name: ..., email: ..., phone: ...)` |
 | Show customer | `show_customer(id)` |
+| Update customer | `update_customer(id, attrs)` |
+| List vehicles | `list_vehicles` |
+| Create vehicle | `create_vehicle(attrs)` |
 | Show vehicle | `show_vehicle(id)` |
+| Update vehicle | `update_vehicle(id, attrs)` |
+| Delete vehicle | `delete_vehicle(id)` |
+| Decode VIN | `decode_vin(vin)` |
+| Check duplicates | `check_duplicate(vin)` |
 | List work orders | `list_work_orders(page: nil)` |
+| Create work order | `create_work_order(attrs)` |
 | Show work order | `show_work_order(id)` |
+| Update work order | `update_work_order(id, attrs)` |
+| Delete work order | `delete_work_order(id)` |
+| Show location | `show_location(id)` |
 
 All methods return the parsed JSON response body as a `Hash`.
 
@@ -65,7 +77,7 @@ the result to walk pages:
 result = client.list_customers
 while result.paginator.has_next?
   result = result.paginator.next_page
-  result["data"] # => next page of records
+  result # => next page of records
 end
 ```
 

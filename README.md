@@ -34,9 +34,11 @@ customers = client.list_customers
 
 | Resource | Operations |
 |---|---|
-| Customers | List, Create, Show |
-| Vehicles | Show |
-| Work orders | List, Show |
+| Account | Show |
+| Customers | List, Create, Show, Update |
+| Vehicles | List, Create, Show, Update, Delete, Decode VIN, Check Duplicates |
+| Work Orders | List, Create, Show, Update, Delete |
+| Locations | Show |
 
 ## Spec
 
