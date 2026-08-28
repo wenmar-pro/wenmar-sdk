@@ -94,6 +94,10 @@ module Conformance
         client.update_work_order(tc.dig("pathParams", "id"), tc.dig("requestBody", "work_order") || {})
       when "delete_work_order"
         client.delete_work_order(tc.dig("pathParams", "id"))
+      when "list_account"
+        client.list_account
+      when "show_location"
+        client.show_location(tc.dig("pathParams", "id"))
       else
         raise "unknown operation: #{tc["operation"]}"
       end

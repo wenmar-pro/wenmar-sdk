@@ -86,5 +86,38 @@
       "noError": true,
       "responseBody": { "path": "status", "equals": "open" }
     }
+  },
+  {
+    "name": "list_account",
+    "operation": "list_account",
+    "method": "GET",
+    "path": "/account",
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": { "id": 1, "name": "Main Shop" }
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "responseBody": { "path": "name", "equals": "Main Shop" }
+    }
+  },
+  {
+    "name": "show_location",
+    "operation": "show_location",
+    "method": "GET",
+    "path": "/locations/1",
+    "pathParams": { "id": "1" },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": { "id": 1, "name": "Bay 1" }
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "responseBody": { "path": "name", "equals": "Bay 1" }
+    }
   }
 ]

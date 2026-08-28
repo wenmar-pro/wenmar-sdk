@@ -263,6 +263,19 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
+	case "list_account":
+		resp, err := client.ListAccount(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_location":
+		id := stringParam(tc.PathParams, "id")
+		resp, err := client.ShowLocation(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
 	default:
 		return nil, fmt.Errorf("unknown operation: %s", tc.Operation)
 	}
