@@ -14,12 +14,16 @@ type APIError struct {
 	StatusCode int            `json:"-"`
 	Method     string         `json:"-"`
 	Path       string         `json:"-"`
+	RequestID  string         `json:"-"`
 }
 
 func (e *APIError) Error() string {
 	s := fmt.Sprintf("%s: %s (HTTP %d)", e.Code, e.Message, e.StatusCode)
 	if e.Method != "" && e.Path != "" {
 		s = fmt.Sprintf("%s %s -> %s", e.Method, e.Path, s)
+	}
+	if e.RequestID != "" {
+		s = fmt.Sprintf("%s [request_id=%s]", s, e.RequestID)
 	}
 	return s
 }
@@ -43,7 +47,13 @@ func ParseErrorBody(body []byte, statusCode int) *APIError {
 // ParseErrorBodyWithRequest is like ParseErrorBody but also records the HTTP
 // method and request path that produced the error, for richer diagnostics.
 func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string) *APIError {
-	apiErr := &APIError{StatusCode: statusCode, Method: method, Path: path}
+	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, "")
+}
+
+// ParseErrorBodyWithRequestAndID is like ParseErrorBodyWithRequest but also
+// records the X-Request-Id header for support correlation.
+func ParseErrorBodyWithRequestAndID(body []byte, statusCode int, method, path, requestID string) *APIError {
+	apiErr := &APIError{StatusCode: statusCode, Method: method, Path: path, RequestID: requestID}
 
 	if len(body) == 0 {
 		apiErr.Code = statusFallbackCode(statusCode)

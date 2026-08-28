@@ -2,24 +2,27 @@ require "json"
 
 module Wenmar
   class Error < StandardError
-    attr_reader :code, :message, :details, :status
+    attr_reader :code, :message, :details, :status, :request_id
 
-    def initialize(code:, message:, details:, status:)
+    def initialize(code:, message:, details:, status:, request_id: nil)
       @code = code
       @message = message
       @details = details
       @status = status
+      @request_id = request_id
       super("#{code}: #{message} (HTTP #{status})")
     end
 
     def self.from_response(response)
       body = JSON.parse(response.body)
       error = body["error"] || {}
+      headers = response.respond_to?(:headers) ? (response.headers || {}) : {}
       new(
         code: error["code"] || "unknown",
         message: error["message"] || "Unknown error",
         details: error["details"] || {},
-        status: response.status
+        status: response.status,
+        request_id: headers["X-Request-Id"]
       )
     rescue JSON::ParserError
       new(code: "unknown", message: "Malformed error response", details: {}, status: response.status)

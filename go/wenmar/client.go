@@ -70,7 +70,7 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("Authorization", "Bearer "+token)
 			req.Header.Set("Accept", "application/json")
-			req.Header.Set("User-Agent", "wenmar-sdk-go")
+			req.Header.Set("User-Agent", fmt.Sprintf("wenmar-sdk-go/%s", Version))
 			return nil
 		}),
 	)
@@ -127,12 +127,15 @@ func stripAuthOnCrossOriginRedirect(req *http.Request, via []*http.Request) erro
 // parseError converts a failed response into an *APIError, capturing the
 // request method and path for diagnostics.
 func parseError(body []byte, statusCode int, hr *http.Response) error {
-	method, path := "", ""
+	method, path, requestID := "", "", ""
 	if hr != nil && hr.Request != nil {
 		method = hr.Request.Method
 		path = hr.Request.URL.Path
 	}
-	return ParseErrorBodyWithRequest(body, statusCode, method, path)
+	if hr != nil {
+		requestID = hr.Header.Get("X-Request-Id")
+	}
+	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, requestID)
 }
 
 func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersResponse, error) {

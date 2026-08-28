@@ -176,7 +176,7 @@ module Wenmar
       Faraday.new(url: @base_url) do |conn|
         conn.headers["Authorization"] = "Bearer #{@token}"
         conn.headers["Content-Type"] = "application/json"
-        conn.headers["User-Agent"] = "wenmar-sdk-ruby"
+        conn.headers["User-Agent"] = "wenmar-sdk-ruby/#{Wenmar::VERSION}"
         conn.request :retry, max: 3, interval: 0.5, backoff_factor: 2,
                     retry_statuses: retry_statuses,
                     methods: methods,

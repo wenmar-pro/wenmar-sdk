@@ -157,6 +157,25 @@ func TestAPIError_Retryable(t *testing.T) {
 	}
 }
 
+func TestAPIError_RequestID(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Request-Id", "req-abc-123")
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(`{"error":{"code":"not_found","message":"x","details":{}}}`))
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+	_, err := c.ShowCustomer(ctx, 999)
+	apiErr, ok := err.(*APIError)
+	if !ok {
+		t.Fatalf("expected *APIError, got %T", err)
+	}
+	if apiErr.RequestID != "req-abc-123" {
+		t.Errorf("expected RequestID 'req-abc-123', got %q", apiErr.RequestID)
+	}
+}
+
 func TestParseError_507LimitExceeded(t *testing.T) {
 	body := []byte(`{"error":{"code":"limit_exceeded","message":"Account limit reached","details":{}}}`)
 	apiErr := ParseErrorBody(body, 507)
