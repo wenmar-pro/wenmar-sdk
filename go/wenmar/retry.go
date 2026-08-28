@@ -8,6 +8,15 @@ import (
 	"time"
 )
 
+// Retry policy (derived from bc3's documented error handling):
+//
+//   429 Too Many Requests → read Retry-After header, wait, retry (max 3)
+//   500/502/503/504      → exponential backoff with jitter, retry (max 3)
+//   404 Not Found         → do NOT retry (deleted, inaccessible, or insufficient permissions)
+//   304 Not Modified     → not an error; return cached body
+//
+// 404 is terminal because retrying a deleted/inaccessible resource will
+// never succeed. 429 and 5xx are transient and may recover.
 type retryTransport struct {
 	transport   http.RoundTripper
 	maxRetries  int
@@ -28,7 +37,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 	for attempt := 0; attempt <= t.maxRetries; attempt++ {
 		resp, err = t.transport.RoundTrip(req)
-		if err != nil || resp.StatusCode < 500 {
+		if err != nil || !isRetryableStatus(resp.StatusCode) {
 			return resp, err
 		}
 
@@ -59,4 +68,17 @@ func (t *retryTransport) backoff(attempt int, resp *http.Response) time.Duration
 	delay := float64(t.baseDelay) * math.Pow(2, float64(attempt))
 	jitter := rand.Float64() * float64(t.baseDelay)
 	return time.Duration(delay + jitter)
+}
+
+func isRetryableStatus(code int) bool {
+	switch code {
+	case http.StatusTooManyRequests, // 429
+		http.StatusInternalServerError, // 500
+		http.StatusBadGateway,          // 502
+		http.StatusServiceUnavailable,  // 503
+		http.StatusGatewayTimeout:      // 504
+		return true
+	default:
+		return false
+	}
 }
