@@ -5,14 +5,20 @@ require "uri"
 
 module Wenmar
   class Client
-    attr_reader :base_url, :token
+    attr_reader :base_url, :token, :config
 
-    def initialize(token:, base_url: "https://app.wenmarpro.com")
-      raise ArgumentError, "API token is required" if token.nil? || token.empty?
-      raise ArgumentError, "base_url must use https (http only allowed for localhost)" unless https_or_localhost?(base_url)
+    def initialize(config: Config.new, token_provider: nil, token: nil, base_url: nil)
+      # Backwards-compatible: if token: is given directly, wrap in StaticTokenProvider.
+      if token_provider.nil?
+        t = token || raise(ArgumentError, "token or token_provider is required")
+        token_provider = StaticTokenProvider.new(t)
+      end
+      @token_provider = token_provider
+      @config = config
+      @base_url = base_url || config.base_url
+      @token = token_provider.token
+      raise ArgumentError, "base_url must use https (http only allowed for localhost)" unless https_or_localhost?(@base_url)
 
-      @token = token
-      @base_url = base_url
       @read_connection = build_connection(retry_statuses: [429, 500, 502, 503, 504])
       @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete])
       @cache = {}
