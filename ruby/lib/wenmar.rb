@@ -9,4 +9,5 @@ require_relative "wenmar/vehicle"
 require_relative "wenmar/work_order"
 
 module Wenmar
+  VERSION = "0.2.0"
 end
