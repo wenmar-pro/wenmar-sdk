@@ -69,7 +69,7 @@ paths:
       operationId: list_account
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/account.json'
-      x-retry: &1
+      x-retry:
         max: 3
         backoff: exponential
         retry-on:
@@ -111,7 +111,16 @@ paths:
       x-paginated: true
       x-pagination-header: Link
       x-pagination-format: rfc5988
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     post:
       summary: create
       tags:
@@ -169,7 +178,16 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers.json
       x-idempotent: false
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers/{customer_id}/vehicles":
     get:
       summary: index
@@ -316,7 +334,16 @@ paths:
       operationId: get_customers_vehicle
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/vehicles.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers/{customer_id}/vehicles/{vehicle_id}/history":
     get:
       summary: show
@@ -497,7 +524,16 @@ paths:
       operationId: get_customers_vehicle_history
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/vehicles/{vehicle_id}/history.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers/{customer_id}/work_orders":
     get:
       summary: index
@@ -652,7 +688,16 @@ paths:
       operationId: get_customers_work_order
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/work_orders.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers/{id}":
     delete:
       summary: destroy
@@ -697,7 +742,16 @@ paths:
       operationId: delete_customer
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     get:
       summary: show
       tags:
@@ -730,7 +784,16 @@ paths:
       operationId: show_customer
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     patch:
       summary: update
       tags:
@@ -791,7 +854,16 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/locations/{id}":
     get:
       summary: show
@@ -862,7 +934,16 @@ paths:
       operationId: show_location
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/locations/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/team/members":
     get:
       summary: index
@@ -942,7 +1023,16 @@ paths:
       operationId: list_team
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/team/members.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles":
     get:
       summary: index
@@ -986,7 +1076,16 @@ paths:
       x-paginated: true
       x-pagination-header: Link
       x-pagination-format: rfc5988
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     post:
       summary: create
       tags:
@@ -1049,7 +1148,16 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles/check_duplicate":
     get:
       summary: check_duplicate
@@ -1095,7 +1203,16 @@ paths:
       operationId: check_duplicate
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/check_duplicate.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles/vin_decode":
     get:
       summary: vin_decode
@@ -1140,7 +1257,16 @@ paths:
       operationId: decode_vin
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/vin_decode.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles/{id}":
     delete:
       summary: destroy
@@ -1174,7 +1300,16 @@ paths:
       operationId: delete_vehicle
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     get:
       summary: show
       tags:
@@ -1207,7 +1342,16 @@ paths:
       operationId: show_vehicle
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     patch:
       summary: update
       tags:
@@ -1245,7 +1389,16 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles/{vehicle_id}/work_orders":
     get:
       summary: index
@@ -1400,7 +1553,16 @@ paths:
       operationId: get_vehicles_work_order
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/{vehicle_id}/work_orders.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/work_orders":
     get:
       summary: index
@@ -1422,7 +1584,16 @@ paths:
       x-paginated: true
       x-pagination-header: Link
       x-pagination-format: rfc5988
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     post:
       summary: create
       tags:
@@ -1457,7 +1628,16 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/work_orders/{id}":
     delete:
       summary: destroy
@@ -1476,7 +1656,16 @@ paths:
       operationId: delete_work_order
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     get:
       summary: show
       tags:
@@ -1498,7 +1687,16 @@ paths:
       operationId: show_work_order
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json'
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     patch:
       summary: update
       tags:
@@ -1536,7 +1734,16 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/work_orders/{work_order_id}/payments":
     post:
       summary: create
@@ -1646,7 +1853,16 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/payments.json
-      x-retry: *1
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
 components:
   securitySchemes:
     BearerAuth:
