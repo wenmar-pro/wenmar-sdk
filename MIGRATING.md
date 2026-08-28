@@ -4,6 +4,64 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.2 to v0.3
+
+v0.3.0 is a breaking release that tracks the wenmar-pro API's pre-v1
+foundation fixes. Two breaking changes affect existing callers.
+
+### Error envelope: `details` → `field_errors`
+
+The API renamed the error envelope's field-error key from `details` to
+`field_errors`. Validation errors now arrive as:
+
+```json
+{ "error": { "code": "validation_failed", "message": "...", "field_errors": { "first_name": ["can't be blank"] } } }
+```
+
+**Go:** `APIError.Details` is renamed to `APIError.FieldErrorsMap`. The
+`FieldErrors()` accessor is unchanged and still returns
+`map[string][]string`.
+
+**Ruby:** `Error#details` is renamed to `Error#field_errors`. The
+`field_errors_by_field` accessor (formerly `field_errors`) returns the
+coerced `{ field => [messages] }` hash.
+
+### Work order show: embedded arrays → `_url` links
+
+`GET /work_orders/{id}` no longer embeds `services[]` and `payments[]`
+arrays. They are replaced by `services_url`, `payments_url`, `wip_url`,
+`inspection_url`, and `parts_url` link fields. Fetch each sub-collection
+via its dedicated endpoint:
+
+- `GET /work_orders/{id}/estimate` → `services[]`
+- `GET /work_orders/{id}/wip` → `services[]`
+- `GET /work_orders/{id}/inspection` → `inspection_reports[]`
+- `GET /work_orders/{id}/parts` → `services[]`
+- `GET /work_orders/{id}/payments` → `payments[]`
+
+### Drivers: ad-hoc → full resource
+
+Drivers were previously returned as `{ id, full_name }`. They are now full
+resources with `phone`, `email`, `customer` stub, `work_orders_count`,
+`work_orders_url`, timestamps, `url`, and `app_url`. Full CRUD is available
+under `/customers/{customer_id}/drivers`.
+
+## New features (v0.3)
+
+- Drivers full CRUD: `ListDrivers`, `ShowDriver`, `CreateDriver`,
+  `UpdateDriver`, `DeleteDriver` (Go) / `list_drivers`, `show_driver`,
+  `create_driver`, `update_driver`, `delete_driver` (Ruby).
+- Statements: `ListStatements`, `ShowStatement` (Go) / `list_statements`,
+  `show_statement` (Ruby).
+- Vendors: `ListVendors`, `ShowVendor` (Go) / `list_vendors`,
+  `show_vendor` (Ruby).
+- Work order sub-collections: `ShowWorkOrderEstimate`, `ShowWorkOrderWip`,
+  `ShowWorkOrderInspection`, `ShowWorkOrderParts`, `ShowWorkOrderPayments`,
+  `CreateWorkOrderPayment` (Go) / `show_work_order_estimate`,
+  `show_work_order_wip`, `show_work_order_inspection`,
+  `show_work_order_parts`, `show_work_order_payments`,
+  `create_work_order_payment` (Ruby).
+
 ## Go
 
 ### `NewClient` signature

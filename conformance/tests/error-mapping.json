@@ -6,7 +6,7 @@
     "path": "/customers/999999",
     "pathParams": { "id": 999999 },
     "mockResponses": [
-      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }
+      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 1,
@@ -20,7 +20,7 @@
     "method": "GET",
     "path": "/customers",
     "mockResponses": [
-      { "status": 401, "body": { "error": { "code": "unauthorized", "message": "Invalid or missing API token", "details": {} } } }
+      { "status": 401, "body": { "error": { "code": "unauthorized", "message": "Invalid or missing API token", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 1,
@@ -37,13 +37,14 @@
     "mockResponses": [
       {
         "status": 422,
-        "body": { "error": { "code": "validation_failed", "message": "Make can't be blank", "details": { "make": ["can't be blank"] } } }
+        "body": { "error": { "code": "validation_failed", "message": "Make can't be blank", "field_errors": { "make": ["can't be blank"] } } }
       }
     ],
     "expect": {
       "requestCount": 1,
       "errorCode": "validation_failed",
-      "errorStatus": 422
+      "errorStatus": 422,
+      "fieldErrors": { "make": ["can't be blank"] }
     }
   },
   {
@@ -52,7 +53,7 @@
     "method": "GET",
     "path": "/customers",
     "mockResponses": [
-      { "status": 507, "body": { "error": { "code": "limit_exceeded", "message": "Account limit reached", "details": {} } } }
+      { "status": 507, "body": { "error": { "code": "limit_exceeded", "message": "Account limit reached", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 1,

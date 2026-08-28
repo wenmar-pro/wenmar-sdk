@@ -1,0 +1,70 @@
+{
+  "type": "WorkOrder",
+  "id": 1,
+  "work_order_number": 1001,
+  "status": "completed",
+  "intake_method": "drop_off",
+  "scheduled_for": null,
+  "authorized": true,
+  "paid": true,
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "closed_at": "2026-08-27T15:00:00.000-04:00",
+  "location_id": 1,
+  "service_advisor_id": 5,
+  "assigned_technician_id": null,
+  "work_order_services_count": 1,
+  "inspection_reports_count": 0,
+  "customer": {
+    "id": 1,
+    "full_name": "Jane Doe",
+    "url": "https://app.wenmarpro.com/customers/1.json"
+  },
+  "vehicle": {
+    "id": 1,
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2020,
+    "vin": "ABC123",
+    "url": "https://app.wenmarpro.com/vehicles/1.json"
+  },
+  "totals": {
+    "subtotal_cents": 5000,
+    "tax_cents": 650,
+    "total_cents": 5650,
+    "paid_cents": 5650,
+    "remaining_cents": 0,
+    "currency": "CAD"
+  },
+  "url": "https://app.wenmarpro.com/work_orders/1.json",
+  "app_url": "https://app.wenmarpro.com/work_orders/1",
+  "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+  "payments": [
+    {
+      "id": 1,
+      "amount_cents": 5650,
+      "method": "cash",
+      "processor_status": "succeeded",
+      "is_refund": false,
+      "processed_at": "2026-08-27T15:00:00.000-04:00",
+      "reference": null,
+      "created_at": "2026-08-27T15:00:00.000-04:00",
+      "updated_at": "2026-08-27T15:00:00.000-04:00",
+      "work_order_id": 1,
+      "customer_id": 1,
+      "processed_by": {
+        "id": 5,
+        "full_name": "Alex Rivera"
+      },
+      "work_order": {
+        "id": 1,
+        "url": "https://app.wenmarpro.com/work_orders/1.json"
+      },
+      "customer": {
+        "id": 1,
+        "full_name": "Jane Doe",
+        "url": "https://app.wenmarpro.com/customers/1.json"
+      }
+    }
+  ]
+}

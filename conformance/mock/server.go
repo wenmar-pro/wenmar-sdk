@@ -229,9 +229,9 @@ func writeError(w http.ResponseWriter, code, message string, status int) {
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(map[string]any{
 		"error": map[string]any{
-			"code":    code,
-			"message": message,
-			"details": map[string]any{},
+			"code":         code,
+			"message":      message,
+			"field_errors": map[string]any{},
 		},
 	})
 }

@@ -1,0 +1,228 @@
+[
+  {
+    "name": "list_drivers_success",
+    "operation": "list_customers_drivers",
+    "method": "GET",
+    "path": "/customers/1/drivers",
+    "pathParams": { "customer_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "full_name": "Jane Doe" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.full_name", "equals": "Jane Doe" }
+    }
+  },
+  {
+    "name": "show_driver_success",
+    "operation": "show_driver",
+    "method": "GET",
+    "path": "/customers/1/drivers/1",
+    "pathParams": { "customer_id": 1, "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "Jane Doe" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "full_name", "equals": "Jane Doe" }
+    }
+  },
+  {
+    "name": "create_driver_success",
+    "operation": "create_driver",
+    "method": "POST",
+    "path": "/customers/1/drivers",
+    "pathParams": { "customer_id": 1 },
+    "requestBody": { "driver": { "full_name": "Jane Doe", "phone": "+1 416 555 0132" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "full_name": "Jane Doe" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "full_name", "equals": "Jane Doe" }
+    }
+  },
+  {
+    "name": "update_driver_success",
+    "operation": "update_driver",
+    "method": "PATCH",
+    "path": "/customers/1/drivers/1",
+    "pathParams": { "customer_id": 1, "id": 1 },
+    "requestBody": { "driver": { "full_name": "Jane Smith" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "Jane Smith" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "full_name", "equals": "Jane Smith" }
+    }
+  },
+  {
+    "name": "delete_driver_success",
+    "operation": "delete_driver",
+    "method": "DELETE",
+    "path": "/customers/1/drivers/1",
+    "pathParams": { "customer_id": 1, "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_statements_success",
+    "operation": "list_customers_statements",
+    "method": "GET",
+    "path": "/customers/1/statements",
+    "pathParams": { "customer_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "statement_number": "ST-0001" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.statement_number", "equals": "ST-0001" }
+    }
+  },
+  {
+    "name": "show_statement_success",
+    "operation": "show_statement",
+    "method": "GET",
+    "path": "/statements/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "statement_number": "ST-0001" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "statement_number", "equals": "ST-0001" }
+    }
+  },
+  {
+    "name": "list_vendors_success",
+    "operation": "list_vendors",
+    "method": "GET",
+    "path": "/vendors",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Acme Auto Parts" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.name", "equals": "Acme Auto Parts" }
+    }
+  },
+  {
+    "name": "show_vendor_success",
+    "operation": "show_vendor",
+    "method": "GET",
+    "path": "/vendors/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Acme Auto Parts" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "name", "equals": "Acme Auto Parts" }
+    }
+  },
+  {
+    "name": "show_work_order_estimate_success",
+    "operation": "show_work_order_estimate",
+    "method": "GET",
+    "path": "/work_orders/1/estimate",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "services": [ { "id": 1, "name": "Brake Inspection" } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "services.0.name", "equals": "Brake Inspection" }
+    }
+  },
+  {
+    "name": "show_work_order_wip_success",
+    "operation": "show_work_order_wip",
+    "method": "GET",
+    "path": "/work_orders/1/wip",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "services": [ { "id": 1, "name": "Brake Inspection" } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "services.0.name", "equals": "Brake Inspection" }
+    }
+  },
+  {
+    "name": "show_work_order_inspection_success",
+    "operation": "show_work_order_inspection",
+    "method": "GET",
+    "path": "/work_orders/1/inspection",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "inspection_reports": [ { "id": 1, "name": "Courtesy Check" } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "inspection_reports.0.name", "equals": "Courtesy Check" }
+    }
+  },
+  {
+    "name": "show_work_order_parts_success",
+    "operation": "show_work_order_parts",
+    "method": "GET",
+    "path": "/work_orders/1/parts",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "services": [ { "id": 1, "name": "Brake Inspection" } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "services.0.name", "equals": "Brake Inspection" }
+    }
+  },
+  {
+    "name": "show_work_order_payments_success",
+    "operation": "show_work_order_payments",
+    "method": "GET",
+    "path": "/work_orders/1/payments",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "payments": [ { "id": 1, "amount_cents": 5650 } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "payments.0.amount_cents", "equals": 5650 }
+    }
+  },
+  {
+    "name": "create_work_order_payment_success",
+    "operation": "create_work_order_payment",
+    "method": "POST",
+    "path": "/work_orders/1/payments",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "payment": { "amount_cents": "50.00", "method": "cash" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "amount_cents": 5000, "method": "cash" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "amount_cents", "equals": 5000 }
+    }
+  }
+]

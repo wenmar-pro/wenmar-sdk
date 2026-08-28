@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -36,12 +37,13 @@ type MockResponse struct {
 }
 
 type Expectation struct {
-	RequestCount          int            `json:"requestCount"`
-	NoError               bool           `json:"noError"`
-	ErrorCode             string         `json:"errorCode"`
-	ErrorStatus           int            `json:"errorStatus"`
-	AssertNoOutboundRequest bool          `json:"assertNoOutboundRequest"`
-	ResponseBody          *BodyAssertion `json:"responseBody"`
+	RequestCount            int            `json:"requestCount"`
+	NoError                 bool           `json:"noError"`
+	ErrorCode               string         `json:"errorCode"`
+	ErrorStatus             int            `json:"errorStatus"`
+	FieldErrors             map[string][]string `json:"fieldErrors"`
+	AssertNoOutboundRequest bool           `json:"assertNoOutboundRequest"`
+	ResponseBody            *BodyAssertion `json:"responseBody"`
 }
 
 type BodyAssertion struct {
@@ -109,6 +111,17 @@ func runCase(t *testing.T, tc TestCase) {
 		}
 		if tc.Expect.ErrorStatus != 0 && apiErr.StatusCode != tc.Expect.ErrorStatus {
 			t.Errorf("expected status %d, got %d", tc.Expect.ErrorStatus, apiErr.StatusCode)
+		}
+		if tc.Expect.FieldErrors != nil {
+			got := apiErr.FieldErrors()
+			if len(got) != len(tc.Expect.FieldErrors) {
+				t.Errorf("expected %d field errors, got %d: %v", len(tc.Expect.FieldErrors), len(got), got)
+			}
+			for field, msgs := range tc.Expect.FieldErrors {
+				if !reflect.DeepEqual(got[field], msgs) {
+					t.Errorf("field %q: expected %v, got %v", field, msgs, got[field])
+				}
+			}
 		}
 	} else {
 		if !tc.Expect.NoError {
@@ -285,6 +298,127 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "show_location":
 		id := stringParam(tc.PathParams, "id")
 		resp, err := client.ShowLocation(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "list_customers_drivers":
+		customerID := intParam(tc.PathParams, "customer_id")
+		resp, err := client.ListDrivers(ctx, customerID)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_driver":
+		customerID := intParam(tc.PathParams, "customer_id")
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.ShowDriver(ctx, customerID, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "create_driver":
+		customerID := intParam(tc.PathParams, "customer_id")
+		body := tc.RequestBody
+		driver, _ := body["driver"].(map[string]any)
+		req := wenmar.CreateDriverRequest{}
+		if driver != nil {
+			req.FullName, _ = driver["full_name"].(string)
+			req.Phone, _ = driver["phone"].(string)
+		}
+		resp, err := client.CreateDriver(ctx, customerID, req)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "update_driver":
+		customerID := intParam(tc.PathParams, "customer_id")
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.UpdateDriver(ctx, customerID, id, wenmar.UpdateDriverRequest{})
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "delete_driver":
+		customerID := intParam(tc.PathParams, "customer_id")
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.DeleteDriver(ctx, customerID, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "list_customers_statements":
+		customerID := intParam(tc.PathParams, "customer_id")
+		resp, err := client.ListStatements(ctx, customerID)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_statement":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.ShowStatement(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "list_vendors":
+		resp, err := client.ListVendors(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_vendor":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.ShowVendor(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_work_order_estimate":
+		id := intParam(tc.PathParams, "work_order_id")
+		resp, err := client.ShowWorkOrderEstimate(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_work_order_wip":
+		id := intParam(tc.PathParams, "work_order_id")
+		resp, err := client.ShowWorkOrderWip(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_work_order_inspection":
+		id := intParam(tc.PathParams, "work_order_id")
+		resp, err := client.ShowWorkOrderInspection(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_work_order_parts":
+		id := intParam(tc.PathParams, "work_order_id")
+		resp, err := client.ShowWorkOrderParts(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "show_work_order_payments":
+		id := intParam(tc.PathParams, "work_order_id")
+		resp, err := client.ShowWorkOrderPayments(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "create_work_order_payment":
+		id := intParam(tc.PathParams, "work_order_id")
+		body := tc.RequestBody
+		payment, _ := body["payment"].(map[string]any)
+		req := wenmar.CreateWorkOrderPaymentRequest{}
+		if payment != nil {
+			req.AmountCents, _ = payment["amount_cents"].(string)
+			req.Method, _ = payment["method"].(string)
+		}
+		resp, err := client.CreateWorkOrderPayment(ctx, id, req)
 		if err != nil {
 			return nil, err
 		}

@@ -20,7 +20,7 @@ module Wenmar
         raise Wenmar::Error.new(
           code: "invalid_pagination",
           message: "pagination next URL is not same-origin as base URL",
-          details: {},
+          field_errors: {},
           status: 0
         )
       end

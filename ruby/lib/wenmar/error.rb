@@ -2,12 +2,12 @@ require "json"
 
 module Wenmar
   class Error < StandardError
-    attr_reader :code, :message, :details, :status, :request_id
+    attr_reader :code, :message, :field_errors, :status, :request_id
 
-    def initialize(code:, message:, details:, status:, request_id: nil)
+    def initialize(code:, message:, field_errors:, status:, request_id: nil)
       @code = code
       @message = message
-      @details = details
+      @field_errors = field_errors
       @status = status
       @request_id = request_id
       super("#{code}: #{message} (HTTP #{status})")
@@ -20,22 +20,22 @@ module Wenmar
       new(
         code: error["code"] || "unknown",
         message: error["message"] || "Unknown error",
-        details: error["details"] || {},
+        field_errors: error["field_errors"] || {},
         status: response.status,
         request_id: headers["X-Request-Id"]
       )
     rescue JSON::ParserError
-      new(code: "unknown", message: "Malformed error response", details: {}, status: response.status)
+      new(code: "unknown", message: "Malformed error response", field_errors: {}, status: response.status)
     end
 
-    # Extracts validation field errors from the details hash.
-    # The Wenmar API sends: details: { "first_name" => ["can't be blank"] }
+    # Extracts validation field errors from the field_errors hash.
+    # The Wenmar API sends: field_errors: { "first_name" => ["can't be blank"] }
     # Returns nil if there are no field errors.
-    def field_errors
-      return nil if @details.nil? || @details.empty?
+    def field_errors_by_field
+      return nil if @field_errors.nil? || @field_errors.empty?
 
       result = {}
-      @details.each do |field, raw|
+      @field_errors.each do |field, raw|
         case raw
         when Array
           msgs = raw.map(&:to_s)

@@ -52,6 +52,45 @@ targets:
   - id: work-order-update
     operation: update_work_order
     fixture: work_orders/get.json
+  - id: work-order-estimate
+    operation: show_work_order_estimate
+    fixture: work_orders/estimate.json
+  - id: work-order-wip
+    operation: show_work_order_wip
+    fixture: work_orders/wip.json
+  - id: work-order-inspection
+    operation: show_work_order_inspection
+    fixture: work_orders/inspection.json
+  - id: work-order-parts
+    operation: show_work_order_parts
+    fixture: work_orders/parts.json
+  - id: work-order-payments
+    operation: show_work_order_payments
+    fixture: work_orders/payments.json
+  - id: driver-get
+    operation: show_driver
+    fixture: drivers/get.json
+  - id: driver-list
+    operation: list_customers_drivers
+    fixture: drivers/list.json
+  - id: driver-create
+    operation: create_driver
+    fixture: drivers/get.json
+  - id: driver-update
+    operation: update_driver
+    fixture: drivers/get.json
+  - id: statement-get
+    operation: show_statement
+    fixture: statements/get.json
+  - id: statement-list
+    operation: list_customers_statements
+    fixture: statements/list.json
+  - id: vendor-get
+    operation: show_vendor
+    fixture: vendors/get.json
+  - id: vendor-list
+    operation: list_vendors
+    fixture: vendors/list.json
   - id: account-get
     operation: list_account
     fixture: account/get.json
@@ -63,5 +102,8 @@ covered_schemas:
   customer: [customer-get, customer-list, customer-create, customer-update]
   vehicle: [vehicle-get, vehicle-list, vehicle-create, vehicle-update]
   work_order: [work-order-get, work-order-list, work-order-create, work-order-update]
+  driver: [driver-get, driver-list, driver-create, driver-update]
+  statement: [statement-get, statement-list]
+  vendor: [vendor-get, vendor-list]
   account: [account-get]
   location: [location-get]

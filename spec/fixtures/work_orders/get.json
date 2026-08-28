@@ -39,10 +39,11 @@
   "url": "https://app.wenmarpro.com/work_orders/1.json",
   "app_url": "https://app.wenmarpro.com/work_orders/1",
   "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
-  "services_url": "https://app.wenmarpro.com/work_orders/1/services.json",
+  "services_url": "https://app.wenmarpro.com/work_orders/1/estimate.json",
   "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",
-  "messages_url": "https://app.wenmarpro.com/work_orders/1/messages.json",
-  "activity_url": "https://app.wenmarpro.com/work_orders/1/activity_logs.json",
+  "wip_url": "https://app.wenmarpro.com/work_orders/1/wip.json",
+  "inspection_url": "https://app.wenmarpro.com/work_orders/1/inspection.json",
+  "parts_url": "https://app.wenmarpro.com/work_orders/1/parts.json",
   "odometer_in": null,
   "odometer_out": null,
   "odometer_unit": "km",
@@ -70,7 +71,5 @@
   "return_method": "customer_pickup",
   "return_method_notes": null,
   "vehicle_keys_location": "front_desk",
-  "vehicle_location": "bay_2",
-  "services": [],
-  "payments": []
+  "vehicle_location": "bay_2"
 }

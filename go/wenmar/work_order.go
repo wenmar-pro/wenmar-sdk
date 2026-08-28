@@ -118,3 +118,90 @@ func (c *Client) CloseAsPaid(ctx context.Context, id int) error {
 func (c *Client) Reopen(ctx context.Context, id int) error {
 	return c.lifecycleAction(ctx, id, "reopen", nil)
 }
+
+// ShowWorkOrderEstimate returns the estimate tab (services) for a work order.
+func (c *Client) ShowWorkOrderEstimate(ctx context.Context, id int) (*generated.ShowWorkOrderEstimateResponse, error) {
+	resp, err := c.gen.ShowWorkOrderEstimateWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// ShowWorkOrderWip returns the work-in-progress tab (services) for a work order.
+func (c *Client) ShowWorkOrderWip(ctx context.Context, id int) (*generated.ShowWorkOrderWipResponse, error) {
+	resp, err := c.gen.ShowWorkOrderWipWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// ShowWorkOrderInspection returns the inspection tab (inspection reports) for a work order.
+func (c *Client) ShowWorkOrderInspection(ctx context.Context, id int) (*generated.ShowWorkOrderInspectionResponse, error) {
+	resp, err := c.gen.ShowWorkOrderInspectionWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// ShowWorkOrderParts returns the parts tab (services) for a work order.
+func (c *Client) ShowWorkOrderParts(ctx context.Context, id int) (*generated.ShowWorkOrderPartsResponse, error) {
+	resp, err := c.gen.ShowWorkOrderPartsWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// ShowWorkOrderPayments returns the payments tab (payments) for a work order.
+func (c *Client) ShowWorkOrderPayments(ctx context.Context, id int) (*generated.ShowWorkOrderPaymentsResponse, error) {
+	resp, err := c.gen.ShowWorkOrderPaymentsWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}
+
+// CreateWorkOrderPaymentRequest is the hand-written input for creating a payment.
+type CreateWorkOrderPaymentRequest struct {
+	AmountCents string
+	Method      string
+}
+
+// CreateWorkOrderPayment creates a payment against a work order.
+func (c *Client) CreateWorkOrderPayment(ctx context.Context, id int, req CreateWorkOrderPaymentRequest) (*generated.CreateWorkOrderPaymentResponse, error) {
+	body := generated.CreateWorkOrderPaymentJSONRequestBody{
+		Payment: struct {
+			AmountCents string `json:"amount_cents"`
+			Method      string `json:"method"`
+		}{
+			AmountCents: req.AmountCents,
+			Method:      req.Method,
+		},
+	}
+	resp, err := c.gen.CreateWorkOrderPaymentWithResponse(ctx, id, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	}
+	return resp, nil
+}

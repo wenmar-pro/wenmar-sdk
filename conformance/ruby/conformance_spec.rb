@@ -42,6 +42,9 @@ module Conformance
         else
           assert_equal tc.dig("expect", "errorCode"), e.code, "[#{tc["name"]}] error code" if tc.dig("expect", "errorCode")
           assert_equal tc.dig("expect", "errorStatus"), e.status, "[#{tc["name"]}] error status" if tc.dig("expect", "errorStatus")
+          if tc.dig("expect", "fieldErrors")
+            assert_equal tc.dig("expect", "fieldErrors"), e.field_errors_by_field, "[#{tc["name"]}] field errors"
+          end
         end
       end
 
@@ -107,6 +110,36 @@ module Conformance
         client.list_account
       when "show_location"
         client.show_location(tc.dig("pathParams", "id"))
+      when "list_customers_drivers"
+        client.list_drivers(tc.dig("pathParams", "customer_id"))
+      when "show_driver"
+        client.show_driver(tc.dig("pathParams", "customer_id"), tc.dig("pathParams", "id"))
+      when "create_driver"
+        client.create_driver(tc.dig("pathParams", "customer_id"), tc.dig("requestBody", "driver") || {})
+      when "update_driver"
+        client.update_driver(tc.dig("pathParams", "customer_id"), tc.dig("pathParams", "id"), tc.dig("requestBody", "driver") || {})
+      when "delete_driver"
+        client.delete_driver(tc.dig("pathParams", "customer_id"), tc.dig("pathParams", "id"))
+      when "list_customers_statements"
+        client.list_statements(tc.dig("pathParams", "customer_id"))
+      when "show_statement"
+        client.show_statement(tc.dig("pathParams", "id"))
+      when "list_vendors"
+        client.list_vendors
+      when "show_vendor"
+        client.show_vendor(tc.dig("pathParams", "id"))
+      when "show_work_order_estimate"
+        client.show_work_order_estimate(tc.dig("pathParams", "work_order_id"))
+      when "show_work_order_wip"
+        client.show_work_order_wip(tc.dig("pathParams", "work_order_id"))
+      when "show_work_order_inspection"
+        client.show_work_order_inspection(tc.dig("pathParams", "work_order_id"))
+      when "show_work_order_parts"
+        client.show_work_order_parts(tc.dig("pathParams", "work_order_id"))
+      when "show_work_order_payments"
+        client.show_work_order_payments(tc.dig("pathParams", "work_order_id"))
+      when "create_work_order_payment"
+        client.create_work_order_payment(tc.dig("pathParams", "work_order_id"), tc.dig("requestBody", "payment") || {})
       else
         raise "unknown operation: #{tc["operation"]}"
       end

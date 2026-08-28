@@ -8,7 +8,10 @@ module EnrichSpec
   RESOURCE_SCHEMAS = {
     "customers" => "Customer",
     "vehicles" => "Vehicle",
-    "work_orders" => "WorkOrder"
+    "work_orders" => "WorkOrder",
+    "drivers" => "Driver",
+    "statements" => "Statement",
+    "vendors" => "Vendor"
   }.freeze
 
   # Collection sub-actions that are NOT standard CRUD on a resource. The key is
@@ -17,6 +20,28 @@ module EnrichSpec
   SUB_ACTION_IDS = {
     "get /vehicles/vin_decode"       => "decode_vin",
     "get /vehicles/check_duplicate"  => "check_duplicate"
+  }.freeze
+
+  # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
+  # id would collide (e.g. drivers list vs show both derive to get_customers_driver)
+  # or whose semantic name differs from the generic derivation. Keyed by
+  # "METHOD path". These are stable contract names — do not rename once shipped.
+  NESTED_OPERATION_IDS = {
+    "get /customers/{customer_id}/drivers"              => "list_customers_drivers",
+    "post /customers/{customer_id}/drivers"             => "create_driver",
+    "get /customers/{customer_id}/drivers/{id}"         => "show_driver",
+    "patch /customers/{customer_id}/drivers/{id}"       => "update_driver",
+    "delete /customers/{customer_id}/drivers/{id}"       => "delete_driver",
+    "get /customers/{customer_id}/statements"           => "list_customers_statements",
+    "get /statements/{id}"                              => "show_statement",
+    "get /vendors"                                      => "list_vendors",
+    "get /vendors/{id}"                                 => "show_vendor",
+    "get /work_orders/{work_order_id}/estimate"         => "show_work_order_estimate",
+    "get /work_orders/{work_order_id}/wip"              => "show_work_order_wip",
+    "get /work_orders/{work_order_id}/inspection"        => "show_work_order_inspection",
+    "get /work_orders/{work_order_id}/parts"            => "show_work_order_parts",
+    "get /work_orders/{work_order_id}/payments"          => "show_work_order_payments",
+    "post /work_orders/{work_order_id}/payments"         => "create_work_order_payment"
   }.freeze
 
   def self.call(input)
@@ -74,6 +99,10 @@ module EnrichSpec
     # Sub-actions (e.g. /vehicles/vin_decode) map to a named operationId.
     sub_action = SUB_ACTION_IDS["#{method} #{path}"]
     return sub_action if sub_action
+
+    # Nested/sub-resource endpoints with explicit, stable operationIds.
+    nested = NESTED_OPERATION_IDS["#{method} #{path}"]
+    return nested if nested
 
     segments = path.split("/").reject(&:empty?)
     resource = segments[0] # "customers", "vehicles", "work_orders"
@@ -197,13 +226,32 @@ module EnrichSpec
 
     spec["paths"].each do |path, methods|
       segments = path.split("/").reject(&:empty?)
-      # Only top-level resource paths (e.g. /customers, /customers/{id}) map to
-      # a component schema. Nested paths (e.g. /customers/{customer_id}/vehicles)
-      # are sub-resources and must not pollute the parent schema.
-      next unless segments.length <= 2
 
+      # Resolve the resource + schema name. Top-level resource paths
+      # (e.g. /customers, /customers/{id}) map directly. Nested sub-resource
+      # paths (e.g. /customers/{customer_id}/drivers) resolve to the LAST
+      # segment when that segment is a registered resource (drivers,
+      # statements, vendors). Sub-collection/action paths (vehicles,
+      # work_orders, history, estimate, wip, inspection, parts, payments)
+      # are handled by their top-level paths and must not pollute the parent
+      # schema.
       resource = segments[0]
       schema_name = RESOURCE_SCHEMAS[resource]
+      if segments.length > 2
+        # Nested sub-resource paths (e.g. /customers/{customer_id}/drivers,
+        # /customers/{customer_id}/drivers/{id}) resolve to the third segment
+        # when it's a registered resource. Sub-collection/action paths
+        # (vehicles, work_orders, history, estimate, wip, inspection, parts,
+        # payments) are handled by their top-level paths and must not pollute
+        # the parent schema.
+        nested = segments[2]
+        if RESOURCE_SCHEMAS.key?(nested)
+          schema_name = RESOURCE_SCHEMAS[nested]
+          resource = nested
+        else
+          next
+        end
+      end
       next unless schema_name
 
       methods.each do |method, operation|

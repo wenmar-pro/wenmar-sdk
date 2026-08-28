@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Acme Auto Parts",
+    "vendor_type": "parts",
+    "payment_terms": "net_30",
+    "active": true,
+    "phone": "+1 416 555 0100",
+    "email": "orders@acmeparts.com",
+    "website": "https://acmeparts.com",
+    "account_number": "ACC-1001",
+    "notes": "Preferred brake parts supplier",
+    "quick_order": true,
+    "order_url_template": null,
+    "catalog_url_template": null,
+    "location": {
+      "id": 1,
+      "name": "Main Shop",
+      "url": "https://app.wenmarpro.com/locations/1.json"
+    },
+    "created_at": "2026-08-27T12:00:00.000-04:00",
+    "updated_at": "2026-08-27T12:00:00.000-04:00",
+    "url": "https://app.wenmarpro.com/vendors/1.json",
+    "app_url": "https://app.wenmarpro.com/vendors/1"
+  }
+]

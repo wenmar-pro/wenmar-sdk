@@ -94,7 +94,7 @@ module Wenmar
     end
 
     def test_show_customer_not_found
-      stub_api(:get, "/customers/999", { error: { code: "not_found", message: "Not found", details: {} } }, status: 404)
+      stub_api(:get, "/customers/999", { error: { code: "not_found", message: "Not found", field_errors: {} } }, status: 404)
       client = Client.new(token: "test", base_url: @base_url)
       err = assert_raises(Wenmar::Error) { client.show_customer(999) }
       assert_equal "not_found", err.code
@@ -126,7 +126,7 @@ module Wenmar
         requests << 1
         {
           status: 500,
-          body: { error: { code: "internal_error", message: "fail", details: {} } }.to_json,
+          body: { error: { code: "internal_error", message: "fail", field_errors: {} } }.to_json,
           headers: { "Content-Type" => "application/json" }
         }
       end
@@ -143,7 +143,7 @@ module Wenmar
         if requests.size == 1
           {
             status: 429,
-            body: { error: { code: "rate_limited", message: "slow", details: {} } }.to_json,
+            body: { error: { code: "rate_limited", message: "slow", field_errors: {} } }.to_json,
             headers: { "Content-Type" => "application/json", "Retry-After" => "0" }
           }
         else

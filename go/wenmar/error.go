@@ -8,13 +8,13 @@ import (
 )
 
 type APIError struct {
-	Code       string         `json:"code"`
-	Message    string         `json:"message"`
-	Details    map[string]any `json:"details"`
-	StatusCode int            `json:"-"`
-	Method     string         `json:"-"`
-	Path       string         `json:"-"`
-	RequestID  string         `json:"-"`
+	Code           string         `json:"code"`
+	Message        string         `json:"message"`
+	FieldErrorsMap map[string]any `json:"field_errors"`
+	StatusCode     int            `json:"-"`
+	Method         string         `json:"-"`
+	Path           string         `json:"-"`
+	RequestID      string         `json:"-"`
 }
 
 func (e *APIError) Error() string {
@@ -37,7 +37,7 @@ func ParseError(resp *http.Response) *APIError {
 	return ParseErrorBody(body, resp.StatusCode)
 }
 
-// ParseErrorBody parses the { "error": { code, message, details } } envelope
+// ParseErrorBody parses the { "error": { code, message, field_errors } } envelope
 // from an already-read response body. The generated oapi-codegen client drains
 // the body into a byte slice, so callers pass that slice here.
 func ParseErrorBody(body []byte, statusCode int) *APIError {
@@ -66,9 +66,9 @@ func ParseErrorBodyWithRequestAndID(body []byte, statusCode int, method, path, r
 
 	var envelope struct {
 		Error struct {
-			Code    string         `json:"code"`
-			Message string         `json:"message"`
-			Details map[string]any `json:"details"`
+			Code        string         `json:"code"`
+			Message     string         `json:"message"`
+			FieldErrors map[string]any `json:"field_errors"`
 		} `json:"error"`
 	}
 
@@ -83,7 +83,7 @@ func ParseErrorBodyWithRequestAndID(body []byte, statusCode int, method, path, r
 
 	apiErr.Code = envelope.Error.Code
 	apiErr.Message = envelope.Error.Message
-	apiErr.Details = envelope.Error.Details
+	apiErr.FieldErrorsMap = envelope.Error.FieldErrors
 	if apiErr.Code == "" {
 		apiErr.Code = statusFallbackCode(statusCode)
 		if apiErr.Code == "" {
@@ -106,18 +106,18 @@ func statusFallbackCode(statusCode int) string {
 	}
 }
 
-// FieldErrors extracts validation field errors from the Details map.
+// FieldErrors extracts validation field errors from the FieldErrors map.
 // The Wenmar API sends validation errors as:
-//   details: { "first_name": ["can't be blank"], "email": ["is invalid"] }
+//   field_errors: { "first_name": ["can't be blank"], "email": ["is invalid"] }
 // This method coerces the loosely-typed JSON values into a
 // map[string][]string for easy form-level error display.
 // Returns nil if there are no field errors.
 func (e *APIError) FieldErrors() map[string][]string {
-	if e.Details == nil {
+	if e.FieldErrorsMap == nil {
 		return nil
 	}
-	result := make(map[string][]string, len(e.Details))
-	for field, raw := range e.Details {
+	result := make(map[string][]string, len(e.FieldErrorsMap))
+	for field, raw := range e.FieldErrorsMap {
 		switch v := raw.(type) {
 		case []any:
 			msgs := make([]string, 0, len(v))

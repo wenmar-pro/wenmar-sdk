@@ -92,7 +92,7 @@ rescue Wenmar::Error => e
   e.code   # => "not_found"
   e.status # => 404
   e.message
-  e.details
+  e.field_errors
 end
 ```
 

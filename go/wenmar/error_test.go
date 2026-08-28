@@ -7,7 +7,7 @@ import (
 )
 
 func TestParseError_NotFound(t *testing.T) {
-	body := `{"error":{"code":"not_found","message":"Customer not found","details":{}}}`
+	body := `{"error":{"code":"not_found","message":"Customer not found","field_errors":{}}}`
 	resp := httptest.NewRecorder()
 	resp.WriteHeader(http.StatusNotFound)
 	resp.Body.WriteString(body)
@@ -26,7 +26,7 @@ func TestParseError_NotFound(t *testing.T) {
 }
 
 func TestParseError_ValidationFailed(t *testing.T) {
-	body := `{"error":{"code":"validation_failed","message":"Full name can't be blank","details":{"full_name":["can't be blank"]}}}`
+	body := `{"error":{"code":"validation_failed","message":"Full name can't be blank","field_errors":{"full_name":["can't be blank"]}}}`
 	resp := httptest.NewRecorder()
 	resp.WriteHeader(http.StatusUnprocessableEntity)
 	resp.Body.WriteString(body)
@@ -36,13 +36,13 @@ func TestParseError_ValidationFailed(t *testing.T) {
 	if apiErr.Code != "validation_failed" {
 		t.Errorf("expected code 'validation_failed', got '%s'", apiErr.Code)
 	}
-	if apiErr.Details["full_name"] == nil {
-		t.Error("expected details to have full_name key")
+	if apiErr.FieldErrorsMap["full_name"] == nil {
+		t.Error("expected field_errors to have full_name key")
 	}
 }
 
 func TestParseError_Unauthorized(t *testing.T) {
-	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","details":{}}}`
+	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","field_errors":{}}}`
 	resp := httptest.NewRecorder()
 	resp.WriteHeader(http.StatusUnauthorized)
 	resp.Body.WriteString(body)
@@ -71,7 +71,7 @@ func TestAPIError_ErrorStringWithRequest(t *testing.T) {
 }
 
 func TestParseErrorBodyWithRequest_SetsMethodAndPath(t *testing.T) {
-	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","details":{}}}`
+	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","field_errors":{}}}`
 	apiErr := ParseErrorBodyWithRequest([]byte(body), http.StatusUnauthorized, "GET", "/customers")
 	if apiErr.Method != "GET" {
 		t.Errorf("expected method 'GET', got '%s'", apiErr.Method)
@@ -85,7 +85,7 @@ func TestParseErrorBodyWithRequest_SetsMethodAndPath(t *testing.T) {
 }
 
 func TestParseErrorBody_LeavesMethodAndPathEmpty(t *testing.T) {
-	body := `{"error":{"code":"not_found","message":"Customer not found","details":{}}}`
+	body := `{"error":{"code":"not_found","message":"Customer not found","field_errors":{}}}`
 	apiErr := ParseErrorBody([]byte(body), http.StatusNotFound)
 	if apiErr.Method != "" {
 		t.Errorf("expected empty method, got '%s'", apiErr.Method)
@@ -115,7 +115,7 @@ func TestAPIError_FieldErrors(t *testing.T) {
 	apiErr := &APIError{
 		Code:       "validation_failed",
 		StatusCode: 422,
-		Details: map[string]any{
+		FieldErrorsMap: map[string]any{
 			"first_name": []any{"can't be blank"},
 			"last_name":  "can't be blank",
 			"email":      []any{"is invalid", "already taken"},
@@ -161,7 +161,7 @@ func TestAPIError_RequestID(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("X-Request-Id", "req-abc-123")
 		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error":{"code":"not_found","message":"x","details":{}}}`))
+		w.Write([]byte(`{"error":{"code":"not_found","message":"x","field_errors":{}}}`))
 	}))
 	defer ts.Close()
 
@@ -177,7 +177,7 @@ func TestAPIError_RequestID(t *testing.T) {
 }
 
 func TestParseError_507LimitExceeded(t *testing.T) {
-	body := []byte(`{"error":{"code":"limit_exceeded","message":"Account limit reached","details":{}}}`)
+	body := []byte(`{"error":{"code":"limit_exceeded","message":"Account limit reached","field_errors":{}}}`)
 	apiErr := ParseErrorBody(body, 507)
 	if apiErr.Code != "limit_exceeded" {
 		t.Errorf("expected code 'limit_exceeded', got %q", apiErr.Code)

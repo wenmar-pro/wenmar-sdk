@@ -118,6 +118,83 @@ module Wenmar
       nil
     end
 
+    def list_drivers(customer_id)
+      response = get("/customers/#{customer_id}/drivers")
+      wrap_with_paginator(response)
+    end
+
+    def show_driver(customer_id, id)
+      response = get("/customers/#{customer_id}/drivers/#{id}")
+      handle_response(response)
+    end
+
+    def create_driver(customer_id, attrs)
+      response = post("/customers/#{customer_id}/drivers", driver: attrs)
+      handle_response(response)
+    end
+
+    def update_driver(customer_id, id, attrs)
+      response = patch("/customers/#{customer_id}/drivers/#{id}", driver: attrs)
+      handle_response(response)
+    end
+
+    def delete_driver(customer_id, id)
+      response = delete("/customers/#{customer_id}/drivers/#{id}")
+      raise Wenmar::Error.from_response(response) if response.status >= 400
+
+      nil
+    end
+
+    def list_statements(customer_id)
+      response = get("/customers/#{customer_id}/statements")
+      wrap_with_paginator(response)
+    end
+
+    def show_statement(id)
+      response = get("/statements/#{id}")
+      handle_response(response)
+    end
+
+    def list_vendors
+      response = get("/vendors")
+      wrap_with_paginator(response)
+    end
+
+    def show_vendor(id)
+      response = get("/vendors/#{id}")
+      handle_response(response)
+    end
+
+    def show_work_order_estimate(id)
+      response = get("/work_orders/#{id}/estimate")
+      handle_response(response)
+    end
+
+    def show_work_order_wip(id)
+      response = get("/work_orders/#{id}/wip")
+      handle_response(response)
+    end
+
+    def show_work_order_inspection(id)
+      response = get("/work_orders/#{id}/inspection")
+      handle_response(response)
+    end
+
+    def show_work_order_parts(id)
+      response = get("/work_orders/#{id}/parts")
+      handle_response(response)
+    end
+
+    def show_work_order_payments(id)
+      response = get("/work_orders/#{id}/payments")
+      handle_response(response)
+    end
+
+    def create_work_order_payment(id, attrs)
+      response = post("/work_orders/#{id}/payments", payment: attrs)
+      handle_response(response)
+    end
+
     def list_account
       response = get("/account")
       handle_response(response)
