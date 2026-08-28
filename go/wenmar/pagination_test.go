@@ -3,6 +3,7 @@ package wenmar
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"sync/atomic"
@@ -87,6 +88,31 @@ func TestListCustomers_TypedResult(t *testing.T) {
 	}
 	if !result.Meta.HasMore {
 		t.Error("expected HasMore=true")
+	}
+}
+
+func TestGetAllCustomers_MaxItems(t *testing.T) {
+	var calls int32
+	var serverURL string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&calls, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=%d>; rel="next"`, serverURL, calls+1))
+		w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test-token")
+	items, truncated, err := c.GetAllCustomers(ctx, &GetAllOptions{MaxItems: 3})
+	if err != nil {
+		t.Fatalf("GetAllCustomers failed: %v", err)
+	}
+	if len(items) != 3 {
+		t.Errorf("expected 3 items (capped), got %d", len(items))
+	}
+	if !truncated {
+		t.Error("expected truncated=true when max_items hit")
 	}
 }
 

@@ -29,6 +29,22 @@ func (c *Client) ListCustomersTyped(ctx context.Context) (*ListResult[generated.
 	return result, nil
 }
 
+// GetAllCustomers auto-paginates and returns all customers, up to
+// MaxItems (default 1000 safety cap).
+func (c *Client) GetAllCustomers(ctx context.Context, opts *GetAllOptions) ([]generated.Customer, bool, error) {
+	if opts == nil {
+		opts = &GetAllOptions{MaxItems: 1000}
+	}
+	if opts.MaxItems == 0 {
+		opts.MaxItems = 1000
+	}
+	first, err := c.ListCustomersTyped(ctx)
+	if err != nil {
+		return nil, false, err
+	}
+	return getAll(ctx, first, opts)
+}
+
 // CreateCustomerRequest is the hand-written input for creating a customer.
 // Callers use this instead of the generated CreateCustomerJSONRequestBody.
 type CreateCustomerRequest struct {

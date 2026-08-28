@@ -55,6 +55,38 @@ func (r *ListResult[T]) HasNext() bool {
 	return r.Next != nil
 }
 
+// GetAllOptions controls auto-pagination behavior.
+type GetAllOptions struct {
+	MaxItems int // Stop after collecting this many items (0 = no cap)
+	MaxPages int // Stop after this many pages (0 = no cap)
+}
+
+// getAll auto-paginates and collects all items into a single slice.
+// If MaxItems or MaxPages is hit, truncated is true.
+func getAll[T any](ctx context.Context, first *ListResult[T], opts *GetAllOptions) (items []T, truncated bool, err error) {
+	if opts == nil {
+		opts = &GetAllOptions{}
+	}
+	items = append(items, first.Items...)
+	pages := 1
+	current := first
+	for current.Next != nil {
+		if opts.MaxPages > 0 && pages >= opts.MaxPages {
+			return items, true, nil
+		}
+		if opts.MaxItems > 0 && len(items) >= opts.MaxItems {
+			return items[:opts.MaxItems], true, nil
+		}
+		current, err = current.Next(ctx)
+		if err != nil {
+			return items, false, err
+		}
+		items = append(items, current.Items...)
+		pages++
+	}
+	return items, false, nil
+}
+
 // parseListResponse decodes a JSON array into a slice of T.
 func parseListResponse[T any](body []byte) ([]T, error) {
 	var items []T
