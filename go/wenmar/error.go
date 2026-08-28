@@ -46,7 +46,10 @@ func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string)
 	apiErr := &APIError{StatusCode: statusCode, Method: method, Path: path}
 
 	if len(body) == 0 {
-		apiErr.Code = "unknown"
+		apiErr.Code = statusFallbackCode(statusCode)
+		if apiErr.Code == "" {
+			apiErr.Code = "unknown"
+		}
 		apiErr.Message = fmt.Sprintf("HTTP %d with empty or unreadable body", statusCode)
 		return apiErr
 	}
@@ -60,7 +63,10 @@ func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string)
 	}
 
 	if err := json.Unmarshal(body, &envelope); err != nil {
-		apiErr.Code = "unknown"
+		apiErr.Code = statusFallbackCode(statusCode)
+		if apiErr.Code == "" {
+			apiErr.Code = "unknown"
+		}
 		apiErr.Message = fmt.Sprintf("HTTP %d with malformed body", statusCode)
 		return apiErr
 	}
@@ -69,8 +75,78 @@ func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string)
 	apiErr.Message = envelope.Error.Message
 	apiErr.Details = envelope.Error.Details
 	if apiErr.Code == "" {
-		apiErr.Code = "unknown"
+		apiErr.Code = statusFallbackCode(statusCode)
+		if apiErr.Code == "" {
+			apiErr.Code = "unknown"
+		}
 	}
 
 	return apiErr
+}
+
+// statusFallbackCode returns a code for a status when the body is empty
+// or malformed. This lets the SDK recognize 507 limit_exceeded even when
+// the server returns no body.
+func statusFallbackCode(statusCode int) string {
+	switch statusCode {
+	case 507:
+		return "limit_exceeded"
+	default:
+		return ""
+	}
+}
+
+// FieldErrors extracts validation field errors from the Details map.
+// The Wenmar API sends validation errors as:
+//   details: { "first_name": ["can't be blank"], "email": ["is invalid"] }
+// This method coerces the loosely-typed JSON values into a
+// map[string][]string for easy form-level error display.
+// Returns nil if there are no field errors.
+func (e *APIError) FieldErrors() map[string][]string {
+	if e.Details == nil {
+		return nil
+	}
+	result := make(map[string][]string, len(e.Details))
+	for field, raw := range e.Details {
+		switch v := raw.(type) {
+		case []any:
+			msgs := make([]string, 0, len(v))
+			for _, item := range v {
+				if s, ok := item.(string); ok {
+					msgs = append(msgs, s)
+				}
+			}
+			if len(msgs) > 0 {
+				result[field] = msgs
+			}
+		case string:
+			result[field] = []string{v}
+		case []string:
+			result[field] = v
+		}
+	}
+	if len(result) == 0 {
+		return nil
+	}
+	return result
+}
+
+// Retryable reports whether the error is worth retrying. Rate limits and
+// 5xx server errors are transient; validation, auth, not-found, forbidden,
+// and limit_exceeded (507) are terminal. The caller should still respect
+// method semantics: mutations should not be retried even if Retryable is
+// true (the retryTransport enforces this for 5xx).
+func (e *APIError) Retryable() bool {
+	switch e.Code {
+	case "rate_limited":
+		return true
+	case "internal_error":
+		return e.StatusCode >= 500
+	case "limit_exceeded":
+		return false
+	}
+	if e.StatusCode >= 500 && e.StatusCode != 507 {
+		return true
+	}
+	return false
 }

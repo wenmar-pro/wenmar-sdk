@@ -110,3 +110,73 @@ func TestParseError_MalformedBody(t *testing.T) {
 		t.Errorf("expected status 500, got %d", apiErr.StatusCode)
 	}
 }
+
+func TestAPIError_FieldErrors(t *testing.T) {
+	apiErr := &APIError{
+		Code:       "validation_failed",
+		StatusCode: 422,
+		Details: map[string]any{
+			"first_name": []any{"can't be blank"},
+			"last_name":  "can't be blank",
+			"email":      []any{"is invalid", "already taken"},
+		},
+	}
+
+	fe := apiErr.FieldErrors()
+	if len(fe) != 3 {
+		t.Fatalf("expected 3 field errors, got %d: %v", len(fe), fe)
+	}
+	if msgs, ok := fe["first_name"]; !ok || len(msgs) != 1 || msgs[0] != "can't be blank" {
+		t.Errorf("first_name mismatch: %v", fe["first_name"])
+	}
+	if msgs, ok := fe["email"]; !ok || len(msgs) != 2 {
+		t.Errorf("email mismatch: %v", fe["email"])
+	}
+}
+
+func TestAPIError_Retryable(t *testing.T) {
+	tests := []struct {
+		code     string
+		status   int
+		expected bool
+	}{
+		{"rate_limited", 429, true},
+		{"internal_error", 500, true},
+		{"internal_error", 502, true},
+		{"validation_failed", 422, false},
+		{"not_found", 404, false},
+		{"forbidden", 403, false},
+		{"unauthorized", 401, false},
+		{"limit_exceeded", 507, false},
+	}
+	for _, tt := range tests {
+		apiErr := &APIError{Code: tt.code, StatusCode: tt.status}
+		if got := apiErr.Retryable(); got != tt.expected {
+			t.Errorf("Code=%q Status=%d: expected Retryable=%v, got %v", tt.code, tt.status, tt.expected, got)
+		}
+	}
+}
+
+func TestParseError_507LimitExceeded(t *testing.T) {
+	body := []byte(`{"error":{"code":"limit_exceeded","message":"Account limit reached","details":{}}}`)
+	apiErr := ParseErrorBody(body, 507)
+	if apiErr.Code != "limit_exceeded" {
+		t.Errorf("expected code 'limit_exceeded', got %q", apiErr.Code)
+	}
+	if apiErr.StatusCode != 507 {
+		t.Errorf("expected status 507, got %d", apiErr.StatusCode)
+	}
+	if apiErr.Retryable() {
+		t.Error("limit_exceeded must not be retryable")
+	}
+}
+
+func TestParseError_507StatusFallback(t *testing.T) {
+	apiErr := ParseErrorBody([]byte{}, 507)
+	if apiErr.Code != "limit_exceeded" {
+		t.Errorf("expected code 'limit_exceeded' from status fallback, got %q", apiErr.Code)
+	}
+	if apiErr.Retryable() {
+		t.Error("limit_exceeded must not be retryable")
+	}
+}
