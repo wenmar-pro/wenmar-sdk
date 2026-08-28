@@ -18,12 +18,13 @@ type Client struct {
 	http     *http.Client
 	gen      *generated.ClientWithResponses
 	location string
+	hooks    Hooks
 }
 
 // NewClient creates a Wenmar API client from the given Config and
 // TokenProvider. The Config is deep-copied so callers cannot mutate the
 // client's configuration after construction.
-func NewClient(cfg Config, tp TokenProvider) (*Client, error) {
+func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, error) {
 	if tp == nil {
 		return nil, fmt.Errorf("token provider is required")
 	}
@@ -77,14 +78,19 @@ func NewClient(cfg Config, tp TokenProvider) (*Client, error) {
 		return nil, fmt.Errorf("failed to create client: %w", err)
 	}
 
-	return &Client{
+	c := &Client{
 		BaseURL: cfgCopy.BaseURL,
 		Token:   token,
 		cfg:     cfgCopy,
 		tp:      tp,
 		http:    httpClient,
 		gen:     gen,
-	}, nil
+		hooks:   NoopHooks{},
+	}
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c, nil
 }
 
 // requireHTTPS rejects non-https URLs unless the host is localhost or 127.0.0.1.
@@ -130,13 +136,18 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 }
 
 func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
 	resp, err := c.gen.ListCustomersWithResponse(ctx)
 	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
+		return nil, perr
 	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
 	return resp, nil
 }
 
