@@ -4,7 +4,7 @@ Public SDKs and OpenAPI spec for the Wenmar Pro automotive shop management API.
 
 - [Go SDK](go/README.md) — `github.com/wenmar-pro/wenmar-sdk/go`
 - [Ruby SDK](ruby/README.md) — the `wenmar` gem
-- [API spec & docs](https://github.com/Wenmar-Pro/wenmar-api) — the canonical OpenAPI spec and human-readable docs
+- [API spec & docs](https://github.com/wenmar-pro/wenmar-api) — the canonical OpenAPI spec and human-readable docs
 
 ## Quick start
 

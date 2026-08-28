@@ -62,6 +62,39 @@ func TestAPIError_ErrorString(t *testing.T) {
 	}
 }
 
+func TestAPIError_ErrorStringWithRequest(t *testing.T) {
+	err := &APIError{Code: "not_found", Message: "Customer not found", StatusCode: 404, Method: "GET", Path: "/customers/999"}
+	expected := "GET /customers/999 -> not_found: Customer not found (HTTP 404)"
+	if err.Error() != expected {
+		t.Errorf("expected '%s', got '%s'", expected, err.Error())
+	}
+}
+
+func TestParseErrorBodyWithRequest_SetsMethodAndPath(t *testing.T) {
+	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","details":{}}}`
+	apiErr := ParseErrorBodyWithRequest([]byte(body), http.StatusUnauthorized, "GET", "/customers")
+	if apiErr.Method != "GET" {
+		t.Errorf("expected method 'GET', got '%s'", apiErr.Method)
+	}
+	if apiErr.Path != "/customers" {
+		t.Errorf("expected path '/customers', got '%s'", apiErr.Path)
+	}
+	if apiErr.StatusCode != http.StatusUnauthorized {
+		t.Errorf("expected status 401, got %d", apiErr.StatusCode)
+	}
+}
+
+func TestParseErrorBody_LeavesMethodAndPathEmpty(t *testing.T) {
+	body := `{"error":{"code":"not_found","message":"Customer not found","details":{}}}`
+	apiErr := ParseErrorBody([]byte(body), http.StatusNotFound)
+	if apiErr.Method != "" {
+		t.Errorf("expected empty method, got '%s'", apiErr.Method)
+	}
+	if apiErr.Path != "" {
+		t.Errorf("expected empty path, got '%s'", apiErr.Path)
+	}
+}
+
 func TestParseError_MalformedBody(t *testing.T) {
 	body := `not json`
 	resp := httptest.NewRecorder()

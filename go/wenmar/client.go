@@ -28,6 +28,8 @@ func NewClient(baseURL, token string) (*Client, error) {
 		generated.WithHTTPClient(httpClient),
 		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("Authorization", "Bearer "+token)
+			req.Header.Set("Accept", "application/json")
+			req.Header.Set("User-Agent", "wenmar-sdk-go")
 			return nil
 		}),
 	)
@@ -43,13 +45,24 @@ func NewClient(baseURL, token string) (*Client, error) {
 	}, nil
 }
 
+// parseError converts a failed response into an *APIError, capturing the
+// request method and path for diagnostics.
+func parseError(body []byte, statusCode int, hr *http.Response) error {
+	method, path := "", ""
+	if hr != nil && hr.Request != nil {
+		method = hr.Request.Method
+		path = hr.Request.URL.Path
+	}
+	return ParseErrorBodyWithRequest(body, statusCode, method, path)
+}
+
 func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersResponse, error) {
 	resp, err := c.gen.ListCustomersWithResponse(ctx)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -69,7 +82,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCusto
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -80,7 +93,7 @@ func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustom
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -91,7 +104,7 @@ func (c *Client) UpdateCustomer(ctx context.Context, id int, body generated.Upda
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -102,7 +115,7 @@ func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesRespo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -113,7 +126,7 @@ func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicl
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -124,7 +137,7 @@ func (c *Client) CreateVehicle(ctx context.Context, body generated.CreateVehicle
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -135,7 +148,7 @@ func (c *Client) UpdateVehicle(ctx context.Context, id int, body generated.Updat
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -146,7 +159,7 @@ func (c *Client) DeleteVehicle(ctx context.Context, id int) (*generated.DeleteVe
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -158,7 +171,7 @@ func (c *Client) DecodeVin(ctx context.Context, vin string) (*generated.DecodeVi
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -170,7 +183,7 @@ func (c *Client) CheckDuplicate(ctx context.Context, vin string) (*generated.Che
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -181,7 +194,7 @@ func (c *Client) ListWorkOrders(ctx context.Context) (*generated.ListWorkOrdersR
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -201,7 +214,7 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWork
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -212,7 +225,7 @@ func (c *Client) CreateWorkOrder(ctx context.Context, body generated.CreateWorkO
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -223,7 +236,7 @@ func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body generated.Upd
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -234,7 +247,7 @@ func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*generated.Delete
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -245,7 +258,7 @@ func (c *Client) ListAccount(ctx context.Context) (*generated.ListAccountRespons
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }
@@ -256,7 +269,7 @@ func (c *Client) ShowLocation(ctx context.Context, id string) (*generated.ShowLo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 	}
 	return resp, nil
 }

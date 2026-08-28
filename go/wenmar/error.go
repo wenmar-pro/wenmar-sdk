@@ -12,10 +12,16 @@ type APIError struct {
 	Message    string         `json:"message"`
 	Details    map[string]any `json:"details"`
 	StatusCode int            `json:"-"`
+	Method     string         `json:"-"`
+	Path       string         `json:"-"`
 }
 
 func (e *APIError) Error() string {
-	return fmt.Sprintf("%s: %s (HTTP %d)", e.Code, e.Message, e.StatusCode)
+	s := fmt.Sprintf("%s: %s (HTTP %d)", e.Code, e.Message, e.StatusCode)
+	if e.Method != "" && e.Path != "" {
+		s = fmt.Sprintf("%s %s -> %s", e.Method, e.Path, s)
+	}
+	return s
 }
 
 // ParseError reads the error envelope from a failed response body.
@@ -31,7 +37,13 @@ func ParseError(resp *http.Response) *APIError {
 // from an already-read response body. The generated oapi-codegen client drains
 // the body into a byte slice, so callers pass that slice here.
 func ParseErrorBody(body []byte, statusCode int) *APIError {
-	apiErr := &APIError{StatusCode: statusCode}
+	return ParseErrorBodyWithRequest(body, statusCode, "", "")
+}
+
+// ParseErrorBodyWithRequest is like ParseErrorBody but also records the HTTP
+// method and request path that produced the error, for richer diagnostics.
+func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string) *APIError {
+	apiErr := &APIError{StatusCode: statusCode, Method: method, Path: path}
 
 	if len(body) == 0 {
 		apiErr.Code = "unknown"

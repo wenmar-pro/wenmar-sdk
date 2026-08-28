@@ -19,7 +19,7 @@ jobs:
 
       - name: Fetch latest spec from wenmar-api
         run: |
-          git clone --depth 1 https://github.com/Wenmar-Pro/wenmar-api.git /tmp/wenmar-api
+          git clone --depth 1 https://github.com/wenmar-pro/wenmar-api.git /tmp/wenmar-api
           cp /tmp/wenmar-api/spec/openapi.yaml spec/openapi.yaml
 
       - name: Check if spec changed
