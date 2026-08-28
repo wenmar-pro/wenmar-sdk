@@ -24,5 +24,32 @@ module Wenmar
     rescue JSON::ParserError
       new(code: "unknown", message: "Malformed error response", details: {}, status: response.status)
     end
+
+    # Extracts validation field errors from the details hash.
+    # The Wenmar API sends: details: { "first_name" => ["can't be blank"] }
+    # Returns nil if there are no field errors.
+    def field_errors
+      return nil if @details.nil? || @details.empty?
+
+      result = {}
+      @details.each do |field, raw|
+        case raw
+        when Array
+          msgs = raw.map(&:to_s)
+          result[field] = msgs if msgs.any?
+        when String
+          result[field] = [raw]
+        end
+      end
+      result.empty? ? nil : result
+    end
+
+    # Reports whether the error is worth retrying.
+    def retryable?
+      return true if @code == "rate_limited"
+      return false if @code == "limit_exceeded"
+
+      @status >= 500 && @status != 507
+    end
   end
 end
