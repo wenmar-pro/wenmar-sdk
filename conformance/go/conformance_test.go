@@ -73,7 +73,7 @@ func runCase(t *testing.T, tc TestCase) {
 		if idx < len(tc.MockResponses) {
 			resp = tc.MockResponses[idx]
 		} else {
-			resp = MockResponse{Status: 200, Body: json.RawMessage(`{"data":[]}`)}
+			resp = MockResponse{Status: 200, Body: json.RawMessage(`[]`)}
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -137,14 +137,18 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		if err != nil {
 			return nil, err
 		}
+		body, err := decodeBody(resp.Body)
+		if err != nil {
+			return nil, err
+		}
 		for paginator.HasNext() {
 			next, err := paginator.NextPage(ctx)
 			if err != nil {
 				return nil, err
 			}
-			resp = next.(*generated.ListCustomersResponse)
+			body = next
 		}
-		return decodeBody(resp.Body)
+		return body, nil
 	case "show_customer":
 		id := intParam(tc.PathParams, "id")
 		resp, err := client.ShowCustomer(ctx, id)
@@ -248,14 +252,18 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		if err != nil {
 			return nil, err
 		}
+		body, err := decodeBody(resp.Body)
+		if err != nil {
+			return nil, err
+		}
 		for paginator.HasNext() {
 			next, err := paginator.NextPage(ctx)
 			if err != nil {
 				return nil, err
 			}
-			resp = next.(*generated.ListWorkOrdersResponse)
+			body = next
 		}
-		return decodeBody(resp.Body)
+		return body, nil
 	case "show_work_order":
 		id := intParam(tc.PathParams, "id")
 		resp, err := client.ShowWorkOrder(ctx, id)
