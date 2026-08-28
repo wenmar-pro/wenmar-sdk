@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: Wenmar SDK retry metadata
+  version: 1.0.0
+actions:
+  - target: "$.paths.*.*"
+    update:
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on: [429, 500, 502, 503, 504]
+        method-gated: true

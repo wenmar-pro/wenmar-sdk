@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: Wenmar SDK pagination metadata
+  version: 1.0.0
+actions:
+  - target: "$.paths['/customers'].get"
+    update:
+      x-paginated: true
+      x-pagination-header: Link
+      x-pagination-format: rfc5988
+  - target: "$.paths['/vehicles'].get"
+    update:
+      x-paginated: true
+      x-pagination-header: Link
+      x-pagination-format: rfc5988
+  - target: "$.paths['/work_orders'].get"
+    update:
+      x-paginated: true
+      x-pagination-header: Link
+      x-pagination-format: rfc5988

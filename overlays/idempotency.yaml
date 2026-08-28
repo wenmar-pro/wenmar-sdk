@@ -1,0 +1,8 @@
+overlay: 1.0.0
+info:
+  title: Wenmar SDK idempotency metadata
+  version: 1.0.0
+actions:
+  - target: "$.paths['/customers'].post"
+    update:
+      x-idempotent: false

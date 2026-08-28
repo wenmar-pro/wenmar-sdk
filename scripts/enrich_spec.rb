@@ -38,8 +38,36 @@ module EnrichSpec
     end
 
     apply_example_overrides!(spec)
+    apply_overlays!(spec)
 
     spec
+  end
+
+  # Applies the simplified OpenAPI Overlay files in overlays/*.yaml to the
+  # enriched spec. This is a simple YAML merge, not a full OpenAPI Overlay
+  # implementation. Supported targets:
+  #   "$.paths.*.*"                 — every operation
+  #   "$.paths['/path'].method"     — a single operation
+  def self.apply_overlays!(spec)
+    overlay_dir = File.expand_path("../overlays", __dir__)
+    Dir.glob(File.join(overlay_dir, "*.yaml")).sort.each do |file|
+      overlay = YAML.load_file(file)
+      (overlay["actions"] || []).each do |action|
+        target = action["target"]
+        update = action["update"] || {}
+        next unless target
+
+        if target == "$.paths.*.*"
+          (spec["paths"] || {}).each_value do |methods|
+            methods.each_value { |operation| operation.merge!(update) }
+          end
+        elsif target =~ %r{\A\$\.paths\['([^']+)'\]\.(\w+)\z}
+          path, method = Regexp.last_match(1), Regexp.last_match(2)
+          operation = spec.dig("paths", path, method)
+          operation.merge!(update) if operation
+        end
+      end
+    end
   end
 
   def self.derive_operation_id(path, method)
