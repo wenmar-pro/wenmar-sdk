@@ -14,11 +14,11 @@ module Wenmar
     def next_page
       return nil unless has_next?
 
-      if @next_url.include?("/customers")
-        @client.list_customers
-      elsif @next_url.include?("/work_orders")
-        @client.list_work_orders
-      end
+      # Follow the actual next URL from the Link header, which includes
+      # query params like ?page=2. This performs a raw GET against the URL.
+      response = @client.send(:get_raw, @next_url)
+      @next_url = self.class.parse_link_header(response.headers["Link"], "next")
+      JSON.parse(response.body)
     end
 
     def self.parse_link_header(header, rel)

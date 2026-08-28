@@ -167,6 +167,15 @@ module Wenmar
       response
     end
 
+    def get_raw(url)
+      response = @connection.get(url) do |req|
+        req.headers["Accept"] = "application/json"
+      end
+      raise Wenmar::Error.from_response(response) if response.status >= 400
+
+      response
+    end
+
     def path_with_query(path, params)
       return path if params.empty?
 

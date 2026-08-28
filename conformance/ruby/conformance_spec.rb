@@ -54,8 +54,9 @@ module Conformance
         client.list_customers
       when "list_customers_paginated"
         result = client.list_customers
-        while result.paginator.has_next?
-          result = result.paginator.next_page
+        paginator = result.paginator
+        while paginator.has_next?
+          result = paginator.next_page
         end
         result
       when "show_customer"
@@ -82,8 +83,9 @@ module Conformance
         client.list_work_orders
       when "list_work_orders_paginated"
         result = client.list_work_orders
-        while result.paginator.has_next?
-          result = result.paginator.next_page
+        paginator = result.paginator
+        while paginator.has_next?
+          result = paginator.next_page
         end
         result
       when "show_work_order"

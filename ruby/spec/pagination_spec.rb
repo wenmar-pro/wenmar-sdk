@@ -35,13 +35,29 @@ module Wenmar
       assert_equal "https://api.example.com/customers?page=2", paginator.next_url
     end
 
-    def test_next_page_follows_link
-      stub_api(:get, "/customers", [{ id: 1 }], link: '<https://api.example.com/customers?page=2>; rel="next"')
-      stub_api(:get, "/customers", [{ id: 2 }])
+    def test_next_page_follows_actual_url
+      # First response: page 1 data + Link header pointing to ?page=2
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 1, "name" => "Page1" }].to_json,
+          headers: { "Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\"" }
+        )
+
+      # Second response: page 2 data (must be a DIFFERENT stub matching ?page=2)
+      stub_request(:get, "#{@base_url}/customers?page=2")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 2, "name" => "Page2" }].to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
       client = Client.new(token: "test", base_url: @base_url)
-      paginator = Paginator.new(next_url: "#{@base_url}/customers?page=2", client: client)
-      page = paginator.next_page
-      assert_equal 2, page.first["id"]
+      result = client.list_customers
+      assert_equal 1, result.first["id"]
+
+      page2 = result.paginator.next_page
+      assert_equal 2, page2.first["id"], "expected page 2 data (id=2), got #{page2.inspect}"
     end
 
     private
