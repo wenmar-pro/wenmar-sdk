@@ -13,7 +13,6 @@ import (
 	"testing"
 
 	wenmar "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var ctx = context.Background()
@@ -161,22 +160,19 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "create_customer":
 		body := tc.RequestBody
 		customer, _ := body["customer"].(map[string]any)
-		reqBody := generated.CreateCustomerJSONBody{}
+		req := wenmar.CreateCustomerRequest{}
 		if customer != nil {
-			firstName, _ := customer["first_name"].(string)
-			lastName, _ := customer["last_name"].(string)
-			reqBody.Customer.FirstName = firstName
-			reqBody.Customer.LastName = lastName
+			req.FirstName, _ = customer["first_name"].(string)
+			req.LastName, _ = customer["last_name"].(string)
 		}
-		resp, err := client.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody(reqBody))
+		resp, err := client.CreateCustomer(ctx, req)
 		if err != nil {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
 	case "update_customer":
 		id := intParam(tc.PathParams, "id")
-		reqBody := generated.UpdateCustomerJSONBody{}
-		resp, err := client.UpdateCustomer(ctx, id, generated.UpdateCustomerJSONRequestBody(reqBody))
+		resp, err := client.UpdateCustomer(ctx, id, wenmar.UpdateCustomerRequest{})
 		if err != nil {
 			return nil, err
 		}
@@ -190,14 +186,14 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "create_vehicle":
 		body := tc.RequestBody
 		vehicle, _ := body["vehicle"].(map[string]any)
-		reqBody := generated.CreateVehicleJSONBody{}
+		req := wenmar.CreateVehicleRequest{}
 		if vehicle != nil {
-			reqBody.Vehicle.Make, _ = vehicle["make"].(string)
-			reqBody.Vehicle.Model, _ = vehicle["model"].(string)
-			reqBody.Vehicle.Year = intParamValue(vehicle, "year")
-			reqBody.Vehicle.CustomerId = intParamValue(vehicle, "customer_id")
+			req.Make, _ = vehicle["make"].(string)
+			req.Model, _ = vehicle["model"].(string)
+			req.Year = intParamValue(vehicle, "year")
+			req.CustomerID = intParamValue(vehicle, "customer_id")
 		}
-		resp, err := client.CreateVehicle(ctx, generated.CreateVehicleJSONRequestBody(reqBody))
+		resp, err := client.CreateVehicle(ctx, req)
 		if err != nil {
 			return nil, err
 		}
@@ -206,11 +202,11 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		id := intParam(tc.PathParams, "id")
 		body := tc.RequestBody
 		vehicle, _ := body["vehicle"].(map[string]any)
-		reqBody := generated.UpdateVehicleJSONBody{}
+		req := wenmar.UpdateVehicleRequest{}
 		if vehicle != nil {
-			reqBody.Vehicle.Make, _ = vehicle["make"].(string)
+			req.Make, _ = vehicle["make"].(string)
 		}
-		resp, err := client.UpdateVehicle(ctx, id, generated.UpdateVehicleJSONRequestBody(reqBody))
+		resp, err := client.UpdateVehicle(ctx, id, req)
 		if err != nil {
 			return nil, err
 		}

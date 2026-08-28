@@ -6,8 +6,6 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
-
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var ctx = context.Background()
@@ -98,13 +96,9 @@ func TestClient_CreateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	body := generated.CreateVehicleJSONRequestBody{}
-	body.Vehicle.Make = "Honda"
-	body.Vehicle.Model = "Civic"
-	body.Vehicle.Year = 2020
-	body.Vehicle.CustomerId = 1
+	req := CreateVehicleRequest{Make: "Honda", Model: "Civic", Year: 2020, CustomerID: 1}
 
-	resp, err := c.CreateVehicle(ctx, body)
+	resp, err := c.CreateVehicle(ctx, req)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -125,10 +119,9 @@ func TestClient_UpdateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	body := generated.UpdateVehicleJSONRequestBody{}
-	body.Vehicle.Make = "Toyota"
+	req := UpdateVehicleRequest{Make: "Toyota"}
 
-	resp, err := c.UpdateVehicle(ctx, 1, body)
+	resp, err := c.UpdateVehicle(ctx, 1, req)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -210,9 +203,9 @@ func TestClient_UpdateCustomer(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	body := generated.UpdateCustomerJSONRequestBody{}
+	req := UpdateCustomerRequest{}
 
-	resp, err := c.UpdateCustomer(ctx, 1, body)
+	resp, err := c.UpdateCustomer(ctx, 1, req)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

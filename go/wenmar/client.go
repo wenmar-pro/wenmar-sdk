@@ -160,28 +160,6 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCusto
 	return resp, nil
 }
 
-func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustomerJSONRequestBody) (*generated.CreateCustomerResponse, error) {
-	resp, err := c.gen.CreateCustomerWithResponse(ctx, body)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) UpdateCustomer(ctx context.Context, id int, body generated.UpdateCustomerJSONRequestBody) (*generated.UpdateCustomerResponse, error) {
-	resp, err := c.gen.UpdateCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
 func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesResponse, error) {
 	resp, err := c.gen.ListVehiclesWithResponse(ctx)
 	if err != nil {
@@ -195,28 +173,6 @@ func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesRespo
 
 func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicleResponse, error) {
 	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) CreateVehicle(ctx context.Context, body generated.CreateVehicleJSONRequestBody) (*generated.CreateVehicleResponse, error) {
-	resp, err := c.gen.CreateVehicleWithResponse(ctx, body)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) UpdateVehicle(ctx context.Context, id int, body generated.UpdateVehicleJSONRequestBody) (*generated.UpdateVehicleResponse, error) {
-	resp, err := c.gen.UpdateVehicleWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -283,28 +239,6 @@ func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*generated.L
 
 func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWorkOrderResponse, error) {
 	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) CreateWorkOrder(ctx context.Context, body generated.CreateWorkOrderJSONRequestBody) (*generated.CreateWorkOrderResponse, error) {
-	resp, err := c.gen.CreateWorkOrderWithResponse(ctx, body)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body generated.UpdateWorkOrderJSONRequestBody) (*generated.UpdateWorkOrderResponse, error) {
-	resp, err := c.gen.UpdateWorkOrderWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err
 	}
