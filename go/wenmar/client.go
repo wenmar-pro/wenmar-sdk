@@ -17,8 +17,14 @@ type Client struct {
 	tp       TokenProvider
 	http     *http.Client
 	gen      *generated.ClientWithResponses
-	location string
+	location *locationHolder
 	hooks    Hooks
+}
+
+// locationHolder is a shared pointer so a scoped LocationClient and its
+// underlying Client inject the same X-Wenmar-Location header.
+type locationHolder struct {
+	id string
 }
 
 // NewClient creates a Wenmar API client from the given Config and
@@ -65,12 +71,16 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 		}
 	}
 
+	loc := &locationHolder{}
 	gen, err := generated.NewClientWithResponses(cfgCopy.BaseURL,
 		generated.WithHTTPClient(httpClient),
 		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("Authorization", "Bearer "+token)
 			req.Header.Set("Accept", "application/json")
 			req.Header.Set("User-Agent", fmt.Sprintf("wenmar-sdk-go/%s", Version))
+			if loc.id != "" {
+				req.Header.Set("X-Wenmar-Location", loc.id)
+			}
 			return nil
 		}),
 	)
@@ -79,20 +89,20 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 	}
 
 	c := &Client{
-		BaseURL: cfgCopy.BaseURL,
-		Token:   token,
-		cfg:     cfgCopy,
-		tp:      tp,
-		http:    httpClient,
-		gen:     gen,
-		hooks:   NoopHooks{},
+		BaseURL:  cfgCopy.BaseURL,
+		Token:    token,
+		cfg:      cfgCopy,
+		tp:       tp,
+		http:     httpClient,
+		gen:      gen,
+		location: loc,
+		hooks:    NoopHooks{},
 	}
 	for _, opt := range opts {
 		opt(c)
 	}
 	return c, nil
 }
-
 // requireHTTPS rejects non-https URLs unless the host is localhost or 127.0.0.1.
 func requireHTTPS(baseURL string) error {
 	parsed, err := url.Parse(baseURL)
