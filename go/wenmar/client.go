@@ -206,6 +206,39 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWork
 	return resp, nil
 }
 
+func (c *Client) CreateWorkOrder(ctx context.Context, body generated.CreateWorkOrderJSONRequestBody) (*generated.CreateWorkOrderResponse, error) {
+	resp, err := c.gen.CreateWorkOrderWithResponse(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body generated.UpdateWorkOrderJSONRequestBody) (*generated.UpdateWorkOrderResponse, error) {
+	resp, err := c.gen.UpdateWorkOrderWithResponse(ctx, id, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*generated.DeleteWorkOrderResponse, error) {
+	resp, err := c.gen.DeleteWorkOrderWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
 func (c *Client) ListAccount(ctx context.Context) (*generated.ListAccountResponse, error) {
 	resp, err := c.gen.ListAccountWithResponse(ctx)
 	if err != nil {
