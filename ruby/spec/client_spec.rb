@@ -120,6 +120,47 @@ module Wenmar
       assert_kind_of Array, result
     end
 
+    def test_post_on_500_not_retried
+      requests = []
+      stub_request(:post, "#{@base_url}/customers").to_return do |_request|
+        requests << 1
+        {
+          status: 500,
+          body: { error: { code: "internal_error", message: "fail", details: {} } }.to_json,
+          headers: { "Content-Type" => "application/json" }
+        }
+      end
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      assert_raises(Wenmar::Error) { client.create_customer(first_name: "Test") }
+      assert_equal 1, requests.size, "POST must not retry on 500 (got #{requests.size} requests)"
+    end
+
+    def test_post_on_429_retried
+      requests = []
+      stub_request(:post, "#{@base_url}/customers").to_return do |_request|
+        requests << 1
+        if requests.size == 1
+          {
+            status: 429,
+            body: { error: { code: "rate_limited", message: "slow", details: {} } }.to_json,
+            headers: { "Content-Type" => "application/json", "Retry-After" => "0" }
+          }
+        else
+          {
+            status: 201,
+            body: { id: 1 }.to_json,
+            headers: { "Content-Type" => "application/json" }
+          }
+        end
+      end
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      result = client.create_customer(first_name: "Test")
+      assert_equal 2, requests.size, "429 on POST should retry (got #{requests.size})"
+      assert_equal 1, result["id"]
+    end
+
     def test_conditional_get_returns_cached_body_on_304
       body = { id: 1, full_name: "Jane" }.to_json
       stub_request(:get, "#{@base_url}/customers/1")

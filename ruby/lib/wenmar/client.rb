@@ -12,7 +12,8 @@ module Wenmar
 
       @token = token
       @base_url = base_url
-      @connection = build_connection
+      @read_connection = build_connection(retry_statuses: [429, 500, 502, 503, 504])
+      @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete])
       @cache = {}
     end
 
@@ -121,12 +122,14 @@ module Wenmar
       result
     end
 
-    def build_connection
+    def build_connection(retry_statuses:, methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS)
       Faraday.new(url: @base_url) do |conn|
         conn.headers["Authorization"] = "Bearer #{@token}"
         conn.headers["Content-Type"] = "application/json"
+        conn.headers["User-Agent"] = "wenmar-sdk-ruby"
         conn.request :retry, max: 3, interval: 0.5, backoff_factor: 2,
-                    retry_statuses: [429, 500, 502, 503, 504],
+                    retry_statuses: retry_statuses,
+                    methods: methods,
                     exceptions: [Faraday::Error, Faraday::ServerError],
                     retry_block: lambda { |env:, **_kwargs|
                       if env.response && env.response.headers["Retry-After"]
@@ -141,7 +144,7 @@ module Wenmar
       cache_key = path_with_query(path, params)
       cached = @cache[cache_key]
 
-      response = @connection.get(path, params) do |req|
+      response = @read_connection.get(path, params) do |req|
         if cached
           req.headers["If-None-Match"] = cached[:etag] if cached[:etag]
           req.headers["If-Modified-Since"] = cached[:last_modified] if cached[:last_modified]
@@ -168,7 +171,7 @@ module Wenmar
     end
 
     def get_raw(url)
-      response = @connection.get(url) do |req|
+      response = @read_connection.get(url) do |req|
         req.headers["Accept"] = "application/json"
       end
       raise Wenmar::Error.from_response(response) if response.status >= 400
@@ -183,19 +186,19 @@ module Wenmar
     end
 
     def post(path, body)
-      @connection.post(path) do |req|
+      @write_connection.post(path) do |req|
         req.body = body.to_json
       end
     end
 
     def patch(path, body)
-      @connection.patch(path) do |req|
+      @write_connection.patch(path) do |req|
         req.body = body.to_json
       end
     end
 
     def delete(path)
-      @connection.delete(path)
+      @write_connection.delete(path)
     end
 
     def handle_response(response)
