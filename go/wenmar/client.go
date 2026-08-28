@@ -204,7 +204,7 @@ func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*generated.L
 	if err != nil {
 		return nil, nil, err
 	}
-	paginator := newWorkOrdersPaginatorFromResponse(resp.HTTPResponse, c)
+	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
 	return resp, paginator, nil
 }
 

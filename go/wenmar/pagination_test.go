@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"sync/atomic"
 	"testing"
 )
 
@@ -114,5 +115,59 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 	}
 	if len(page2) != 1 || page2[0].(map[string]any)["id"] != float64(2) {
 		t.Fatalf("expected page 2 customer (id=2), got %v", page2)
+	}
+}
+
+func TestPagination_RejectsCrossOriginNextURL(t *testing.T) {
+	var outboundRequests int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&outboundRequests, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Link", `<https://attacker.example.com/customers?page=2>; rel="next"`)
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[{"id":1}]`))
+	}))
+	defer ts.Close()
+
+	var attackerRequests int32
+	var attackerGotAuth bool
+	attacker := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&attackerRequests, 1)
+		if r.Header.Get("Authorization") != "" {
+			attackerGotAuth = true
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[]`))
+	}))
+	defer attacker.Close()
+
+	c, _ := NewClient(ts.URL, "test-token")
+	resp, paginator, err := c.ListCustomersWithPagination(ctx)
+	if err != nil {
+		t.Fatalf("first page fetch failed: %v", err)
+	}
+	resp.HTTPResponse.Body.Close()
+
+	if !paginator.HasNext() {
+		t.Fatal("expected paginator to have a next URL")
+	}
+
+	_, err = paginator.NextPage(ctx)
+	if err == nil {
+		t.Fatal("expected error on cross-origin next URL, got nil")
+	}
+	apiErr, ok := err.(*APIError)
+	if !ok {
+		t.Fatalf("expected *APIError, got %T: %v", err, err)
+	}
+	if apiErr.Code != "invalid_pagination" {
+		t.Errorf("expected code 'invalid_pagination', got %q", apiErr.Code)
+	}
+
+	if attackerRequests != 0 {
+		t.Errorf("expected 0 requests to attacker origin, got %d", attackerRequests)
+	}
+	if attackerGotAuth {
+		t.Error("Authorization header leaked to cross-origin attacker server")
 	}
 }
