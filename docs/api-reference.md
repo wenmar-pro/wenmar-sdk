@@ -14,7 +14,7 @@ All requests require a bearer token (see [authentication](authentication.md)).
 ## List customers
 
 ```
-GET /api/customers
+GET /customers
 ```
 
 Paginated. Response carries a `Link` header for the next page.
@@ -34,14 +34,14 @@ Paginated. Response carries a `Link` header for the next page.
 ```
 
 ```bash
-curl "https://app.wenmarpro.com/api/customers" \
+curl "https://app.wenmarpro.com/customers" \
   -H "Authorization: Bearer YOUR_API_TOKEN"
 ```
 
 ## Create customer
 
 ```
-POST /api/customers
+POST /customers
 ```
 
 **Request body** — `customer` object:
@@ -59,7 +59,7 @@ POST /api/customers
 ```
 
 ```bash
-curl "https://app.wenmarpro.com/api/customers" \
+curl "https://app.wenmarpro.com/customers" \
   -X POST -H "Authorization: Bearer YOUR_API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"customer":{"full_name":"Jane Doe"}}'
@@ -74,7 +74,7 @@ curl "https://app.wenmarpro.com/api/customers" \
 ## Show customer
 
 ```
-GET /api/customers/{id}
+GET /customers/{id}
 ```
 
 | Param | Type | Required |
@@ -96,7 +96,7 @@ GET /api/customers/{id}
 ## Show vehicle
 
 ```
-GET /api/vehicles/{id}
+GET /vehicles/{id}
 ```
 
 | Param | Type | Required |
@@ -112,7 +112,7 @@ GET /api/vehicles/{id}
 ## List work orders
 
 ```
-GET /api/work_orders
+GET /work_orders
 ```
 
 Paginated via the `Link` header.
@@ -139,7 +139,7 @@ Paginated via the `Link` header.
 ## Show work order
 
 ```
-GET /api/work_orders/{id}
+GET /work_orders/{id}
 ```
 
 | Param | Type | Required |

@@ -1,6 +1,6 @@
 # Pagination
 
-List endpoints — `GET /api/customers` and `GET /api/work_orders` — paginate
+List endpoints — `GET /customers` and `GET /work_orders` — paginate
 results using [RFC 5988](https://www.rfc-editor.org/rfc/rfc5988) `Link`
 headers.
 
@@ -9,7 +9,7 @@ headers.
 Each response includes a `Link` header pointing to the next page:
 
 ```
-Link: <https://app.wenmarpro.com/api/customers?page=2>; rel="next"
+Link: <https://app.wenmarpro.com/customers?page=2>; rel="next"
 ```
 
 When there is no next page, the `Link` header is absent (or carries no
