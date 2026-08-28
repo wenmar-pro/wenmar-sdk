@@ -138,6 +138,22 @@ module Wenmar
         .with(headers: { "If-None-Match" => "\"abc123\"" })
     end
 
+    def test_list_account
+      stub_api(:get, "/account", { "id" => 1, "name" => "Main Shop" })
+      client = Client.new(token: "test", base_url: @base_url)
+      result = client.list_account
+      assert_equal 1, result["id"]
+      assert_equal "Main Shop", result["name"]
+    end
+
+    def test_show_location
+      stub_api(:get, "/locations/1", { "id" => 1, "name" => "Bay 1" })
+      client = Client.new(token: "test", base_url: @base_url)
+      result = client.show_location("1")
+      assert_equal 1, result["id"]
+      assert_equal "Bay 1", result["name"]
+    end
+
     private
 
     def stub_api(method, path, body, status: 200)

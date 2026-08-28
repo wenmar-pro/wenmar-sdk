@@ -100,6 +100,16 @@ module Wenmar
       nil
     end
 
+    def list_account
+      response = get("/account")
+      handle_response(response)
+    end
+
+    def show_location(id)
+      response = get("/locations/#{id}")
+      handle_response(response)
+    end
+
     private
 
     def wrap_with_paginator(response)
