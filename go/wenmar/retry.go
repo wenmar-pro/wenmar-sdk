@@ -8,15 +8,18 @@ import (
 	"time"
 )
 
-// Retry policy (derived from bc3's documented error handling):
+// Retry policy:
 //
-//   429 Too Many Requests → read Retry-After header, wait, retry (max 3)
-//   500/502/503/504      → exponential backoff with jitter, retry (max 3)
-//   404 Not Found         → do NOT retry (deleted, inaccessible, or insufficient permissions)
-//   304 Not Modified     → not an error; return cached body
+//   429 Too Many Requests → retry all methods (idempotent throttle; honor Retry-After)
+//   500/502/503/504      → retry GET only (exponential backoff with jitter; max 3)
+//   507 Insufficient Storage → do NOT retry (account/plan limit; not transient)
+//   404 Not Found         → do NOT retry (deleted, inaccessible, or forbidden)
+//   304 Not Modified     → not an error; returned cached body by cachingTransport
 //
-// 404 is terminal because retrying a deleted/inaccessible resource will
-// never succeed. 429 and 5xx are transient and may recover.
+// Mutations (POST/PATCH/DELETE) are NOT retried on 5xx because the server
+// may have processed the request before the response was lost, and retrying
+// would duplicate the side effect. 429 is safe to retry because the
+// throttle response means the request was NOT processed.
 type retryTransport struct {
 	transport   http.RoundTripper
 	maxRetries  int
@@ -37,7 +40,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 	for attempt := 0; attempt <= t.maxRetries; attempt++ {
 		resp, err = t.transport.RoundTrip(req)
-		if err != nil || !isRetryableStatus(resp.StatusCode) {
+		if err != nil || !isRetryableStatus(req.Method, resp.StatusCode) {
 			return resp, err
 		}
 
@@ -57,10 +60,16 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 func (t *retryTransport) backoff(attempt int, resp *http.Response) time.Duration {
-	// Respect Retry-After header if present
 	if retryAfter := resp.Header.Get("Retry-After"); retryAfter != "" {
 		if seconds, err := strconv.Atoi(retryAfter); err == nil {
 			return time.Duration(seconds) * time.Second
+		}
+		if httpDate, err := http.ParseTime(retryAfter); err == nil {
+			delay := time.Until(httpDate)
+			if delay > 0 {
+				return delay
+			}
+			return 0
 		}
 	}
 
@@ -70,15 +79,25 @@ func (t *retryTransport) backoff(attempt int, resp *http.Response) time.Duration
 	return time.Duration(delay + jitter)
 }
 
-func isRetryableStatus(code int) bool {
-	switch code {
-	case http.StatusTooManyRequests, // 429
-		http.StatusInternalServerError, // 500
-		http.StatusBadGateway,          // 502
-		http.StatusServiceUnavailable,  // 503
-		http.StatusGatewayTimeout:      // 504
+func isRetryableStatus(method string, code int) bool {
+	// 429 (Too Many Requests) is retryable for all methods — it is an
+	// idempotent throttle response that does not execute the request.
+	if code == http.StatusTooManyRequests {
 		return true
-	default:
-		return false
 	}
+
+	// 5xx server errors are only retried for safe (GET) methods.
+	// Retrying POST/PATCH/DELETE on 5xx risks duplicating mutations
+	// if the server processed the request but the response was lost.
+	if method == http.MethodGet {
+		switch code {
+		case http.StatusInternalServerError,
+			http.StatusBadGateway,
+			http.StatusServiceUnavailable,
+			http.StatusGatewayTimeout:
+			return true
+		}
+	}
+
+	return false
 }
