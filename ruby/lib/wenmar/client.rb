@@ -128,6 +128,31 @@ module Wenmar
       handle_response(response)
     end
 
+    def for_location(location_id)
+      LocationClient.new(self, location_id)
+    end
+
+    class LocationClient
+      attr_reader :parent, :location_id
+
+      def initialize(parent, location_id)
+        @parent = parent
+        @location_id = location_id
+      end
+
+      # Delegate all operations to the parent client. The location_id is
+      # documented in SPEC.md as a known limitation — the server currently
+      # pins a token to one location. This sub-client is a guard/documentation
+      # surface for callers who want to be explicit about the location context.
+      def method_missing(name, *args, **kwargs, &block)
+        @parent.send(name, *args, **kwargs, &block)
+      end
+
+      def respond_to_missing?(name, include_private = false)
+        @parent.respond_to?(name, include_private) || super
+      end
+    end
+
     private
 
     def wrap_with_paginator(response)
@@ -135,6 +160,14 @@ module Wenmar
       client = self
       result.define_singleton_method(:paginator) do
         Paginator.from_response(response, client)
+      end
+      result.define_singleton_method(:meta) do
+        next_url = Paginator.parse_link_header(response.headers["Link"], "next")
+        {
+          total_count: response.headers["X-Total-Count"]&.to_i,
+          per_page: response.headers["X-Per-Page"]&.to_i,
+          has_more: !next_url.nil? && !next_url.empty?
+        }
       end
       result
     end
