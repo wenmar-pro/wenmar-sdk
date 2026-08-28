@@ -6,6 +6,29 @@ import (
 	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
+// ListCustomersTyped returns a typed, paginated list of customers.
+func (c *Client) ListCustomersTyped(ctx context.Context) (*ListResult[generated.Customer], error) {
+	resp, err := c.ListCustomers(ctx)
+	if err != nil {
+		return nil, err
+	}
+	items, err := parseListResponse[generated.Customer](resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	meta, nextURL := extractPaginationMeta(resp.HTTPResponse)
+	result := &ListResult[generated.Customer]{
+		Items: items,
+		Meta:  meta,
+	}
+	if nextURL != "" {
+		result.Next = func(ctx context.Context) (*ListResult[generated.Customer], error) {
+			return c.fetchNextPage[generated.Customer](ctx, nextURL)
+		}
+	}
+	return result, nil
+}
+
 // CreateCustomerRequest is the hand-written input for creating a customer.
 // Callers use this instead of the generated CreateCustomerJSONRequestBody.
 type CreateCustomerRequest struct {

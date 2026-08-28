@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -31,6 +32,74 @@ type Paginator struct {
 	// fetchNext is called with the raw next URL to fetch the next page.
 	// It returns the response body and the Link header from the next response.
 	fetchNext func(ctx context.Context, url string) (body []byte, linkHeader string, err error)
+}
+
+// PaginationMeta holds metadata about a paginated list result.
+type PaginationMeta struct {
+	HasMore    bool
+	TotalCount int // from X-Total-Count header if available, 0 if unknown
+	PerPage    int // from X-Per-Page header if available, 0 if unknown
+}
+
+// ListResult is a typed paginated result. Items is the current page's data.
+// Next returns a new ListResult for the next page, or nil if there is no
+// next page.
+type ListResult[T any] struct {
+	Items []T
+	Meta  PaginationMeta
+	Next  func(ctx context.Context) (*ListResult[T], error)
+}
+
+// HasMore reports whether there is a next page.
+func (r *ListResult[T]) HasNext() bool {
+	return r.Next != nil
+}
+
+// parseListResponse decodes a JSON array into a slice of T.
+func parseListResponse[T any](body []byte) ([]T, error) {
+	var items []T
+	if err := json.Unmarshal(body, &items); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+// extractPaginationMeta reads X-Total-Count, X-Per-Page, and the Link header.
+func extractPaginationMeta(resp *http.Response) (PaginationMeta, string) {
+	meta := PaginationMeta{}
+	if v := resp.Header.Get("X-Total-Count"); v != "" {
+		meta.TotalCount, _ = strconv.Atoi(v)
+	}
+	if v := resp.Header.Get("X-Per-Page"); v != "" {
+		meta.PerPage, _ = strconv.Atoi(v)
+	}
+	nextURL := parseLinkHeader(resp.Header.Get("Link"), "next")
+	meta.HasMore = nextURL != ""
+	return meta, nextURL
+}
+
+// fetchNextPage fetches the next page (same-origin validated by fetchURL)
+// and decodes it into a typed ListResult.
+func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListResult[T], error) {
+	body, linkHeader, err := c.fetchURL(ctx, url)
+	if err != nil {
+		return nil, err
+	}
+	items, err := parseListResponse[T](body)
+	if err != nil {
+		return nil, err
+	}
+	nextURL := parseLinkHeader(linkHeader, "next")
+	result := &ListResult[T]{
+		Items: items,
+		Meta:  PaginationMeta{HasMore: nextURL != ""},
+	}
+	if nextURL != "" {
+		result.Next = func(ctx context.Context) (*ListResult[T], error) {
+			return c.fetchNextPage[T](ctx, nextURL)
+		}
+	}
+	return result, nil
 }
 
 func (p *Paginator) HasNext() bool {

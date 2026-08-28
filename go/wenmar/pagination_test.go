@@ -60,6 +60,36 @@ func TestNewPaginatorFromResponse(t *testing.T) {
 	}
 }
 
+func TestListCustomers_TypedResult(t *testing.T) {
+	var serverURL string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		if r.URL.Path == "/customers" {
+			w.Header().Set("Link", `<`+serverURL+`/customers?page=2>; rel="next"`)
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		} else {
+			w.Write([]byte(`[{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		}
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test-token")
+	result, err := c.ListCustomersTyped(ctx)
+	if err != nil {
+		t.Fatalf("ListCustomersTyped failed: %v", err)
+	}
+	if len(result.Items) != 1 {
+		t.Fatalf("expected 1 item, got %d", len(result.Items))
+	}
+	if result.Items[0].Id != 1 {
+		t.Errorf("expected id 1, got %d", result.Items[0].Id)
+	}
+	if !result.Meta.HasMore {
+		t.Error("expected HasMore=true")
+	}
+}
+
 func TestPaginationFollowsNextURL(t *testing.T) {
 	requestCount := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
