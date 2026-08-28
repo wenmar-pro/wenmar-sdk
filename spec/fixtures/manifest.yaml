@@ -52,8 +52,16 @@ targets:
   - id: work-order-update
     operation: update_work_order
     fixture: work_orders/get.json
+  - id: account-get
+    operation: list_account
+    fixture: account/get.json
+  - id: location-get
+    operation: show_location
+    fixture: locations/get.json
 
 covered_schemas:
   customer: [customer-get, customer-list, customer-create, customer-update]
   vehicle: [vehicle-get, vehicle-list, vehicle-create, vehicle-update]
   work_order: [work-order-get, work-order-list, work-order-create, work-order-update]
+  account: [account-get]
+  location: [location-get]

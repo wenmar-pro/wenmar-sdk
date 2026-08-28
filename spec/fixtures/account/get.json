@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "name": "Main Shop",
+  "slug": "main-shop",
+  "locations": [
+    { "id": 1, "name": "Bay 1", "url": "https://app.wenmarpro.com/locations/1.json" }
+  ],
+  "url": "https://app.wenmarpro.com/account.json"
+}

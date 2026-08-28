@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "name": "Bay 1",
+  "location_type": "shop",
+  "currency": "CAD",
+  "dock": [
+    { "name": "work_orders", "enabled": true, "url": "https://app.wenmarpro.com/work_orders.json" }
+  ],
+  "url": "https://app.wenmarpro.com/locations/1.json"
+}
