@@ -205,3 +205,25 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWork
 	}
 	return resp, nil
 }
+
+func (c *Client) ListAccount(ctx context.Context) (*generated.ListAccountResponse, error) {
+	resp, err := c.gen.ListAccountWithResponse(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
+
+func (c *Client) ShowLocation(ctx context.Context, id string) (*generated.ShowLocationResponse, error) {
+	resp, err := c.gen.ShowLocationWithResponse(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		return nil, ParseErrorBody(resp.Body, resp.StatusCode())
+	}
+	return resp, nil
+}
