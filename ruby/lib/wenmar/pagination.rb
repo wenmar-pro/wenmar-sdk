@@ -1,3 +1,5 @@
+require "uri"
+
 module Wenmar
   class Paginator
     attr_reader :next_url, :client
@@ -14,12 +16,28 @@ module Wenmar
     def next_page
       return nil unless has_next?
 
-      # Follow the actual next URL from the Link header, which includes
-      # query params like ?page=2. This performs a raw GET against the URL.
+      unless same_origin?(@next_url, @client.base_url)
+        raise Wenmar::Error.new(
+          code: "invalid_pagination",
+          message: "pagination next URL is not same-origin as base URL",
+          details: {},
+          status: 0
+        )
+      end
+
       response = @client.send(:get_raw, @next_url)
       @next_url = self.class.parse_link_header(response.headers["Link"], "next")
       JSON.parse(response.body)
     end
+
+    def same_origin?(url, base_url)
+      parsed = URI.parse(url)
+      base = URI.parse(base_url)
+      parsed.scheme == base.scheme && parsed.host == base.host && parsed.port == base.port
+    rescue URI::InvalidURIError
+      false
+    end
+    private :same_origin?
 
     def self.parse_link_header(header, rel)
       return nil if header.nil? || header.empty?

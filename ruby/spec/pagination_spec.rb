@@ -60,6 +60,25 @@ module Wenmar
       assert_equal 2, page2.first["id"], "expected page 2 data (id=2), got #{page2.inspect}"
     end
 
+    def test_next_page_rejects_cross_origin_url
+      stub_request(:get, "#{@base_url}/customers").to_return(
+        status: 200,
+        body: [{ id: 1 }].to_json,
+        headers: {
+          "Content-Type" => "application/json",
+          "Link" => '<https://attacker.example.com/customers?page=2>; rel="next"'
+        }
+      )
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      result = client.list_customers
+      assert result.paginator.has_next?
+
+      assert_raises(Wenmar::Error) { result.paginator.next_page }
+
+      assert_not_requested(:get, %r{https://attacker\.example\.com})
+    end
+
     private
 
     def stub_api(method, path, body, status: 200, link: nil)
