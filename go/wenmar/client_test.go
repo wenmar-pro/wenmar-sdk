@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
@@ -297,5 +298,56 @@ func TestClient_ErrorMapping(t *testing.T) {
 	}
 	if apiErr.Code != "not_found" || apiErr.StatusCode != http.StatusNotFound {
 		t.Errorf("expected not_found/404, got %s/%d", apiErr.Code, apiErr.StatusCode)
+	}
+}
+
+func TestNewClient_RejectsHTTP(t *testing.T) {
+	_, err := NewClient("http://app.wenmarpro.com", "test-token")
+	if err == nil {
+		t.Fatal("expected error for http:// base URL, got nil")
+	}
+	if !strings.Contains(err.Error(), "https") {
+		t.Errorf("expected error mentioning https, got: %v", err)
+	}
+}
+
+func TestNewClient_AcceptsHTTPS(t *testing.T) {
+	_, err := NewClient("https://app.wenmarpro.com", "test-token")
+	if err != nil {
+		t.Fatalf("expected success for https://, got: %v", err)
+	}
+}
+
+func TestNewClient_AcceptsLocalhostHTTP(t *testing.T) {
+	_, err := NewClient("http://localhost:3000", "test-token")
+	if err != nil {
+		t.Fatalf("expected success for http://localhost, got: %v", err)
+	}
+	_, err = NewClient("http://127.0.0.1:3000", "test-token")
+	if err != nil {
+		t.Fatalf("expected success for http://127.0.0.1, got: %v", err)
+	}
+}
+
+func TestClient_StripsAuthOnCrossOriginRedirect(t *testing.T) {
+	target := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if auth := r.Header.Get("Authorization"); auth != "" {
+			t.Errorf("Authorization header leaked to cross-origin redirect target: %q", auth)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[]`))
+	}))
+	defer target.Close()
+
+	origin := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, target.URL, http.StatusFound)
+	}))
+	defer origin.Close()
+
+	c, _ := NewClient(origin.URL, "test-token")
+	_, err := c.ListCustomers(ctx)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
 	}
 }

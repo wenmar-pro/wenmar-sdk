@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
+	"strings"
 
 	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
@@ -15,13 +17,20 @@ type Client struct {
 	gen     *generated.ClientWithResponses
 }
 
+// NewClient creates a Wenmar API client. The baseURL must use https unless
+// the host is localhost or 127.0.0.1 (for development). The token is sent as
+// a Bearer header on every request.
 func NewClient(baseURL, token string) (*Client, error) {
 	if token == "" {
 		return nil, fmt.Errorf("API token is required")
 	}
+	if err := requireHTTPS(baseURL); err != nil {
+		return nil, err
+	}
 
 	httpClient := &http.Client{
 		Transport: newCachingTransport(newRetryTransport()),
+		CheckRedirect: stripAuthOnCrossOriginRedirect,
 	}
 
 	gen, err := generated.NewClientWithResponses(baseURL,
@@ -43,6 +52,37 @@ func NewClient(baseURL, token string) (*Client, error) {
 		http:    httpClient,
 		gen:     gen,
 	}, nil
+}
+
+// requireHTTPS rejects non-https URLs unless the host is localhost or 127.0.0.1.
+func requireHTTPS(baseURL string) error {
+	parsed, err := url.Parse(baseURL)
+	if err != nil {
+		return fmt.Errorf("invalid base URL: %w", err)
+	}
+	if strings.EqualFold(parsed.Scheme, "https") {
+		return nil
+	}
+	host := parsed.Hostname()
+	if host == "localhost" || host == "127.0.0.1" {
+		return nil
+	}
+	return fmt.Errorf("base URL must use https (got %q); http is only allowed for localhost", baseURL)
+}
+
+// stripAuthOnCrossOriginRedirect is the CheckRedirect policy: it preserves
+// all headers for same-origin redirects but drops the Authorization header
+// when the redirect target has a different scheme or host, preventing
+// credential leakage to third parties.
+func stripAuthOnCrossOriginRedirect(req *http.Request, via []*http.Request) error {
+	if len(via) == 0 {
+		return nil
+	}
+	original := via[0]
+	if !sameOrigin(req.URL.String(), original.URL.String()) {
+		req.Header.Del("Authorization")
+	}
+	return nil
 }
 
 // parseError converts a failed response into an *APIError, capturing the
