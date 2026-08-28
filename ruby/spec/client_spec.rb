@@ -195,6 +195,31 @@ module Wenmar
       assert_equal "Bay 1", result["name"]
     end
 
+    def test_rejects_http_base_url
+      assert_raises(ArgumentError) { Client.new(token: "x", base_url: "http://app.wenmarpro.com") }
+    end
+
+    def test_accepts_https_base_url
+      client = Client.new(token: "x", base_url: "https://app.wenmarpro.com")
+      assert_equal "https://app.wenmarpro.com", client.base_url
+    end
+
+    def test_accepts_localhost_http_base_url
+      client = Client.new(token: "x", base_url: "http://localhost:3000")
+      assert_equal "http://localhost:3000", client.base_url
+    end
+
+    def test_302_redirect_does_not_follow_and_does_not_leak_token
+      stub_request(:get, "https://origin.example.com/customers").to_return(
+        status: 302,
+        headers: { "Location" => "https://target.example.com/customers" }
+      )
+
+      client = Client.new(token: "my-token", base_url: "https://origin.example.com")
+      assert_raises(JSON::ParserError) { client.list_customers }
+      assert_not_requested(:get, "https://target.example.com/customers")
+    end
+
     private
 
     def stub_api(method, path, body, status: 200)

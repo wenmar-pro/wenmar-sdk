@@ -9,6 +9,7 @@ module Wenmar
 
     def initialize(token:, base_url: "https://app.wenmarpro.com")
       raise ArgumentError, "API token is required" if token.nil? || token.empty?
+      raise ArgumentError, "base_url must use https (http only allowed for localhost)" unless https_or_localhost?(base_url)
 
       @token = token
       @base_url = base_url
@@ -16,6 +17,16 @@ module Wenmar
       @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete])
       @cache = {}
     end
+
+    def https_or_localhost?(url)
+      parsed = URI.parse(url)
+      return true if parsed.scheme == "https"
+
+      %w[localhost 127.0.0.1].include?(parsed.host)
+    rescue URI::InvalidURIError
+      false
+    end
+    private :https_or_localhost?
 
     def list_customers
       response = get("/customers")
