@@ -3,88 +3,88 @@
     "name": "list_customers_success",
     "operation": "list_customers",
     "method": "GET",
-    "path": "/api/customers",
+    "path": "/customers",
     "mockResponses": [
-      { "status": 200, "body": { "data": [ { "id": 1, "full_name": "Jane Doe" } ] } }
+      { "status": 200, "body": [ { "id": 1, "full_name": "Jane Doe" } ] }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.0.full_name", "equals": "Jane Doe" }
+      "responseBody": { "path": "0.full_name", "equals": "Jane Doe" }
     }
   },
   {
     "name": "show_customer_success",
     "operation": "show_customer",
     "method": "GET",
-    "path": "/api/customers/1",
+    "path": "/customers/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "data": { "id": 1, "full_name": "Jane Doe" } } }
+      { "status": 200, "body": { "id": 1, "full_name": "Jane Doe" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.id", "equals": 1 }
+      "responseBody": { "path": "id", "equals": 1 }
     }
   },
   {
     "name": "create_customer_success",
     "operation": "create_customer",
     "method": "POST",
-    "path": "/api/customers",
-    "requestBody": { "customer": { "full_name": "Jane Doe" } },
+    "path": "/customers",
+    "requestBody": { "customer": { "first_name": "Jane", "last_name": "Doe" } },
     "mockResponses": [
-      { "status": 201, "body": { "data": { "id": 1, "full_name": "Jane Doe" } } }
+      { "status": 201, "body": { "id": 1, "full_name": "Jane Doe" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.full_name", "equals": "Jane Doe" }
+      "responseBody": { "path": "full_name", "equals": "Jane Doe" }
     }
   },
   {
     "name": "show_vehicle_success",
     "operation": "show_vehicle",
     "method": "GET",
-    "path": "/api/vehicles/1",
+    "path": "/vehicles/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "data": { "id": 1, "make": "Toyota", "model": "Camry", "year": 2020, "vin": "ABC123" } } }
+      { "status": 200, "body": { "id": 1, "make": "Toyota", "model": "Camry", "year": 2020, "vin": "ABC123" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.make", "equals": "Toyota" }
+      "responseBody": { "path": "make", "equals": "Toyota" }
     }
   },
   {
     "name": "list_work_orders_success",
     "operation": "list_work_orders",
     "method": "GET",
-    "path": "/api/work_orders",
+    "path": "/work_orders",
     "mockResponses": [
-      { "status": 200, "body": { "data": [ { "id": 1, "status": "open" } ] } }
+      { "status": 200, "body": [ { "id": 1, "status": "open" } ] }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.0.status", "equals": "open" }
+      "responseBody": { "path": "0.status", "equals": "open" }
     }
   },
   {
     "name": "show_work_order_success",
     "operation": "show_work_order",
     "method": "GET",
-    "path": "/api/work_orders/1",
+    "path": "/work_orders/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "data": { "id": 1, "status": "open" } } }
+      { "status": 200, "body": { "id": 1, "status": "open" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "data.status", "equals": "open" }
+      "responseBody": { "path": "status", "equals": "open" }
     }
   }
 ]

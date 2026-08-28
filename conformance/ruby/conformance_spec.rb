@@ -62,8 +62,22 @@ module Conformance
         client.show_customer(tc.dig("pathParams", "id"))
       when "create_customer"
         client.create_customer(tc.dig("requestBody", "customer") || {})
+      when "update_customer"
+        client.update_customer(tc.dig("pathParams", "id"), tc.dig("requestBody", "customer") || {})
+      when "list_vehicles"
+        client.list_vehicles
       when "show_vehicle"
         client.show_vehicle(tc.dig("pathParams", "id"))
+      when "create_vehicle"
+        client.create_vehicle(tc.dig("requestBody", "vehicle") || {})
+      when "update_vehicle"
+        client.update_vehicle(tc.dig("pathParams", "id"), tc.dig("requestBody", "vehicle") || {})
+      when "delete_vehicle"
+        client.delete_vehicle(tc.dig("pathParams", "id"))
+      when "decode_vin"
+        client.decode_vin(tc.dig("query", "vin"))
+      when "check_duplicate"
+        client.check_duplicate(tc.dig("query", "vin"))
       when "list_work_orders"
         client.list_work_orders
       when "list_work_orders_paginated"
@@ -74,6 +88,12 @@ module Conformance
         result
       when "show_work_order"
         client.show_work_order(tc.dig("pathParams", "id"))
+      when "create_work_order"
+        client.create_work_order(tc.dig("requestBody", "work_order") || {})
+      when "update_work_order"
+        client.update_work_order(tc.dig("pathParams", "id"), tc.dig("requestBody", "work_order") || {})
+      when "delete_work_order"
+        client.delete_work_order(tc.dig("pathParams", "id"))
       else
         raise "unknown operation: #{tc["operation"]}"
       end

@@ -3,44 +3,44 @@
     "name": "paginate_through_customers",
     "operation": "list_customers_paginated",
     "method": "GET",
-    "path": "/api/customers",
+    "path": "/customers",
     "mockResponses": [
       {
         "status": 200,
-        "headers": { "Link": "<{server}/api/customers?page=2>; rel=\"next\"" },
-        "body": { "data": [ { "id": 1, "full_name": "Jane Doe" } ] }
+        "headers": { "Link": "<{server}/customers?page=2>; rel=\"next\"" },
+        "body": [ { "id": 1, "full_name": "Jane Doe" } ]
       },
       {
         "status": 200,
-        "body": { "data": [ { "id": 2, "full_name": "John Smith" } ] }
+        "body": [ { "id": 2, "full_name": "John Smith" } ]
       }
     ],
     "expect": {
       "requestCount": 2,
       "noError": true,
-      "responseBody": { "path": "data.0.id", "equals": 2 }
+      "responseBody": { "path": "0.id", "equals": 2 }
     }
   },
   {
     "name": "paginate_work_orders",
     "operation": "list_work_orders_paginated",
     "method": "GET",
-    "path": "/api/work_orders",
+    "path": "/work_orders",
     "mockResponses": [
       {
         "status": 200,
-        "headers": { "Link": "<{server}/api/work_orders?page=2>; rel=\"next\"" },
-        "body": { "data": [ { "id": 1, "status": "open" } ] }
+        "headers": { "Link": "<{server}/work_orders?page=2>; rel=\"next\"" },
+        "body": [ { "id": 1, "status": "open" } ]
       },
       {
         "status": 200,
-        "body": { "data": [ { "id": 2, "status": "in_progress" } ] }
+        "body": [ { "id": 2, "status": "in_progress" } ]
       }
     ],
     "expect": {
       "requestCount": 2,
       "noError": true,
-      "responseBody": { "path": "data.0.id", "equals": 2 }
+      "responseBody": { "path": "0.id", "equals": 2 }
     }
   }
 ]

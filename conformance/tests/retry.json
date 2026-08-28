@@ -3,7 +3,7 @@
     "name": "retry_on_500_then_200",
     "operation": "list_customers",
     "method": "GET",
-    "path": "/api/customers",
+    "path": "/customers",
     "mockResponses": [
       {
         "status": 500,
@@ -15,7 +15,7 @@
       },
       {
         "status": 200,
-        "body": { "data": [ { "id": 1, "full_name": "Jane Doe" } ] }
+        "body": [ { "id": 1, "full_name": "Jane Doe" } ]
       }
     ],
     "expect": {
@@ -27,7 +27,7 @@
     "name": "retry_max_retries_exceeded",
     "operation": "list_customers",
     "method": "GET",
-    "path": "/api/customers",
+    "path": "/customers",
     "mockResponses": [
       { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
       { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
@@ -44,7 +44,7 @@
     "name": "no_retry_on_404",
     "operation": "show_customer",
     "method": "GET",
-    "path": "/api/customers/999",
+    "path": "/customers/999",
     "pathParams": { "id": 999 },
     "mockResponses": [
       { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }

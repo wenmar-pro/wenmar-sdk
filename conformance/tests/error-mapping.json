@@ -3,7 +3,7 @@
     "name": "404_on_missing_customer",
     "operation": "show_customer",
     "method": "GET",
-    "path": "/api/customers/999999",
+    "path": "/customers/999999",
     "pathParams": { "id": 999999 },
     "mockResponses": [
       { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }
@@ -18,7 +18,7 @@
     "name": "401_unauthorized",
     "operation": "list_customers",
     "method": "GET",
-    "path": "/api/customers",
+    "path": "/customers",
     "mockResponses": [
       { "status": 401, "body": { "error": { "code": "unauthorized", "message": "Invalid or missing API token", "details": {} } } }
     ],
@@ -30,14 +30,14 @@
   },
   {
     "name": "422_validation_failed",
-    "operation": "create_customer",
+    "operation": "create_vehicle",
     "method": "POST",
-    "path": "/api/customers",
-    "requestBody": { "customer": { "full_name": "" } },
+    "path": "/vehicles",
+    "requestBody": { "vehicle": { "make": "", "model": "", "year": 0 } },
     "mockResponses": [
       {
         "status": 422,
-        "body": { "error": { "code": "validation_failed", "message": "Full name can't be blank", "details": { "full_name": ["can't be blank"] } } }
+        "body": { "error": { "code": "validation_failed", "message": "Make can't be blank", "details": { "make": ["can't be blank"] } } }
       }
     ],
     "expect": {

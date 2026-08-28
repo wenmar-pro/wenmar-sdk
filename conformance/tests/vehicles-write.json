@@ -1,0 +1,93 @@
+[
+  {
+    "name": "create_vehicle_success",
+    "operation": "create_vehicle",
+    "method": "POST",
+    "path": "/vehicles",
+    "requestBody": { "vehicle": { "make": "Honda", "model": "Civic", "year": 2020, "customer_id": 1 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "make": "Honda", "model": "Civic", "year": 2020 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "make", "equals": "Honda" }
+    }
+  },
+  {
+    "name": "update_vehicle_success",
+    "operation": "update_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "vehicle": { "make": "Toyota" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "make": "Toyota", "model": "Camry", "year": 2020 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "make", "equals": "Toyota" }
+    }
+  },
+  {
+    "name": "delete_vehicle_success",
+    "operation": "delete_vehicle",
+    "method": "DELETE",
+    "path": "/vehicles/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "decode_vin_success",
+    "operation": "decode_vin",
+    "method": "GET",
+    "path": "/vehicles/vin_decode",
+    "query": { "vin": "1HGCM82633A004352" },
+    "mockResponses": [
+      { "status": 200, "body": { "make": "Honda", "model": "Civic", "vin": "1HGCM82633A004352" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "make", "equals": "Honda" }
+    }
+  },
+  {
+    "name": "check_duplicate_success",
+    "operation": "check_duplicate",
+    "method": "GET",
+    "path": "/vehicles/check_duplicate",
+    "query": { "vin": "ABC123" },
+    "mockResponses": [
+      { "status": 200, "body": { "matches": [ { "id": 1, "display_name": "Toyota Camry", "url": "/vehicles/1", "reasons": ["vin"] } ] } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "matches.0.id", "equals": 1 }
+    }
+  },
+  {
+    "name": "update_customer_success",
+    "operation": "update_customer",
+    "method": "PATCH",
+    "path": "/customers/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "customer": { "first_name": "Jane" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "Jane Doe" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  }
+]

@@ -24,6 +24,7 @@ type TestCase struct {
 	Method        string            `json:"method"`
 	Path          string            `json:"path"`
 	PathParams    map[string]any    `json:"pathParams"`
+	Query         map[string]any    `json:"query"`
 	RequestBody   map[string]any    `json:"requestBody"`
 	MockResponses []MockResponse    `json:"mockResponses"`
 	Expect        Expectation       `json:"expect"`
@@ -126,13 +127,13 @@ func runCase(t *testing.T, tc TestCase) {
 func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	switch tc.Operation {
 	case "list_customers":
-		resp, err := client.ListCustomers(ctx, nil)
+		resp, err := client.ListCustomers(ctx)
 		if err != nil {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
 	case "list_customers_paginated":
-		resp, paginator, err := client.ListCustomersWithPagination(ctx, nil)
+		resp, paginator, err := client.ListCustomersWithPagination(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -156,14 +157,75 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		customer, _ := body["customer"].(map[string]any)
 		reqBody := generated.CreateCustomerJSONBody{}
 		if customer != nil {
-			fullName, _ := customer["full_name"].(string)
-			reqBody.Customer = &struct {
-				Email    *string `json:"email,omitempty"`
-				FullName string  `json:"full_name"`
-				Phone    *string `json:"phone,omitempty"`
-			}{FullName: fullName}
+			firstName, _ := customer["first_name"].(string)
+			lastName, _ := customer["last_name"].(string)
+			reqBody.Customer.FirstName = firstName
+			reqBody.Customer.LastName = lastName
 		}
 		resp, err := client.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody(reqBody))
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "update_customer":
+		id := intParam(tc.PathParams, "id")
+		reqBody := generated.UpdateCustomerJSONBody{}
+		resp, err := client.UpdateCustomer(ctx, id, generated.UpdateCustomerJSONRequestBody(reqBody))
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "list_vehicles":
+		resp, err := client.ListVehicles(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "create_vehicle":
+		body := tc.RequestBody
+		vehicle, _ := body["vehicle"].(map[string]any)
+		reqBody := generated.CreateVehicleJSONBody{}
+		if vehicle != nil {
+			reqBody.Vehicle.Make, _ = vehicle["make"].(string)
+			reqBody.Vehicle.Model, _ = vehicle["model"].(string)
+			reqBody.Vehicle.Year = intParamValue(vehicle, "year")
+			reqBody.Vehicle.CustomerId = intParamValue(vehicle, "customer_id")
+		}
+		resp, err := client.CreateVehicle(ctx, generated.CreateVehicleJSONRequestBody(reqBody))
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "update_vehicle":
+		id := intParam(tc.PathParams, "id")
+		body := tc.RequestBody
+		vehicle, _ := body["vehicle"].(map[string]any)
+		reqBody := generated.UpdateVehicleJSONBody{}
+		if vehicle != nil {
+			reqBody.Vehicle.Make, _ = vehicle["make"].(string)
+		}
+		resp, err := client.UpdateVehicle(ctx, id, generated.UpdateVehicleJSONRequestBody(reqBody))
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "delete_vehicle":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.DeleteVehicle(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "decode_vin":
+		vin := stringParam(tc.Query, "vin")
+		resp, err := client.DecodeVin(ctx, vin)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "check_duplicate":
+		vin := stringParam(tc.Query, "vin")
+		resp, err := client.CheckDuplicate(ctx, vin)
 		if err != nil {
 			return nil, err
 		}
@@ -176,13 +238,13 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		}
 		return decodeBody(resp.Body)
 	case "list_work_orders":
-		resp, err := client.ListWorkOrders(ctx, nil)
+		resp, err := client.ListWorkOrders(ctx)
 		if err != nil {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
 	case "list_work_orders_paginated":
-		resp, paginator, err := client.ListWorkOrdersWithPagination(ctx, nil)
+		resp, paginator, err := client.ListWorkOrdersWithPagination(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -231,6 +293,20 @@ func intParam(params map[string]any, key string) int {
 		return n
 	}
 	return 0
+}
+
+func intParamValue(params map[string]any, key string) int {
+	return intParam(params, key)
+}
+
+func stringParam(params map[string]any, key string) string {
+	if params == nil {
+		return ""
+	}
+	if v, ok := params[key].(string); ok {
+		return v
+	}
+	return ""
 }
 
 func assertBodyPath(t *testing.T, body any, assertion *BodyAssertion) {

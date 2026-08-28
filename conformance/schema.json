@@ -8,11 +8,15 @@
     "name": { "type": "string" },
     "operation": {
       "type": "string",
-      "enum": ["list_customers", "show_customer", "create_customer", "show_vehicle", "list_work_orders", "show_work_order", "list_customers_paginated", "list_work_orders_paginated"]
+      "enum": ["list_customers", "show_customer", "create_customer", "update_customer", "show_vehicle", "list_vehicles", "create_vehicle", "update_vehicle", "delete_vehicle", "decode_vin", "check_duplicate", "list_work_orders", "show_work_order", "create_work_order", "update_work_order", "delete_work_order", "list_customers_paginated", "list_work_orders_paginated"]
     },
-    "method": { "type": "string", "enum": ["GET", "POST"] },
+    "method": { "type": "string", "enum": ["GET", "POST", "PATCH", "DELETE"] },
     "path": { "type": "string" },
     "pathParams": {
+      "type": "object",
+      "additionalProperties": { "type": ["integer", "string"] }
+    },
+    "query": {
       "type": "object",
       "additionalProperties": { "type": ["integer", "string"] }
     },
