@@ -18,6 +18,9 @@ import (
 
 // Customer defines model for Customer.
 type Customer struct {
+	Addresses []interface{} `json:"addresses"`
+	AppUrl    string        `json:"app_url"`
+
 	// CompanyName Example: Acme Auto
 	CompanyName interface{} `json:"company_name"`
 	CreatedAt   string      `json:"created_at"`
@@ -25,6 +28,7 @@ type Customer struct {
 
 	// Emails Example: [{"address":"jane@acmeauto.com","id":42,"label":"work","primary":true}]
 	Emails          []interface{} `json:"emails"`
+	EmailsCount     int           `json:"emails_count"`
 	FirstName       string        `json:"first_name"`
 	FleetIdentifier interface{}   `json:"fleet_identifier"`
 
@@ -32,12 +36,18 @@ type Customer struct {
 	FullName string `json:"full_name"`
 
 	// Id Example: 7
-	Id                      int           `json:"id"`
-	LastName                string        `json:"last_name"`
-	LastVisitAt             interface{}   `json:"last_visit_at"`
+	Id          int         `json:"id"`
+	LastName    string      `json:"last_name"`
+	LastVisitAt interface{} `json:"last_visit_at"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
 	MarketingOptIn          bool          `json:"marketing_opt_in"`
 	OutstandingBalanceCents int           `json:"outstanding_balance_cents"`
 	Phones                  []interface{} `json:"phones"`
+	PhonesCount             int           `json:"phones_count"`
 	StatementsCount         int           `json:"statements_count"`
 	StoreCreditCents        int           `json:"store_credit_cents"`
 	TaxExempt               bool          `json:"tax_exempt"`
@@ -60,6 +70,7 @@ type Error struct {
 // Vehicle defines model for Vehicle.
 type Vehicle struct {
 	AnnualSafetyExpiresAt interface{} `json:"annual_safety_expires_at"`
+	AppUrl                string      `json:"app_url"`
 	AppointmentsCount     int         `json:"appointments_count"`
 	BodyStyle             interface{} `json:"body_style"`
 	Color                 interface{} `json:"color"`
@@ -80,6 +91,11 @@ type Vehicle struct {
 	LicensePlateCountry  string      `json:"license_plate_country"`
 	LicensePlateState    interface{} `json:"license_plate_state"`
 	LifetimeRevenueCents int         `json:"lifetime_revenue_cents"`
+	Location             struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
 
 	// Make Example: Honda
 	Make string `json:"make"`
@@ -115,7 +131,7 @@ type Vehicle struct {
 
 // WorkOrder defines model for WorkOrder.
 type WorkOrder struct {
-	ActivityUrl          string      `json:"activity_url"`
+	AppUrl               string      `json:"app_url"`
 	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
 	Authorized           bool        `json:"authorized"`
 	AuthorizedAt         interface{} `json:"authorized_at"`
@@ -139,27 +155,31 @@ type WorkOrder struct {
 	FeesCents             int         `json:"fees_cents"`
 
 	// Id Example: 42
-	Id                     int         `json:"id"`
-	InspectionReportsCount int         `json:"inspection_reports_count"`
-	IntakeMethod           string      `json:"intake_method"`
-	LaborCents             int         `json:"labor_cents"`
-	LocationId             int         `json:"location_id"`
-	MessagesUrl            string      `json:"messages_url"`
-	Notes                  interface{} `json:"notes"`
-	OdometerIn             interface{} `json:"odometer_in"`
-	OdometerOut            interface{} `json:"odometer_out"`
-	OdometerUnit           string      `json:"odometer_unit"`
-	Paid                   bool        `json:"paid"`
-	PartsCents             int         `json:"parts_cents"`
-	PaymentsUrl            string      `json:"payments_url"`
-	PurchaseOrderNumber    interface{} `json:"purchase_order_number"`
-	ReadyForPickupAt       interface{} `json:"ready_for_pickup_at"`
-	ReturnMethod           string      `json:"return_method"`
-	ReturnMethodNotes      interface{} `json:"return_method_notes"`
-	SavedForLater          bool        `json:"saved_for_later"`
-	ScheduledFor           interface{} `json:"scheduled_for"`
-	ServiceAdvisorId       int         `json:"service_advisor_id"`
-	ServicesUrl            string      `json:"services_url"`
+	Id                     int    `json:"id"`
+	InspectionReportsCount int    `json:"inspection_reports_count"`
+	IntakeMethod           string `json:"intake_method"`
+	LaborCents             int    `json:"labor_cents"`
+	Location               struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int           `json:"location_id"`
+	Notes               interface{}   `json:"notes"`
+	OdometerIn          interface{}   `json:"odometer_in"`
+	OdometerOut         interface{}   `json:"odometer_out"`
+	OdometerUnit        string        `json:"odometer_unit"`
+	Paid                bool          `json:"paid"`
+	PartsCents          int           `json:"parts_cents"`
+	Payments            []interface{} `json:"payments"`
+	PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+	ReturnMethod        string        `json:"return_method"`
+	ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+	SavedForLater       bool          `json:"saved_for_later"`
+	ScheduledFor        interface{}   `json:"scheduled_for"`
+	ServiceAdvisorId    int           `json:"service_advisor_id"`
+	Services            []interface{} `json:"services"`
 
 	// Status Example: in_progress
 	Status            string `json:"status"`
@@ -219,6 +239,12 @@ type UpdateCustomerJSONBody struct {
 	} `json:"customer"`
 }
 
+// ListVehiclesParams defines parameters for ListVehicles.
+type ListVehiclesParams struct {
+	CustomerId *int `form:"customer_id,omitempty" json:"customer_id,omitempty"`
+	Page       *int `form:"page,omitempty" json:"page,omitempty"`
+}
+
 // CreateVehicleJSONBody defines parameters for CreateVehicle.
 type CreateVehicleJSONBody struct {
 	Vehicle struct {
@@ -261,6 +287,14 @@ type UpdateWorkOrderJSONBody struct {
 	} `json:"work_order"`
 }
 
+// PostWorkOrdersPaymentJSONBody defines parameters for PostWorkOrdersPayment.
+type PostWorkOrdersPaymentJSONBody struct {
+	Payment struct {
+		AmountCents string `json:"amount_cents"`
+		Method      string `json:"method"`
+	} `json:"payment"`
+}
+
 // CreateCustomerJSONRequestBody defines body for CreateCustomer for application/json ContentType.
 type CreateCustomerJSONRequestBody CreateCustomerJSONBody
 
@@ -278,6 +312,9 @@ type CreateWorkOrderJSONRequestBody CreateWorkOrderJSONBody
 
 // UpdateWorkOrderJSONRequestBody defines body for UpdateWorkOrder for application/json ContentType.
 type UpdateWorkOrderJSONRequestBody UpdateWorkOrderJSONBody
+
+// PostWorkOrdersPaymentJSONRequestBody defines body for PostWorkOrdersPayment for application/json ContentType.
+type PostWorkOrdersPaymentJSONRequestBody PostWorkOrdersPaymentJSONBody
 
 // RequestEditorFn is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -385,6 +422,28 @@ type ClientInterface interface {
 	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomer(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetCustomersVehicle index
+	//
+	// Corresponds with GET /customers/{customer_id}/vehicles (the `GetCustomersVehicle` operationId).
+	GetCustomersVehicle(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetCustomersVehicleHistory show
+	//
+	// Corresponds with GET /customers/{customer_id}/vehicles/{vehicle_id}/history (the `GetCustomersVehicleHistory` operationId).
+	GetCustomersVehicleHistory(ctx context.Context, customerId int, vehicleId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetCustomersWorkOrder index
+	//
+	// Corresponds with GET /customers/{customer_id}/work_orders (the `GetCustomersWorkOrder` operationId).
+	GetCustomersWorkOrder(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteCustomer destroy
+	//
+	// Delete a customer by ID.
+	//
+	// Corresponds with DELETE /customers/{id} (the `DeleteCustomer` operationId).
+	DeleteCustomer(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ShowCustomer show
 	//
 	// Show a customer by ID.
@@ -417,12 +476,19 @@ type ClientInterface interface {
 	// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
 	ShowLocation(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListTeam index
+	//
+	// List all team, paginated via the Link header.
+	//
+	// Corresponds with GET /team/members (the `ListTeam` operationId).
+	ListTeam(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListVehicles index
 	//
 	// List all vehicles, paginated via the Link header.
 	//
 	// Corresponds with GET /vehicles (the `ListVehicles` operationId).
-	ListVehicles(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListVehicles(ctx context.Context, params *ListVehiclesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateVehicleWithBody create
 	//
@@ -484,6 +550,11 @@ type ClientInterface interface {
 	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
 	UpdateVehicle(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetVehiclesWorkOrder index
+	//
+	// Corresponds with GET /vehicles/{vehicle_id}/work_orders (the `GetVehiclesWorkOrder` operationId).
+	GetVehiclesWorkOrder(ctx context.Context, vehicleId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListWorkOrders index
 	//
 	// List all work orders, paginated via the Link header.
@@ -540,6 +611,20 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
 	UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PostWorkOrdersPaymentWithBody create
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+	PostWorkOrdersPaymentWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PostWorkOrdersPayment create
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+	PostWorkOrdersPayment(ctx context.Context, workOrderId int, body PostWorkOrdersPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 // ListAccount show
@@ -604,6 +689,68 @@ func (c *Client) CreateCustomerWithBody(ctx context.Context, contentType string,
 // Corresponds with POST /customers (the `CreateCustomer` operationId).
 func (c *Client) CreateCustomer(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateCustomerRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCustomersVehicle index
+//
+// Corresponds with GET /customers/{customer_id}/vehicles (the `GetCustomersVehicle` operationId).
+func (c *Client) GetCustomersVehicle(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCustomersVehicleRequest(c.Server, customerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCustomersVehicleHistory show
+//
+// Corresponds with GET /customers/{customer_id}/vehicles/{vehicle_id}/history (the `GetCustomersVehicleHistory` operationId).
+func (c *Client) GetCustomersVehicleHistory(ctx context.Context, customerId int, vehicleId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCustomersVehicleHistoryRequest(c.Server, customerId, vehicleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetCustomersWorkOrder index
+//
+// Corresponds with GET /customers/{customer_id}/work_orders (the `GetCustomersWorkOrder` operationId).
+func (c *Client) GetCustomersWorkOrder(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetCustomersWorkOrderRequest(c.Server, customerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteCustomer destroy
+//
+// Delete a customer by ID.
+//
+// Corresponds with DELETE /customers/{id} (the `DeleteCustomer` operationId).
+func (c *Client) DeleteCustomer(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteCustomerRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -686,13 +833,30 @@ func (c *Client) ShowLocation(ctx context.Context, id string, reqEditors ...Requ
 	return c.Client.Do(req)
 }
 
+// ListTeam index
+//
+// List all team, paginated via the Link header.
+//
+// Corresponds with GET /team/members (the `ListTeam` operationId).
+func (c *Client) ListTeam(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListTeamRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListVehicles index
 //
 // List all vehicles, paginated via the Link header.
 //
 // Corresponds with GET /vehicles (the `ListVehicles` operationId).
-func (c *Client) ListVehicles(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListVehiclesRequest(c.Server)
+func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListVehiclesRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -843,6 +1007,21 @@ func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleJS
 	return c.Client.Do(req)
 }
 
+// GetVehiclesWorkOrder index
+//
+// Corresponds with GET /vehicles/{vehicle_id}/work_orders (the `GetVehiclesWorkOrder` operationId).
+func (c *Client) GetVehiclesWorkOrder(ctx context.Context, vehicleId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetVehiclesWorkOrderRequest(c.Server, vehicleId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListWorkOrders index
 //
 // List all work orders, paginated via the Link header.
@@ -970,6 +1149,40 @@ func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrd
 	return c.Client.Do(req)
 }
 
+// PostWorkOrdersPaymentWithBody create
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+func (c *Client) PostWorkOrdersPaymentWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPostWorkOrdersPaymentRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PostWorkOrdersPayment create
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+func (c *Client) PostWorkOrdersPayment(ctx context.Context, workOrderId int, body PostWorkOrdersPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPostWorkOrdersPaymentRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // NewListAccountRequest constructs an http.Request for the ListAccount method
 func NewListAccountRequest(server string) (*http.Request, error) {
 	var err error
@@ -1060,6 +1273,149 @@ func NewCreateCustomerRequestWithBody(server string, contentType string, body io
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetCustomersVehicleRequest constructs an http.Request for the GetCustomersVehicle method
+func NewGetCustomersVehicleRequest(server string, customerId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/vehicles", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetCustomersVehicleHistoryRequest constructs an http.Request for the GetCustomersVehicleHistory method
+func NewGetCustomersVehicleHistoryRequest(server string, customerId int, vehicleId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "vehicle_id", vehicleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/vehicles/%s/history", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetCustomersWorkOrderRequest constructs an http.Request for the GetCustomersWorkOrder method
+func NewGetCustomersWorkOrderRequest(server string, customerId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/work_orders", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteCustomerRequest constructs an http.Request for the DeleteCustomer method
+func NewDeleteCustomerRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -1179,8 +1535,35 @@ func NewShowLocationRequest(server string, id string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewListTeamRequest constructs an http.Request for the ListTeam method
+func NewListTeamRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/team/members")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListVehiclesRequest constructs an http.Request for the ListVehicles method
-func NewListVehiclesRequest(server string) (*http.Request, error) {
+func NewListVehiclesRequest(server string, params *ListVehiclesParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -1196,6 +1579,45 @@ func NewListVehiclesRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.CustomerId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "customer_id", *params.CustomerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -1469,6 +1891,40 @@ func NewUpdateVehicleRequestWithBody(server string, id int, contentType string, 
 	return req, nil
 }
 
+// NewGetVehiclesWorkOrderRequest constructs an http.Request for the GetVehiclesWorkOrder method
+func NewGetVehiclesWorkOrderRequest(server string, vehicleId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "vehicle_id", vehicleId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/vehicles/%s/work_orders", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListWorkOrdersRequest constructs an http.Request for the ListWorkOrders method
 func NewListWorkOrdersRequest(server string) (*http.Request, error) {
 	var err error
@@ -1651,6 +2107,53 @@ func NewUpdateWorkOrderRequestWithBody(server string, id int, contentType string
 	return req, nil
 }
 
+// NewPostWorkOrdersPaymentRequest calls the generic PostWorkOrdersPayment builder with application/json body
+func NewPostWorkOrdersPaymentRequest(server string, workOrderId int, body PostWorkOrdersPaymentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPostWorkOrdersPaymentRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewPostWorkOrdersPaymentRequestWithBody constructs an http.Request for the PostWorkOrdersPayment method, with any body, and a specified content type
+func NewPostWorkOrdersPaymentRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/payments", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
 	for _, r := range c.RequestEditors {
 		if err := r(ctx, req); err != nil {
@@ -1731,6 +2234,36 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /customers (the `CreateCustomer` operationId).
 	CreateCustomerWithResponse(ctx context.Context, body CreateCustomerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerResponse, error)
 
+	// GetCustomersVehicleWithResponse index
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/vehicles (the `GetCustomersVehicle` operationId).
+	GetCustomersVehicleWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*GetCustomersVehicleResponse, error)
+
+	// GetCustomersVehicleHistoryWithResponse show
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/vehicles/{vehicle_id}/history (the `GetCustomersVehicleHistory` operationId).
+	GetCustomersVehicleHistoryWithResponse(ctx context.Context, customerId int, vehicleId int, reqEditors ...RequestEditorFn) (*GetCustomersVehicleHistoryResponse, error)
+
+	// GetCustomersWorkOrderWithResponse index
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/work_orders (the `GetCustomersWorkOrder` operationId).
+	GetCustomersWorkOrderWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*GetCustomersWorkOrderResponse, error)
+
+	// DeleteCustomerWithResponse destroy
+	//
+	// Delete a customer by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /customers/{id} (the `DeleteCustomer` operationId).
+	DeleteCustomerWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCustomerResponse, error)
+
 	// ShowCustomerWithResponse show
 	//
 	// Show a customer by ID.
@@ -1767,6 +2300,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /locations/{id} (the `ShowLocation` operationId).
 	ShowLocationWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*ShowLocationResponse, error)
 
+	// ListTeamWithResponse index
+	//
+	// List all team, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /team/members (the `ListTeam` operationId).
+	ListTeamWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListTeamResponse, error)
+
 	// ListVehiclesWithResponse index
 	//
 	// List all vehicles, paginated via the Link header.
@@ -1774,7 +2316,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /vehicles (the `ListVehicles` operationId).
-	ListVehiclesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error)
+	ListVehiclesWithResponse(ctx context.Context, params *ListVehiclesParams, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error)
 
 	// CreateVehicleWithBodyWithResponse create
 	//
@@ -1844,6 +2386,13 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /vehicles/{id} (the `UpdateVehicle` operationId).
 	UpdateVehicleWithResponse(ctx context.Context, id int, body UpdateVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateVehicleResponse, error)
 
+	// GetVehiclesWorkOrderWithResponse index
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /vehicles/{vehicle_id}/work_orders (the `GetVehiclesWorkOrder` operationId).
+	GetVehiclesWorkOrderWithResponse(ctx context.Context, vehicleId int, reqEditors ...RequestEditorFn) (*GetVehiclesWorkOrderResponse, error)
+
 	// ListWorkOrdersWithResponse index
 	//
 	// List all work orders, paginated via the Link header.
@@ -1906,6 +2455,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
 	UpdateWorkOrderWithResponse(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error)
+
+	// PostWorkOrdersPaymentWithBodyWithResponse create
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+	PostWorkOrdersPaymentWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostWorkOrdersPaymentResponse, error)
+
+	// PostWorkOrdersPaymentWithResponse create
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+	PostWorkOrdersPaymentWithResponse(ctx context.Context, workOrderId int, body PostWorkOrdersPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*PostWorkOrdersPaymentResponse, error)
 }
 
 type ListAccountResponse struct {
@@ -1913,11 +2476,13 @@ type ListAccountResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Id        int `json:"id"`
+		AppUrl    string `json:"app_url"`
+		Id        int    `json:"id"`
 		Locations []struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Url  string `json:"url"`
+			AppUrl string `json:"app_url"`
+			Id     int    `json:"id"`
+			Name   string `json:"name"`
+			Url    string `json:"url"`
 		} `json:"locations"`
 		Name string `json:"name"`
 		Slug string `json:"slug"`
@@ -1931,11 +2496,13 @@ type ListAccountResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListAccountResponse) GetJSON200() *struct {
-	Id        int `json:"id"`
+	AppUrl    string `json:"app_url"`
+	Id        int    `json:"id"`
 	Locations []struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
+		AppUrl string `json:"app_url"`
+		Id     int    `json:"id"`
+		Name   string `json:"name"`
+		Url    string `json:"url"`
 	} `json:"locations"`
 	Name string `json:"name"`
 	Slug string `json:"slug"`
@@ -2037,6 +2604,10 @@ type CreateCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *Customer
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 	// JSON422 the response for an HTTP 422 `application/json` response
 	JSON422 *struct {
 		Error Error `json:"error"`
@@ -2046,6 +2617,13 @@ type CreateCustomerResponse struct {
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r CreateCustomerResponse) GetJSON201() *Customer {
 	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateCustomerResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetJSON422 returns the response for an HTTP 422 `application/json` response
@@ -2084,16 +2662,494 @@ func (r CreateCustomerResponse) ContentType() string {
 	return ""
 }
 
+type GetCustomersVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AnnualSafetyExpiresAt interface{} `json:"annual_safety_expires_at"`
+		AppUrl                string      `json:"app_url"`
+		BodyStyle             interface{} `json:"body_style"`
+		Color                 interface{} `json:"color"`
+		CreatedAt             string      `json:"created_at"`
+		Customer              struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		Drivetrain          interface{} `json:"drivetrain"`
+		Engine              interface{} `json:"engine"`
+		FleetIdentifier     interface{} `json:"fleet_identifier"`
+		Id                  int         `json:"id"`
+		LicensePlate        string      `json:"license_plate"`
+		LicensePlateCountry string      `json:"license_plate_country"`
+		LicensePlateState   string      `json:"license_plate_state"`
+		Location            struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make     string      `json:"make"`
+		Model    string      `json:"model"`
+		Notes    interface{} `json:"notes"`
+		Odometer struct {
+			Reading interface{} `json:"reading"`
+			Unit    string      `json:"unit"`
+		} `json:"odometer"`
+		ProductionDate  interface{} `json:"production_date"`
+		Submodel        interface{} `json:"submodel"`
+		Transmission    interface{} `json:"transmission"`
+		Type            string      `json:"type"`
+		UnitNumber      interface{} `json:"unit_number"`
+		UpdatedAt       string      `json:"updated_at"`
+		Url             string      `json:"url"`
+		VehicleType     string      `json:"vehicle_type"`
+		Vin             string      `json:"vin"`
+		WorkOrdersCount int         `json:"work_orders_count"`
+		WorkOrdersUrl   string      `json:"work_orders_url"`
+		Year            int         `json:"year"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCustomersVehicleResponse) GetJSON200() *[]struct {
+	AnnualSafetyExpiresAt interface{} `json:"annual_safety_expires_at"`
+	AppUrl                string      `json:"app_url"`
+	BodyStyle             interface{} `json:"body_style"`
+	Color                 interface{} `json:"color"`
+	CreatedAt             string      `json:"created_at"`
+	Customer              struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	Drivetrain          interface{} `json:"drivetrain"`
+	Engine              interface{} `json:"engine"`
+	FleetIdentifier     interface{} `json:"fleet_identifier"`
+	Id                  int         `json:"id"`
+	LicensePlate        string      `json:"license_plate"`
+	LicensePlateCountry string      `json:"license_plate_country"`
+	LicensePlateState   string      `json:"license_plate_state"`
+	Location            struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make     string      `json:"make"`
+	Model    string      `json:"model"`
+	Notes    interface{} `json:"notes"`
+	Odometer struct {
+		Reading interface{} `json:"reading"`
+		Unit    string      `json:"unit"`
+	} `json:"odometer"`
+	ProductionDate  interface{} `json:"production_date"`
+	Submodel        interface{} `json:"submodel"`
+	Transmission    interface{} `json:"transmission"`
+	Type            string      `json:"type"`
+	UnitNumber      interface{} `json:"unit_number"`
+	UpdatedAt       string      `json:"updated_at"`
+	Url             string      `json:"url"`
+	VehicleType     string      `json:"vehicle_type"`
+	Vin             string      `json:"vin"`
+	WorkOrdersCount int         `json:"work_orders_count"`
+	WorkOrdersUrl   string      `json:"work_orders_url"`
+	Year            int         `json:"year"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCustomersVehicleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCustomersVehicleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCustomersVehicleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCustomersVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetCustomersVehicleHistoryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		TotalWorkOrders int `json:"total_work_orders"`
+		WorkOrders      []struct {
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			ClosedAt             interface{} `json:"closed_at"`
+			CreatedAt            string      `json:"created_at"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			Id                     int    `json:"id"`
+			InspectionReportsCount int    `json:"inspection_reports_count"`
+			IntakeMethod           string `json:"intake_method"`
+			Location               struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId       int         `json:"location_id"`
+			Paid             bool        `json:"paid"`
+			ScheduledFor     interface{} `json:"scheduled_for"`
+			ServiceAdvisorId interface{} `json:"service_advisor_id"`
+			Status           string      `json:"status"`
+			Totals           struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			WorkOrderNumber        int `json:"work_order_number"`
+			WorkOrderServicesCount int `json:"work_order_services_count"`
+		} `json:"work_orders"`
+	}
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCustomersVehicleHistoryResponse) GetJSON200() *struct {
+	TotalWorkOrders int `json:"total_work_orders"`
+	WorkOrders      []struct {
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		ClosedAt             interface{} `json:"closed_at"`
+		CreatedAt            string      `json:"created_at"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		Id                     int    `json:"id"`
+		InspectionReportsCount int    `json:"inspection_reports_count"`
+		IntakeMethod           string `json:"intake_method"`
+		Location               struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId       int         `json:"location_id"`
+		Paid             bool        `json:"paid"`
+		ScheduledFor     interface{} `json:"scheduled_for"`
+		ServiceAdvisorId interface{} `json:"service_advisor_id"`
+		Status           string      `json:"status"`
+		Totals           struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		WorkOrderNumber        int `json:"work_order_number"`
+		WorkOrderServicesCount int `json:"work_order_services_count"`
+	} `json:"work_orders"`
+} {
+	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r GetCustomersVehicleHistoryResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCustomersVehicleHistoryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCustomersVehicleHistoryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCustomersVehicleHistoryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCustomersVehicleHistoryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetCustomersWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		ClosedAt             interface{} `json:"closed_at"`
+		CreatedAt            string      `json:"created_at"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		Id                     int    `json:"id"`
+		InspectionReportsCount int    `json:"inspection_reports_count"`
+		IntakeMethod           string `json:"intake_method"`
+		Location               struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId       int         `json:"location_id"`
+		Paid             bool        `json:"paid"`
+		ScheduledFor     interface{} `json:"scheduled_for"`
+		ServiceAdvisorId interface{} `json:"service_advisor_id"`
+		Status           string      `json:"status"`
+		Totals           struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		WorkOrderNumber        int `json:"work_order_number"`
+		WorkOrderServicesCount int `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetCustomersWorkOrderResponse) GetJSON200() *[]struct {
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	ClosedAt             interface{} `json:"closed_at"`
+	CreatedAt            string      `json:"created_at"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	Id                     int    `json:"id"`
+	InspectionReportsCount int    `json:"inspection_reports_count"`
+	IntakeMethod           string `json:"intake_method"`
+	Location               struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId       int         `json:"location_id"`
+	Paid             bool        `json:"paid"`
+	ScheduledFor     interface{} `json:"scheduled_for"`
+	ServiceAdvisorId interface{} `json:"service_advisor_id"`
+	Status           string      `json:"status"`
+	Totals           struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	WorkOrderNumber        int `json:"work_order_number"`
+	WorkOrderServicesCount int `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r GetCustomersWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetCustomersWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetCustomersWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetCustomersWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteCustomerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *Customer
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r DeleteCustomerResponse) GetJSON202() *Customer {
+	return r.JSON202
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r DeleteCustomerResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r DeleteCustomerResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteCustomerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteCustomerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteCustomerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteCustomerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowCustomerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *Customer
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowCustomerResponse) GetJSON200() *Customer {
 	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ShowCustomerResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
 }
 
 // GetBody returns the raw response body bytes
@@ -2171,6 +3227,7 @@ type ShowLocationResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		AppUrl   string `json:"app_url"`
 		Currency string `json:"currency"`
 		Dock     []struct {
 			Enabled bool    `json:"enabled"`
@@ -2190,6 +3247,7 @@ type ShowLocationResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowLocationResponse) GetJSON200() *struct {
+	AppUrl   string `json:"app_url"`
 	Currency string `json:"currency"`
 	Dock     []struct {
 		Enabled bool    `json:"enabled"`
@@ -2240,16 +3298,113 @@ func (r ShowLocationResponse) ContentType() string {
 	return ""
 }
 
+type ListTeamResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		CreatedAt    string      `json:"created_at"`
+		Disabled     bool        `json:"disabled"`
+		Email        interface{} `json:"email"`
+		FullName     string      `json:"full_name"`
+		HomeLocation struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"home_location"`
+		Id        int `json:"id"`
+		Locations []struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+		} `json:"locations"`
+		Role      string `json:"role"`
+		UpdatedAt string `json:"updated_at"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListTeamResponse) GetJSON200() *[]struct {
+	CreatedAt    string      `json:"created_at"`
+	Disabled     bool        `json:"disabled"`
+	Email        interface{} `json:"email"`
+	FullName     string      `json:"full_name"`
+	HomeLocation struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"home_location"`
+	Id        int `json:"id"`
+	Locations []struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+	} `json:"locations"`
+	Role      string `json:"role"`
+	UpdatedAt string `json:"updated_at"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListTeamResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListTeamResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListTeamResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListTeamResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListTeamResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListVehiclesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]Vehicle
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListVehiclesResponse) GetJSON200() *[]Vehicle {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListVehiclesResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -2286,6 +3441,10 @@ type CreateVehicleResponse struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *Vehicle
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 	// JSON422 the response for an HTTP 422 `application/json` response
 	JSON422 *struct {
 		Error Error `json:"error"`
@@ -2295,6 +3454,13 @@ type CreateVehicleResponse struct {
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r CreateVehicleResponse) GetJSON201() *Vehicle {
 	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateVehicleResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetJSON422 returns the response for an HTTP 422 `application/json` response
@@ -2451,10 +3617,17 @@ func (r DecodeVinResponse) ContentType() string {
 type DeleteVehicleResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *Vehicle
 	// JSON422 the response for an HTTP 422 `application/json` response
 	JSON422 *struct {
 		Error Error `json:"error"`
 	}
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r DeleteVehicleResponse) GetJSON202() *Vehicle {
+	return r.JSON202
 }
 
 // GetJSON422 returns the response for an HTTP 422 `application/json` response
@@ -2498,11 +3671,22 @@ type ShowVehicleResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *Vehicle
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowVehicleResponse) GetJSON200() *Vehicle {
 	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ShowVehicleResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
 }
 
 // GetBody returns the raw response body bytes
@@ -2569,6 +3753,137 @@ func (r UpdateVehicleResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetVehiclesWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		ClosedAt             interface{} `json:"closed_at"`
+		CreatedAt            string      `json:"created_at"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		Id                     int    `json:"id"`
+		InspectionReportsCount int    `json:"inspection_reports_count"`
+		IntakeMethod           string `json:"intake_method"`
+		Location               struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId       int         `json:"location_id"`
+		Paid             bool        `json:"paid"`
+		ScheduledFor     interface{} `json:"scheduled_for"`
+		ServiceAdvisorId interface{} `json:"service_advisor_id"`
+		Status           string      `json:"status"`
+		Totals           struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		WorkOrderNumber        int `json:"work_order_number"`
+		WorkOrderServicesCount int `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetVehiclesWorkOrderResponse) GetJSON200() *[]struct {
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	ClosedAt             interface{} `json:"closed_at"`
+	CreatedAt            string      `json:"created_at"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	Id                     int    `json:"id"`
+	InspectionReportsCount int    `json:"inspection_reports_count"`
+	IntakeMethod           string `json:"intake_method"`
+	Location               struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId       int         `json:"location_id"`
+	Paid             bool        `json:"paid"`
+	ScheduledFor     interface{} `json:"scheduled_for"`
+	ServiceAdvisorId interface{} `json:"service_advisor_id"`
+	Status           string      `json:"status"`
+	Totals           struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	WorkOrderNumber        int `json:"work_order_number"`
+	WorkOrderServicesCount int `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r GetVehiclesWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetVehiclesWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetVehiclesWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetVehiclesWorkOrderResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -2773,6 +4088,101 @@ func (r UpdateWorkOrderResponse) ContentType() string {
 	return ""
 }
 
+type PostWorkOrdersPaymentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AmountCents int    `json:"amount_cents"`
+		CreatedAt   string `json:"created_at"`
+		CustomerId  int    `json:"customer_id"`
+		Id          int    `json:"id"`
+		IsRefund    bool   `json:"is_refund"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+		} `json:"processed_by"`
+		ProcessorStatus interface{} `json:"processor_status"`
+		Reference       interface{} `json:"reference"`
+		UpdatedAt       string      `json:"updated_at"`
+		WorkOrderId     int         `json:"work_order_id"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r PostWorkOrdersPaymentResponse) GetJSON201() *struct {
+	AmountCents int    `json:"amount_cents"`
+	CreatedAt   string `json:"created_at"`
+	CustomerId  int    `json:"customer_id"`
+	Id          int    `json:"id"`
+	IsRefund    bool   `json:"is_refund"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+	} `json:"processed_by"`
+	ProcessorStatus interface{} `json:"processor_status"`
+	Reference       interface{} `json:"reference"`
+	UpdatedAt       string      `json:"updated_at"`
+	WorkOrderId     int         `json:"work_order_id"`
+} {
+	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r PostWorkOrdersPaymentResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r PostWorkOrdersPaymentResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r PostWorkOrdersPaymentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PostWorkOrdersPaymentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PostWorkOrdersPaymentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PostWorkOrdersPaymentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // ListAccountWithResponse show
 //
 // List all account, paginated via the Link header.
@@ -2831,6 +4241,60 @@ func (c *ClientWithResponses) CreateCustomerWithResponse(ctx context.Context, bo
 		return nil, err
 	}
 	return ParseCreateCustomerResponse(rsp)
+}
+
+// GetCustomersVehicleWithResponse index
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/vehicles (the `GetCustomersVehicle` operationId).
+func (c *ClientWithResponses) GetCustomersVehicleWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*GetCustomersVehicleResponse, error) {
+	rsp, err := c.GetCustomersVehicle(ctx, customerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCustomersVehicleResponse(rsp)
+}
+
+// GetCustomersVehicleHistoryWithResponse show
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/vehicles/{vehicle_id}/history (the `GetCustomersVehicleHistory` operationId).
+func (c *ClientWithResponses) GetCustomersVehicleHistoryWithResponse(ctx context.Context, customerId int, vehicleId int, reqEditors ...RequestEditorFn) (*GetCustomersVehicleHistoryResponse, error) {
+	rsp, err := c.GetCustomersVehicleHistory(ctx, customerId, vehicleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCustomersVehicleHistoryResponse(rsp)
+}
+
+// GetCustomersWorkOrderWithResponse index
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/work_orders (the `GetCustomersWorkOrder` operationId).
+func (c *ClientWithResponses) GetCustomersWorkOrderWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*GetCustomersWorkOrderResponse, error) {
+	rsp, err := c.GetCustomersWorkOrder(ctx, customerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetCustomersWorkOrderResponse(rsp)
+}
+
+// DeleteCustomerWithResponse destroy
+//
+// Delete a customer by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /customers/{id} (the `DeleteCustomer` operationId).
+func (c *ClientWithResponses) DeleteCustomerWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCustomerResponse, error) {
+	rsp, err := c.DeleteCustomer(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteCustomerResponse(rsp)
 }
 
 // ShowCustomerWithResponse show
@@ -2893,6 +4357,21 @@ func (c *ClientWithResponses) ShowLocationWithResponse(ctx context.Context, id s
 	return ParseShowLocationResponse(rsp)
 }
 
+// ListTeamWithResponse index
+//
+// List all team, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /team/members (the `ListTeam` operationId).
+func (c *ClientWithResponses) ListTeamWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListTeamResponse, error) {
+	rsp, err := c.ListTeam(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListTeamResponse(rsp)
+}
+
 // ListVehiclesWithResponse index
 //
 // List all vehicles, paginated via the Link header.
@@ -2900,8 +4379,8 @@ func (c *ClientWithResponses) ShowLocationWithResponse(ctx context.Context, id s
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /vehicles (the `ListVehicles` operationId).
-func (c *ClientWithResponses) ListVehiclesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error) {
-	rsp, err := c.ListVehicles(ctx, reqEditors...)
+func (c *ClientWithResponses) ListVehiclesWithResponse(ctx context.Context, params *ListVehiclesParams, reqEditors ...RequestEditorFn) (*ListVehiclesResponse, error) {
+	rsp, err := c.ListVehicles(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -3024,6 +4503,19 @@ func (c *ClientWithResponses) UpdateVehicleWithResponse(ctx context.Context, id 
 	return ParseUpdateVehicleResponse(rsp)
 }
 
+// GetVehiclesWorkOrderWithResponse index
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /vehicles/{vehicle_id}/work_orders (the `GetVehiclesWorkOrder` operationId).
+func (c *ClientWithResponses) GetVehiclesWorkOrderWithResponse(ctx context.Context, vehicleId int, reqEditors ...RequestEditorFn) (*GetVehiclesWorkOrderResponse, error) {
+	rsp, err := c.GetVehiclesWorkOrder(ctx, vehicleId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetVehiclesWorkOrderResponse(rsp)
+}
+
 // ListWorkOrdersWithResponse index
 //
 // List all work orders, paginated via the Link header.
@@ -3129,6 +4621,32 @@ func (c *ClientWithResponses) UpdateWorkOrderWithResponse(ctx context.Context, i
 	return ParseUpdateWorkOrderResponse(rsp)
 }
 
+// PostWorkOrdersPaymentWithBodyWithResponse create
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+func (c *ClientWithResponses) PostWorkOrdersPaymentWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PostWorkOrdersPaymentResponse, error) {
+	rsp, err := c.PostWorkOrdersPaymentWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePostWorkOrdersPaymentResponse(rsp)
+}
+
+// PostWorkOrdersPaymentWithResponse create
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `PostWorkOrdersPayment` operationId).
+func (c *ClientWithResponses) PostWorkOrdersPaymentWithResponse(ctx context.Context, workOrderId int, body PostWorkOrdersPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*PostWorkOrdersPaymentResponse, error) {
+	rsp, err := c.PostWorkOrdersPayment(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePostWorkOrdersPaymentResponse(rsp)
+}
+
 // ParseListAccountResponse parses an HTTP response from a ListAccountWithResponse call
 func ParseListAccountResponse(rsp *http.Response) (*ListAccountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -3145,11 +4663,13 @@ func ParseListAccountResponse(rsp *http.Response) (*ListAccountResponse, error) 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Id        int `json:"id"`
+			AppUrl    string `json:"app_url"`
+			Id        int    `json:"id"`
 			Locations []struct {
-				Id   int    `json:"id"`
-				Name string `json:"name"`
-				Url  string `json:"url"`
+				AppUrl string `json:"app_url"`
+				Id     int    `json:"id"`
+				Name   string `json:"name"`
+				Url    string `json:"url"`
 			} `json:"locations"`
 			Name string `json:"name"`
 			Slug string `json:"slug"`
@@ -3230,6 +4750,281 @@ func ParseCreateCustomerResponse(rsp *http.Response) (*CreateCustomerResponse, e
 		}
 		response.JSON201 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCustomersVehicleResponse parses an HTTP response from a GetCustomersVehicleWithResponse call
+func ParseGetCustomersVehicleResponse(rsp *http.Response) (*GetCustomersVehicleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCustomersVehicleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AnnualSafetyExpiresAt interface{} `json:"annual_safety_expires_at"`
+			AppUrl                string      `json:"app_url"`
+			BodyStyle             interface{} `json:"body_style"`
+			Color                 interface{} `json:"color"`
+			CreatedAt             string      `json:"created_at"`
+			Customer              struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			Drivetrain          interface{} `json:"drivetrain"`
+			Engine              interface{} `json:"engine"`
+			FleetIdentifier     interface{} `json:"fleet_identifier"`
+			Id                  int         `json:"id"`
+			LicensePlate        string      `json:"license_plate"`
+			LicensePlateCountry string      `json:"license_plate_country"`
+			LicensePlateState   string      `json:"license_plate_state"`
+			Location            struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make     string      `json:"make"`
+			Model    string      `json:"model"`
+			Notes    interface{} `json:"notes"`
+			Odometer struct {
+				Reading interface{} `json:"reading"`
+				Unit    string      `json:"unit"`
+			} `json:"odometer"`
+			ProductionDate  interface{} `json:"production_date"`
+			Submodel        interface{} `json:"submodel"`
+			Transmission    interface{} `json:"transmission"`
+			Type            string      `json:"type"`
+			UnitNumber      interface{} `json:"unit_number"`
+			UpdatedAt       string      `json:"updated_at"`
+			Url             string      `json:"url"`
+			VehicleType     string      `json:"vehicle_type"`
+			Vin             string      `json:"vin"`
+			WorkOrdersCount int         `json:"work_orders_count"`
+			WorkOrdersUrl   string      `json:"work_orders_url"`
+			Year            int         `json:"year"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCustomersVehicleHistoryResponse parses an HTTP response from a GetCustomersVehicleHistoryWithResponse call
+func ParseGetCustomersVehicleHistoryResponse(rsp *http.Response) (*GetCustomersVehicleHistoryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCustomersVehicleHistoryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			TotalWorkOrders int `json:"total_work_orders"`
+			WorkOrders      []struct {
+				AppUrl               string      `json:"app_url"`
+				AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+				Authorized           bool        `json:"authorized"`
+				ClosedAt             interface{} `json:"closed_at"`
+				CreatedAt            string      `json:"created_at"`
+				Customer             struct {
+					FullName string `json:"full_name"`
+					Id       int    `json:"id"`
+					Url      string `json:"url"`
+				} `json:"customer"`
+				Id                     int    `json:"id"`
+				InspectionReportsCount int    `json:"inspection_reports_count"`
+				IntakeMethod           string `json:"intake_method"`
+				Location               struct {
+					Id   int    `json:"id"`
+					Name string `json:"name"`
+					Url  string `json:"url"`
+				} `json:"location"`
+				LocationId       int         `json:"location_id"`
+				Paid             bool        `json:"paid"`
+				ScheduledFor     interface{} `json:"scheduled_for"`
+				ServiceAdvisorId interface{} `json:"service_advisor_id"`
+				Status           string      `json:"status"`
+				Totals           struct {
+					Currency       string `json:"currency"`
+					PaidCents      int    `json:"paid_cents"`
+					RemainingCents int    `json:"remaining_cents"`
+					SubtotalCents  int    `json:"subtotal_cents"`
+					TaxCents       int    `json:"tax_cents"`
+					TotalCents     int    `json:"total_cents"`
+				} `json:"totals"`
+				Type      string `json:"type"`
+				UpdatedAt string `json:"updated_at"`
+				Url       string `json:"url"`
+				Vehicle   struct {
+					Id    int    `json:"id"`
+					Make  string `json:"make"`
+					Model string `json:"model"`
+					Url   string `json:"url"`
+					Vin   string `json:"vin"`
+					Year  int    `json:"year"`
+				} `json:"vehicle"`
+				WorkOrderNumber        int `json:"work_order_number"`
+				WorkOrderServicesCount int `json:"work_order_services_count"`
+			} `json:"work_orders"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetCustomersWorkOrderResponse parses an HTTP response from a GetCustomersWorkOrderWithResponse call
+func ParseGetCustomersWorkOrderResponse(rsp *http.Response) (*GetCustomersWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetCustomersWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			ClosedAt             interface{} `json:"closed_at"`
+			CreatedAt            string      `json:"created_at"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			Id                     int    `json:"id"`
+			InspectionReportsCount int    `json:"inspection_reports_count"`
+			IntakeMethod           string `json:"intake_method"`
+			Location               struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId       int         `json:"location_id"`
+			Paid             bool        `json:"paid"`
+			ScheduledFor     interface{} `json:"scheduled_for"`
+			ServiceAdvisorId interface{} `json:"service_advisor_id"`
+			Status           string      `json:"status"`
+			Totals           struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			WorkOrderNumber        int `json:"work_order_number"`
+			WorkOrderServicesCount int `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteCustomerResponse parses an HTTP response from a DeleteCustomerWithResponse call
+func ParseDeleteCustomerResponse(rsp *http.Response) (*DeleteCustomerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteCustomerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest Customer
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
 		var dest struct {
 			Error Error `json:"error"`
@@ -3264,6 +5059,15 @@ func ParseShowCustomerResponse(rsp *http.Response) (*ShowCustomerResponse, error
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	}
 
@@ -3312,6 +5116,7 @@ func ParseShowLocationResponse(rsp *http.Response) (*ShowLocationResponse, error
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			AppUrl   string `json:"app_url"`
 			Currency string `json:"currency"`
 			Dock     []struct {
 				Enabled bool    `json:"enabled"`
@@ -3322,6 +5127,58 @@ func ParseShowLocationResponse(rsp *http.Response) (*ShowLocationResponse, error
 			LocationType string `json:"location_type"`
 			Name         string `json:"name"`
 			Url          string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListTeamResponse parses an HTTP response from a ListTeamWithResponse call
+func ParseListTeamResponse(rsp *http.Response) (*ListTeamResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListTeamResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			CreatedAt    string      `json:"created_at"`
+			Disabled     bool        `json:"disabled"`
+			Email        interface{} `json:"email"`
+			FullName     string      `json:"full_name"`
+			HomeLocation struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"home_location"`
+			Id        int `json:"id"`
+			Locations []struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+			} `json:"locations"`
+			Role      string `json:"role"`
+			UpdatedAt string `json:"updated_at"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -3363,6 +5220,15 @@ func ParseListVehiclesResponse(rsp *http.Response) (*ListVehiclesResponse, error
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -3388,6 +5254,15 @@ func ParseCreateVehicleResponse(rsp *http.Response) (*CreateVehicleResponse, err
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
 		var dest struct {
@@ -3489,8 +5364,12 @@ func ParseDeleteVehicleResponse(rsp *http.Response) (*DeleteVehicleResponse, err
 	}
 
 	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest Vehicle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
 		var dest struct {
@@ -3527,6 +5406,15 @@ func ParseShowVehicleResponse(rsp *http.Response) (*ShowVehicleResponse, error) 
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	}
 
 	return response, nil
@@ -3548,6 +5436,77 @@ func ParseUpdateVehicleResponse(rsp *http.Response) (*UpdateVehicleResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest Vehicle
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetVehiclesWorkOrderResponse parses an HTTP response from a GetVehiclesWorkOrderWithResponse call
+func ParseGetVehiclesWorkOrderResponse(rsp *http.Response) (*GetVehiclesWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetVehiclesWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			ClosedAt             interface{} `json:"closed_at"`
+			CreatedAt            string      `json:"created_at"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			Id                     int    `json:"id"`
+			InspectionReportsCount int    `json:"inspection_reports_count"`
+			IntakeMethod           string `json:"intake_method"`
+			Location               struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId       int         `json:"location_id"`
+			Paid             bool        `json:"paid"`
+			ScheduledFor     interface{} `json:"scheduled_for"`
+			ServiceAdvisorId interface{} `json:"service_advisor_id"`
+			Status           string      `json:"status"`
+			Totals           struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			WorkOrderNumber        int `json:"work_order_number"`
+			WorkOrderServicesCount int `json:"work_order_services_count"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -3672,6 +5631,66 @@ func ParseUpdateWorkOrderResponse(rsp *http.Response) (*UpdateWorkOrderResponse,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePostWorkOrdersPaymentResponse parses an HTTP response from a PostWorkOrdersPaymentWithResponse call
+func ParsePostWorkOrdersPaymentResponse(rsp *http.Response) (*PostWorkOrdersPaymentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PostWorkOrdersPaymentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AmountCents int    `json:"amount_cents"`
+			CreatedAt   string `json:"created_at"`
+			CustomerId  int    `json:"customer_id"`
+			Id          int    `json:"id"`
+			IsRefund    bool   `json:"is_refund"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+			} `json:"processed_by"`
+			ProcessorStatus interface{} `json:"processor_status"`
+			Reference       interface{} `json:"reference"`
+			UpdatedAt       string      `json:"updated_at"`
+			WorkOrderId     int         `json:"work_order_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
 
 	}
 

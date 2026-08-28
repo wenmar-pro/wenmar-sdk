@@ -35,11 +35,16 @@ paths:
                           type: string
                         url:
                           type: string
+                        app_url:
+                          type: string
                       required:
                       - id
                       - name
                       - url
+                      - app_url
                   url:
+                    type: string
+                  app_url:
                     type: string
                 required:
                 - id
@@ -47,6 +52,7 @@ paths:
                 - slug
                 - locations
                 - url
+                - app_url
         '403':
           description: GET /account -> 403
           content:
@@ -106,42 +112,10 @@ paths:
                       type: boolean
                     vehicles_count:
                       type: integer
-                    emails:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          address:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - id
-                        - address
-                        - label
-                        - primary
-                    phones:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          number:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - id
-                        - number
-                        - label
-                        - primary
+                    emails_count:
+                      type: integer
+                    phones_count:
+                      type: integer
                     vehicles_url:
                       type: string
                     work_orders_url:
@@ -152,6 +126,21 @@ paths:
                       type: string
                     url:
                       type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
                   required:
                   - type
                   - id
@@ -163,13 +152,15 @@ paths:
                   - marketing_opt_in
                   - tax_exempt
                   - vehicles_count
-                  - emails
-                  - phones
+                  - emails_count
+                  - phones_count
                   - vehicles_url
                   - work_orders_url
                   - created_at
                   - updated_at
                   - url
+                  - app_url
+                  - location
         '401':
           description: GET /customers -> 401
           content:
@@ -244,12 +235,10 @@ paths:
                     type: boolean
                   vehicles_count:
                     type: integer
-                  emails:
-                    type: array
-                    items: {}
-                  phones:
-                    type: array
-                    items: {}
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
                   vehicles_url:
                     type: string
                   work_orders_url:
@@ -260,6 +249,30 @@ paths:
                     type: string
                   url:
                     type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  emails:
+                    type: array
+                    items: {}
+                  phones:
+                    type: array
+                    items: {}
+                  addresses:
+                    type: array
+                    items: {}
                   outstanding_balance_cents:
                     type: integer
                   total_revenue_cents:
@@ -283,19 +296,47 @@ paths:
                 - marketing_opt_in
                 - tax_exempt
                 - vehicles_count
-                - emails
-                - phones
+                - emails_count
+                - phones_count
                 - vehicles_url
                 - work_orders_url
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
                 - outstanding_balance_cents
                 - total_revenue_cents
                 - store_credit_cents
                 - last_visit_at
                 - statements_count
                 - currency
+        '403':
+          description: POST /customers -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
         '422':
           description: POST /customers -> 422
           content:
@@ -331,7 +372,570 @@ paths:
                 required:
                 - error
       description: POST /customers
+  "/customers/{customer_id}/vehicles":
+    get:
+      summary: index
+      tags:
+      - Shop::Vehicle
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/vehicles -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: integer
+                    make:
+                      type: string
+                    model:
+                      type: string
+                    year:
+                      type: integer
+                    submodel:
+                      nullable: true
+                    body_style:
+                      nullable: true
+                    engine:
+                      nullable: true
+                    vin:
+                      type: string
+                    license_plate:
+                      type: string
+                    license_plate_state:
+                      type: string
+                    license_plate_country:
+                      type: string
+                    drivetrain:
+                      nullable: true
+                    transmission:
+                      nullable: true
+                    color:
+                      nullable: true
+                    vehicle_type:
+                      type: string
+                    unit_number:
+                      nullable: true
+                    fleet_identifier:
+                      nullable: true
+                    production_date:
+                      nullable: true
+                    annual_safety_expires_at:
+                      nullable: true
+                    notes:
+                      nullable: true
+                    odometer:
+                      type: object
+                      properties:
+                        reading:
+                          nullable: true
+                        unit:
+                          type: string
+                      required:
+                      - reading
+                      - unit
+                    work_orders_count:
+                      type: integer
+                    work_orders_url:
+                      type: string
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                  required:
+                  - type
+                  - id
+                  - make
+                  - model
+                  - year
+                  - submodel
+                  - body_style
+                  - engine
+                  - vin
+                  - license_plate
+                  - license_plate_state
+                  - license_plate_country
+                  - drivetrain
+                  - transmission
+                  - color
+                  - vehicle_type
+                  - unit_number
+                  - fleet_identifier
+                  - production_date
+                  - annual_safety_expires_at
+                  - notes
+                  - odometer
+                  - work_orders_count
+                  - work_orders_url
+                  - customer
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+                  - location
+      description: GET /customers/{customer_id}/vehicles
+  "/customers/{customer_id}/vehicles/{vehicle_id}/history":
+    get:
+      summary: show
+      tags:
+      - Shop::VehicleHistory
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: vehicle_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/vehicles/{vehicle_id}/history
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_work_orders:
+                    type: integer
+                  work_orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        id:
+                          type: integer
+                        work_order_number:
+                          type: integer
+                        status:
+                          type: string
+                        intake_method:
+                          type: string
+                        scheduled_for:
+                          nullable: true
+                        authorized:
+                          type: boolean
+                        paid:
+                          type: boolean
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        closed_at:
+                          nullable: true
+                        location_id:
+                          type: integer
+                        service_advisor_id:
+                          nullable: true
+                        assigned_technician_id:
+                          nullable: true
+                        work_order_services_count:
+                          type: integer
+                        inspection_reports_count:
+                          type: integer
+                        customer:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            full_name:
+                              type: string
+                            url:
+                              type: string
+                          required:
+                          - id
+                          - full_name
+                          - url
+                        vehicle:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            make:
+                              type: string
+                            model:
+                              type: string
+                            year:
+                              type: integer
+                            vin:
+                              type: string
+                            url:
+                              type: string
+                          required:
+                          - id
+                          - make
+                          - model
+                          - year
+                          - vin
+                          - url
+                        totals:
+                          type: object
+                          properties:
+                            subtotal_cents:
+                              type: integer
+                            tax_cents:
+                              type: integer
+                            total_cents:
+                              type: integer
+                            paid_cents:
+                              type: integer
+                            remaining_cents:
+                              type: integer
+                            currency:
+                              type: string
+                          required:
+                          - subtotal_cents
+                          - tax_cents
+                          - total_cents
+                          - paid_cents
+                          - remaining_cents
+                          - currency
+                        url:
+                          type: string
+                        app_url:
+                          type: string
+                        location:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            url:
+                              type: string
+                          required:
+                          - id
+                          - name
+                          - url
+                      required:
+                      - type
+                      - id
+                      - work_order_number
+                      - status
+                      - intake_method
+                      - scheduled_for
+                      - authorized
+                      - paid
+                      - created_at
+                      - updated_at
+                      - closed_at
+                      - location_id
+                      - service_advisor_id
+                      - assigned_technician_id
+                      - work_order_services_count
+                      - inspection_reports_count
+                      - customer
+                      - vehicle
+                      - totals
+                      - url
+                      - app_url
+                      - location
+                required:
+                - total_work_orders
+                - work_orders
+        '404':
+          description: GET /customers/{customer_id}/vehicles/{vehicle_id}/history
+            -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+      description: GET /customers/{customer_id}/vehicles/{vehicle_id}/history
+  "/customers/{customer_id}/work_orders":
+    get:
+      summary: index
+      tags:
+      - Shop::WorkOrder
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/work_orders -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: integer
+                    work_order_number:
+                      type: integer
+                    status:
+                      type: string
+                    intake_method:
+                      type: string
+                    scheduled_for:
+                      nullable: true
+                    authorized:
+                      type: boolean
+                    paid:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    closed_at:
+                      nullable: true
+                    location_id:
+                      type: integer
+                    service_advisor_id:
+                      nullable: true
+                    assigned_technician_id:
+                      nullable: true
+                    work_order_services_count:
+                      type: integer
+                    inspection_reports_count:
+                      type: integer
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    vehicle:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        make:
+                          type: string
+                        model:
+                          type: string
+                        year:
+                          type: integer
+                        vin:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - make
+                      - model
+                      - year
+                      - vin
+                      - url
+                    totals:
+                      type: object
+                      properties:
+                        subtotal_cents:
+                          type: integer
+                        tax_cents:
+                          type: integer
+                        total_cents:
+                          type: integer
+                        paid_cents:
+                          type: integer
+                        remaining_cents:
+                          type: integer
+                        currency:
+                          type: string
+                      required:
+                      - subtotal_cents
+                      - tax_cents
+                      - total_cents
+                      - paid_cents
+                      - remaining_cents
+                      - currency
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                  required:
+                  - type
+                  - id
+                  - work_order_number
+                  - status
+                  - intake_method
+                  - scheduled_for
+                  - authorized
+                  - paid
+                  - created_at
+                  - updated_at
+                  - closed_at
+                  - location_id
+                  - service_advisor_id
+                  - assigned_technician_id
+                  - work_order_services_count
+                  - inspection_reports_count
+                  - customer
+                  - vehicle
+                  - totals
+                  - url
+                  - app_url
+                  - location
+      description: GET /customers/{customer_id}/work_orders
   "/customers/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::Customer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '202':
+          description: DELETE /customers/{id} -> 202
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  resource:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                    required:
+                    - id
+                    - type
+                required:
+                - status
+                - resource
+        '403':
+          description: DELETE /customers/{id} -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+        '422':
+          description: DELETE /customers/{id} -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+      description: DELETE /customers/{id}
     get:
       summary: show
       tags:
@@ -370,6 +974,35 @@ paths:
                     type: boolean
                   vehicles_count:
                     type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   emails:
                     type: array
                     items:
@@ -406,16 +1039,42 @@ paths:
                       - number
                       - label
                       - primary
-                  vehicles_url:
-                    type: string
-                  work_orders_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
+                  addresses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        address1:
+                          type: string
+                        address2:
+                          nullable: true
+                        city:
+                          type: string
+                        state:
+                          type: string
+                        state_name:
+                          type: string
+                        postal_code:
+                          type: string
+                        country:
+                          type: string
+                        is_billing:
+                          type: boolean
+                        full_address:
+                          type: string
+                      required:
+                      - id
+                      - address1
+                      - address2
+                      - city
+                      - state
+                      - state_name
+                      - postal_code
+                      - country
+                      - is_billing
+                      - full_address
                   outstanding_balance_cents:
                     type: integer
                   total_revenue_cents:
@@ -439,19 +1098,47 @@ paths:
                 - marketing_opt_in
                 - tax_exempt
                 - vehicles_count
-                - emails
-                - phones
+                - emails_count
+                - phones_count
                 - vehicles_url
                 - work_orders_url
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
                 - outstanding_balance_cents
                 - total_revenue_cents
                 - store_credit_cents
                 - last_visit_at
                 - statements_count
                 - currency
+        '404':
+          description: GET /customers/{id} -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
       description: GET /customers/{id}
     patch:
       summary: update
@@ -472,6 +1159,18 @@ paths:
                 customer:
                   type: object
                   properties:
+                    phones_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          _destroy:
+                            type: boolean
+                        required:
+                        - id
+                        - _destroy
                     emails_attributes:
                       type: array
                       items:
@@ -487,18 +1186,6 @@ paths:
                             nullable: true
                         required:
                         - email
-                    phones_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          _destroy:
-                            type: boolean
-                        required:
-                        - id
-                        - _destroy
               required:
               - customer
       responses:
@@ -529,6 +1216,35 @@ paths:
                     type: boolean
                   vehicles_count:
                     type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   emails:
                     type: array
                     items:
@@ -565,16 +1281,9 @@ paths:
                       - number
                       - label
                       - primary
-                  vehicles_url:
-                    type: string
-                  work_orders_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
+                  addresses:
+                    type: array
+                    items: {}
                   outstanding_balance_cents:
                     type: integer
                   total_revenue_cents:
@@ -598,13 +1307,18 @@ paths:
                 - marketing_opt_in
                 - tax_exempt
                 - vehicles_count
-                - emails
-                - phones
+                - emails_count
+                - phones_count
                 - vehicles_url
                 - work_orders_url
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
                 - outstanding_balance_cents
                 - total_revenue_cents
                 - store_credit_cents
@@ -657,6 +1371,8 @@ paths:
                       - url
                   url:
                     type: string
+                  app_url:
+                    type: string
                 required:
                 - id
                 - name
@@ -664,6 +1380,7 @@ paths:
                 - currency
                 - dock
                 - url
+                - app_url
         '403':
           description: GET /locations/{id} -> 403
           content:
@@ -688,6 +1405,94 @@ paths:
                 required:
                 - error
       description: GET /locations/{id}
+  "/team/members":
+    get:
+      summary: index
+      tags:
+      - Shop::Team::Member
+      responses:
+        '200':
+          description: GET /team/members -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    full_name:
+                      type: string
+                    email:
+                      nullable: true
+                    role:
+                      type: string
+                    disabled:
+                      type: boolean
+                    home_location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    locations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                        required:
+                        - id
+                        - name
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                  required:
+                  - id
+                  - full_name
+                  - email
+                  - role
+                  - disabled
+                  - home_location
+                  - locations
+                  - created_at
+                  - updated_at
+        '403':
+          description: GET /team/members -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+      description: GET /team/members
   "/vehicles":
     get:
       summary: index
@@ -778,6 +1583,21 @@ paths:
                       type: string
                     url:
                       type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
                   required:
                   - type
                   - id
@@ -807,35 +1627,47 @@ paths:
                   - created_at
                   - updated_at
                   - url
+                  - app_url
+                  - location
+        '403':
+          description: GET /vehicles -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+      parameters:
+      - name: customer_id
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
       description: GET /vehicles
     post:
       summary: create
       tags:
       - Shop::Vehicle
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                vehicle:
-                  type: object
-                  properties:
-                    make:
-                      type: string
-                    model:
-                      type: string
-                    year:
-                      type: integer
-                    customer_id:
-                      type: integer
-                  required:
-                  - make
-                  - model
-                  - year
-                  - customer_id
-              required:
-              - vehicle
       responses:
         '201':
           description: POST /vehicles -> 201
@@ -919,6 +1751,21 @@ paths:
                     type: string
                   url:
                     type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   last_serviced_at:
                     nullable: true
                   lifetime_revenue_cents:
@@ -956,10 +1803,35 @@ paths:
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
                 - last_serviced_at
                 - lifetime_revenue_cents
                 - open_work_orders_count
                 - appointments_count
+        '403':
+          description: POST /vehicles -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
         '422':
           description: POST /vehicles -> 422
           content:
@@ -999,6 +1871,30 @@ paths:
                     - details
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle:
+                  type: object
+                  properties:
+                    make:
+                      type: string
+                    model:
+                      type: string
+                    year:
+                      type: integer
+                    customer_id:
+                      type: integer
+                  required:
+                  - make
+                  - model
+                  - year
+                  - customer_id
+              required:
+              - vehicle
       description: POST /vehicles
   "/vehicles/check_duplicate":
     get:
@@ -1107,8 +2003,28 @@ paths:
         schema:
           type: integer
       responses:
-        '204':
-          description: DELETE /vehicles/{id} -> 204
+        '202':
+          description: DELETE /vehicles/{id} -> 202
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  resource:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                    required:
+                    - id
+                    - type
+                required:
+                - status
+                - resource
         '422':
           description: DELETE /vehicles/{id} -> 422
           content:
@@ -1226,6 +2142,21 @@ paths:
                     type: string
                   url:
                     type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   last_serviced_at:
                     nullable: true
                   lifetime_revenue_cents:
@@ -1263,10 +2194,35 @@ paths:
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
                 - last_serviced_at
                 - lifetime_revenue_cents
                 - open_work_orders_count
                 - appointments_count
+        '404':
+          description: GET /vehicles/{id} -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
       description: GET /vehicles/{id}
     patch:
       summary: update
@@ -1376,6 +2332,21 @@ paths:
                     type: string
                   url:
                     type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   last_serviced_at:
                     nullable: true
                   lifetime_revenue_cents:
@@ -1413,11 +2384,164 @@ paths:
                 - created_at
                 - updated_at
                 - url
+                - app_url
+                - location
                 - last_serviced_at
                 - lifetime_revenue_cents
                 - open_work_orders_count
                 - appointments_count
       description: PATCH /vehicles/{id}
+  "/vehicles/{vehicle_id}/work_orders":
+    get:
+      summary: index
+      tags:
+      - Shop::WorkOrder
+      parameters:
+      - name: vehicle_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /vehicles/{vehicle_id}/work_orders -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: integer
+                    work_order_number:
+                      type: integer
+                    status:
+                      type: string
+                    intake_method:
+                      type: string
+                    scheduled_for:
+                      nullable: true
+                    authorized:
+                      type: boolean
+                    paid:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    closed_at:
+                      nullable: true
+                    location_id:
+                      type: integer
+                    service_advisor_id:
+                      nullable: true
+                    assigned_technician_id:
+                      nullable: true
+                    work_order_services_count:
+                      type: integer
+                    inspection_reports_count:
+                      type: integer
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    vehicle:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        make:
+                          type: string
+                        model:
+                          type: string
+                        year:
+                          type: integer
+                        vin:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - make
+                      - model
+                      - year
+                      - vin
+                      - url
+                    totals:
+                      type: object
+                      properties:
+                        subtotal_cents:
+                          type: integer
+                        tax_cents:
+                          type: integer
+                        total_cents:
+                          type: integer
+                        paid_cents:
+                          type: integer
+                        remaining_cents:
+                          type: integer
+                        currency:
+                          type: string
+                      required:
+                      - subtotal_cents
+                      - tax_cents
+                      - total_cents
+                      - paid_cents
+                      - remaining_cents
+                      - currency
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                  required:
+                  - type
+                  - id
+                  - work_order_number
+                  - status
+                  - intake_method
+                  - scheduled_for
+                  - authorized
+                  - paid
+                  - created_at
+                  - updated_at
+                  - closed_at
+                  - location_id
+                  - service_advisor_id
+                  - assigned_technician_id
+                  - work_order_services_count
+                  - inspection_reports_count
+                  - customer
+                  - vehicle
+                  - totals
+                  - url
+                  - app_url
+                  - location
+      description: GET /vehicles/{vehicle_id}/work_orders
   "/work_orders":
     get:
       summary: index
@@ -1524,6 +2648,21 @@ paths:
                       - currency
                     url:
                       type: string
+                    app_url:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
                   required:
                   - type
                   - id
@@ -1545,6 +2684,8 @@ paths:
                   - vehicle
                   - totals
                   - url
+                  - app_url
+                  - location
       description: GET /work_orders
     post:
       summary: create
@@ -1667,14 +2808,21 @@ paths:
                     - currency
                   url:
                     type: string
-                  services_url:
+                  app_url:
                     type: string
-                  payments_url:
-                    type: string
-                  messages_url:
-                    type: string
-                  activity_url:
-                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   odometer_in:
                     nullable: true
                   odometer_out:
@@ -1731,6 +2879,12 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  services:
+                    type: array
+                    items: {}
+                  payments:
+                    type: array
+                    items: {}
                 required:
                 - type
                 - id
@@ -1752,10 +2906,8 @@ paths:
                 - vehicle
                 - totals
                 - url
-                - services_url
-                - payments_url
-                - messages_url
-                - activity_url
+                - app_url
+                - location
                 - odometer_in
                 - odometer_out
                 - odometer_unit
@@ -1784,6 +2936,8 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - services
+                - payments
       description: POST /work_orders
   "/work_orders/{id}":
     delete:
@@ -1909,14 +3063,21 @@ paths:
                     - currency
                   url:
                     type: string
-                  services_url:
+                  app_url:
                     type: string
-                  payments_url:
-                    type: string
-                  messages_url:
-                    type: string
-                  activity_url:
-                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   odometer_in:
                     nullable: true
                   odometer_out:
@@ -1973,6 +3134,209 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  services:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        service_type:
+                          type: string
+                        authorization_status:
+                          type: string
+                        pricing_mode:
+                          type: string
+                        technician_id:
+                          nullable: true
+                        category_id:
+                          nullable: true
+                        ordinal:
+                          type: integer
+                        discount_cents:
+                          type: integer
+                        labor_cents:
+                          type: integer
+                        parts_cents:
+                          type: integer
+                        fees_cents:
+                          type: integer
+                        sublet_cents:
+                          type: integer
+                        tires_cents:
+                          type: integer
+                        total_cents:
+                          type: integer
+                        tax_total_cents:
+                          type: integer
+                        estimated_hours:
+                          type: string
+                        customer_notes:
+                          nullable: true
+                        started_at:
+                          nullable: true
+                        completed_at:
+                          nullable: true
+                        authorized_at:
+                          nullable: true
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        line_items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              item_type:
+                                type: string
+                              description:
+                                type: string
+                              quantity:
+                                type: string
+                              unit_price_cents:
+                                type: integer
+                              total_cents:
+                                type: integer
+                              tax_total_cents:
+                                type: integer
+                              pricing_mode:
+                                type: string
+                              is_taxable:
+                                type: boolean
+                              is_warranty:
+                                type: boolean
+                              completed:
+                                type: boolean
+                              notes:
+                                nullable: true
+                              created_at:
+                                type: string
+                              updated_at:
+                                type: string
+                              hours:
+                                type: string
+                                nullable: true
+                              rate_cents:
+                                type: integer
+                                nullable: true
+                              technician_id:
+                                nullable: true
+                              labor_rate_id:
+                                nullable: true
+                              part_type:
+                                type: string
+                                nullable: true
+                              part_status:
+                                type: string
+                                nullable: true
+                              vendor_id:
+                                nullable: true
+                              vendor_part_number:
+                                nullable: true
+                              unit_cost_cents:
+                                type: integer
+                                nullable: true
+                              brand:
+                                nullable: true
+                              dot_code:
+                                nullable: true
+                              tire_size:
+                                nullable: true
+                            required:
+                            - id
+                            - item_type
+                            - description
+                            - quantity
+                            - unit_price_cents
+                            - total_cents
+                            - tax_total_cents
+                            - pricing_mode
+                            - is_taxable
+                            - is_warranty
+                            - completed
+                            - notes
+                            - created_at
+                            - updated_at
+                      required:
+                      - id
+                      - name
+                      - service_type
+                      - authorization_status
+                      - pricing_mode
+                      - technician_id
+                      - category_id
+                      - ordinal
+                      - discount_cents
+                      - labor_cents
+                      - parts_cents
+                      - fees_cents
+                      - sublet_cents
+                      - tires_cents
+                      - total_cents
+                      - tax_total_cents
+                      - estimated_hours
+                      - customer_notes
+                      - started_at
+                      - completed_at
+                      - authorized_at
+                      - created_at
+                      - updated_at
+                      - line_items
+                  payments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        amount_cents:
+                          type: integer
+                        method:
+                          type: string
+                        processor_status:
+                          type: string
+                        is_refund:
+                          type: boolean
+                        processed_at:
+                          type: string
+                        reference:
+                          nullable: true
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        work_order_id:
+                          type: integer
+                        customer_id:
+                          type: integer
+                        processed_by:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            full_name:
+                              type: string
+                          required:
+                          - id
+                          - full_name
+                      required:
+                      - id
+                      - amount_cents
+                      - method
+                      - processor_status
+                      - is_refund
+                      - processed_at
+                      - reference
+                      - created_at
+                      - updated_at
+                      - work_order_id
+                      - customer_id
+                      - processed_by
                 required:
                 - type
                 - id
@@ -1994,10 +3358,8 @@ paths:
                 - vehicle
                 - totals
                 - url
-                - services_url
-                - payments_url
-                - messages_url
-                - activity_url
+                - app_url
+                - location
                 - odometer_in
                 - odometer_out
                 - odometer_unit
@@ -2026,6 +3388,8 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - services
+                - payments
       description: GET /work_orders/{id}
     patch:
       summary: update
@@ -2151,14 +3515,21 @@ paths:
                     - currency
                   url:
                     type: string
-                  services_url:
+                  app_url:
                     type: string
-                  payments_url:
-                    type: string
-                  messages_url:
-                    type: string
-                  activity_url:
-                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                   odometer_in:
                     nullable: true
                   odometer_out:
@@ -2215,6 +3586,12 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  services:
+                    type: array
+                    items: {}
+                  payments:
+                    type: array
+                    items: {}
                 required:
                 - type
                 - id
@@ -2236,10 +3613,8 @@ paths:
                 - vehicle
                 - totals
                 - url
-                - services_url
-                - payments_url
-                - messages_url
-                - activity_url
+                - app_url
+                - location
                 - odometer_in
                 - odometer_out
                 - odometer_unit
@@ -2268,19 +3643,141 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - services
+                - payments
       description: PATCH /work_orders/{id}
+  "/work_orders/{work_order_id}/payments":
+    post:
+      summary: create
+      tags:
+      - Shop::Payment
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: POST /work_orders/{work_order_id}/payments -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  amount_cents:
+                    type: integer
+                  method:
+                    type: string
+                  processor_status:
+                    nullable: true
+                  is_refund:
+                    type: boolean
+                  processed_at:
+                    type: string
+                  reference:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  work_order_id:
+                    type: integer
+                  customer_id:
+                    type: integer
+                  processed_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                required:
+                - id
+                - amount_cents
+                - method
+                - processor_status
+                - is_refund
+                - processed_at
+                - reference
+                - created_at
+                - updated_at
+                - work_order_id
+                - customer_id
+                - processed_by
+        '403':
+          description: POST /work_orders/{work_order_id}/payments -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+        '422':
+          description: POST /work_orders/{work_order_id}/payments -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - details
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                    amount_cents:
+                      type: string
+                  required:
+                  - method
+                  - amount_cents
+              required:
+              - payment
+      description: POST /work_orders/{work_order_id}/payments
 components:
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
       bearerFormat: token
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://app.wenmarpro.com/oauth/authorize
-          tokenUrl: https://app.wenmarpro.com/oauth/token
-          scopes:
-            read: Read access
-            write: Write access

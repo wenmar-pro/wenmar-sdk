@@ -47,10 +47,25 @@ module EnrichSpec
     sub_action = SUB_ACTION_IDS["#{method} #{path}"]
     return sub_action if sub_action
 
-    resource = path.split("/")[1] # "customers", "vehicles", "work_orders"
+    segments = path.split("/").reject(&:empty?)
+    resource = segments[0] # "customers", "vehicles", "work_orders"
     return nil unless resource
 
     singularized = SINGULAR_OVERRIDES[resource] || resource.chomp("s")
+
+    # Nested resource paths (e.g. /work_orders/{work_order_id}/payments) get a
+    # distinct operationId so they don't collide with the top-level resource.
+    if segments.length >= 3
+      nested = segments[2]
+      nested_singular = nested.chomp("s")
+      # Deeper nesting (e.g. .../vehicles/{vehicle_id}/history) appends the
+      # final segment to keep operationIds unique.
+      if segments.length >= 5
+        return "#{method}_#{resource}_#{nested_singular}_#{segments[4]}"
+      end
+      return "#{method}_#{resource}_#{nested_singular}"
+    end
+
     has_id = path.include?("{id}")
 
     case [method, has_id]
@@ -153,7 +168,13 @@ module EnrichSpec
     spec["components"]["schemas"] ||= {}
 
     spec["paths"].each do |path, methods|
-      resource = path.split("/")[1]
+      segments = path.split("/").reject(&:empty?)
+      # Only top-level resource paths (e.g. /customers, /customers/{id}) map to
+      # a component schema. Nested paths (e.g. /customers/{customer_id}/vehicles)
+      # are sub-resources and must not pollute the parent schema.
+      next unless segments.length <= 2
+
+      resource = segments[0]
       schema_name = RESOURCE_SCHEMAS[resource]
       next unless schema_name
 

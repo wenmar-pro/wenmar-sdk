@@ -161,7 +161,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCusto
 }
 
 func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesResponse, error) {
-	resp, err := c.gen.ListVehiclesWithResponse(ctx)
+	resp, err := c.gen.ListVehiclesWithResponse(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
