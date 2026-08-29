@@ -150,7 +150,7 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 
 func (c *Client) ListCustomers(ctx context.Context) (*ListCustomersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
-	resp, err := c.gen.ListCustomersWithResponse(ctx)
+	resp, err := c.gen.ListCustomersWithResponse(ctx, nil)
 	if err != nil {
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
 		return nil, err

@@ -344,6 +344,18 @@ type UpdateCustomerTagJSONBody struct {
 	Name string `json:"name"`
 }
 
+// ListCustomersParams defines parameters for ListCustomers.
+type ListCustomersParams struct {
+	HasBalance      *bool     `form:"has_balance,omitempty" json:"has_balance,omitempty"`
+	HasVehicle      *bool     `form:"has_vehicle,omitempty" json:"has_vehicle,omitempty"`
+	LastVisitMonths *int      `form:"last_visit_months,omitempty" json:"last_visit_months,omitempty"`
+	Page            *int      `form:"page,omitempty" json:"page,omitempty"`
+	PerPage         *int      `form:"per_page,omitempty" json:"per_page,omitempty"`
+	Query           *string   `form:"query,omitempty" json:"query,omitempty"`
+	TagIds          *[]string `form:"tag_ids,omitempty" json:"tag_ids,omitempty"`
+	Type            *string   `form:"type,omitempty" json:"type,omitempty"`
+}
+
 // CreateCustomerJSONBody defines parameters for CreateCustomer.
 type CreateCustomerJSONBody struct {
 	Customer struct {
@@ -824,7 +836,7 @@ type ClientInterface interface {
 	// List all customers, paginated via the Link header.
 	//
 	// Corresponds with GET /customers (the `ListCustomers` operationId).
-	ListCustomers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListCustomers(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateCustomerWithBody create
 	//
@@ -1573,8 +1585,8 @@ func (c *Client) UpdateCustomerTag(ctx context.Context, id int, body UpdateCusto
 // List all customers, paginated via the Link header.
 //
 // Corresponds with GET /customers (the `ListCustomers` operationId).
-func (c *Client) ListCustomers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListCustomersRequest(c.Server)
+func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomersRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -3195,7 +3207,7 @@ func NewUpdateCustomerTagRequestWithBody(server string, id int, contentType stri
 }
 
 // NewListCustomersRequest constructs an http.Request for the ListCustomers method
-func NewListCustomersRequest(server string) (*http.Request, error) {
+func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -3211,6 +3223,117 @@ func NewListCustomersRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.HasBalance != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "has_balance", *params.HasBalance, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.HasVehicle != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "has_vehicle", *params.HasVehicle, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.LastVisitMonths != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "last_visit_months", *params.LastVisitMonths, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Query != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "query", *params.Query, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.TagIds != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "tag_ids", *params.TagIds, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Type != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "type", *params.Type, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -5834,7 +5957,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /customers (the `ListCustomers` operationId).
-	ListCustomersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error)
+	ListCustomersWithResponse(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error)
 
 	// CreateCustomerWithBodyWithResponse create
 	//
@@ -11261,8 +11384,8 @@ func (c *ClientWithResponses) UpdateCustomerTagWithResponse(ctx context.Context,
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /customers (the `ListCustomers` operationId).
-func (c *ClientWithResponses) ListCustomersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error) {
-	rsp, err := c.ListCustomers(ctx, reqEditors...)
+func (c *ClientWithResponses) ListCustomersWithResponse(ctx context.Context, params *ListCustomersParams, reqEditors ...RequestEditorFn) (*ListCustomersResponse, error) {
+	rsp, err := c.ListCustomers(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}

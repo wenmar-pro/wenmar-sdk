@@ -303,12 +303,14 @@ paths:
                       type: string
                     company_name:
                       nullable: true
+                      type: string
                     first_name:
                       type: string
                     last_name:
                       type: string
                     fleet_identifier:
                       nullable: true
+                      type: string
                     marketing_opt_in:
                       type: boolean
                     tax_exempt:
@@ -388,6 +390,49 @@ paths:
                 required:
                 - error
       description: GET /customers
+      parameters:
+      - name: has_balance
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: has_vehicle
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: last_visit_months
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: tag_ids
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
     post:
       summary: create
       tags:
@@ -837,9 +882,9 @@ paths:
                   - name
                   - company_name
                   - initials
+                  - fleet_identifier
                   - phone
                   - email
-                  - fleet_identifier
       description: GET /customers/lookup
   "/customers/{customer_id}/drivers":
     get:
@@ -4193,10 +4238,10 @@ paths:
                       type: array
                       items: {}
                   required:
-                  - customer_id
-                  - year
                   - make
                   - model
+                  - year
+                  - customer_id
               required:
               - vehicle
       description: POST /vehicles
