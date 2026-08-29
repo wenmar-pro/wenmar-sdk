@@ -27,7 +27,10 @@ const (
 // Manager, Linux Secret Service) via zalando/go-keyring.
 type KeyringStore struct{}
 
-// GetToken reads the token from the keyring.
+// GetToken reads the token from the keyring. The token is stored as JSON
+// to preserve refresh_token and expires_at. Falls back to treating the
+// stored value as a raw access token string for backward compatibility
+// with old static-token entries.
 func (KeyringStore) GetToken(_ context.Context) (*Token, error) {
 	raw, err := keyring.Get(keyringService, keyringUser)
 	if err != nil {
@@ -36,15 +39,28 @@ func (KeyringStore) GetToken(_ context.Context) (*Token, error) {
 	if raw == "" {
 		return nil, fmt.Errorf("keyring returned an empty token")
 	}
-	return &Token{AccessToken: raw}, nil
+	var token Token
+	if err := json.Unmarshal([]byte(raw), &token); err != nil {
+		// Backward compat: old static tokens stored as raw strings
+		return &Token{AccessToken: raw}, nil
+	}
+	if token.AccessToken == "" {
+		return nil, fmt.Errorf("keyring token has an empty access_token")
+	}
+	return &token, nil
 }
 
-// SaveToken writes the token to the keyring.
+// SaveToken writes the full token (access, refresh, expiry) to the keyring
+// as JSON so OAuth tokens preserve all fields.
 func (KeyringStore) SaveToken(_ context.Context, token *Token) error {
 	if token == nil || token.AccessToken == "" {
 		return fmt.Errorf("cannot save an empty token")
 	}
-	return keyring.Set(keyringService, keyringUser, token.AccessToken)
+	data, err := json.Marshal(token)
+	if err != nil {
+		return fmt.Errorf("serialize token: %w", err)
+	}
+	return keyring.Set(keyringService, keyringUser, string(data))
 }
 
 // DeleteToken removes the token from the keyring.

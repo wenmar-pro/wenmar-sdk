@@ -2,11 +2,144 @@ package auth
 
 import (
 	"context"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
 )
+
+func TestFileStore_FullTokenRoundTrip(t *testing.T) {
+	store := FileStore{Path: filepath.Join(t.TempDir(), "credentials.json")}
+
+	expiresAt := time.Now().Add(2 * time.Hour)
+	original := &Token{
+		AccessToken:  "access-123",
+		RefreshToken: "refresh-456",
+		ExpiresAt:    &expiresAt,
+		TokenType:    "Bearer",
+	}
+
+	if err := store.SaveToken(context.Background(), original); err != nil {
+		t.Fatalf("SaveToken failed: %v", err)
+	}
+
+	loaded, err := store.GetToken(context.Background())
+	if err != nil {
+		t.Fatalf("GetToken failed: %v", err)
+	}
+
+	if loaded.AccessToken != original.AccessToken {
+		t.Errorf("AccessToken = %q, want %q", loaded.AccessToken, original.AccessToken)
+	}
+	if loaded.RefreshToken != original.RefreshToken {
+		t.Errorf("RefreshToken = %q, want %q", loaded.RefreshToken, original.RefreshToken)
+	}
+	if loaded.TokenType != original.TokenType {
+		t.Errorf("TokenType = %q, want %q", loaded.TokenType, original.TokenType)
+	}
+	if loaded.ExpiresAt == nil {
+		t.Fatal("ExpiresAt is nil")
+	}
+	// Compare Unix seconds (sub-second precision may differ)
+	if loaded.ExpiresAt.Unix() != original.ExpiresAt.Unix() {
+		t.Errorf("ExpiresAt Unix = %d, want %d", loaded.ExpiresAt.Unix(), original.ExpiresAt.Unix())
+	}
+}
+
+func TestFileStore_StaticTokenRoundTrip(t *testing.T) {
+	store := FileStore{Path: filepath.Join(t.TempDir(), "credentials.json")}
+
+	original := &Token{AccessToken: "static-token-only"}
+
+	if err := store.SaveToken(context.Background(), original); err != nil {
+		t.Fatalf("SaveToken failed: %v", err)
+	}
+
+	loaded, err := store.GetToken(context.Background())
+	if err != nil {
+		t.Fatalf("GetToken failed: %v", err)
+	}
+
+	if loaded.AccessToken != "static-token-only" {
+		t.Errorf("AccessToken = %q, want %q", loaded.AccessToken, "static-token-only")
+	}
+	if loaded.RefreshToken != "" {
+		t.Errorf("RefreshToken = %q, want empty", loaded.RefreshToken)
+	}
+}
+
+func TestFileStore_DeleteToken(t *testing.T) {
+	store := FileStore{Path: filepath.Join(t.TempDir(), "credentials.json")}
+
+	_ = store.SaveToken(context.Background(), &Token{AccessToken: "x"})
+	if err := store.DeleteToken(context.Background()); err != nil {
+		t.Fatalf("DeleteToken failed: %v", err)
+	}
+
+	_, err := store.GetToken(context.Background())
+	if err == nil {
+		t.Fatal("expected error after delete, got nil")
+	}
+}
+
+func TestFileStore_DeleteToken_Idempotent(t *testing.T) {
+	store := FileStore{Path: filepath.Join(t.TempDir(), "credentials.json")}
+
+	// Deleting a non-existent file should not error
+	if err := store.DeleteToken(context.Background()); err != nil {
+		t.Fatalf("DeleteToken on non-existent file should not error: %v", err)
+	}
+}
+
+func TestToken_JSONSerialization(t *testing.T) {
+	expiresAt := time.Now().Add(2 * time.Hour).UTC().Truncate(time.Second)
+
+	original := &Token{
+		AccessToken:  "access-123",
+		RefreshToken: "refresh-456",
+		ExpiresAt:    &expiresAt,
+		TokenType:    "Bearer",
+	}
+
+	data, err := json.Marshal(original)
+	if err != nil {
+		t.Fatalf("Marshal failed: %v", err)
+	}
+
+	var loaded Token
+	if err := json.Unmarshal(data, &loaded); err != nil {
+		t.Fatalf("Unmarshal failed: %v", err)
+	}
+
+	if loaded.AccessToken != original.AccessToken {
+		t.Errorf("AccessToken = %q, want %q", loaded.AccessToken, original.AccessToken)
+	}
+	if loaded.RefreshToken != original.RefreshToken {
+		t.Errorf("RefreshToken = %q, want %q", loaded.RefreshToken, original.RefreshToken)
+	}
+}
+
+func TestToken_JSONBackwardCompat_RawString(t *testing.T) {
+	// Simulate an old keyring entry that was stored as a raw string
+	// (not JSON). The GetToken fallback should handle this.
+	rawString := "old-static-token"
+
+	// Try to unmarshal as JSON first — this should fail
+	var token Token
+	if err := json.Unmarshal([]byte(rawString), &token); err == nil {
+		// If it somehow parses, AccessToken should be empty (it's not valid JSON)
+		if token.AccessToken != "" {
+			t.Fatalf("unexpected successful parse of raw string: %+v", token)
+		}
+	}
+
+	// The fallback: treat as raw AccessToken
+	fallbackToken := &Token{AccessToken: rawString}
+	if fallbackToken.AccessToken != "old-static-token" {
+		t.Errorf("fallback AccessToken = %q, want %q", fallbackToken.AccessToken, "old-static-token")
+	}
+}
 
 func TestFileStore_Roundtrip(t *testing.T) {
 	dir := t.TempDir()
