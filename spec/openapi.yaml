@@ -586,6 +586,11 @@ paths:
       tags:
       - Shop::Customer
       parameters:
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
       - name: first_name
         in: query
         required: false
@@ -596,6 +601,11 @@ paths:
         required: false
         schema:
           type: string
+      - name: phone
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /customers/check_duplicate -> 200
@@ -2570,6 +2580,18 @@ paths:
                         type: string
                     required:
                     - id
+                vehicle_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      _destroy:
+                        type: string
+                    required:
+                    - id
+                    - _destroy
               required:
               - customer_tags
       responses:

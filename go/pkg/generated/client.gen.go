@@ -361,8 +361,10 @@ type CreateCustomerJSONBody struct {
 
 // CheckCustomerDuplicateParams defines parameters for CheckCustomerDuplicate.
 type CheckCustomerDuplicateParams struct {
+	Email     *string `form:"email,omitempty" json:"email,omitempty"`
 	FirstName *string `form:"first_name,omitempty" json:"first_name,omitempty"`
 	LastName  *string `form:"last_name,omitempty" json:"last_name,omitempty"`
+	Phone     *int    `form:"phone,omitempty" json:"phone,omitempty"`
 }
 
 // LookupCustomerParams defines parameters for LookupCustomer.
@@ -435,6 +437,10 @@ type UpdateTagsJSONBody struct {
 		Id                int     `json:"id"`
 		Name              *string `json:"name,omitempty"`
 	} `json:"customer_tags"`
+	VehicleTags *[]struct {
+		UnderscoreDestroy string `json:"_destroy"`
+		Id                int    `json:"id"`
+	} `json:"vehicle_tags,omitempty"`
 }
 
 // CreateVehicleTagJSONBody defines parameters for CreateVehicleTag.
@@ -2482,6 +2488,18 @@ func NewCheckCustomerDuplicateRequest(server string, params *CheckCustomerDuplic
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
 
+		if params.Email != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "email", *params.Email, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.FirstName != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "first_name", *params.FirstName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
@@ -2497,6 +2515,18 @@ func NewCheckCustomerDuplicateRequest(server string, params *CheckCustomerDuplic
 		if params.LastName != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "last_name", *params.LastName, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Phone != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "phone", *params.Phone, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
