@@ -229,18 +229,6 @@ func (c *Client) DecodeVin(ctx context.Context, vin string) (*generated.DecodeVi
 	return resp, nil
 }
 
-func (c *Client) CheckDuplicate(ctx context.Context, vin string) (*generated.CheckDuplicateResponse, error) {
-	params := &generated.CheckDuplicateParams{Vin: &vin}
-	resp, err := c.gen.CheckDuplicateWithResponse(ctx, params)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
 func (c *Client) ListWorkOrders(ctx context.Context) (*generated.ListWorkOrdersResponse, error) {
 	resp, err := c.gen.ListWorkOrdersWithResponse(ctx)
 	if err != nil {

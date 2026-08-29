@@ -6,29 +6,9 @@ import (
 	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
-// CreateVehicleRequest is the hand-written input for creating a vehicle.
-type CreateVehicleRequest struct {
-	CustomerID int
-	Make       string
-	Model      string
-	Year       int
-}
-
-// CreateVehicle creates a new vehicle.
-func (c *Client) CreateVehicle(ctx context.Context, req CreateVehicleRequest) (*generated.CreateVehicleResponse, error) {
-	body := generated.CreateVehicleJSONRequestBody{
-		Vehicle: struct {
-			CustomerId int    `json:"customer_id"`
-			Make       string `json:"make"`
-			Model      string `json:"model"`
-			Year       int    `json:"year"`
-		}{
-			CustomerId: req.CustomerID,
-			Make:       req.Make,
-			Model:      req.Model,
-			Year:       req.Year,
-		},
-	}
+// CreateVehicle creates a new vehicle. Accepts the generated request body
+// type directly — all fields are typed from the OpenAPI spec.
+func (c *Client) CreateVehicle(ctx context.Context, body generated.CreateVehicleJSONRequestBody) (*generated.CreateVehicleResponse, error) {
 	resp, err := c.gen.CreateVehicleWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -39,20 +19,9 @@ func (c *Client) CreateVehicle(ctx context.Context, req CreateVehicleRequest) (*
 	return resp, nil
 }
 
-// UpdateVehicleRequest is the hand-written input for updating a vehicle.
-type UpdateVehicleRequest struct {
-	Make string
-}
-
-// UpdateVehicle updates a vehicle.
-func (c *Client) UpdateVehicle(ctx context.Context, id int, req UpdateVehicleRequest) (*generated.UpdateVehicleResponse, error) {
-	body := generated.UpdateVehicleJSONRequestBody{
-		Vehicle: struct {
-			Make string `json:"make"`
-		}{
-			Make: req.Make,
-		},
-	}
+// UpdateVehicle updates a vehicle. Accepts the generated request body type
+// directly.
+func (c *Client) UpdateVehicle(ctx context.Context, id int, body generated.UpdateVehicleJSONRequestBody) (*generated.UpdateVehicleResponse, error) {
 	resp, err := c.gen.UpdateVehicleWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err

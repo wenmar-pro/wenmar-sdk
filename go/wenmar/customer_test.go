@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
-func TestCreateCustomer_WithHandwrittenStruct(t *testing.T) {
+func TestCreateCustomer_WithGeneratedBody(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
@@ -15,10 +17,8 @@ func TestCreateCustomer_WithHandwrittenStruct(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.CreateCustomer(ctx, CreateCustomerRequest{
-		FirstName: "Jane",
-		LastName:  "Doe",
-	})
+	body := generated.CreateCustomerJSONRequestBody{}
+	resp, err := c.CreateCustomer(ctx, body)
 	if err != nil {
 		t.Fatalf("CreateCustomer failed: %v", err)
 	}
