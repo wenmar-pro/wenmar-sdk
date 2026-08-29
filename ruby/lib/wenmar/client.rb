@@ -54,6 +54,22 @@ module Wenmar
       handle_response(response)
     end
 
+    def merge_customer(id, source_customer_id)
+      response = post("/customers/#{id}/merge", source_customer_id: source_customer_id)
+      handle_response(response)
+    end
+
+    def lookup_customer(query:)
+      response = get("/customers/lookup", { query: query })
+      handle_response(response)
+    end
+
+    def check_customer_duplicate(first_name: nil, last_name: nil, email: nil, phone: nil)
+      params = { first_name: first_name, last_name: last_name, email: email, phone: phone }.compact
+      response = get("/customers/check_duplicate", params)
+      handle_response(response)
+    end
+
     def list_vehicles
       response = get("/vehicles")
       handle_response(response)
@@ -74,6 +90,28 @@ module Wenmar
       handle_response(response)
     end
 
+    def transfer_vehicle(id, customer_id:, mode: "vehicle_only")
+      response = patch("/vehicles/#{id}/transfer", customer_id: customer_id, mode: mode)
+      handle_response(response)
+    end
+
+    def merge_vehicle(id, source_vehicle_id:)
+      response = post("/vehicles/#{id}/merge", source_vehicle_id: source_vehicle_id)
+      handle_response(response)
+    end
+
+    def prefill_vehicle(vin: nil, license_plate: nil, license_plate_state: nil, year: nil, make: nil, model: nil)
+      params = { vin: vin, license_plate: license_plate, license_plate_state: license_plate_state,
+                 year: year, make: make, model: model }.compact
+      response = get("/vehicles/prefill", params)
+      handle_response(response)
+    end
+
+    def lookup_vehicle(query:)
+      response = get("/vehicles/lookup", { query: query })
+      handle_response(response)
+    end
+
     def delete_vehicle(id)
       response = delete("/vehicles/#{id}")
       raise Wenmar::Error.from_response(response) if response.status >= 400
@@ -87,6 +125,11 @@ module Wenmar
     end
 
     def check_duplicate(vin)
+      response = get("/vehicles/check_duplicate", { vin: vin })
+      handle_response(response)
+    end
+
+    def check_vehicle_duplicate(vin:)
       response = get("/vehicles/check_duplicate", { vin: vin })
       handle_response(response)
     end
@@ -150,6 +193,21 @@ module Wenmar
       wrap_with_paginator(response)
     end
 
+    def list_customer_vehicles(customer_id)
+      response = get("/customers/#{customer_id}/vehicles")
+      wrap_with_paginator(response)
+    end
+
+    def list_customer_work_orders(customer_id)
+      response = get("/customers/#{customer_id}/work_orders")
+      wrap_with_paginator(response)
+    end
+
+    def list_vehicle_work_orders(vehicle_id)
+      response = get("/vehicles/#{vehicle_id}/work_orders")
+      wrap_with_paginator(response)
+    end
+
     def show_statement(id)
       response = get("/statements/#{id}")
       handle_response(response)
@@ -162,6 +220,29 @@ module Wenmar
 
     def show_vendor(id)
       response = get("/vendors/#{id}")
+      handle_response(response)
+    end
+
+    def list_tags
+      response = get("/settings/tags")
+      handle_response(response)
+    end
+
+    def update_tags(customer_tags: nil, vehicle_tags: nil)
+      body = {}
+      body[:customer_tags] = customer_tags if customer_tags
+      body[:vehicle_tags] = vehicle_tags if vehicle_tags
+      response = patch("/settings/tags", body)
+      handle_response(response)
+    end
+
+    def create_customer_tag(name:)
+      response = post("/customer_tags", name: name)
+      handle_response(response)
+    end
+
+    def create_vehicle_tag(name:)
+      response = post("/vehicle_tags", name: name)
       handle_response(response)
     end
 
