@@ -316,6 +316,16 @@ module Wenmar
       handle_response(response)
     end
 
+    def show_work_order_service_history(id)
+      response = get("/work_orders/#{id}/service_history")
+      handle_response(response)
+    end
+
+    def show_work_order_declined_services(id)
+      response = get("/work_orders/#{id}/declined_services")
+      handle_response(response)
+    end
+
     def create_work_order_payment(id, attrs)
       response = post("/work_orders/#{id}/payments", payment: attrs)
       handle_response(response)

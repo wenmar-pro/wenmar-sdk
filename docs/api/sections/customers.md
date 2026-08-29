@@ -1193,13 +1193,19 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `return_method_notes` | any | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
-| `summary_url` | string | Yes |
 | `services_url` | string | Yes |
 | `payments_url` | string | Yes |
 | `wip_url` | string | Yes |
 | `inspection_url` | string | Yes |
 | `parts_url` | string | Yes |
 | `concerns_url` | string | Yes |
+| `customer_visit_count` | integer | Yes |
+| `customer_total_spend_cents` | integer | Yes |
+| `average_ticket_cents` | integer | Yes |
+| `activity_total` | integer | Yes |
+| `recent_activities` | array of any | Yes |
+| `service_history_url` | string | Yes |
+| `declined_services_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |

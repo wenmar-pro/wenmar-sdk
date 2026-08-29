@@ -64,7 +64,20 @@ module EnrichSpec
     "patch /service_categories/{id}/deactivate"           => "deactivate_service_category",
     "patch /service_categories/{id}/reactivate"           => "reactivate_service_category",
     "patch /service_categories/{id}/move_up"               => "move_up_service_category",
-    "patch /service_categories/{id}/move_down"             => "move_down_service_category"
+    "patch /service_categories/{id}/move_down"             => "move_down_service_category",
+    # Work order summary sub-pages (2026-08-29): flattened out of /summary/*
+    "get /work_orders/{work_order_id}/service_history"     => "show_work_order_service_history",
+    "get /work_orders/{work_order_id}/declined_services"    => "show_work_order_declined_services",
+    # Lifecycle + authorization endpoints (synced 2026-08-29)
+    "post /work_orders/{work_order_id}/authorization"                => "create_work_order_authorization",
+    "post /work_orders/{work_order_id}/authorization/update_decisions" => "update_work_order_authorization_decisions",
+    "patch /work_orders/{work_order_id}/lifecycle/close"              => "close_work_order",
+    "patch /work_orders/{work_order_id}/lifecycle/close_as_paid"      => "close_work_order_as_paid",
+    "patch /work_orders/{work_order_id}/lifecycle/decline_all"        => "decline_all_work_order_services",
+    "patch /work_orders/{work_order_id}/lifecycle/reopen"             => "reopen_work_order",
+    "patch /work_orders/{work_order_id}/lifecycle/return_to_board"    => "return_work_order_to_board",
+    "patch /work_orders/{work_order_id}/lifecycle/save_for_later"     => "save_work_order_for_later",
+    "patch /work_orders/{work_order_id}/lifecycle/stage_transition"   => "stage_transition_work_order"
   }.freeze
 
   def self.call(input)

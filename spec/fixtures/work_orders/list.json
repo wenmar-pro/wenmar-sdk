@@ -39,13 +39,16 @@
     },
     "url": "https://app.wenmarpro.com/work_orders/1.json",
     "app_url": "https://app.wenmarpro.com/work_orders/1",
-    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+    "location": {
+      "id": 1,
+      "name": "Main Shop",
+      "url": "https://app.wenmarpro.com/locations/1.json"
+    },
     "services_url": "https://app.wenmarpro.com/work_orders/1/estimate.json",
     "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",
     "wip_url": "https://app.wenmarpro.com/work_orders/1/wip.json",
     "inspection_url": "https://app.wenmarpro.com/work_orders/1/inspection.json",
     "parts_url": "https://app.wenmarpro.com/work_orders/1/parts.json",
-    "summary_url": "https://app.wenmarpro.com/work_orders/1/summary.json",
     "concerns_url": "https://app.wenmarpro.com/work_orders/1/concerns.json",
     "odometer_in": null,
     "odometer_out": null,
@@ -74,7 +77,14 @@
     "return_method": "customer_pickup",
     "return_method_notes": null,
     "vehicle_keys_location": "front_desk",
-    "vehicle_location": "bay_2"
+    "vehicle_location": "bay_2",
+    "service_history_url": "https://app.wenmarpro.com/work_orders/1/service_history.json",
+    "declined_services_url": "https://app.wenmarpro.com/work_orders/1/declined_services.json",
+    "customer_visit_count": 3,
+    "customer_total_spend_cents": 45200,
+    "average_ticket_cents": 15067,
+    "activity_total": 2,
+    "recent_activities": []
   },
   {
     "type": "WorkOrder",
@@ -116,13 +126,16 @@
     },
     "url": "https://app.wenmarpro.com/work_orders/2.json",
     "app_url": "https://app.wenmarpro.com/work_orders/2",
-    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+    "location": {
+      "id": 1,
+      "name": "Main Shop",
+      "url": "https://app.wenmarpro.com/locations/1.json"
+    },
     "services_url": "https://app.wenmarpro.com/work_orders/2/estimate.json",
     "payments_url": "https://app.wenmarpro.com/work_orders/2/payments.json",
     "wip_url": "https://app.wenmarpro.com/work_orders/2/wip.json",
     "inspection_url": "https://app.wenmarpro.com/work_orders/2/inspection.json",
     "parts_url": "https://app.wenmarpro.com/work_orders/2/parts.json",
-    "summary_url": "https://app.wenmarpro.com/work_orders/2/summary.json",
     "concerns_url": "https://app.wenmarpro.com/work_orders/2/concerns.json",
     "odometer_in": null,
     "odometer_out": null,
@@ -151,6 +164,13 @@
     "return_method": "customer_pickup",
     "return_method_notes": null,
     "vehicle_keys_location": "front_desk",
-    "vehicle_location": "bay_2"
+    "vehicle_location": "bay_2",
+    "service_history_url": "https://app.wenmarpro.com/work_orders/2/service_history.json",
+    "declined_services_url": "https://app.wenmarpro.com/work_orders/2/declined_services.json",
+    "customer_visit_count": 3,
+    "customer_total_spend_cents": 45200,
+    "average_ticket_cents": 15067,
+    "activity_total": 2,
+    "recent_activities": []
   }
 ]

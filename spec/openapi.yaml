@@ -6005,8 +6005,6 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
-                  summary_url:
-                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -6018,6 +6016,21 @@ paths:
                   parts_url:
                     type: string
                   concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                  service_history_url:
+                    type: string
+                  declined_services_url:
                     type: string
                 required:
                 - type
@@ -6070,13 +6083,19 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
-                - summary_url
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
                 - concerns_url
+                - service_history_url
+                - declined_services_url
       description: POST /work_orders
   "/work_orders/{id}":
     delete:
@@ -6273,8 +6292,6 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
-                  summary_url:
-                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -6286,6 +6303,21 @@ paths:
                   parts_url:
                     type: string
                   concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                  service_history_url:
+                    type: string
+                  declined_services_url:
                     type: string
                 required:
                 - type
@@ -6338,13 +6370,19 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
-                - summary_url
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
                 - concerns_url
+                - service_history_url
+                - declined_services_url
       description: GET /work_orders/{id}
     patch:
       summary: update
@@ -6541,8 +6579,6 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
-                  summary_url:
-                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -6554,6 +6590,21 @@ paths:
                   parts_url:
                     type: string
                   concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                  service_history_url:
+                    type: string
+                  declined_services_url:
                     type: string
                 required:
                 - type
@@ -6606,13 +6657,19 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
-                - summary_url
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
                 - concerns_url
+                - service_history_url
+                - declined_services_url
         '422':
           description: PATCH /work_orders/{id} -> 422
           content:
@@ -6643,6 +6700,748 @@ paths:
                 required:
                 - error
       description: PATCH /work_orders/{id}
+  "/work_orders/{work_order_id}/declined_services":
+    get:
+      summary: show
+      tags:
+      - Shop::WorkOrders::DeclinedService
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /work_orders/{work_order_id}/declined_services -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    name:
+                      type: string
+                    declined_at:
+                      type: string
+                    work_order_number:
+                      type: integer
+                  required:
+                  - id
+                  - type
+                  - name
+                  - declined_at
+                  - work_order_number
+      description: GET /work_orders/{work_order_id}/declined_services
+  "/work_orders/{work_order_id}/service_history":
+    get:
+      summary: show
+      tags:
+      - Shop::WorkOrders::ServiceHistory
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /work_orders/{work_order_id}/service_history -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    name:
+                      type: string
+                    authorization_status:
+                      type: string
+                    completed_at:
+                      type: string
+                    work_order_number:
+                      type: integer
+                  required:
+                  - id
+                  - type
+                  - name
+                  - authorization_status
+                  - completed_at
+                  - work_order_number
+      description: GET /work_orders/{work_order_id}/service_history
+  "/work_orders/{work_order_id}/authorization":
+    post:
+      summary: create
+      tags:
+      - Shop::WorkOrderAuthorization
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authorization_method:
+                  type: string
+                service_ids:
+                  type: array
+                  items:
+                    type: integer
+                service_decisions:
+                  type: object
+                  properties:
+                    '1047559673':
+                      type: string
+                  required:
+                  - '1047559673'
+              required:
+              - authorization_method
+              - service_ids
+              - service_decisions
+      responses:
+        '200':
+          description: POST /work_orders/{work_order_id}/authorization -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    type: string
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                    type: string
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                          nullable: true
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+        '403':
+          description: POST /work_orders/{work_order_id}/authorization -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '422':
+          description: POST /work_orders/{work_order_id}/authorization -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: POST /work_orders/{work_order_id}/authorization
+  "/work_orders/{work_order_id}/authorization/update_decisions":
+    post:
+      summary: update_decisions
+      tags:
+      - Shop::WorkOrderAuthorization
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_decision_reasons:
+                  type: object
+                  properties:
+                    '1047559673':
+                      type: string
+                  required:
+                  - '1047559673'
+              required:
+              - service_decision_reasons
+      responses:
+        '200':
+          description: POST /work_orders/{work_order_id}/authorization/update_decisions
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    type: string
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    type: string
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          nullable: true
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: POST /work_orders/{work_order_id}/authorization/update_decisions
   "/work_orders/{work_order_id}/estimate":
     get:
       summary: show
@@ -7111,6 +7910,2101 @@ paths:
                 - location
                 - inspection_reports
       description: GET /work_orders/{work_order_id}/inspection
+  "/work_orders/{work_order_id}/lifecycle/close":
+    patch:
+      summary: close
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/close -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    type: string
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                    type: string
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    type: string
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+        '422':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/close -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                closure_type:
+                  type: string
+                closure_reason:
+                  type: string
+              required:
+              - closure_type
+              - closure_reason
+      description: PATCH /work_orders/{work_order_id}/lifecycle/close
+  "/work_orders/{work_order_id}/lifecycle/close_as_paid":
+    patch:
+      summary: close_as_paid
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    type: string
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid
+  "/work_orders/{work_order_id}/lifecycle/decline_all":
+    patch:
+      summary: decline_all
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decline_reason:
+                  type: string
+              required:
+              - decline_reason
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/decline_all ->
+            200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    type: string
+                  decline_reason:
+                    type: string
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: PATCH /work_orders/{work_order_id}/lifecycle/decline_all
+  "/work_orders/{work_order_id}/lifecycle/reopen":
+    patch:
+      summary: reopen
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/reopen -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+        '403':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/reopen -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: PATCH /work_orders/{work_order_id}/lifecycle/reopen
+  "/work_orders/{work_order_id}/lifecycle/return_to_board":
+    patch:
+      summary: return_to_board
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/return_to_board
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: PATCH /work_orders/{work_order_id}/lifecycle/return_to_board
+  "/work_orders/{work_order_id}/lifecycle/save_for_later":
+    patch:
+      summary: save_for_later
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/save_for_later
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: PATCH /work_orders/{work_order_id}/lifecycle/save_for_later
+  "/work_orders/{work_order_id}/lifecycle/stage_transition":
+    patch:
+      summary: stage_transition
+      tags:
+      - Shop::WorkOrders::Lifecycle
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+              required:
+              - target
+      responses:
+        '200':
+          description: PATCH /work_orders/{work_order_id}/lifecycle/stage_transition
+            -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    type: string
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  odometer_in:
+                    nullable: true
+                  odometer_out:
+                    nullable: true
+                  odometer_unit:
+                    type: string
+                  authorized_at:
+                    nullable: true
+                  authorized_total_cents:
+                    type: integer
+                  customer_notified:
+                    type: boolean
+                  customer_notified_ready:
+                    type: boolean
+                  vehicle_arrived_at:
+                    nullable: true
+                  ready_for_pickup_at:
+                    nullable: true
+                  completed_at:
+                    nullable: true
+                  declined_at:
+                    nullable: true
+                  decline_reason:
+                    nullable: true
+                  discount_cents:
+                    type: integer
+                  fees_cents:
+                    type: integer
+                  parts_cents:
+                    type: integer
+                  labor_cents:
+                    type: integer
+                  tires_cents:
+                    type: integer
+                  subcontracts_cents:
+                    type: integer
+                  credit_balance_cents:
+                    type: integer
+                  saved_for_later:
+                    type: boolean
+                  closure_reason:
+                    nullable: true
+                  closure_reason_notes:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  purchase_order_number:
+                    nullable: true
+                  return_method:
+                    type: string
+                  return_method_notes:
+                    nullable: true
+                  vehicle_keys_location:
+                    type: string
+                  vehicle_location:
+                    type: string
+                  services_url:
+                    type: string
+                  payments_url:
+                    type: string
+                  wip_url:
+                    type: string
+                  inspection_url:
+                    type: string
+                  parts_url:
+                    type: string
+                  concerns_url:
+                    type: string
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                      required:
+                      - id
+                      - category
+                      - description
+                      - created_at
+                  service_history_url:
+                    type: string
+                  declined_services_url:
+                    type: string
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - odometer_in
+                - odometer_out
+                - odometer_unit
+                - authorized_at
+                - authorized_total_cents
+                - customer_notified
+                - customer_notified_ready
+                - vehicle_arrived_at
+                - ready_for_pickup_at
+                - completed_at
+                - declined_at
+                - decline_reason
+                - discount_cents
+                - fees_cents
+                - parts_cents
+                - labor_cents
+                - tires_cents
+                - subcontracts_cents
+                - credit_balance_cents
+                - saved_for_later
+                - closure_reason
+                - closure_reason_notes
+                - notes
+                - purchase_order_number
+                - return_method
+                - return_method_notes
+                - vehicle_keys_location
+                - vehicle_location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+                - services_url
+                - payments_url
+                - wip_url
+                - inspection_url
+                - parts_url
+                - concerns_url
+                - service_history_url
+                - declined_services_url
+      description: PATCH /work_orders/{work_order_id}/lifecycle/stage_transition
   "/work_orders/{work_order_id}/parts":
     get:
       summary: show
@@ -7718,171 +10612,6 @@ paths:
                 required:
                 - error
       description: POST /work_orders/{work_order_id}/payments
-  "/work_orders/{work_order_id}/summary":
-    get:
-      summary: show
-      tags:
-      - Shop::WorkOrders::Summary
-      parameters:
-      - name: work_order_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: GET /work_orders/{work_order_id}/summary -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  type:
-                    type: string
-                  id:
-                    type: integer
-                  work_order_number:
-                    type: integer
-                  status:
-                    type: string
-                  intake_method:
-                    type: string
-                  scheduled_for:
-                    nullable: true
-                  authorized:
-                    type: boolean
-                  paid:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  closed_at:
-                    nullable: true
-                  location_id:
-                    type: integer
-                  service_advisor_id:
-                    nullable: true
-                  assigned_technician_id:
-                    nullable: true
-                  work_order_services_count:
-                    type: integer
-                  inspection_reports_count:
-                    type: integer
-                  customer:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      full_name:
-                        type: string
-                      url:
-                        type: string
-                    required:
-                    - id
-                    - full_name
-                    - url
-                  vehicle:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      make:
-                        type: string
-                      model:
-                        type: string
-                      year:
-                        type: integer
-                      vin:
-                        type: string
-                      url:
-                        type: string
-                    required:
-                    - id
-                    - make
-                    - model
-                    - year
-                    - vin
-                    - url
-                  totals:
-                    type: object
-                    properties:
-                      subtotal_cents:
-                        type: integer
-                      tax_cents:
-                        type: integer
-                      total_cents:
-                        type: integer
-                      paid_cents:
-                        type: integer
-                      remaining_cents:
-                        type: integer
-                      currency:
-                        type: string
-                    required:
-                    - subtotal_cents
-                    - tax_cents
-                    - total_cents
-                    - paid_cents
-                    - remaining_cents
-                    - currency
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                  location:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      url:
-                        type: string
-                    required:
-                    - id
-                    - name
-                    - url
-                  customer_visit_count:
-                    type: integer
-                  customer_total_spend_cents:
-                    type: integer
-                  average_ticket_cents:
-                    type: integer
-                  activity_total:
-                    type: integer
-                  recent_activities:
-                    type: array
-                    items: {}
-                required:
-                - type
-                - id
-                - work_order_number
-                - status
-                - intake_method
-                - scheduled_for
-                - authorized
-                - paid
-                - created_at
-                - updated_at
-                - closed_at
-                - location_id
-                - service_advisor_id
-                - assigned_technician_id
-                - work_order_services_count
-                - inspection_reports_count
-                - customer
-                - vehicle
-                - totals
-                - url
-                - app_url
-                - location
-                - customer_visit_count
-                - customer_total_spend_cents
-                - average_ticket_cents
-                - activity_total
-                - recent_activities
-      description: GET /work_orders/{work_order_id}/summary
   "/work_orders/{work_order_id}/wip":
     get:
       summary: show

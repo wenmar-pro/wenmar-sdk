@@ -244,11 +244,13 @@ type Vendor struct {
 
 // WorkOrder defines model for WorkOrder.
 type WorkOrder struct {
+	ActivityTotal        int         `json:"activity_total"`
 	AppUrl               string      `json:"app_url"`
 	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
 	Authorized           bool        `json:"authorized"`
 	AuthorizedAt         interface{} `json:"authorized_at"`
 	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
 	ClosedAt             interface{} `json:"closed_at"`
 	ClosureReason        interface{} `json:"closure_reason"`
 	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
@@ -261,12 +263,15 @@ type WorkOrder struct {
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
 	} `json:"customer"`
-	CustomerNotified      bool        `json:"customer_notified"`
-	CustomerNotifiedReady bool        `json:"customer_notified_ready"`
-	DeclineReason         interface{} `json:"decline_reason"`
-	DeclinedAt            interface{} `json:"declined_at"`
-	DiscountCents         int         `json:"discount_cents"`
-	FeesCents             int         `json:"fees_cents"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
 
 	// Id Example: 42
 	Id                     int    `json:"id"`
@@ -279,28 +284,29 @@ type WorkOrder struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	LocationId          int         `json:"location_id"`
-	Notes               interface{} `json:"notes"`
-	OdometerIn          interface{} `json:"odometer_in"`
-	OdometerOut         interface{} `json:"odometer_out"`
-	OdometerUnit        string      `json:"odometer_unit"`
-	Paid                bool        `json:"paid"`
-	PartsCents          int         `json:"parts_cents"`
-	PartsUrl            string      `json:"parts_url"`
-	PaymentsUrl         string      `json:"payments_url"`
-	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
-	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
-	ReturnMethod        string      `json:"return_method"`
-	ReturnMethodNotes   interface{} `json:"return_method_notes"`
-	SavedForLater       bool        `json:"saved_for_later"`
-	ScheduledFor        interface{} `json:"scheduled_for"`
-	ServiceAdvisorId    int         `json:"service_advisor_id"`
-	ServicesUrl         string      `json:"services_url"`
+	LocationId          int           `json:"location_id"`
+	Notes               interface{}   `json:"notes"`
+	OdometerIn          interface{}   `json:"odometer_in"`
+	OdometerOut         interface{}   `json:"odometer_out"`
+	OdometerUnit        string        `json:"odometer_unit"`
+	Paid                bool          `json:"paid"`
+	PartsCents          int           `json:"parts_cents"`
+	PartsUrl            string        `json:"parts_url"`
+	PaymentsUrl         string        `json:"payments_url"`
+	PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+	RecentActivities    []interface{} `json:"recent_activities"`
+	ReturnMethod        string        `json:"return_method"`
+	ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+	SavedForLater       bool          `json:"saved_for_later"`
+	ScheduledFor        interface{}   `json:"scheduled_for"`
+	ServiceAdvisorId    int           `json:"service_advisor_id"`
+	ServiceHistoryUrl   string        `json:"service_history_url"`
+	ServicesUrl         string        `json:"services_url"`
 
 	// Status Example: in_progress
 	Status            string `json:"status"`
 	SubcontractsCents int    `json:"subcontracts_cents"`
-	SummaryUrl        string `json:"summary_url"`
 	TiresCents        int    `json:"tires_cents"`
 	Totals            struct {
 		// Currency Example: CAD
@@ -620,6 +626,50 @@ type UpdateWorkOrderJSONBody struct {
 	} `json:"work_order"`
 }
 
+// CreateWorkOrderAuthorizationJSONBody defines parameters for CreateWorkOrderAuthorization.
+type CreateWorkOrderAuthorizationJSONBody struct {
+	AuthorizationMethod string `json:"authorization_method"`
+	ServiceDecisions    struct {
+		N1047559673 string `json:"1047559673"`
+	} `json:"service_decisions"`
+	ServiceIds []int `json:"service_ids"`
+}
+
+// UpdateWorkOrderAuthorizationDecisionsJSONBody defines parameters for UpdateWorkOrderAuthorizationDecisions.
+type UpdateWorkOrderAuthorizationDecisionsJSONBody struct {
+	ServiceDecisionReasons struct {
+		N1047559673 string `json:"1047559673"`
+	} `json:"service_decision_reasons"`
+}
+
+// CloseWorkOrderJSONBody defines parameters for CloseWorkOrder.
+type CloseWorkOrderJSONBody struct {
+	ClosureReason string `json:"closure_reason"`
+	ClosureType   string `json:"closure_type"`
+}
+
+// CloseWorkOrderAsPaidJSONBody defines parameters for CloseWorkOrderAsPaid.
+type CloseWorkOrderAsPaidJSONBody = map[string]interface{}
+
+// DeclineAllWorkOrderServicesJSONBody defines parameters for DeclineAllWorkOrderServices.
+type DeclineAllWorkOrderServicesJSONBody struct {
+	DeclineReason string `json:"decline_reason"`
+}
+
+// ReopenWorkOrderJSONBody defines parameters for ReopenWorkOrder.
+type ReopenWorkOrderJSONBody = map[string]interface{}
+
+// ReturnWorkOrderToBoardJSONBody defines parameters for ReturnWorkOrderToBoard.
+type ReturnWorkOrderToBoardJSONBody = map[string]interface{}
+
+// SaveWorkOrderForLaterJSONBody defines parameters for SaveWorkOrderForLater.
+type SaveWorkOrderForLaterJSONBody = map[string]interface{}
+
+// StageTransitionWorkOrderJSONBody defines parameters for StageTransitionWorkOrder.
+type StageTransitionWorkOrderJSONBody struct {
+	Target string `json:"target"`
+}
+
 // CreateWorkOrderPaymentJSONBody defines parameters for CreateWorkOrderPayment.
 type CreateWorkOrderPaymentJSONBody struct {
 	Payment struct {
@@ -696,6 +746,33 @@ type CreateWorkOrderJSONRequestBody CreateWorkOrderJSONBody
 
 // UpdateWorkOrderJSONRequestBody defines body for UpdateWorkOrder for application/json ContentType.
 type UpdateWorkOrderJSONRequestBody UpdateWorkOrderJSONBody
+
+// CreateWorkOrderAuthorizationJSONRequestBody defines body for CreateWorkOrderAuthorization for application/json ContentType.
+type CreateWorkOrderAuthorizationJSONRequestBody CreateWorkOrderAuthorizationJSONBody
+
+// UpdateWorkOrderAuthorizationDecisionsJSONRequestBody defines body for UpdateWorkOrderAuthorizationDecisions for application/json ContentType.
+type UpdateWorkOrderAuthorizationDecisionsJSONRequestBody UpdateWorkOrderAuthorizationDecisionsJSONBody
+
+// CloseWorkOrderJSONRequestBody defines body for CloseWorkOrder for application/json ContentType.
+type CloseWorkOrderJSONRequestBody CloseWorkOrderJSONBody
+
+// CloseWorkOrderAsPaidJSONRequestBody defines body for CloseWorkOrderAsPaid for application/json ContentType.
+type CloseWorkOrderAsPaidJSONRequestBody = CloseWorkOrderAsPaidJSONBody
+
+// DeclineAllWorkOrderServicesJSONRequestBody defines body for DeclineAllWorkOrderServices for application/json ContentType.
+type DeclineAllWorkOrderServicesJSONRequestBody DeclineAllWorkOrderServicesJSONBody
+
+// ReopenWorkOrderJSONRequestBody defines body for ReopenWorkOrder for application/json ContentType.
+type ReopenWorkOrderJSONRequestBody = ReopenWorkOrderJSONBody
+
+// ReturnWorkOrderToBoardJSONRequestBody defines body for ReturnWorkOrderToBoard for application/json ContentType.
+type ReturnWorkOrderToBoardJSONRequestBody = ReturnWorkOrderToBoardJSONBody
+
+// SaveWorkOrderForLaterJSONRequestBody defines body for SaveWorkOrderForLater for application/json ContentType.
+type SaveWorkOrderForLaterJSONRequestBody = SaveWorkOrderForLaterJSONBody
+
+// StageTransitionWorkOrderJSONRequestBody defines body for StageTransitionWorkOrder for application/json ContentType.
+type StageTransitionWorkOrderJSONRequestBody StageTransitionWorkOrderJSONBody
 
 // CreateWorkOrderPaymentJSONRequestBody defines body for CreateWorkOrderPayment for application/json ContentType.
 type CreateWorkOrderPaymentJSONRequestBody CreateWorkOrderPaymentJSONBody
@@ -1394,6 +1471,49 @@ type ClientInterface interface {
 	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
 	UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateWorkOrderAuthorizationWithBody create
+	//
+	// Create a work order authorization.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+	CreateWorkOrderAuthorizationWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderAuthorization create
+	//
+	// Create a work order authorization.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+	CreateWorkOrderAuthorization(ctx context.Context, workOrderId int, body CreateWorkOrderAuthorizationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderAuthorizationDecisionsWithBody update_decisions
+	//
+	// Update a work order authorization decisions by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+	UpdateWorkOrderAuthorizationDecisionsWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderAuthorizationDecisions update_decisions
+	//
+	// Update a work order authorization decisions by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+	UpdateWorkOrderAuthorizationDecisions(ctx context.Context, workOrderId int, body UpdateWorkOrderAuthorizationDecisionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ShowWorkOrderDeclinedServices show
+	//
+	// Show a work order declined services by ID.
+	//
+	// Corresponds with GET /work_orders/{work_order_id}/declined_services (the `ShowWorkOrderDeclinedServices` operationId).
+	ShowWorkOrderDeclinedServices(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ShowWorkOrderEstimate show
 	//
 	// Show a work order estimate by ID.
@@ -1407,6 +1527,104 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 	ShowWorkOrderInspection(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CloseWorkOrderWithBody close
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+	CloseWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CloseWorkOrder close
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+	CloseWorkOrder(ctx context.Context, workOrderId int, body CloseWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CloseWorkOrderAsPaidWithBody close_as_paid
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+	CloseWorkOrderAsPaidWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CloseWorkOrderAsPaid close_as_paid
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+	CloseWorkOrderAsPaid(ctx context.Context, workOrderId int, body CloseWorkOrderAsPaidJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeclineAllWorkOrderServicesWithBody decline_all
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+	DeclineAllWorkOrderServicesWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeclineAllWorkOrderServices decline_all
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+	DeclineAllWorkOrderServices(ctx context.Context, workOrderId int, body DeclineAllWorkOrderServicesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReopenWorkOrderWithBody reopen
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+	ReopenWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReopenWorkOrder reopen
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+	ReopenWorkOrder(ctx context.Context, workOrderId int, body ReopenWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReturnWorkOrderToBoardWithBody return_to_board
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+	ReturnWorkOrderToBoardWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReturnWorkOrderToBoard return_to_board
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+	ReturnWorkOrderToBoard(ctx context.Context, workOrderId int, body ReturnWorkOrderToBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SaveWorkOrderForLaterWithBody save_for_later
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+	SaveWorkOrderForLaterWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SaveWorkOrderForLater save_for_later
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+	SaveWorkOrderForLater(ctx context.Context, workOrderId int, body SaveWorkOrderForLaterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StageTransitionWorkOrderWithBody stage_transition
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+	StageTransitionWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StageTransitionWorkOrder stage_transition
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+	StageTransitionWorkOrder(ctx context.Context, workOrderId int, body StageTransitionWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowWorkOrderParts show
 	//
@@ -1440,10 +1658,12 @@ type ClientInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
 	CreateWorkOrderPayment(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetWorkOrdersSummary show
+	// ShowWorkOrderServiceHistory show
 	//
-	// Corresponds with GET /work_orders/{work_order_id}/summary (the `GetWorkOrdersSummary` operationId).
-	GetWorkOrdersSummary(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Show a work order service history by ID.
+	//
+	// Corresponds with GET /work_orders/{work_order_id}/service_history (the `ShowWorkOrderServiceHistory` operationId).
+	ShowWorkOrderServiceHistory(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowWorkOrderWip show
 	//
@@ -2893,6 +3113,99 @@ func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrd
 	return c.Client.Do(req)
 }
 
+// CreateWorkOrderAuthorizationWithBody create
+//
+// Create a work order authorization.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+func (c *Client) CreateWorkOrderAuthorizationWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderAuthorizationRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderAuthorization create
+//
+// Create a work order authorization.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+func (c *Client) CreateWorkOrderAuthorization(ctx context.Context, workOrderId int, body CreateWorkOrderAuthorizationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderAuthorizationRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderAuthorizationDecisionsWithBody update_decisions
+//
+// Update a work order authorization decisions by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+func (c *Client) UpdateWorkOrderAuthorizationDecisionsWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderAuthorizationDecisionsRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderAuthorizationDecisions update_decisions
+//
+// Update a work order authorization decisions by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+func (c *Client) UpdateWorkOrderAuthorizationDecisions(ctx context.Context, workOrderId int, body UpdateWorkOrderAuthorizationDecisionsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderAuthorizationDecisionsRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ShowWorkOrderDeclinedServices show
+//
+// Show a work order declined services by ID.
+//
+// Corresponds with GET /work_orders/{work_order_id}/declined_services (the `ShowWorkOrderDeclinedServices` operationId).
+func (c *Client) ShowWorkOrderDeclinedServices(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowWorkOrderDeclinedServicesRequest(c.Server, workOrderId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ShowWorkOrderEstimate show
 //
 // Show a work order estimate by ID.
@@ -2917,6 +3230,244 @@ func (c *Client) ShowWorkOrderEstimate(ctx context.Context, workOrderId int, req
 // Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 func (c *Client) ShowWorkOrderInspection(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewShowWorkOrderInspectionRequest(c.Server, workOrderId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CloseWorkOrderWithBody close
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+func (c *Client) CloseWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCloseWorkOrderRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CloseWorkOrder close
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+func (c *Client) CloseWorkOrder(ctx context.Context, workOrderId int, body CloseWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCloseWorkOrderRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CloseWorkOrderAsPaidWithBody close_as_paid
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+func (c *Client) CloseWorkOrderAsPaidWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCloseWorkOrderAsPaidRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CloseWorkOrderAsPaid close_as_paid
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+func (c *Client) CloseWorkOrderAsPaid(ctx context.Context, workOrderId int, body CloseWorkOrderAsPaidJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCloseWorkOrderAsPaidRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeclineAllWorkOrderServicesWithBody decline_all
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+func (c *Client) DeclineAllWorkOrderServicesWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeclineAllWorkOrderServicesRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeclineAllWorkOrderServices decline_all
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+func (c *Client) DeclineAllWorkOrderServices(ctx context.Context, workOrderId int, body DeclineAllWorkOrderServicesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeclineAllWorkOrderServicesRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReopenWorkOrderWithBody reopen
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+func (c *Client) ReopenWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReopenWorkOrderRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReopenWorkOrder reopen
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+func (c *Client) ReopenWorkOrder(ctx context.Context, workOrderId int, body ReopenWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReopenWorkOrderRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReturnWorkOrderToBoardWithBody return_to_board
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+func (c *Client) ReturnWorkOrderToBoardWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReturnWorkOrderToBoardRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReturnWorkOrderToBoard return_to_board
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+func (c *Client) ReturnWorkOrderToBoard(ctx context.Context, workOrderId int, body ReturnWorkOrderToBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReturnWorkOrderToBoardRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SaveWorkOrderForLaterWithBody save_for_later
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+func (c *Client) SaveWorkOrderForLaterWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSaveWorkOrderForLaterRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SaveWorkOrderForLater save_for_later
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+func (c *Client) SaveWorkOrderForLater(ctx context.Context, workOrderId int, body SaveWorkOrderForLaterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSaveWorkOrderForLaterRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StageTransitionWorkOrderWithBody stage_transition
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+func (c *Client) StageTransitionWorkOrderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStageTransitionWorkOrderRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StageTransitionWorkOrder stage_transition
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+func (c *Client) StageTransitionWorkOrder(ctx context.Context, workOrderId int, body StageTransitionWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStageTransitionWorkOrderRequest(c.Server, workOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2999,11 +3550,13 @@ func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, bo
 	return c.Client.Do(req)
 }
 
-// GetWorkOrdersSummary show
+// ShowWorkOrderServiceHistory show
 //
-// Corresponds with GET /work_orders/{work_order_id}/summary (the `GetWorkOrdersSummary` operationId).
-func (c *Client) GetWorkOrdersSummary(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetWorkOrdersSummaryRequest(c.Server, workOrderId)
+// Show a work order service history by ID.
+//
+// Corresponds with GET /work_orders/{work_order_id}/service_history (the `ShowWorkOrderServiceHistory` operationId).
+func (c *Client) ShowWorkOrderServiceHistory(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowWorkOrderServiceHistoryRequest(c.Server, workOrderId)
 	if err != nil {
 		return nil, err
 	}
@@ -5592,6 +6145,134 @@ func NewUpdateWorkOrderRequestWithBody(server string, id int, contentType string
 	return req, nil
 }
 
+// NewCreateWorkOrderAuthorizationRequest calls the generic CreateWorkOrderAuthorization builder with application/json body
+func NewCreateWorkOrderAuthorizationRequest(server string, workOrderId int, body CreateWorkOrderAuthorizationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrderAuthorizationRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrderAuthorizationRequestWithBody constructs an http.Request for the CreateWorkOrderAuthorization method, with any body, and a specified content type
+func NewCreateWorkOrderAuthorizationRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/authorization", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateWorkOrderAuthorizationDecisionsRequest calls the generic UpdateWorkOrderAuthorizationDecisions builder with application/json body
+func NewUpdateWorkOrderAuthorizationDecisionsRequest(server string, workOrderId int, body UpdateWorkOrderAuthorizationDecisionsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrderAuthorizationDecisionsRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrderAuthorizationDecisionsRequestWithBody constructs an http.Request for the UpdateWorkOrderAuthorizationDecisions method, with any body, and a specified content type
+func NewUpdateWorkOrderAuthorizationDecisionsRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/authorization/update_decisions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewShowWorkOrderDeclinedServicesRequest constructs an http.Request for the ShowWorkOrderDeclinedServices method
+func NewShowWorkOrderDeclinedServicesRequest(server string, workOrderId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/declined_services", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewShowWorkOrderEstimateRequest constructs an http.Request for the ShowWorkOrderEstimate method
 func NewShowWorkOrderEstimateRequest(server string, workOrderId int) (*http.Request, error) {
 	var err error
@@ -5656,6 +6337,335 @@ func NewShowWorkOrderInspectionRequest(server string, workOrderId int) (*http.Re
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewCloseWorkOrderRequest calls the generic CloseWorkOrder builder with application/json body
+func NewCloseWorkOrderRequest(server string, workOrderId int, body CloseWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCloseWorkOrderRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCloseWorkOrderRequestWithBody constructs an http.Request for the CloseWorkOrder method, with any body, and a specified content type
+func NewCloseWorkOrderRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/close", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCloseWorkOrderAsPaidRequest calls the generic CloseWorkOrderAsPaid builder with application/json body
+func NewCloseWorkOrderAsPaidRequest(server string, workOrderId int, body CloseWorkOrderAsPaidJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCloseWorkOrderAsPaidRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCloseWorkOrderAsPaidRequestWithBody constructs an http.Request for the CloseWorkOrderAsPaid method, with any body, and a specified content type
+func NewCloseWorkOrderAsPaidRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/close_as_paid", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeclineAllWorkOrderServicesRequest calls the generic DeclineAllWorkOrderServices builder with application/json body
+func NewDeclineAllWorkOrderServicesRequest(server string, workOrderId int, body DeclineAllWorkOrderServicesJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewDeclineAllWorkOrderServicesRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewDeclineAllWorkOrderServicesRequestWithBody constructs an http.Request for the DeclineAllWorkOrderServices method, with any body, and a specified content type
+func NewDeclineAllWorkOrderServicesRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/decline_all", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewReopenWorkOrderRequest calls the generic ReopenWorkOrder builder with application/json body
+func NewReopenWorkOrderRequest(server string, workOrderId int, body ReopenWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewReopenWorkOrderRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewReopenWorkOrderRequestWithBody constructs an http.Request for the ReopenWorkOrder method, with any body, and a specified content type
+func NewReopenWorkOrderRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/reopen", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewReturnWorkOrderToBoardRequest calls the generic ReturnWorkOrderToBoard builder with application/json body
+func NewReturnWorkOrderToBoardRequest(server string, workOrderId int, body ReturnWorkOrderToBoardJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewReturnWorkOrderToBoardRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewReturnWorkOrderToBoardRequestWithBody constructs an http.Request for the ReturnWorkOrderToBoard method, with any body, and a specified content type
+func NewReturnWorkOrderToBoardRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/return_to_board", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewSaveWorkOrderForLaterRequest calls the generic SaveWorkOrderForLater builder with application/json body
+func NewSaveWorkOrderForLaterRequest(server string, workOrderId int, body SaveWorkOrderForLaterJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSaveWorkOrderForLaterRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewSaveWorkOrderForLaterRequestWithBody constructs an http.Request for the SaveWorkOrderForLater method, with any body, and a specified content type
+func NewSaveWorkOrderForLaterRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/save_for_later", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewStageTransitionWorkOrderRequest calls the generic StageTransitionWorkOrder builder with application/json body
+func NewStageTransitionWorkOrderRequest(server string, workOrderId int, body StageTransitionWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewStageTransitionWorkOrderRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewStageTransitionWorkOrderRequestWithBody constructs an http.Request for the StageTransitionWorkOrder method, with any body, and a specified content type
+func NewStageTransitionWorkOrderRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/lifecycle/stage_transition", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -5775,8 +6785,8 @@ func NewCreateWorkOrderPaymentRequestWithBody(server string, workOrderId int, co
 	return req, nil
 }
 
-// NewGetWorkOrdersSummaryRequest constructs an http.Request for the GetWorkOrdersSummary method
-func NewGetWorkOrdersSummaryRequest(server string, workOrderId int) (*http.Request, error) {
+// NewShowWorkOrderServiceHistoryRequest constructs an http.Request for the ShowWorkOrderServiceHistory method
+func NewShowWorkOrderServiceHistoryRequest(server string, workOrderId int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5791,7 +6801,7 @@ func NewGetWorkOrdersSummaryRequest(server string, workOrderId int) (*http.Reque
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/work_orders/%s/summary", pathParam0)
+	operationPath := fmt.Sprintf("/work_orders/%s/service_history", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -6579,6 +7589,51 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /work_orders/{id} (the `UpdateWorkOrder` operationId).
 	UpdateWorkOrderWithResponse(ctx context.Context, id int, body UpdateWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderResponse, error)
 
+	// CreateWorkOrderAuthorizationWithBodyWithResponse create
+	//
+	// Create a work order authorization.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+	CreateWorkOrderAuthorizationWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderAuthorizationResponse, error)
+
+	// CreateWorkOrderAuthorizationWithResponse create
+	//
+	// Create a work order authorization.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+	CreateWorkOrderAuthorizationWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrderAuthorizationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderAuthorizationResponse, error)
+
+	// UpdateWorkOrderAuthorizationDecisionsWithBodyWithResponse update_decisions
+	//
+	// Update a work order authorization decisions by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+	UpdateWorkOrderAuthorizationDecisionsWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderAuthorizationDecisionsResponse, error)
+
+	// UpdateWorkOrderAuthorizationDecisionsWithResponse update_decisions
+	//
+	// Update a work order authorization decisions by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+	UpdateWorkOrderAuthorizationDecisionsWithResponse(ctx context.Context, workOrderId int, body UpdateWorkOrderAuthorizationDecisionsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderAuthorizationDecisionsResponse, error)
+
+	// ShowWorkOrderDeclinedServicesWithResponse show
+	//
+	// Show a work order declined services by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /work_orders/{work_order_id}/declined_services (the `ShowWorkOrderDeclinedServices` operationId).
+	ShowWorkOrderDeclinedServicesWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderDeclinedServicesResponse, error)
+
 	// ShowWorkOrderEstimateWithResponse show
 	//
 	// Show a work order estimate by ID.
@@ -6596,6 +7651,104 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 	ShowWorkOrderInspectionWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderInspectionResponse, error)
+
+	// CloseWorkOrderWithBodyWithResponse close
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+	CloseWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloseWorkOrderResponse, error)
+
+	// CloseWorkOrderWithResponse close
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+	CloseWorkOrderWithResponse(ctx context.Context, workOrderId int, body CloseWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CloseWorkOrderResponse, error)
+
+	// CloseWorkOrderAsPaidWithBodyWithResponse close_as_paid
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+	CloseWorkOrderAsPaidWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloseWorkOrderAsPaidResponse, error)
+
+	// CloseWorkOrderAsPaidWithResponse close_as_paid
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+	CloseWorkOrderAsPaidWithResponse(ctx context.Context, workOrderId int, body CloseWorkOrderAsPaidJSONRequestBody, reqEditors ...RequestEditorFn) (*CloseWorkOrderAsPaidResponse, error)
+
+	// DeclineAllWorkOrderServicesWithBodyWithResponse decline_all
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+	DeclineAllWorkOrderServicesWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeclineAllWorkOrderServicesResponse, error)
+
+	// DeclineAllWorkOrderServicesWithResponse decline_all
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+	DeclineAllWorkOrderServicesWithResponse(ctx context.Context, workOrderId int, body DeclineAllWorkOrderServicesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeclineAllWorkOrderServicesResponse, error)
+
+	// ReopenWorkOrderWithBodyWithResponse reopen
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+	ReopenWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReopenWorkOrderResponse, error)
+
+	// ReopenWorkOrderWithResponse reopen
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+	ReopenWorkOrderWithResponse(ctx context.Context, workOrderId int, body ReopenWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*ReopenWorkOrderResponse, error)
+
+	// ReturnWorkOrderToBoardWithBodyWithResponse return_to_board
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+	ReturnWorkOrderToBoardWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReturnWorkOrderToBoardResponse, error)
+
+	// ReturnWorkOrderToBoardWithResponse return_to_board
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+	ReturnWorkOrderToBoardWithResponse(ctx context.Context, workOrderId int, body ReturnWorkOrderToBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*ReturnWorkOrderToBoardResponse, error)
+
+	// SaveWorkOrderForLaterWithBodyWithResponse save_for_later
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+	SaveWorkOrderForLaterWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SaveWorkOrderForLaterResponse, error)
+
+	// SaveWorkOrderForLaterWithResponse save_for_later
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+	SaveWorkOrderForLaterWithResponse(ctx context.Context, workOrderId int, body SaveWorkOrderForLaterJSONRequestBody, reqEditors ...RequestEditorFn) (*SaveWorkOrderForLaterResponse, error)
+
+	// StageTransitionWorkOrderWithBodyWithResponse stage_transition
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+	StageTransitionWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StageTransitionWorkOrderResponse, error)
+
+	// StageTransitionWorkOrderWithResponse stage_transition
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+	StageTransitionWorkOrderWithResponse(ctx context.Context, workOrderId int, body StageTransitionWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*StageTransitionWorkOrderResponse, error)
 
 	// ShowWorkOrderPartsWithResponse show
 	//
@@ -6633,12 +7786,14 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
 	CreateWorkOrderPaymentWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error)
 
-	// GetWorkOrdersSummaryWithResponse show
+	// ShowWorkOrderServiceHistoryWithResponse show
+	//
+	// Show a work order service history by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /work_orders/{work_order_id}/summary (the `GetWorkOrdersSummary` operationId).
-	GetWorkOrdersSummaryWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*GetWorkOrdersSummaryResponse, error)
+	// Corresponds with GET /work_orders/{work_order_id}/service_history (the `ShowWorkOrderServiceHistory` operationId).
+	ShowWorkOrderServiceHistoryWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderServiceHistoryResponse, error)
 
 	// ShowWorkOrderWipWithResponse show
 	//
@@ -10053,6 +11208,527 @@ func (r UpdateWorkOrderResponse) ContentType() string {
 	return ""
 }
 
+type CreateWorkOrderAuthorizationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         string      `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              *string     `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    *string `json:"category"`
+			CreatedAt   string  `json:"created_at"`
+			Description string  `json:"description"`
+			Id          int     `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateWorkOrderAuthorizationResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         string      `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              *string     `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    *string `json:"category"`
+		CreatedAt   string  `json:"created_at"`
+		Description string  `json:"description"`
+		Id          int     `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateWorkOrderAuthorizationResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateWorkOrderAuthorizationResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkOrderAuthorizationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkOrderAuthorizationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkOrderAuthorizationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkOrderAuthorizationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateWorkOrderAuthorizationDecisionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         string      `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              string      `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    interface{} `json:"category"`
+			CreatedAt   string      `json:"created_at"`
+			Description string      `json:"description"`
+			Id          int         `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateWorkOrderAuthorizationDecisionsResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         string      `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              string      `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    interface{} `json:"category"`
+		CreatedAt   string      `json:"created_at"`
+		Description string      `json:"description"`
+		Id          int         `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrderAuthorizationDecisionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrderAuthorizationDecisionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrderAuthorizationDecisionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrderAuthorizationDecisionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowWorkOrderDeclinedServicesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		DeclinedAt      string `json:"declined_at"`
+		Id              int    `json:"id"`
+		Name            string `json:"name"`
+		Type            string `json:"type"`
+		WorkOrderNumber int    `json:"work_order_number"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowWorkOrderDeclinedServicesResponse) GetJSON200() *[]struct {
+	DeclinedAt      string `json:"declined_at"`
+	Id              int    `json:"id"`
+	Name            string `json:"name"`
+	Type            string `json:"type"`
+	WorkOrderNumber int    `json:"work_order_number"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ShowWorkOrderDeclinedServicesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ShowWorkOrderDeclinedServicesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ShowWorkOrderDeclinedServicesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ShowWorkOrderDeclinedServicesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowWorkOrderEstimateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -10425,6 +12101,1569 @@ func (r ShowWorkOrderInspectionResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ShowWorkOrderInspectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CloseWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             string      `json:"closed_at"`
+		ClosureReason        string      `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              *string     `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CloseWorkOrderResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             string      `json:"closed_at"`
+	ClosureReason        string      `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              *string     `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CloseWorkOrderResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CloseWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CloseWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CloseWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CloseWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CloseWorkOrderAsPaidResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             string      `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              interface{} `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CloseWorkOrderAsPaidResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             string      `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CloseWorkOrderAsPaidResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CloseWorkOrderAsPaidResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CloseWorkOrderAsPaidResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CloseWorkOrderAsPaidResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeclineAllWorkOrderServicesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool   `json:"customer_notified"`
+		CustomerNotifiedReady   bool   `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int    `json:"customer_visit_count"`
+		DeclineReason           string `json:"decline_reason"`
+		DeclinedAt              string `json:"declined_at"`
+		DeclinedServicesUrl     string `json:"declined_services_url"`
+		DiscountCents           int    `json:"discount_cents"`
+		FeesCents               int    `json:"fees_cents"`
+		Id                      int    `json:"id"`
+		InspectionReportsCount  int    `json:"inspection_reports_count"`
+		InspectionUrl           string `json:"inspection_url"`
+		IntakeMethod            string `json:"intake_method"`
+		LaborCents              int    `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DeclineAllWorkOrderServicesResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool   `json:"customer_notified"`
+	CustomerNotifiedReady   bool   `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int    `json:"customer_visit_count"`
+	DeclineReason           string `json:"decline_reason"`
+	DeclinedAt              string `json:"declined_at"`
+	DeclinedServicesUrl     string `json:"declined_services_url"`
+	DiscountCents           int    `json:"discount_cents"`
+	FeesCents               int    `json:"fees_cents"`
+	Id                      int    `json:"id"`
+	InspectionReportsCount  int    `json:"inspection_reports_count"`
+	InspectionUrl           string `json:"inspection_url"`
+	IntakeMethod            string `json:"intake_method"`
+	LaborCents              int    `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r DeclineAllWorkOrderServicesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeclineAllWorkOrderServicesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeclineAllWorkOrderServicesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeclineAllWorkOrderServicesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReopenWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              interface{} `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ReopenWorkOrderResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ReopenWorkOrderResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ReopenWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReopenWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReopenWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReopenWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReturnWorkOrderToBoardResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              interface{} `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int           `json:"location_id"`
+		Notes               interface{}   `json:"notes"`
+		OdometerIn          interface{}   `json:"odometer_in"`
+		OdometerOut         interface{}   `json:"odometer_out"`
+		OdometerUnit        string        `json:"odometer_unit"`
+		Paid                bool          `json:"paid"`
+		PartsCents          int           `json:"parts_cents"`
+		PartsUrl            string        `json:"parts_url"`
+		PaymentsUrl         string        `json:"payments_url"`
+		PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+		RecentActivities    []interface{} `json:"recent_activities"`
+		ReturnMethod        string        `json:"return_method"`
+		ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+		SavedForLater       bool          `json:"saved_for_later"`
+		ScheduledFor        interface{}   `json:"scheduled_for"`
+		ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+		ServiceHistoryUrl   string        `json:"service_history_url"`
+		ServicesUrl         string        `json:"services_url"`
+		Status              string        `json:"status"`
+		SubcontractsCents   int           `json:"subcontracts_cents"`
+		TiresCents          int           `json:"tires_cents"`
+		Totals              struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ReturnWorkOrderToBoardResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int           `json:"location_id"`
+	Notes               interface{}   `json:"notes"`
+	OdometerIn          interface{}   `json:"odometer_in"`
+	OdometerOut         interface{}   `json:"odometer_out"`
+	OdometerUnit        string        `json:"odometer_unit"`
+	Paid                bool          `json:"paid"`
+	PartsCents          int           `json:"parts_cents"`
+	PartsUrl            string        `json:"parts_url"`
+	PaymentsUrl         string        `json:"payments_url"`
+	PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+	RecentActivities    []interface{} `json:"recent_activities"`
+	ReturnMethod        string        `json:"return_method"`
+	ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+	SavedForLater       bool          `json:"saved_for_later"`
+	ScheduledFor        interface{}   `json:"scheduled_for"`
+	ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+	ServiceHistoryUrl   string        `json:"service_history_url"`
+	ServicesUrl         string        `json:"services_url"`
+	Status              string        `json:"status"`
+	SubcontractsCents   int           `json:"subcontracts_cents"`
+	TiresCents          int           `json:"tires_cents"`
+	Totals              struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ReturnWorkOrderToBoardResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReturnWorkOrderToBoardResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReturnWorkOrderToBoardResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReturnWorkOrderToBoardResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SaveWorkOrderForLaterResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             interface{} `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              interface{} `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int           `json:"location_id"`
+		Notes               interface{}   `json:"notes"`
+		OdometerIn          interface{}   `json:"odometer_in"`
+		OdometerOut         interface{}   `json:"odometer_out"`
+		OdometerUnit        string        `json:"odometer_unit"`
+		Paid                bool          `json:"paid"`
+		PartsCents          int           `json:"parts_cents"`
+		PartsUrl            string        `json:"parts_url"`
+		PaymentsUrl         string        `json:"payments_url"`
+		PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+		RecentActivities    []interface{} `json:"recent_activities"`
+		ReturnMethod        string        `json:"return_method"`
+		ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+		SavedForLater       bool          `json:"saved_for_later"`
+		ScheduledFor        interface{}   `json:"scheduled_for"`
+		ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+		ServiceHistoryUrl   string        `json:"service_history_url"`
+		ServicesUrl         string        `json:"services_url"`
+		Status              string        `json:"status"`
+		SubcontractsCents   int           `json:"subcontracts_cents"`
+		TiresCents          int           `json:"tires_cents"`
+		Totals              struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SaveWorkOrderForLaterResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             interface{} `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int           `json:"location_id"`
+	Notes               interface{}   `json:"notes"`
+	OdometerIn          interface{}   `json:"odometer_in"`
+	OdometerOut         interface{}   `json:"odometer_out"`
+	OdometerUnit        string        `json:"odometer_unit"`
+	Paid                bool          `json:"paid"`
+	PartsCents          int           `json:"parts_cents"`
+	PartsUrl            string        `json:"parts_url"`
+	PaymentsUrl         string        `json:"payments_url"`
+	PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+	RecentActivities    []interface{} `json:"recent_activities"`
+	ReturnMethod        string        `json:"return_method"`
+	ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+	SavedForLater       bool          `json:"saved_for_later"`
+	ScheduledFor        interface{}   `json:"scheduled_for"`
+	ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+	ServiceHistoryUrl   string        `json:"service_history_url"`
+	ServicesUrl         string        `json:"services_url"`
+	Status              string        `json:"status"`
+	SubcontractsCents   int           `json:"subcontracts_cents"`
+	TiresCents          int           `json:"tires_cents"`
+	Totals              struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r SaveWorkOrderForLaterResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SaveWorkOrderForLaterResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SaveWorkOrderForLaterResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SaveWorkOrderForLaterResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StageTransitionWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int         `json:"activity_total"`
+		AppUrl               string      `json:"app_url"`
+		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+		Authorized           bool        `json:"authorized"`
+		AuthorizedAt         interface{} `json:"authorized_at"`
+		AuthorizedTotalCents int         `json:"authorized_total_cents"`
+		AverageTicketCents   int         `json:"average_ticket_cents"`
+		ClosedAt             string      `json:"closed_at"`
+		ClosureReason        interface{} `json:"closure_reason"`
+		ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+		CompletedAt          interface{} `json:"completed_at"`
+		ConcernsUrl          string      `json:"concerns_url"`
+		CreatedAt            string      `json:"created_at"`
+		CreditBalanceCents   int         `json:"credit_balance_cents"`
+		Customer             struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified        bool        `json:"customer_notified"`
+		CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+		CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+		CustomerVisitCount      int         `json:"customer_visit_count"`
+		DeclineReason           interface{} `json:"decline_reason"`
+		DeclinedAt              interface{} `json:"declined_at"`
+		DeclinedServicesUrl     string      `json:"declined_services_url"`
+		DiscountCents           int         `json:"discount_cents"`
+		FeesCents               int         `json:"fees_cents"`
+		Id                      int         `json:"id"`
+		InspectionReportsCount  int         `json:"inspection_reports_count"`
+		InspectionUrl           string      `json:"inspection_url"`
+		IntakeMethod            string      `json:"intake_method"`
+		LaborCents              int         `json:"labor_cents"`
+		Location                struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int         `json:"location_id"`
+		Notes               interface{} `json:"notes"`
+		OdometerIn          interface{} `json:"odometer_in"`
+		OdometerOut         interface{} `json:"odometer_out"`
+		OdometerUnit        string      `json:"odometer_unit"`
+		Paid                bool        `json:"paid"`
+		PartsCents          int         `json:"parts_cents"`
+		PartsUrl            string      `json:"parts_url"`
+		PaymentsUrl         string      `json:"payments_url"`
+		PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+		ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod      string      `json:"return_method"`
+		ReturnMethodNotes interface{} `json:"return_method_notes"`
+		SavedForLater     bool        `json:"saved_for_later"`
+		ScheduledFor      interface{} `json:"scheduled_for"`
+		ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+		ServiceHistoryUrl string      `json:"service_history_url"`
+		ServicesUrl       string      `json:"services_url"`
+		Status            string      `json:"status"`
+		SubcontractsCents int         `json:"subcontracts_cents"`
+		TiresCents        int         `json:"tires_cents"`
+		Totals            struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			Id    int    `json:"id"`
+			Make  string `json:"make"`
+			Model string `json:"model"`
+			Url   string `json:"url"`
+			Vin   string `json:"vin"`
+			Year  int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+		VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+		VehicleLocation        string      `json:"vehicle_location"`
+		WipUrl                 string      `json:"wip_url"`
+		WorkOrderNumber        int         `json:"work_order_number"`
+		WorkOrderServicesCount int         `json:"work_order_services_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StageTransitionWorkOrderResponse) GetJSON200() *struct {
+	ActivityTotal        int         `json:"activity_total"`
+	AppUrl               string      `json:"app_url"`
+	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+	Authorized           bool        `json:"authorized"`
+	AuthorizedAt         interface{} `json:"authorized_at"`
+	AuthorizedTotalCents int         `json:"authorized_total_cents"`
+	AverageTicketCents   int         `json:"average_ticket_cents"`
+	ClosedAt             string      `json:"closed_at"`
+	ClosureReason        interface{} `json:"closure_reason"`
+	ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+	CompletedAt          interface{} `json:"completed_at"`
+	ConcernsUrl          string      `json:"concerns_url"`
+	CreatedAt            string      `json:"created_at"`
+	CreditBalanceCents   int         `json:"credit_balance_cents"`
+	Customer             struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified        bool        `json:"customer_notified"`
+	CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+	CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+	CustomerVisitCount      int         `json:"customer_visit_count"`
+	DeclineReason           interface{} `json:"decline_reason"`
+	DeclinedAt              interface{} `json:"declined_at"`
+	DeclinedServicesUrl     string      `json:"declined_services_url"`
+	DiscountCents           int         `json:"discount_cents"`
+	FeesCents               int         `json:"fees_cents"`
+	Id                      int         `json:"id"`
+	InspectionReportsCount  int         `json:"inspection_reports_count"`
+	InspectionUrl           string      `json:"inspection_url"`
+	IntakeMethod            string      `json:"intake_method"`
+	LaborCents              int         `json:"labor_cents"`
+	Location                struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int         `json:"location_id"`
+	Notes               interface{} `json:"notes"`
+	OdometerIn          interface{} `json:"odometer_in"`
+	OdometerOut         interface{} `json:"odometer_out"`
+	OdometerUnit        string      `json:"odometer_unit"`
+	Paid                bool        `json:"paid"`
+	PartsCents          int         `json:"parts_cents"`
+	PartsUrl            string      `json:"parts_url"`
+	PaymentsUrl         string      `json:"payments_url"`
+	PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+	ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string      `json:"return_method"`
+	ReturnMethodNotes interface{} `json:"return_method_notes"`
+	SavedForLater     bool        `json:"saved_for_later"`
+	ScheduledFor      interface{} `json:"scheduled_for"`
+	ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+	ServiceHistoryUrl string      `json:"service_history_url"`
+	ServicesUrl       string      `json:"services_url"`
+	Status            string      `json:"status"`
+	SubcontractsCents int         `json:"subcontracts_cents"`
+	TiresCents        int         `json:"tires_cents"`
+	Totals            struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		Id    int    `json:"id"`
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Url   string `json:"url"`
+		Vin   string `json:"vin"`
+		Year  int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+	VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+	VehicleLocation        string      `json:"vehicle_location"`
+	WipUrl                 string      `json:"wip_url"`
+	WorkOrderNumber        int         `json:"work_order_number"`
+	WorkOrderServicesCount int         `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r StageTransitionWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StageTransitionWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StageTransitionWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StageTransitionWorkOrderResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -10910,125 +14149,39 @@ func (r CreateWorkOrderPaymentResponse) ContentType() string {
 	return ""
 }
 
-type GetWorkOrdersSummaryResponse struct {
+type ShowWorkOrderServiceHistoryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		ActivityTotal        int         `json:"activity_total"`
-		AppUrl               string      `json:"app_url"`
-		AssignedTechnicianId interface{} `json:"assigned_technician_id"`
-		Authorized           bool        `json:"authorized"`
-		AverageTicketCents   int         `json:"average_ticket_cents"`
-		ClosedAt             interface{} `json:"closed_at"`
-		CreatedAt            string      `json:"created_at"`
-		Customer             struct {
-			FullName string `json:"full_name"`
-			Id       int    `json:"id"`
-			Url      string `json:"url"`
-		} `json:"customer"`
-		CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
-		CustomerVisitCount      int    `json:"customer_visit_count"`
-		Id                      int    `json:"id"`
-		InspectionReportsCount  int    `json:"inspection_reports_count"`
-		IntakeMethod            string `json:"intake_method"`
-		Location                struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Url  string `json:"url"`
-		} `json:"location"`
-		LocationId       int           `json:"location_id"`
-		Paid             bool          `json:"paid"`
-		RecentActivities []interface{} `json:"recent_activities"`
-		ScheduledFor     interface{}   `json:"scheduled_for"`
-		ServiceAdvisorId interface{}   `json:"service_advisor_id"`
-		Status           string        `json:"status"`
-		Totals           struct {
-			Currency       string `json:"currency"`
-			PaidCents      int    `json:"paid_cents"`
-			RemainingCents int    `json:"remaining_cents"`
-			SubtotalCents  int    `json:"subtotal_cents"`
-			TaxCents       int    `json:"tax_cents"`
-			TotalCents     int    `json:"total_cents"`
-		} `json:"totals"`
-		Type      string `json:"type"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
-		Vehicle   struct {
-			Id    int    `json:"id"`
-			Make  string `json:"make"`
-			Model string `json:"model"`
-			Url   string `json:"url"`
-			Vin   string `json:"vin"`
-			Year  int    `json:"year"`
-		} `json:"vehicle"`
-		WorkOrderNumber        int `json:"work_order_number"`
-		WorkOrderServicesCount int `json:"work_order_services_count"`
+	JSON200 *[]struct {
+		AuthorizationStatus string `json:"authorization_status"`
+		CompletedAt         string `json:"completed_at"`
+		Id                  int    `json:"id"`
+		Name                string `json:"name"`
+		Type                string `json:"type"`
+		WorkOrderNumber     int    `json:"work_order_number"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetWorkOrdersSummaryResponse) GetJSON200() *struct {
-	ActivityTotal        int         `json:"activity_total"`
-	AppUrl               string      `json:"app_url"`
-	AssignedTechnicianId interface{} `json:"assigned_technician_id"`
-	Authorized           bool        `json:"authorized"`
-	AverageTicketCents   int         `json:"average_ticket_cents"`
-	ClosedAt             interface{} `json:"closed_at"`
-	CreatedAt            string      `json:"created_at"`
-	Customer             struct {
-		FullName string `json:"full_name"`
-		Id       int    `json:"id"`
-		Url      string `json:"url"`
-	} `json:"customer"`
-	CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
-	CustomerVisitCount      int    `json:"customer_visit_count"`
-	Id                      int    `json:"id"`
-	InspectionReportsCount  int    `json:"inspection_reports_count"`
-	IntakeMethod            string `json:"intake_method"`
-	Location                struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
-	} `json:"location"`
-	LocationId       int           `json:"location_id"`
-	Paid             bool          `json:"paid"`
-	RecentActivities []interface{} `json:"recent_activities"`
-	ScheduledFor     interface{}   `json:"scheduled_for"`
-	ServiceAdvisorId interface{}   `json:"service_advisor_id"`
-	Status           string        `json:"status"`
-	Totals           struct {
-		Currency       string `json:"currency"`
-		PaidCents      int    `json:"paid_cents"`
-		RemainingCents int    `json:"remaining_cents"`
-		SubtotalCents  int    `json:"subtotal_cents"`
-		TaxCents       int    `json:"tax_cents"`
-		TotalCents     int    `json:"total_cents"`
-	} `json:"totals"`
-	Type      string `json:"type"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
-	Vehicle   struct {
-		Id    int    `json:"id"`
-		Make  string `json:"make"`
-		Model string `json:"model"`
-		Url   string `json:"url"`
-		Vin   string `json:"vin"`
-		Year  int    `json:"year"`
-	} `json:"vehicle"`
-	WorkOrderNumber        int `json:"work_order_number"`
-	WorkOrderServicesCount int `json:"work_order_services_count"`
+func (r ShowWorkOrderServiceHistoryResponse) GetJSON200() *[]struct {
+	AuthorizationStatus string `json:"authorization_status"`
+	CompletedAt         string `json:"completed_at"`
+	Id                  int    `json:"id"`
+	Name                string `json:"name"`
+	Type                string `json:"type"`
+	WorkOrderNumber     int    `json:"work_order_number"`
 } {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r GetWorkOrdersSummaryResponse) GetBody() []byte {
+func (r ShowWorkOrderServiceHistoryResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r GetWorkOrdersSummaryResponse) Status() string {
+func (r ShowWorkOrderServiceHistoryResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -11036,7 +14189,7 @@ func (r GetWorkOrdersSummaryResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetWorkOrdersSummaryResponse) StatusCode() int {
+func (r ShowWorkOrderServiceHistoryResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -11044,7 +14197,7 @@ func (r GetWorkOrdersSummaryResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetWorkOrdersSummaryResponse) ContentType() string {
+func (r ShowWorkOrderServiceHistoryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -12456,6 +15609,81 @@ func (c *ClientWithResponses) UpdateWorkOrderWithResponse(ctx context.Context, i
 	return ParseUpdateWorkOrderResponse(rsp)
 }
 
+// CreateWorkOrderAuthorizationWithBodyWithResponse create
+//
+// Create a work order authorization.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+func (c *ClientWithResponses) CreateWorkOrderAuthorizationWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderAuthorizationResponse, error) {
+	rsp, err := c.CreateWorkOrderAuthorizationWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderAuthorizationResponse(rsp)
+}
+
+// CreateWorkOrderAuthorizationWithResponse create
+//
+// Create a work order authorization.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization (the `CreateWorkOrderAuthorization` operationId).
+func (c *ClientWithResponses) CreateWorkOrderAuthorizationWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrderAuthorizationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderAuthorizationResponse, error) {
+	rsp, err := c.CreateWorkOrderAuthorization(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderAuthorizationResponse(rsp)
+}
+
+// UpdateWorkOrderAuthorizationDecisionsWithBodyWithResponse update_decisions
+//
+// Update a work order authorization decisions by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderAuthorizationDecisionsWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderAuthorizationDecisionsResponse, error) {
+	rsp, err := c.UpdateWorkOrderAuthorizationDecisionsWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderAuthorizationDecisionsResponse(rsp)
+}
+
+// UpdateWorkOrderAuthorizationDecisionsWithResponse update_decisions
+//
+// Update a work order authorization decisions by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/authorization/update_decisions (the `UpdateWorkOrderAuthorizationDecisions` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderAuthorizationDecisionsWithResponse(ctx context.Context, workOrderId int, body UpdateWorkOrderAuthorizationDecisionsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderAuthorizationDecisionsResponse, error) {
+	rsp, err := c.UpdateWorkOrderAuthorizationDecisions(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderAuthorizationDecisionsResponse(rsp)
+}
+
+// ShowWorkOrderDeclinedServicesWithResponse show
+//
+// Show a work order declined services by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /work_orders/{work_order_id}/declined_services (the `ShowWorkOrderDeclinedServices` operationId).
+func (c *ClientWithResponses) ShowWorkOrderDeclinedServicesWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderDeclinedServicesResponse, error) {
+	rsp, err := c.ShowWorkOrderDeclinedServices(ctx, workOrderId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseShowWorkOrderDeclinedServicesResponse(rsp)
+}
+
 // ShowWorkOrderEstimateWithResponse show
 //
 // Show a work order estimate by ID.
@@ -12484,6 +15712,188 @@ func (c *ClientWithResponses) ShowWorkOrderInspectionWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseShowWorkOrderInspectionResponse(rsp)
+}
+
+// CloseWorkOrderWithBodyWithResponse close
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+func (c *ClientWithResponses) CloseWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloseWorkOrderResponse, error) {
+	rsp, err := c.CloseWorkOrderWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCloseWorkOrderResponse(rsp)
+}
+
+// CloseWorkOrderWithResponse close
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close (the `CloseWorkOrder` operationId).
+func (c *ClientWithResponses) CloseWorkOrderWithResponse(ctx context.Context, workOrderId int, body CloseWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CloseWorkOrderResponse, error) {
+	rsp, err := c.CloseWorkOrder(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCloseWorkOrderResponse(rsp)
+}
+
+// CloseWorkOrderAsPaidWithBodyWithResponse close_as_paid
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+func (c *ClientWithResponses) CloseWorkOrderAsPaidWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CloseWorkOrderAsPaidResponse, error) {
+	rsp, err := c.CloseWorkOrderAsPaidWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCloseWorkOrderAsPaidResponse(rsp)
+}
+
+// CloseWorkOrderAsPaidWithResponse close_as_paid
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid (the `CloseWorkOrderAsPaid` operationId).
+func (c *ClientWithResponses) CloseWorkOrderAsPaidWithResponse(ctx context.Context, workOrderId int, body CloseWorkOrderAsPaidJSONRequestBody, reqEditors ...RequestEditorFn) (*CloseWorkOrderAsPaidResponse, error) {
+	rsp, err := c.CloseWorkOrderAsPaid(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCloseWorkOrderAsPaidResponse(rsp)
+}
+
+// DeclineAllWorkOrderServicesWithBodyWithResponse decline_all
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+func (c *ClientWithResponses) DeclineAllWorkOrderServicesWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DeclineAllWorkOrderServicesResponse, error) {
+	rsp, err := c.DeclineAllWorkOrderServicesWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeclineAllWorkOrderServicesResponse(rsp)
+}
+
+// DeclineAllWorkOrderServicesWithResponse decline_all
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/decline_all (the `DeclineAllWorkOrderServices` operationId).
+func (c *ClientWithResponses) DeclineAllWorkOrderServicesWithResponse(ctx context.Context, workOrderId int, body DeclineAllWorkOrderServicesJSONRequestBody, reqEditors ...RequestEditorFn) (*DeclineAllWorkOrderServicesResponse, error) {
+	rsp, err := c.DeclineAllWorkOrderServices(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeclineAllWorkOrderServicesResponse(rsp)
+}
+
+// ReopenWorkOrderWithBodyWithResponse reopen
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+func (c *ClientWithResponses) ReopenWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReopenWorkOrderResponse, error) {
+	rsp, err := c.ReopenWorkOrderWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReopenWorkOrderResponse(rsp)
+}
+
+// ReopenWorkOrderWithResponse reopen
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/reopen (the `ReopenWorkOrder` operationId).
+func (c *ClientWithResponses) ReopenWorkOrderWithResponse(ctx context.Context, workOrderId int, body ReopenWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*ReopenWorkOrderResponse, error) {
+	rsp, err := c.ReopenWorkOrder(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReopenWorkOrderResponse(rsp)
+}
+
+// ReturnWorkOrderToBoardWithBodyWithResponse return_to_board
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+func (c *ClientWithResponses) ReturnWorkOrderToBoardWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ReturnWorkOrderToBoardResponse, error) {
+	rsp, err := c.ReturnWorkOrderToBoardWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReturnWorkOrderToBoardResponse(rsp)
+}
+
+// ReturnWorkOrderToBoardWithResponse return_to_board
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/return_to_board (the `ReturnWorkOrderToBoard` operationId).
+func (c *ClientWithResponses) ReturnWorkOrderToBoardWithResponse(ctx context.Context, workOrderId int, body ReturnWorkOrderToBoardJSONRequestBody, reqEditors ...RequestEditorFn) (*ReturnWorkOrderToBoardResponse, error) {
+	rsp, err := c.ReturnWorkOrderToBoard(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReturnWorkOrderToBoardResponse(rsp)
+}
+
+// SaveWorkOrderForLaterWithBodyWithResponse save_for_later
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+func (c *ClientWithResponses) SaveWorkOrderForLaterWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SaveWorkOrderForLaterResponse, error) {
+	rsp, err := c.SaveWorkOrderForLaterWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSaveWorkOrderForLaterResponse(rsp)
+}
+
+// SaveWorkOrderForLaterWithResponse save_for_later
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/save_for_later (the `SaveWorkOrderForLater` operationId).
+func (c *ClientWithResponses) SaveWorkOrderForLaterWithResponse(ctx context.Context, workOrderId int, body SaveWorkOrderForLaterJSONRequestBody, reqEditors ...RequestEditorFn) (*SaveWorkOrderForLaterResponse, error) {
+	rsp, err := c.SaveWorkOrderForLater(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSaveWorkOrderForLaterResponse(rsp)
+}
+
+// StageTransitionWorkOrderWithBodyWithResponse stage_transition
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+func (c *ClientWithResponses) StageTransitionWorkOrderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StageTransitionWorkOrderResponse, error) {
+	rsp, err := c.StageTransitionWorkOrderWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStageTransitionWorkOrderResponse(rsp)
+}
+
+// StageTransitionWorkOrderWithResponse stage_transition
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/lifecycle/stage_transition (the `StageTransitionWorkOrder` operationId).
+func (c *ClientWithResponses) StageTransitionWorkOrderWithResponse(ctx context.Context, workOrderId int, body StageTransitionWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*StageTransitionWorkOrderResponse, error) {
+	rsp, err := c.StageTransitionWorkOrder(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStageTransitionWorkOrderResponse(rsp)
 }
 
 // ShowWorkOrderPartsWithResponse show
@@ -12546,17 +15956,19 @@ func (c *ClientWithResponses) CreateWorkOrderPaymentWithResponse(ctx context.Con
 	return ParseCreateWorkOrderPaymentResponse(rsp)
 }
 
-// GetWorkOrdersSummaryWithResponse show
+// ShowWorkOrderServiceHistoryWithResponse show
+//
+// Show a work order service history by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /work_orders/{work_order_id}/summary (the `GetWorkOrdersSummary` operationId).
-func (c *ClientWithResponses) GetWorkOrdersSummaryWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*GetWorkOrdersSummaryResponse, error) {
-	rsp, err := c.GetWorkOrdersSummary(ctx, workOrderId, reqEditors...)
+// Corresponds with GET /work_orders/{work_order_id}/service_history (the `ShowWorkOrderServiceHistory` operationId).
+func (c *ClientWithResponses) ShowWorkOrderServiceHistoryWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderServiceHistoryResponse, error) {
+	rsp, err := c.ShowWorkOrderServiceHistory(ctx, workOrderId, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetWorkOrdersSummaryResponse(rsp)
+	return ParseShowWorkOrderServiceHistoryResponse(rsp)
 }
 
 // ShowWorkOrderWipWithResponse show
@@ -14695,6 +18107,290 @@ func ParseUpdateWorkOrderResponse(rsp *http.Response) (*UpdateWorkOrderResponse,
 	return response, nil
 }
 
+// ParseCreateWorkOrderAuthorizationResponse parses an HTTP response from a CreateWorkOrderAuthorizationWithResponse call
+func ParseCreateWorkOrderAuthorizationResponse(rsp *http.Response) (*CreateWorkOrderAuthorizationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkOrderAuthorizationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         string      `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              *string     `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    *string `json:"category"`
+				CreatedAt   string  `json:"created_at"`
+				Description string  `json:"description"`
+				Id          int     `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrderAuthorizationDecisionsResponse parses an HTTP response from a UpdateWorkOrderAuthorizationDecisionsWithResponse call
+func ParseUpdateWorkOrderAuthorizationDecisionsResponse(rsp *http.Response) (*UpdateWorkOrderAuthorizationDecisionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrderAuthorizationDecisionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         string      `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              string      `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    interface{} `json:"category"`
+				CreatedAt   string      `json:"created_at"`
+				Description string      `json:"description"`
+				Id          int         `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseShowWorkOrderDeclinedServicesResponse parses an HTTP response from a ShowWorkOrderDeclinedServicesWithResponse call
+func ParseShowWorkOrderDeclinedServicesResponse(rsp *http.Response) (*ShowWorkOrderDeclinedServicesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ShowWorkOrderDeclinedServicesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			DeclinedAt      string `json:"declined_at"`
+			Id              int    `json:"id"`
+			Name            string `json:"name"`
+			Type            string `json:"type"`
+			WorkOrderNumber int    `json:"work_order_number"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseShowWorkOrderEstimateResponse parses an HTTP response from a ShowWorkOrderEstimateWithResponse call
 func ParseShowWorkOrderEstimateResponse(rsp *http.Response) (*ShowWorkOrderEstimateResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -14884,6 +18580,833 @@ func ParseShowWorkOrderInspectionResponse(rsp *http.Response) (*ShowWorkOrderIns
 			} `json:"vehicle"`
 			WorkOrderNumber        int `json:"work_order_number"`
 			WorkOrderServicesCount int `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCloseWorkOrderResponse parses an HTTP response from a CloseWorkOrderWithResponse call
+func ParseCloseWorkOrderResponse(rsp *http.Response) (*CloseWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CloseWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             string      `json:"closed_at"`
+			ClosureReason        string      `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              *string     `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCloseWorkOrderAsPaidResponse parses an HTTP response from a CloseWorkOrderAsPaidWithResponse call
+func ParseCloseWorkOrderAsPaidResponse(rsp *http.Response) (*CloseWorkOrderAsPaidResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CloseWorkOrderAsPaidResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             string      `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              interface{} `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeclineAllWorkOrderServicesResponse parses an HTTP response from a DeclineAllWorkOrderServicesWithResponse call
+func ParseDeclineAllWorkOrderServicesResponse(rsp *http.Response) (*DeclineAllWorkOrderServicesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeclineAllWorkOrderServicesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool   `json:"customer_notified"`
+			CustomerNotifiedReady   bool   `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int    `json:"customer_visit_count"`
+			DeclineReason           string `json:"decline_reason"`
+			DeclinedAt              string `json:"declined_at"`
+			DeclinedServicesUrl     string `json:"declined_services_url"`
+			DiscountCents           int    `json:"discount_cents"`
+			FeesCents               int    `json:"fees_cents"`
+			Id                      int    `json:"id"`
+			InspectionReportsCount  int    `json:"inspection_reports_count"`
+			InspectionUrl           string `json:"inspection_url"`
+			IntakeMethod            string `json:"intake_method"`
+			LaborCents              int    `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReopenWorkOrderResponse parses an HTTP response from a ReopenWorkOrderWithResponse call
+func ParseReopenWorkOrderResponse(rsp *http.Response) (*ReopenWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReopenWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              interface{} `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReturnWorkOrderToBoardResponse parses an HTTP response from a ReturnWorkOrderToBoardWithResponse call
+func ParseReturnWorkOrderToBoardResponse(rsp *http.Response) (*ReturnWorkOrderToBoardResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReturnWorkOrderToBoardResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              interface{} `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int           `json:"location_id"`
+			Notes               interface{}   `json:"notes"`
+			OdometerIn          interface{}   `json:"odometer_in"`
+			OdometerOut         interface{}   `json:"odometer_out"`
+			OdometerUnit        string        `json:"odometer_unit"`
+			Paid                bool          `json:"paid"`
+			PartsCents          int           `json:"parts_cents"`
+			PartsUrl            string        `json:"parts_url"`
+			PaymentsUrl         string        `json:"payments_url"`
+			PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+			RecentActivities    []interface{} `json:"recent_activities"`
+			ReturnMethod        string        `json:"return_method"`
+			ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+			SavedForLater       bool          `json:"saved_for_later"`
+			ScheduledFor        interface{}   `json:"scheduled_for"`
+			ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+			ServiceHistoryUrl   string        `json:"service_history_url"`
+			ServicesUrl         string        `json:"services_url"`
+			Status              string        `json:"status"`
+			SubcontractsCents   int           `json:"subcontracts_cents"`
+			TiresCents          int           `json:"tires_cents"`
+			Totals              struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSaveWorkOrderForLaterResponse parses an HTTP response from a SaveWorkOrderForLaterWithResponse call
+func ParseSaveWorkOrderForLaterResponse(rsp *http.Response) (*SaveWorkOrderForLaterResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SaveWorkOrderForLaterResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             interface{} `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              interface{} `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int           `json:"location_id"`
+			Notes               interface{}   `json:"notes"`
+			OdometerIn          interface{}   `json:"odometer_in"`
+			OdometerOut         interface{}   `json:"odometer_out"`
+			OdometerUnit        string        `json:"odometer_unit"`
+			Paid                bool          `json:"paid"`
+			PartsCents          int           `json:"parts_cents"`
+			PartsUrl            string        `json:"parts_url"`
+			PaymentsUrl         string        `json:"payments_url"`
+			PurchaseOrderNumber interface{}   `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{}   `json:"ready_for_pickup_at"`
+			RecentActivities    []interface{} `json:"recent_activities"`
+			ReturnMethod        string        `json:"return_method"`
+			ReturnMethodNotes   interface{}   `json:"return_method_notes"`
+			SavedForLater       bool          `json:"saved_for_later"`
+			ScheduledFor        interface{}   `json:"scheduled_for"`
+			ServiceAdvisorId    interface{}   `json:"service_advisor_id"`
+			ServiceHistoryUrl   string        `json:"service_history_url"`
+			ServicesUrl         string        `json:"services_url"`
+			Status              string        `json:"status"`
+			SubcontractsCents   int           `json:"subcontracts_cents"`
+			TiresCents          int           `json:"tires_cents"`
+			Totals              struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStageTransitionWorkOrderResponse parses an HTTP response from a StageTransitionWorkOrderWithResponse call
+func ParseStageTransitionWorkOrderResponse(rsp *http.Response) (*StageTransitionWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StageTransitionWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int         `json:"activity_total"`
+			AppUrl               string      `json:"app_url"`
+			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
+			Authorized           bool        `json:"authorized"`
+			AuthorizedAt         interface{} `json:"authorized_at"`
+			AuthorizedTotalCents int         `json:"authorized_total_cents"`
+			AverageTicketCents   int         `json:"average_ticket_cents"`
+			ClosedAt             string      `json:"closed_at"`
+			ClosureReason        interface{} `json:"closure_reason"`
+			ClosureReasonNotes   interface{} `json:"closure_reason_notes"`
+			CompletedAt          interface{} `json:"completed_at"`
+			ConcernsUrl          string      `json:"concerns_url"`
+			CreatedAt            string      `json:"created_at"`
+			CreditBalanceCents   int         `json:"credit_balance_cents"`
+			Customer             struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified        bool        `json:"customer_notified"`
+			CustomerNotifiedReady   bool        `json:"customer_notified_ready"`
+			CustomerTotalSpendCents int         `json:"customer_total_spend_cents"`
+			CustomerVisitCount      int         `json:"customer_visit_count"`
+			DeclineReason           interface{} `json:"decline_reason"`
+			DeclinedAt              interface{} `json:"declined_at"`
+			DeclinedServicesUrl     string      `json:"declined_services_url"`
+			DiscountCents           int         `json:"discount_cents"`
+			FeesCents               int         `json:"fees_cents"`
+			Id                      int         `json:"id"`
+			InspectionReportsCount  int         `json:"inspection_reports_count"`
+			InspectionUrl           string      `json:"inspection_url"`
+			IntakeMethod            string      `json:"intake_method"`
+			LaborCents              int         `json:"labor_cents"`
+			Location                struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int         `json:"location_id"`
+			Notes               interface{} `json:"notes"`
+			OdometerIn          interface{} `json:"odometer_in"`
+			OdometerOut         interface{} `json:"odometer_out"`
+			OdometerUnit        string      `json:"odometer_unit"`
+			Paid                bool        `json:"paid"`
+			PartsCents          int         `json:"parts_cents"`
+			PartsUrl            string      `json:"parts_url"`
+			PaymentsUrl         string      `json:"payments_url"`
+			PurchaseOrderNumber interface{} `json:"purchase_order_number"`
+			ReadyForPickupAt    interface{} `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod      string      `json:"return_method"`
+			ReturnMethodNotes interface{} `json:"return_method_notes"`
+			SavedForLater     bool        `json:"saved_for_later"`
+			ScheduledFor      interface{} `json:"scheduled_for"`
+			ServiceAdvisorId  interface{} `json:"service_advisor_id"`
+			ServiceHistoryUrl string      `json:"service_history_url"`
+			ServicesUrl       string      `json:"services_url"`
+			Status            string      `json:"status"`
+			SubcontractsCents int         `json:"subcontracts_cents"`
+			TiresCents        int         `json:"tires_cents"`
+			Totals            struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				Id    int    `json:"id"`
+				Make  string `json:"make"`
+				Model string `json:"model"`
+				Url   string `json:"url"`
+				Vin   string `json:"vin"`
+				Year  int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       interface{} `json:"vehicle_arrived_at"`
+			VehicleKeysLocation    string      `json:"vehicle_keys_location"`
+			VehicleLocation        string      `json:"vehicle_location"`
+			WipUrl                 string      `json:"wip_url"`
+			WorkOrderNumber        int         `json:"work_order_number"`
+			WorkOrderServicesCount int         `json:"work_order_services_count"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -15158,71 +19681,28 @@ func ParseCreateWorkOrderPaymentResponse(rsp *http.Response) (*CreateWorkOrderPa
 	return response, nil
 }
 
-// ParseGetWorkOrdersSummaryResponse parses an HTTP response from a GetWorkOrdersSummaryWithResponse call
-func ParseGetWorkOrdersSummaryResponse(rsp *http.Response) (*GetWorkOrdersSummaryResponse, error) {
+// ParseShowWorkOrderServiceHistoryResponse parses an HTTP response from a ShowWorkOrderServiceHistoryWithResponse call
+func ParseShowWorkOrderServiceHistoryResponse(rsp *http.Response) (*ShowWorkOrderServiceHistoryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetWorkOrdersSummaryResponse{
+	response := &ShowWorkOrderServiceHistoryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			ActivityTotal        int         `json:"activity_total"`
-			AppUrl               string      `json:"app_url"`
-			AssignedTechnicianId interface{} `json:"assigned_technician_id"`
-			Authorized           bool        `json:"authorized"`
-			AverageTicketCents   int         `json:"average_ticket_cents"`
-			ClosedAt             interface{} `json:"closed_at"`
-			CreatedAt            string      `json:"created_at"`
-			Customer             struct {
-				FullName string `json:"full_name"`
-				Id       int    `json:"id"`
-				Url      string `json:"url"`
-			} `json:"customer"`
-			CustomerTotalSpendCents int    `json:"customer_total_spend_cents"`
-			CustomerVisitCount      int    `json:"customer_visit_count"`
-			Id                      int    `json:"id"`
-			InspectionReportsCount  int    `json:"inspection_reports_count"`
-			IntakeMethod            string `json:"intake_method"`
-			Location                struct {
-				Id   int    `json:"id"`
-				Name string `json:"name"`
-				Url  string `json:"url"`
-			} `json:"location"`
-			LocationId       int           `json:"location_id"`
-			Paid             bool          `json:"paid"`
-			RecentActivities []interface{} `json:"recent_activities"`
-			ScheduledFor     interface{}   `json:"scheduled_for"`
-			ServiceAdvisorId interface{}   `json:"service_advisor_id"`
-			Status           string        `json:"status"`
-			Totals           struct {
-				Currency       string `json:"currency"`
-				PaidCents      int    `json:"paid_cents"`
-				RemainingCents int    `json:"remaining_cents"`
-				SubtotalCents  int    `json:"subtotal_cents"`
-				TaxCents       int    `json:"tax_cents"`
-				TotalCents     int    `json:"total_cents"`
-			} `json:"totals"`
-			Type      string `json:"type"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
-			Vehicle   struct {
-				Id    int    `json:"id"`
-				Make  string `json:"make"`
-				Model string `json:"model"`
-				Url   string `json:"url"`
-				Vin   string `json:"vin"`
-				Year  int    `json:"year"`
-			} `json:"vehicle"`
-			WorkOrderNumber        int `json:"work_order_number"`
-			WorkOrderServicesCount int `json:"work_order_services_count"`
+		var dest []struct {
+			AuthorizationStatus string `json:"authorization_status"`
+			CompletedAt         string `json:"completed_at"`
+			Id                  int    `json:"id"`
+			Name                string `json:"name"`
+			Type                string `json:"type"`
+			WorkOrderNumber     int    `json:"work_order_number"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err

@@ -70,12 +70,22 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/work_orders/{id}` | `delete_work_order` | Delete a work order by ID. |
 | GET | `/work_orders/{id}` | `show_work_order` | Show a work order by ID. |
 | PATCH | `/work_orders/{id}` | `update_work_order` | Update a work order by ID. |
+| POST | `/work_orders/{work_order_id}/authorization` | `create_work_order_authorization` | Create a work order authorization. |
+| POST | `/work_orders/{work_order_id}/authorization/update_decisions` | `update_work_order_authorization_decisions` | Update a work order authorization decisions by ID. |
+| GET | `/work_orders/{work_order_id}/declined_services` | `show_work_order_declined_services` | Show a work order declined services by ID. |
 | GET | `/work_orders/{work_order_id}/estimate` | `show_work_order_estimate` | Show a work order estimate by ID. |
 | GET | `/work_orders/{work_order_id}/inspection` | `show_work_order_inspection` | Show a work order inspection by ID. |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/close` | `close_work_order` | Close |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/close_as_paid` | `close_work_order_as_paid` | Close as paid |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/decline_all` | `decline_all_work_order_services` | Decline all |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/reopen` | `reopen_work_order` | Reopen |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/return_to_board` | `return_work_order_to_board` | Return to board |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/save_for_later` | `save_work_order_for_later` | Save for later |
+| PATCH | `/work_orders/{work_order_id}/lifecycle/stage_transition` | `stage_transition_work_order` | Stage transition |
 | GET | `/work_orders/{work_order_id}/parts` | `show_work_order_parts` | Show a work order parts by ID. |
 | GET | `/work_orders/{work_order_id}/payments` | `show_work_order_payments` | Show a work order payments by ID. |
 | POST | `/work_orders/{work_order_id}/payments` | `create_work_order_payment` | Create a work order payment. |
-| GET | `/work_orders/{work_order_id}/summary` | `get_work_orders_summary` | Show |
+| GET | `/work_orders/{work_order_id}/service_history` | `show_work_order_service_history` | Show a work order service history by ID. |
 | GET | `/work_orders/{work_order_id}/wip` | `show_work_order_wip` | Show a work order wip by ID. |
 
 For common error and pagination shapes, see [errors](errors.md) and [pagination](pagination.md).
