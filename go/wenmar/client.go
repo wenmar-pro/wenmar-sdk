@@ -173,6 +173,36 @@ func (c *Client) ListCustomersWithPagination(ctx context.Context) (*ListCustomer
 	return resp, paginator, nil
 }
 
+// ListCustomersWithParams lists customers filtered by the given params
+// (query, type, has_vehicle, has_balance, tag_ids) with pagination
+// (page, per_page).
+func (c *Client) ListCustomersWithParams(ctx context.Context, params ListCustomersParams) (*ListCustomersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
+	resp, err := c.gen.ListCustomersWithResponse(ctx, &params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
+	return resp, nil
+}
+
+// ListCustomersWithParamsWithPagination is the filter-accepting variant of
+// ListCustomersWithPagination.
+func (c *Client) ListCustomersWithParamsWithPagination(ctx context.Context, params ListCustomersParams) (*ListCustomersResponse, *Paginator, error) {
+	resp, err := c.ListCustomersWithParams(ctx, params)
+	if err != nil {
+		return nil, nil, err
+	}
+	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
+	return resp, paginator, nil
+}
+
 func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
 	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
 	if err != nil {

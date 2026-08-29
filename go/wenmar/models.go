@@ -89,4 +89,5 @@ type (
 	PrefillVehicleParams         = generated.PrefillVehicleParams
 	DecodeVinParams              = generated.DecodeVinParams
 	ListVehiclesParams           = generated.ListVehiclesParams
+	ListCustomersParams          = generated.ListCustomersParams
 )
