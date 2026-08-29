@@ -7,7 +7,8 @@ import (
 )
 
 // TransferVehicle transfers a vehicle to a new customer.
-func (c *Client) TransferVehicle(ctx context.Context, id int, body generated.TransferVehicleJSONRequestBody) (*generated.TransferVehicleResponse, error) {
+func (c *Client) TransferVehicle(ctx context.Context, id int, req TransferVehicleRequest) (*TransferVehicleResponse, error) {
+	body := req.ToGenerated()
 	resp, err := c.gen.TransferVehicleWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err
@@ -19,7 +20,8 @@ func (c *Client) TransferVehicle(ctx context.Context, id int, body generated.Tra
 }
 
 // MergeVehicle merges a source vehicle into the keeper (id).
-func (c *Client) MergeVehicle(ctx context.Context, id int, body generated.MergeVehicleJSONRequestBody) (*generated.MergeVehicleResponse, error) {
+func (c *Client) MergeVehicle(ctx context.Context, id int, req MergeVehicleRequest) (*MergeVehicleResponse, error) {
+	body := req.ToGenerated()
 	resp, err := c.gen.MergeVehicleWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err
@@ -31,7 +33,7 @@ func (c *Client) MergeVehicle(ctx context.Context, id int, body generated.MergeV
 }
 
 // PrefillVehicle decodes VIN/plate/year-make-model to prefill a vehicle form.
-func (c *Client) PrefillVehicle(ctx context.Context, params generated.PrefillVehicleParams) (*generated.PrefillVehicleResponse, error) {
+func (c *Client) PrefillVehicle(ctx context.Context, params PrefillVehicleParams) (*PrefillVehicleResponse, error) {
 	resp, err := c.gen.PrefillVehicleWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err
@@ -43,7 +45,7 @@ func (c *Client) PrefillVehicle(ctx context.Context, params generated.PrefillVeh
 }
 
 // LookupVehicle searches vehicles by query.
-func (c *Client) LookupVehicle(ctx context.Context, query string) (*generated.LookupVehicleResponse, error) {
+func (c *Client) LookupVehicle(ctx context.Context, query string) (*LookupVehicleResponse, error) {
 	resp, err := c.gen.LookupVehicleWithResponse(ctx, &generated.LookupVehicleParams{Query: &query})
 	if err != nil {
 		return nil, err
@@ -55,7 +57,7 @@ func (c *Client) LookupVehicle(ctx context.Context, query string) (*generated.Lo
 }
 
 // CheckVehicleDuplicate checks for duplicate vehicles by VIN/plate.
-func (c *Client) CheckVehicleDuplicate(ctx context.Context, params generated.CheckVehicleDuplicateParams) (*generated.CheckVehicleDuplicateResponse, error) {
+func (c *Client) CheckVehicleDuplicate(ctx context.Context, params CheckVehicleDuplicateParams) (*CheckVehicleDuplicateResponse, error) {
 	resp, err := c.gen.CheckVehicleDuplicateWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err

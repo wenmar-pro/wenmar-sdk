@@ -2,28 +2,26 @@ package wenmar
 
 import (
 	"context"
-
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 // ListStatementsTyped returns a typed, paginated list of statements for a customer.
-func (c *Client) ListStatementsTyped(ctx context.Context, customerID int) (*ListResult[generated.Statement], error) {
+func (c *Client) ListStatementsTyped(ctx context.Context, customerID int) (*ListResult[Statement], error) {
 	resp, err := c.ListStatements(ctx, customerID)
 	if err != nil {
 		return nil, err
 	}
-	items, err := parseListResponse[generated.Statement](resp.Body)
+	items, err := parseListResponse[Statement](resp.Body)
 	if err != nil {
 		return nil, err
 	}
 	meta, nextURL := extractPaginationMeta(resp.HTTPResponse)
-	result := &ListResult[generated.Statement]{
+	result := &ListResult[Statement]{
 		Items: items,
 		Meta:  meta,
 	}
 	if nextURL != "" {
-		result.Next = func(ctx context.Context) (*ListResult[generated.Statement], error) {
-			return c.fetchNextPage[generated.Statement](ctx, nextURL)
+		result.Next = func(ctx context.Context) (*ListResult[Statement], error) {
+			return c.fetchNextPage[Statement](ctx, nextURL)
 		}
 	}
 	return result, nil
@@ -31,7 +29,7 @@ func (c *Client) ListStatementsTyped(ctx context.Context, customerID int) (*List
 
 // GetAllStatements auto-paginates and returns all statements for a customer,
 // up to MaxItems (default 1000 safety cap).
-func (c *Client) GetAllStatements(ctx context.Context, customerID int, opts *GetAllOptions) ([]generated.Statement, bool, error) {
+func (c *Client) GetAllStatements(ctx context.Context, customerID int, opts *GetAllOptions) ([]Statement, bool, error) {
 	if opts == nil {
 		opts = &GetAllOptions{MaxItems: 1000}
 	}
@@ -46,7 +44,7 @@ func (c *Client) GetAllStatements(ctx context.Context, customerID int, opts *Get
 }
 
 // ListStatements lists statements for a customer.
-func (c *Client) ListStatements(ctx context.Context, customerID int) (*generated.ListCustomersStatementsResponse, error) {
+func (c *Client) ListStatements(ctx context.Context, customerID int) (*ListCustomersStatementsResponse, error) {
 	resp, err := c.gen.ListCustomersStatementsWithResponse(ctx, customerID)
 	if err != nil {
 		return nil, err
@@ -58,7 +56,7 @@ func (c *Client) ListStatements(ctx context.Context, customerID int) (*generated
 }
 
 // ShowStatement shows a single statement.
-func (c *Client) ShowStatement(ctx context.Context, id int) (*generated.ShowStatementResponse, error) {
+func (c *Client) ShowStatement(ctx context.Context, id int) (*ShowStatementResponse, error) {
 	resp, err := c.gen.ShowStatementWithResponse(ctx, id)
 	if err != nil {
 		return nil, err

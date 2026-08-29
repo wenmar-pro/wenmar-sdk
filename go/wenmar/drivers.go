@@ -7,23 +7,23 @@ import (
 )
 
 // ListDriversTyped returns a typed, paginated list of drivers for a customer.
-func (c *Client) ListDriversTyped(ctx context.Context, customerID int) (*ListResult[generated.Driver], error) {
+func (c *Client) ListDriversTyped(ctx context.Context, customerID int) (*ListResult[Driver], error) {
 	resp, err := c.ListDrivers(ctx, customerID)
 	if err != nil {
 		return nil, err
 	}
-	items, err := parseListResponse[generated.Driver](resp.Body)
+	items, err := parseListResponse[Driver](resp.Body)
 	if err != nil {
 		return nil, err
 	}
 	meta, nextURL := extractPaginationMeta(resp.HTTPResponse)
-	result := &ListResult[generated.Driver]{
+	result := &ListResult[Driver]{
 		Items: items,
 		Meta:  meta,
 	}
 	if nextURL != "" {
-		result.Next = func(ctx context.Context) (*ListResult[generated.Driver], error) {
-			return c.fetchNextPage[generated.Driver](ctx, nextURL)
+		result.Next = func(ctx context.Context) (*ListResult[Driver], error) {
+			return c.fetchNextPage[Driver](ctx, nextURL)
 		}
 	}
 	return result, nil
@@ -31,7 +31,7 @@ func (c *Client) ListDriversTyped(ctx context.Context, customerID int) (*ListRes
 
 // GetAllDrivers auto-paginates and returns all drivers for a customer, up to
 // MaxItems (default 1000 safety cap).
-func (c *Client) GetAllDrivers(ctx context.Context, customerID int, opts *GetAllOptions) ([]generated.Driver, bool, error) {
+func (c *Client) GetAllDrivers(ctx context.Context, customerID int, opts *GetAllOptions) ([]Driver, bool, error) {
 	if opts == nil {
 		opts = &GetAllOptions{MaxItems: 1000}
 	}
@@ -46,7 +46,7 @@ func (c *Client) GetAllDrivers(ctx context.Context, customerID int, opts *GetAll
 }
 
 // ListDrivers lists drivers for a customer.
-func (c *Client) ListDrivers(ctx context.Context, customerID int) (*generated.ListCustomersDriversResponse, error) {
+func (c *Client) ListDrivers(ctx context.Context, customerID int) (*ListCustomersDriversResponse, error) {
 	resp, err := c.gen.ListCustomersDriversWithResponse(ctx, customerID)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (c *Client) ListDrivers(ctx context.Context, customerID int) (*generated.Li
 }
 
 // ShowDriver shows a single driver.
-func (c *Client) ShowDriver(ctx context.Context, customerID, id int) (*generated.ShowDriverResponse, error) {
+func (c *Client) ShowDriver(ctx context.Context, customerID, id int) (*ShowDriverResponse, error) {
 	resp, err := c.gen.ShowDriverWithResponse(ctx, customerID, id)
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ type CreateDriverRequest struct {
 }
 
 // CreateDriver creates a new driver for a customer.
-func (c *Client) CreateDriver(ctx context.Context, customerID int, req CreateDriverRequest) (*generated.CreateDriverResponse, error) {
+func (c *Client) CreateDriver(ctx context.Context, customerID int, req CreateDriverRequest) (*CreateDriverResponse, error) {
 	body := generated.CreateDriverJSONRequestBody{
 		Driver: struct {
 			FullName string `json:"full_name"`
@@ -102,7 +102,7 @@ type UpdateDriverRequest struct {
 }
 
 // UpdateDriver updates a driver.
-func (c *Client) UpdateDriver(ctx context.Context, customerID, id int, req UpdateDriverRequest) (*generated.UpdateDriverResponse, error) {
+func (c *Client) UpdateDriver(ctx context.Context, customerID, id int, req UpdateDriverRequest) (*UpdateDriverResponse, error) {
 	body := generated.UpdateDriverJSONRequestBody{
 		Driver: struct {
 			FullName string `json:"full_name"`
@@ -121,7 +121,7 @@ func (c *Client) UpdateDriver(ctx context.Context, customerID, id int, req Updat
 }
 
 // DeleteDriver deletes a driver.
-func (c *Client) DeleteDriver(ctx context.Context, customerID, id int) (*generated.DeleteDriverResponse, error) {
+func (c *Client) DeleteDriver(ctx context.Context, customerID, id int) (*DeleteDriverResponse, error) {
 	resp, err := c.gen.DeleteDriverWithResponse(ctx, customerID, id)
 	if err != nil {
 		return nil, err

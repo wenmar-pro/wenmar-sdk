@@ -6,8 +6,6 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
-
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var ctx = context.Background()
@@ -100,34 +98,11 @@ func TestClient_CreateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	req := generated.CreateVehicleJSONRequestBody{
-		Vehicle: struct {
-			BodyStyle         *string        `json:"body_style,omitempty"`
-			Color             *string        `json:"color,omitempty"`
-			CustomerId        int            `json:"customer_id"`
-			Drivetrain        *string        `json:"drivetrain,omitempty"`
-			Engine            *string        `json:"engine,omitempty"`
-			FleetIdentifier   *string        `json:"fleet_identifier,omitempty"`
-			LicensePlate      *string        `json:"license_plate,omitempty"`
-			LicensePlateState *string        `json:"license_plate_state,omitempty"`
-			Make              string         `json:"make"`
-			Model             string         `json:"model"`
-			Notes             *string        `json:"notes,omitempty"`
-			OdometerReading   *int           `json:"odometer_reading,omitempty"`
-			OdometerUnit      *string        `json:"odometer_unit,omitempty"`
-			ProductionDate    *string        `json:"production_date,omitempty"`
-			Submodel          *string        `json:"submodel,omitempty"`
-			Transmission      *string        `json:"transmission,omitempty"`
-			UnitNumber        *string        `json:"unit_number,omitempty"`
-			VehicleTagIds     *[]interface{} `json:"vehicle_tag_ids,omitempty"`
-			Vin               *string        `json:"vin,omitempty"`
-			Year              int            `json:"year"`
-		}{
-			CustomerId: 1,
-			Make:       "Honda",
-			Model:      "Civic",
-			Year:       2020,
-		},
+	req := CreateVehicleRequest{
+		CustomerID: 1,
+		Make:       "Honda",
+		Model:      "Civic",
+		Year:       2020,
 	}
 
 	resp, err := c.CreateVehicle(ctx, req)
@@ -151,26 +126,8 @@ func TestClient_UpdateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	req := generated.UpdateVehicleJSONRequestBody{
-		Vehicle: struct {
-			BodyStyle         *string `json:"body_style,omitempty"`
-			Color             *string `json:"color,omitempty"`
-			Drivetrain        *string `json:"drivetrain,omitempty"`
-			Engine            *string `json:"engine,omitempty"`
-			LicensePlate      *string `json:"license_plate,omitempty"`
-			LicensePlateState *string `json:"license_plate_state,omitempty"`
-			Make              string  `json:"make"`
-			Model             *string `json:"model,omitempty"`
-			Notes             *string `json:"notes,omitempty"`
-			OdometerReading   *int    `json:"odometer_reading,omitempty"`
-			OdometerUnit      *string `json:"odometer_unit,omitempty"`
-			Submodel          *string `json:"submodel,omitempty"`
-			Transmission      *string `json:"transmission,omitempty"`
-			Vin               *string `json:"vin,omitempty"`
-			Year              *int    `json:"year,omitempty"`
-		}{
-			Make: "Toyota",
-		},
+	req := UpdateVehicleRequest{
+		Make: "Toyota",
 	}
 
 	resp, err := c.UpdateVehicle(ctx, 1, req)
@@ -234,7 +191,7 @@ func TestClient_CheckDuplicate(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.CheckVehicleDuplicate(ctx, generated.CheckVehicleDuplicateParams{Vin: strPtr("ABC123")})
+	resp, err := c.CheckVehicleDuplicate(ctx, CheckVehicleDuplicateParams{Vin: strPtr("ABC123")})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -255,7 +212,7 @@ func TestClient_UpdateCustomer(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	req := generated.UpdateCustomerJSONRequestBody{}
+	req := UpdateCustomerRequest{}
 
 	resp, err := c.UpdateCustomer(ctx, 1, req)
 	if err != nil {

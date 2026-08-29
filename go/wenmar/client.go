@@ -148,7 +148,7 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, requestID)
 }
 
-func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersResponse, error) {
+func (c *Client) ListCustomers(ctx context.Context) (*ListCustomersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
 	resp, err := c.gen.ListCustomersWithResponse(ctx)
 	if err != nil {
@@ -164,7 +164,7 @@ func (c *Client) ListCustomers(ctx context.Context) (*generated.ListCustomersRes
 	return resp, nil
 }
 
-func (c *Client) ListCustomersWithPagination(ctx context.Context) (*generated.ListCustomersResponse, *Paginator, error) {
+func (c *Client) ListCustomersWithPagination(ctx context.Context) (*ListCustomersResponse, *Paginator, error) {
 	resp, err := c.ListCustomers(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -173,7 +173,7 @@ func (c *Client) ListCustomersWithPagination(ctx context.Context) (*generated.Li
 	return resp, paginator, nil
 }
 
-func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCustomerResponse, error) {
+func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
 	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*generated.ShowCusto
 	return resp, nil
 }
 
-func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesResponse, error) {
+func (c *Client) ListVehicles(ctx context.Context) (*ListVehiclesResponse, error) {
 	resp, err := c.gen.ListVehiclesWithResponse(ctx, nil)
 	if err != nil {
 		return nil, err
@@ -195,7 +195,7 @@ func (c *Client) ListVehicles(ctx context.Context) (*generated.ListVehiclesRespo
 	return resp, nil
 }
 
-func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicleResponse, error) {
+func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse, error) {
 	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -206,7 +206,7 @@ func (c *Client) ShowVehicle(ctx context.Context, id int) (*generated.ShowVehicl
 	return resp, nil
 }
 
-func (c *Client) DeleteVehicle(ctx context.Context, id int) (*generated.DeleteVehicleResponse, error) {
+func (c *Client) DeleteVehicle(ctx context.Context, id int) (*DeleteVehicleResponse, error) {
 	resp, err := c.gen.DeleteVehicleWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -217,7 +217,7 @@ func (c *Client) DeleteVehicle(ctx context.Context, id int) (*generated.DeleteVe
 	return resp, nil
 }
 
-func (c *Client) DecodeVin(ctx context.Context, vin string) (*generated.DecodeVinResponse, error) {
+func (c *Client) DecodeVin(ctx context.Context, vin string) (*DecodeVinResponse, error) {
 	params := &generated.DecodeVinParams{Vin: &vin}
 	resp, err := c.gen.DecodeVinWithResponse(ctx, params)
 	if err != nil {
@@ -229,7 +229,7 @@ func (c *Client) DecodeVin(ctx context.Context, vin string) (*generated.DecodeVi
 	return resp, nil
 }
 
-func (c *Client) ListWorkOrders(ctx context.Context) (*generated.ListWorkOrdersResponse, error) {
+func (c *Client) ListWorkOrders(ctx context.Context) (*ListWorkOrdersResponse, error) {
 	resp, err := c.gen.ListWorkOrdersWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -240,7 +240,7 @@ func (c *Client) ListWorkOrders(ctx context.Context) (*generated.ListWorkOrdersR
 	return resp, nil
 }
 
-func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*generated.ListWorkOrdersResponse, *Paginator, error) {
+func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*ListWorkOrdersResponse, *Paginator, error) {
 	resp, err := c.ListWorkOrders(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -249,7 +249,7 @@ func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*generated.L
 	return resp, paginator, nil
 }
 
-func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWorkOrderResponse, error) {
+func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*ShowWorkOrderResponse, error) {
 	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -260,7 +260,7 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*generated.ShowWork
 	return resp, nil
 }
 
-func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*generated.DeleteWorkOrderResponse, error) {
+func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*DeleteWorkOrderResponse, error) {
 	resp, err := c.gen.DeleteWorkOrderWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -271,7 +271,7 @@ func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*generated.Delete
 	return resp, nil
 }
 
-func (c *Client) ListAccount(ctx context.Context) (*generated.ListAccountResponse, error) {
+func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) {
 	resp, err := c.gen.ListAccountWithResponse(ctx)
 	if err != nil {
 		return nil, err
@@ -282,7 +282,7 @@ func (c *Client) ListAccount(ctx context.Context) (*generated.ListAccountRespons
 	return resp, nil
 }
 
-func (c *Client) ShowLocation(ctx context.Context, id string) (*generated.ShowLocationResponse, error) {
+func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResponse, error) {
 	resp, err := c.gen.ShowLocationWithResponse(ctx, id)
 	if err != nil {
 		return nil, err

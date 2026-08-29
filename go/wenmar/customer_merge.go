@@ -7,7 +7,8 @@ import (
 )
 
 // MergeCustomer merges a source customer into the keeper (id).
-func (c *Client) MergeCustomer(ctx context.Context, id int, body generated.MergeCustomerJSONRequestBody) (*generated.MergeCustomerResponse, error) {
+func (c *Client) MergeCustomer(ctx context.Context, id int, req MergeCustomerRequest) (*MergeCustomerResponse, error) {
+	body := req.ToGenerated()
 	resp, err := c.gen.MergeCustomerWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err
@@ -19,7 +20,7 @@ func (c *Client) MergeCustomer(ctx context.Context, id int, body generated.Merge
 }
 
 // LookupCustomer searches customers by query.
-func (c *Client) LookupCustomer(ctx context.Context, query string) (*generated.LookupCustomerResponse, error) {
+func (c *Client) LookupCustomer(ctx context.Context, query string) (*LookupCustomerResponse, error) {
 	resp, err := c.gen.LookupCustomerWithResponse(ctx, &generated.LookupCustomerParams{Query: &query})
 	if err != nil {
 		return nil, err
@@ -31,7 +32,7 @@ func (c *Client) LookupCustomer(ctx context.Context, query string) (*generated.L
 }
 
 // CheckCustomerDuplicate checks for duplicate customers.
-func (c *Client) CheckCustomerDuplicate(ctx context.Context, params generated.CheckCustomerDuplicateParams) (*generated.CheckCustomerDuplicateResponse, error) {
+func (c *Client) CheckCustomerDuplicate(ctx context.Context, params CheckCustomerDuplicateParams) (*CheckCustomerDuplicateResponse, error) {
 	resp, err := c.gen.CheckCustomerDuplicateWithResponse(ctx, &params)
 	if err != nil {
 		return nil, err

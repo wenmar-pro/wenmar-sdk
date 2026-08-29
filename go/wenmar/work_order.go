@@ -18,7 +18,7 @@ type CreateWorkOrderRequest struct {
 }
 
 // CreateWorkOrder creates a new work order.
-func (c *Client) CreateWorkOrder(ctx context.Context, req CreateWorkOrderRequest) (*generated.CreateWorkOrderResponse, error) {
+func (c *Client) CreateWorkOrder(ctx context.Context, req CreateWorkOrderRequest) (*CreateWorkOrderResponse, error) {
 	body := generated.CreateWorkOrderJSONRequestBody{
 		WorkOrder: struct {
 			CustomerId int `json:"customer_id"`
@@ -44,7 +44,7 @@ type UpdateWorkOrderRequest struct {
 }
 
 // UpdateWorkOrder updates a work order.
-func (c *Client) UpdateWorkOrder(ctx context.Context, id int, req UpdateWorkOrderRequest) (*generated.UpdateWorkOrderResponse, error) {
+func (c *Client) UpdateWorkOrder(ctx context.Context, id int, req UpdateWorkOrderRequest) (*UpdateWorkOrderResponse, error) {
 	body := generated.UpdateWorkOrderJSONRequestBody{
 		WorkOrder: struct {
 			IntakeMethod string `json:"intake_method"`
@@ -120,7 +120,7 @@ func (c *Client) Reopen(ctx context.Context, id int) error {
 }
 
 // ShowWorkOrderEstimate returns the estimate tab (services) for a work order.
-func (c *Client) ShowWorkOrderEstimate(ctx context.Context, id int) (*generated.ShowWorkOrderEstimateResponse, error) {
+func (c *Client) ShowWorkOrderEstimate(ctx context.Context, id int) (*ShowWorkOrderEstimateResponse, error) {
 	resp, err := c.gen.ShowWorkOrderEstimateWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (c *Client) ShowWorkOrderEstimate(ctx context.Context, id int) (*generated.
 }
 
 // ShowWorkOrderWip returns the work-in-progress tab (services) for a work order.
-func (c *Client) ShowWorkOrderWip(ctx context.Context, id int) (*generated.ShowWorkOrderWipResponse, error) {
+func (c *Client) ShowWorkOrderWip(ctx context.Context, id int) (*ShowWorkOrderWipResponse, error) {
 	resp, err := c.gen.ShowWorkOrderWipWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -144,7 +144,7 @@ func (c *Client) ShowWorkOrderWip(ctx context.Context, id int) (*generated.ShowW
 }
 
 // ShowWorkOrderInspection returns the inspection tab (inspection reports) for a work order.
-func (c *Client) ShowWorkOrderInspection(ctx context.Context, id int) (*generated.ShowWorkOrderInspectionResponse, error) {
+func (c *Client) ShowWorkOrderInspection(ctx context.Context, id int) (*ShowWorkOrderInspectionResponse, error) {
 	resp, err := c.gen.ShowWorkOrderInspectionWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -156,7 +156,7 @@ func (c *Client) ShowWorkOrderInspection(ctx context.Context, id int) (*generate
 }
 
 // ShowWorkOrderParts returns the parts tab (services) for a work order.
-func (c *Client) ShowWorkOrderParts(ctx context.Context, id int) (*generated.ShowWorkOrderPartsResponse, error) {
+func (c *Client) ShowWorkOrderParts(ctx context.Context, id int) (*ShowWorkOrderPartsResponse, error) {
 	resp, err := c.gen.ShowWorkOrderPartsWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -168,7 +168,7 @@ func (c *Client) ShowWorkOrderParts(ctx context.Context, id int) (*generated.Sho
 }
 
 // ShowWorkOrderPayments returns the payments tab (payments) for a work order.
-func (c *Client) ShowWorkOrderPayments(ctx context.Context, id int) (*generated.ShowWorkOrderPaymentsResponse, error) {
+func (c *Client) ShowWorkOrderPayments(ctx context.Context, id int) (*ShowWorkOrderPaymentsResponse, error) {
 	resp, err := c.gen.ShowWorkOrderPaymentsWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
@@ -186,7 +186,7 @@ type CreateWorkOrderPaymentRequest struct {
 }
 
 // CreateWorkOrderPayment creates a payment against a work order.
-func (c *Client) CreateWorkOrderPayment(ctx context.Context, id int, req CreateWorkOrderPaymentRequest) (*generated.CreateWorkOrderPaymentResponse, error) {
+func (c *Client) CreateWorkOrderPayment(ctx context.Context, id int, req CreateWorkOrderPaymentRequest) (*CreateWorkOrderPaymentResponse, error) {
 	body := generated.CreateWorkOrderPaymentJSONRequestBody{
 		Payment: struct {
 			AmountCents string `json:"amount_cents"`

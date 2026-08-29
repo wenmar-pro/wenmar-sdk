@@ -2,28 +2,26 @@ package wenmar
 
 import (
 	"context"
-
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 // ListCustomersTyped returns a typed, paginated list of customers.
-func (c *Client) ListCustomersTyped(ctx context.Context) (*ListResult[generated.Customer], error) {
+func (c *Client) ListCustomersTyped(ctx context.Context) (*ListResult[Customer], error) {
 	resp, err := c.ListCustomers(ctx)
 	if err != nil {
 		return nil, err
 	}
-	items, err := parseListResponse[generated.Customer](resp.Body)
+	items, err := parseListResponse[Customer](resp.Body)
 	if err != nil {
 		return nil, err
 	}
 	meta, nextURL := extractPaginationMeta(resp.HTTPResponse)
-	result := &ListResult[generated.Customer]{
+	result := &ListResult[Customer]{
 		Items: items,
 		Meta:  meta,
 	}
 	if nextURL != "" {
-		result.Next = func(ctx context.Context) (*ListResult[generated.Customer], error) {
-			return c.fetchNextPage[generated.Customer](ctx, nextURL)
+		result.Next = func(ctx context.Context) (*ListResult[Customer], error) {
+			return c.fetchNextPage[Customer](ctx, nextURL)
 		}
 	}
 	return result, nil
@@ -31,7 +29,7 @@ func (c *Client) ListCustomersTyped(ctx context.Context) (*ListResult[generated.
 
 // GetAllCustomers auto-paginates and returns all customers, up to
 // MaxItems (default 1000 safety cap).
-func (c *Client) GetAllCustomers(ctx context.Context, opts *GetAllOptions) ([]generated.Customer, bool, error) {
+func (c *Client) GetAllCustomers(ctx context.Context, opts *GetAllOptions) ([]Customer, bool, error) {
 	if opts == nil {
 		opts = &GetAllOptions{MaxItems: 1000}
 	}
@@ -45,9 +43,9 @@ func (c *Client) GetAllCustomers(ctx context.Context, opts *GetAllOptions) ([]ge
 	return getAll(ctx, first, opts)
 }
 
-// CreateCustomer creates a new customer. Accepts the generated request body
-// type directly — all fields are typed from the OpenAPI spec.
-func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustomerJSONRequestBody) (*generated.CreateCustomerResponse, error) {
+// CreateCustomer creates a new customer.
+func (c *Client) CreateCustomer(ctx context.Context, req CreateCustomerRequest) (*CreateCustomerResponse, error) {
+	body := req.ToGenerated()
 	resp, err := c.gen.CreateCustomerWithResponse(ctx, body)
 	if err != nil {
 		return nil, err
@@ -58,9 +56,9 @@ func (c *Client) CreateCustomer(ctx context.Context, body generated.CreateCustom
 	return resp, nil
 }
 
-// UpdateCustomer updates a customer. Accepts the generated request body type
-// directly.
-func (c *Client) UpdateCustomer(ctx context.Context, id int, body generated.UpdateCustomerJSONRequestBody) (*generated.UpdateCustomerResponse, error) {
+// UpdateCustomer updates a customer.
+func (c *Client) UpdateCustomer(ctx context.Context, id int, req UpdateCustomerRequest) (*UpdateCustomerResponse, error) {
+	body := req.ToGenerated()
 	resp, err := c.gen.UpdateCustomerWithResponse(ctx, id, body)
 	if err != nil {
 		return nil, err

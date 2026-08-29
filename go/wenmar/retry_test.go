@@ -5,8 +5,6 @@ import (
 	"net/http/httptest"
 	"sync/atomic"
 	"testing"
-
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 func TestRetry_On500Then200(t *testing.T) {
@@ -63,7 +61,7 @@ func TestRetry_PostOn500NotRetried(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody{})
+	_, err := c.CreateCustomer(ctx, CreateCustomerRequest{})
 	if err == nil {
 		t.Fatal("expected error on POST 500")
 	}
@@ -89,7 +87,7 @@ func TestRetry_PostOn429Retried(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody{})
+	_, err := c.CreateCustomer(ctx, CreateCustomerRequest{})
 	if err != nil {
 		t.Fatalf("expected success after 429 retry, got: %v", err)
 	}

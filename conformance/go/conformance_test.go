@@ -14,7 +14,6 @@ import (
 	"testing"
 
 	wenmar "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
 var ctx = context.Background()
@@ -181,10 +180,10 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "create_customer":
 		body := tc.RequestBody
 		customer, _ := body["customer"].(map[string]any)
-		var req generated.CreateCustomerJSONRequestBody
+		req := wenmar.CreateCustomerRequest{}
 		if customer != nil {
-			req.Customer.FirstName = stringVal(customer["first_name"])
-			req.Customer.LastName = stringVal(customer["last_name"])
+			req.FirstName = stringVal(customer["first_name"])
+			req.LastName = stringVal(customer["last_name"])
 		}
 		resp, err := client.CreateCustomer(ctx, req)
 		if err != nil {
@@ -193,7 +192,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		return decodeBody(resp.Body)
 	case "update_customer":
 		id := intParam(tc.PathParams, "id")
-		resp, err := client.UpdateCustomer(ctx, id, generated.UpdateCustomerJSONRequestBody{})
+		resp, err := client.UpdateCustomer(ctx, id, wenmar.UpdateCustomerRequest{})
 		if err != nil {
 			return nil, err
 		}
@@ -207,12 +206,12 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "create_vehicle":
 		body := tc.RequestBody
 		vehicle, _ := body["vehicle"].(map[string]any)
-		var req generated.CreateVehicleJSONRequestBody
+		req := wenmar.CreateVehicleRequest{}
 		if vehicle != nil {
-			req.Vehicle.Make = stringVal(vehicle["make"])
-			req.Vehicle.Model = stringVal(vehicle["model"])
-			req.Vehicle.Year = intParamValue(vehicle, "year")
-			req.Vehicle.CustomerId = intParamValue(vehicle, "customer_id")
+			req.Make = stringVal(vehicle["make"])
+			req.Model = stringVal(vehicle["model"])
+			req.Year = intParamValue(vehicle, "year")
+			req.CustomerID = intParamValue(vehicle, "customer_id")
 		}
 		resp, err := client.CreateVehicle(ctx, req)
 		if err != nil {
@@ -223,9 +222,9 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		id := intParam(tc.PathParams, "id")
 		body := tc.RequestBody
 		vehicle, _ := body["vehicle"].(map[string]any)
-		var req generated.UpdateVehicleJSONRequestBody
+		req := wenmar.UpdateVehicleRequest{}
 		if vehicle != nil {
-			req.Vehicle.Make = stringVal(vehicle["make"])
+			req.Make = stringVal(vehicle["make"])
 		}
 		resp, err := client.UpdateVehicle(ctx, id, req)
 		if err != nil {
@@ -248,7 +247,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		return decodeBody(resp.Body)
 	case "check_duplicate":
 		vin := stringParam(tc.Query, "vin")
-		resp, err := client.CheckVehicleDuplicate(ctx, generated.CheckVehicleDuplicateParams{Vin: &vin})
+		resp, err := client.CheckVehicleDuplicate(ctx, wenmar.CheckVehicleDuplicateParams{Vin: &vin})
 		if err != nil {
 			return nil, err
 		}
@@ -379,7 +378,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "merge_customer":
 		id := intParam(tc.PathParams, "id")
 		body := tc.RequestBody
-		req := generated.MergeCustomerJSONRequestBody{SourceCustomerId: intParamValue(body, "source_customer_id")}
+		req := wenmar.MergeCustomerRequest{SourceCustomerID: intParamValue(body, "source_customer_id")}
 		resp, err := client.MergeCustomer(ctx, id, req)
 		if err != nil {
 			return nil, err
@@ -388,8 +387,8 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "transfer_vehicle":
 		id := intParam(tc.PathParams, "id")
 		body := tc.RequestBody
-		req := generated.TransferVehicleJSONRequestBody{
-			CustomerId: intParamValue(body, "customer_id"),
+		req := wenmar.TransferVehicleRequest{
+			CustomerID: intParamValue(body, "customer_id"),
 			Mode:       stringVal(body["mode"]),
 		}
 		resp, err := client.TransferVehicle(ctx, id, req)
@@ -400,7 +399,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "merge_vehicle":
 		id := intParam(tc.PathParams, "id")
 		body := tc.RequestBody
-		req := generated.MergeVehicleJSONRequestBody{SourceVehicleId: intParamValue(body, "source_vehicle_id")}
+		req := wenmar.MergeVehicleRequest{SourceVehicleID: intParamValue(body, "source_vehicle_id")}
 		resp, err := client.MergeVehicle(ctx, id, req)
 		if err != nil {
 			return nil, err
@@ -413,19 +412,19 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		}
 		return decodeBody(resp.Body)
 	case "update_tags":
-		resp, err := client.UpdateTags(ctx, generated.UpdateTagsJSONRequestBody{})
+		resp, err := client.UpdateTags(ctx, wenmar.UpdateTagsRequest{})
 		if err != nil {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
 	case "create_customer_tag":
-		resp, err := client.CreateCustomerTag(ctx, generated.CreateCustomerTagJSONRequestBody{Name: stringParam(tc.RequestBody, "name")})
+		resp, err := client.CreateCustomerTag(ctx, wenmar.CreateCustomerTagRequest{Name: stringParam(tc.RequestBody, "name")})
 		if err != nil {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
 	case "create_vehicle_tag":
-		resp, err := client.CreateVehicleTag(ctx, generated.CreateVehicleTagJSONRequestBody{Name: stringParam(tc.RequestBody, "name")})
+		resp, err := client.CreateVehicleTag(ctx, wenmar.CreateVehicleTagRequest{Name: stringParam(tc.RequestBody, "name")})
 		if err != nil {
 			return nil, err
 		}
@@ -444,7 +443,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		return decodeBody(resp.Body)
 	case "prefill_vehicle":
 		vin := stringParam(tc.Query, "vin")
-		resp, err := client.PrefillVehicle(ctx, generated.PrefillVehicleParams{Vin: &vin})
+		resp, err := client.PrefillVehicle(ctx, wenmar.PrefillVehicleParams{Vin: &vin})
 		if err != nil {
 			return nil, err
 		}
@@ -452,7 +451,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 	case "check_customer_duplicate":
 		fn := stringParam(tc.Query, "first_name")
 		ln := stringParam(tc.Query, "last_name")
-		resp, err := client.CheckCustomerDuplicate(ctx, generated.CheckCustomerDuplicateParams{
+		resp, err := client.CheckCustomerDuplicate(ctx, wenmar.CheckCustomerDuplicateParams{
 			FirstName: &fn,
 			LastName:  &ln,
 		})
@@ -462,7 +461,7 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 		return decodeBody(resp.Body)
 	case "check_vehicle_duplicate":
 		vin := stringParam(tc.Query, "vin")
-		resp, err := client.CheckVehicleDuplicate(ctx, generated.CheckVehicleDuplicateParams{Vin: &vin})
+		resp, err := client.CheckVehicleDuplicate(ctx, wenmar.CheckVehicleDuplicateParams{Vin: &vin})
 		if err != nil {
 			return nil, err
 		}
