@@ -206,10 +206,16 @@ API endpoints
 <!-- START API ENDPOINTS -->
 - [Account](sections/account.md#account)
 - [Customers](sections/customers.md#customers)
+- [Customer Tags](sections/customer_tags.md#customer-tags)
 - [Locations](sections/locations.md#locations)
+- [Service Categories](sections/service_categories.md#service-categories)
+- [Settings](sections/settings.md#settings)
+- [Statements](sections/statements.md#statements)
+- [Team](sections/team.md#team)
+- [Vehicle Tags](sections/vehicle_tags.md#vehicle-tags)
 - [Vehicles](sections/vehicles.md#vehicles)
+- [Vendors](sections/vendors.md#vendors)
 - [Work Orders](sections/work_orders.md#work-orders)
-
 <!-- END API ENDPOINTS -->
 
 See the [full API reference](api-reference.md) for a single-table view of every endpoint.

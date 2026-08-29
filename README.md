@@ -28,13 +28,7 @@ customers = client.list_customers
 
 ## API coverage
 
-| Resource | Operations |
-|---|---|
-| Account | Show |
-| Customers | List, Create, Show, Update |
-| Vehicles | List, Create, Show, Update, Delete, Decode VIN, Check Duplicates |
-| Work Orders | List, Create, Show, Update, Delete |
-| Locations | Show |
+The full endpoint table is [generated from the OpenAPI spec](docs/api/api-reference.md) — see it for the live list. Resources are grouped per-tag in `docs/api/sections/`.
 
 ## Spec
 
@@ -44,11 +38,11 @@ It is pushed by wenmar-pro's CI on every merge to `main` and is read-only here.
 ## Repository structure
 
 - `spec/` — OpenAPI 3.0 spec + shared JSON fixtures
-- `docs/api/` — human-readable API docs (CC BY-SA)
+- `docs/api/` — API docs: hand-written narrative + generated reference (CC BY-SA)
 - `go/` — Go SDK (generated client + hand-written layer)
 - `ruby/` — Ruby gem (hand-written Faraday client)
 - `conformance/` — shared behavioral tests run against both SDKs
-- `scripts/` — spec enrichment and fixture-coverage checker
+- `scripts/` — spec enrichment, doc generation, fixture-coverage checker
 
 ## License
 

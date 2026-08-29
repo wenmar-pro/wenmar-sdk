@@ -38,16 +38,32 @@ wenmar-cli (Go CLI, Cobra)
 
 - Regenerate Go client: `cd go && go generate ./...`
 - Enrich spec: `ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml`
+- Generate API docs: `ruby scripts/generate_docs.rb spec/openapi.enriched.yaml docs/api spec/fixtures`
 - Fixture coverage: `ruby scripts/check_fixture_coverage.rb`
+- Doc generator tests: `ruby scripts/generate_docs_test.rb`
+- Scalar local preview: `make scalar` then open `docs/scalar/index.html`
 - Go tests: `cd go && go test ./...`
 - Ruby tests: `cd ruby && bundle install && ruby -Ilib spec/client_spec.rb`
 - Conformance: `cd conformance/go && go test ./...` and `cd conformance/ruby && bundle exec ruby conformance_spec.rb`
 
 ## API docs
 
-Human-readable API documentation lives in `docs/api/` and is licensed
-CC BY-SA 4.0 (see `docs/api/LICENSE`). The spec lives in `spec/openapi.yaml`
-(push from wenmar-pro, read-only).
+API documentation is split into hand-written narrative and generated reference:
+
+- `docs/api/README.md`, `conventions.md`, `authentication.md`, `errors.md`,
+  `pagination.md` — hand-written prose, not generated. Edit directly.
+- `docs/api/sections/{tag}.md` — **generated** from the enriched spec by
+  `scripts/generate_docs.rb`. Do not hand-edit; run `make docs` instead.
+- `docs/api/api-reference.md` — **generated** endpoint table.
+- `docs/api/llm-compact.md` — **generated** single-file compact view for
+  LLM context windows (no cURL, no examples, just method/path/shape).
+- `docs/scalar/index.html` — Scalar interactive reference, deployed to
+  GitHub Pages by `.github/workflows/pages.yml`. Reads the enriched spec
+  at render time; no per-endpoint work needed.
+
+All generated docs carry an `AUTO-GENERATED` marker and are drift-checked
+in CI (`make check` and `sdk-generate.yml`). The spec lives in
+`spec/openapi.yaml` (push from wenmar-pro, read-only).
 
 ## Full architecture
 

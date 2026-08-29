@@ -40,6 +40,9 @@ jobs:
       - name: Enrich spec
         run: ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml
 
+      - name: Generate API docs
+        run: ruby scripts/generate_docs.rb spec/openapi.enriched.yaml docs/api spec/fixtures
+
       - name: Regenerate Go client
         run: go generate ./...
         working-directory: go
@@ -70,8 +73,16 @@ jobs:
       - name: Fixture coverage
         run: ruby scripts/check_fixture_coverage.rb
 
+      - name: Doc generator tests
+        run: ruby scripts/generate_docs_test.rb
+
       - name: Verify no drift in generated Go client
         run: |
           go generate ./...
           git diff --exit-code -- pkg/generated/client.gen.go
         working-directory: go
+
+      - name: Verify no drift in generated API docs
+        run: |
+          ruby scripts/generate_docs.rb spec/openapi.enriched.yaml docs/api spec/fixtures
+          git diff --exit-code -- docs/api/sections/ docs/api/api-reference.md docs/api/llm-compact.md

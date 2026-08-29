@@ -1,2 +1,3 @@
 *.gem
 .worktrees/
+docs/scalar/openapi.enriched.yaml
