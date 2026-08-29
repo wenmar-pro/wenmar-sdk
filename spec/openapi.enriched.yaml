@@ -79,6 +79,68 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/customer_tags":
+    post:
+      summary: create
+      tags:
+      - customer_tags
+      responses:
+        '201':
+          description: POST /customer_tags -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+        '422':
+          description: POST /customer_tags -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      description: Create a customer tag.
+      operationId: create_customer_tag
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers":
     get:
       summary: index
@@ -167,6 +229,83 @@ paths:
                       type: string
                     last_name:
                       type: string
+                    company_name:
+                      type: string
+                    fleet_identifier:
+                      type: string
+                    billing_terms:
+                      type: string
+                    credit_limit_cents:
+                      type: string
+                    tax_exempt:
+                      type: boolean
+                    tax_exempt_number:
+                      type: string
+                    notes:
+                      type: string
+                    marketing_opt_in:
+                      type: boolean
+                    discount_percent:
+                      type: string
+                    po_required:
+                      type: boolean
+                    tag_ids:
+                      type: array
+                      items: {}
+                    emails_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          label:
+                            type: string
+                          primary:
+                            type: boolean
+                        required:
+                        - email
+                        - label
+                        - primary
+                    phones_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                          label:
+                            type: string
+                          primary:
+                            type: boolean
+                        required:
+                        - number
+                        - label
+                        - primary
+                    addresses_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          address1:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          postal_code:
+                            type: string
+                          country:
+                            type: string
+                          is_billing:
+                            type: boolean
+                        required:
+                        - address1
+                        - city
+                        - state
+                        - postal_code
+                        - country
+                        - is_billing
                   required:
                   - first_name
                   - last_name
@@ -178,6 +317,111 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers.json
       x-idempotent: false
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/check_duplicate":
+    get:
+      summary: check_duplicate
+      tags:
+      - customers
+      parameters:
+      - name: first_name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /customers/check_duplicate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        phone:
+                          type: string
+                        email:
+                          type: string
+                        url:
+                          type: string
+                        reasons:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - id
+                      - name
+                      - phone
+                      - email
+                      - url
+                      - reasons
+                required:
+                - matches
+      description:
+      operationId: check_customer_duplicate
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customers/check_duplicate.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/lookup":
+    get:
+      summary: lookup
+      tags:
+      - customers
+      parameters:
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /customers/lookup -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Customer"
+      description:
+      operationId: lookup_customer
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customers/lookup.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -458,8 +702,8 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Vehicle"
-      description:
-      operationId: get_customers_vehicle
+      description: List all customers vehicles, paginated via the Link header.
+      operationId: list_customers_vehicles
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/vehicles.json'
       x-retry:
@@ -542,8 +786,8 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/WorkOrder"
-      description:
-      operationId: get_customers_work_order
+      description: List all customers work orders, paginated via the Link header.
+      operationId: list_customers_work_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/work_orders.json'
       x-retry:
@@ -678,11 +922,19 @@ paths:
                         properties:
                           id:
                             type: integer
+                            nullable: true
                           _destroy:
                             type: boolean
-                        required:
-                        - id
-                        - _destroy
+                            nullable: true
+                          number:
+                            type: string
+                            nullable: true
+                          label:
+                            type: string
+                            nullable: true
+                          primary:
+                            type: boolean
+                            nullable: true
                     emails_attributes:
                       type: array
                       items:
@@ -698,6 +950,52 @@ paths:
                             nullable: true
                         required:
                         - email
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    company_name:
+                      type: string
+                    fleet_identifier:
+                      type: string
+                    billing_terms:
+                      type: string
+                    credit_limit_cents:
+                      type: string
+                    tax_exempt:
+                      type: boolean
+                    notes:
+                      type: string
+                    marketing_opt_in:
+                      type: boolean
+                    discount_percent:
+                      type: string
+                    po_required:
+                      type: boolean
+                    addresses_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          address1:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          postal_code:
+                            type: string
+                          country:
+                            type: string
+                          is_billing:
+                            type: boolean
+                        required:
+                        - address1
+                        - city
+                        - state
+                        - postal_code
+                        - country
+                        - is_billing
               required:
               - customer
       responses:
@@ -711,6 +1009,201 @@ paths:
       operationId: update_customer
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{id}/merge":
+    post:
+      summary: perform_merge
+      tags:
+      - customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: POST /customers/{id}/merge -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  full_name:
+                    type: string
+                  company_name:
+                    nullable: true
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                  marketing_opt_in:
+                    type: boolean
+                  tax_exempt:
+                    type: boolean
+                  vehicles_count:
+                    type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        address:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - address
+                      - label
+                      - primary
+                  phones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        number:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - number
+                      - label
+                      - primary
+                  addresses:
+                    type: array
+                    items: {}
+                  outstanding_balance_cents:
+                    type: integer
+                  total_revenue_cents:
+                    type: integer
+                  store_credit_cents:
+                    type: integer
+                  last_visit_at:
+                    nullable: true
+                  statements_count:
+                    type: integer
+                  currency:
+                    type: string
+                required:
+                - type
+                - id
+                - full_name
+                - company_name
+                - first_name
+                - last_name
+                - fleet_identifier
+                - marketing_opt_in
+                - tax_exempt
+                - vehicles_count
+                - emails_count
+                - phones_count
+                - vehicles_url
+                - work_orders_url
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
+                - outstanding_balance_cents
+                - total_revenue_cents
+                - store_credit_cents
+                - last_visit_at
+                - statements_count
+                - currency
+        '403':
+          description: POST /customers/{id}/merge -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /customers/{id}/merge -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_customer_id:
+                  type: integer
+              required:
+              - source_customer_id
+      description:
+      operationId: merge_customer
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
       x-retry:
         max: 3
@@ -792,6 +1285,155 @@ paths:
       operationId: show_location
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/locations/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/settings/tags":
+    get:
+      summary: show
+      tags:
+      - settings
+      responses:
+        '200':
+          description: GET /settings/tags -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        color:
+                          type: string
+                        color_hex:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - color
+                      - color_hex
+                  vehicle_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        color:
+                          type: string
+                        color_hex:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - color
+                      - color_hex
+                required:
+                - customer_tags
+                - vehicle_tags
+        '403':
+          description: GET /settings/tags -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all tags, paginated via the Link header.
+      operationId: list_tags
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/tags.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      _destroy:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+              required:
+              - customer_tags
+      responses:
+        '200':
+          description: PATCH /settings/tags -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        color:
+                          type: string
+                        color_hex:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - color
+                      - color_hex
+                  vehicle_tags:
+                    type: array
+                    items: {}
+                required:
+                - customer_tags
+                - vehicle_tags
+      description: Update a tags by ID.
+      operationId: update_tags
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/settings/tags.json
       x-retry:
         max: 3
         backoff: exponential
@@ -934,6 +1576,57 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/vehicle_tags":
+    post:
+      summary: create
+      tags:
+      - vehicle_tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '201':
+          description: POST /vehicle_tags -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+      description: Create a vehicle tag.
+      operationId: create_vehicle_tag
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/vehicles":
     get:
       summary: index
@@ -1037,11 +1730,44 @@ paths:
                       type: integer
                     customer_id:
                       type: integer
+                    vin:
+                      type: string
+                    submodel:
+                      type: string
+                    body_style:
+                      type: string
+                    engine:
+                      type: string
+                    transmission:
+                      type: string
+                    drivetrain:
+                      type: string
+                    color:
+                      type: string
+                    license_plate:
+                      type: string
+                    license_plate_state:
+                      type: string
+                    odometer_reading:
+                      type: integer
+                    odometer_unit:
+                      type: string
+                    unit_number:
+                      type: string
+                    fleet_identifier:
+                      type: string
+                    notes:
+                      type: string
+                    production_date:
+                      type: string
+                    vehicle_tag_ids:
+                      type: array
+                      items: {}
                   required:
+                  - customer_id
+                  - year
                   - make
                   - model
-                  - year
-                  - customer_id
               required:
               - vehicle
       description: Create a vehicle.
@@ -1101,9 +1827,101 @@ paths:
                 required:
                 - matches
       description:
-      operationId: check_duplicate
+      operationId: check_vehicle_duplicate
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/check_duplicate.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/lookup":
+    get:
+      summary: lookup
+      tags:
+      - vehicles
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /vehicles/lookup -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Vehicle"
+      description:
+      operationId: lookup_vehicle
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/lookup.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/prefill":
+    get:
+      summary: prefill
+      tags:
+      - vehicles
+      parameters:
+      - name: make
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: model
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: vin
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: year
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /vehicles/prefill -> 200
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vehicle"
+        '404':
+          description: GET /vehicles/prefill -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description:
+      operationId: prefill_vehicle
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/prefill.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -1274,6 +2092,34 @@ paths:
                   properties:
                     make:
                       type: string
+                    model:
+                      type: string
+                    year:
+                      type: integer
+                    vin:
+                      type: string
+                    submodel:
+                      type: string
+                    body_style:
+                      type: string
+                    engine:
+                      type: string
+                    transmission:
+                      type: string
+                    drivetrain:
+                      type: string
+                    color:
+                      type: string
+                    license_plate:
+                      type: string
+                    license_plate_state:
+                      type: string
+                    odometer_reading:
+                      type: integer
+                    odometer_unit:
+                      type: string
+                    notes:
+                      type: string
                   required:
                   - make
               required:
@@ -1287,6 +2133,396 @@ paths:
                 "$ref": "#/components/schemas/Vehicle"
       description: Update a vehicle by ID.
       operationId: update_vehicle
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/{id}/merge":
+    post:
+      summary: perform_merge
+      tags:
+      - vehicles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_vehicle_id:
+                  type: integer
+              required:
+              - source_vehicle_id
+      responses:
+        '200':
+          description: POST /vehicles/{id}/merge -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                  body_style:
+                    nullable: true
+                  engine:
+                    nullable: true
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                  transmission:
+                    nullable: true
+                  color:
+                    nullable: true
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                  fleet_identifier:
+                    nullable: true
+                  production_date:
+                    nullable: true
+                  annual_safety_expires_at:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  last_serviced_at:
+                    nullable: true
+                  lifetime_revenue_cents:
+                    type: integer
+                  open_work_orders_count:
+                    type: integer
+                  appointments_count:
+                    type: integer
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - last_serviced_at
+                - lifetime_revenue_cents
+                - open_work_orders_count
+                - appointments_count
+        '422':
+          description: POST /vehicles/{id}/merge -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description:
+      operationId: merge_vehicle
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/{id}/transfer":
+    patch:
+      summary: perform_transfer
+      tags:
+      - vehicles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                mode:
+                  type: string
+              required:
+              - customer_id
+              - mode
+      responses:
+        '200':
+          description: PATCH /vehicles/{id}/transfer -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                  body_style:
+                    nullable: true
+                  engine:
+                    nullable: true
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                  transmission:
+                    nullable: true
+                  color:
+                    nullable: true
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                  fleet_identifier:
+                    nullable: true
+                  production_date:
+                    nullable: true
+                  annual_safety_expires_at:
+                    nullable: true
+                  notes:
+                    nullable: true
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  last_serviced_at:
+                    nullable: true
+                  lifetime_revenue_cents:
+                    type: integer
+                  open_work_orders_count:
+                    type: integer
+                  appointments_count:
+                    type: integer
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - last_serviced_at
+                - lifetime_revenue_cents
+                - open_work_orders_count
+                - appointments_count
+        '403':
+          description: PATCH /vehicles/{id}/transfer -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: PATCH /vehicles/{id}/transfer -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description:
+      operationId: transfer_vehicle
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
@@ -1320,8 +2556,8 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/WorkOrder"
-      description:
-      operationId: get_vehicles_work_order
+      description: List all vehicles work orders, paginated via the Link header.
+      operationId: list_vehicles_work_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/{vehicle_id}/work_orders.json'
       x-retry:
@@ -2720,6 +3956,184 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/work_orders/{work_order_id}/summary":
+    get:
+      summary: show
+      tags:
+      - work_orders
+      parameters:
+      - name: work_order_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /work_orders/{work_order_id}/summary -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  work_order_number:
+                    type: integer
+                  status:
+                    type: string
+                  intake_method:
+                    type: string
+                  scheduled_for:
+                    nullable: true
+                  authorized:
+                    type: boolean
+                  paid:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  closed_at:
+                    nullable: true
+                  location_id:
+                    type: integer
+                  service_advisor_id:
+                    nullable: true
+                  assigned_technician_id:
+                    nullable: true
+                  work_order_services_count:
+                    type: integer
+                  inspection_reports_count:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      make:
+                        type: string
+                      model:
+                        type: string
+                      year:
+                        type: integer
+                      vin:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - make
+                    - model
+                    - year
+                    - vin
+                    - url
+                  totals:
+                    type: object
+                    properties:
+                      subtotal_cents:
+                        type: integer
+                      tax_cents:
+                        type: integer
+                      total_cents:
+                        type: integer
+                      paid_cents:
+                        type: integer
+                      remaining_cents:
+                        type: integer
+                      currency:
+                        type: string
+                    required:
+                    - subtotal_cents
+                    - tax_cents
+                    - total_cents
+                    - paid_cents
+                    - remaining_cents
+                    - currency
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  customer_visit_count:
+                    type: integer
+                  customer_total_spend_cents:
+                    type: integer
+                  average_ticket_cents:
+                    type: integer
+                  activity_total:
+                    type: integer
+                  recent_activities:
+                    type: array
+                    items: {}
+                required:
+                - type
+                - id
+                - work_order_number
+                - status
+                - intake_method
+                - scheduled_for
+                - authorized
+                - paid
+                - created_at
+                - updated_at
+                - closed_at
+                - location_id
+                - service_advisor_id
+                - assigned_technician_id
+                - work_order_services_count
+                - inspection_reports_count
+                - customer
+                - vehicle
+                - totals
+                - url
+                - app_url
+                - location
+                - customer_visit_count
+                - customer_total_spend_cents
+                - average_ticket_cents
+                - activity_total
+                - recent_activities
+      description:
+      operationId: get_work_orders_summary
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/work_orders/{work_order_id}/wip":
     get:
       summary: show
@@ -3039,6 +4453,7 @@ components:
           example: Jane Doe
         company_name:
           nullable: true
+          type: string
           example: Acme Auto
         first_name:
           type: string
@@ -3046,6 +4461,7 @@ components:
           type: string
         fleet_identifier:
           nullable: true
+          type: string
         marketing_opt_in:
           type: boolean
         tax_exempt:
@@ -3083,7 +4499,22 @@ components:
           - url
         emails:
           type: array
-          items: {}
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              address:
+                type: string
+              label:
+                type: string
+              primary:
+                type: boolean
+            required:
+            - id
+            - address
+            - label
+            - primary
           example:
           - id: 42
             address: jane@acmeauto.com
@@ -3091,10 +4522,58 @@ components:
             primary: true
         phones:
           type: array
-          items: {}
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              number:
+                type: string
+              label:
+                type: string
+              primary:
+                type: boolean
+            required:
+            - id
+            - number
+            - label
+            - primary
         addresses:
           type: array
-          items: {}
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              address1:
+                type: string
+              address2:
+                nullable: true
+              city:
+                type: string
+              state:
+                type: string
+              state_name:
+                type: string
+              postal_code:
+                type: string
+              country:
+                type: string
+              is_billing:
+                type: boolean
+              full_address:
+                type: string
+            required:
+            - id
+            - address1
+            - address2
+            - city
+            - state
+            - state_name
+            - postal_code
+            - country
+            - is_billing
+            - full_address
         outstanding_balance_cents:
           type: integer
         total_revenue_cents:
@@ -3283,25 +4762,34 @@ components:
           example: 2020
         submodel:
           nullable: true
+          type: string
         body_style:
           nullable: true
+          type: string
         engine:
           nullable: true
+          type: string
         vin:
           nullable: true
+          type: string
           example: 1HGCN2345ABC
         license_plate:
           nullable: true
+          type: string
         license_plate_state:
           nullable: true
+          type: string
         license_plate_country:
           type: string
         drivetrain:
           nullable: true
+          type: string
         transmission:
           nullable: true
+          type: string
         color:
           nullable: true
+          type: string
         vehicle_type:
           type: string
         unit_number:
@@ -3310,15 +4798,18 @@ components:
           nullable: true
         production_date:
           nullable: true
+          type: string
         annual_safety_expires_at:
           nullable: true
         notes:
           nullable: true
+          type: string
         odometer:
           type: object
           properties:
             reading:
               nullable: true
+              type: integer
               example: 182340
             unit:
               type: string
@@ -3586,6 +5077,10 @@ components:
         inspection_url:
           type: string
         parts_url:
+          type: string
+        summary_url:
+          type: string
+        concerns_url:
           type: string
       required:
       - type

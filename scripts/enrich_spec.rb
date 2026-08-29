@@ -19,7 +19,8 @@ module EnrichSpec
   # differ from the operation name (e.g. /vehicles/vin_decode -> decode_vin).
   SUB_ACTION_IDS = {
     "get /vehicles/vin_decode"       => "decode_vin",
-    "get /vehicles/check_duplicate"  => "check_duplicate"
+    "get /vehicles/check_duplicate"  => "check_vehicle_duplicate",
+    "get /customers/check_duplicate" => "check_customer_duplicate"
   }.freeze
 
   # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
@@ -41,7 +42,19 @@ module EnrichSpec
     "get /work_orders/{work_order_id}/inspection"        => "show_work_order_inspection",
     "get /work_orders/{work_order_id}/parts"            => "show_work_order_parts",
     "get /work_orders/{work_order_id}/payments"          => "show_work_order_payments",
-    "post /work_orders/{work_order_id}/payments"         => "create_work_order_payment"
+    "post /work_orders/{work_order_id}/payments"         => "create_work_order_payment",
+    # Full CRUD expansion (2026-08-28): merge/transfer, tags, lookup/prefill
+    "post /customers/{id}/merge"                          => "merge_customer",
+    "patch /vehicles/{id}/transfer"                       => "transfer_vehicle",
+    "post /vehicles/{id}/merge"                           => "merge_vehicle",
+    "get /settings/tags"                                  => "list_tags",
+    "patch /settings/tags"                                => "update_tags",
+    "get /customers/lookup"                               => "lookup_customer",
+    "get /vehicles/lookup"                                => "lookup_vehicle",
+    "get /vehicles/prefill"                               => "prefill_vehicle",
+    "get /customers/{customer_id}/vehicles"               => "list_customers_vehicles",
+    "get /customers/{customer_id}/work_orders"            => "list_customers_work_orders",
+    "get /vehicles/{vehicle_id}/work_orders"              => "list_vehicles_work_orders"
   }.freeze
 
   def self.call(input)
