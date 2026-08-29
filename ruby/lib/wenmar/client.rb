@@ -34,8 +34,8 @@ module Wenmar
     end
     private :https_or_localhost?
 
-    def list_customers
-      response = get("/customers")
+    def list_customers(params: nil)
+      response = get("/customers", params || {})
       wrap_with_paginator(response)
     end
 
