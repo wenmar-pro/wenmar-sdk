@@ -69,6 +69,15 @@ module Conformance
           result = paginator.next_page
         end
         result
+      when "list_customers_with_params"
+        client.list_customers(params: tc["query"])
+      when "list_customers_with_params_paginated"
+        result = client.list_customers(params: tc["query"])
+        paginator = result.paginator
+        while paginator.has_next?
+          result = paginator.next_page
+        end
+        result
       when "show_customer"
         client.show_customer(tc.dig("pathParams", "id"))
       when "create_customer"

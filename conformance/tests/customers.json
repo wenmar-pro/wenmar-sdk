@@ -1,0 +1,116 @@
+[
+  {
+    "name": "list_customers_with_query_filter",
+    "operation": "list_customers_with_params",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "query": "Smith" },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [ { "id": 1, "full_name": "John Smith", "first_name": "John", "last_name": "Smith" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.full_name", "equals": "John Smith" }
+    }
+  },
+  {
+    "name": "list_customers_with_type_filter",
+    "operation": "list_customers_with_params",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "type": "fleet" },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [ { "id": 1, "full_name": "Fleet Co", "fleet_identifier": "FLEET-001" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.fleet_identifier", "equals": "FLEET-001" }
+    }
+  },
+  {
+    "name": "list_customers_with_has_balance_filter",
+    "operation": "list_customers_with_params",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "has_balance": true },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [ { "id": 1, "full_name": "Owing Customer" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.full_name", "equals": "Owing Customer" }
+    }
+  },
+  {
+    "name": "list_customers_with_combined_filters",
+    "operation": "list_customers_with_params",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "query": "Smith", "type": "fleet", "has_balance": true },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [ { "id": 1, "full_name": "John Smith", "fleet_identifier": "FLEET-001" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.id", "equals": 1 }
+    }
+  },
+  {
+    "name": "list_customers_with_per_page",
+    "operation": "list_customers_with_params",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "per_page": 2 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Link": "<{server}/customers?per_page=2&page=2>; rel=\"next\"", "X-Total-Count": "5", "X-Per-Page": "2" },
+        "body": [ { "id": 1, "full_name": "Customer 1" }, { "id": 2, "full_name": "Customer 2" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "1.id", "equals": 2 }
+    }
+  },
+  {
+    "name": "list_customers_with_params_pagination_traverses_pages",
+    "operation": "list_customers_with_params_paginated",
+    "method": "GET",
+    "path": "/customers",
+    "query": { "per_page": 2 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Link": "<{server}/customers?per_page=2&page=2>; rel=\"next\"" },
+        "body": [ { "id": 1, "full_name": "Page 1" } ]
+      },
+      {
+        "status": 200,
+        "body": [ { "id": 2, "full_name": "Page 2" } ]
+      }
+    ],
+    "expect": {
+      "requestCount": 2,
+      "noError": true,
+      "responseBody": { "path": "0.id", "equals": 2 }
+    }
+  }
+]

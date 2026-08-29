@@ -170,6 +170,31 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 			body = next
 		}
 		return body, nil
+	case "list_customers_with_params":
+		params := buildListCustomersParams(tc.Query)
+		resp, err := client.ListCustomersWithParams(ctx, params)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "list_customers_with_params_paginated":
+		params := buildListCustomersParams(tc.Query)
+		resp, paginator, err := client.ListCustomersWithParamsWithPagination(ctx, params)
+		if err != nil {
+			return nil, err
+		}
+		body, err := decodeBody(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+		for paginator.HasNext() {
+			next, err := paginator.NextPage(ctx)
+			if err != nil {
+				return nil, err
+			}
+			body = next
+		}
+		return body, nil
 	case "show_customer":
 		id := intParam(tc.PathParams, "id")
 		resp, err := client.ShowCustomer(ctx, id)
@@ -660,6 +685,34 @@ func stringParam(params map[string]any, key string) string {
 		return v
 	}
 	return ""
+}
+
+// buildListCustomersParams maps conformance test query values to the
+// generated ListCustomersParams struct.
+func buildListCustomersParams(query map[string]any) wenmar.ListCustomersParams {
+	params := wenmar.ListCustomersParams{}
+	if v := stringParam(query, "query"); v != "" {
+		params.Query = &v
+	}
+	if v := stringParam(query, "type"); v != "" {
+		params.Type = &v
+	}
+	if v, ok := query["has_balance"].(bool); ok {
+		params.HasBalance = &v
+	}
+	if v, ok := query["has_vehicle"].(bool); ok {
+		params.HasVehicle = &v
+	}
+	if n := intParam(query, "last_visit_months"); n > 0 {
+		params.LastVisitMonths = &n
+	}
+	if n := intParam(query, "per_page"); n > 0 {
+		params.PerPage = &n
+	}
+	if n := intParam(query, "page"); n > 0 {
+		params.Page = &n
+	}
+	return params
 }
 
 func assertBodyPath(t *testing.T, body any, assertion *BodyAssertion) {
