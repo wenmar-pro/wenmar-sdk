@@ -4,6 +4,14 @@ on:
   pull_request:
   push:
     branches: [main]
+    paths:
+      - "spec/openapi.yaml"
+      - "scripts/**"
+      - "overlays/**"
+      - "go/**"
+      - "ruby/**"
+      - "conformance/**"
+      - ".github/workflows/sdk-generate.yml"
 
 jobs:
   verify:
@@ -22,6 +30,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Validate spec is OpenAPI 3.0
+        run: |
+          version=$(ruby -ryaml -e 'puts YAML.load_file("spec/openapi.yaml")["openapi"]')
+          echo "openapi version: $version"
+          test "${version#3.0}" != "$version"
 
       - name: Enrich spec
         run: ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml

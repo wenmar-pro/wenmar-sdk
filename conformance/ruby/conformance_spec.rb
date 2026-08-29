@@ -170,6 +170,24 @@ module Conformance
         client.create_customer_tag(name: tc.dig("requestBody", "name"))
       when "create_vehicle_tag"
         client.create_vehicle_tag(name: tc.dig("requestBody", "name"))
+      when "list_service_categories"
+        client.list_service_categories
+      when "create_service_category"
+        client.create_service_category(name: tc.dig("requestBody", "service_category", "name"), service_type: tc.dig("requestBody", "service_category", "service_type"), icon: tc.dig("requestBody", "service_category", "icon"))
+      when "update_service_category"
+        client.update_service_category(tc.dig("pathParams", "id"), name: tc.dig("requestBody", "service_category", "name"))
+      when "delete_service_category"
+        client.delete_service_category(tc.dig("pathParams", "id"))
+      when "deactivate_service_category"
+        client.deactivate_service_category(tc.dig("pathParams", "id"))
+      when "reactivate_service_category"
+        client.reactivate_service_category(tc.dig("pathParams", "id"))
+      when "move_up_service_category"
+        client.move_up_service_category(tc.dig("pathParams", "id"))
+      when "move_down_service_category"
+        client.move_down_service_category(tc.dig("pathParams", "id"))
+      when "seed_defaults_service_categories"
+        client.seed_defaults_service_categories
       else
         raise "unknown operation: #{tc["operation"]}"
       end

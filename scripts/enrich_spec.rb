@@ -2,7 +2,8 @@ require "yaml"
 
 module EnrichSpec
   SINGULAR_OVERRIDES = {
-    "work_orders" => "work_order"
+    "work_orders" => "work_order",
+    "service_categories" => "service_category"
   }.freeze
 
   RESOURCE_SCHEMAS = {
@@ -11,7 +12,8 @@ module EnrichSpec
     "work_orders" => "WorkOrder",
     "drivers" => "Driver",
     "statements" => "Statement",
-    "vendors" => "Vendor"
+    "vendors" => "Vendor",
+    "service_categories" => "ServiceCategory"
   }.freeze
 
   # Collection sub-actions that are NOT standard CRUD on a resource. The key is
@@ -20,7 +22,9 @@ module EnrichSpec
   SUB_ACTION_IDS = {
     "get /vehicles/vin_decode"       => "decode_vin",
     "get /vehicles/check_duplicate"  => "check_vehicle_duplicate",
-    "get /customers/check_duplicate" => "check_customer_duplicate"
+    "get /customers/check_duplicate" => "check_customer_duplicate",
+    # seed_defaults returns a {created, message} summary, not a ServiceCategory.
+    "post /service_categories/seed_defaults" => "seed_defaults_service_categories"
   }.freeze
 
   # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
@@ -54,7 +58,13 @@ module EnrichSpec
     "get /vehicles/prefill"                               => "prefill_vehicle",
     "get /customers/{customer_id}/vehicles"               => "list_customers_vehicles",
     "get /customers/{customer_id}/work_orders"            => "list_customers_work_orders",
-    "get /vehicles/{vehicle_id}/work_orders"              => "list_vehicles_work_orders"
+    "get /vehicles/{vehicle_id}/work_orders"              => "list_vehicles_work_orders",
+    # Service Categories custom actions (2026-08-29): deactivate/reactivate/
+    # move_up/move_down are member actions; seed_defaults is a collection action.
+    "patch /service_categories/{id}/deactivate"           => "deactivate_service_category",
+    "patch /service_categories/{id}/reactivate"           => "reactivate_service_category",
+    "patch /service_categories/{id}/move_up"               => "move_up_service_category",
+    "patch /service_categories/{id}/move_down"             => "move_down_service_category"
   }.freeze
 
   def self.call(input)

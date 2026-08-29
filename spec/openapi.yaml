@@ -78,6 +78,37 @@ paths:
                 - error
       description: GET /account
   "/customer_tags":
+    get:
+      summary: index
+      tags:
+      - Shop::CustomerTag
+      responses:
+        '200':
+          description: GET /customer_tags -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+      description: GET /customer_tags
     post:
       summary: create
       tags:
@@ -98,11 +129,36 @@ paths:
                     type: string
                   color_hex:
                     type: string
+                  color_class:
+                    type: string
                 required:
                 - id
                 - name
                 - color
                 - color_hex
+        '403':
+          description: POST /customer_tags -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
         '422':
           description: POST /customer_tags -> 422
           content:
@@ -143,6 +199,87 @@ paths:
               required:
               - name
       description: POST /customer_tags
+  "/customer_tags/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::CustomerTag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: DELETE /customer_tags/{id}
+    patch:
+      summary: update
+      tags:
+      - Shop::CustomerTag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: PATCH /customer_tags/{id}
   "/customers":
     get:
       summary: index
@@ -255,6 +392,101 @@ paths:
       summary: create
       tags:
       - Shop::Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    company_name:
+                      type: string
+                    fleet_identifier:
+                      type: string
+                    billing_terms:
+                      type: string
+                    credit_limit_cents:
+                      type: string
+                    tax_exempt:
+                      type: boolean
+                    tax_exempt_number:
+                      type: string
+                    notes:
+                      type: string
+                    marketing_opt_in:
+                      type: boolean
+                    discount_percent:
+                      type: string
+                    po_required:
+                      type: boolean
+                    tag_ids:
+                      type: array
+                      items: {}
+                    emails_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          label:
+                            type: string
+                          primary:
+                            type: boolean
+                        required:
+                        - email
+                        - label
+                        - primary
+                    phones_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          number:
+                            type: string
+                          label:
+                            type: string
+                          primary:
+                            type: boolean
+                        required:
+                        - number
+                        - label
+                        - primary
+                    addresses_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          address1:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          postal_code:
+                            type: string
+                          country:
+                            type: string
+                          is_billing:
+                            type: boolean
+                        required:
+                        - address1
+                        - city
+                        - state
+                        - postal_code
+                        - country
+                        - is_billing
+                  required:
+                  - first_name
+                  - last_name
+              required:
+              - customer
       responses:
         '201':
           description: POST /customers -> 201
@@ -484,101 +716,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    company_name:
-                      type: string
-                    fleet_identifier:
-                      type: string
-                    billing_terms:
-                      type: string
-                    credit_limit_cents:
-                      type: string
-                    tax_exempt:
-                      type: boolean
-                    tax_exempt_number:
-                      type: string
-                    notes:
-                      type: string
-                    marketing_opt_in:
-                      type: boolean
-                    discount_percent:
-                      type: string
-                    po_required:
-                      type: boolean
-                    tag_ids:
-                      type: array
-                      items: {}
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          email:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - email
-                        - label
-                        - primary
-                    phones_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          number:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - number
-                        - label
-                        - primary
-                    addresses_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          address1:
-                            type: string
-                          city:
-                            type: string
-                          state:
-                            type: string
-                          postal_code:
-                            type: string
-                          country:
-                            type: string
-                          is_billing:
-                            type: boolean
-                        required:
-                        - address1
-                        - city
-                        - state
-                        - postal_code
-                        - country
-                        - is_billing
-                  required:
-                  - first_name
-                  - last_name
-              required:
-              - customer
       description: POST /customers
   "/customers/check_duplicate":
     get:
@@ -700,9 +837,9 @@ paths:
                   - name
                   - company_name
                   - initials
-                  - fleet_identifier
                   - phone
                   - email
+                  - fleet_identifier
       description: GET /customers/lookup
   "/customers/{customer_id}/drivers":
     get:
@@ -1961,21 +2098,6 @@ paths:
                           primary:
                             type: boolean
                             nullable: true
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            nullable: true
-                          email:
-                            type: string
-                          label:
-                            type: string
-                            nullable: true
-                        required:
-                        - email
                     first_name:
                       type: string
                     last_name:
@@ -1998,6 +2120,21 @@ paths:
                       type: string
                     po_required:
                       type: boolean
+                    emails_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            nullable: true
+                          email:
+                            type: string
+                          label:
+                            type: string
+                            nullable: true
+                        required:
+                        - email
                     addresses_attributes:
                       type: array
                       items:
@@ -2481,60 +2618,119 @@ paths:
                 required:
                 - error
       description: GET /locations/{id}
-  "/settings/tags":
+  "/service_categories":
     get:
-      summary: show
+      summary: index
       tags:
-      - Shop::Settings::Tag
+      - Shop::ServiceCategory
       responses:
         '200':
-          description: GET /settings/tags -> 200
+          description: GET /service_categories -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                    active:
+                      type: boolean
+                    position:
+                      type: integer
+                    canonical:
+                      type: boolean
+                    canonical_key:
+                      type: string
+                      nullable: true
+                    job_count:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - service_type
+                  - icon
+                  - color
+                  - active
+                  - position
+                  - canonical
+                  - canonical_key
+                  - job_count
+                  - url
+                  - app_url
+      description: GET /service_categories
+    post:
+      summary: create
+      tags:
+      - Shop::ServiceCategory
+      responses:
+        '201':
+          description: POST /service_categories -> 201
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  customer_tags:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        color:
-                          type: string
-                        color_hex:
-                          type: string
-                      required:
-                      - id
-                      - name
-                      - color
-                      - color_hex
-                  vehicle_tags:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        color:
-                          type: string
-                        color_hex:
-                          type: string
-                      required:
-                      - id
-                      - name
-                      - color
-                      - color_hex
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    type: string
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
                 required:
-                - customer_tags
-                - vehicle_tags
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
         '403':
-          description: GET /settings/tags -> 403
+          description: POST /service_categories -> 403
           content:
             application/json:
               schema:
@@ -2556,44 +2752,564 @@ paths:
                     - field_errors
                 required:
                 - error
-      description: GET /settings/tags
-    patch:
-      summary: update
-      tags:
-      - Shop::Settings::Tag
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                customer_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      _destroy:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                vehicle_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      _destroy:
-                        type: string
-                    required:
-                    - id
-                    - _destroy
+                service_category:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                  required:
+                  - name
+                  - service_type
+                  - icon
               required:
-              - customer_tags
+              - service_category
+      description: POST /service_categories
+  "/service_categories/seed_defaults":
+    post:
+      summary: seed_defaults
+      tags:
+      - Shop::ServiceCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: POST /service_categories/seed_defaults -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - created
+                - message
+      description: POST /service_categories/seed_defaults
+  "/service_categories/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /service_categories/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+        '422':
+          description: DELETE /service_categories/{id} -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: DELETE /service_categories/{id}
+    patch:
+      summary: update
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_category:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - service_category
+      responses:
+        '200':
+          description: PATCH /service_categories/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description: PATCH /service_categories/{id}
+  "/service_categories/{id}/deactivate":
+    patch:
+      summary: deactivate
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/deactivate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description: PATCH /service_categories/{id}/deactivate
+  "/service_categories/{id}/move_down":
+    patch:
+      summary: move_down
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/move_down -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                    active:
+                      type: boolean
+                    position:
+                      type: integer
+                    canonical:
+                      type: boolean
+                    canonical_key:
+                      type: string
+                      nullable: true
+                    job_count:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - service_type
+                  - icon
+                  - color
+                  - active
+                  - position
+                  - canonical
+                  - canonical_key
+                  - job_count
+                  - url
+                  - app_url
+      description: PATCH /service_categories/{id}/move_down
+  "/service_categories/{id}/move_up":
+    patch:
+      summary: move_up
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/move_up -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                    active:
+                      type: boolean
+                    position:
+                      type: integer
+                    canonical:
+                      type: boolean
+                    canonical_key:
+                      type: string
+                      nullable: true
+                    job_count:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - service_type
+                  - icon
+                  - color
+                  - active
+                  - position
+                  - canonical
+                  - canonical_key
+                  - job_count
+                  - url
+                  - app_url
+      description: PATCH /service_categories/{id}/move_up
+  "/service_categories/{id}/reactivate":
+    patch:
+      summary: reactivate
+      tags:
+      - Shop::ServiceCategory
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/reactivate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description: PATCH /service_categories/{id}/reactivate
+  "/settings/tags":
+    get:
+      summary: show
+      tags:
+      - Shop::Settings::Tag
+      responses:
+        '200':
+          description: GET /settings/tags -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        account_id:
+                          type: integer
+                        color:
+                          type: string
+                        created_at:
+                          type: string
+                        customers_count:
+                          type: integer
+                        metadata:
+                          type: object
+                          properties: {}
+                        name:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - account_id
+                      - color
+                      - created_at
+                      - customers_count
+                      - metadata
+                      - name
+                      - updated_at
+                  vehicle_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        account_id:
+                          type: integer
+                        color:
+                          type: string
+                        created_at:
+                          type: string
+                        name:
+                          type: string
+                        updated_at:
+                          type: string
+                      required:
+                      - id
+                      - account_id
+                      - color
+                      - created_at
+                      - name
+                      - updated_at
+                required:
+                - customer_tags
+                - vehicle_tags
+        '404':
+          description: GET /settings/tags -> 404
+      description: GET /settings/tags
+    patch:
+      summary: update
+      tags:
+      - Shop::Settings::Tag
       responses:
         '200':
           description: PATCH /settings/tags -> 200
@@ -2609,23 +3325,73 @@ paths:
                       properties:
                         id:
                           type: integer
-                        name:
-                          type: string
+                        account_id:
+                          type: integer
                         color:
                           type: string
-                        color_hex:
+                        created_at:
+                          type: string
+                        customers_count:
+                          type: integer
+                        metadata:
+                          type: object
+                          properties: {}
+                        name:
+                          type: string
+                        updated_at:
                           type: string
                       required:
                       - id
-                      - name
+                      - account_id
                       - color
-                      - color_hex
+                      - created_at
+                      - customers_count
+                      - metadata
+                      - name
+                      - updated_at
                   vehicle_tags:
                     type: array
                     items: {}
                 required:
                 - customer_tags
                 - vehicle_tags
+        '403':
+          description: PATCH /settings/tags -> 403
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      _destroy:
+                        type: string
+                    required:
+                    - id
+                    - _destroy
+                customer_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      _destroy:
+                        type: string
+                    required:
+                    - id
       description: PATCH /settings/tags
   "/statements/{id}":
     get:
@@ -2836,6 +3602,37 @@ paths:
                 - error
       description: GET /team/members
   "/vehicle_tags":
+    get:
+      summary: index
+      tags:
+      - Shop::VehicleTag
+      responses:
+        '200':
+          description: GET /vehicle_tags -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+      description: GET /vehicle_tags
     post:
       summary: create
       tags:
@@ -2866,12 +3663,95 @@ paths:
                     type: string
                   color_hex:
                     type: string
+                  color_class:
+                    type: string
                 required:
                 - id
                 - name
                 - color
                 - color_hex
       description: POST /vehicle_tags
+  "/vehicle_tags/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::VehicleTag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /vehicle_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: DELETE /vehicle_tags/{id}
+    patch:
+      summary: update
+      tags:
+      - Shop::VehicleTag
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: PATCH /vehicle_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: PATCH /vehicle_tags/{id}
   "/vehicles":
     get:
       summary: index
@@ -4014,16 +4894,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                source_vehicle_id:
-                  type: integer
-              required:
-              - source_vehicle_id
       responses:
         '200':
           description: POST /vehicles/{id}/merge -> 200
@@ -4188,6 +5058,16 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_vehicle_id:
+                  type: integer
+              required:
+              - source_vehicle_id
       description: POST /vehicles/{id}/merge
   "/vehicles/{id}/transfer":
     patch:
@@ -4200,19 +5080,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer_id:
-                  type: integer
-                mode:
-                  type: string
-              required:
-              - customer_id
-              - mode
       responses:
         '200':
           description: PATCH /vehicles/{id}/transfer -> 200
@@ -4400,6 +5267,19 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                mode:
+                  type: string
+              required:
+              - customer_id
+              - mode
       description: PATCH /vehicles/{id}/transfer
   "/vehicles/{vehicle_id}/work_orders":
     get:
@@ -4719,12 +5599,6 @@ paths:
                 - updated_at
                 - url
                 - app_url
-        '302':
-          description: GET /vendors/{id} -> 302
-          content:
-            text/html:
-              schema:
-                type: string
         '404':
           description: GET /vendors/{id} -> 404
           content:
@@ -5086,6 +5960,8 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  summary_url:
+                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -5095,8 +5971,6 @@ paths:
                   inspection_url:
                     type: string
                   parts_url:
-                    type: string
-                  summary_url:
                     type: string
                   concerns_url:
                     type: string
@@ -5151,11 +6025,13 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - summary_url
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
+                - concerns_url
       description: POST /work_orders
   "/work_orders/{id}":
     delete:
@@ -5352,6 +6228,8 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  summary_url:
+                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -5361,8 +6239,6 @@ paths:
                   inspection_url:
                     type: string
                   parts_url:
-                    type: string
-                  summary_url:
                     type: string
                   concerns_url:
                     type: string
@@ -5417,11 +6293,13 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - summary_url
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
+                - concerns_url
       description: GET /work_orders/{id}
     patch:
       summary: update
@@ -5433,6 +6311,21 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order:
+                  type: object
+                  properties:
+                    intake_method:
+                      type: string
+                  required:
+                  - intake_method
+              required:
+              - work_order
       responses:
         '200':
           description: PATCH /work_orders/{id} -> 200
@@ -5603,6 +6496,8 @@ paths:
                     type: string
                   vehicle_location:
                     type: string
+                  summary_url:
+                    type: string
                   services_url:
                     type: string
                   payments_url:
@@ -5612,8 +6507,6 @@ paths:
                   inspection_url:
                     type: string
                   parts_url:
-                    type: string
-                  summary_url:
                     type: string
                   concerns_url:
                     type: string
@@ -5668,11 +6561,13 @@ paths:
                 - return_method_notes
                 - vehicle_keys_location
                 - vehicle_location
+                - summary_url
                 - services_url
                 - payments_url
                 - wip_url
                 - inspection_url
                 - parts_url
+                - concerns_url
         '422':
           description: PATCH /work_orders/{id} -> 422
           content:
@@ -5702,21 +6597,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order:
-                  type: object
-                  properties:
-                    intake_method:
-                      type: string
-                  required:
-                  - intake_method
-              required:
-              - work_order
       description: PATCH /work_orders/{id}
   "/work_orders/{work_order_id}/estimate":
     get:
@@ -6650,6 +7530,24 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                    amount_cents:
+                      type: string
+                  required:
+                  - method
+                  - amount_cents
+              required:
+              - payment
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/payments -> 201
@@ -6774,24 +7672,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                payment:
-                  type: object
-                  properties:
-                    method:
-                      type: string
-                    amount_cents:
-                      type: string
-                  required:
-                  - method
-                  - amount_cents
-              required:
-              - payment
       description: POST /work_orders/{work_order_id}/payments
   "/work_orders/{work_order_id}/summary":
     get:

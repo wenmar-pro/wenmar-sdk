@@ -3,7 +3,7 @@
 This document is the cross-SDK behavioral contract for the Wenmar Pro API
 clients (Go and Ruby). It describes the guarantees both SDKs provide so that
 behavior is consistent regardless of language. The canonical OpenAPI spec
-lives in the [wenmar-api](https://github.com/wenmar-pro/wenmar-api) repo.
+lives in [`spec/openapi.yaml`](spec/openapi.yaml) in this repo.
 
 ## Retry Policy
 

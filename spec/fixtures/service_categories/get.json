@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "name": "Brakes",
+  "description": "Brake system repairs and maintenance",
+  "service_type": "repair",
+  "icon": "disc",
+  "color": "red",
+  "active": true,
+  "position": 2,
+  "canonical": true,
+  "canonical_key": "brakes",
+  "job_count": 0,
+  "url": "https://app.wenmarpro.com/service_categories/1.json",
+  "app_url": "https://app.wenmarpro.com/service_categories/1"
+}

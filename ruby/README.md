@@ -96,7 +96,7 @@ rescue Wenmar::Error => e
 end
 ```
 
-See [docs/errors.md](../docs/errors.md) for the full error envelope and code table.
+See [docs/errors.md](../docs/api/errors.md) for the full error envelope and code table.
 
 ## Retry
 
@@ -105,10 +105,10 @@ respects the `Retry-After` response header and never retries 4xx errors.
 
 ## Documentation
 
-- [API reference](../docs/api-reference.md)
-- [Authentication](../docs/authentication.md)
-- [Pagination](../docs/pagination.md)
-- [Errors](../docs/errors.md)
+- [API reference](../docs/api/api-reference.md)
+- [Authentication](../docs/api/authentication.md)
+- [Pagination](../docs/api/pagination.md)
+- [Errors](../docs/api/errors.md)
 
 ## License
 

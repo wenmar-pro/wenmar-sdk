@@ -118,6 +118,12 @@ targets:
   - id: vehicle-prefill
     operation: prefill_vehicle
     fixture: vehicles/prefill.json
+  - id: service-category-list
+    operation: list_service_categories
+    fixture: service_categories/list.json
+  - id: service-category-create
+    operation: create_service_category
+    fixture: service_categories/get.json
 
 covered_schemas:
   customer: [customer-get, customer-list, customer-create, customer-update]
@@ -126,5 +132,6 @@ covered_schemas:
   driver: [driver-get, driver-list, driver-create, driver-update]
   statement: [statement-get, statement-list]
   vendor: [vendor-get, vendor-list]
+  service_category: [service-category-list, service-category-create]
   account: [account-get]
   location: [location-get]

@@ -44,6 +44,8 @@
   "wip_url": "https://app.wenmarpro.com/work_orders/1/wip.json",
   "inspection_url": "https://app.wenmarpro.com/work_orders/1/inspection.json",
   "parts_url": "https://app.wenmarpro.com/work_orders/1/parts.json",
+  "summary_url": "https://app.wenmarpro.com/work_orders/1/summary.json",
+  "concerns_url": "https://app.wenmarpro.com/work_orders/1/concerns.json",
   "odometer_in": null,
   "odometer_out": null,
   "odometer_unit": "km",

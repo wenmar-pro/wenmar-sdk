@@ -1,0 +1,136 @@
+[
+  {
+    "name": "list_service_categories_success",
+    "operation": "list_service_categories",
+    "method": "GET",
+    "path": "/service_categories",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Brakes", "active": true } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.name", "equals": "Brakes" }
+    }
+  },
+  {
+    "name": "create_service_category_success",
+    "operation": "create_service_category",
+    "method": "POST",
+    "path": "/service_categories",
+    "requestBody": { "service_category": { "name": "Brakes", "service_type": "repair", "icon": "disc" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "name": "BRAKES", "active": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "name", "equals": "BRAKES" }
+    }
+  },
+  {
+    "name": "update_service_category_success",
+    "operation": "update_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "service_category": { "name": "New Name" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "NEW NAME", "active": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "name", "equals": "NEW NAME" }
+    }
+  },
+  {
+    "name": "delete_service_category_success",
+    "operation": "delete_service_category",
+    "method": "DELETE",
+    "path": "/service_categories/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Deleted", "active": false } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "deactivate_service_category_success",
+    "operation": "deactivate_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/deactivate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Brakes", "active": false } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "active", "equals": false }
+    }
+  },
+  {
+    "name": "reactivate_service_category_success",
+    "operation": "reactivate_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/reactivate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Brakes", "active": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "active", "equals": true }
+    }
+  },
+  {
+    "name": "move_up_service_category_success",
+    "operation": "move_up_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/2/move_up",
+    "pathParams": { "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 2, "name": "Brakes", "position": 1 }, { "id": 1, "name": "Maintenance", "position": 2 } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.name", "equals": "Brakes" }
+    }
+  },
+  {
+    "name": "move_down_service_category_success",
+    "operation": "move_down_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/move_down",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 2, "name": "Brakes", "position": 1 }, { "id": 1, "name": "Maintenance", "position": 2 } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.name", "equals": "Brakes" }
+    }
+  },
+  {
+    "name": "seed_defaults_service_categories_success",
+    "operation": "seed_defaults_service_categories",
+    "method": "POST",
+    "path": "/service_categories/seed_defaults",
+    "mockResponses": [
+      { "status": 200, "body": { "created": 5, "message": "5 default categories created." } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "created", "equals": 5 }
+    }
+  }
+]

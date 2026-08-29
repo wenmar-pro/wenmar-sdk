@@ -246,6 +246,51 @@ module Wenmar
       handle_response(response)
     end
 
+    def list_service_categories
+      response = get("/service_categories")
+      handle_response(response)
+    end
+
+    def create_service_category(name:, service_type:, icon:)
+      response = post("/service_categories", service_category: { name: name, service_type: service_type, icon: icon })
+      handle_response(response)
+    end
+
+    def update_service_category(id, name:)
+      response = patch("/service_categories/#{id}", service_category: { name: name })
+      handle_response(response)
+    end
+
+    def delete_service_category(id)
+      response = delete("/service_categories/#{id}")
+      handle_response(response)
+    end
+
+    def deactivate_service_category(id)
+      response = patch("/service_categories/#{id}/deactivate", {})
+      handle_response(response)
+    end
+
+    def reactivate_service_category(id)
+      response = patch("/service_categories/#{id}/reactivate", {})
+      handle_response(response)
+    end
+
+    def move_up_service_category(id)
+      response = patch("/service_categories/#{id}/move_up", {})
+      handle_response(response)
+    end
+
+    def move_down_service_category(id)
+      response = patch("/service_categories/#{id}/move_down", {})
+      handle_response(response)
+    end
+
+    def seed_defaults_service_categories
+      response = post("/service_categories/seed_defaults", {})
+      handle_response(response)
+    end
+
     def show_work_order_estimate(id)
       response = get("/work_orders/#{id}/estimate")
       handle_response(response)

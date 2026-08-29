@@ -1,0 +1,117 @@
+# Work Orders
+
+## List work orders
+
+```
+GET /work_orders
+```
+
+Paginated via the `Link` header. Returns a bare array.
+
+| Param | Type | Required |
+|---|---|---|
+| `page` | integer | No |
+
+**Response 200** — bare array of work order objects.
+
+## Create work order
+
+```
+POST /work_orders
+```
+
+**Request body** — `work_order` object:
+
+| Field | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+| `vehicle_id` | integer | Yes |
+
+**Response 201** — bare work order object (same shape as show).
+
+## Show work order
+
+```
+GET /work_orders/{id}
+```
+
+**Response 200** — bare work order object:
+
+```json
+{
+  "type": "WorkOrder",
+  "id": 1,
+  "work_order_number": 1001,
+  "status": "in_progress",
+  "intake_method": "drop_off",
+  "scheduled_for": null,
+  "authorized": true,
+  "paid": false,
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "closed_at": null,
+  "location_id": 1,
+  "service_advisor_id": 5,
+  "assigned_technician_id": null,
+  "work_order_services_count": 2,
+  "inspection_reports_count": 0,
+  "customer": { "id": 1, "full_name": "Jane Doe", "url": "..." },
+  "vehicle": { "id": 1, "make": "Toyota", "model": "Camry", "year": 2020, "vin": "ABC123", "url": "..." },
+  "totals": { "subtotal_cents": 5000, "tax_cents": 650, "total_cents": 5650, "paid_cents": 0, "remaining_cents": 5650, "currency": "CAD" },
+  "url": "https://app.wenmarpro.com/work_orders/1.json",
+  "services_url": "https://app.wenmarpro.com/work_orders/1/services.json",
+  "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",
+  "messages_url": "https://app.wenmarpro.com/work_orders/1/messages.json",
+  "activity_url": "https://app.wenmarpro.com/work_orders/1/activity_logs.json",
+  "odometer_in": null,
+  "odometer_out": null,
+  "odometer_unit": "km",
+  "authorized_at": "2026-08-27T12:30:00.000-04:00",
+  "authorized_total_cents": 5650,
+  "customer_notified": true,
+  "customer_notified_ready": false,
+  "vehicle_arrived_at": "2026-08-27T12:00:00.000-04:00",
+  "ready_for_pickup_at": null,
+  "completed_at": null,
+  "declined_at": null,
+  "decline_reason": null,
+  "discount_cents": 0,
+  "fees_cents": 0,
+  "parts_cents": 2500,
+  "labor_cents": 2500,
+  "tires_cents": 0,
+  "subcontracts_cents": 0,
+  "credit_balance_cents": 0,
+  "saved_for_later": false,
+  "closure_reason": null,
+  "closure_reason_notes": null,
+  "notes": null,
+  "purchase_order_number": null,
+  "return_method": "customer_pickup",
+  "return_method_notes": null,
+  "vehicle_keys_location": "front_desk",
+  "vehicle_location": "bay_2"
+}
+```
+
+## Update work order
+
+```
+PATCH /work_orders/{id}
+```
+
+**Request body** — `work_order` object (any subset of fields):
+
+| Field | Type |
+|---|---|
+| `intake_method` | string |
+
+**Response 200** — bare work order object.
+
+## Delete work order
+
+```
+DELETE /work_orders/{id}
+```
+
+**Response 204** — no content.

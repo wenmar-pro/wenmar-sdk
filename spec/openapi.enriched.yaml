@@ -80,6 +80,50 @@ paths:
         - 504
         method-gated: true
   "/customer_tags":
+    get:
+      summary: index
+      tags:
+      - customer_tags
+      responses:
+        '200':
+          description: GET /customer_tags -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+      description: List all customer tags, paginated via the Link header.
+      operationId: list_customer_tags
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     post:
       summary: create
       tags:
@@ -100,11 +144,24 @@ paths:
                     type: string
                   color_hex:
                     type: string
+                  color_class:
+                    type: string
                 required:
                 - id
                 - name
                 - color
                 - color_hex
+        '403':
+          description: POST /customer_tags -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
         '422':
           description: POST /customer_tags -> 422
           content:
@@ -131,6 +188,114 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customer_tags/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: Delete a customer tag by ID.
+      operationId: delete_customer_tag
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: Update a customer tag by ID.
+      operationId: update_customer_tag
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
       x-retry:
         max: 3
         backoff: exponential
@@ -187,35 +352,6 @@ paths:
       summary: create
       tags:
       - customers
-      responses:
-        '201':
-          description: POST /customers -> 201
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Customer"
-        '403':
-          description: POST /customers -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /customers -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       requestBody:
         content:
           application/json:
@@ -311,6 +447,35 @@ paths:
                   - last_name
               required:
               - customer
+      responses:
+        '201':
+          description: POST /customers -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Customer"
+        '403':
+          description: POST /customers -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /customers -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: Create a customer.
       operationId: create_customer
       x-curl-example: |-
@@ -945,21 +1110,6 @@ paths:
                           primary:
                             type: boolean
                             nullable: true
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            nullable: true
-                          email:
-                            type: string
-                          label:
-                            type: string
-                            nullable: true
-                        required:
-                        - email
                     first_name:
                       type: string
                     last_name:
@@ -982,6 +1132,21 @@ paths:
                       type: string
                     po_required:
                       type: boolean
+                    emails_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            nullable: true
+                          email:
+                            type: string
+                          label:
+                            type: string
+                            nullable: true
+                        required:
+                        - email
                     addresses_attributes:
                       type: array
                       items:
@@ -1305,6 +1470,553 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/service_categories":
+    get:
+      summary: index
+      tags:
+      - service_categories
+      responses:
+        '200':
+          description: GET /service_categories -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ServiceCategory"
+      description: List all service categories, paginated via the Link header.
+      operationId: list_service_categories
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/service_categories.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - service_categories
+      responses:
+        '201':
+          description: POST /service_categories -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ServiceCategory"
+        '403':
+          description: POST /service_categories -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_category:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                  required:
+                  - name
+                  - service_type
+                  - icon
+              required:
+              - service_category
+      description: Create a service category.
+      operationId: create_service_category
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/seed_defaults":
+    post:
+      summary: seed_defaults
+      tags:
+      - service_categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: POST /service_categories/seed_defaults -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - created
+                - message
+      description:
+      operationId: seed_defaults_service_categories
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/seed_defaults.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /service_categories/{id} -> 200
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ServiceCategory"
+        '422':
+          description: DELETE /service_categories/{id} -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Delete a service category by ID.
+      operationId: delete_service_category
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/service_categories/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_category:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - service_category
+      responses:
+        '200':
+          description: PATCH /service_categories/{id} -> 200
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ServiceCategory"
+      description: Update a service category by ID.
+      operationId: update_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/deactivate":
+    patch:
+      summary: deactivate
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/deactivate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description:
+      operationId: deactivate_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/move_down":
+    patch:
+      summary: move_down
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/move_down -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                    active:
+                      type: boolean
+                    position:
+                      type: integer
+                    canonical:
+                      type: boolean
+                    canonical_key:
+                      type: string
+                      nullable: true
+                    job_count:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - service_type
+                  - icon
+                  - color
+                  - active
+                  - position
+                  - canonical
+                  - canonical_key
+                  - job_count
+                  - url
+                  - app_url
+      description:
+      operationId: move_down_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/move_up":
+    patch:
+      summary: move_up
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/move_up -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                    active:
+                      type: boolean
+                    position:
+                      type: integer
+                    canonical:
+                      type: boolean
+                    canonical_key:
+                      type: string
+                      nullable: true
+                    job_count:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - service_type
+                  - icon
+                  - color
+                  - active
+                  - position
+                  - canonical
+                  - canonical_key
+                  - job_count
+                  - url
+                  - app_url
+      description:
+      operationId: move_up_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/reactivate":
+    patch:
+      summary: reactivate
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/reactivate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                  color:
+                    nullable: true
+                  active:
+                    type: boolean
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - active
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description:
+      operationId: reactivate_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/settings/tags":
     get:
       summary: show
@@ -1325,17 +2037,30 @@ paths:
                       properties:
                         id:
                           type: integer
-                        name:
-                          type: string
+                        account_id:
+                          type: integer
                         color:
                           type: string
-                        color_hex:
+                        created_at:
+                          type: string
+                        customers_count:
+                          type: integer
+                        metadata:
+                          type: object
+                          properties: {}
+                        name:
+                          type: string
+                        updated_at:
                           type: string
                       required:
                       - id
-                      - name
+                      - account_id
                       - color
-                      - color_hex
+                      - created_at
+                      - customers_count
+                      - metadata
+                      - name
+                      - updated_at
                   vehicle_tags:
                     type: array
                     items:
@@ -1343,31 +2068,28 @@ paths:
                       properties:
                         id:
                           type: integer
-                        name:
-                          type: string
+                        account_id:
+                          type: integer
                         color:
                           type: string
-                        color_hex:
+                        created_at:
+                          type: string
+                        name:
+                          type: string
+                        updated_at:
                           type: string
                       required:
                       - id
-                      - name
+                      - account_id
                       - color
-                      - color_hex
+                      - created_at
+                      - name
+                      - updated_at
                 required:
                 - customer_tags
                 - vehicle_tags
-        '403':
-          description: GET /settings/tags -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
+        '404':
+          description: GET /settings/tags -> 404
       description: List all tags, paginated via the Link header.
       operationId: list_tags
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -1386,39 +2108,6 @@ paths:
       summary: update
       tags:
       - settings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      _destroy:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                vehicle_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      _destroy:
-                        type: string
-                    required:
-                    - id
-                    - _destroy
-              required:
-              - customer_tags
       responses:
         '200':
           description: PATCH /settings/tags -> 200
@@ -1434,23 +2123,73 @@ paths:
                       properties:
                         id:
                           type: integer
-                        name:
-                          type: string
+                        account_id:
+                          type: integer
                         color:
                           type: string
-                        color_hex:
+                        created_at:
+                          type: string
+                        customers_count:
+                          type: integer
+                        metadata:
+                          type: object
+                          properties: {}
+                        name:
+                          type: string
+                        updated_at:
                           type: string
                       required:
                       - id
-                      - name
+                      - account_id
                       - color
-                      - color_hex
+                      - created_at
+                      - customers_count
+                      - metadata
+                      - name
+                      - updated_at
                   vehicle_tags:
                     type: array
                     items: {}
                 required:
                 - customer_tags
                 - vehicle_tags
+        '403':
+          description: PATCH /settings/tags -> 403
+          content:
+            text/html:
+              schema:
+                type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      _destroy:
+                        type: string
+                    required:
+                    - id
+                    - _destroy
+                customer_tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      _destroy:
+                        type: string
+                    required:
+                    - id
       description: Update a tags by ID.
       operationId: update_tags
       x-curl-example: |-
@@ -1599,6 +2338,50 @@ paths:
         - 504
         method-gated: true
   "/vehicle_tags":
+    get:
+      summary: index
+      tags:
+      - vehicle_tags
+      responses:
+        '200':
+          description: GET /vehicle_tags -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+      description: List all vehicle tags, paginated via the Link header.
+      operationId: list_vehicle_tags
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/vehicle_tags.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     post:
       summary: create
       tags:
@@ -1629,6 +2412,8 @@ paths:
                     type: string
                   color_hex:
                     type: string
+                  color_class:
+                    type: string
                 required:
                 - id
                 - name
@@ -1639,6 +2424,114 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicle_tags/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - vehicle_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /vehicle_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: Delete a vehicle tag by ID.
+      operationId: delete_vehicle_tag
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicle_tags/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - vehicle_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+      responses:
+        '200':
+          description: PATCH /vehicle_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+      description: Update a vehicle tag by ID.
+      operationId: update_vehicle_tag
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags/<id>.json
       x-retry:
         max: 3
         backoff: exponential
@@ -2179,16 +3072,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                source_vehicle_id:
-                  type: integer
-              required:
-              - source_vehicle_id
       responses:
         '200':
           description: POST /vehicles/{id}/merge -> 200
@@ -2341,6 +3224,16 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_vehicle_id:
+                  type: integer
+              required:
+              - source_vehicle_id
       description:
       operationId: merge_vehicle
       x-curl-example: |-
@@ -2367,19 +3260,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer_id:
-                  type: integer
-                mode:
-                  type: string
-              required:
-              - customer_id
-              - mode
       responses:
         '200':
           description: PATCH /vehicles/{id}/transfer -> 200
@@ -2543,6 +3423,19 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                mode:
+                  type: string
+              required:
+              - customer_id
+              - mode
       description:
       operationId: transfer_vehicle
       x-curl-example: |-
@@ -2638,12 +3531,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Vendor"
-        '302':
-          description: GET /vendors/{id} -> 302
-          content:
-            text/html:
-              schema:
-                type: string
         '404':
           description: GET /vendors/{id} -> 404
           content:
@@ -2813,6 +3700,21 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order:
+                  type: object
+                  properties:
+                    intake_method:
+                      type: string
+                  required:
+                  - intake_method
+              required:
+              - work_order
       responses:
         '200':
           description: PATCH /work_orders/{id} -> 200
@@ -2831,21 +3733,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order:
-                  type: object
-                  properties:
-                    intake_method:
-                      type: string
-                  required:
-                  - intake_method
-              required:
-              - work_order
       description: Update a work order by ID.
       operationId: update_work_order
       x-curl-example: |-
@@ -3845,6 +4732,24 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                    amount_cents:
+                      type: string
+                  required:
+                  - method
+                  - amount_cents
+              required:
+              - payment
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/payments -> 201
@@ -3945,24 +4850,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                payment:
-                  type: object
-                  properties:
-                    method:
-                      type: string
-                    amount_cents:
-                      type: string
-                  required:
-                  - method
-                  - amount_cents
-              required:
-              - payment
       description: Create a work order payment.
       operationId: create_work_order_payment
       x-curl-example: |-
@@ -5090,6 +5977,8 @@ components:
           type: string
         vehicle_location:
           type: string
+        summary_url:
+          type: string
         services_url:
           type: string
         payments_url:
@@ -5099,8 +5988,6 @@ components:
         inspection_url:
           type: string
         parts_url:
-          type: string
-        summary_url:
           type: string
         concerns_url:
           type: string
@@ -5155,11 +6042,59 @@ components:
       - return_method_notes
       - vehicle_keys_location
       - vehicle_location
+      - summary_url
       - services_url
       - payments_url
       - wip_url
       - inspection_url
       - parts_url
+      - concerns_url
+    ServiceCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          nullable: true
+        service_type:
+          type: string
+        icon:
+          type: string
+          nullable: true
+        color:
+          type: string
+          nullable: true
+        active:
+          type: boolean
+        position:
+          type: integer
+        canonical:
+          type: boolean
+        canonical_key:
+          type: string
+          nullable: true
+        job_count:
+          type: integer
+        url:
+          type: string
+        app_url:
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - service_type
+      - icon
+      - color
+      - active
+      - position
+      - canonical
+      - canonical_key
+      - job_count
+      - url
+      - app_url
     Vendor:
       type: object
       properties:

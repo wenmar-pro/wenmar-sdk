@@ -460,18 +460,19 @@ type UpdateTagsRequest struct {
 func (r UpdateTagsRequest) ToGenerated() generated.UpdateTagsJSONRequestBody {
 	body := generated.UpdateTagsJSONRequestBody{}
 	if r.CustomerTags != nil {
-		body.CustomerTags = make([]struct {
+		ct := make([]struct {
 			UnderscoreDestroy *string `json:"_destroy,omitempty"`
 			Id                int     `json:"id"`
 			Name              *string `json:"name,omitempty"`
 		}, len(r.CustomerTags))
 		for i, t := range r.CustomerTags {
-			body.CustomerTags[i] = struct {
+			ct[i] = struct {
 				UnderscoreDestroy *string `json:"_destroy,omitempty"`
 				Id                int     `json:"id"`
 				Name              *string `json:"name,omitempty"`
 			}{UnderscoreDestroy: t.UnderscoreDestroy, Id: t.Id, Name: t.Name}
 		}
+		body.CustomerTags = &ct
 	}
 	if r.VehicleTags != nil {
 		vt := make([]struct {
@@ -507,4 +508,42 @@ type CreateVehicleTagRequest struct {
 // ToGenerated converts to the generated request body type.
 func (r CreateVehicleTagRequest) ToGenerated() generated.CreateVehicleTagJSONRequestBody {
 	return generated.CreateVehicleTagJSONRequestBody{Name: r.Name}
+}
+
+// CreateServiceCategoryRequest is the typed input for creating a service category.
+type CreateServiceCategoryRequest struct {
+	Name        string
+	ServiceType string
+	Icon        string
+}
+
+// ToGenerated converts to the generated request body type.
+func (r CreateServiceCategoryRequest) ToGenerated() generated.CreateServiceCategoryJSONRequestBody {
+	return generated.CreateServiceCategoryJSONRequestBody{
+		ServiceCategory: struct {
+			Icon        string `json:"icon"`
+			Name        string `json:"name"`
+			ServiceType string `json:"service_type"`
+		}{
+			Icon:        r.Icon,
+			Name:        r.Name,
+			ServiceType: r.ServiceType,
+		},
+	}
+}
+
+// UpdateServiceCategoryRequest is the typed input for updating a service category.
+type UpdateServiceCategoryRequest struct {
+	Name string
+}
+
+// ToGenerated converts to the generated request body type.
+func (r UpdateServiceCategoryRequest) ToGenerated() generated.UpdateServiceCategoryJSONRequestBody {
+	return generated.UpdateServiceCategoryJSONRequestBody{
+		ServiceCategory: struct {
+			Name string `json:"name"`
+		}{
+			Name: r.Name,
+		},
+	}
 }

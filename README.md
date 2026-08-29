@@ -4,7 +4,7 @@ Public SDKs and OpenAPI spec for the Wenmar Pro automotive shop management API.
 
 - [Go SDK](go/README.md) — `github.com/wenmar-pro/wenmar-sdk/go`
 - [Ruby SDK](ruby/README.md) — the `wenmar` gem
-- [API spec & docs](https://github.com/wenmar-pro/wenmar-api) — the canonical OpenAPI spec and human-readable docs
+- [API spec & docs](docs/api/README.md) — the canonical OpenAPI spec and human-readable docs
 
 ## Quick start
 
@@ -39,11 +39,12 @@ customers = client.list_customers
 ## Spec
 
 The canonical OpenAPI spec lives in [`spec/openapi.yaml`](spec/openapi.yaml).
-It is synced from the private wenmar-pro repo and is read-only here.
+It is pushed by wenmar-pro's CI on every merge to `main` and is read-only here.
 
 ## Repository structure
 
 - `spec/` — OpenAPI 3.0 spec + shared JSON fixtures
+- `docs/api/` — human-readable API docs (CC BY-SA)
 - `go/` — Go SDK (generated client + hand-written layer)
 - `ruby/` — Ruby gem (hand-written Faraday client)
 - `conformance/` — shared behavioral tests run against both SDKs
@@ -51,4 +52,4 @@ It is synced from the private wenmar-pro repo and is read-only here.
 
 ## License
 
-MIT
+Code is MIT. API docs in `docs/api/` are [CC BY-SA 4.0](docs/api/LICENSE).

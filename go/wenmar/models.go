@@ -5,13 +5,14 @@ import "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 // Model type aliases. These expose the generated model types under the
 // wenmar package so callers never need to import pkg/generated.
 type (
-	Customer  = generated.Customer
-	Vehicle   = generated.Vehicle
-	WorkOrder = generated.WorkOrder
-	Driver    = generated.Driver
-	Statement = generated.Statement
-	Vendor    = generated.Vendor
-	Error     = generated.Error
+	Customer         = generated.Customer
+	Vehicle          = generated.Vehicle
+	WorkOrder        = generated.WorkOrder
+	Driver           = generated.Driver
+	Statement        = generated.Statement
+	Vendor           = generated.Vendor
+	ServiceCategory  = generated.ServiceCategory
+	Error            = generated.Error
 )
 
 // Response type aliases. Each is identical to the generated response
@@ -69,6 +70,15 @@ type (
 	CreateWorkOrderPaymentResponse    = generated.CreateWorkOrderPaymentResponse
 	GetWorkOrdersSummaryResponse      = generated.GetWorkOrdersSummaryResponse
 	ListTeamResponse                  = generated.ListTeamResponse
+	ListServiceCategoriesResponse           = generated.ListServiceCategoriesResponse
+	CreateServiceCategoryResponse           = generated.CreateServiceCategoryResponse
+	UpdateServiceCategoryResponse           = generated.UpdateServiceCategoryResponse
+	DeleteServiceCategoryResponse           = generated.DeleteServiceCategoryResponse
+	DeactivateServiceCategoryResponse       = generated.DeactivateServiceCategoryResponse
+	ReactivateServiceCategoryResponse       = generated.ReactivateServiceCategoryResponse
+	MoveUpServiceCategoryResponse            = generated.MoveUpServiceCategoryResponse
+	MoveDownServiceCategoryResponse          = generated.MoveDownServiceCategoryResponse
+	SeedDefaultsServiceCategoriesResponse    = generated.SeedDefaultsServiceCategoriesResponse
 )
 
 // Params type aliases for query-parameter types used in public method

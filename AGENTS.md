@@ -1,26 +1,22 @@
 # Wenmar SDK
 
 Go and Ruby SDKs for the Wenmar Pro automotive shop management API, plus
-the OpenAPI spec and conformance suite.
+the OpenAPI spec, human-readable API docs, and conformance suite.
 
 ## Architecture
 
-The public API surface spans four repos. The Rails app is the source of
-truth; the API docs repo holds the spec; this repo and the CLI are derived.
+The public API surface spans three repos. The Rails app is the source of
+truth; the spec and docs live here and push changes downstream to the CLI.
 
 - `wenmar-pro` (`~/Projects/wenmar-pro`) — Rails app, **source of truth** for the API
-- `wenmar-api` (`~/Projects/wenmar-api`) — OpenAPI spec + human-readable docs (CC BY-SA)
-- `wenmar-sdk` (this repo) — Go/Ruby SDKs + conformance suite (pulls spec from wenmar-api)
+- `wenmar-sdk` (this repo) — spec + API docs + Go/Ruby SDKs + conformance suite
 - `wenmar-cli` (`~/Projects/wenmar-cli`) — Go CLI (Cobra) consuming the Go SDK
 
 ```
 wenmar-pro (Rails, source of truth)
-   │  exports OpenAPI spec
+   │  pushes redacted spec to spec/openapi.yaml on merge to main
    ▼
-wenmar-api (OpenAPI spec + docs, the contract)
-   │  spec consumed by
-   ▼
-wenmar-sdk (Go/Ruby SDKs + conformance)
+wenmar-sdk (spec + docs + Go/Ruby SDKs + conformance)
    │  Go SDK consumed by
    ▼
 wenmar-cli (Go CLI, Cobra)
@@ -34,8 +30,9 @@ wenmar-cli (Go CLI, Cobra)
 - **No Smithy** — OpenAPI is the spec format. Revisit Smithy only when
   ~50+ operations, 3+ SDK languages, or conformance schema generation
   from the spec is needed.
-- **Spec is read-only here** — `spec/openapi.yaml` is synced from
-  wenmar-pro. Do not hand-edit it; sync it out from the Rails app.
+- **Spec is read-only here** — `spec/openapi.yaml` is pushed by
+  wenmar-pro's CI. Do not hand-edit it; make contract changes with
+  request tests in the Rails app.
 
 ## Quick reference
 
@@ -46,8 +43,14 @@ wenmar-cli (Go CLI, Cobra)
 - Ruby tests: `cd ruby && bundle install && ruby -Ilib spec/client_spec.rb`
 - Conformance: `cd conformance/go && go test ./...` and `cd conformance/ruby && bundle exec ruby conformance_spec.rb`
 
+## API docs
+
+Human-readable API documentation lives in `docs/api/` and is licensed
+CC BY-SA 4.0 (see `docs/api/LICENSE`). The spec lives in `spec/openapi.yaml`
+(push from wenmar-pro, read-only).
+
 ## Full architecture
 
 For the full architecture, codegen pipeline, and the checklist for
-touching `Api::` controllers, load the `sdk-cli` skill from
-`wenmar-pro/.opencode/skills/sdk-cli/SKILL.md`.
+touching JSON API endpoints in `Shop::` controllers, load the `sdk-cli`
+skill from `wenmar-pro/.opencode/skills/sdk-cli/SKILL.md`.

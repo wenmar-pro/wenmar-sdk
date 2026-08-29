@@ -535,6 +535,78 @@ func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
 			return nil, err
 		}
 		return decodeBody(resp.Body)
+	case "list_service_categories":
+		resp, err := client.ListServiceCategories(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "create_service_category":
+		sc, _ := tc.RequestBody["service_category"].(map[string]any)
+		req := wenmar.CreateServiceCategoryRequest{}
+		if sc != nil {
+			req.Name, _ = sc["name"].(string)
+			req.ServiceType, _ = sc["service_type"].(string)
+			req.Icon, _ = sc["icon"].(string)
+		}
+		resp, err := client.CreateServiceCategory(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "update_service_category":
+		id := intParam(tc.PathParams, "id")
+		sc, _ := tc.RequestBody["service_category"].(map[string]any)
+		req := wenmar.UpdateServiceCategoryRequest{}
+		if sc != nil {
+			req.Name, _ = sc["name"].(string)
+		}
+		resp, err := client.UpdateServiceCategory(ctx, id, req)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "delete_service_category":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.DeleteServiceCategory(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "deactivate_service_category":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.DeactivateServiceCategory(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "reactivate_service_category":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.ReactivateServiceCategory(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "move_up_service_category":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.MoveUpServiceCategory(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "move_down_service_category":
+		id := intParam(tc.PathParams, "id")
+		resp, err := client.MoveDownServiceCategory(ctx, id)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
+	case "seed_defaults_service_categories":
+		resp, err := client.SeedDefaultsServiceCategories(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return decodeBody(resp.Body)
 	default:
 		return nil, fmt.Errorf("unknown operation: %s", tc.Operation)
 	}
