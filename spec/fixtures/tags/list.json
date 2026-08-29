@@ -1,0 +1,10 @@
+{
+  "customer_tags": [
+    { "id": 1, "name": "VIP", "color": "blue", "color_hex": "#3b82f6" },
+    { "id": 2, "name": "FLEET", "color": "green", "color_hex": "#22c55e" }
+  ],
+  "vehicle_tags": [
+    { "id": 3, "name": "FLEET", "color": "green", "color_hex": "#22c55e" },
+    { "id": 4, "name": "LEASED", "color": "amber", "color_hex": "#f59e0b" }
+  ]
+}

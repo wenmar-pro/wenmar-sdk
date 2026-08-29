@@ -140,6 +140,36 @@ module Conformance
         client.show_work_order_payments(tc.dig("pathParams", "work_order_id"))
       when "create_work_order_payment"
         client.create_work_order_payment(tc.dig("pathParams", "work_order_id"), tc.dig("requestBody", "payment") || {})
+      when "merge_customer"
+        client.merge_customer(tc.dig("pathParams", "id"), tc.dig("requestBody", "source_customer_id"))
+      when "lookup_customer"
+        client.lookup_customer(query: tc.dig("query", "query"))
+      when "check_customer_duplicate"
+        client.check_customer_duplicate(first_name: tc.dig("query", "first_name"), last_name: tc.dig("query", "last_name"))
+      when "transfer_vehicle"
+        client.transfer_vehicle(tc.dig("pathParams", "id"), customer_id: tc.dig("requestBody", "customer_id"), mode: tc.dig("requestBody", "mode") || "vehicle_only")
+      when "merge_vehicle"
+        client.merge_vehicle(tc.dig("pathParams", "id"), source_vehicle_id: tc.dig("requestBody", "source_vehicle_id"))
+      when "prefill_vehicle"
+        client.prefill_vehicle(vin: tc.dig("query", "vin"))
+      when "lookup_vehicle"
+        client.lookup_vehicle(query: tc.dig("query", "query"))
+      when "check_vehicle_duplicate"
+        client.check_vehicle_duplicate(vin: tc.dig("query", "vin"))
+      when "list_customer_vehicles"
+        client.list_customer_vehicles(tc.dig("pathParams", "customer_id"))
+      when "list_customer_work_orders"
+        client.list_customer_work_orders(tc.dig("pathParams", "customer_id"))
+      when "list_vehicle_work_orders"
+        client.list_vehicle_work_orders(tc.dig("pathParams", "vehicle_id"))
+      when "list_tags"
+        client.list_tags
+      when "update_tags"
+        client.update_tags(customer_tags: tc.dig("requestBody", "customer_tags"))
+      when "create_customer_tag"
+        client.create_customer_tag(name: tc.dig("requestBody", "name"))
+      when "create_vehicle_tag"
+        client.create_vehicle_tag(name: tc.dig("requestBody", "name"))
       else
         raise "unknown operation: #{tc["operation"]}"
       end

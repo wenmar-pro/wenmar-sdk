@@ -1,0 +1,554 @@
+[
+  {
+    "name": "merge_customer_success",
+    "operation": "merge_customer",
+    "method": "POST",
+    "path": "/customers/1/merge",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "source_customer_id": 2
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "full_name": "Jane Doe",
+          "type": "Customer"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "merge_customer_missing_source",
+    "operation": "merge_customer",
+    "method": "POST",
+    "path": "/customers/1/merge",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "source_customer_id": 999999
+    },
+    "mockResponses": [
+      {
+        "status": 422,
+        "body": {
+          "error": {
+            "code": "validation_failed",
+            "message": "Source customer not found."
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": false,
+      "errorCode": "validation_failed",
+      "errorStatus": 422
+    }
+  },
+  {
+    "name": "transfer_vehicle_success",
+    "operation": "transfer_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1/transfer",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "customer_id": 2,
+      "mode": "vehicle_only"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "make": "Honda",
+          "customer": {
+            "id": 2
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "customer.id",
+        "equals": 2
+      }
+    }
+  },
+  {
+    "name": "transfer_vehicle_same_customer",
+    "operation": "transfer_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1/transfer",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "customer_id": 1,
+      "mode": "vehicle_only"
+    },
+    "mockResponses": [
+      {
+        "status": 422,
+        "body": {
+          "error": {
+            "code": "validation_failed",
+            "message": "Vehicle is already assigned to this customer"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": false,
+      "errorCode": "validation_failed",
+      "errorStatus": 422
+    }
+  },
+  {
+    "name": "merge_vehicle_success",
+    "operation": "merge_vehicle",
+    "method": "POST",
+    "path": "/vehicles/1/merge",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "source_vehicle_id": 2
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "make": "Honda",
+          "model": "Civic"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "merge_vehicle_missing_source",
+    "operation": "merge_vehicle",
+    "method": "POST",
+    "path": "/vehicles/1/merge",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "source_vehicle_id": 999999
+    },
+    "mockResponses": [
+      {
+        "status": 422,
+        "body": {
+          "error": {
+            "code": "validation_failed",
+            "message": "Source vehicle not found."
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": false,
+      "errorCode": "validation_failed",
+      "errorStatus": 422
+    }
+  },
+  {
+    "name": "list_customer_vehicles",
+    "operation": "list_customer_vehicles",
+    "method": "GET",
+    "path": "/customers/1/vehicles",
+    "pathParams": {
+      "customer_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "make": "Honda"
+          },
+          {
+            "id": 2,
+            "make": "Toyota"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_customer_work_orders",
+    "operation": "list_customer_work_orders",
+    "method": "GET",
+    "path": "/customers/1/work_orders",
+    "pathParams": {
+      "customer_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "status": "in_progress"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_vehicle_work_orders",
+    "operation": "list_vehicle_work_orders",
+    "method": "GET",
+    "path": "/vehicles/1/work_orders",
+    "pathParams": {
+      "vehicle_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "status": "in_progress"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_customer_statements",
+    "operation": "list_customers_statements",
+    "method": "GET",
+    "path": "/customers/1/statements",
+    "pathParams": {
+      "customer_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "balance_due_cents": 1000
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_customer_drivers",
+    "operation": "list_customers_drivers",
+    "method": "GET",
+    "path": "/customers/1/drivers",
+    "pathParams": {
+      "customer_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "full_name": "Bob"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_tags",
+    "operation": "list_tags",
+    "method": "GET",
+    "path": "/settings/tags",
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "customer_tags": [
+            {
+              "id": 1,
+              "name": "VIP"
+            }
+          ],
+          "vehicle_tags": []
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "customer_tags.0.name",
+        "equals": "VIP"
+      }
+    }
+  },
+  {
+    "name": "update_tags",
+    "operation": "update_tags",
+    "method": "PATCH",
+    "path": "/settings/tags",
+    "requestBody": {
+      "customer_tags": [
+        {
+          "id": 1,
+          "name": "NEW"
+        }
+      ]
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "customer_tags": [
+            {
+              "id": 1,
+              "name": "NEW"
+            }
+          ],
+          "vehicle_tags": []
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "create_customer_tag",
+    "operation": "create_customer_tag",
+    "method": "POST",
+    "path": "/customer_tags",
+    "requestBody": {
+      "name": "PRIORITY"
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 1,
+          "name": "PRIORITY",
+          "color": "blue",
+          "color_hex": "#3b82f6"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "name",
+        "equals": "PRIORITY"
+      }
+    }
+  },
+  {
+    "name": "create_vehicle_tag",
+    "operation": "create_vehicle_tag",
+    "method": "POST",
+    "path": "/vehicle_tags",
+    "requestBody": {
+      "name": "FLEET"
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 1,
+          "name": "FLEET",
+          "color": "blue",
+          "color_hex": "#3b82f6"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "name",
+        "equals": "FLEET"
+      }
+    }
+  },
+  {
+    "name": "lookup_customer",
+    "operation": "lookup_customer",
+    "method": "GET",
+    "path": "/customers/lookup",
+    "query": {
+      "query": "Jane"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "name": "Jane Doe"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "lookup_vehicle",
+    "operation": "lookup_vehicle",
+    "method": "GET",
+    "path": "/vehicles/lookup",
+    "query": {
+      "query": "Honda"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "make": "Honda",
+            "model": "Civic"
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "prefill_vehicle",
+    "operation": "prefill_vehicle",
+    "method": "GET",
+    "path": "/vehicles/prefill",
+    "query": {
+      "vin": "1HGCM82633A004352"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "vehicle": {
+            "make": "Honda",
+            "model": "Civic",
+            "year": 2020
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "vehicle.make",
+        "equals": "Honda"
+      }
+    }
+  },
+  {
+    "name": "check_customer_duplicate",
+    "operation": "check_customer_duplicate",
+    "method": "GET",
+    "path": "/customers/check_duplicate",
+    "query": {
+      "first_name": "John",
+      "last_name": "Smith"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "matches": [
+            {
+              "id": 1,
+              "name": "John Smith"
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "check_vehicle_duplicate",
+    "operation": "check_vehicle_duplicate",
+    "method": "GET",
+    "path": "/vehicles/check_duplicate",
+    "query": {
+      "vin": "1HGCM82633A004352"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "matches": [
+            {
+              "id": 1,
+              "display_name": "Honda Civic"
+            }
+          ]
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  }
+]

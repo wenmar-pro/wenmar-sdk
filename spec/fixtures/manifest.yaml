@@ -97,6 +97,27 @@ targets:
   - id: location-get
     operation: show_location
     fixture: locations/get.json
+  - id: customer-merge
+    operation: merge_customer
+    fixture: customers/merge_response.json
+  - id: vehicle-transfer
+    operation: transfer_vehicle
+    fixture: vehicles/transfer_response.json
+  - id: vehicle-merge
+    operation: merge_vehicle
+    fixture: vehicles/merge_response.json
+  - id: tags-list
+    operation: list_tags
+    fixture: tags/list.json
+  - id: customer-lookup
+    operation: lookup_customer
+    fixture: customers/lookup.json
+  - id: vehicle-lookup
+    operation: lookup_vehicle
+    fixture: vehicles/lookup.json
+  - id: vehicle-prefill
+    operation: prefill_vehicle
+    fixture: vehicles/prefill.json
 
 covered_schemas:
   customer: [customer-get, customer-list, customer-create, customer-update]
