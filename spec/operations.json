@@ -1,0 +1,1367 @@
+{
+  "version": "2026-08-30",
+  "source": "spec/openapi.enriched.yaml",
+  "schemas": [
+    "CloseWorkOrderAsPaidRequest",
+    "CloseWorkOrderRequest",
+    "CreateCustomerRequest",
+    "CreateCustomerTagRequest",
+    "CreateDriverRequest",
+    "CreateServiceCategoryRequest",
+    "CreateVehicleRequest",
+    "CreateVehicleTagRequest",
+    "CreateWorkOrderAuthorizationRequest",
+    "CreateWorkOrderPaymentRequest",
+    "CreateWorkOrderRequest",
+    "Customer",
+    "DeactivateServiceCategoryRequest",
+    "DeclineAllWorkOrderServicesRequest",
+    "Driver",
+    "Error",
+    "MergeCustomerRequest",
+    "MergeVehicleRequest",
+    "MoveDownServiceCategoryRequest",
+    "MoveUpServiceCategoryRequest",
+    "ReactivateServiceCategoryRequest",
+    "ReopenWorkOrderRequest",
+    "ReturnWorkOrderToBoardRequest",
+    "SaveWorkOrderForLaterRequest",
+    "SeedDefaultsServiceCategoriesRequest",
+    "ServiceCategory",
+    "StageTransitionWorkOrderRequest",
+    "Statement",
+    "TransferVehicleRequest",
+    "UpdateCustomerRequest",
+    "UpdateCustomerTagRequest",
+    "UpdateDriverRequest",
+    "UpdateServiceCategoryRequest",
+    "UpdateTagsRequest",
+    "UpdateVehicleRequest",
+    "UpdateVehicleTagRequest",
+    "UpdateWorkOrderAuthorizationDecisionsRequest",
+    "UpdateWorkOrderRequest",
+    "Vehicle",
+    "Vendor",
+    "WorkOrder"
+  ],
+  "operations": [
+    {
+      "id": "list_account",
+      "method": "get",
+      "path": "/account",
+      "tag": "account",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "list_customer_tags",
+      "method": "get",
+      "path": "/customer_tags",
+      "tag": "customer_tags",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "index"
+    },
+    {
+      "id": "create_customer_tag",
+      "method": "post",
+      "path": "/customer_tags",
+      "tag": "customer_tags",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateCustomerTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "create"
+    },
+    {
+      "id": "delete_customer_tag",
+      "method": "delete",
+      "path": "/customer_tags/{id}",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_customer_tag",
+      "method": "patch",
+      "path": "/customer_tags/{id}",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "update"
+    },
+    {
+      "id": "list_customers",
+      "method": "get",
+      "path": "/customers",
+      "tag": "customers",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "has_balance",
+          "type": "boolean",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "has_vehicle",
+          "type": "boolean",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "last_visit_months",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "tag_ids",
+          "type": "array",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Customer",
+      "summary": "index"
+    },
+    {
+      "id": "create_customer",
+      "method": "post",
+      "path": "/customers",
+      "tag": "customers",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateCustomerRequest",
+      "requestShape": {
+        "wrapper": "customer"
+      },
+      "paginated": false,
+      "responseSchema": "Customer",
+      "summary": "create"
+    },
+    {
+      "id": "check_customer_duplicate",
+      "method": "get",
+      "path": "/customers/check_duplicate",
+      "tag": "customers",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "email",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "first_name",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "last_name",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "phone",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "check_duplicate"
+    },
+    {
+      "id": "lookup_customer",
+      "method": "get",
+      "path": "/customers/lookup",
+      "tag": "customers",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Customer",
+      "summary": "lookup"
+    },
+    {
+      "id": "list_customers_drivers",
+      "method": "get",
+      "path": "/customers/{customer_id}/drivers",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Driver",
+      "summary": "index"
+    },
+    {
+      "id": "create_driver",
+      "method": "post",
+      "path": "/customers/{customer_id}/drivers",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateDriverRequest",
+      "requestShape": {
+        "wrapper": "driver"
+      },
+      "paginated": false,
+      "responseSchema": "Driver",
+      "summary": "create"
+    },
+    {
+      "id": "delete_driver",
+      "method": "delete",
+      "path": "/customers/{customer_id}/drivers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_driver",
+      "method": "get",
+      "path": "/customers/{customer_id}/drivers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Driver",
+      "summary": "show"
+    },
+    {
+      "id": "update_driver",
+      "method": "patch",
+      "path": "/customers/{customer_id}/drivers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateDriverRequest",
+      "requestShape": {
+        "wrapper": "driver"
+      },
+      "paginated": false,
+      "responseSchema": "Driver",
+      "summary": "update"
+    },
+    {
+      "id": "list_customers_statements",
+      "method": "get",
+      "path": "/customers/{customer_id}/statements",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Statement",
+      "summary": "index"
+    },
+    {
+      "id": "list_customers_vehicles",
+      "method": "get",
+      "path": "/customers/{customer_id}/vehicles",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "index"
+    },
+    {
+      "id": "get_customers_vehicle_history",
+      "method": "get",
+      "path": "/customers/{customer_id}/vehicles/{vehicle_id}/history",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id",
+        "vehicle_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "show"
+    },
+    {
+      "id": "list_customers_work_orders",
+      "method": "get",
+      "path": "/customers/{customer_id}/work_orders",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "index"
+    },
+    {
+      "id": "delete_customer",
+      "method": "delete",
+      "path": "/customers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_customer",
+      "method": "get",
+      "path": "/customers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Customer",
+      "summary": "show"
+    },
+    {
+      "id": "update_customer",
+      "method": "patch",
+      "path": "/customers/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerRequest",
+      "requestShape": {
+        "wrapper": "customer"
+      },
+      "paginated": false,
+      "responseSchema": "Customer",
+      "summary": "update"
+    },
+    {
+      "id": "merge_customer",
+      "method": "post",
+      "path": "/customers/{id}/merge",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "MergeCustomerRequest",
+      "requestShape": {
+        "wrapper": "source_customer_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "perform_merge"
+    },
+    {
+      "id": "show_location",
+      "method": "get",
+      "path": "/locations/{id}",
+      "tag": "locations",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "list_service_categories",
+      "method": "get",
+      "path": "/service_categories",
+      "tag": "service_categories",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "ServiceCategory",
+      "summary": "index"
+    },
+    {
+      "id": "create_service_category",
+      "method": "post",
+      "path": "/service_categories",
+      "tag": "service_categories",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": "service_category"
+      },
+      "paginated": false,
+      "responseSchema": "ServiceCategory",
+      "summary": "create"
+    },
+    {
+      "id": "seed_defaults_service_categories",
+      "method": "post",
+      "path": "/service_categories/seed_defaults",
+      "tag": "service_categories",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "SeedDefaultsServiceCategoriesRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "seed_defaults"
+    },
+    {
+      "id": "delete_service_category",
+      "method": "delete",
+      "path": "/service_categories/{id}",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "ServiceCategory",
+      "summary": "destroy"
+    },
+    {
+      "id": "update_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": "service_category"
+      },
+      "paginated": false,
+      "responseSchema": "ServiceCategory",
+      "summary": "update"
+    },
+    {
+      "id": "deactivate_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/deactivate",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "DeactivateServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "deactivate"
+    },
+    {
+      "id": "move_down_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/move_down",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "MoveDownServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "move_down"
+    },
+    {
+      "id": "move_up_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/move_up",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "MoveUpServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "move_up"
+    },
+    {
+      "id": "reactivate_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/reactivate",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReactivateServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "reactivate"
+    },
+    {
+      "id": "list_tags",
+      "method": "get",
+      "path": "/settings/tags",
+      "tag": "settings",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "update_tags",
+      "method": "patch",
+      "path": "/settings/tags",
+      "tag": "settings",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "UpdateTagsRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "update"
+    },
+    {
+      "id": "show_statement",
+      "method": "get",
+      "path": "/statements/{id}",
+      "tag": "statements",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Statement",
+      "summary": "show"
+    },
+    {
+      "id": "list_team",
+      "method": "get",
+      "path": "/team/members",
+      "tag": "team",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "index"
+    },
+    {
+      "id": "list_vehicle_tags",
+      "method": "get",
+      "path": "/vehicle_tags",
+      "tag": "vehicle_tags",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "index"
+    },
+    {
+      "id": "create_vehicle_tag",
+      "method": "post",
+      "path": "/vehicle_tags",
+      "tag": "vehicle_tags",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateVehicleTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "create"
+    },
+    {
+      "id": "delete_vehicle_tag",
+      "method": "delete",
+      "path": "/vehicle_tags/{id}",
+      "tag": "vehicle_tags",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_vehicle_tag",
+      "method": "patch",
+      "path": "/vehicle_tags/{id}",
+      "tag": "vehicle_tags",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateVehicleTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "update"
+    },
+    {
+      "id": "list_vehicles",
+      "method": "get",
+      "path": "/vehicles",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "customer_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "index"
+    },
+    {
+      "id": "create_vehicle",
+      "method": "post",
+      "path": "/vehicles",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateVehicleRequest",
+      "requestShape": {
+        "wrapper": "vehicle"
+      },
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "create"
+    },
+    {
+      "id": "check_vehicle_duplicate",
+      "method": "get",
+      "path": "/vehicles/check_duplicate",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "vin",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "check_duplicate"
+    },
+    {
+      "id": "lookup_vehicle",
+      "method": "get",
+      "path": "/vehicles/lookup",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "lookup"
+    },
+    {
+      "id": "prefill_vehicle",
+      "method": "get",
+      "path": "/vehicles/prefill",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "make",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "vin",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "prefill"
+    },
+    {
+      "id": "decode_vin",
+      "method": "get",
+      "path": "/vehicles/vin_decode",
+      "tag": "vehicles",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "vin",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "vin_decode"
+    },
+    {
+      "id": "delete_vehicle",
+      "method": "delete",
+      "path": "/vehicles/{id}",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_vehicle",
+      "method": "get",
+      "path": "/vehicles/{id}",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "show"
+    },
+    {
+      "id": "update_vehicle",
+      "method": "patch",
+      "path": "/vehicles/{id}",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateVehicleRequest",
+      "requestShape": {
+        "wrapper": "vehicle"
+      },
+      "paginated": false,
+      "responseSchema": "Vehicle",
+      "summary": "update"
+    },
+    {
+      "id": "merge_vehicle",
+      "method": "post",
+      "path": "/vehicles/{id}/merge",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "MergeVehicleRequest",
+      "requestShape": {
+        "wrapper": "source_vehicle_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "perform_merge"
+    },
+    {
+      "id": "transfer_vehicle",
+      "method": "patch",
+      "path": "/vehicles/{id}/transfer",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "TransferVehicleRequest",
+      "requestShape": {
+        "flat": [
+          "customer_id",
+          "mode"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "perform_transfer"
+    },
+    {
+      "id": "list_vehicles_work_orders",
+      "method": "get",
+      "path": "/vehicles/{vehicle_id}/work_orders",
+      "tag": "vehicles",
+      "pathParams": [
+        "vehicle_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "index"
+    },
+    {
+      "id": "list_vendors",
+      "method": "get",
+      "path": "/vendors",
+      "tag": "vendors",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vendor",
+      "summary": "index"
+    },
+    {
+      "id": "show_vendor",
+      "method": "get",
+      "path": "/vendors/{id}",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Vendor",
+      "summary": "show"
+    },
+    {
+      "id": "list_work_orders",
+      "method": "get",
+      "path": "/work_orders",
+      "tag": "work_orders",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "index"
+    },
+    {
+      "id": "create_work_order",
+      "method": "post",
+      "path": "/work_orders",
+      "tag": "work_orders",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrderRequest",
+      "requestShape": {
+        "wrapper": "work_order"
+      },
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "create"
+    },
+    {
+      "id": "delete_work_order",
+      "method": "delete",
+      "path": "/work_orders/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_work_order",
+      "method": "get",
+      "path": "/work_orders/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "show"
+    },
+    {
+      "id": "update_work_order",
+      "method": "patch",
+      "path": "/work_orders/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrderRequest",
+      "requestShape": {
+        "wrapper": "work_order"
+      },
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "summary": "update"
+    },
+    {
+      "id": "show_work_order_declined_services",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/declined_services",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "show_work_order_service_history",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/service_history",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "create_work_order_authorization",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/authorization",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrderAuthorizationRequest",
+      "requestShape": {
+        "flat": [
+          "authorization_method",
+          "service_ids",
+          "service_decisions"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "create"
+    },
+    {
+      "id": "update_work_order_authorization_decisions",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/authorization/update_decisions",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrderAuthorizationDecisionsRequest",
+      "requestShape": {
+        "wrapper": "service_decision_reasons"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "update_decisions"
+    },
+    {
+      "id": "show_work_order_estimate",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/estimate",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "show_work_order_inspection",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/inspection",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "close_work_order",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/close",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CloseWorkOrderRequest",
+      "requestShape": {
+        "flat": [
+          "closure_type",
+          "closure_reason"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "close"
+    },
+    {
+      "id": "close_work_order_as_paid",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/close_as_paid",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CloseWorkOrderAsPaidRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "close_as_paid"
+    },
+    {
+      "id": "decline_all_work_order_services",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/decline_all",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "DeclineAllWorkOrderServicesRequest",
+      "requestShape": {
+        "wrapper": "decline_reason"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "decline_all"
+    },
+    {
+      "id": "reopen_work_order",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/reopen",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReopenWorkOrderRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "reopen"
+    },
+    {
+      "id": "return_work_order_to_board",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/return_to_board",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReturnWorkOrderToBoardRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "return_to_board"
+    },
+    {
+      "id": "save_work_order_for_later",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/save_for_later",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "SaveWorkOrderForLaterRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "save_for_later"
+    },
+    {
+      "id": "stage_transition_work_order",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/lifecycle/stage_transition",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "StageTransitionWorkOrderRequest",
+      "requestShape": {
+        "wrapper": "target"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "stage_transition"
+    },
+    {
+      "id": "show_work_order_parts",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/parts",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "show_work_order_payments",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/payments",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    },
+    {
+      "id": "create_work_order_payment",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/payments",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrderPaymentRequest",
+      "requestShape": {
+        "wrapper": "payment"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "create"
+    },
+    {
+      "id": "show_work_order_wip",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/wip",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "summary": "show"
+    }
+  ]
+}
