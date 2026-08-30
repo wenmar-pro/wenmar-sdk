@@ -177,17 +177,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/CreateCustomerTagRequest"
       description: Create a customer tag.
       operationId: create_customer_tag
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags.json
+      x-wenmar-request-schema: CreateCustomerTagRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -261,12 +257,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/UpdateCustomerTagRequest"
       responses:
         '200':
           description: PATCH /customer_tags/{id} -> 200
@@ -296,6 +287,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
+      x-wenmar-request-schema: UpdateCustomerTagRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -399,97 +391,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    company_name:
-                      type: string
-                    fleet_identifier:
-                      type: string
-                    billing_terms:
-                      type: string
-                    credit_limit_cents:
-                      type: string
-                    tax_exempt:
-                      type: boolean
-                    tax_exempt_number:
-                      type: string
-                    notes:
-                      type: string
-                    marketing_opt_in:
-                      type: boolean
-                    discount_percent:
-                      type: string
-                    po_required:
-                      type: boolean
-                    tag_ids:
-                      type: array
-                      items: {}
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          email:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - email
-                        - label
-                        - primary
-                    phones_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          number:
-                            type: string
-                          label:
-                            type: string
-                          primary:
-                            type: boolean
-                        required:
-                        - number
-                        - label
-                        - primary
-                    addresses_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          address1:
-                            type: string
-                          city:
-                            type: string
-                          state:
-                            type: string
-                          postal_code:
-                            type: string
-                          country:
-                            type: string
-                          is_billing:
-                            type: boolean
-                        required:
-                        - address1
-                        - city
-                        - state
-                        - postal_code
-                        - country
-                        - is_billing
-                  required:
-                  - first_name
-                  - last_name
-              required:
-              - customer
+              "$ref": "#/components/schemas/CreateCustomerRequest"
       responses:
         '201':
           description: POST /customers -> 201
@@ -524,6 +426,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers.json
+      x-wenmar-request-schema: CreateCustomerRequest
       x-idempotent: false
       x-retry:
         max: 3
@@ -698,20 +601,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                driver:
-                  type: object
-                  properties:
-                    full_name:
-                      type: string
-                    phone:
-                      type: string
-                  required:
-                  - full_name
-                  - phone
-              required:
-              - driver
+              "$ref": "#/components/schemas/CreateDriverRequest"
       responses:
         '201':
           description: POST /customers/{customer_id}/drivers -> 201
@@ -735,6 +625,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/{customer_id}/drivers.json
+      x-wenmar-request-schema: CreateDriverRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -833,17 +724,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                driver:
-                  type: object
-                  properties:
-                    full_name:
-                      type: string
-                  required:
-                  - full_name
-              required:
-              - driver
+              "$ref": "#/components/schemas/UpdateDriverRequest"
       responses:
         '200':
           description: PATCH /customers/{customer_id}/drivers/{id} -> 200
@@ -856,6 +737,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: UpdateDriverRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1128,94 +1010,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    phones_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            nullable: true
-                          _destroy:
-                            type: boolean
-                            nullable: true
-                          number:
-                            type: string
-                            nullable: true
-                          label:
-                            type: string
-                            nullable: true
-                          primary:
-                            type: boolean
-                            nullable: true
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    company_name:
-                      type: string
-                    fleet_identifier:
-                      type: string
-                    billing_terms:
-                      type: string
-                    credit_limit_cents:
-                      type: string
-                    tax_exempt:
-                      type: boolean
-                    notes:
-                      type: string
-                    marketing_opt_in:
-                      type: boolean
-                    discount_percent:
-                      type: string
-                    po_required:
-                      type: boolean
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            nullable: true
-                          email:
-                            type: string
-                          label:
-                            type: string
-                            nullable: true
-                        required:
-                        - email
-                    addresses_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          address1:
-                            type: string
-                          city:
-                            type: string
-                          state:
-                            type: string
-                          postal_code:
-                            type: string
-                          country:
-                            type: string
-                          is_billing:
-                            type: boolean
-                        required:
-                        - address1
-                        - city
-                        - state
-                        - postal_code
-                        - country
-                        - is_billing
-              required:
-              - customer
+              "$ref": "#/components/schemas/UpdateCustomerRequest"
       responses:
         '200':
           description: PATCH /customers/{id} -> 200
@@ -1228,6 +1023,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: UpdateCustomerRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1412,17 +1208,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                source_customer_id:
-                  type: integer
-              required:
-              - source_customer_id
+              "$ref": "#/components/schemas/MergeCustomerRequest"
       description:
       operationId: merge_customer
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: MergeCustomerRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1567,28 +1359,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                service_category:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    service_type:
-                      type: string
-                    icon:
-                      type: string
-                  required:
-                  - name
-                  - service_type
-                  - icon
-              required:
-              - service_category
+              "$ref": "#/components/schemas/CreateServiceCategoryRequest"
       description: Create a service category.
       operationId: create_service_category
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories.json
+      x-wenmar-request-schema: CreateServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1608,8 +1385,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/SeedDefaultsServiceCategoriesRequest"
       responses:
         '200':
           description: POST /service_categories/seed_defaults -> 200
@@ -1630,6 +1406,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/seed_defaults.json
+      x-wenmar-request-schema: SeedDefaultsServiceCategoriesRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1697,17 +1474,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                service_category:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                  required:
-                  - name
-              required:
-              - service_category
+              "$ref": "#/components/schemas/UpdateServiceCategoryRequest"
       responses:
         '200':
           description: PATCH /service_categories/{id} -> 200
@@ -1720,6 +1487,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: UpdateServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1745,8 +1513,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/DeactivateServiceCategoryRequest"
       responses:
         '200':
           description: PATCH /service_categories/{id}/deactivate -> 200
@@ -1800,6 +1567,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: DeactivateServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1825,8 +1593,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/MoveDownServiceCategoryRequest"
       responses:
         '200':
           description: PATCH /service_categories/{id}/move_down -> 200
@@ -1885,6 +1652,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: MoveDownServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1910,8 +1678,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/MoveUpServiceCategoryRequest"
       responses:
         '200':
           description: PATCH /service_categories/{id}/move_up -> 200
@@ -1970,6 +1737,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: MoveUpServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -1995,8 +1763,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/ReactivateServiceCategoryRequest"
       responses:
         '200':
           description: PATCH /service_categories/{id}/reactivate -> 200
@@ -2050,6 +1817,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: ReactivateServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -2206,38 +1974,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                vehicle_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      _destroy:
-                        type: string
-                    required:
-                    - id
-                    - _destroy
-                customer_tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      _destroy:
-                        type: string
-                    required:
-                    - id
+              "$ref": "#/components/schemas/UpdateTagsRequest"
       description: Update a tags by ID.
       operationId: update_tags
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/settings/tags.json
+      x-wenmar-request-schema: UpdateTagsRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -2433,12 +2176,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/CreateVehicleTagRequest"
       responses:
         '201':
           description: POST /vehicle_tags -> 201
@@ -2467,6 +2205,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags.json
+      x-wenmar-request-schema: CreateVehicleTagRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -2540,12 +2279,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/UpdateVehicleTagRequest"
       responses:
         '200':
           description: PATCH /vehicle_tags/{id} -> 200
@@ -2575,6 +2309,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags/<id>.json
+      x-wenmar-request-schema: UpdateVehicleTagRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -2675,64 +2410,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                vehicle:
-                  type: object
-                  properties:
-                    make:
-                      type: string
-                    model:
-                      type: string
-                    year:
-                      type: integer
-                    customer_id:
-                      type: integer
-                    vin:
-                      type: string
-                    submodel:
-                      type: string
-                    body_style:
-                      type: string
-                    engine:
-                      type: string
-                    transmission:
-                      type: string
-                    drivetrain:
-                      type: string
-                    color:
-                      type: string
-                    license_plate:
-                      type: string
-                    license_plate_state:
-                      type: string
-                    odometer_reading:
-                      type: integer
-                    odometer_unit:
-                      type: string
-                    unit_number:
-                      type: string
-                    fleet_identifier:
-                      type: string
-                    notes:
-                      type: string
-                    production_date:
-                      type: string
-                    vehicle_tag_ids:
-                      type: array
-                      items: {}
-                  required:
-                  - make
-                  - model
-                  - year
-                  - customer_id
-              required:
-              - vehicle
+              "$ref": "#/components/schemas/CreateVehicleRequest"
       description: Create a vehicle.
       operationId: create_vehicle
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles.json
+      x-wenmar-request-schema: CreateVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3043,45 +2727,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                vehicle:
-                  type: object
-                  properties:
-                    make:
-                      type: string
-                    model:
-                      type: string
-                    year:
-                      type: integer
-                    vin:
-                      type: string
-                    submodel:
-                      type: string
-                    body_style:
-                      type: string
-                    engine:
-                      type: string
-                    transmission:
-                      type: string
-                    drivetrain:
-                      type: string
-                    color:
-                      type: string
-                    license_plate:
-                      type: string
-                    license_plate_state:
-                      type: string
-                    odometer_reading:
-                      type: integer
-                    odometer_unit:
-                      type: string
-                    notes:
-                      type: string
-                  required:
-                  - make
-              required:
-              - vehicle
+              "$ref": "#/components/schemas/UpdateVehicleRequest"
       responses:
         '200':
           description: PATCH /vehicles/{id} -> 200
@@ -3094,6 +2740,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: UpdateVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3271,17 +2918,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                source_vehicle_id:
-                  type: integer
-              required:
-              - source_vehicle_id
+              "$ref": "#/components/schemas/MergeVehicleRequest"
       description:
       operationId: merge_vehicle
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: MergeVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3470,20 +3113,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                customer_id:
-                  type: integer
-                mode:
-                  type: string
-              required:
-              - customer_id
-              - mode
+              "$ref": "#/components/schemas/TransferVehicleRequest"
       description:
       operationId: transfer_vehicle
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: TransferVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3638,20 +3274,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                work_order:
-                  type: object
-                  properties:
-                    customer_id:
-                      type: integer
-                    vehicle_id:
-                      type: integer
-                  required:
-                  - customer_id
-                  - vehicle_id
-              required:
-              - work_order
+              "$ref": "#/components/schemas/CreateWorkOrderRequest"
       responses:
         '201':
           description: POST /work_orders -> 201
@@ -3664,6 +3287,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders.json
+      x-wenmar-request-schema: CreateWorkOrderRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3747,17 +3371,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                work_order:
-                  type: object
-                  properties:
-                    intake_method:
-                      type: string
-                  required:
-                  - intake_method
-              required:
-              - work_order
+              "$ref": "#/components/schemas/UpdateWorkOrderRequest"
       responses:
         '200':
           description: PATCH /work_orders/{id} -> 200
@@ -3781,6 +3395,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
+      x-wenmar-request-schema: UpdateWorkOrderRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3911,25 +3526,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                authorization_method:
-                  type: string
-                service_ids:
-                  type: array
-                  items:
-                    type: integer
-                service_decisions:
-                  type: object
-                  properties:
-                    '1047559673':
-                      type: string
-                  required:
-                  - '1047559673'
-              required:
-              - authorization_method
-              - service_ids
-              - service_decisions
+              "$ref": "#/components/schemas/CreateWorkOrderAuthorizationRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/authorization -> 200
@@ -4235,6 +3832,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/authorization.json
+      x-wenmar-request-schema: CreateWorkOrderAuthorizationRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -4260,17 +3858,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                service_decision_reasons:
-                  type: object
-                  properties:
-                    '1047559673':
-                      type: string
-                  required:
-                  - '1047559673'
-              required:
-              - service_decision_reasons
+              "$ref": "#/components/schemas/UpdateWorkOrderAuthorizationDecisionsRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/authorization/update_decisions
@@ -4553,6 +4141,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/authorization/update_decisions.json
+      x-wenmar-request-schema: UpdateWorkOrderAuthorizationDecisionsRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -5360,20 +4949,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                closure_type:
-                  type: string
-                closure_reason:
-                  type: string
-              required:
-              - closure_type
-              - closure_reason
+              "$ref": "#/components/schemas/CloseWorkOrderRequest"
       description:
       operationId: close_work_order
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/close.json
+      x-wenmar-request-schema: CloseWorkOrderRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -5399,8 +4981,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/CloseWorkOrderAsPaidRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/close_as_paid
@@ -5683,6 +5264,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/close_as_paid.json
+      x-wenmar-request-schema: CloseWorkOrderAsPaidRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -5708,12 +5290,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                decline_reason:
-                  type: string
-              required:
-              - decline_reason
+              "$ref": "#/components/schemas/DeclineAllWorkOrderServicesRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/decline_all ->
@@ -5996,6 +5573,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/decline_all.json
+      x-wenmar-request-schema: DeclineAllWorkOrderServicesRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -6021,8 +5599,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/ReopenWorkOrderRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/reopen -> 200
@@ -6315,6 +5892,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/reopen.json
+      x-wenmar-request-schema: ReopenWorkOrderRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -6340,8 +5918,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/ReturnWorkOrderToBoardRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/return_to_board
@@ -6609,6 +6186,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/return_to_board.json
+      x-wenmar-request-schema: ReturnWorkOrderToBoardRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -6634,8 +6212,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              "$ref": "#/components/schemas/SaveWorkOrderForLaterRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/save_for_later
@@ -6903,6 +6480,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/save_for_later.json
+      x-wenmar-request-schema: SaveWorkOrderForLaterRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -6928,12 +6506,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                target:
-                  type: string
-              required:
-              - target
+              "$ref": "#/components/schemas/StageTransitionWorkOrderRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/lifecycle/stage_transition
@@ -7216,6 +6789,7 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/lifecycle/stage_transition.json
+      x-wenmar-request-schema: StageTransitionWorkOrderRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -7720,20 +7294,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                payment:
-                  type: object
-                  properties:
-                    method:
-                      type: string
-                    amount_cents:
-                      type: string
-                  required:
-                  - method
-                  - amount_cents
-              required:
-              - payment
+              "$ref": "#/components/schemas/CreateWorkOrderPaymentRequest"
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/payments -> 201
@@ -7839,6 +7400,7 @@ paths:
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/payments.json
+      x-wenmar-request-schema: CreateWorkOrderPaymentRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -9003,3 +8565,540 @@ components:
       - code
       - message
       - field_errors
+    CreateCustomerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    UpdateCustomerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    CreateCustomerRequest:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            company_name:
+              type: string
+            fleet_identifier:
+              type: string
+            billing_terms:
+              type: string
+            credit_limit_cents:
+              type: string
+            tax_exempt:
+              type: boolean
+            tax_exempt_number:
+              type: string
+            notes:
+              type: string
+            marketing_opt_in:
+              type: boolean
+            discount_percent:
+              type: string
+            po_required:
+              type: boolean
+            tag_ids:
+              type: array
+              items: {}
+            emails_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  label:
+                    type: string
+                  primary:
+                    type: boolean
+                required:
+                - email
+                - label
+                - primary
+            phones_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  number:
+                    type: string
+                  label:
+                    type: string
+                  primary:
+                    type: boolean
+                required:
+                - number
+                - label
+                - primary
+            addresses_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  address1:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  country:
+                    type: string
+                  is_billing:
+                    type: boolean
+                required:
+                - address1
+                - city
+                - state
+                - postal_code
+                - country
+                - is_billing
+          required:
+          - first_name
+          - last_name
+      required:
+      - customer
+    CreateDriverRequest:
+      type: object
+      properties:
+        driver:
+          type: object
+          properties:
+            full_name:
+              type: string
+            phone:
+              type: string
+          required:
+          - full_name
+          - phone
+      required:
+      - driver
+    UpdateDriverRequest:
+      type: object
+      properties:
+        driver:
+          type: object
+          properties:
+            full_name:
+              type: string
+          required:
+          - full_name
+      required:
+      - driver
+    UpdateCustomerRequest:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            phones_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    nullable: true
+                  _destroy:
+                    type: boolean
+                    nullable: true
+                  number:
+                    type: string
+                    nullable: true
+                  label:
+                    type: string
+                    nullable: true
+                  primary:
+                    type: boolean
+                    nullable: true
+            first_name:
+              type: string
+            last_name:
+              type: string
+            company_name:
+              type: string
+            fleet_identifier:
+              type: string
+            billing_terms:
+              type: string
+            credit_limit_cents:
+              type: string
+            tax_exempt:
+              type: boolean
+            notes:
+              type: string
+            marketing_opt_in:
+              type: boolean
+            discount_percent:
+              type: string
+            po_required:
+              type: boolean
+            emails_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    nullable: true
+                  email:
+                    type: string
+                  label:
+                    type: string
+                    nullable: true
+                required:
+                - email
+            addresses_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  address1:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  country:
+                    type: string
+                  is_billing:
+                    type: boolean
+                required:
+                - address1
+                - city
+                - state
+                - postal_code
+                - country
+                - is_billing
+      required:
+      - customer
+    MergeCustomerRequest:
+      type: object
+      properties:
+        source_customer_id:
+          type: integer
+      required:
+      - source_customer_id
+    CreateServiceCategoryRequest:
+      type: object
+      properties:
+        service_category:
+          type: object
+          properties:
+            name:
+              type: string
+            service_type:
+              type: string
+            icon:
+              type: string
+          required:
+          - name
+          - service_type
+          - icon
+      required:
+      - service_category
+    SeedDefaultsServiceCategoriesRequest:
+      type: object
+      properties: {}
+    UpdateServiceCategoryRequest:
+      type: object
+      properties:
+        service_category:
+          type: object
+          properties:
+            name:
+              type: string
+          required:
+          - name
+      required:
+      - service_category
+    DeactivateServiceCategoryRequest:
+      type: object
+      properties: {}
+    MoveDownServiceCategoryRequest:
+      type: object
+      properties: {}
+    MoveUpServiceCategoryRequest:
+      type: object
+      properties: {}
+    ReactivateServiceCategoryRequest:
+      type: object
+      properties: {}
+    UpdateTagsRequest:
+      type: object
+      properties:
+        vehicle_tags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              _destroy:
+                type: string
+            required:
+            - id
+            - _destroy
+        customer_tags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              _destroy:
+                type: string
+            required:
+            - id
+    CreateVehicleTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    UpdateVehicleTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    CreateVehicleRequest:
+      type: object
+      properties:
+        vehicle:
+          type: object
+          properties:
+            make:
+              type: string
+            model:
+              type: string
+            year:
+              type: integer
+            customer_id:
+              type: integer
+            vin:
+              type: string
+            submodel:
+              type: string
+            body_style:
+              type: string
+            engine:
+              type: string
+            transmission:
+              type: string
+            drivetrain:
+              type: string
+            color:
+              type: string
+            license_plate:
+              type: string
+            license_plate_state:
+              type: string
+            odometer_reading:
+              type: integer
+            odometer_unit:
+              type: string
+            unit_number:
+              type: string
+            fleet_identifier:
+              type: string
+            notes:
+              type: string
+            production_date:
+              type: string
+            vehicle_tag_ids:
+              type: array
+              items: {}
+          required:
+          - make
+          - model
+          - year
+          - customer_id
+      required:
+      - vehicle
+    UpdateVehicleRequest:
+      type: object
+      properties:
+        vehicle:
+          type: object
+          properties:
+            make:
+              type: string
+            model:
+              type: string
+            year:
+              type: integer
+            vin:
+              type: string
+            submodel:
+              type: string
+            body_style:
+              type: string
+            engine:
+              type: string
+            transmission:
+              type: string
+            drivetrain:
+              type: string
+            color:
+              type: string
+            license_plate:
+              type: string
+            license_plate_state:
+              type: string
+            odometer_reading:
+              type: integer
+            odometer_unit:
+              type: string
+            notes:
+              type: string
+          required:
+          - make
+      required:
+      - vehicle
+    MergeVehicleRequest:
+      type: object
+      properties:
+        source_vehicle_id:
+          type: integer
+      required:
+      - source_vehicle_id
+    TransferVehicleRequest:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        mode:
+          type: string
+      required:
+      - customer_id
+      - mode
+    CreateWorkOrderRequest:
+      type: object
+      properties:
+        work_order:
+          type: object
+          properties:
+            customer_id:
+              type: integer
+            vehicle_id:
+              type: integer
+          required:
+          - customer_id
+          - vehicle_id
+      required:
+      - work_order
+    UpdateWorkOrderRequest:
+      type: object
+      properties:
+        work_order:
+          type: object
+          properties:
+            intake_method:
+              type: string
+          required:
+          - intake_method
+      required:
+      - work_order
+    CreateWorkOrderAuthorizationRequest:
+      type: object
+      properties:
+        authorization_method:
+          type: string
+        service_ids:
+          type: array
+          items:
+            type: integer
+        service_decisions:
+          type: object
+          properties:
+            '1047559673':
+              type: string
+          required:
+          - '1047559673'
+      required:
+      - authorization_method
+      - service_ids
+      - service_decisions
+    UpdateWorkOrderAuthorizationDecisionsRequest:
+      type: object
+      properties:
+        service_decision_reasons:
+          type: object
+          properties:
+            '1047559673':
+              type: string
+          required:
+          - '1047559673'
+      required:
+      - service_decision_reasons
+    CloseWorkOrderRequest:
+      type: object
+      properties:
+        closure_type:
+          type: string
+        closure_reason:
+          type: string
+      required:
+      - closure_type
+      - closure_reason
+    CloseWorkOrderAsPaidRequest:
+      type: object
+      properties: {}
+    DeclineAllWorkOrderServicesRequest:
+      type: object
+      properties:
+        decline_reason:
+          type: string
+      required:
+      - decline_reason
+    ReopenWorkOrderRequest:
+      type: object
+      properties: {}
+    ReturnWorkOrderToBoardRequest:
+      type: object
+      properties: {}
+    SaveWorkOrderForLaterRequest:
+      type: object
+      properties: {}
+    StageTransitionWorkOrderRequest:
+      type: object
+      properties:
+        target:
+          type: string
+      required:
+      - target
+    CreateWorkOrderPaymentRequest:
+      type: object
+      properties:
+        payment:
+          type: object
+          properties:
+            method:
+              type: string
+            amount_cents:
+              type: string
+          required:
+          - method
+          - amount_cents
+      required:
+      - payment
