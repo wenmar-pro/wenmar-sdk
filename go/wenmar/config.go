@@ -23,6 +23,12 @@ type Config struct {
 	// HTTPClient is the underlying http.Client. If nil, a new one is
 	// built with the Timeout and transport stack (retry + caching).
 	HTTPClient *http.Client
+	// Token is a static bearer token. Prefer TokenProvider for rotation.
+	Token string
+	// TokenProvider resolves a token per request. Takes precedence over Token.
+	TokenProvider TokenProvider
+	// Hooks receives observability callbacks. Defaults to NoopHooks.
+	Hooks Hooks
 }
 
 // DefaultConfig returns a Config with production defaults.

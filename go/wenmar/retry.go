@@ -26,9 +26,12 @@ type retryTransport struct {
 	baseDelay   time.Duration
 }
 
-func newRetryTransportWithRetries(maxRetries int) *retryTransport {
+func newRetryTransportWithRetries(maxRetries int, base http.RoundTripper) *retryTransport {
+	if base == nil {
+		base = http.DefaultTransport
+	}
 	return &retryTransport{
-		transport:  http.DefaultTransport,
+		transport:  base,
 		maxRetries: maxRetries,
 		baseDelay:  500 * time.Millisecond,
 	}
@@ -36,7 +39,7 @@ func newRetryTransportWithRetries(maxRetries int) *retryTransport {
 
 // Keep the old constructor for backwards compatibility within the package.
 func newRetryTransport() *retryTransport {
-	return newRetryTransportWithRetries(3)
+	return newRetryTransportWithRetries(3, http.DefaultTransport)
 }
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -44,6 +47,15 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	var err error
 
 	for attempt := 0; attempt <= t.maxRetries; attempt++ {
+		// Rewind a replayable request body so retries send the same payload.
+		if req.Body != nil && req.GetBody != nil {
+			body, err := req.GetBody()
+			if err != nil {
+				return nil, err
+			}
+			req.Body = body
+		}
+
 		resp, err = t.transport.RoundTrip(req)
 		if err != nil || !isRetryableStatus(req.Method, resp.StatusCode) {
 			return resp, err

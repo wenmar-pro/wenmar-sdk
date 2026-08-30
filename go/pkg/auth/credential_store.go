@@ -19,8 +19,9 @@ type CredentialStore interface {
 }
 
 const (
-	keyringService = "wenmar-cli"
-	keyringUser    = "token"
+	keyringService      = "wenmar"
+	legacyKeyringService = "wenmar-cli"
+	keyringUser         = "token"
 )
 
 // KeyringStore uses the system keyring (macOS Keychain, Windows Credential
@@ -31,8 +32,29 @@ type KeyringStore struct{}
 // to preserve refresh_token and expires_at. Falls back to treating the
 // stored value as a raw access token string for backward compatibility
 // with old static-token entries.
+//
+// The keyring service is now "wenmar". A token stored under the legacy
+// "wenmar-cli" service is read and migrated to the new service (read-old,
+// write-new), then removed from the legacy slot.
 func (KeyringStore) GetToken(_ context.Context) (*Token, error) {
-	raw, err := keyring.Get(keyringService, keyringUser)
+	tok, err := getFromService(keyringService)
+	if err == nil {
+		return tok, nil
+	}
+	// Legacy fallback + migrate.
+	legacy, legacyErr := getFromService(legacyKeyringService)
+	if legacyErr != nil {
+		return nil, legacyErr
+	}
+	if data, marshalErr := json.Marshal(legacy); marshalErr == nil {
+		_ = keyring.Set(keyringService, keyringUser, string(data))
+	}
+	_ = keyring.Delete(legacyKeyringService, keyringUser)
+	return legacy, nil
+}
+
+func getFromService(service string) (*Token, error) {
+	raw, err := keyring.Get(service, keyringUser)
 	if err != nil {
 		return nil, err
 	}

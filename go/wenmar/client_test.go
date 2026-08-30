@@ -12,16 +12,17 @@ var ctx = context.Background()
 
 func strPtr(s string) *string { return &s }
 
+func intPtr(i int) *int { return &i }
+
 func TestNewClient_WithConfigAndTokenProvider(t *testing.T) {
 	cfg := DefaultConfig()
 	cfg.BaseURL = "https://localhost" // will be overwritten by httptest below
-	tp := NewStaticTokenProvider("test-token")
-	c, err := NewClient(cfg, tp)
+	c, err := NewClient(cfg, NewStaticTokenProvider("test-token"))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if c.Token != "test-token" {
-		t.Errorf("expected token 'test-token', got %q", c.Token)
+	if c.BaseURL != "https://localhost" {
+		t.Errorf("expected BaseURL 'https://localhost', got %q", c.BaseURL)
 	}
 }
 
@@ -33,15 +34,23 @@ func TestNewClient_SetsBaseURL(t *testing.T) {
 	if c.BaseURL != "https://app.wenmarpro.com" {
 		t.Errorf("expected BaseURL 'https://app.wenmarpro.com', got '%s'", c.BaseURL)
 	}
-	if c.Token != "test-token" {
-		t.Errorf("expected Token 'test-token', got '%s'", c.Token)
-	}
 }
 
 func TestNewClient_EmptyToken(t *testing.T) {
-	_, err := NewClient(DefaultConfig(), NewStaticTokenProvider(""))
+	c, err := NewClient(DefaultConfig(), NewStaticTokenProvider(""))
+	if err != nil {
+		t.Fatalf("expected construction to succeed (token resolved per request), got: %v", err)
+	}
+	// The empty token surfaces as a transport error on the first request.
+	if _, err := c.ListCustomers(ctx, nil); err == nil {
+		t.Error("expected error for empty token on request")
+	}
+}
+
+func TestNewClient_RequiresTokenProvider(t *testing.T) {
+	_, err := NewClient(Config{BaseURL: "https://app.wenmarpro.com"}, nil)
 	if err == nil {
-		t.Error("expected error for empty token")
+		t.Error("expected error when no token provider is given")
 	}
 }
 
@@ -56,7 +65,7 @@ func TestClient_AuthHeader(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "my-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -74,7 +83,7 @@ func TestClient_ListCustomers(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.ListCustomers(ctx)
+	resp, err := c.ListCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -98,12 +107,10 @@ func TestClient_CreateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	req := CreateVehicleRequest{
-		CustomerID: 1,
-		Make:       "Honda",
-		Model:      "Civic",
-		Year:       2020,
-	}
+	req := CreateVehicleRequest{}
+	req.Vehicle.Make = "Honda"
+	req.Vehicle.Model = "Civic"
+	req.Vehicle.Year = 2020
 
 	resp, err := c.CreateVehicle(ctx, req)
 	if err != nil {
@@ -126,9 +133,8 @@ func TestClient_UpdateVehicle(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	req := UpdateVehicleRequest{
-		Make: "Toyota",
-	}
+	req := UpdateVehicleRequest{}
+	req.Vehicle.Make = "Toyota"
 
 	resp, err := c.UpdateVehicle(ctx, 1, req)
 	if err != nil {
@@ -170,7 +176,7 @@ func TestClient_DecodeVin(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.DecodeVin(ctx, "1HGCM82633A004352")
+	resp, err := c.DecodeVin(ctx, &DecodeVinParams{Vin: strPtr("1HGCM82633A004352")})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -191,7 +197,7 @@ func TestClient_CheckDuplicate(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.CheckVehicleDuplicate(ctx, CheckVehicleDuplicateParams{Vin: strPtr("ABC123")})
+	resp, err := c.CheckVehicleDuplicate(ctx, &CheckVehicleDuplicateParams{Vin: strPtr("ABC123")})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -232,7 +238,7 @@ func TestClient_ListVehicles(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.ListVehicles(ctx)
+	resp, err := c.ListVehicles(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -292,7 +298,7 @@ func TestClient_ErrorMapping(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error":{"code":"not_found","message":"Customer not found","details":{}}}`))
+		w.Write([]byte(`{"error":{"code":"not_found","message":"Customer not found","field_errors":{}}}`))
 	}))
 	defer ts.Close()
 
@@ -362,8 +368,48 @@ func TestClient_StripsAuthOnCrossOriginRedirect(t *testing.T) {
 	defer origin.Close()
 
 	c := newTestClient(t, origin.URL, "test-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
+	}
+}
+
+func TestForLocation_InjectsHeader(t *testing.T) {
+	var capturedLoc string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		capturedLoc = r.Header.Get("X-Wenmar-Location")
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[]`))
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+	scoped := c.ForLocation("42")
+	if _, err := scoped.ListCustomers(ctx, nil); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if capturedLoc != "42" {
+		t.Errorf("expected X-Wenmar-Location '42', got %q", capturedLoc)
+	}
+}
+
+func TestForLocation_DoesNotMutateParent(t *testing.T) {
+	var capturedLoc string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		capturedLoc = r.Header.Get("X-Wenmar-Location")
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[]`))
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+	_ = c.ForLocation("42")
+	if _, err := c.ListCustomers(ctx, nil); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if capturedLoc != "" {
+		t.Errorf("parent client should not carry location header, got %q", capturedLoc)
 	}
 }

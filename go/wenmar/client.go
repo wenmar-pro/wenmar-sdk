@@ -7,24 +7,48 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
+	gen "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 )
 
+// TokenProvider resolves a bearer token for a request. Implementations may
+// refresh or rotate the token; the provider is called per request.
+type TokenProvider interface {
+	Token(ctx context.Context) (string, error)
+}
+
+type staticToken string
+
+func (s staticToken) Token(context.Context) (string, error) { return string(s), nil }
+
+// StaticTokenProvider returns a fixed token. Suitable for simple scripts and
+// tests.
+type StaticTokenProvider struct {
+	token string
+}
+
+// NewStaticTokenProvider creates a TokenProvider that always returns the
+// given token.
+func NewStaticTokenProvider(token string) *StaticTokenProvider {
+	return &StaticTokenProvider{token: token}
+}
+
+func (p *StaticTokenProvider) Token(context.Context) (string, error) {
+	if p.token == "" {
+		return "", fmt.Errorf("token is empty")
+	}
+	return p.token, nil
+}
+
+// Client is the hand-written SDK entry point. All 76 operations are generated
+// into operations.gen.go and share the core request pipeline defined here.
 type Client struct {
 	BaseURL  string
-	Token    string
 	cfg      Config
 	tp       TokenProvider
 	http     *http.Client
-	gen      *generated.ClientWithResponses
-	location *locationHolder
+	gen      *gen.ClientWithResponses
+	location string
 	hooks    Hooks
-}
-
-// locationHolder is a shared pointer so a scoped LocationClient and its
-// underlying Client inject the same X-Wenmar-Location header.
-type locationHolder struct {
-	id string
 }
 
 // NewClient creates a Wenmar API client from the given Config and
@@ -35,7 +59,6 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 		return nil, fmt.Errorf("token provider is required")
 	}
 
-	// Deep-copy config to prevent post-construction mutation.
 	cfgCopy := cfg
 	if cfgCopy.BaseURL == "" {
 		cfgCopy.BaseURL = DefaultConfig().BaseURL
@@ -43,27 +66,18 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 	if err := requireHTTPS(cfgCopy.BaseURL); err != nil {
 		return nil, err
 	}
-
-	// Resolve the token once at construction (for fetchURL/pagination).
-	// A TokenProvider that rotates tokens per-request is supported by
-	// a request-editor wrapper, but the pagination path needs the token
-	// eagerly. For now, StaticTokenProvider and CredentialStore both
-	// return a stable token.
-	token, err := tp.Token(context.Background())
-	if err != nil {
-		return nil, fmt.Errorf("failed to resolve token: %w", err)
-	}
-
-	var transport http.RoundTripper = http.DefaultTransport
-	if cfgCopy.MaxRetries > 0 {
-		transport = newRetryTransportWithRetries(cfgCopy.MaxRetries)
-	}
-	if cfgCopy.CacheEnabled {
-		transport = newCachingTransport(transport)
-	}
+	cfgCopy.BaseURL = strings.TrimSuffix(cfgCopy.BaseURL, "/")
 
 	httpClient := cfgCopy.HTTPClient
 	if httpClient == nil {
+		// Build the transport stack bottom-up: caching -> retry -> base.
+		var transport http.RoundTripper = http.DefaultTransport
+		if cfgCopy.CacheEnabled {
+			transport = newCachingTransport(transport)
+		}
+		if cfgCopy.MaxRetries > 0 {
+			transport = newRetryTransportWithRetries(cfgCopy.MaxRetries, transport)
+		}
 		httpClient = &http.Client{
 			Transport:     transport,
 			Timeout:       cfgCopy.Timeout,
@@ -71,38 +85,48 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 		}
 	}
 
-	loc := &locationHolder{}
-	gen, err := generated.NewClientWithResponses(cfgCopy.BaseURL,
-		generated.WithHTTPClient(httpClient),
-		generated.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
-			req.Header.Set("Authorization", "Bearer "+token)
-			req.Header.Set("Accept", "application/json")
-			req.Header.Set("User-Agent", fmt.Sprintf("wenmar-sdk-go/%s", Version))
-			if loc.id != "" {
-				req.Header.Set("X-Wenmar-Location", loc.id)
-			}
-			return nil
-		}),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create client: %w", err)
-	}
-
 	c := &Client{
-		BaseURL:  cfgCopy.BaseURL,
-		Token:    token,
-		cfg:      cfgCopy,
-		tp:       tp,
-		http:     httpClient,
-		gen:      gen,
-		location: loc,
-		hooks:    NoopHooks{},
+		BaseURL: cfgCopy.BaseURL,
+		cfg:     cfgCopy,
+		tp:      tp,
+		http:    httpClient,
+		hooks:   NoopHooks{},
+	}
+	if cfgCopy.Hooks != nil {
+		c.hooks = cfgCopy.Hooks
 	}
 	for _, opt := range opts {
 		opt(c)
 	}
+
+	genClient, err := gen.NewClientWithResponses(cfgCopy.BaseURL,
+		gen.WithHTTPClient(httpClient),
+		gen.WithRequestEditorFn(c.requestEditor),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create client: %w", err)
+	}
+	c.gen = genClient
 	return c, nil
 }
+
+// requestEditor is called by the generated client before every request. It
+// resolves the token per request and sets common headers, including the
+// X-Wenmar-Location header when the client is location-scoped.
+func (c *Client) requestEditor(ctx context.Context, req *http.Request) error {
+	token, err := c.tp.Token(ctx)
+	if err != nil {
+		return fmt.Errorf("token provider: %w", err)
+	}
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "wenmar-sdk-go/"+Version)
+	if c.location != "" {
+		req.Header.Set("X-Wenmar-Location", c.location)
+	}
+	return nil
+}
+
 // requireHTTPS rejects non-https URLs unless the host is localhost or 127.0.0.1.
 func requireHTTPS(baseURL string) error {
 	parsed, err := url.Parse(baseURL)
@@ -119,10 +143,9 @@ func requireHTTPS(baseURL string) error {
 	return fmt.Errorf("base URL must use https (got %q); http is only allowed for localhost", baseURL)
 }
 
-// stripAuthOnCrossOriginRedirect is the CheckRedirect policy: it preserves
-// all headers for same-origin redirects but drops the Authorization header
-// when the redirect target has a different scheme or host, preventing
-// credential leakage to third parties.
+// stripAuthOnCrossOriginRedirect drops the Authorization header when a
+// redirect target has a different scheme or host, preventing credential
+// leakage to third parties.
 func stripAuthOnCrossOriginRedirect(req *http.Request, via []*http.Request) error {
 	if len(via) == 0 {
 		return nil
@@ -134,8 +157,28 @@ func stripAuthOnCrossOriginRedirect(req *http.Request, via []*http.Request) erro
 	return nil
 }
 
-// parseError converts a failed response into an *APIError, capturing the
-// request method and path for diagnostics.
+// ForLocation returns a scoped client that injects X-Wenmar-Location on every
+// request. The parent client is not mutated.
+func (c *Client) ForLocation(locationID string) *Client {
+	if locationID == "" {
+		return c
+	}
+	child := *c
+	child.location = locationID
+	// Re-create the generated client so the request editor closure reads the
+	// child's location value.
+	genClient, err := gen.NewClientWithResponses(child.BaseURL,
+		gen.WithHTTPClient(child.http),
+		gen.WithRequestEditorFn(child.requestEditor),
+	)
+	if err == nil {
+		child.gen = genClient
+	}
+	return &child
+}
+
+// parseError converts a failed generated response into an *APIError using the
+// already-drained body bytes (oapi-codegen drains the body into resp.Body).
 func parseError(body []byte, statusCode int, hr *http.Response) error {
 	method, path, requestID := "", "", ""
 	if hr != nil && hr.Request != nil {
@@ -148,177 +191,33 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, requestID)
 }
 
-func (c *Client) ListCustomers(ctx context.Context) (*ListCustomersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
-	resp, err := c.gen.ListCustomersWithResponse(ctx, nil)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
-	return resp, nil
-}
-
-func (c *Client) ListCustomersWithPagination(ctx context.Context) (*ListCustomersResponse, *Paginator, error) {
-	resp, err := c.ListCustomers(ctx)
-	if err != nil {
-		return nil, nil, err
-	}
-	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
-	return resp, paginator, nil
-}
-
-// ListCustomersWithParams lists customers filtered by the given params
-// (query, type, has_vehicle, has_balance, tag_ids) with pagination
-// (page, per_page).
-func (c *Client) ListCustomersWithParams(ctx context.Context, params ListCustomersParams) (*ListCustomersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
-	resp, err := c.gen.ListCustomersWithResponse(ctx, &params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
-	return resp, nil
-}
-
-// ListCustomersWithParamsWithPagination is the filter-accepting variant of
-// ListCustomersWithPagination.
-func (c *Client) ListCustomersWithParamsWithPagination(ctx context.Context, params ListCustomersParams) (*ListCustomersResponse, *Paginator, error) {
-	resp, err := c.ListCustomersWithParams(ctx, params)
-	if err != nil {
-		return nil, nil, err
-	}
-	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
-	return resp, paginator, nil
-}
-
-func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
-	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
+// collectAll follows the Link header from a first page body, appending items
+func collectAll[T any](ctx context.Context, c *Client, body []byte, link string, max int) ([]T, error) {
+	items, err := parseListResponse[T](body)
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+	if max > 0 && len(items) >= max {
+		return items[:max], nil
 	}
-	return resp, nil
-}
-
-func (c *Client) ListVehicles(ctx context.Context) (*ListVehiclesResponse, error) {
-	resp, err := c.gen.ListVehiclesWithResponse(ctx, nil)
-	if err != nil {
-		return nil, err
+	nextURL := parseLinkHeader(link, "next")
+	for nextURL != "" {
+		nextBody, nextLink, err := c.fetchURL(ctx, nextURL)
+		if err != nil {
+			return nil, err
+		}
+		nextItems, err := parseListResponse[T](nextBody)
+		if err != nil {
+			return nil, err
+		}
+		if max > 0 && len(items)+len(nextItems) > max {
+			nextItems = nextItems[:max-len(items)]
+		}
+		items = append(items, nextItems...)
+		if max > 0 && len(items) >= max {
+			return items, nil
+		}
+		nextURL = parseLinkHeader(nextLink, "next")
 	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse, error) {
-	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) DeleteVehicle(ctx context.Context, id int) (*DeleteVehicleResponse, error) {
-	resp, err := c.gen.DeleteVehicleWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) DecodeVin(ctx context.Context, vin string) (*DecodeVinResponse, error) {
-	params := &generated.DecodeVinParams{Vin: &vin}
-	resp, err := c.gen.DecodeVinWithResponse(ctx, params)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) ListWorkOrders(ctx context.Context) (*ListWorkOrdersResponse, error) {
-	resp, err := c.gen.ListWorkOrdersWithResponse(ctx)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) ListWorkOrdersWithPagination(ctx context.Context) (*ListWorkOrdersResponse, *Paginator, error) {
-	resp, err := c.ListWorkOrders(ctx)
-	if err != nil {
-		return nil, nil, err
-	}
-	paginator := newPaginatorFromResponse(resp.HTTPResponse, c)
-	return resp, paginator, nil
-}
-
-func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*ShowWorkOrderResponse, error) {
-	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*DeleteWorkOrderResponse, error) {
-	resp, err := c.gen.DeleteWorkOrderWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) {
-	resp, err := c.gen.ListAccountWithResponse(ctx)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
-}
-
-func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResponse, error) {
-	resp, err := c.gen.ShowLocationWithResponse(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-	}
-	return resp, nil
+	return items, nil
 }

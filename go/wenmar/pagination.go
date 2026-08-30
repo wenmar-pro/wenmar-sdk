@@ -3,7 +3,6 @@ package wenmar
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -209,9 +208,9 @@ func (c *Client) fetchURL(ctx context.Context, url string) ([]byte, string, erro
 	if err != nil {
 		return nil, "", err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.Token)
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", fmt.Sprintf("wenmar-sdk-go/%s", Version))
+	if err := c.requestEditor(ctx, req); err != nil {
+		return nil, "", err
+	}
 
 	resp, err := c.http.Do(req)
 	if err != nil {

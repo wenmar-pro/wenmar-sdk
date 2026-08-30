@@ -1,8 +1,10 @@
 package wenmar
 
 import (
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync/atomic"
 	"testing"
 )
@@ -23,7 +25,7 @@ func TestRetry_On500Then200(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("expected success after retry, got error: %v", err)
 	}
@@ -42,7 +44,7 @@ func TestRetry_MaxRetriesExceeded(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err == nil {
 		t.Fatal("expected error after max retries")
 	}
@@ -96,6 +98,44 @@ func TestRetry_PostOn429Retried(t *testing.T) {
 	}
 }
 
+func TestRetry_POST429RewindsBody(t *testing.T) {
+	var calls int32
+	var bodies []string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		buf := new(strings.Builder)
+		io.Copy(buf, r.Body)
+		bodies = append(bodies, buf.String())
+		n := atomic.AddInt32(&calls, 1)
+		if n == 1 {
+			w.Header().Set("Retry-After", "0")
+			w.WriteHeader(http.StatusTooManyRequests)
+			w.Write([]byte(`{"error":{"code":"rate_limited","message":"slow"}}`))
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		w.Write([]byte(`{"customer":{"id":1}}`))
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+	req := CreateCustomerRequest{}
+	req.Customer.FirstName = "Jane"
+	req.Customer.LastName = "Doe"
+	if _, err := c.CreateCustomer(ctx, req); err != nil {
+		t.Fatalf("expected success after 429 retry, got: %v", err)
+	}
+	if calls != 2 {
+		t.Fatalf("expected 2 calls, got %d", calls)
+	}
+	if len(bodies) != 2 || bodies[0] != bodies[1] {
+		t.Errorf("expected the request body to be rewound on retry, got %v", bodies)
+	}
+	if !strings.Contains(bodies[0], "Jane") {
+		t.Errorf("expected body to contain the customer first_name, got %q", bodies[0])
+	}
+}
+
 func TestRetry_RetryAfterHTTPDate(t *testing.T) {
 	var calls int32
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -113,7 +153,7 @@ func TestRetry_RetryAfterHTTPDate(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("expected success after HTTP-date Retry-After, got: %v", err)
 	}
@@ -132,7 +172,7 @@ func TestRetry_NoRetryOn4xx(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.ListCustomers(ctx)
+	_, err := c.ListCustomers(ctx, nil)
 	if err == nil {
 		t.Fatal("expected error on 404")
 	}

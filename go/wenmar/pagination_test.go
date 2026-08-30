@@ -10,8 +10,6 @@ import (
 	"testing"
 )
 
-var serverURLForTest string
-
 func TestParseLinkHeader_Next(t *testing.T) {
 	header := `<https://api.example.com/customers?page=2>; rel="next"`
 	next := parseLinkHeader(header, "next")
@@ -35,100 +33,65 @@ func TestParseLinkHeader_Empty(t *testing.T) {
 	}
 }
 
-func TestPaginator_HasNext(t *testing.T) {
-	p := &Paginator{nextURL: "https://api.example.com/customers?page=2"}
-	if !p.HasNext() {
-		t.Error("expected HasNext to be true")
-	}
-
-	p = &Paginator{nextURL: ""}
-	if p.HasNext() {
-		t.Error("expected HasNext to be false")
-	}
-}
-
-func TestNewPaginatorFromResponse(t *testing.T) {
-	resp := httptest.NewRecorder()
-	resp.Header().Set("Link", `<https://api.example.com/customers?page=2>; rel="next"`)
-	r := resp.Result()
-
-	p := newPaginatorFromResponse(r, nil)
-	if !p.HasNext() {
-		t.Error("expected paginator to have next")
-	}
-	if p.nextURL != "https://api.example.com/customers?page=2" {
-		t.Errorf("expected next URL, got '%s'", p.nextURL)
-	}
-}
-
-func TestListCustomers_TypedResult(t *testing.T) {
+func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	var serverURL string
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		if r.URL.Path == "/customers" {
-			w.Header().Set("Link", `<`+serverURL+`/customers?page=2>; rel="next"`)
-			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
-		} else {
-			w.Write([]byte(`[{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
-		}
-	}))
-	defer ts.Close()
-	serverURL = ts.URL
-
-	c := newTestClient(t, ts.URL, "test-token")
-	result, err := c.ListCustomersTyped(ctx)
-	if err != nil {
-		t.Fatalf("ListCustomersTyped failed: %v", err)
-	}
-	if len(result.Items) != 1 {
-		t.Fatalf("expected 1 item, got %d", len(result.Items))
-	}
-	if result.Items[0].Id != 1 {
-		t.Errorf("expected id 1, got %d", result.Items[0].Id)
-	}
-	if !result.Meta.HasMore {
-		t.Error("expected HasMore=true")
-	}
-}
-
-func TestGetAllCustomers_MaxItems(t *testing.T) {
 	var calls int32
-	var serverURL string
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		atomic.AddInt32(&calls, 1)
+		calls++
 		w.Header().Set("Content-Type", "application/json")
-		w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=%d>; rel="next"`, serverURL, calls+1))
+		if calls == 1 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+		}
 		w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
 	}))
 	defer ts.Close()
 	serverURL = ts.URL
 
 	c := newTestClient(t, ts.URL, "test-token")
-	items, truncated, err := c.GetAllCustomers(ctx, &GetAllOptions{MaxItems: 3})
+	items, err := c.GetAllCustomers(ctx, nil)
 	if err != nil {
 		t.Fatalf("GetAllCustomers failed: %v", err)
 	}
-	if len(items) != 3 {
-		t.Errorf("expected 3 items (capped), got %d", len(items))
+	if len(items) != 2 {
+		t.Errorf("expected 2 items across 2 pages, got %d", len(items))
 	}
-	if !truncated {
-		t.Error("expected truncated=true when max_items hit")
+	if calls != 2 {
+		t.Errorf("expected 2 calls, got %d", calls)
+	}
+}
+
+func TestGetAllCustomers_CapsAtMax(t *testing.T) {
+	var serverURL string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=next>; rel="next"`, serverURL))
+		w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"},{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test-token")
+	items, err := collectAll[Customer](ctx, c, []byte(`[]`), fmt.Sprintf(`<%s/customers?page=1>; rel="next"`, serverURL), 2)
+	if err != nil {
+		t.Fatalf("collectAll failed: %v", err)
+	}
+	if len(items) != 2 {
+		t.Errorf("expected 2 items capped, got %d", len(items))
 	}
 }
 
 func TestPaginationFollowsNextURL(t *testing.T) {
+	var serverURL string
 	requestCount := 0
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		requestCount++
 		w.Header().Set("Content-Type", "application/json")
 		if requestCount == 1 {
-			// First page: return Link header pointing to ?page=2
-			w.Header().Set("Link", `<`+serverURLForTest+`/customers?page=2>; rel="next"`)
+			w.Header().Set("Link", `<`+serverURL+`/customers?page=2>; rel="next"`)
 			w.WriteHeader(200)
 			w.Write([]byte(`[{"id":1,"full_name":"Page1Customer"}]`))
 			return
 		}
-		// Page 2: verify the request actually has ?page=2
 		if r.URL.Query().Get("page") != "2" {
 			t.Errorf("expected page=2 query param, got %q", r.URL.Query().Get("page"))
 		}
@@ -136,38 +99,37 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 		w.Write([]byte(`[{"id":2,"full_name":"Page2Customer"}]`))
 	}))
 	defer server.Close()
-	serverURLForTest = server.URL
+	serverURL = server.URL
 
 	client := newTestClient(t, server.URL, "test-token")
 
-	resp, paginator, err := client.ListCustomersWithPagination(context.Background())
+	resp, err := client.ListCustomers(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	// Verify page 1 data
 	var page1 []map[string]any
 	json.Unmarshal(resp.Body, &page1)
 	if len(page1) != 1 || page1[0]["id"] != float64(1) {
 		t.Fatalf("expected page 1 customer, got %v", page1)
 	}
 
-	if !paginator.HasNext() {
-		t.Fatal("expected paginator to have next page")
+	// Follow the Link header manually via fetchURL.
+	nextURL := parseLinkHeader(resp.HTTPResponse.Header.Get("Link"), "next")
+	if nextURL == "" {
+		t.Fatal("expected Link header with next URL")
 	}
-
-	// Fetch page 2
-	next, err := paginator.NextPage(context.Background())
+	body, link, err := client.fetchURL(context.Background(), nextURL)
 	if err != nil {
-		t.Fatalf("unexpected error on NextPage: %v", err)
+		t.Fatalf("unexpected error on fetchURL: %v", err)
 	}
-
-	page2, ok := next.([]any)
-	if !ok {
-		t.Fatalf("expected []any from NextPage, got %T", next)
-	}
-	if len(page2) != 1 || page2[0].(map[string]any)["id"] != float64(2) {
+	var page2 []map[string]any
+	json.Unmarshal(body, &page2)
+	if len(page2) != 1 || page2[0]["id"] != float64(2) {
 		t.Fatalf("expected page 2 customer (id=2), got %v", page2)
+	}
+	if parseLinkHeader(link, "next") != "" {
+		t.Errorf("expected no further next link on page 2, got %q", link)
 	}
 }
 
@@ -195,17 +157,8 @@ func TestPagination_RejectsCrossOriginNextURL(t *testing.T) {
 	defer attacker.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, paginator, err := c.ListCustomersWithPagination(ctx)
-	if err != nil {
-		t.Fatalf("first page fetch failed: %v", err)
-	}
-	resp.HTTPResponse.Body.Close()
-
-	if !paginator.HasNext() {
-		t.Fatal("expected paginator to have a next URL")
-	}
-
-	_, err = paginator.NextPage(ctx)
+	nextURL := "https://attacker.example.com/customers?page=2"
+	_, _, err := c.fetchURL(ctx, nextURL)
 	if err == nil {
 		t.Fatal("expected error on cross-origin next URL, got nil")
 	}

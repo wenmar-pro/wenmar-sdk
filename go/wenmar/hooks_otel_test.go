@@ -27,7 +27,7 @@ func TestOTelHooks_CreatesSpan(t *testing.T) {
 	ctx, span := tp.Tracer("test").Start(context.Background(), "parent")
 
 	c, _ := NewClient(cfg, NewStaticTokenProvider("test-token"), WithHooks(hooks))
-	_, _ = c.ListCustomers(ctx)
+	_, _ = c.ListCustomers(ctx, nil)
 	span.End()
 
 	spans := exporter.GetSpans()

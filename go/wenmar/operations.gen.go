@@ -3,17 +3,7 @@
 
 package wenmar
 
-import (
-	"context"
-	"net/http"
-)
-
-// genResponse is satisfied by every generated raw response struct.
-type genResponse interface {
-	StatusCode() int
-	Body []byte
-	HTTPResponse() *http.Response
-}
+import "context"
 
 // ListAccount runs the list_account operation (GET /account).
 func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) {
@@ -24,7 +14,7 @@ func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) 
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount", Err: perr})
 		return nil, perr
 	}
@@ -41,7 +31,7 @@ func (c *Client) ListCustomerTags(ctx context.Context) (*ListCustomerTagsRespons
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags", Err: perr})
 		return nil, perr
 	}
@@ -58,7 +48,7 @@ func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagRe
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag", Err: perr})
 		return nil, perr
 	}
@@ -75,7 +65,7 @@ func (c *Client) DeleteCustomerTag(ctx context.Context, id int) (*DeleteCustomer
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCustomerTag"}, OperationResult{Operation: "DeleteCustomerTag", Err: perr})
 		return nil, perr
 	}
@@ -92,7 +82,7 @@ func (c *Client) UpdateCustomerTag(ctx context.Context, id int, body UpdateCusto
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag", Err: perr})
 		return nil, perr
 	}
@@ -109,7 +99,7 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams)
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
 		return nil, perr
 	}
@@ -126,7 +116,7 @@ func (c *Client) CreateCustomer(ctx context.Context, body CreateCustomerRequest)
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomer"}, OperationResult{Operation: "CreateCustomer", Err: perr})
 		return nil, perr
 	}
@@ -143,7 +133,7 @@ func (c *Client) CheckCustomerDuplicate(ctx context.Context, params *CheckCustom
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate", Err: perr})
 		return nil, perr
 	}
@@ -160,7 +150,7 @@ func (c *Client) LookupCustomer(ctx context.Context, params *LookupCustomerParam
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "LookupCustomer"}, OperationResult{Operation: "LookupCustomer", Err: perr})
 		return nil, perr
 	}
@@ -177,7 +167,7 @@ func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*Lis
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers", Err: perr})
 		return nil, perr
 	}
@@ -194,7 +184,7 @@ func (c *Client) CreateDriver(ctx context.Context, customerId int, body CreateDr
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateDriver"}, OperationResult{Operation: "CreateDriver", Err: perr})
 		return nil, perr
 	}
@@ -211,7 +201,7 @@ func (c *Client) DeleteDriver(ctx context.Context, customerId int, id int) (*Del
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteDriver"}, OperationResult{Operation: "DeleteDriver", Err: perr})
 		return nil, perr
 	}
@@ -228,7 +218,7 @@ func (c *Client) ShowDriver(ctx context.Context, customerId int, id int) (*ShowD
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver", Err: perr})
 		return nil, perr
 	}
@@ -245,7 +235,7 @@ func (c *Client) UpdateDriver(ctx context.Context, customerId int, id int, body 
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver", Err: perr})
 		return nil, perr
 	}
@@ -262,7 +252,7 @@ func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStatements"}, OperationResult{Operation: "ListCustomersStatements", Err: perr})
 		return nil, perr
 	}
@@ -279,7 +269,7 @@ func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*Li
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersVehicles"}, OperationResult{Operation: "ListCustomersVehicles", Err: perr})
 		return nil, perr
 	}
@@ -296,7 +286,7 @@ func (c *Client) GetCustomersVehicleHistory(ctx context.Context, customerId int,
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "GetCustomersVehicleHistory"}, OperationResult{Operation: "GetCustomersVehicleHistory", Err: perr})
 		return nil, perr
 	}
@@ -313,7 +303,7 @@ func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersWorkOrders"}, OperationResult{Operation: "ListCustomersWorkOrders", Err: perr})
 		return nil, perr
 	}
@@ -330,7 +320,7 @@ func (c *Client) DeleteCustomer(ctx context.Context, id int) (*DeleteCustomerRes
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCustomer"}, OperationResult{Operation: "DeleteCustomer", Err: perr})
 		return nil, perr
 	}
@@ -347,7 +337,7 @@ func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerRespons
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer", Err: perr})
 		return nil, perr
 	}
@@ -364,7 +354,7 @@ func (c *Client) UpdateCustomer(ctx context.Context, id int, body UpdateCustomer
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer", Err: perr})
 		return nil, perr
 	}
@@ -381,7 +371,7 @@ func (c *Client) MergeCustomer(ctx context.Context, id int, body MergeCustomerRe
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer", Err: perr})
 		return nil, perr
 	}
@@ -398,7 +388,7 @@ func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResp
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation", Err: perr})
 		return nil, perr
 	}
@@ -415,7 +405,7 @@ func (c *Client) ListServiceCategories(ctx context.Context) (*ListServiceCategor
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListServiceCategories"}, OperationResult{Operation: "ListServiceCategories", Err: perr})
 		return nil, perr
 	}
@@ -432,7 +422,7 @@ func (c *Client) CreateServiceCategory(ctx context.Context, body CreateServiceCa
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -449,7 +439,7 @@ func (c *Client) SeedDefaultsServiceCategories(ctx context.Context, body SeedDef
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories", Err: perr})
 		return nil, perr
 	}
@@ -466,7 +456,7 @@ func (c *Client) DeleteServiceCategory(ctx context.Context, id int) (*DeleteServ
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteServiceCategory"}, OperationResult{Operation: "DeleteServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -483,7 +473,7 @@ func (c *Client) UpdateServiceCategory(ctx context.Context, id int, body UpdateS
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -500,7 +490,7 @@ func (c *Client) DeactivateServiceCategory(ctx context.Context, id int, body Dea
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeactivateServiceCategory"}, OperationResult{Operation: "DeactivateServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -517,7 +507,7 @@ func (c *Client) MoveDownServiceCategory(ctx context.Context, id int, body MoveD
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MoveDownServiceCategory"}, OperationResult{Operation: "MoveDownServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -534,7 +524,7 @@ func (c *Client) MoveUpServiceCategory(ctx context.Context, id int, body MoveUpS
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MoveUpServiceCategory"}, OperationResult{Operation: "MoveUpServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -551,7 +541,7 @@ func (c *Client) ReactivateServiceCategory(ctx context.Context, id int, body Rea
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReactivateServiceCategory"}, OperationResult{Operation: "ReactivateServiceCategory", Err: perr})
 		return nil, perr
 	}
@@ -568,7 +558,7 @@ func (c *Client) ListTags(ctx context.Context) (*ListTagsResponse, error) {
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTags"}, OperationResult{Operation: "ListTags", Err: perr})
 		return nil, perr
 	}
@@ -585,7 +575,7 @@ func (c *Client) UpdateTags(ctx context.Context, body UpdateTagsRequest) (*Updat
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTags"}, OperationResult{Operation: "UpdateTags", Err: perr})
 		return nil, perr
 	}
@@ -602,7 +592,7 @@ func (c *Client) ShowStatement(ctx context.Context, id int) (*ShowStatementRespo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement", Err: perr})
 		return nil, perr
 	}
@@ -619,7 +609,7 @@ func (c *Client) ListTeam(ctx context.Context) (*ListTeamResponse, error) {
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTeam"}, OperationResult{Operation: "ListTeam", Err: perr})
 		return nil, perr
 	}
@@ -636,7 +626,7 @@ func (c *Client) ListVehicleTags(ctx context.Context) (*ListVehicleTagsResponse,
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVehicleTags"}, OperationResult{Operation: "ListVehicleTags", Err: perr})
 		return nil, perr
 	}
@@ -653,7 +643,7 @@ func (c *Client) CreateVehicleTag(ctx context.Context, body CreateVehicleTagRequ
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicleTag"}, OperationResult{Operation: "CreateVehicleTag", Err: perr})
 		return nil, perr
 	}
@@ -670,7 +660,7 @@ func (c *Client) DeleteVehicleTag(ctx context.Context, id int) (*DeleteVehicleTa
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVehicleTag"}, OperationResult{Operation: "DeleteVehicleTag", Err: perr})
 		return nil, perr
 	}
@@ -687,7 +677,7 @@ func (c *Client) UpdateVehicleTag(ctx context.Context, id int, body UpdateVehicl
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicleTag"}, OperationResult{Operation: "UpdateVehicleTag", Err: perr})
 		return nil, perr
 	}
@@ -704,7 +694,7 @@ func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVehicles"}, OperationResult{Operation: "ListVehicles", Err: perr})
 		return nil, perr
 	}
@@ -721,7 +711,7 @@ func (c *Client) CreateVehicle(ctx context.Context, body CreateVehicleRequest) (
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle", Err: perr})
 		return nil, perr
 	}
@@ -738,7 +728,7 @@ func (c *Client) CheckVehicleDuplicate(ctx context.Context, params *CheckVehicle
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate", Err: perr})
 		return nil, perr
 	}
@@ -755,7 +745,7 @@ func (c *Client) LookupVehicle(ctx context.Context, params *LookupVehicleParams)
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "LookupVehicle"}, OperationResult{Operation: "LookupVehicle", Err: perr})
 		return nil, perr
 	}
@@ -772,7 +762,7 @@ func (c *Client) PrefillVehicle(ctx context.Context, params *PrefillVehicleParam
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle", Err: perr})
 		return nil, perr
 	}
@@ -789,7 +779,7 @@ func (c *Client) DecodeVin(ctx context.Context, params *DecodeVinParams) (*Decod
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin", Err: perr})
 		return nil, perr
 	}
@@ -806,7 +796,7 @@ func (c *Client) DeleteVehicle(ctx context.Context, id int) (*DeleteVehicleRespo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVehicle"}, OperationResult{Operation: "DeleteVehicle", Err: perr})
 		return nil, perr
 	}
@@ -823,7 +813,7 @@ func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse,
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle", Err: perr})
 		return nil, perr
 	}
@@ -840,7 +830,7 @@ func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleRe
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle", Err: perr})
 		return nil, perr
 	}
@@ -857,7 +847,7 @@ func (c *Client) MergeVehicle(ctx context.Context, id int, body MergeVehicleRequ
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle", Err: perr})
 		return nil, perr
 	}
@@ -874,7 +864,7 @@ func (c *Client) TransferVehicle(ctx context.Context, id int, body TransferVehic
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle", Err: perr})
 		return nil, perr
 	}
@@ -891,7 +881,7 @@ func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*Li
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVehiclesWorkOrders"}, OperationResult{Operation: "ListVehiclesWorkOrders", Err: perr})
 		return nil, perr
 	}
@@ -908,7 +898,7 @@ func (c *Client) ListVendors(ctx context.Context) (*ListVendorsResponse, error) 
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVendors"}, OperationResult{Operation: "ListVendors", Err: perr})
 		return nil, perr
 	}
@@ -925,7 +915,7 @@ func (c *Client) ShowVendor(ctx context.Context, id int) (*ShowVendorResponse, e
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor", Err: perr})
 		return nil, perr
 	}
@@ -942,7 +932,7 @@ func (c *Client) ListWorkOrders(ctx context.Context) (*ListWorkOrdersResponse, e
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrders"}, OperationResult{Operation: "ListWorkOrders", Err: perr})
 		return nil, perr
 	}
@@ -959,7 +949,7 @@ func (c *Client) CreateWorkOrder(ctx context.Context, body CreateWorkOrderReques
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -976,7 +966,7 @@ func (c *Client) DeleteWorkOrder(ctx context.Context, id int) (*DeleteWorkOrderR
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrder"}, OperationResult{Operation: "DeleteWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -993,7 +983,7 @@ func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*ShowWorkOrderRespo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -1010,7 +1000,7 @@ func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrd
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -1027,7 +1017,7 @@ func (c *Client) ShowWorkOrderDeclinedServices(ctx context.Context, workOrderId 
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices", Err: perr})
 		return nil, perr
 	}
@@ -1044,7 +1034,7 @@ func (c *Client) ShowWorkOrderServiceHistory(ctx context.Context, workOrderId in
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory", Err: perr})
 		return nil, perr
 	}
@@ -1061,7 +1051,7 @@ func (c *Client) CreateWorkOrderAuthorization(ctx context.Context, workOrderId i
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderAuthorization"}, OperationResult{Operation: "CreateWorkOrderAuthorization", Err: perr})
 		return nil, perr
 	}
@@ -1078,7 +1068,7 @@ func (c *Client) UpdateWorkOrderAuthorizationDecisions(ctx context.Context, work
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderAuthorizationDecisions"}, OperationResult{Operation: "UpdateWorkOrderAuthorizationDecisions", Err: perr})
 		return nil, perr
 	}
@@ -1095,7 +1085,7 @@ func (c *Client) ShowWorkOrderEstimate(ctx context.Context, workOrderId int) (*S
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderEstimate"}, OperationResult{Operation: "ShowWorkOrderEstimate", Err: perr})
 		return nil, perr
 	}
@@ -1112,7 +1102,7 @@ func (c *Client) ShowWorkOrderInspection(ctx context.Context, workOrderId int) (
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderInspection"}, OperationResult{Operation: "ShowWorkOrderInspection", Err: perr})
 		return nil, perr
 	}
@@ -1129,7 +1119,7 @@ func (c *Client) CloseWorkOrder(ctx context.Context, workOrderId int, body Close
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -1146,7 +1136,7 @@ func (c *Client) CloseWorkOrderAsPaid(ctx context.Context, workOrderId int, body
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrderAsPaid"}, OperationResult{Operation: "CloseWorkOrderAsPaid", Err: perr})
 		return nil, perr
 	}
@@ -1163,7 +1153,7 @@ func (c *Client) DeclineAllWorkOrderServices(ctx context.Context, workOrderId in
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderServices"}, OperationResult{Operation: "DeclineAllWorkOrderServices", Err: perr})
 		return nil, perr
 	}
@@ -1180,7 +1170,7 @@ func (c *Client) ReopenWorkOrder(ctx context.Context, workOrderId int, body Reop
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenWorkOrder"}, OperationResult{Operation: "ReopenWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -1197,7 +1187,7 @@ func (c *Client) ReturnWorkOrderToBoard(ctx context.Context, workOrderId int, bo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReturnWorkOrderToBoard"}, OperationResult{Operation: "ReturnWorkOrderToBoard", Err: perr})
 		return nil, perr
 	}
@@ -1214,7 +1204,7 @@ func (c *Client) SaveWorkOrderForLater(ctx context.Context, workOrderId int, bod
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SaveWorkOrderForLater"}, OperationResult{Operation: "SaveWorkOrderForLater", Err: perr})
 		return nil, perr
 	}
@@ -1231,7 +1221,7 @@ func (c *Client) StageTransitionWorkOrder(ctx context.Context, workOrderId int, 
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StageTransitionWorkOrder"}, OperationResult{Operation: "StageTransitionWorkOrder", Err: perr})
 		return nil, perr
 	}
@@ -1248,7 +1238,7 @@ func (c *Client) ShowWorkOrderParts(ctx context.Context, workOrderId int) (*Show
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderParts"}, OperationResult{Operation: "ShowWorkOrderParts", Err: perr})
 		return nil, perr
 	}
@@ -1265,7 +1255,7 @@ func (c *Client) ShowWorkOrderPayments(ctx context.Context, workOrderId int) (*S
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderPayments"}, OperationResult{Operation: "ShowWorkOrderPayments", Err: perr})
 		return nil, perr
 	}
@@ -1282,7 +1272,7 @@ func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, bo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment", Err: perr})
 		return nil, perr
 	}
@@ -1299,7 +1289,7 @@ func (c *Client) ShowWorkOrderWip(ctx context.Context, workOrderId int) (*ShowWo
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
-		perr := parseErrorFromGen(resp)
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
 		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip", Err: perr})
 		return nil, perr
 	}
@@ -1319,7 +1309,7 @@ func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParam
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1331,7 +1321,7 @@ func (c *Client) GetAllLookupCustomer(ctx context.Context, params *LookupCustome
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 // GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header up to
@@ -1341,7 +1331,7 @@ func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int) ([]
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Driver](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Driver](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1355,7 +1345,7 @@ func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int) 
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Statement](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Statement](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 // GetAllCustomersVehicles auto-paginates list_customers_vehicles, following the Link header up to
@@ -1365,7 +1355,7 @@ func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int) ([
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1376,7 +1366,7 @@ func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int) 
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1391,7 +1381,7 @@ func (c *Client) GetAllServiceCategories(ctx context.Context) ([]ServiceCategory
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[ServiceCategory](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[ServiceCategory](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1417,7 +1407,7 @@ func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1429,7 +1419,7 @@ func (c *Client) GetAllLookupVehicle(ctx context.Context, params *LookupVehicleP
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1446,7 +1436,7 @@ func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int) ([
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 // GetAllVendors auto-paginates list_vendors, following the Link header up to
@@ -1456,7 +1446,7 @@ func (c *Client) GetAllVendors(ctx context.Context) ([]Vendor, error) {
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vendor](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[Vendor](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 
@@ -1467,7 +1457,7 @@ func (c *Client) GetAllWorkOrders(ctx context.Context) ([]WorkOrder, error) {
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
 
 

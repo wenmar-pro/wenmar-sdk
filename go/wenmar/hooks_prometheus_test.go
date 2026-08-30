@@ -21,7 +21,7 @@ func TestPrometheusHooks_CountsOperations(t *testing.T) {
 	cfg.BaseURL = ts.URL
 
 	c, _ := NewClient(cfg, NewStaticTokenProvider("test-token"), WithHooks(hooks))
-	_, _ = c.ListCustomers(context.Background())
+	_, _ = c.ListCustomers(context.Background(), nil)
 
 	mfs, err := reg.Gather()
 	if err != nil {

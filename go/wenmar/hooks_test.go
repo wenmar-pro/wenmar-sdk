@@ -19,7 +19,7 @@ func TestHooks_OnOperationStartEnd(t *testing.T) {
 	cfg.BaseURL = ts.URL
 
 	c, _ := NewClient(cfg, NewStaticTokenProvider("test-token"), WithHooks(recorder))
-	_, _ = c.ListCustomers(context.Background())
+	_, _ = c.ListCustomers(context.Background(), nil)
 
 	if len(recorder.starts) != 1 {
 		t.Errorf("expected 1 OnOperationStart, got %d", len(recorder.starts))

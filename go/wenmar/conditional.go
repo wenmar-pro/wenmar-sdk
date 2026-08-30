@@ -32,11 +32,25 @@ func newCachingTransport(transport http.RoundTripper) *cachingTransport {
 	}
 }
 
+// cacheKey derives a cache slot key from the request, including the
+// X-Wenmar-Location header so two location-scoped clients never serve each
+// other's cached bodies.
+func cacheKey(req *http.Request) string {
+	key := req.Method + " " + req.URL.String()
+	if loc := req.Header.Get("X-Wenmar-Location"); loc != "" {
+		key += " loc=" + loc
+	}
+	if accept := req.Header.Get("Accept"); accept != "" {
+		key += " accept=" + accept
+	}
+	return key
+}
+
 func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	isGet := req.Method == http.MethodGet
 
 	t.mu.Lock()
-	entry := t.cache[req.URL.String()]
+	entry := t.cache[cacheKey(req)]
 	t.mu.Unlock()
 
 	reqCopy := req
@@ -70,7 +84,7 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 			body := readResponseBody(resp)
 			if body != nil {
 				t.mu.Lock()
-				t.cache[req.URL.String()] = &cacheEntry{
+				t.cache[cacheKey(req)] = &cacheEntry{
 					ETag:         etag,
 					LastModified: resp.Header.Get("Last-Modified"),
 					Body:         body,

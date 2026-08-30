@@ -66,3 +66,41 @@ func containsStr(s, substr string) bool {
 	}
 	return false
 }
+
+func TestConditionalGet_CacheKeyIsLocationAware(t *testing.T) {
+	var calls int32
+	var lastLoc string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		lastLoc = r.Header.Get("X-Wenmar-Location")
+		n := atomic.AddInt32(&calls, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("ETag", `"etag-loc"`)
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[{"id":1,"full_name":"Jane"}]`))
+		_ = n
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+
+	// Two scoped clients must not share cache entries across locations.
+	scopedA := c.ForLocation("1")
+	scopedB := c.ForLocation("2")
+
+	if _, err := scopedA.ListCustomers(context.Background(), nil); err != nil {
+		t.Fatalf("scoped A call failed: %v", err)
+	}
+	if lastLoc != "1" {
+		t.Errorf("expected location header '1', got %q", lastLoc)
+	}
+	if _, err := scopedB.ListCustomers(context.Background(), nil); err != nil {
+		t.Fatalf("scoped B call failed: %v", err)
+	}
+	if lastLoc != "2" {
+		t.Errorf("expected location header '2', got %q", lastLoc)
+	}
+	// Each distinct location produced its own cache miss -> 2 outbound calls.
+	if calls != 2 {
+		t.Errorf("expected 2 calls (one per location), got %d", calls)
+	}
+}
