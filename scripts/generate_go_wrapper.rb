@@ -1,0 +1,173 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Builds go/wenmar/operations.gen.go and go/wenmar/models.gen.go from
+# spec/operations.json. These are the public wrapper methods and type aliases.
+#
+# Usage: ruby scripts/generate_go_wrapper.rb [manifest]
+#   manifest defaults to spec/operations.json
+
+require "json"
+
+MANIFEST_PATH = ARGV[0] || "spec/operations.json"
+MANIFEST = JSON.parse(File.read(MANIFEST_PATH))
+OPS = MANIFEST["operations"]
+
+# Map an operation id (snake_case) to a Go exported method/type name.
+def pascal(identifier)
+  identifier.split("_").reject(&:empty?).map { |p| p[0].upcase + p[1..] }.join
+end
+
+# Convert a snake_case path parameter name to a camelCase Go identifier.
+def go_param_name(name)
+  parts = name.split("_")
+  (parts.shift || "id") + parts.map { |p| p[0].upcase + p[1..] }.join
+end
+
+def path_param_types(op)
+  types = op["pathParams"].each_with_object({}) { |p, h| h[go_param_name(p)] = "int" }
+  types["id"] = "string" if op["id"] == "show_location"
+  types
+end
+
+def path_param_signature(op)
+  types = path_param_types(op)
+  op["pathParams"].map { |p| "#{go_param_name(p)} #{types[go_param_name(p)]}" }.join(", ")
+end
+
+def path_param_args(op)
+  op["pathParams"].map { |p| go_param_name(p) }.join(", ")
+end
+
+def has_query_params?(op)
+  !(op["queryParams"] || []).empty?
+end
+
+def param_struct(op)
+  "#{pascal(op["id"])}Params"
+end
+
+# Build a single operation method. Each wrapper returns the generated raw
+# response struct (aliased into the wenmar package by models.gen.go) and
+# centralizes hook firing + error parsing.
+def build_operation(op)
+  m = pascal(op["id"])
+  body_type = op["requestSchema"] # wenmar-alias name
+  params = []
+  params << path_param_signature(op) unless op["pathParams"].empty?
+  params << "params *#{param_struct(op)}" if has_query_params?(op)
+  params << "body #{body_type}" if body_type
+
+  gen_fn = "#{m}WithResponse"
+  gen_args = op["pathParams"].map { |p| go_param_name(p) }
+  gen_args << "params" if has_query_params?(op)
+  gen_args << "body" if body_type
+
+  call = "c.gen.#{gen_fn}(ctx#{gen_args.empty? ? "" : ", " + gen_args.join(", ")})"
+
+  <<~GO
+    // #{m} runs the #{op["id"]} operation (#{op["method"].upcase} #{op["path"]}).
+    func (c *Client) #{m}(ctx context.Context#{params.empty? ? "" : ", " + params.join(", ")}) (*#{m}Response, error) {
+    	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "#{m}"})
+    	resp, err := #{call}
+    	if err != nil {
+    		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "#{m}"}, OperationResult{Operation: "#{m}", Err: err})
+    		return nil, err
+    	}
+    	if resp.StatusCode() >= 400 {
+    		perr := parseErrorFromGen(resp)
+    		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "#{m}"}, OperationResult{Operation: "#{m}", Err: perr})
+    		return nil, perr
+    	}
+    	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "#{m}"}, OperationResult{Operation: "#{m}"})
+    	return resp, nil
+    }
+  GO
+end
+
+def build_operation_bodies
+  OPS.map { |op| build_operation(op) }.join("\n")
+end
+
+# Build GetAll helpers for paginated list operations. They collect items from
+# the first page plus every Link-header page, capped at maxItems (default 1000).
+def build_get_all(op)
+  return "" unless op["paginated"]
+  return "" unless op["responseSchema"]
+
+  item = op["responseSchema"] # wenmar-alias of the item type
+  list_method = pascal(op["id"])
+  base = list_method.sub(/\AList/, "")
+  params = ["ctx context.Context"]
+  params << path_param_signature(op) unless op["pathParams"].empty?
+  params << "params *#{param_struct(op)}" if has_query_params?(op)
+
+  call_args = ["ctx"]
+  call_args += op["pathParams"].map { |p| go_param_name(p) }
+  call_args << "params" if has_query_params?(op)
+
+  <<~GO
+    // GetAll#{base} auto-paginates #{op["id"]}, following the Link header up to
+    // 1000 items by default.
+    func (c *Client) GetAll#{base}(#{params.join(", ")}) ([]#{item}, error) {
+    	first, err := c.#{list_method}(#{call_args.join(", ")})
+    	if err != nil {
+    		return nil, err
+    	}
+    	return collectAll[#{item}](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+    }
+  GO
+end
+
+def build_get_all_bodies
+  OPS.map { |op| build_get_all(op) }.join("\n")
+end
+
+def build_models
+  item_types = OPS.map { |op| op["responseSchema"] }.compact.uniq
+  response_types = OPS.map { |op| pascal(op["id"]) + "Response" }.uniq
+  request_types = OPS.map { |op| op["requestSchema"] }.compact.uniq
+  param_types = OPS.filter_map { |op| param_struct(op) if has_query_params?(op) }.uniq
+
+  groups = []
+  groups << (item_types + response_types)
+  groups << request_types
+  groups << param_types
+
+  groups.filter_map do |types|
+    next if types.empty?
+
+    "type (\n" + types.map { |t| "\t#{t} = gen.#{t}" }.join("\n") + "\n)"
+  end.join("\n\n")
+end
+
+operations_header = <<~'GO'
+	// Code generated by scripts/generate_go_wrapper.rb from spec/operations.json. DO NOT EDIT.
+	//go:build !skip_generate
+
+	package wenmar
+
+	import (
+		"context"
+		"net/http"
+	)
+
+	// genResponse is satisfied by every generated raw response struct.
+	type genResponse interface {
+		StatusCode() int
+		Body []byte
+		HTTPResponse() *http.Response
+	}
+GO
+
+models_header = <<~'GO'
+	// Code generated by scripts/generate_go_wrapper.rb from spec/operations.json. DO NOT EDIT.
+
+	package wenmar
+
+	import gen "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
+GO
+
+File.write("go/wenmar/operations.gen.go", operations_header + "\n" + build_operation_bodies + "\n" + build_get_all_bodies)
+File.write("go/wenmar/models.gen.go", models_header + "\n" + build_models + "\n")
+puts "Wrote go/wenmar/operations.gen.go and go/wenmar/models.gen.go (#{OPS.size} operations)"
