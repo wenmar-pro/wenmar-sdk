@@ -1,7 +1,11 @@
-.PHONY: check test conformance enrich generate docs scalar
+.PHONY: check test conformance enrich generate docs scalar check-conformance-parity
 
-generate: ## Regenerate the Go client from the enriched spec
+generate: enrich ## Run the full codegen pipeline from the enriched spec
 	cd go && go generate ./...
+	ruby scripts/generate_manifest.rb spec/openapi.enriched.yaml spec/operations.json
+	ruby scripts/generate_go_wrapper.rb
+	ruby scripts/generate_ruby_resources.rb
+	ruby scripts/generate_conformance_dispatch.rb
 
 enrich: ## Enrich the spec from the canonical openapi.yaml
 	ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml
@@ -24,14 +28,33 @@ conformance: ## Run both conformance suites
 	cd conformance/go && go test ./...
 	cd conformance/ruby && bundle exec ruby conformance_spec.rb
 
-check: enrich generate docs test conformance ## Full CI check — fails on drift
-	@echo "Checking for spec drift..."
+check-conformance-parity: ## Verify manifest <-> dispatch <-> test parity
+	ruby scripts/check_conformance_parity.rb
+
+check: enrich generate docs test conformance check-conformance-parity ## Full CI check — fails on drift
+	@echo "Checking for generated-file drift..."
 	@if ! git diff --exit-code spec/openapi.enriched.yaml; then \
 		echo "::error::openapi.enriched.yaml has drifted. Run 'make enrich' and commit."; \
 		exit 1; \
 	fi
+	@if ! git diff --exit-code spec/operations.json; then \
+		echo "::error::spec/operations.json has drifted. Run 'make generate' and commit."; \
+		exit 1; \
+	fi
 	@if ! git diff --exit-code go/pkg/generated/client.gen.go; then \
 		echo "::error::generated Go client has drifted. Run 'go generate ./...' and commit."; \
+		exit 1; \
+	fi
+	@if ! git diff --exit-code go/wenmar/operations.gen.go go/wenmar/models.gen.go; then \
+		echo "::error::generated Go wrapper has drifted. Run 'make generate' and commit."; \
+		exit 1; \
+	fi
+	@if ! git diff --exit-code ruby/lib/wenmar/resources.rb; then \
+		echo "::error::generated Ruby resources have drifted. Run 'make generate' and commit."; \
+		exit 1; \
+	fi
+	@if ! git diff --exit-code conformance/go/dispatch.gen.go conformance/ruby/dispatch.gen.rb; then \
+		echo "::error::generated conformance dispatch has drifted. Run 'make generate' and commit."; \
 		exit 1; \
 	fi
 	@if ! git diff --exit-code docs/api/sections/ docs/api/api-reference.md docs/api/llm-compact.md; then \
