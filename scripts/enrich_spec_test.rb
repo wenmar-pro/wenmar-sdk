@@ -172,6 +172,59 @@ class EnrichSpecTest < Minitest::Test
     assert_includes show_example, "https://app.wenmarpro.com/customers/<id>.json"
   end
 
+  def test_hoists_inline_request_body_into_named_schema
+    input = make_spec_with(
+      "/customers" => {
+        "post" => {
+          "requestBody" => {
+            "content" => { "application/json" => { "schema" => { "type" => "object", "properties" => { "full_name" => { "type" => "string" } } } } }
+          },
+          "responses" => {}
+        }
+      }
+    )
+    result = enrich(input)
+    assert_equal "create_customer", result["paths"]["/customers"]["post"]["operationId"]
+    assert_equal "CreateCustomerRequest", result["paths"]["/customers"]["post"]["x-wenmar-request-schema"]
+    assert_equal(
+      { "$ref" => "#/components/schemas/CreateCustomerRequest" },
+      result["paths"]["/customers"]["post"]["requestBody"]["content"]["application/json"]["schema"]
+    )
+    refute_nil result["components"]["schemas"]["CreateCustomerRequest"]
+    assert_equal({ "full_name" => { "type" => "string" } }, result["components"]["schemas"]["CreateCustomerRequest"]["properties"])
+  end
+
+  def test_request_schema_name_matches_operation_id_rule
+    input = make_spec_with(
+      "/work_orders" => {
+        "post" => {
+          "requestBody" => { "content" => { "application/json" => { "schema" => { "type" => "object", "properties" => {} } } } },
+          "responses" => {}
+        }
+      }
+    )
+    result = enrich(input)
+    assert_equal "create_work_order", result["paths"]["/work_orders"]["post"]["operationId"]
+    assert_equal "CreateWorkOrderRequest", result["paths"]["/work_orders"]["post"]["x-wenmar-request-schema"]
+  end
+
+  def test_referenced_request_body_is_left_alone
+    input = make_spec_with(
+      "/customers" => {
+        "post" => {
+          "requestBody" => { "content" => { "application/json" => { "schema" => { "$ref" => "#/components/schemas/Customer" } } } },
+          "responses" => {}
+        }
+      }
+    )
+    result = enrich(input)
+    assert_nil result["paths"]["/customers"]["post"]["x-wenmar-request-schema"]
+    assert_equal(
+      { "$ref" => "#/components/schemas/Customer" },
+      result["paths"]["/customers"]["post"]["requestBody"]["content"]["application/json"]["schema"]
+    )
+  end
+
   def test_applies_example_overrides_to_schemas
     result = enrich(@input)
     customer = result["components"]["schemas"]["Customer"]

@@ -98,6 +98,8 @@ module EnrichSpec
       end
     end
 
+    name_request_schemas!(spec)
+
     apply_example_overrides!(spec)
     apply_overlays!(spec)
 
@@ -254,6 +256,35 @@ module EnrichSpec
         end
       end
     end
+  end
+
+  # Hoists inline JSON request bodies into named component schemas so
+  # oapi-codegen emits a named request struct. Each request schema is named
+  # "<PascalCase operationId>Request" and the operation is annotated with
+  # x-wenmar-request-schema so downstream generators can find it.
+  def self.name_request_schemas!(spec)
+    spec["components"] ||= {}
+    spec["components"]["schemas"] ||= {}
+
+    spec["paths"].each do |path, methods|
+      methods.each do |method, operation|
+        body = operation.dig("requestBody", "content", "application/json", "schema")
+        next unless body && !body["$ref"]
+
+        operation_id = operation["operationId"]
+        next unless operation_id
+
+        schema_name = pascal_case("#{operation_id}_request")
+        spec["components"]["schemas"][schema_name] = body
+        operation["requestBody"]["content"]["application/json"]["schema"] =
+          { "$ref" => "#/components/schemas/#{schema_name}" }
+        operation["x-wenmar-request-schema"] = schema_name
+      end
+    end
+  end
+
+  def self.pascal_case(identifier)
+    identifier.split("_").reject(&:empty?).map { |part| part[0].upcase + part[1..] }.join
   end
 
   def self.extract_components!(spec)
