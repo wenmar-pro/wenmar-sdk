@@ -67,7 +67,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
       "summary": "index"
     },
@@ -176,7 +176,7 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Customer",
       "summary": "index"
     },
@@ -255,7 +255,7 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Customer",
       "summary": "lookup"
     },
@@ -270,7 +270,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Driver",
       "summary": "index"
     },
@@ -352,7 +352,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Statement",
       "summary": "index"
     },
@@ -367,7 +367,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Vehicle",
       "summary": "index"
     },
@@ -398,7 +398,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "WorkOrder",
       "summary": "index"
     },
@@ -490,7 +490,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "ServiceCategory",
       "summary": "index"
     },
@@ -676,7 +676,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
       "summary": "index"
     },
@@ -689,7 +689,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
       "summary": "index"
     },
@@ -762,7 +762,7 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Vehicle",
       "summary": "index"
     },
@@ -817,7 +817,7 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Vehicle",
       "summary": "lookup"
     },
@@ -974,7 +974,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "WorkOrder",
       "summary": "index"
     },
@@ -987,7 +987,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "Vendor",
       "summary": "index"
     },
@@ -1015,7 +1015,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": "WorkOrder",
       "summary": "index"
     },
@@ -1092,7 +1092,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
       "summary": "show"
     },
@@ -1107,7 +1107,7 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
       "summary": "show"
     },

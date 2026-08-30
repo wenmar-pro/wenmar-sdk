@@ -28,16 +28,18 @@ def type_of(param)
   t
 end
 
-def paginated?(operation)
+# A list is paginated when it returns a bare array whose next page is
+# advertised via the `Link` header (`rel="next"`). The manifest records these
+# so SDK generators can expose pagination + GetAll helpers.
+def paginated?(method, operation)
+  return false unless method == "get"
+
   responses = operation["responses"] || {}
   ok = responses["200"] || responses["201"]
   return false unless ok
 
   schema = ok.dig("content", "application/json", "schema")
-  return false unless schema
-
-  props = schema["properties"] || {}
-  %w[data links meta].all? { |k| props.key?(k) }
+  schema && schema["type"] == "array"
 end
 
 def response_schema(operation)
@@ -96,7 +98,7 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
       end,
       "requestSchema" => operation["x-wenmar-request-schema"],
       "requestShape" => request_shape(operation["x-wenmar-request-schema"]),
-      "paginated" => paginated?(operation),
+      "paginated" => paginated?(method, operation),
       "responseSchema" => response_schema(operation),
       "summary" => operation["summary"]
     }
