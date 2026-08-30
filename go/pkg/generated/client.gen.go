@@ -16,6 +16,130 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
+// CloseWorkOrderAsPaidRequest defines model for CloseWorkOrderAsPaidRequest.
+type CloseWorkOrderAsPaidRequest = map[string]interface{}
+
+// CloseWorkOrderRequest defines model for CloseWorkOrderRequest.
+type CloseWorkOrderRequest struct {
+	ClosureReason string `json:"closure_reason"`
+	ClosureType   string `json:"closure_type"`
+}
+
+// CreateCustomerRequest defines model for CreateCustomerRequest.
+type CreateCustomerRequest struct {
+	Customer struct {
+		AddressesAttributes *[]struct {
+			Address1   string `json:"address1"`
+			City       string `json:"city"`
+			Country    string `json:"country"`
+			IsBilling  bool   `json:"is_billing"`
+			PostalCode string `json:"postal_code"`
+			State      string `json:"state"`
+		} `json:"addresses_attributes,omitempty"`
+		BillingTerms     *string `json:"billing_terms,omitempty"`
+		CompanyName      *string `json:"company_name,omitempty"`
+		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
+		DiscountPercent  *string `json:"discount_percent,omitempty"`
+		EmailsAttributes *[]struct {
+			Email   string `json:"email"`
+			Label   string `json:"label"`
+			Primary bool   `json:"primary"`
+		} `json:"emails_attributes,omitempty"`
+		FirstName        string  `json:"first_name"`
+		FleetIdentifier  *string `json:"fleet_identifier,omitempty"`
+		LastName         string  `json:"last_name"`
+		MarketingOptIn   *bool   `json:"marketing_opt_in,omitempty"`
+		Notes            *string `json:"notes,omitempty"`
+		PhonesAttributes *[]struct {
+			Label   string `json:"label"`
+			Number  string `json:"number"`
+			Primary bool   `json:"primary"`
+		} `json:"phones_attributes,omitempty"`
+		PoRequired      *bool          `json:"po_required,omitempty"`
+		TagIds          *[]interface{} `json:"tag_ids,omitempty"`
+		TaxExempt       *bool          `json:"tax_exempt,omitempty"`
+		TaxExemptNumber *string        `json:"tax_exempt_number,omitempty"`
+	} `json:"customer"`
+}
+
+// CreateCustomerTagRequest defines model for CreateCustomerTagRequest.
+type CreateCustomerTagRequest struct {
+	Name string `json:"name"`
+}
+
+// CreateDriverRequest defines model for CreateDriverRequest.
+type CreateDriverRequest struct {
+	Driver struct {
+		FullName string `json:"full_name"`
+		Phone    string `json:"phone"`
+	} `json:"driver"`
+}
+
+// CreateServiceCategoryRequest defines model for CreateServiceCategoryRequest.
+type CreateServiceCategoryRequest struct {
+	ServiceCategory struct {
+		Icon        string `json:"icon"`
+		Name        string `json:"name"`
+		ServiceType string `json:"service_type"`
+	} `json:"service_category"`
+}
+
+// CreateVehicleRequest defines model for CreateVehicleRequest.
+type CreateVehicleRequest struct {
+	Vehicle struct {
+		BodyStyle         *string        `json:"body_style,omitempty"`
+		Color             *string        `json:"color,omitempty"`
+		CustomerId        int            `json:"customer_id"`
+		Drivetrain        *string        `json:"drivetrain,omitempty"`
+		Engine            *string        `json:"engine,omitempty"`
+		FleetIdentifier   *string        `json:"fleet_identifier,omitempty"`
+		LicensePlate      *string        `json:"license_plate,omitempty"`
+		LicensePlateState *string        `json:"license_plate_state,omitempty"`
+		Make              string         `json:"make"`
+		Model             string         `json:"model"`
+		Notes             *string        `json:"notes,omitempty"`
+		OdometerReading   *int           `json:"odometer_reading,omitempty"`
+		OdometerUnit      *string        `json:"odometer_unit,omitempty"`
+		ProductionDate    *string        `json:"production_date,omitempty"`
+		Submodel          *string        `json:"submodel,omitempty"`
+		Transmission      *string        `json:"transmission,omitempty"`
+		UnitNumber        *string        `json:"unit_number,omitempty"`
+		VehicleTagIds     *[]interface{} `json:"vehicle_tag_ids,omitempty"`
+		Vin               *string        `json:"vin,omitempty"`
+		Year              int            `json:"year"`
+	} `json:"vehicle"`
+}
+
+// CreateVehicleTagRequest defines model for CreateVehicleTagRequest.
+type CreateVehicleTagRequest struct {
+	Name string `json:"name"`
+}
+
+// CreateWorkOrderAuthorizationRequest defines model for CreateWorkOrderAuthorizationRequest.
+type CreateWorkOrderAuthorizationRequest struct {
+	AuthorizationMethod string `json:"authorization_method"`
+	ServiceDecisions    struct {
+		N1047559673 string `json:"1047559673"`
+	} `json:"service_decisions"`
+	ServiceIds []int `json:"service_ids"`
+}
+
+// CreateWorkOrderPaymentRequest defines model for CreateWorkOrderPaymentRequest.
+type CreateWorkOrderPaymentRequest struct {
+	Payment struct {
+		AmountCents string `json:"amount_cents"`
+		Method      string `json:"method"`
+	} `json:"payment"`
+}
+
+// CreateWorkOrderRequest defines model for CreateWorkOrderRequest.
+type CreateWorkOrderRequest struct {
+	WorkOrder struct {
+		CustomerId int `json:"customer_id"`
+		VehicleId  int `json:"vehicle_id"`
+	} `json:"work_order"`
+}
+
 // Customer defines model for Customer.
 type Customer struct {
 	Addresses []struct {
@@ -81,6 +205,14 @@ type Customer struct {
 	WorkOrdersUrl     string `json:"work_orders_url"`
 }
 
+// DeactivateServiceCategoryRequest defines model for DeactivateServiceCategoryRequest.
+type DeactivateServiceCategoryRequest = map[string]interface{}
+
+// DeclineAllWorkOrderServicesRequest defines model for DeclineAllWorkOrderServicesRequest.
+type DeclineAllWorkOrderServicesRequest struct {
+	DeclineReason string `json:"decline_reason"`
+}
+
 // Driver defines model for Driver.
 type Driver struct {
 	AppUrl    string `json:"app_url"`
@@ -107,6 +239,37 @@ type Error struct {
 	Message     string                 `json:"message"`
 }
 
+// MergeCustomerRequest defines model for MergeCustomerRequest.
+type MergeCustomerRequest struct {
+	SourceCustomerId int `json:"source_customer_id"`
+}
+
+// MergeVehicleRequest defines model for MergeVehicleRequest.
+type MergeVehicleRequest struct {
+	SourceVehicleId int `json:"source_vehicle_id"`
+}
+
+// MoveDownServiceCategoryRequest defines model for MoveDownServiceCategoryRequest.
+type MoveDownServiceCategoryRequest = map[string]interface{}
+
+// MoveUpServiceCategoryRequest defines model for MoveUpServiceCategoryRequest.
+type MoveUpServiceCategoryRequest = map[string]interface{}
+
+// ReactivateServiceCategoryRequest defines model for ReactivateServiceCategoryRequest.
+type ReactivateServiceCategoryRequest = map[string]interface{}
+
+// ReopenWorkOrderRequest defines model for ReopenWorkOrderRequest.
+type ReopenWorkOrderRequest = map[string]interface{}
+
+// ReturnWorkOrderToBoardRequest defines model for ReturnWorkOrderToBoardRequest.
+type ReturnWorkOrderToBoardRequest = map[string]interface{}
+
+// SaveWorkOrderForLaterRequest defines model for SaveWorkOrderForLaterRequest.
+type SaveWorkOrderForLaterRequest = map[string]interface{}
+
+// SeedDefaultsServiceCategoriesRequest defines model for SeedDefaultsServiceCategoriesRequest.
+type SeedDefaultsServiceCategoriesRequest = map[string]interface{}
+
 // ServiceCategory defines model for ServiceCategory.
 type ServiceCategory struct {
 	Active       bool        `json:"active"`
@@ -122,6 +285,11 @@ type ServiceCategory struct {
 	Position     int         `json:"position"`
 	ServiceType  string      `json:"service_type"`
 	Url          string      `json:"url"`
+}
+
+// StageTransitionWorkOrderRequest defines model for StageTransitionWorkOrderRequest.
+type StageTransitionWorkOrderRequest struct {
+	Target string `json:"target"`
 }
 
 // Statement defines model for Statement.
@@ -152,6 +320,121 @@ type Statement struct {
 	UpdatedAt string      `json:"updated_at"`
 	Url       string      `json:"url"`
 	ViewedAt  interface{} `json:"viewed_at"`
+}
+
+// TransferVehicleRequest defines model for TransferVehicleRequest.
+type TransferVehicleRequest struct {
+	CustomerId int    `json:"customer_id"`
+	Mode       string `json:"mode"`
+}
+
+// UpdateCustomerRequest defines model for UpdateCustomerRequest.
+type UpdateCustomerRequest struct {
+	Customer struct {
+		AddressesAttributes *[]struct {
+			Address1   string `json:"address1"`
+			City       string `json:"city"`
+			Country    string `json:"country"`
+			IsBilling  bool   `json:"is_billing"`
+			PostalCode string `json:"postal_code"`
+			State      string `json:"state"`
+		} `json:"addresses_attributes,omitempty"`
+		BillingTerms     *string `json:"billing_terms,omitempty"`
+		CompanyName      *string `json:"company_name,omitempty"`
+		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
+		DiscountPercent  *string `json:"discount_percent,omitempty"`
+		EmailsAttributes *[]struct {
+			Email string  `json:"email"`
+			Id    *int    `json:"id,omitempty"`
+			Label *string `json:"label,omitempty"`
+		} `json:"emails_attributes,omitempty"`
+		FirstName        *string `json:"first_name,omitempty"`
+		FleetIdentifier  *string `json:"fleet_identifier,omitempty"`
+		LastName         *string `json:"last_name,omitempty"`
+		MarketingOptIn   *bool   `json:"marketing_opt_in,omitempty"`
+		Notes            *string `json:"notes,omitempty"`
+		PhonesAttributes *[]struct {
+			UnderscoreDestroy *bool   `json:"_destroy,omitempty"`
+			Id                *int    `json:"id,omitempty"`
+			Label             *string `json:"label,omitempty"`
+			Number            *string `json:"number,omitempty"`
+			Primary           *bool   `json:"primary,omitempty"`
+		} `json:"phones_attributes,omitempty"`
+		PoRequired *bool `json:"po_required,omitempty"`
+		TaxExempt  *bool `json:"tax_exempt,omitempty"`
+	} `json:"customer"`
+}
+
+// UpdateCustomerTagRequest defines model for UpdateCustomerTagRequest.
+type UpdateCustomerTagRequest struct {
+	Name string `json:"name"`
+}
+
+// UpdateDriverRequest defines model for UpdateDriverRequest.
+type UpdateDriverRequest struct {
+	Driver struct {
+		FullName string `json:"full_name"`
+	} `json:"driver"`
+}
+
+// UpdateServiceCategoryRequest defines model for UpdateServiceCategoryRequest.
+type UpdateServiceCategoryRequest struct {
+	ServiceCategory struct {
+		Name string `json:"name"`
+	} `json:"service_category"`
+}
+
+// UpdateTagsRequest defines model for UpdateTagsRequest.
+type UpdateTagsRequest struct {
+	CustomerTags *[]struct {
+		UnderscoreDestroy *string `json:"_destroy,omitempty"`
+		Id                int     `json:"id"`
+		Name              *string `json:"name,omitempty"`
+	} `json:"customer_tags,omitempty"`
+	VehicleTags *[]struct {
+		UnderscoreDestroy string `json:"_destroy"`
+		Id                int    `json:"id"`
+	} `json:"vehicle_tags,omitempty"`
+}
+
+// UpdateVehicleRequest defines model for UpdateVehicleRequest.
+type UpdateVehicleRequest struct {
+	Vehicle struct {
+		BodyStyle         *string `json:"body_style,omitempty"`
+		Color             *string `json:"color,omitempty"`
+		Drivetrain        *string `json:"drivetrain,omitempty"`
+		Engine            *string `json:"engine,omitempty"`
+		LicensePlate      *string `json:"license_plate,omitempty"`
+		LicensePlateState *string `json:"license_plate_state,omitempty"`
+		Make              string  `json:"make"`
+		Model             *string `json:"model,omitempty"`
+		Notes             *string `json:"notes,omitempty"`
+		OdometerReading   *int    `json:"odometer_reading,omitempty"`
+		OdometerUnit      *string `json:"odometer_unit,omitempty"`
+		Submodel          *string `json:"submodel,omitempty"`
+		Transmission      *string `json:"transmission,omitempty"`
+		Vin               *string `json:"vin,omitempty"`
+		Year              *int    `json:"year,omitempty"`
+	} `json:"vehicle"`
+}
+
+// UpdateVehicleTagRequest defines model for UpdateVehicleTagRequest.
+type UpdateVehicleTagRequest struct {
+	Name string `json:"name"`
+}
+
+// UpdateWorkOrderAuthorizationDecisionsRequest defines model for UpdateWorkOrderAuthorizationDecisionsRequest.
+type UpdateWorkOrderAuthorizationDecisionsRequest struct {
+	ServiceDecisionReasons struct {
+		N1047559673 string `json:"1047559673"`
+	} `json:"service_decision_reasons"`
+}
+
+// UpdateWorkOrderRequest defines model for UpdateWorkOrderRequest.
+type UpdateWorkOrderRequest struct {
+	WorkOrder struct {
+		IntakeMethod string `json:"intake_method"`
+	} `json:"work_order"`
 }
 
 // Vehicle defines model for Vehicle.
@@ -340,16 +623,6 @@ type WorkOrder struct {
 	WorkOrderServicesCount int `json:"work_order_services_count"`
 }
 
-// CreateCustomerTagJSONBody defines parameters for CreateCustomerTag.
-type CreateCustomerTagJSONBody struct {
-	Name string `json:"name"`
-}
-
-// UpdateCustomerTagJSONBody defines parameters for UpdateCustomerTag.
-type UpdateCustomerTagJSONBody struct {
-	Name string `json:"name"`
-}
-
 // ListCustomersParams defines parameters for ListCustomers.
 type ListCustomersParams struct {
 	HasBalance      *bool     `form:"has_balance,omitempty" json:"has_balance,omitempty"`
@@ -360,43 +633,6 @@ type ListCustomersParams struct {
 	Query           *string   `form:"query,omitempty" json:"query,omitempty"`
 	TagIds          *[]string `form:"tag_ids,omitempty" json:"tag_ids,omitempty"`
 	Type            *string   `form:"type,omitempty" json:"type,omitempty"`
-}
-
-// CreateCustomerJSONBody defines parameters for CreateCustomer.
-type CreateCustomerJSONBody struct {
-	Customer struct {
-		AddressesAttributes *[]struct {
-			Address1   string `json:"address1"`
-			City       string `json:"city"`
-			Country    string `json:"country"`
-			IsBilling  bool   `json:"is_billing"`
-			PostalCode string `json:"postal_code"`
-			State      string `json:"state"`
-		} `json:"addresses_attributes,omitempty"`
-		BillingTerms     *string `json:"billing_terms,omitempty"`
-		CompanyName      *string `json:"company_name,omitempty"`
-		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
-		DiscountPercent  *string `json:"discount_percent,omitempty"`
-		EmailsAttributes *[]struct {
-			Email   string `json:"email"`
-			Label   string `json:"label"`
-			Primary bool   `json:"primary"`
-		} `json:"emails_attributes,omitempty"`
-		FirstName        string  `json:"first_name"`
-		FleetIdentifier  *string `json:"fleet_identifier,omitempty"`
-		LastName         string  `json:"last_name"`
-		MarketingOptIn   *bool   `json:"marketing_opt_in,omitempty"`
-		Notes            *string `json:"notes,omitempty"`
-		PhonesAttributes *[]struct {
-			Label   string `json:"label"`
-			Number  string `json:"number"`
-			Primary bool   `json:"primary"`
-		} `json:"phones_attributes,omitempty"`
-		PoRequired      *bool          `json:"po_required,omitempty"`
-		TagIds          *[]interface{} `json:"tag_ids,omitempty"`
-		TaxExempt       *bool          `json:"tax_exempt,omitempty"`
-		TaxExemptNumber *string        `json:"tax_exempt_number,omitempty"`
-	} `json:"customer"`
 }
 
 // CheckCustomerDuplicateParams defines parameters for CheckCustomerDuplicate.
@@ -413,147 +649,10 @@ type LookupCustomerParams struct {
 	Query *string `form:"query,omitempty" json:"query,omitempty"`
 }
 
-// CreateDriverJSONBody defines parameters for CreateDriver.
-type CreateDriverJSONBody struct {
-	Driver struct {
-		FullName string `json:"full_name"`
-		Phone    string `json:"phone"`
-	} `json:"driver"`
-}
-
-// UpdateDriverJSONBody defines parameters for UpdateDriver.
-type UpdateDriverJSONBody struct {
-	Driver struct {
-		FullName string `json:"full_name"`
-	} `json:"driver"`
-}
-
-// UpdateCustomerJSONBody defines parameters for UpdateCustomer.
-type UpdateCustomerJSONBody struct {
-	Customer struct {
-		AddressesAttributes *[]struct {
-			Address1   string `json:"address1"`
-			City       string `json:"city"`
-			Country    string `json:"country"`
-			IsBilling  bool   `json:"is_billing"`
-			PostalCode string `json:"postal_code"`
-			State      string `json:"state"`
-		} `json:"addresses_attributes,omitempty"`
-		BillingTerms     *string `json:"billing_terms,omitempty"`
-		CompanyName      *string `json:"company_name,omitempty"`
-		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
-		DiscountPercent  *string `json:"discount_percent,omitempty"`
-		EmailsAttributes *[]struct {
-			Email string  `json:"email"`
-			Id    *int    `json:"id,omitempty"`
-			Label *string `json:"label,omitempty"`
-		} `json:"emails_attributes,omitempty"`
-		FirstName        *string `json:"first_name,omitempty"`
-		FleetIdentifier  *string `json:"fleet_identifier,omitempty"`
-		LastName         *string `json:"last_name,omitempty"`
-		MarketingOptIn   *bool   `json:"marketing_opt_in,omitempty"`
-		Notes            *string `json:"notes,omitempty"`
-		PhonesAttributes *[]struct {
-			UnderscoreDestroy *bool   `json:"_destroy,omitempty"`
-			Id                *int    `json:"id,omitempty"`
-			Label             *string `json:"label,omitempty"`
-			Number            *string `json:"number,omitempty"`
-			Primary           *bool   `json:"primary,omitempty"`
-		} `json:"phones_attributes,omitempty"`
-		PoRequired *bool `json:"po_required,omitempty"`
-		TaxExempt  *bool `json:"tax_exempt,omitempty"`
-	} `json:"customer"`
-}
-
-// MergeCustomerJSONBody defines parameters for MergeCustomer.
-type MergeCustomerJSONBody struct {
-	SourceCustomerId int `json:"source_customer_id"`
-}
-
-// CreateServiceCategoryJSONBody defines parameters for CreateServiceCategory.
-type CreateServiceCategoryJSONBody struct {
-	ServiceCategory struct {
-		Icon        string `json:"icon"`
-		Name        string `json:"name"`
-		ServiceType string `json:"service_type"`
-	} `json:"service_category"`
-}
-
-// SeedDefaultsServiceCategoriesJSONBody defines parameters for SeedDefaultsServiceCategories.
-type SeedDefaultsServiceCategoriesJSONBody = map[string]interface{}
-
-// UpdateServiceCategoryJSONBody defines parameters for UpdateServiceCategory.
-type UpdateServiceCategoryJSONBody struct {
-	ServiceCategory struct {
-		Name string `json:"name"`
-	} `json:"service_category"`
-}
-
-// DeactivateServiceCategoryJSONBody defines parameters for DeactivateServiceCategory.
-type DeactivateServiceCategoryJSONBody = map[string]interface{}
-
-// MoveDownServiceCategoryJSONBody defines parameters for MoveDownServiceCategory.
-type MoveDownServiceCategoryJSONBody = map[string]interface{}
-
-// MoveUpServiceCategoryJSONBody defines parameters for MoveUpServiceCategory.
-type MoveUpServiceCategoryJSONBody = map[string]interface{}
-
-// ReactivateServiceCategoryJSONBody defines parameters for ReactivateServiceCategory.
-type ReactivateServiceCategoryJSONBody = map[string]interface{}
-
-// UpdateTagsJSONBody defines parameters for UpdateTags.
-type UpdateTagsJSONBody struct {
-	CustomerTags *[]struct {
-		UnderscoreDestroy *string `json:"_destroy,omitempty"`
-		Id                int     `json:"id"`
-		Name              *string `json:"name,omitempty"`
-	} `json:"customer_tags,omitempty"`
-	VehicleTags *[]struct {
-		UnderscoreDestroy string `json:"_destroy"`
-		Id                int    `json:"id"`
-	} `json:"vehicle_tags,omitempty"`
-}
-
-// CreateVehicleTagJSONBody defines parameters for CreateVehicleTag.
-type CreateVehicleTagJSONBody struct {
-	Name string `json:"name"`
-}
-
-// UpdateVehicleTagJSONBody defines parameters for UpdateVehicleTag.
-type UpdateVehicleTagJSONBody struct {
-	Name string `json:"name"`
-}
-
 // ListVehiclesParams defines parameters for ListVehicles.
 type ListVehiclesParams struct {
 	CustomerId *int `form:"customer_id,omitempty" json:"customer_id,omitempty"`
 	Page       *int `form:"page,omitempty" json:"page,omitempty"`
-}
-
-// CreateVehicleJSONBody defines parameters for CreateVehicle.
-type CreateVehicleJSONBody struct {
-	Vehicle struct {
-		BodyStyle         *string        `json:"body_style,omitempty"`
-		Color             *string        `json:"color,omitempty"`
-		CustomerId        int            `json:"customer_id"`
-		Drivetrain        *string        `json:"drivetrain,omitempty"`
-		Engine            *string        `json:"engine,omitempty"`
-		FleetIdentifier   *string        `json:"fleet_identifier,omitempty"`
-		LicensePlate      *string        `json:"license_plate,omitempty"`
-		LicensePlateState *string        `json:"license_plate_state,omitempty"`
-		Make              string         `json:"make"`
-		Model             string         `json:"model"`
-		Notes             *string        `json:"notes,omitempty"`
-		OdometerReading   *int           `json:"odometer_reading,omitempty"`
-		OdometerUnit      *string        `json:"odometer_unit,omitempty"`
-		ProductionDate    *string        `json:"production_date,omitempty"`
-		Submodel          *string        `json:"submodel,omitempty"`
-		Transmission      *string        `json:"transmission,omitempty"`
-		UnitNumber        *string        `json:"unit_number,omitempty"`
-		VehicleTagIds     *[]interface{} `json:"vehicle_tag_ids,omitempty"`
-		Vin               *string        `json:"vin,omitempty"`
-		Year              int            `json:"year"`
-	} `json:"vehicle"`
 }
 
 // CheckVehicleDuplicateParams defines parameters for CheckVehicleDuplicate.
@@ -579,203 +678,104 @@ type DecodeVinParams struct {
 	Vin *string `form:"vin,omitempty" json:"vin,omitempty"`
 }
 
-// UpdateVehicleJSONBody defines parameters for UpdateVehicle.
-type UpdateVehicleJSONBody struct {
-	Vehicle struct {
-		BodyStyle         *string `json:"body_style,omitempty"`
-		Color             *string `json:"color,omitempty"`
-		Drivetrain        *string `json:"drivetrain,omitempty"`
-		Engine            *string `json:"engine,omitempty"`
-		LicensePlate      *string `json:"license_plate,omitempty"`
-		LicensePlateState *string `json:"license_plate_state,omitempty"`
-		Make              string  `json:"make"`
-		Model             *string `json:"model,omitempty"`
-		Notes             *string `json:"notes,omitempty"`
-		OdometerReading   *int    `json:"odometer_reading,omitempty"`
-		OdometerUnit      *string `json:"odometer_unit,omitempty"`
-		Submodel          *string `json:"submodel,omitempty"`
-		Transmission      *string `json:"transmission,omitempty"`
-		Vin               *string `json:"vin,omitempty"`
-		Year              *int    `json:"year,omitempty"`
-	} `json:"vehicle"`
-}
-
-// MergeVehicleJSONBody defines parameters for MergeVehicle.
-type MergeVehicleJSONBody struct {
-	SourceVehicleId int `json:"source_vehicle_id"`
-}
-
-// TransferVehicleJSONBody defines parameters for TransferVehicle.
-type TransferVehicleJSONBody struct {
-	CustomerId int    `json:"customer_id"`
-	Mode       string `json:"mode"`
-}
-
-// CreateWorkOrderJSONBody defines parameters for CreateWorkOrder.
-type CreateWorkOrderJSONBody struct {
-	WorkOrder struct {
-		CustomerId int `json:"customer_id"`
-		VehicleId  int `json:"vehicle_id"`
-	} `json:"work_order"`
-}
-
-// UpdateWorkOrderJSONBody defines parameters for UpdateWorkOrder.
-type UpdateWorkOrderJSONBody struct {
-	WorkOrder struct {
-		IntakeMethod string `json:"intake_method"`
-	} `json:"work_order"`
-}
-
-// CreateWorkOrderAuthorizationJSONBody defines parameters for CreateWorkOrderAuthorization.
-type CreateWorkOrderAuthorizationJSONBody struct {
-	AuthorizationMethod string `json:"authorization_method"`
-	ServiceDecisions    struct {
-		N1047559673 string `json:"1047559673"`
-	} `json:"service_decisions"`
-	ServiceIds []int `json:"service_ids"`
-}
-
-// UpdateWorkOrderAuthorizationDecisionsJSONBody defines parameters for UpdateWorkOrderAuthorizationDecisions.
-type UpdateWorkOrderAuthorizationDecisionsJSONBody struct {
-	ServiceDecisionReasons struct {
-		N1047559673 string `json:"1047559673"`
-	} `json:"service_decision_reasons"`
-}
-
-// CloseWorkOrderJSONBody defines parameters for CloseWorkOrder.
-type CloseWorkOrderJSONBody struct {
-	ClosureReason string `json:"closure_reason"`
-	ClosureType   string `json:"closure_type"`
-}
-
-// CloseWorkOrderAsPaidJSONBody defines parameters for CloseWorkOrderAsPaid.
-type CloseWorkOrderAsPaidJSONBody = map[string]interface{}
-
-// DeclineAllWorkOrderServicesJSONBody defines parameters for DeclineAllWorkOrderServices.
-type DeclineAllWorkOrderServicesJSONBody struct {
-	DeclineReason string `json:"decline_reason"`
-}
-
-// ReopenWorkOrderJSONBody defines parameters for ReopenWorkOrder.
-type ReopenWorkOrderJSONBody = map[string]interface{}
-
-// ReturnWorkOrderToBoardJSONBody defines parameters for ReturnWorkOrderToBoard.
-type ReturnWorkOrderToBoardJSONBody = map[string]interface{}
-
-// SaveWorkOrderForLaterJSONBody defines parameters for SaveWorkOrderForLater.
-type SaveWorkOrderForLaterJSONBody = map[string]interface{}
-
-// StageTransitionWorkOrderJSONBody defines parameters for StageTransitionWorkOrder.
-type StageTransitionWorkOrderJSONBody struct {
-	Target string `json:"target"`
-}
-
-// CreateWorkOrderPaymentJSONBody defines parameters for CreateWorkOrderPayment.
-type CreateWorkOrderPaymentJSONBody struct {
-	Payment struct {
-		AmountCents string `json:"amount_cents"`
-		Method      string `json:"method"`
-	} `json:"payment"`
-}
-
 // CreateCustomerTagJSONRequestBody defines body for CreateCustomerTag for application/json ContentType.
-type CreateCustomerTagJSONRequestBody CreateCustomerTagJSONBody
+type CreateCustomerTagJSONRequestBody = CreateCustomerTagRequest
 
 // UpdateCustomerTagJSONRequestBody defines body for UpdateCustomerTag for application/json ContentType.
-type UpdateCustomerTagJSONRequestBody UpdateCustomerTagJSONBody
+type UpdateCustomerTagJSONRequestBody = UpdateCustomerTagRequest
 
 // CreateCustomerJSONRequestBody defines body for CreateCustomer for application/json ContentType.
-type CreateCustomerJSONRequestBody CreateCustomerJSONBody
+type CreateCustomerJSONRequestBody = CreateCustomerRequest
 
 // CreateDriverJSONRequestBody defines body for CreateDriver for application/json ContentType.
-type CreateDriverJSONRequestBody CreateDriverJSONBody
+type CreateDriverJSONRequestBody = CreateDriverRequest
 
 // UpdateDriverJSONRequestBody defines body for UpdateDriver for application/json ContentType.
-type UpdateDriverJSONRequestBody UpdateDriverJSONBody
+type UpdateDriverJSONRequestBody = UpdateDriverRequest
 
 // UpdateCustomerJSONRequestBody defines body for UpdateCustomer for application/json ContentType.
-type UpdateCustomerJSONRequestBody UpdateCustomerJSONBody
+type UpdateCustomerJSONRequestBody = UpdateCustomerRequest
 
 // MergeCustomerJSONRequestBody defines body for MergeCustomer for application/json ContentType.
-type MergeCustomerJSONRequestBody MergeCustomerJSONBody
+type MergeCustomerJSONRequestBody = MergeCustomerRequest
 
 // CreateServiceCategoryJSONRequestBody defines body for CreateServiceCategory for application/json ContentType.
-type CreateServiceCategoryJSONRequestBody CreateServiceCategoryJSONBody
+type CreateServiceCategoryJSONRequestBody = CreateServiceCategoryRequest
 
 // SeedDefaultsServiceCategoriesJSONRequestBody defines body for SeedDefaultsServiceCategories for application/json ContentType.
-type SeedDefaultsServiceCategoriesJSONRequestBody = SeedDefaultsServiceCategoriesJSONBody
+type SeedDefaultsServiceCategoriesJSONRequestBody = SeedDefaultsServiceCategoriesRequest
 
 // UpdateServiceCategoryJSONRequestBody defines body for UpdateServiceCategory for application/json ContentType.
-type UpdateServiceCategoryJSONRequestBody UpdateServiceCategoryJSONBody
+type UpdateServiceCategoryJSONRequestBody = UpdateServiceCategoryRequest
 
 // DeactivateServiceCategoryJSONRequestBody defines body for DeactivateServiceCategory for application/json ContentType.
-type DeactivateServiceCategoryJSONRequestBody = DeactivateServiceCategoryJSONBody
+type DeactivateServiceCategoryJSONRequestBody = DeactivateServiceCategoryRequest
 
 // MoveDownServiceCategoryJSONRequestBody defines body for MoveDownServiceCategory for application/json ContentType.
-type MoveDownServiceCategoryJSONRequestBody = MoveDownServiceCategoryJSONBody
+type MoveDownServiceCategoryJSONRequestBody = MoveDownServiceCategoryRequest
 
 // MoveUpServiceCategoryJSONRequestBody defines body for MoveUpServiceCategory for application/json ContentType.
-type MoveUpServiceCategoryJSONRequestBody = MoveUpServiceCategoryJSONBody
+type MoveUpServiceCategoryJSONRequestBody = MoveUpServiceCategoryRequest
 
 // ReactivateServiceCategoryJSONRequestBody defines body for ReactivateServiceCategory for application/json ContentType.
-type ReactivateServiceCategoryJSONRequestBody = ReactivateServiceCategoryJSONBody
+type ReactivateServiceCategoryJSONRequestBody = ReactivateServiceCategoryRequest
 
 // UpdateTagsJSONRequestBody defines body for UpdateTags for application/json ContentType.
-type UpdateTagsJSONRequestBody UpdateTagsJSONBody
+type UpdateTagsJSONRequestBody = UpdateTagsRequest
 
 // CreateVehicleTagJSONRequestBody defines body for CreateVehicleTag for application/json ContentType.
-type CreateVehicleTagJSONRequestBody CreateVehicleTagJSONBody
+type CreateVehicleTagJSONRequestBody = CreateVehicleTagRequest
 
 // UpdateVehicleTagJSONRequestBody defines body for UpdateVehicleTag for application/json ContentType.
-type UpdateVehicleTagJSONRequestBody UpdateVehicleTagJSONBody
+type UpdateVehicleTagJSONRequestBody = UpdateVehicleTagRequest
 
 // CreateVehicleJSONRequestBody defines body for CreateVehicle for application/json ContentType.
-type CreateVehicleJSONRequestBody CreateVehicleJSONBody
+type CreateVehicleJSONRequestBody = CreateVehicleRequest
 
 // UpdateVehicleJSONRequestBody defines body for UpdateVehicle for application/json ContentType.
-type UpdateVehicleJSONRequestBody UpdateVehicleJSONBody
+type UpdateVehicleJSONRequestBody = UpdateVehicleRequest
 
 // MergeVehicleJSONRequestBody defines body for MergeVehicle for application/json ContentType.
-type MergeVehicleJSONRequestBody MergeVehicleJSONBody
+type MergeVehicleJSONRequestBody = MergeVehicleRequest
 
 // TransferVehicleJSONRequestBody defines body for TransferVehicle for application/json ContentType.
-type TransferVehicleJSONRequestBody TransferVehicleJSONBody
+type TransferVehicleJSONRequestBody = TransferVehicleRequest
 
 // CreateWorkOrderJSONRequestBody defines body for CreateWorkOrder for application/json ContentType.
-type CreateWorkOrderJSONRequestBody CreateWorkOrderJSONBody
+type CreateWorkOrderJSONRequestBody = CreateWorkOrderRequest
 
 // UpdateWorkOrderJSONRequestBody defines body for UpdateWorkOrder for application/json ContentType.
-type UpdateWorkOrderJSONRequestBody UpdateWorkOrderJSONBody
+type UpdateWorkOrderJSONRequestBody = UpdateWorkOrderRequest
 
 // CreateWorkOrderAuthorizationJSONRequestBody defines body for CreateWorkOrderAuthorization for application/json ContentType.
-type CreateWorkOrderAuthorizationJSONRequestBody CreateWorkOrderAuthorizationJSONBody
+type CreateWorkOrderAuthorizationJSONRequestBody = CreateWorkOrderAuthorizationRequest
 
 // UpdateWorkOrderAuthorizationDecisionsJSONRequestBody defines body for UpdateWorkOrderAuthorizationDecisions for application/json ContentType.
-type UpdateWorkOrderAuthorizationDecisionsJSONRequestBody UpdateWorkOrderAuthorizationDecisionsJSONBody
+type UpdateWorkOrderAuthorizationDecisionsJSONRequestBody = UpdateWorkOrderAuthorizationDecisionsRequest
 
 // CloseWorkOrderJSONRequestBody defines body for CloseWorkOrder for application/json ContentType.
-type CloseWorkOrderJSONRequestBody CloseWorkOrderJSONBody
+type CloseWorkOrderJSONRequestBody = CloseWorkOrderRequest
 
 // CloseWorkOrderAsPaidJSONRequestBody defines body for CloseWorkOrderAsPaid for application/json ContentType.
-type CloseWorkOrderAsPaidJSONRequestBody = CloseWorkOrderAsPaidJSONBody
+type CloseWorkOrderAsPaidJSONRequestBody = CloseWorkOrderAsPaidRequest
 
 // DeclineAllWorkOrderServicesJSONRequestBody defines body for DeclineAllWorkOrderServices for application/json ContentType.
-type DeclineAllWorkOrderServicesJSONRequestBody DeclineAllWorkOrderServicesJSONBody
+type DeclineAllWorkOrderServicesJSONRequestBody = DeclineAllWorkOrderServicesRequest
 
 // ReopenWorkOrderJSONRequestBody defines body for ReopenWorkOrder for application/json ContentType.
-type ReopenWorkOrderJSONRequestBody = ReopenWorkOrderJSONBody
+type ReopenWorkOrderJSONRequestBody = ReopenWorkOrderRequest
 
 // ReturnWorkOrderToBoardJSONRequestBody defines body for ReturnWorkOrderToBoard for application/json ContentType.
-type ReturnWorkOrderToBoardJSONRequestBody = ReturnWorkOrderToBoardJSONBody
+type ReturnWorkOrderToBoardJSONRequestBody = ReturnWorkOrderToBoardRequest
 
 // SaveWorkOrderForLaterJSONRequestBody defines body for SaveWorkOrderForLater for application/json ContentType.
-type SaveWorkOrderForLaterJSONRequestBody = SaveWorkOrderForLaterJSONBody
+type SaveWorkOrderForLaterJSONRequestBody = SaveWorkOrderForLaterRequest
 
 // StageTransitionWorkOrderJSONRequestBody defines body for StageTransitionWorkOrder for application/json ContentType.
-type StageTransitionWorkOrderJSONRequestBody StageTransitionWorkOrderJSONBody
+type StageTransitionWorkOrderJSONRequestBody = StageTransitionWorkOrderRequest
 
 // CreateWorkOrderPaymentJSONRequestBody defines body for CreateWorkOrderPayment for application/json ContentType.
-type CreateWorkOrderPaymentJSONRequestBody CreateWorkOrderPaymentJSONBody
+type CreateWorkOrderPaymentJSONRequestBody = CreateWorkOrderPaymentRequest
 
 // RequestEditorFn is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
