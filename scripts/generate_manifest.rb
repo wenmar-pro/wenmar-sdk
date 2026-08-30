@@ -51,6 +51,14 @@ def response_schema(operation)
   ref&.split("/")&.last
 end
 
+# Whether the success (2xx) response carries an application/json body at all.
+# Distinct from response_schema: some ops return an inline object (anonymous
+# JSON200) that has no component name.
+def response_body?(operation)
+  ok = operation.dig("responses", "200") || operation.dig("responses", "201")
+  !ok&.dig("content", "application/json").nil?
+end
+
 # Describes how the request body should be passed from SDK callers.
 #   {"wrapper" => "customer"} -> pass { "customer" => attrs }
 #   {"flat" => ["f1", "f2"]}  -> pass keyword args
@@ -100,6 +108,7 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
       "requestShape" => request_shape(operation["x-wenmar-request-schema"]),
       "paginated" => paginated?(method, operation),
       "responseSchema" => response_schema(operation),
+      "responseBody" => response_body?(operation),
       "summary" => operation["summary"]
     }
   end

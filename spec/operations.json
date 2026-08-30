@@ -56,6 +56,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -69,6 +70,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -84,6 +86,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -99,6 +102,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "destroy"
     },
     {
@@ -116,6 +120,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -178,6 +183,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Customer",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -193,6 +199,7 @@
       },
       "paginated": false,
       "responseSchema": "Customer",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -231,6 +238,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "check_duplicate"
     },
     {
@@ -257,6 +265,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Customer",
+      "responseBody": true,
       "summary": "lookup"
     },
     {
@@ -272,6 +281,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Driver",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -289,6 +299,7 @@
       },
       "paginated": false,
       "responseSchema": "Driver",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -305,6 +316,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": false,
       "summary": "destroy"
     },
     {
@@ -321,6 +333,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Driver",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -339,6 +352,7 @@
       },
       "paginated": false,
       "responseSchema": "Driver",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -354,6 +368,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Statement",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -369,6 +384,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -385,6 +401,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -400,6 +417,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -415,6 +433,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": false,
       "summary": "destroy"
     },
     {
@@ -430,6 +449,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Customer",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -447,6 +467,7 @@
       },
       "paginated": false,
       "responseSchema": "Customer",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -464,6 +485,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "perform_merge"
     },
     {
@@ -479,6 +501,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -492,6 +515,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "ServiceCategory",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -507,6 +531,7 @@
       },
       "paginated": false,
       "responseSchema": "ServiceCategory",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -522,6 +547,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "seed_defaults"
     },
     {
@@ -537,6 +563,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "ServiceCategory",
+      "responseBody": true,
       "summary": "destroy"
     },
     {
@@ -554,6 +581,7 @@
       },
       "paginated": false,
       "responseSchema": "ServiceCategory",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -571,6 +599,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "deactivate"
     },
     {
@@ -588,6 +617,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "move_down"
     },
     {
@@ -605,6 +635,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "move_up"
     },
     {
@@ -622,6 +653,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "reactivate"
     },
     {
@@ -635,6 +667,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -650,6 +683,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -665,6 +699,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Statement",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -678,6 +713,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -691,6 +727,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -706,6 +743,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -721,6 +759,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "destroy"
     },
     {
@@ -738,6 +777,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -764,6 +804,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -779,6 +820,7 @@
       },
       "paginated": false,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -799,6 +841,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "check_duplicate"
     },
     {
@@ -819,6 +862,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "lookup"
     },
     {
@@ -857,6 +901,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "prefill"
     },
     {
@@ -877,6 +922,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "vin_decode"
     },
     {
@@ -892,6 +938,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": false,
       "summary": "destroy"
     },
     {
@@ -907,6 +954,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -924,6 +972,7 @@
       },
       "paginated": false,
       "responseSchema": "Vehicle",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -941,6 +990,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "perform_merge"
     },
     {
@@ -961,6 +1011,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "perform_transfer"
     },
     {
@@ -976,6 +1027,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -989,6 +1041,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "Vendor",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -1004,6 +1057,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "Vendor",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1017,6 +1071,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -1032,6 +1087,7 @@
       },
       "paginated": false,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -1047,6 +1103,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": false,
       "summary": "destroy"
     },
     {
@@ -1062,6 +1119,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1079,6 +1137,7 @@
       },
       "paginated": false,
       "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -1094,6 +1153,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1109,6 +1169,7 @@
       "requestShape": null,
       "paginated": true,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1130,6 +1191,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -1147,6 +1209,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "update_decisions"
     },
     {
@@ -1162,6 +1225,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1177,6 +1241,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1197,6 +1262,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "close"
     },
     {
@@ -1214,6 +1280,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "close_as_paid"
     },
     {
@@ -1231,6 +1298,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "decline_all"
     },
     {
@@ -1248,6 +1316,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "reopen"
     },
     {
@@ -1265,6 +1334,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "return_to_board"
     },
     {
@@ -1282,6 +1352,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "save_for_later"
     },
     {
@@ -1299,6 +1370,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "stage_transition"
     },
     {
@@ -1314,6 +1386,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1329,6 +1402,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -1346,6 +1420,7 @@
       },
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -1361,6 +1436,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
+      "responseBody": true,
       "summary": "show"
     }
   ]
