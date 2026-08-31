@@ -7,11 +7,11 @@
     "mockResponses": [
       {
         "status": 500,
-        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "details": {} } }
+        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "field_errors": {} } }
       },
       {
         "status": 500,
-        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "details": {} } }
+        "body": { "error": { "code": "internal_error", "message": "Simulated failure", "field_errors": {} } }
       },
       {
         "status": 200,
@@ -29,10 +29,10 @@
     "method": "GET",
     "path": "/customers",
     "mockResponses": [
-      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
-      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
-      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } },
-      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } }
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "field_errors": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "field_errors": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "field_errors": {} } } },
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 4,
@@ -47,7 +47,7 @@
     "path": "/customers/999",
     "pathParams": { "id": 999 },
     "mockResponses": [
-      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "details": {} } } }
+      { "status": 404, "body": { "error": { "code": "not_found", "message": "Customer not found", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 1,
@@ -62,7 +62,7 @@
     "path": "/customers",
     "requestBody": { "customer": { "first_name": "Test", "last_name": "User" } },
     "mockResponses": [
-      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "details": {} } } }
+      { "status": 500, "body": { "error": { "code": "internal_error", "message": "fail", "field_errors": {} } } }
     ],
     "expect": {
       "requestCount": 1,
@@ -77,7 +77,7 @@
     "path": "/customers",
     "requestBody": { "customer": { "first_name": "Test", "last_name": "User" } },
     "mockResponses": [
-      { "status": 429, "headers": { "Retry-After": "0" }, "body": { "error": { "code": "rate_limited", "message": "slow", "details": {} } } },
+      { "status": 429, "headers": { "Retry-After": "0" }, "body": { "error": { "code": "rate_limited", "message": "slow", "field_errors": {} } } },
       { "status": 201, "body": { "id": 1 } }
     ],
     "expect": {

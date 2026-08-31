@@ -40,6 +40,21 @@ jobs:
       - name: Enrich spec
         run: ruby scripts/enrich_spec.rb spec/openapi.yaml spec/openapi.enriched.yaml
 
+      - name: Enrich spec tests
+        run: ruby scripts/enrich_spec_test.rb
+
+      - name: Generate manifest
+        run: ruby scripts/generate_manifest.rb spec/openapi.enriched.yaml spec/operations.json
+
+      - name: Generate Go wrapper
+        run: ruby scripts/generate_go_wrapper.rb
+
+      - name: Generate Ruby resources
+        run: ruby scripts/generate_ruby_resources.rb
+
+      - name: Generate conformance dispatch
+        run: ruby scripts/generate_conformance_dispatch.rb
+
       - name: Generate API docs
         run: ruby scripts/generate_docs.rb spec/openapi.enriched.yaml docs/api spec/fixtures
 
@@ -64,6 +79,9 @@ jobs:
           bundle install
           bundle exec ruby -Ilib spec/client_spec.rb
           bundle exec ruby -Ilib spec/pagination_spec.rb
+          bundle exec ruby -Ilib spec/error_spec.rb
+          bundle exec ruby -Ilib spec/config_spec.rb
+          bundle exec ruby -Ilib spec/resources_spec.rb
         working-directory: ruby
 
       - name: Ruby conformance
@@ -73,6 +91,9 @@ jobs:
       - name: Fixture coverage
         run: ruby scripts/check_fixture_coverage.rb
 
+      - name: Conformance parity
+        run: ruby scripts/check_conformance_parity.rb
+
       - name: Doc generator tests
         run: ruby scripts/generate_docs_test.rb
 
@@ -81,6 +102,14 @@ jobs:
           go generate ./...
           git diff --exit-code -- pkg/generated/client.gen.go
         working-directory: go
+
+      - name: Verify no drift in generated SDK layers
+        run: |
+          ruby scripts/generate_manifest.rb spec/openapi.enriched.yaml spec/operations.json
+          ruby scripts/generate_go_wrapper.rb
+          ruby scripts/generate_ruby_resources.rb
+          ruby scripts/generate_conformance_dispatch.rb
+          git diff --exit-code -- spec/operations.json go/wenmar/operations.gen.go go/wenmar/models.gen.go ruby/lib/wenmar/resources.rb conformance/go/dispatch.gen.go conformance/ruby/dispatch.gen.rb
 
       - name: Verify no drift in generated API docs
         run: |
