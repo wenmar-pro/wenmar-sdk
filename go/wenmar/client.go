@@ -199,6 +199,12 @@ func (c *Client) FetchPage(ctx context.Context, url string) ([]byte, string, err
 	return c.fetchURL(ctx, url)
 }
 
+// PaginatorFromResponse builds a Paginator from a list response's Link header.
+// It lets callers follow Link-header pages manually from a raw list response.
+func (c *Client) PaginatorFromResponse(resp *http.Response) *Paginator {
+	return newPaginatorFromResponse(resp, c)
+}
+
 // collectAll follows the Link header from a first page body, appending items
 func collectAll[T any](ctx context.Context, c *Client, body []byte, link string, max int) ([]T, error) {
 	items, err := parseListResponse[T](body)
