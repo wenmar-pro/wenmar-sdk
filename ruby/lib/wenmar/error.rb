@@ -1,10 +1,10 @@
-require "json"
+# frozen_string_literal: true
 
 module Wenmar
   class Error < StandardError
     attr_reader :code, :message, :field_errors, :status, :request_id
 
-    def initialize(code:, message:, field_errors:, status:, request_id: nil)
+    def initialize(code:, message:, field_errors: {}, status: nil, request_id: nil)
       @code = code
       @message = message
       @field_errors = field_errors
@@ -14,18 +14,42 @@ module Wenmar
     end
 
     def self.from_response(response)
-      body = JSON.parse(response.body)
-      error = body["error"] || {}
+      body = response.body
+      body = JSON.parse(body) if body.is_a?(String)
+      body = {} unless body.is_a?(Hash)
       headers = response.respond_to?(:headers) ? (response.headers || {}) : {}
-      new(
-        code: error["code"] || "unknown",
-        message: error["message"] || "Unknown error",
-        field_errors: error["field_errors"] || {},
-        status: response.status,
-        request_id: headers["X-Request-Id"]
-      )
+
+      if body["error"].is_a?(Hash)
+        err = body["error"]
+        new(
+          code: err["code"] || "unknown",
+          message: err["message"] || "API error",
+          field_errors: field_errors_map(err["field_errors"] || err["details"] || {}),
+          status: response.status,
+          request_id: headers["X-Request-Id"]
+        )
+      elsif response.status == 507
+        new(code: "limit_exceeded", message: "storage limit exceeded", status: response.status)
+      else
+        new(code: "unknown", message: body.to_s, status: response.status)
+      end
     rescue JSON::ParserError
-      new(code: "unknown", message: "Malformed error response", field_errors: {}, status: response.status)
+      new(code: "unknown", message: "Malformed error response", status: response.status)
+    end
+
+    def self.field_errors_map(list)
+      case list
+      when Hash
+        list
+      when Array
+        list.each_with_object({}) do |item, memo|
+          if item.is_a?(Hash)
+            memo[item["field"] || item[:field]] = item["message"] || item[:message]
+          end
+        end
+      else
+        {}
+      end
     end
 
     # Extracts validation field errors from the field_errors hash.

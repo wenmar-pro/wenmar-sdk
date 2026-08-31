@@ -79,7 +79,7 @@ def build_method(op)
         out
       else
         # list with query params -> pass a params hash
-        query_kw = query.map { |q| "#{q["name"]}:" }
+        query_kw = query.map { |q| "#{q["name"]}: nil" }
         sig = (pos + query_kw).join(", ")
         params_body = "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
         out = <<~RUBY
@@ -104,10 +104,10 @@ def build_method(op)
       end
     else
       # non-paginated GET
-      query_kw = query.map { |q| "#{q["name"]}:" }
+      query_kw = query.map { |q| "#{q["name"]}: nil" }
       sig = (pos + query_kw).join(", ")
       get_arg = if query.empty?
-        body_args(op, force_path: true)
+        "get(\"#{substituted}\")"
       else
         params_body = "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
         "#{params_body}\n      get(\"#{substituted}\", params.compact)"

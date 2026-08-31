@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 module Wenmar
+  class TokenError < StandardError; end
+
   module TokenProvider
     def token
       raise NotImplementedError
@@ -7,11 +11,15 @@ module Wenmar
 
   class StaticTokenProvider
     include TokenProvider
-    attr_reader :token
 
     def initialize(token)
       raise ArgumentError, "token is required" if token.nil? || token.empty?
+
       @token = token
+    end
+
+    def token
+      @token
     end
   end
 end

@@ -1,23 +1,33 @@
+# frozen_string_literal: true
+
 require "json"
 require "fileutils"
 
 module Wenmar
   class CredentialStore
-    include TokenProvider
+    TOKEN_KEY = "access_token"
+    LEGACY_TOKEN_KEY = "token"
 
-    KEYRING_SERVICE = "wenmar-sdk"
-
-    def initialize(path: default_path)
+    def initialize(path = default_path)
       @path = path
     end
 
-    def save(token)
-      save_to_keyring(token)
-      save_to_file(token)
+    def load
+      return {} unless File.exist?(@path)
+
+      JSON.parse(File.read(@path))
+    rescue JSON::ParserError
+      {}
     end
 
     def token
-      from_keyring || from_file
+      data = load
+      data[TOKEN_KEY] || data[LEGACY_TOKEN_KEY]
+    end
+
+    def save(token)
+      FileUtils.mkdir_p(File.dirname(@path))
+      File.write(@path, JSON.pretty_generate({ TOKEN_KEY => token }), perm: 0600)
     end
 
     private
@@ -25,38 +35,32 @@ module Wenmar
     def default_path
       File.join(Dir.home, ".config", "wenmar", "credentials.json")
     end
+  end
 
-    def save_to_keyring(token)
+  class KeychainStore
+    SERVICE = "wenmar"
+    LEGACY_SERVICE = "wenmar-cli"
+    ACCOUNT = "token"
+
+    def initialize
       require "keychain"
-      keychain = Keychain.default
-      item = keychain.generic_password_item(
-        service: KEYRING_SERVICE,
-        account: "default",
-        password: token
-      )
-      item.save!
-    rescue LoadError, StandardError
-      # keychain gem not installed or no keyring available — file fallback
     end
 
-    def save_to_file(token)
-      FileUtils.mkdir_p(File.dirname(@path))
-      File.write(@path, { token: token }.to_json, perm: 0600)
+    def token
+      item = Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first
+      return item.password if item
+
+      legacy = Keychain.generic_passwords.where(service: LEGACY_SERVICE, account: ACCOUNT).first
+      return nil unless legacy
+
+      save(legacy.password)
+      legacy.password
     end
 
-    def from_keyring
-      require "keychain"
-      item = Keychain.default.generic_password_item(service: KEYRING_SERVICE, account: "default")
-      item.password if item
-    rescue LoadError, StandardError
-      nil
-    end
-
-    def from_file
-      data = JSON.parse(File.read(@path))
-      data["token"] || raise("empty token in credentials file")
-    rescue Errno::ENOENT
-      raise "credentials file not found at #{@path}"
+    def save(token)
+      existing = Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first
+      existing.destroy if existing
+      Keychain.generic_passwords.create(service: SERVICE, account: ACCOUNT, password: token)
     end
   end
 end

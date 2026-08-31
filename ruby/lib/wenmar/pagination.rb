@@ -1,12 +1,20 @@
+# frozen_string_literal: true
+
 require "uri"
 
 module Wenmar
   class Paginator
-    attr_reader :next_url, :client
+    include Enumerable
 
-    def initialize(next_url:, client:)
-      @next_url = next_url
+    attr_reader :data, :links, :meta, :next_url, :client
+
+    def initialize(client, page)
       @client = client
+      @data = page.fetch("data", page.fetch(:data, []))
+      @links = page.fetch("links", page.fetch(:links, {}))
+      @meta = page.fetch("meta", page.fetch(:meta, {}))
+      @page = page
+      @next_url = @links["next"] || @links[:next]
     end
 
     def has_next?
@@ -28,6 +36,30 @@ module Wenmar
       response = @client.send(:get_raw, @next_url)
       @next_url = self.class.parse_link_header(response.headers["Link"], "next")
       JSON.parse(response.body)
+    end
+
+    def each
+      return to_enum unless block_given?
+
+      page = self
+      loop do
+        page.data.each { |item| yield item }
+        page = page.next_page
+        break if page.nil?
+      end
+    end
+
+    def to_a(max = 1000)
+      result = []
+      page = self
+      loop do
+        result.concat(page.data)
+        break if result.size >= max
+
+        page = page.next_page
+        break if page.nil?
+      end
+      result.first(max)
     end
 
     def same_origin?(url, base_url)
@@ -52,7 +84,7 @@ module Wenmar
     def self.from_response(response, client)
       link_header = response.headers["Link"]
       next_url = parse_link_header(link_header, "next")
-      new(next_url: next_url, client: client)
+      new(client, { "data" => [], "links" => { "next" => next_url }, "meta" => {} })
     end
   end
 end

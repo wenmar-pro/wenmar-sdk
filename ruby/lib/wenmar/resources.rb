@@ -6,7 +6,7 @@ module Wenmar
   class Client
 # Fetches list_account.
 def list_account()
-  
+  get("/account")
 end
 # Lists list_customer_tags resources (paginated).
 # @return [Wenmar::Paginator]
@@ -33,28 +33,28 @@ def update_customer_tag(id, name:)
 end
 # Lists list_customers resources (paginated).
 # @return [Wenmar::Paginator]
-def list_customers(has_balance:, has_vehicle:, last_visit_months:, page:, per_page:, query:, tag_ids:, type:)
+def list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, query: nil, tag_ids: nil, type: nil)
   params = { has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, query: query, tag_ids: tag_ids, type: type }
   get("/customers", params.compact)
 end
 
 # Fetches all customers, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_customers(has_balance:, has_vehicle:, last_visit_months:, page:, per_page:, query:, tag_ids:, type:)
-  paginator_to_a(list_customers(has_balance:, has_vehicle:, last_visit_months:, page:, per_page:, query:, tag_ids:, type:), 1000)
+def get_all_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, query: nil, tag_ids: nil, type: nil)
+  paginator_to_a(list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, query: nil, tag_ids: nil, type: nil), 1000)
 end
 # Runs create_customer (POST /customers).
 def create_customer(customer:)
   post("/customers", { customer: customer })
 end
 # Fetches check_customer_duplicate.
-def check_customer_duplicate(email:, first_name:, last_name:, phone:)
+def check_customer_duplicate(email: nil, first_name: nil, last_name: nil, phone: nil)
   params = { email: email, first_name: first_name, last_name: last_name, phone: phone }
       get("/customers/check_duplicate", params.compact)
 end
 # Lists lookup_customer resources (paginated).
 # @return [Wenmar::Paginator]
-def lookup_customer(id:, query:)
+def lookup_customer(id: nil, query: nil)
   params = { id: id, query: query }
   get("/customers/lookup", params.compact)
 end
@@ -79,7 +79,7 @@ def delete_driver(customer_id, id)
 end
 # Fetches show_driver.
 def show_driver(customer_id, id)
-  
+  get("/customers/#{customer_id}/drivers/#{id}")
 end
 # Runs update_driver (PATCH /customers/{customer_id}/drivers/{id}).
 def update_driver(customer_id, id, driver:)
@@ -109,7 +109,7 @@ def get_all_customers_vehicles(customer_id)
 end
 # Fetches get_customers_vehicle_history.
 def get_customers_vehicle_history(customer_id, vehicle_id)
-  
+  get("/customers/#{customer_id}/vehicles/#{vehicle_id}/history")
 end
 # Lists list_customers_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
@@ -128,7 +128,7 @@ def delete_customer(id)
 end
 # Fetches show_customer.
 def show_customer(id)
-  
+  get("/customers/#{id}")
 end
 # Runs update_customer (PATCH /customers/{id}).
 def update_customer(id, customer:)
@@ -140,7 +140,7 @@ def merge_customer(id, source_customer_id:)
 end
 # Fetches show_location.
 def show_location(id)
-  
+  get("/locations/#{id}")
 end
 # Lists list_service_categories resources (paginated).
 # @return [Wenmar::Paginator]
@@ -187,7 +187,7 @@ def reactivate_service_category(id)
 end
 # Fetches list_tags.
 def list_tags()
-  
+  get("/settings/tags")
 end
 # Runs update_tags (PATCH /settings/tags).
 def update_tags()
@@ -195,7 +195,7 @@ def update_tags()
 end
 # Fetches show_statement.
 def show_statement(id)
-  
+  get("/statements/#{id}")
 end
 # Lists list_team resources (paginated).
 # @return [Wenmar::Paginator]
@@ -233,38 +233,38 @@ def update_vehicle_tag(id, name:)
 end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
-def list_vehicles(customer_id:, page:)
+def list_vehicles(customer_id: nil, page: nil)
   params = { customer_id: customer_id, page: page }
   get("/vehicles", params.compact)
 end
 
 # Fetches all vehicles, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_vehicles(customer_id:, page:)
-  paginator_to_a(list_vehicles(customer_id:, page:), 1000)
+def get_all_vehicles(customer_id: nil, page: nil)
+  paginator_to_a(list_vehicles(customer_id: nil, page: nil), 1000)
 end
 # Runs create_vehicle (POST /vehicles).
 def create_vehicle(vehicle:)
   post("/vehicles", { vehicle: vehicle })
 end
 # Fetches check_vehicle_duplicate.
-def check_vehicle_duplicate(vin:)
+def check_vehicle_duplicate(vin: nil)
   params = { vin: vin }
       get("/vehicles/check_duplicate", params.compact)
 end
 # Lists lookup_vehicle resources (paginated).
 # @return [Wenmar::Paginator]
-def lookup_vehicle(query:)
+def lookup_vehicle(query: nil)
   params = { query: query }
   get("/vehicles/lookup", params.compact)
 end
 # Fetches prefill_vehicle.
-def prefill_vehicle(make:, model:, vin:, year:)
+def prefill_vehicle(make: nil, model: nil, vin: nil, year: nil)
   params = { make: make, model: model, vin: vin, year: year }
       get("/vehicles/prefill", params.compact)
 end
 # Fetches decode_vin.
-def decode_vin(vin:)
+def decode_vin(vin: nil)
   params = { vin: vin }
       get("/vehicles/vin_decode", params.compact)
 end
@@ -274,7 +274,7 @@ def delete_vehicle(id)
 end
 # Fetches show_vehicle.
 def show_vehicle(id)
-  
+  get("/vehicles/#{id}")
 end
 # Runs update_vehicle (PATCH /vehicles/{id}).
 def update_vehicle(id, vehicle:)
@@ -312,7 +312,7 @@ def get_all_vendors()
 end
 # Fetches show_vendor.
 def show_vendor(id)
-  
+  get("/vendors/#{id}")
 end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
@@ -335,7 +335,7 @@ def delete_work_order(id)
 end
 # Fetches show_work_order.
 def show_work_order(id)
-  
+  get("/work_orders/#{id}")
 end
 # Runs update_work_order (PATCH /work_orders/{id}).
 def update_work_order(id, work_order:)
@@ -361,11 +361,11 @@ def update_work_order_authorization_decisions(work_order_id, service_decision_re
 end
 # Fetches show_work_order_estimate.
 def show_work_order_estimate(work_order_id)
-  
+  get("/work_orders/#{work_order_id}/estimate")
 end
 # Fetches show_work_order_inspection.
 def show_work_order_inspection(work_order_id)
-  
+  get("/work_orders/#{work_order_id}/inspection")
 end
 # Runs close_work_order (PATCH /work_orders/{work_order_id}/lifecycle/close).
 def close_work_order(work_order_id, closure_type:, closure_reason:)
@@ -397,11 +397,11 @@ def stage_transition_work_order(work_order_id, target:)
 end
 # Fetches show_work_order_parts.
 def show_work_order_parts(work_order_id)
-  
+  get("/work_orders/#{work_order_id}/parts")
 end
 # Fetches show_work_order_payments.
 def show_work_order_payments(work_order_id)
-  
+  get("/work_orders/#{work_order_id}/payments")
 end
 # Runs create_work_order_payment (POST /work_orders/{work_order_id}/payments).
 def create_work_order_payment(work_order_id, payment:)
@@ -409,7 +409,7 @@ def create_work_order_payment(work_order_id, payment:)
 end
 # Fetches show_work_order_wip.
 def show_work_order_wip(work_order_id)
-  
+  get("/work_orders/#{work_order_id}/wip")
 end
   end
 end

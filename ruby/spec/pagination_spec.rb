@@ -19,10 +19,10 @@ module Wenmar
     end
 
     def test_has_next
-      paginator = Paginator.new(next_url: "https://api.example.com?page=2", client: nil)
+      paginator = Paginator.new(nil, { "data" => [], "links" => { "next" => "https://api.example.com?page=2" }, "meta" => {} })
       assert paginator.has_next?
 
-      paginator = Paginator.new(next_url: nil, client: nil)
+      paginator = Paginator.new(nil, { "data" => [], "links" => {}, "meta" => {} })
       refute paginator.has_next?
     end
 
@@ -36,7 +36,6 @@ module Wenmar
     end
 
     def test_next_page_follows_actual_url
-      # First response: page 1 data + Link header pointing to ?page=2
       stub_request(:get, "#{@base_url}/customers")
         .to_return(
           status: 200,
@@ -44,7 +43,6 @@ module Wenmar
           headers: { "Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\"" }
         )
 
-      # Second response: page 2 data (must be a DIFFERENT stub matching ?page=2)
       stub_request(:get, "#{@base_url}/customers?page=2")
         .to_return(
           status: 200,
@@ -77,6 +75,25 @@ module Wenmar
       assert_raises(Wenmar::Error) { result.paginator.next_page }
 
       assert_not_requested(:get, %r{https://attacker\.example\.com})
+    end
+
+    def test_get_all_customers_collects_pages
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 1 }].to_json,
+          headers: { "Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\"" }
+        )
+      stub_request(:get, "#{@base_url}/customers?page=2")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 2 }].to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+      client = Client.new(token: "test", base_url: @base_url)
+      all = client.get_all_customers
+      assert_equal [1, 2], all.map { |c| c["id"] }
     end
 
     private
