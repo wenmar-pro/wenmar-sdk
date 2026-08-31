@@ -97,7 +97,18 @@ func runCase(t *testing.T, tc TestCase) {
 		t.Fatalf("failed to create client: %v", err)
 	}
 
-	body, err := executeOperation(client, tc)
+	args := map[string]interface{}{
+		"pathParams":  tc.PathParams,
+		"query":       tc.Query,
+		"requestBody": tc.RequestBody,
+	}
+
+	fn, ok := dispatch[tc.Operation]
+	if !ok {
+		t.Fatalf("operation %q not in dispatch", tc.Operation)
+	}
+
+	body, err := fn(ctx, t, client, args)
 	if err != nil {
 		if tc.Expect.NoError {
 			t.Fatalf("expected success, got error: %v", err)
@@ -143,516 +154,14 @@ func runCase(t *testing.T, tc TestCase) {
 	}
 }
 
-// executeOperation dispatches the SDK call and returns the raw response body
-// (as a decoded generic value) for body assertions.
-func executeOperation(client *wenmar.Client, tc TestCase) (any, error) {
-	switch tc.Operation {
-	case "list_customers":
-		resp, err := client.ListCustomers(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customers_paginated":
-		resp, paginator, err := client.ListCustomersWithPagination(ctx)
-		if err != nil {
-			return nil, err
-		}
-		body, err := decodeBody(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-		for paginator.HasNext() {
-			next, err := paginator.NextPage(ctx)
-			if err != nil {
-				return nil, err
-			}
-			body = next
-		}
-		return body, nil
-	case "list_customers_with_params":
-		params := buildListCustomersParams(tc.Query)
-		resp, err := client.ListCustomersWithParams(ctx, params)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customers_with_params_paginated":
-		params := buildListCustomersParams(tc.Query)
-		resp, paginator, err := client.ListCustomersWithParamsWithPagination(ctx, params)
-		if err != nil {
-			return nil, err
-		}
-		body, err := decodeBody(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-		for paginator.HasNext() {
-			next, err := paginator.NextPage(ctx)
-			if err != nil {
-				return nil, err
-			}
-			body = next
-		}
-		return body, nil
-	case "show_customer":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowCustomer(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_customer":
-		body := tc.RequestBody
-		customer, _ := body["customer"].(map[string]any)
-		req := wenmar.CreateCustomerRequest{}
-		if customer != nil {
-			req.FirstName = stringVal(customer["first_name"])
-			req.LastName = stringVal(customer["last_name"])
-		}
-		resp, err := client.CreateCustomer(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "update_customer":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.UpdateCustomer(ctx, id, wenmar.UpdateCustomerRequest{})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_vehicles":
-		resp, err := client.ListVehicles(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_vehicle":
-		body := tc.RequestBody
-		vehicle, _ := body["vehicle"].(map[string]any)
-		req := wenmar.CreateVehicleRequest{}
-		if vehicle != nil {
-			req.Make = stringVal(vehicle["make"])
-			req.Model = stringVal(vehicle["model"])
-			req.Year = intParamValue(vehicle, "year")
-			req.CustomerID = intParamValue(vehicle, "customer_id")
-		}
-		resp, err := client.CreateVehicle(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "update_vehicle":
-		id := intParam(tc.PathParams, "id")
-		body := tc.RequestBody
-		vehicle, _ := body["vehicle"].(map[string]any)
-		req := wenmar.UpdateVehicleRequest{}
-		if vehicle != nil {
-			req.Make = stringVal(vehicle["make"])
-		}
-		resp, err := client.UpdateVehicle(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "delete_vehicle":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.DeleteVehicle(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "decode_vin":
-		vin := stringParam(tc.Query, "vin")
-		resp, err := client.DecodeVin(ctx, vin)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "check_duplicate":
-		vin := stringParam(tc.Query, "vin")
-		resp, err := client.CheckVehicleDuplicate(ctx, wenmar.CheckVehicleDuplicateParams{Vin: &vin})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_vehicle":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowVehicle(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_work_orders":
-		resp, err := client.ListWorkOrders(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_work_orders_paginated":
-		resp, paginator, err := client.ListWorkOrdersWithPagination(ctx)
-		if err != nil {
-			return nil, err
-		}
-		body, err := decodeBody(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-		for paginator.HasNext() {
-			next, err := paginator.NextPage(ctx)
-			if err != nil {
-				return nil, err
-			}
-			body = next
-		}
-		return body, nil
-	case "show_work_order":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowWorkOrder(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_account":
-		resp, err := client.ListAccount(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_location":
-		id := stringParam(tc.PathParams, "id")
-		resp, err := client.ShowLocation(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customers_drivers":
-		customerID := intParam(tc.PathParams, "customer_id")
-		resp, err := client.ListDrivers(ctx, customerID)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_driver":
-		customerID := intParam(tc.PathParams, "customer_id")
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowDriver(ctx, customerID, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_driver":
-		customerID := intParam(tc.PathParams, "customer_id")
-		body := tc.RequestBody
-		driver, _ := body["driver"].(map[string]any)
-		req := wenmar.CreateDriverRequest{}
-		if driver != nil {
-			req.FullName, _ = driver["full_name"].(string)
-			req.Phone, _ = driver["phone"].(string)
-		}
-		resp, err := client.CreateDriver(ctx, customerID, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "update_driver":
-		customerID := intParam(tc.PathParams, "customer_id")
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.UpdateDriver(ctx, customerID, id, wenmar.UpdateDriverRequest{})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "delete_driver":
-		customerID := intParam(tc.PathParams, "customer_id")
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.DeleteDriver(ctx, customerID, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customers_statements":
-		customerID := intParam(tc.PathParams, "customer_id")
-		resp, err := client.ListStatements(ctx, customerID)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customer_vehicles":
-		customerID := intParam(tc.PathParams, "customer_id")
-		resp, err := client.ListCustomerVehicles(ctx, customerID)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_customer_work_orders":
-		customerID := intParam(tc.PathParams, "customer_id")
-		resp, err := client.ListCustomerWorkOrders(ctx, customerID)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_vehicle_work_orders":
-		vehicleID := intParam(tc.PathParams, "vehicle_id")
-		resp, err := client.ListVehicleWorkOrders(ctx, vehicleID)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "merge_customer":
-		id := intParam(tc.PathParams, "id")
-		body := tc.RequestBody
-		req := wenmar.MergeCustomerRequest{SourceCustomerID: intParamValue(body, "source_customer_id")}
-		resp, err := client.MergeCustomer(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "transfer_vehicle":
-		id := intParam(tc.PathParams, "id")
-		body := tc.RequestBody
-		req := wenmar.TransferVehicleRequest{
-			CustomerID: intParamValue(body, "customer_id"),
-			Mode:       stringVal(body["mode"]),
-		}
-		resp, err := client.TransferVehicle(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "merge_vehicle":
-		id := intParam(tc.PathParams, "id")
-		body := tc.RequestBody
-		req := wenmar.MergeVehicleRequest{SourceVehicleID: intParamValue(body, "source_vehicle_id")}
-		resp, err := client.MergeVehicle(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_tags":
-		resp, err := client.ListTags(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "update_tags":
-		resp, err := client.UpdateTags(ctx, wenmar.UpdateTagsRequest{})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_customer_tag":
-		resp, err := client.CreateCustomerTag(ctx, wenmar.CreateCustomerTagRequest{Name: stringParam(tc.RequestBody, "name")})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_vehicle_tag":
-		resp, err := client.CreateVehicleTag(ctx, wenmar.CreateVehicleTagRequest{Name: stringParam(tc.RequestBody, "name")})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "lookup_customer":
-		resp, err := client.LookupCustomer(ctx, stringParam(tc.Query, "query"))
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "lookup_vehicle":
-		resp, err := client.LookupVehicle(ctx, stringParam(tc.Query, "query"))
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "prefill_vehicle":
-		vin := stringParam(tc.Query, "vin")
-		resp, err := client.PrefillVehicle(ctx, wenmar.PrefillVehicleParams{Vin: &vin})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "check_customer_duplicate":
-		fn := stringParam(tc.Query, "first_name")
-		ln := stringParam(tc.Query, "last_name")
-		resp, err := client.CheckCustomerDuplicate(ctx, wenmar.CheckCustomerDuplicateParams{
-			FirstName: &fn,
-			LastName:  &ln,
-		})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "check_vehicle_duplicate":
-		vin := stringParam(tc.Query, "vin")
-		resp, err := client.CheckVehicleDuplicate(ctx, wenmar.CheckVehicleDuplicateParams{Vin: &vin})
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_statement":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowStatement(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_vendors":
-		resp, err := client.ListVendors(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_vendor":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ShowVendor(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_work_order_estimate":
-		id := intParam(tc.PathParams, "work_order_id")
-		resp, err := client.ShowWorkOrderEstimate(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_work_order_wip":
-		id := intParam(tc.PathParams, "work_order_id")
-		resp, err := client.ShowWorkOrderWip(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_work_order_inspection":
-		id := intParam(tc.PathParams, "work_order_id")
-		resp, err := client.ShowWorkOrderInspection(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_work_order_parts":
-		id := intParam(tc.PathParams, "work_order_id")
-		resp, err := client.ShowWorkOrderParts(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "show_work_order_payments":
-		id := intParam(tc.PathParams, "work_order_id")
-		resp, err := client.ShowWorkOrderPayments(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_work_order_payment":
-		id := intParam(tc.PathParams, "work_order_id")
-		body := tc.RequestBody
-		payment, _ := body["payment"].(map[string]any)
-		req := wenmar.CreateWorkOrderPaymentRequest{}
-		if payment != nil {
-			req.AmountCents, _ = payment["amount_cents"].(string)
-			req.Method, _ = payment["method"].(string)
-		}
-		resp, err := client.CreateWorkOrderPayment(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "list_service_categories":
-		resp, err := client.ListServiceCategories(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "create_service_category":
-		sc, _ := tc.RequestBody["service_category"].(map[string]any)
-		req := wenmar.CreateServiceCategoryRequest{}
-		if sc != nil {
-			req.Name, _ = sc["name"].(string)
-			req.ServiceType, _ = sc["service_type"].(string)
-			req.Icon, _ = sc["icon"].(string)
-		}
-		resp, err := client.CreateServiceCategory(ctx, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "update_service_category":
-		id := intParam(tc.PathParams, "id")
-		sc, _ := tc.RequestBody["service_category"].(map[string]any)
-		req := wenmar.UpdateServiceCategoryRequest{}
-		if sc != nil {
-			req.Name, _ = sc["name"].(string)
-		}
-		resp, err := client.UpdateServiceCategory(ctx, id, req)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "delete_service_category":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.DeleteServiceCategory(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "deactivate_service_category":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.DeactivateServiceCategory(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "reactivate_service_category":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.ReactivateServiceCategory(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "move_up_service_category":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.MoveUpServiceCategory(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "move_down_service_category":
-		id := intParam(tc.PathParams, "id")
-		resp, err := client.MoveDownServiceCategory(ctx, id)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	case "seed_defaults_service_categories":
-		resp, err := client.SeedDefaultsServiceCategories(ctx)
-		if err != nil {
-			return nil, err
-		}
-		return decodeBody(resp.Body)
-	default:
-		return nil, fmt.Errorf("unknown operation: %s", tc.Operation)
-	}
-}
+// --- dispatch helpers (used by dispatch.gen.go) ---
 
-func decodeBody(body []byte) (any, error) {
-	if len(body) == 0 {
-		return nil, nil
-	}
-	var v any
-	if err := json.Unmarshal(body, &v); err != nil {
-		return nil, err
-	}
-	return v, nil
-}
-
-func intParam(params map[string]any, key string) int {
-	if params == nil {
+// intArg extracts an integer path/query param from args.
+func intArg(m map[string]interface{}, key string) int {
+	if m == nil {
 		return 0
 	}
-	switch v := params[key].(type) {
+	switch v := m[key].(type) {
 	case float64:
 		return int(v)
 	case int:
@@ -664,55 +173,133 @@ func intParam(params map[string]any, key string) int {
 	return 0
 }
 
-func intParamValue(params map[string]any, key string) int {
-	return intParam(params, key)
-}
-
-func stringVal(v any) string {
-	if s, ok := v.(string); ok {
-		return s
-	}
-	return ""
-}
-
-func mustStr(s string) string { return s }
-
-func stringParam(params map[string]any, key string) string {
-	if params == nil {
+// strArg extracts a string path/query param from args.
+func strArg(m map[string]interface{}, key string) string {
+	if m == nil {
 		return ""
 	}
-	if v, ok := params[key].(string); ok {
+	if v, ok := m[key].(string); ok {
 		return v
 	}
 	return ""
 }
 
-// buildListCustomersParams maps conformance test query values to the
-// generated ListCustomersParams struct.
-func buildListCustomersParams(query map[string]any) wenmar.ListCustomersParams {
-	params := wenmar.ListCustomersParams{}
-	if v := stringParam(query, "query"); v != "" {
-		params.Query = &v
+// strPtr returns a *string for a query param, or nil if absent.
+func strPtr(m map[string]interface{}, key string) *string {
+	if m == nil {
+		return nil
 	}
-	if v := stringParam(query, "type"); v != "" {
-		params.Type = &v
+	if v, ok := m[key].(string); ok {
+		return &v
 	}
-	if v, ok := query["has_balance"].(bool); ok {
-		params.HasBalance = &v
+	return nil
+}
+
+// boolPtr returns a *bool for a query param, or nil if absent.
+func boolPtr(m map[string]interface{}, key string) *bool {
+	if m == nil {
+		return nil
 	}
-	if v, ok := query["has_vehicle"].(bool); ok {
-		params.HasVehicle = &v
+	if v, ok := m[key].(bool); ok {
+		return &v
 	}
-	if n := intParam(query, "last_visit_months"); n > 0 {
-		params.LastVisitMonths = &n
+	return nil
+}
+
+// intPtr returns a *int for a query param, or nil if absent.
+func intPtr(m map[string]interface{}, key string) *int {
+	if m == nil {
+		return nil
 	}
-	if n := intParam(query, "per_page"); n > 0 {
-		params.PerPage = &n
+	switch v := m[key].(type) {
+	case float64:
+		i := int(v)
+		return &i
+	case int:
+		return &v
 	}
-	if n := intParam(query, "page"); n > 0 {
-		params.Page = &n
+	return nil
+}
+
+// flatVal extracts a scalar value for a flat request body field.
+func flatVal(m map[string]interface{}, key string) interface{} {
+	if m == nil {
+		return nil
 	}
-	return params
+	return m[key]
+}
+
+// buildWrapper builds a request struct whose single required field is a
+// wrapper (e.g. CreateCustomerRequest.Customer). It sets the wrapper field
+// from the requestBody map.
+func buildWrapper[T any](wrapper string, body map[string]interface{}) T {
+	var out T
+	// The wrapper field is the first (and only) field of the struct. We set
+	// it by marshalling the body and unmarshalling into the struct, which
+	// populates the nested field via its json tag.
+	if body != nil {
+		data, _ := json.Marshal(map[string]interface{}{wrapper: body})
+		_ = json.Unmarshal(data, &out)
+	}
+	return out
+}
+
+// buildFlat builds a flat request struct (e.g. TransferVehicleRequest) from
+// the request body map via JSON round-trip.
+func buildFlat[T any](body map[string]interface{}) T {
+	var out T
+	if body != nil {
+		data, _ := json.Marshal(body)
+		_ = json.Unmarshal(data, &out)
+	}
+	return out
+}
+
+// paginateBody follows Link-header pages up to maxPages and returns the final
+// decoded body. It uses the SDK's FetchPage so same-origin validation and the
+// transport stack (retry/cache) apply.
+func paginateBody(c *wenmar.Client, body []byte, link string, maxPages int) (interface{}, error) {
+	for i := 0; i < maxPages; i++ {
+		next := parseLink(link, "next")
+		if next == "" {
+			break
+		}
+		nextBody, nextLink, err := c.FetchPage(ctx, next)
+		if err != nil {
+			return nil, err
+		}
+		body = nextBody
+		link = nextLink
+	}
+	return decodeBody(body)
+}
+
+func parseLink(header, rel string) string {
+	if header == "" {
+		return ""
+	}
+	for _, part := range strings.Split(header, ",") {
+		part = strings.TrimSpace(part)
+		if strings.Contains(part, `rel="`+rel+`"`) {
+			start := strings.Index(part, "<")
+			end := strings.Index(part, ">")
+			if start >= 0 && end > start {
+				return part[start+1 : end]
+			}
+		}
+	}
+	return ""
+}
+
+func decodeBody(body []byte) (any, error) {
+	if len(body) == 0 {
+		return nil, nil
+	}
+	var v any
+	if err := json.Unmarshal(body, &v); err != nil {
+		return nil, err
+	}
+	return v, nil
 }
 
 func assertBodyPath(t *testing.T, body any, assertion *BodyAssertion) {

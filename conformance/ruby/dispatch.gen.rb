@@ -82,10 +82,6 @@ module Conformance
     "list_customer_vehicles" => ->(client, args) { client.list_customers_vehicles(buildArgs(client, args)) },
     "list_customer_work_orders" => ->(client, args) { client.list_customers_work_orders(buildArgs(client, args)) },
     "list_vehicle_work_orders" => ->(client, args) { client.list_vehicles_work_orders(buildArgs(client, args)) },
-    "list_customers_with_params" => ->(client, args) { client.list_customers(buildArgs(client, args)) },
-    "list_customers_with_params_paginated" => ->(client, args) { client.list_customers(buildArgs(client, args)) },
-    "list_customers_paginated" => ->(client, args) { client.list_customers(buildArgs(client, args)) },
-    "list_work_orders_paginated" => ->(client, args) { client.list_work_orders(buildArgs(client, args)) },
     "check_duplicate" => ->(client, args) { client.check_vehicle_duplicate(buildArgs(client, args)) },
 
   }.freeze
@@ -170,10 +166,6 @@ module Conformance
     "list_customer_vehicles",
     "list_customer_work_orders",
     "list_vehicle_work_orders",
-    "list_customers_with_params",
-    "list_customers_with_params_paginated",
-    "list_customers_paginated",
-    "list_work_orders_paginated",
-    "check_duplicate"
+    "check_duplicate",
   ].freeze
 end
