@@ -38,7 +38,7 @@ overrides the computed delay.
 
 ## Error Codes
 
-The API returns errors in the `{ "error": { code, message, details } }`
+The API returns errors in the `{ "error": { code, message, field_errors } }`
 envelope. The SDK maps each code to an error type with the following
 properties:
 
@@ -48,21 +48,22 @@ properties:
 | `forbidden` | 403 | No | Authenticated but not permitted |
 | `not_found` | 404 | No | Resource missing or inaccessible |
 | `rate_limited` | 429 | Yes | Throttled; honor `Retry-After` |
-| `validation_failed` | 422 | No | Field-level errors in `details` |
+| `validation_failed` | 422 | No | Field-level errors in `field_errors` |
 | `internal_error` | 500 | Yes (GET) | Server error |
 | `limit_exceeded` | 507 | No | Account/plan limit reached |
 
-`details` may contain field-level validation errors keyed by field name
+`field_errors` may contain field-level validation errors keyed by field name
 (e.g. `{ "first_name": ["can't be blank"] }`). The SDK exposes these via a
 `FieldErrors` / `field_errors` accessor.
 
 ## Authentication
 
 - Authentication is **bearer token only**: `Authorization: Bearer <token>`.
-- Tokens are **location-pinned**: a token is bound to a single location. There
-  is no per-request location header yet — this is a documented follow-up. The
-  `for_location` sub-client is an SDK-side guard/documentation surface for
-  callers who want to be explicit about the location context.
+- Tokens are **location-pinned**: a token is bound to a single location. A
+  caller may scope a request to a specific location by sending the
+  `X-Wenmar-Location` header. The `for_location` / `ForLocation` sub-client
+  injects this header on every request. The server rejects a location the
+  token is not permitted to access with `403 forbidden`.
 - `X-Request-Id` is captured from error responses and surfaced on the error
   object for support correlation.
 
@@ -95,7 +96,20 @@ The Go SDK exposes a `Hooks` interface for logging, tracing, and metrics:
 - `OTelHook` — OpenTelemetry spans per SDK operation.
 - `PrometheusHook` — operation/request/retry counters.
 
-**Known limitation:** request-level hooks (`OnRequestStart`/`OnRequestEnd`) do
-not return a context, so request-level OTel child spans and hook chaining
-(OTel + Prometheus composed) are not yet supported. Only the operation-level
-`OnOperationStart` returns a context for span correlation.
+Both operation-level and request-level hooks propagate a `context.Context`:
+
+```go
+type Hooks interface {
+    OnOperationStart(ctx context.Context, op OperationInfo) context.Context
+    OnOperationEnd(ctx context.Context, op OperationInfo, err error)
+    OnRequestStart(ctx context.Context, req RequestInfo) context.Context
+    OnRequestEnd(ctx context.Context, req RequestInfo, resp *ResponseInfo, err error)
+    OnRetry(ctx context.Context, retry RetryInfo)
+    OnPaginate(ctx context.Context, paginate PaginateInfo)
+}
+```
+
+`OnOperationStart` and `OnRequestStart` return a (possibly derived) context
+that is threaded through to the matching `*End` callback. This enables
+request-level OTel child spans and hook chaining (e.g. OTel + Prometheus
+composed).

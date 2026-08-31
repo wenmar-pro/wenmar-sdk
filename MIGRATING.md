@@ -4,6 +4,101 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.3 to v0.4.1
+
+v0.4.1 is a breaking release that moves both SDKs onto a generated operation
+layer driven by `spec/operations.json`. Request bodies are now nested under a
+resource key, list methods take params structs, and several method names
+changed to match the API's operation IDs.
+
+### Request struct nesting
+
+Create/update request bodies are now wrapped under a resource key instead of
+being flat.
+
+**Go — before:**
+
+```go
+resp, err := client.CreateCustomer(ctx, wenmar.CreateCustomerRequest{
+    FirstName: "Jane",
+    LastName:  "Doe",
+})
+```
+
+**Go — after:**
+
+```go
+resp, err := client.CreateCustomer(ctx, wenmar.CreateCustomerRequest{
+    Customer: struct {
+        FirstName string `json:"first_name"`
+        LastName  string `json:"last_name"`
+    }{
+        FirstName: "Jane",
+        LastName:  "Doe",
+    },
+})
+```
+
+The same applies to `CreateVehicleRequest` (`.Vehicle`), `CreateWorkOrderRequest`
+(`.WorkOrder`), `CreateDriverRequest` (`.Driver`), and
+`CreateServiceCategoryRequest` (`.ServiceCategory`).
+
+**Ruby — before:**
+
+```ruby
+client.create_customer(full_name: "Jane Doe")
+```
+
+**Ruby — after:**
+
+```ruby
+client.create_customer(customer: { first_name: "Jane", last_name: "Doe" })
+```
+
+### Method renames
+
+Method names now align with the API operation IDs:
+
+| Old | New |
+|---|---|
+| `ListDrivers` / `list_drivers` | `ListCustomersDrivers` / `list_customers_drivers` |
+| `ListStatements` / `list_statements` | `ListCustomersStatements` / `list_customers_statements` |
+| `ListCustomerVehicles` / `list_customer_vehicles` | `ListCustomersVehicles` / `list_customers_vehicles` |
+| `ListCustomerWorkOrders` / `list_customer_work_orders` | `ListCustomersWorkOrders` / `list_customers_work_orders` |
+| `ListVehicleWorkOrders` / `list_vehicle_work_orders` | `ListVehiclesWorkOrders` / `list_vehicles_work_orders` |
+
+### List methods take params structs
+
+**Go:** `ListCustomers(ctx, nil)` and `ListVehicles(ctx, nil)` now take a
+`*ListCustomersParams` / `*ListVehiclesParams` (pass `nil` for defaults).
+`DecodeVin` and `LookupVehicle` take a params struct instead of a bare string.
+
+**Ruby:** list methods accept keyword params, e.g.
+`list_customers(query: "Acme", page: 2)`.
+
+### `Token` field removal
+
+The `Config.Token` field is still accepted for convenience, but the preferred
+path is a `TokenProvider`. `NewClient` now requires a non-nil `TokenProvider`
+argument:
+
+```go
+client, err := wenmar.NewClient(cfg, wenmar.NewStaticTokenProvider("YOUR_API_TOKEN"))
+```
+
+### Credential JSON shape
+
+The credential file at `~/.config/wenmar/credentials.json` now stores the
+token under `access_token` (previously `token`). The old key is still read for
+backwards compatibility. The keyring service name changed from `wenmar-cli`
+to `wenmar`; legacy entries are read and migrated on first access.
+
+### Hook signature change
+
+`OnRequestStart` and `OnRequestEnd` now return / receive a `context.Context`,
+so request-level OTel child spans and hook chaining are supported. See
+`SPEC.md` for the updated signatures.
+
 ## Migrating from v0.2 to v0.3
 
 v0.3.0 is a breaking release that tracks the wenmar-pro API's pre-v1

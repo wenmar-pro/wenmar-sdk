@@ -15,6 +15,11 @@ require "json"
 ENRICHED_PATH = ARGV[0] || "spec/openapi.enriched.yaml"
 OUT_PATH = ARGV[1] || "spec/operations.json"
 
+# Stable manifest version. This is a schema/format version, not a date, so
+# the generated file is byte-stable across runs and the drift check in
+# `make check` does not fail on a new day.
+MANIFEST_VERSION = "2026-08-30"
+
 SPEC = YAML.load_file(ENRICHED_PATH, aliases: true)
 
 def normalize_tag(tag)
@@ -115,7 +120,7 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
 end
 
 File.write(OUT_PATH, JSON.pretty_generate(
-                        "version" => Time.now.strftime("%Y-%m-%d"),
+                        "version" => MANIFEST_VERSION,
                         "source" => ENRICHED_PATH,
                         "schemas" => schemas,
                         "operations" => operations

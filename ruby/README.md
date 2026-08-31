@@ -31,8 +31,8 @@ customers # => [{ "id" => 1, "full_name" => "Jane Doe", ... }]
 customer = client.show_customer(1)
 customer # => { "id" => 1, "full_name" => "Jane Doe", ... }
 
-# Create a customer
-created = client.create_customer(full_name: "Jane Doe")
+# Create a customer (request body is nested under the resource key)
+created = client.create_customer(customer: { first_name: "Jane", last_name: "Doe" })
 ```
 
 ## Configuration
@@ -43,43 +43,53 @@ created = client.create_customer(full_name: "Jane Doe")
 client = Wenmar::Client.new(token: "YOUR_API_KEY", base_url: "https://app.wenmarpro.com")
 ```
 
+## Location scoping
+
+Use `for_location` to scope every request to a specific location. The parent
+client is not mutated:
+
+```ruby
+shop = client.for_location("42")
+shop.list_customers # sends X-Wenmar-Location: 42
+```
+
 ## API coverage
+
+All 76 operations are generated into `resources.rb`. Key methods:
 
 | Operation | Method |
 |---|---|
-| List account | `list_account` |
-| List customers | `list_customers(page: nil)` |
-| Create customer | `create_customer(full_name: ..., email: ..., phone: ...)` |
+| List customers | `list_customers(query: nil, page: nil, ...)` |
+| Create customer | `create_customer(customer:)` |
 | Show customer | `show_customer(id)` |
-| Update customer | `update_customer(id, attrs)` |
-| List vehicles | `list_vehicles` |
-| Create vehicle | `create_vehicle(attrs)` |
+| Update customer | `update_customer(id, customer:)` |
+| List vehicles | `list_vehicles(customer_id: nil, page: nil)` |
+| Create vehicle | `create_vehicle(vehicle:)` |
 | Show vehicle | `show_vehicle(id)` |
-| Update vehicle | `update_vehicle(id, attrs)` |
+| Update vehicle | `update_vehicle(id, vehicle:)` |
 | Delete vehicle | `delete_vehicle(id)` |
-| Decode VIN | `decode_vin(vin)` |
-| Check duplicates | `check_duplicate(vin)` |
-| List work orders | `list_work_orders(page: nil)` |
-| Create work order | `create_work_order(attrs)` |
+| Decode VIN | `decode_vin(vin:)` |
+| Check duplicates | `check_vehicle_duplicate(vin:)` |
+| List work orders | `list_work_orders` |
+| Create work order | `create_work_order(work_order:)` |
 | Show work order | `show_work_order(id)` |
-| Update work order | `update_work_order(id, attrs)` |
+| Update work order | `update_work_order(id, work_order:)` |
 | Delete work order | `delete_work_order(id)` |
-| Show location | `show_location(id)` |
 
-All methods return the parsed JSON response body as a `Hash`.
+Every paginated list also has a `get_all_*` variant that auto-paginates with a
+1,000-item safety cap, e.g. `get_all_customers`.
 
 ## Pagination
 
-List endpoints paginate via the RFC 5988 `Link` header. Call `.paginator` on
-the result to walk pages:
+List endpoints paginate via the RFC 5988 `Link` header. Paginated list methods
+return a `Wenmar::Paginator`:
 
 ```ruby
 result = client.list_customers
-while result.paginator.has_next?
-  result = result.paginator.next_page
-  result # => next page of records
-end
+result.each { |customer| puts customer["full_name"] }
 ```
+
+Or collect everything with `get_all_customers`.
 
 ## Errors
 
@@ -100,8 +110,8 @@ See [docs/errors.md](../docs/api/errors.md) for the full error envelope and code
 
 ## Retry
 
-The client retries 5xx responses with exponential backoff (max 3 retries). It
-respects the `Retry-After` response header and never retries 4xx errors.
+The client retries 429/503/504 with exponential backoff (max 3 retries). It
+respects the `Retry-After` response header. Mutations are only retried on 429.
 
 ## Documentation
 

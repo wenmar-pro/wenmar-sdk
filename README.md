@@ -13,7 +13,9 @@ Public SDKs and OpenAPI spec for the Wenmar Pro automotive shop management API.
 ```go
 import "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
 
-client, err := wenmar.NewClient("https://app.wenmarpro.com", "YOUR_API_TOKEN")
+cfg := wenmar.DefaultConfig()
+cfg.BaseURL = "https://app.wenmarpro.com"
+client, err := wenmar.NewClient(cfg, wenmar.NewStaticTokenProvider("YOUR_API_TOKEN"))
 resp, err := client.ListCustomers(ctx, nil)
 ```
 

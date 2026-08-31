@@ -7,7 +7,7 @@ Every error response uses a consistent envelope:
   "error": {
     "code": "not_found",
     "message": "Customer not found",
-    "details": {}
+    "field_errors": {}
   }
 }
 ```
@@ -23,7 +23,7 @@ Every error response uses a consistent envelope:
 | 429 | `rate_limited` | Too many requests — retry after delay |
 | 500+ | `internal_error` | Server-side failure |
 
-The `details` object carries per-field validation errors, e.g.
+The `field_errors` object carries per-field validation errors, e.g.
 `{ "full_name": ["can't be blank"] }`.
 
 ## Retries
@@ -39,10 +39,10 @@ Non-2xx responses return a `*wenmar.APIError`:
 resp, err := client.ShowCustomer(ctx, 999)
 if err != nil {
     apiErr := err.(*wenmar.APIError)
-    apiErr.Code       // => "not_found"
-    apiErr.StatusCode // => 404
+    apiErr.Code         // => "not_found"
+    apiErr.StatusCode   // => 404
     apiErr.Message
-    apiErr.Details
+    apiErr.FieldErrorsMap
 }
 ```
 
@@ -57,6 +57,6 @@ rescue Wenmar::Error => e
   e.code   # => "not_found"
   e.status # => 404
   e.message
-  e.details
+  e.field_errors
 end
 ```

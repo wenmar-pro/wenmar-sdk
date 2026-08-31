@@ -11,24 +11,29 @@ go get github.com/wenmar-pro/wenmar-sdk/go
 ```go
 import "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
 
-client, err := wenmar.NewClient("https://app.wenmarpro.com", "YOUR_API_TOKEN")
+cfg := wenmar.DefaultConfig()
+cfg.BaseURL = "https://app.wenmarpro.com"
+
+client, err := wenmar.NewClient(cfg, wenmar.NewStaticTokenProvider("YOUR_API_TOKEN"))
 if err != nil {
-    // token is required
+    // token provider is required
 }
 
-// List customers (paginated)
+// List customers (paginated via the Link header)
 resp, err := client.ListCustomers(ctx, nil)
 
 // Show a customer
 customer, err := client.ShowCustomer(ctx, 1)
 
-// Create a customer
-created, err := client.CreateCustomer(ctx, generated.CreateCustomerJSONRequestBody{
-    Customer: &struct {
-        Email    *string `json:"email,omitempty"`
-        FullName string  `json:"full_name"`
-        Phone    *string `json:"phone,omitempty"`
-    }{FullName: "Jane Doe"},
+// Create a customer (request body is nested under the resource key)
+created, err := client.CreateCustomer(ctx, wenmar.CreateCustomerRequest{
+    Customer: struct {
+        FirstName string `json:"first_name"`
+        LastName  string `json:"last_name"`
+    }{
+        FirstName: "Jane",
+        LastName:  "Doe",
+    },
 })
 ```
 
@@ -36,47 +41,60 @@ The client uses the `context` package for cancellation and deadlines.
 
 ## Configuration
 
-`wenmar.NewClient(baseURL, token)` returns a `*Client` with retry, pagination,
-error mapping, and bearer-token auth built in. An empty token is an error.
+`wenmar.NewClient(cfg, tp)` takes a `Config` and a `TokenProvider`. The
+`Config` supports a custom `HTTPClient`, `Timeout`, `MaxRetries`,
+`CacheEnabled`, and `Hooks`. An empty token provider is an error.
+
+## Location scoping
+
+Use `ForLocation` to scope every request to a specific location. The parent
+client is not mutated:
+
+```go
+shop := client.ForLocation("42")
+resp, err := shop.ListCustomers(ctx, nil) // sends X-Wenmar-Location: 42
+```
 
 ## API coverage
 
+All 76 operations are generated into `operations.gen.go`. Key methods:
+
 | Operation | Method |
 |---|---|
-| List account | `ListAccount(ctx)` |
-| List customers | `ListCustomers(ctx, page *int)` |
-| Create customer | `CreateCustomer(ctx, body)` |
+| List customers | `ListCustomers(ctx, params *ListCustomersParams)` |
+| Create customer | `CreateCustomer(ctx, body CreateCustomerRequest)` |
 | Show customer | `ShowCustomer(ctx, id)` |
-| Update customer | `UpdateCustomer(ctx, id, body)` |
-| List vehicles | `ListVehicles(ctx)` |
-| Create vehicle | `CreateVehicle(ctx, body)` |
+| Update customer | `UpdateCustomer(ctx, id, body UpdateCustomerRequest)` |
+| List vehicles | `ListVehicles(ctx, params *ListVehiclesParams)` |
+| Create vehicle | `CreateVehicle(ctx, body CreateVehicleRequest)` |
 | Show vehicle | `ShowVehicle(ctx, id)` |
-| Update vehicle | `UpdateVehicle(ctx, id, body)` |
+| Update vehicle | `UpdateVehicle(ctx, id, body UpdateVehicleRequest)` |
 | Delete vehicle | `DeleteVehicle(ctx, id)` |
-| Decode VIN | `DecodeVin(ctx, vin)` |
-| Check duplicates | `CheckDuplicate(ctx, vin)` |
-| List work orders | `ListWorkOrders(ctx, page *int)` |
-| Create work order | `CreateWorkOrder(ctx, body)` |
+| Decode VIN | `DecodeVin(ctx, params *DecodeVinParams)` |
+| Check duplicates | `CheckVehicleDuplicate(ctx, params *CheckVehicleDuplicateParams)` |
+| List work orders | `ListWorkOrders(ctx)` |
+| Create work order | `CreateWorkOrder(ctx, body CreateWorkOrderRequest)` |
 | Show work order | `ShowWorkOrder(ctx, id)` |
-| Update work order | `UpdateWorkOrder(ctx, id, body)` |
+| Update work order | `UpdateWorkOrder(ctx, id, body UpdateWorkOrderRequest)` |
 | Delete work order | `DeleteWorkOrder(ctx, id)` |
-| Show location | `ShowLocation(ctx, id)` |
 
-The `*generated.*Response` values carry `.Body` (raw JSON), `.HTTPResponse`,
-and parsed `.JSON200` / `.JSON404` fields.
+Every paginated list also has a `GetAll*` variant that auto-paginates with a
+1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil)`.
 
 ## Pagination
 
-List endpoints paginate via the RFC 5988 `Link` header. Use the paginated
-helpers to walk pages:
+List endpoints paginate via the RFC 5988 `Link` header. Use the typed
+`ListResult[T]` to walk pages:
 
 ```go
-resp, paginator, err := client.ListCustomersWithPagination(ctx, nil)
-for paginator.HasNext() {
-    resp, err = paginator.NextPage(ctx)
-    // resp holds the next page
+result, err := client.ListCustomers(ctx, nil)
+for result.HasNext() {
+    result, err = result.Next(ctx)
+    // result.Items holds the next page
 }
 ```
+
+Or collect everything with `GetAllCustomers(ctx, nil)`.
 
 ## Errors
 
@@ -86,10 +104,10 @@ Non-2xx responses return a `*wenmar.APIError`:
 resp, err := client.ShowCustomer(ctx, 999)
 if err != nil {
     apiErr := err.(*wenmar.APIError)
-    apiErr.Code       // => "not_found"
-    apiErr.StatusCode // => 404
+    apiErr.Code         // => "not_found"
+    apiErr.StatusCode   // => 404
     apiErr.Message
-    apiErr.Details
+    apiErr.FieldErrorsMap
 }
 ```
 
@@ -97,9 +115,9 @@ See [docs/errors.md](../docs/api/errors.md) for the full error envelope and code
 
 ## Retry
 
-The client retries 5xx responses with exponential backoff + jitter (max 3
-retries). It respects the `Retry-After` response header and never retries 4xx
-errors.
+The client retries 429/503/504 with exponential backoff + jitter (max 3
+retries). It respects the `Retry-After` response header. Mutations are only
+retried on 429 (the throttle response means the request was not processed).
 
 ## Documentation
 
