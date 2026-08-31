@@ -191,6 +191,14 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, requestID)
 }
 
+// FetchPage fetches a pagination URL (from a Link header) through the same
+// transport stack and same-origin validation as normal requests. It returns
+// the raw body and the next Link header. It is used by conformance tests and
+// advanced callers that follow Link headers manually.
+func (c *Client) FetchPage(ctx context.Context, url string) ([]byte, string, error) {
+	return c.fetchURL(ctx, url)
+}
+
 // collectAll follows the Link header from a first page body, appending items
 func collectAll[T any](ctx context.Context, c *Client, body []byte, link string, max int) ([]T, error) {
 	items, err := parseListResponse[T](body)

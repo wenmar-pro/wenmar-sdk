@@ -141,27 +141,6 @@ POST /customers
 
 Create a customer.
 
-**Request body** — wrapper key `customer`:
-
-| Field | Type | Required |
-|---|---|---|
-| `first_name` | string | Yes |
-| `last_name` | string | Yes |
-| `company_name` | string | No |
-| `fleet_identifier` | string | No |
-| `billing_terms` | string | No |
-| `credit_limit_cents` | string | No |
-| `tax_exempt` | boolean | No |
-| `tax_exempt_number` | string | No |
-| `notes` | string | No |
-| `marketing_opt_in` | boolean | No |
-| `discount_percent` | string | No |
-| `po_required` | boolean | No |
-| `tag_ids` | array of any | No |
-| `emails_attributes` | array of object | No |
-| `phones_attributes` | array of object | No |
-| `addresses_attributes` | array of object | No |
-
 **Response 201** — [Customer](#customer-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
@@ -396,13 +375,6 @@ Create a driver.
 |---|---|---|
 | `customer_id` | integer | Yes |
 
-**Request body** — wrapper key `driver`:
-
-| Field | Type | Required |
-|---|---|---|
-| `full_name` | string | Yes |
-| `phone` | string | Yes |
-
 **Response 201** — [Driver](#driver-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
@@ -506,12 +478,6 @@ Update a driver by ID.
 |---|---|---|
 | `customer_id` | integer | Yes |
 | `id` | integer | Yes |
-
-**Request body** — wrapper key `driver`:
-
-| Field | Type | Required |
-|---|---|---|
-| `full_name` | string | Yes |
 
 **Response 200** — [Driver](#driver-schema)
 
@@ -759,25 +725,6 @@ Update a customer by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Request body** — wrapper key `customer`:
-
-| Field | Type | Required |
-|---|---|---|
-| `phones_attributes` | array of object | No |
-| `first_name` | string | No |
-| `last_name` | string | No |
-| `company_name` | string | No |
-| `fleet_identifier` | string | No |
-| `billing_terms` | string | No |
-| `credit_limit_cents` | string | No |
-| `tax_exempt` | boolean | No |
-| `notes` | string | No |
-| `marketing_opt_in` | boolean | No |
-| `discount_percent` | string | No |
-| `po_required` | boolean | No |
-| `emails_attributes` | array of object | No |
-| `addresses_attributes` | array of object | No |
-
 **Response 200** — [Customer](#customer-schema)
 
 **Example**
@@ -849,12 +796,6 @@ Perform merge
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `source_customer_id` | integer | Yes |
 
 **Response 200**
 
@@ -1014,6 +955,34 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 
 ---
 
+### CreateCustomerRequest schema {#createcustomerrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `customer` | object | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `first_name` | string | Yes |
+| `last_name` | string | Yes |
+| `company_name` | string | No |
+| `fleet_identifier` | string | No |
+| `billing_terms` | string | No |
+| `credit_limit_cents` | string | No |
+| `tax_exempt` | boolean | No |
+| `tax_exempt_number` | string | No |
+| `notes` | string | No |
+| `marketing_opt_in` | boolean | No |
+| `discount_percent` | string | No |
+| `po_required` | boolean | No |
+| `tag_ids` | array of any | No |
+| `emails_attributes` | array of object | No |
+| `phones_attributes` | array of object | No |
+| `addresses_attributes` | array of object | No |
+
+---
+
 ### Driver schema {#driver-schema}
 
 | Field | Type | Required |
@@ -1036,6 +1005,33 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
 | `url` | string | Yes |
+
+---
+
+### CreateDriverRequest schema {#createdriverrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `driver` | object | Yes |
+
+`driver` — object:
+| Field | Type | Required |
+|---|---|---|
+| `full_name` | string | Yes |
+| `phone` | string | Yes |
+
+---
+
+### UpdateDriverRequest schema {#updatedriverrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `driver` | object | Yes |
+
+`driver` — object:
+| Field | Type | Required |
+|---|---|---|
+| `full_name` | string | Yes |
 
 ---
 
@@ -1240,4 +1236,38 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+---
+
+### UpdateCustomerRequest schema {#updatecustomerrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `customer` | object | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `phones_attributes` | array of object | No |
+| `first_name` | string | No |
+| `last_name` | string | No |
+| `company_name` | string | No |
+| `fleet_identifier` | string | No |
+| `billing_terms` | string | No |
+| `credit_limit_cents` | string | No |
+| `tax_exempt` | boolean | No |
+| `notes` | string | No |
+| `marketing_opt_in` | boolean | No |
+| `discount_percent` | string | No |
+| `po_required` | boolean | No |
+| `emails_attributes` | array of object | No |
+| `addresses_attributes` | array of object | No |
+
+---
+
+### MergeCustomerRequest schema {#mergecustomerrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `source_customer_id` | integer | Yes |
 

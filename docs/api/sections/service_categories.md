@@ -62,14 +62,6 @@ POST /service_categories
 
 Create a service category.
 
-**Request body** — wrapper key `service_category`:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `icon` | string | Yes |
-
 **Response 201** — [ServiceCategory](#servicecategory-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
@@ -150,12 +142,6 @@ Update a service category by ID.
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-
-**Request body** — wrapper key `service_category`:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
 
 **Response 200** — [ServiceCategory](#servicecategory-schema)
 
@@ -326,6 +312,21 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
+### CreateServiceCategoryRequest schema {#createservicecategoryrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `service_category` | object | Yes |
+
+`service_category` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+| `service_type` | string | Yes |
+| `icon` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -335,4 +336,17 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### UpdateServiceCategoryRequest schema {#updateservicecategoryrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `service_category` | object | Yes |
+
+`service_category` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
 

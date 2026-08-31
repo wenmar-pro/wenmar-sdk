@@ -75,7 +75,7 @@ def build_operation(op)
     		return nil, err
     	}
     	if resp.StatusCode() >= 400 {
-    		perr := parseErrorFromGen(resp)
+    		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
     		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "#{m}"}, OperationResult{Operation: "#{m}", Err: perr})
     		return nil, perr
     	}
@@ -114,7 +114,7 @@ def build_get_all(op)
     	if err != nil {
     		return nil, err
     	}
-    	return collectAll[#{item}](ctx, c, first.Body, first.HTTPResponse().Header.Get("Link"), 1000)
+    	return collectAll[#{item}](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
     }
   GO
 end
@@ -147,17 +147,7 @@ operations_header = <<~'GO'
 
 	package wenmar
 
-	import (
-		"context"
-		"net/http"
-	)
-
-	// genResponse is satisfied by every generated raw response struct.
-	type genResponse interface {
-		StatusCode() int
-		Body []byte
-		HTTPResponse() *http.Response
-	}
+	import "context"
 GO
 
 models_header = <<~'GO'

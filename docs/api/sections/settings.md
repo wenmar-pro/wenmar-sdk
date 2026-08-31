@@ -79,13 +79,6 @@ PATCH /settings/tags
 
 Update a tags by ID.
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `vehicle_tags` | array of object | No |
-| `customer_tags` | array of object | No |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -99,4 +92,13 @@ Update a tags by ID.
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/settings/tags.json
 ```
+
+---
+
+### UpdateTagsRequest schema {#updatetagsrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vehicle_tags` | array of object | No |
+| `customer_tags` | array of object | No |
 

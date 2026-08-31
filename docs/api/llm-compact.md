@@ -130,4 +130,37 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **ServiceCategory**: {id*:integer, name*:string, description*:any, service_type*:string, icon*:string, color*:string, active*:boolean, position*:integer, canonical*:boolean, canonical_key*:string, job_count*:integer, url*:string, app_url*:string}
 - **Vendor**: {id*:integer, name*:string, vendor_type*:string, payment_terms*:string, active*:boolean, phone*:string, email*:string, website*:string, account_number*:string, notes*:string, quick_order*:boolean, order_url_template*:any, catalog_url_template*:any, location*:object{id,name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
 - **Error**: {code*:string, message*:string, field_errors*:object}
+- **CreateCustomerTagRequest**: {name*:string}
+- **UpdateCustomerTagRequest**: {name*:string}
+- **CreateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,tax_exempt_number,notes,marketing_opt_in,discount_percent,po_required,tag_ids,emails_attributes,phones_attributes,addresses_attributes}}
+- **CreateDriverRequest**: {driver*:object{full_name,phone}}
+- **UpdateDriverRequest**: {driver*:object{full_name}}
+- **UpdateCustomerRequest**: {customer*:object{phones_attributes,first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,notes,marketing_opt_in,discount_percent,po_required,emails_attributes,addresses_attributes}}
+- **MergeCustomerRequest**: {source_customer_id*:integer}
+- **CreateServiceCategoryRequest**: {service_category*:object{name,service_type,icon}}
+- **SeedDefaultsServiceCategoriesRequest**: {}
+- **UpdateServiceCategoryRequest**: {service_category*:object{name}}
+- **DeactivateServiceCategoryRequest**: {}
+- **MoveDownServiceCategoryRequest**: {}
+- **MoveUpServiceCategoryRequest**: {}
+- **ReactivateServiceCategoryRequest**: {}
+- **UpdateTagsRequest**: {vehicle_tags:array of object, customer_tags:array of object}
+- **CreateVehicleTagRequest**: {name*:string}
+- **UpdateVehicleTagRequest**: {name*:string}
+- **CreateVehicleRequest**: {vehicle*:object{make,model,year,customer_id,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,odometer_unit,unit_number,fleet_identifier,notes,production_date,vehicle_tag_ids}}
+- **UpdateVehicleRequest**: {vehicle*:object{make,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,odometer_unit,notes}}
+- **MergeVehicleRequest**: {source_vehicle_id*:integer}
+- **TransferVehicleRequest**: {customer_id*:integer, mode*:string}
+- **CreateWorkOrderRequest**: {work_order*:object{customer_id,vehicle_id}}
+- **UpdateWorkOrderRequest**: {work_order*:object{intake_method}}
+- **CreateWorkOrderAuthorizationRequest**: {authorization_method*:string, service_ids*:array of integer, service_decisions*:object{1047559673}}
+- **UpdateWorkOrderAuthorizationDecisionsRequest**: {service_decision_reasons*:object{1047559673}}
+- **CloseWorkOrderRequest**: {closure_type*:string, closure_reason*:string}
+- **CloseWorkOrderAsPaidRequest**: {}
+- **DeclineAllWorkOrderServicesRequest**: {decline_reason*:string}
+- **ReopenWorkOrderRequest**: {}
+- **ReturnWorkOrderToBoardRequest**: {}
+- **SaveWorkOrderForLaterRequest**: {}
+- **StageTransitionWorkOrderRequest**: {target*:string}
+- **CreateWorkOrderPaymentRequest**: {payment*:object{method,amount_cents}}
 

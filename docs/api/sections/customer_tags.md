@@ -33,12 +33,6 @@ POST /customer_tags
 
 Create a customer tag.
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-
 **Response 201**
 
 | Field | Type | Required |
@@ -96,12 +90,6 @@ Update a customer tag by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -119,6 +107,14 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
+### CreateCustomerTagRequest schema {#createcustomertagrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -128,4 +124,12 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### UpdateCustomerTagRequest schema {#updatecustomertagrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
 

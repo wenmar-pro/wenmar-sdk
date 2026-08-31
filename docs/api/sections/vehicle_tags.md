@@ -33,12 +33,6 @@ POST /vehicle_tags
 
 Create a vehicle tag.
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-
 **Response 201**
 
 | Field | Type | Required |
@@ -92,12 +86,6 @@ Update a vehicle tag by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -112,4 +100,20 @@ Update a vehicle tag by ID.
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/vehicle_tags/<id>.json
 ```
+
+---
+
+### CreateVehicleTagRequest schema {#createvehicletagrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
+### UpdateVehicleTagRequest schema {#updatevehicletagrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
 

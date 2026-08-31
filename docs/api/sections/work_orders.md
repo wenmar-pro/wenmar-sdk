@@ -206,13 +206,6 @@ POST /work_orders
 
 Create a work order.
 
-**Request body** — wrapper key `work_order`:
-
-| Field | Type | Required |
-|---|---|---|
-| `customer_id` | integer | Yes |
-| `vehicle_id` | integer | Yes |
-
 **Response 201** — [WorkOrder](#workorder-schema)
 
 **Example**
@@ -478,12 +471,6 @@ Update a work order by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Request body** — wrapper key `work_order`:
-
-| Field | Type | Required |
-|---|---|---|
-| `intake_method` | string | Yes |
-
 **Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
@@ -610,19 +597,6 @@ Create a work order authorization.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `authorization_method` | string | Yes |
-| `service_ids` | array of integer | Yes |
-| `service_decisions` | object | Yes |
-
-`service_decisions` — object:
-| Field | Type | Required |
-|---|---|---|
-| `1047559673` | string | Yes |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -745,12 +719,6 @@ Update a work order authorization decisions by ID.
 | Param | Type | Required |
 |---|---|---|
 | `work_order_id` | integer | Yes |
-
-**Request body** — wrapper key `service_decision_reasons`:
-
-| Field | Type | Required |
-|---|---|---|
-| `1047559673` | string | Yes |
 
 **Response 200**
 
@@ -1190,13 +1158,6 @@ Close
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `closure_type` | string | Yes |
-| `closure_reason` | string | Yes |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -1436,12 +1397,6 @@ Decline all
 | Param | Type | Required |
 |---|---|---|
 | `work_order_id` | integer | Yes |
-
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `decline_reason` | string | Yes |
 
 **Response 200**
 
@@ -1921,12 +1876,6 @@ Stage transition
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `target` | string | Yes |
-
 **Response 200**
 
 | Field | Type | Required |
@@ -2360,13 +2309,6 @@ Create a work order payment.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Request body** — wrapper key `payment`:
-
-| Field | Type | Required |
-|---|---|---|
-| `method` | string | Yes |
-| `amount_cents` | string | Yes |
-
 **Response 201**
 
 | Field | Type | Required |
@@ -2704,6 +2646,33 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
+### CreateWorkOrderRequest schema {#createworkorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `work_order` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+| `vehicle_id` | integer | Yes |
+
+---
+
+### UpdateWorkOrderRequest schema {#updateworkorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `work_order` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `intake_method` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -2713,4 +2682,71 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### CreateWorkOrderAuthorizationRequest schema {#createworkorderauthorizationrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `authorization_method` | string | Yes |
+| `service_ids` | array of integer | Yes |
+| `service_decisions` | object | Yes |
+
+`service_decisions` — object:
+| Field | Type | Required |
+|---|---|---|
+| `1047559673` | string | Yes |
+
+---
+
+### UpdateWorkOrderAuthorizationDecisionsRequest schema {#updateworkorderauthorizationdecisionsrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `service_decision_reasons` | object | Yes |
+
+`service_decision_reasons` — object:
+| Field | Type | Required |
+|---|---|---|
+| `1047559673` | string | Yes |
+
+---
+
+### CloseWorkOrderRequest schema {#closeworkorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `closure_type` | string | Yes |
+| `closure_reason` | string | Yes |
+
+---
+
+### DeclineAllWorkOrderServicesRequest schema {#declineallworkorderservicesrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `decline_reason` | string | Yes |
+
+---
+
+### StageTransitionWorkOrderRequest schema {#stagetransitionworkorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `target` | string | Yes |
+
+---
+
+### CreateWorkOrderPaymentRequest schema {#createworkorderpaymentrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `payment` | object | Yes |
+
+`payment` — object:
+| Field | Type | Required |
+|---|---|---|
+| `method` | string | Yes |
+| `amount_cents` | string | Yes |
 

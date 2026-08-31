@@ -133,31 +133,6 @@ POST /vehicles
 
 Create a vehicle.
 
-**Request body** — wrapper key `vehicle`:
-
-| Field | Type | Required |
-|---|---|---|
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `customer_id` | integer | Yes |
-| `vin` | string | No |
-| `submodel` | string | No |
-| `body_style` | string | No |
-| `engine` | string | No |
-| `transmission` | string | No |
-| `drivetrain` | string | No |
-| `color` | string | No |
-| `license_plate` | string | No |
-| `license_plate_state` | string | No |
-| `odometer_reading` | integer | No |
-| `odometer_unit` | string | No |
-| `unit_number` | string | No |
-| `fleet_identifier` | string | No |
-| `notes` | string | No |
-| `production_date` | string | No |
-| `vehicle_tag_ids` | array of any | No |
-
 **Response 201** — [Vehicle](#vehicle-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
@@ -520,26 +495,6 @@ Update a vehicle by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Request body** — wrapper key `vehicle`:
-
-| Field | Type | Required |
-|---|---|---|
-| `make` | string | Yes |
-| `model` | string | No |
-| `year` | integer | No |
-| `vin` | string | No |
-| `submodel` | string | No |
-| `body_style` | string | No |
-| `engine` | string | No |
-| `transmission` | string | No |
-| `drivetrain` | string | No |
-| `color` | string | No |
-| `license_plate` | string | No |
-| `license_plate_state` | string | No |
-| `odometer_reading` | integer | No |
-| `odometer_unit` | string | No |
-| `notes` | string | No |
-
 **Response 200** — [Vehicle](#vehicle-schema)
 
 **Example**
@@ -610,12 +565,6 @@ Perform merge
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `source_vehicle_id` | integer | Yes |
 
 **Response 200**
 
@@ -746,13 +695,6 @@ Perform transfer
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-
-**Request body**:
-
-| Field | Type | Required |
-|---|---|---|
-| `customer_id` | integer | Yes |
-| `mode` | string | Yes |
 
 **Response 200**
 
@@ -964,6 +906,82 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### CreateVehicleRequest schema {#createvehiclerequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vehicle` | object | Yes |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `make` | string | Yes |
+| `model` | string | Yes |
+| `year` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `vin` | string | No |
+| `submodel` | string | No |
+| `body_style` | string | No |
+| `engine` | string | No |
+| `transmission` | string | No |
+| `drivetrain` | string | No |
+| `color` | string | No |
+| `license_plate` | string | No |
+| `license_plate_state` | string | No |
+| `odometer_reading` | integer | No |
+| `odometer_unit` | string | No |
+| `unit_number` | string | No |
+| `fleet_identifier` | string | No |
+| `notes` | string | No |
+| `production_date` | string | No |
+| `vehicle_tag_ids` | array of any | No |
+
+---
+
+### UpdateVehicleRequest schema {#updatevehiclerequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vehicle` | object | Yes |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `make` | string | Yes |
+| `model` | string | No |
+| `year` | integer | No |
+| `vin` | string | No |
+| `submodel` | string | No |
+| `body_style` | string | No |
+| `engine` | string | No |
+| `transmission` | string | No |
+| `drivetrain` | string | No |
+| `color` | string | No |
+| `license_plate` | string | No |
+| `license_plate_state` | string | No |
+| `odometer_reading` | integer | No |
+| `odometer_unit` | string | No |
+| `notes` | string | No |
+
+---
+
+### MergeVehicleRequest schema {#mergevehiclerequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `source_vehicle_id` | integer | Yes |
+
+---
+
+### TransferVehicleRequest schema {#transfervehiclerequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+| `mode` | string | Yes |
 
 ---
 
