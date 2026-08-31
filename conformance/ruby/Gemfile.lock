@@ -1,7 +1,7 @@
 PATH
   remote: ../../ruby
   specs:
-    wenmar (0.1.0)
+    wenmar (0.4.1)
       faraday (~> 2.0)
       faraday-retry (~> 2.0)
 
@@ -67,7 +67,7 @@ CHECKSUMS
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   uri (1.1.1) sha256=379fa58d27ffb1387eaada68c749d1426738bd0f654d812fcc07e7568f5c57c6
   webmock (3.26.3) sha256=77c612816bdcb2fc43db0e42fd98b19be7d4770fd708816fdde65a006664ddec
-  wenmar (0.1.0)
+  wenmar (0.4.1)
 
 BUNDLED WITH
   4.0.18

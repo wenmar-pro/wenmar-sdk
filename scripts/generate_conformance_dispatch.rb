@@ -146,6 +146,40 @@ def build_go_entry(key, manifest_id, variant = :default)
   body.gsub("KEY", key).gsub("CALL", call)
 end
 
+# Build a single Ruby dispatch lambda body for an operation.
+def build_ruby_entry(key, manifest_id, variant = :default)
+  op = op_by_id(manifest_id)
+  return nil unless op
+
+  m = op["id"]
+  path_params = op["pathParams"]
+  query = op["queryParams"] || []
+  shape = op["requestShape"]
+
+  # Positional path params.
+  pos = path_params.map { |p| "args[\"pathParams\"][#{p.inspect}]" }
+
+  # Query params as keyword args.
+  query_kw = query.map { |q| "#{q["name"]}: args[\"query\"][#{q["name"].inspect}]" }
+
+  # Request body keyword args.
+  body_kw = []
+  if shape && shape["wrapper"]
+    body_kw << "#{shape["wrapper"]}: args[\"requestBody\"][#{shape["wrapper"].inspect}]"
+  elsif shape && shape["flat"]
+    shape["flat"].each { |f| body_kw << "#{f}: args[\"requestBody\"][#{f.inspect}]" }
+  end
+
+  call_args = pos + query_kw + body_kw
+  call = "client.#{m}(#{call_args.join(", ")})"
+
+  if variant == :paginated
+    %Q{    "#{key}" => ->(client, args) { paginate_ruby(client, #{call}) },\n}
+  else
+    %Q{    "#{key}" => ->(client, args) { #{call} },\n}
+  end
+end
+
 go_dispatch = +""
 ruby_dispatch = +""
 go_all = []
@@ -158,7 +192,7 @@ OPS.each do |op|
 
   go_dispatch << entry << "\n"
   go_all << key
-  ruby_dispatch << %Q{    "#{key}" => ->(client, args) { client.#{key}(buildArgs(client, args)) },\n}
+  ruby_dispatch << build_ruby_entry(key, key)
   ruby_all << key
 end
 
@@ -174,6 +208,8 @@ end
 
   go_dispatch << entry << "\n"
   go_all << key
+  ruby_dispatch << build_ruby_entry(key, manifest_id, variant)
+  ruby_all << key
 end
 
 # Simple aliases that map to a different manifest id (no variant).
@@ -185,7 +221,7 @@ TEST_ALIASES.each do |key, manifest_id|
 
   go_dispatch << entry << "\n"
   go_all << key
-  ruby_dispatch << %Q{    "#{key}" => ->(client, args) { client.#{manifest_id}(buildArgs(client, args)) },\n}
+  ruby_dispatch << build_ruby_entry(key, manifest_id)
   ruby_all << key
 end
 
