@@ -34,6 +34,8 @@ List all work orders, paginated via the Link header.
     "location_id": 1,
     "service_advisor_id": 5,
     "assigned_technician_id": null,
+    "sub_status_type_id": null,
+    "payer_customer_id": null,
     "work_order_services_count": 0,
     "inspection_reports_count": 0,
     "customer": {
@@ -121,6 +123,8 @@ List all work orders, paginated via the Link header.
     "location_id": 1,
     "service_advisor_id": 5,
     "assigned_technician_id": null,
+    "sub_status_type_id": null,
+    "payer_customer_id": null,
     "work_order_services_count": 0,
     "inspection_reports_count": 0,
     "customer": {
@@ -228,6 +232,8 @@ Create a work order.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
   "work_order_services_count": 2,
   "inspection_reports_count": 0,
   "customer": {
@@ -370,6 +376,8 @@ Show a work order by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
   "work_order_services_count": 2,
   "inspection_reports_count": 0,
   "customer": {
@@ -495,6 +503,8 @@ Update a work order by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
   "work_order_services_count": 2,
   "inspection_reports_count": 0,
   "customer": {
@@ -2630,6 +2640,9 @@ Show a work order estimate by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
+  "vehicle_arrived_at": null,
   "work_order_services_count": 1,
   "inspection_reports_count": 0,
   "customer": {
@@ -2790,6 +2803,9 @@ Show a work order inspection by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
+  "vehicle_arrived_at": null,
   "work_order_services_count": 0,
   "inspection_reports_count": 1,
   "customer": {
@@ -3171,6 +3187,9 @@ Show a work order parts by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
+  "vehicle_arrived_at": null,
   "work_order_services_count": 1,
   "inspection_reports_count": 0,
   "customer": {
@@ -3331,6 +3350,9 @@ Show a work order payments by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
+  "vehicle_arrived_at": null,
   "work_order_services_count": 1,
   "inspection_reports_count": 0,
   "customer": {
@@ -5228,6 +5250,9 @@ Show a work order wip by ID.
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
+  "vehicle_arrived_at": null,
   "work_order_services_count": 1,
   "inspection_reports_count": 0,
   "customer": {
