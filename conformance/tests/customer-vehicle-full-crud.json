@@ -3,7 +3,7 @@
     "name": "merge_customer_success",
     "operation": "merge_customer",
     "method": "POST",
-    "path": "/customers/1/merge",
+    "path": "/customers/1/merges",
     "pathParams": {
       "id": 1
     },
@@ -33,7 +33,7 @@
     "name": "merge_customer_missing_source",
     "operation": "merge_customer",
     "method": "POST",
-    "path": "/customers/1/merge",
+    "path": "/customers/1/merges",
     "pathParams": {
       "id": 1
     },
@@ -61,8 +61,8 @@
   {
     "name": "transfer_vehicle_success",
     "operation": "transfer_vehicle",
-    "method": "PATCH",
-    "path": "/vehicles/1/transfer",
+    "method": "POST",
+    "path": "/vehicles/1/transfers",
     "pathParams": {
       "id": 1
     },
@@ -72,13 +72,15 @@
     },
     "mockResponses": [
       {
-        "status": 200,
+        "status": 201,
         "body": {
+          "type": "VehicleTransfer",
           "id": 1,
-          "make": "Honda",
-          "customer": {
-            "id": 2
-          }
+          "vehicle_id": 1,
+          "from_customer_id": 1,
+          "to_customer_id": 2,
+          "status": "completed",
+          "mode": "vehicle_only"
         }
       }
     ],
@@ -86,7 +88,7 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": {
-        "path": "customer.id",
+        "path": "to_customer_id",
         "equals": 2
       }
     }
@@ -94,8 +96,8 @@
   {
     "name": "transfer_vehicle_same_customer",
     "operation": "transfer_vehicle",
-    "method": "PATCH",
-    "path": "/vehicles/1/transfer",
+    "method": "POST",
+    "path": "/vehicles/1/transfers",
     "pathParams": {
       "id": 1
     },
@@ -125,7 +127,7 @@
     "name": "merge_vehicle_success",
     "operation": "merge_vehicle",
     "method": "POST",
-    "path": "/vehicles/1/merge",
+    "path": "/vehicles/1/merges",
     "pathParams": {
       "id": 1
     },
@@ -155,7 +157,7 @@
     "name": "merge_vehicle_missing_source",
     "operation": "merge_vehicle",
     "method": "POST",
-    "path": "/vehicles/1/merge",
+    "path": "/vehicles/1/merges",
     "pathParams": {
       "id": 1
     },
