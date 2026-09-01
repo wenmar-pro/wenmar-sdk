@@ -13,7 +13,10 @@ module EnrichSpec
     "drivers" => "Driver",
     "statements" => "Statement",
     "vendors" => "Vendor",
-    "service_categories" => "ServiceCategory"
+    "service_categories" => "ServiceCategory",
+    "purchase_orders" => "PurchaseOrder",
+    "return_orders" => "ReturnOrder",
+    "sublet_orders" => "SubletOrder"
   }.freeze
 
   # Collection sub-actions that are NOT standard CRUD on a resource. The key is
@@ -339,24 +342,38 @@ module EnrichSpec
       # work_orders, history, estimate, wip, inspection, parts, payments)
       # are handled by their top-level paths and must not pollute the parent
       # schema.
-      resource = segments[0]
-      schema_name = RESOURCE_SCHEMAS[resource]
-      if segments.length > 2
-        # Nested sub-resource paths (e.g. /customers/{customer_id}/drivers,
-        # /customers/{customer_id}/drivers/{id}) resolve to the third segment
-        # when it's a registered resource. Sub-collection/action paths
-        # (vehicles, work_orders, history, estimate, wip, inspection, parts,
-        # payments) are handled by their top-level paths and must not pollute
-        # the parent schema.
-        nested = segments[2]
-        if RESOURCE_SCHEMAS.key?(nested)
-          schema_name = RESOURCE_SCHEMAS[nested]
-          resource = nested
-        else
-          next
+      # Resolve the resource + schema name. Top-level resource paths
+      # (e.g. /customers, /customers/{id}) map directly. The `orders`
+      # namespace (e.g. /orders/purchase_orders) prefixes the resource, so
+      # segments[1] is the resource. Nested sub-resource paths
+      # (e.g. /customers/{customer_id}/vehicles) resolve to the nested
+      # segment when it's a registered resource. Sub-collection/action paths
+      # (vehicles, work_orders, history, estimate, wip, inspection, parts,
+      # payments) are handled by their top-level paths and must not pollute
+      # the parent schema.
+      namespace = segments[0] == "orders" && !RESOURCE_SCHEMAS.key?(segments[0])
+      if namespace
+        # orders namespace: resource is the second segment
+        # (e.g. /orders/purchase_orders). Deeper sub-resources
+        # (e.g. /orders/purchase_orders/{id}/cancellations) return the
+        # base resource schema.
+        resource = segments[1]
+        schema_name = RESOURCE_SCHEMAS[resource]
+        next unless schema_name
+      else
+        resource = segments[0]
+        schema_name = RESOURCE_SCHEMAS[resource]
+        if segments.length > 2 && RESOURCE_SCHEMAS.key?(segments[2])
+          # Nested sub-resource paths (e.g. /customers/{customer_id}/vehicles)
+          # resolve to the third segment when it's a registered resource.
+          # Sub-collection/action paths (vehicles, work_orders, history,
+          # estimate, wip, inspection, parts, payments) are handled by their
+          # top-level paths and must not pollute the parent schema.
+          resource = segments[2]
+          schema_name = RESOURCE_SCHEMAS[segments[2]]
         end
+        next unless schema_name
       end
-      next unless schema_name
 
       methods.each do |method, operation|
         # decode_vin / check_duplicate return free-form data, not a resource.

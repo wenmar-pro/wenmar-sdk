@@ -367,14 +367,30 @@ end
 def get_all_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
   paginator_to_a(list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil), 1000)
 end
+# Runs create_inventory_level (POST /inventory_levels).
+def create_inventory_level(part:)
+  post("/inventory_levels", { part: part })
+end
 # Fetches list_inventory_levels_barcode_lookup.
 def list_inventory_levels_barcode_lookup(barcode: nil)
   params = { barcode: barcode }
       get("/inventory_levels/barcode_lookup", params.compact)
 end
+# Deletes delete_inventory_level.
+def delete_inventory_level(id)
+  delete("/inventory_levels/#{id}")
+end
 # Fetches show_inventory_level.
 def show_inventory_level(id)
   get("/inventory_levels/#{id}")
+end
+# Runs update_inventory_level (PATCH /inventory_levels/{id}).
+def update_inventory_level(id, part:)
+  patch("/inventory_levels/#{id}", { part: part })
+end
+# Runs update_inventory_levels_stock (PATCH /inventory_levels/{id}/stock).
+def update_inventory_levels_stock(id, inventory_level:)
+  patch("/inventory_levels/#{id}/stock", { inventory_level: inventory_level })
 end
 # Lists list_labels resources (paginated).
 # @return [Wenmar::Paginator]
@@ -481,14 +497,81 @@ def update_notification(id, read:)
 end
 # Lists list_orders_purchase_orders resources (paginated).
 # @return [Wenmar::Paginator]
-def list_orders_purchase_orders()
-  get("/orders/purchase_orders")
+def list_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil)
+  params = { page: page, per_page: per_page, vendor_id: vendor_id }
+  get("/orders/purchase_orders", params.compact)
 end
 
 # Fetches all orders_purchase_orders, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_orders_purchase_orders()
-  paginator_to_a(list_orders_purchase_orders(), 1000)
+def get_all_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil)
+  paginator_to_a(list_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil), 1000)
+end
+# Runs create_orders_purchase_order (POST /orders/purchase_orders).
+def create_orders_purchase_order(purchase_order:)
+  post("/orders/purchase_orders", { purchase_order: purchase_order })
+end
+# Deletes delete_orders_purchase_order.
+def delete_orders_purchase_order(id)
+  delete("/orders/purchase_orders/#{id}")
+end
+# Fetches show_orders_purchase_order.
+def show_orders_purchase_order(id)
+  get("/orders/purchase_orders/#{id}")
+end
+# Runs update_orders_purchase_order (PATCH /orders/purchase_orders/{id}).
+def update_orders_purchase_order(id, purchase_order:)
+  patch("/orders/purchase_orders/#{id}", { purchase_order: purchase_order })
+end
+# Runs create_orders_purchase_orders_cancellation (POST /orders/purchase_orders/{purchase_order_id}/cancellations).
+def create_orders_purchase_orders_cancellation(purchase_order_id)
+  post("/orders/purchase_orders/#{purchase_order_id}/cancellations")
+end
+# Lists list_orders_return_orders resources (paginated).
+# @return [Wenmar::Paginator]
+def list_orders_return_orders()
+  get("/orders/return_orders")
+end
+
+# Fetches all orders_return_orders, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_orders_return_orders()
+  paginator_to_a(list_orders_return_orders(), 1000)
+end
+# Deletes delete_orders_return_order.
+def delete_orders_return_order(id)
+  delete("/orders/return_orders/#{id}")
+end
+# Fetches show_orders_return_order.
+def show_orders_return_order(id)
+  get("/orders/return_orders/#{id}")
+end
+# Runs update_orders_return_order (PATCH /orders/return_orders/{id}).
+def update_orders_return_order(id, return_order:)
+  patch("/orders/return_orders/#{id}", { return_order: return_order })
+end
+# Runs create_orders_return_orders_refund_completion (POST /orders/return_orders/{return_order_id}/refund_completions).
+def create_orders_return_orders_refund_completion(return_order_id)
+  post("/orders/return_orders/#{return_order_id}/refund_completions")
+end
+# Lists list_orders_sublet_orders resources (paginated).
+# @return [Wenmar::Paginator]
+def list_orders_sublet_orders()
+  get("/orders/sublet_orders")
+end
+
+# Fetches all orders_sublet_orders, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_orders_sublet_orders()
+  paginator_to_a(list_orders_sublet_orders(), 1000)
+end
+# Runs update_orders_sublet_orders_mark_payment_complete (PATCH /orders/sublet_orders/mark_payment_complete).
+def update_orders_sublet_orders_mark_payment_complete(sublet_order_ids:, payment_method:)
+  patch("/orders/sublet_orders/mark_payment_complete", { sublet_order_ids: sublet_order_ids, payment_method: payment_method })
+end
+# Fetches show_orders_sublet_order.
+def show_orders_sublet_order(id)
+  get("/orders/sublet_orders/#{id}")
 end
 # Lists list_packages resources (paginated).
 # @return [Wenmar::Paginator]
@@ -531,6 +614,45 @@ end
 # Runs update_parts_matrice (PATCH /parts_matrices/{id}).
 def update_parts_matrice(id, parts_matrix:)
   patch("/parts_matrices/#{id}", { parts_matrix: parts_matrix })
+end
+# Lists list_payments resources (paginated).
+# @return [Wenmar::Paginator]
+def list_payments(method: nil)
+  params = { method: method }
+  get("/payments", params.compact)
+end
+
+# Fetches all payments, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_payments(method: nil)
+  paginator_to_a(list_payments(method: nil), 1000)
+end
+# Lists list_payments_pending resources (paginated).
+# @return [Wenmar::Paginator]
+def list_payments_pending()
+  get("/payments/pending")
+end
+
+# Fetches all payments_pending, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_payments_pending()
+  paginator_to_a(list_payments_pending(), 1000)
+end
+# Fetches show_payment.
+def show_payment(id)
+  get("/payments/#{id}")
+end
+# Runs create_payments_cancellation (POST /payments/{id}/cancellation).
+def create_payments_cancellation(id)
+  post("/payments/#{id}/cancellation")
+end
+# Runs create_payments_confirmation (POST /payments/{id}/confirmation).
+def create_payments_confirmation(id)
+  post("/payments/#{id}/confirmation")
+end
+# Runs create_payments_failure (POST /payments/{id}/failure).
+def create_payments_failure(id)
+  post("/payments/#{id}/failure")
 end
 # Fetches list_preferences.
 def list_preferences()
@@ -615,6 +737,18 @@ end
 # Fetches list_reports_work_order_profitability.
 def list_reports_work_order_profitability()
   get("/reports/work_order_profitability")
+end
+# Runs create_scan_lookup (POST /scan/lookups).
+def create_scan_lookup(code:, type:)
+  post("/scan/lookups", { code: code, type: type })
+end
+# Runs create_scan_started_work_order (POST /scan/started_work_orders).
+def create_scan_started_work_order(outcome:, vehicle_id:)
+  post("/scan/started_work_orders", { outcome: outcome, vehicle_id: vehicle_id })
+end
+# Runs create_scan_vehicle (POST /scan/vehicles).
+def create_scan_vehicle(customer:, vehicle:)
+  post("/scan/vehicles", { customer: customer, vehicle: vehicle })
 end
 # Fetches list_search.
 def list_search(q: nil)
@@ -777,6 +911,17 @@ end
 def show_statement(id)
   get("/statements/#{id}")
 end
+# Lists list_statements_payments resources (paginated).
+# @return [Wenmar::Paginator]
+def list_statements_payments(statement_id)
+  get("/statements/#{statement_id}/payments")
+end
+
+# Fetches all statements_payments, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_statements_payments(statement_id)
+  paginator_to_a(list_statements_payments(statement_id), 1000)
+end
 # Runs create_store_credits_void (POST /store_credits/{store_credit_id}/voids).
 def create_store_credits_void(store_credit_id)
   post("/store_credits/#{store_credit_id}/voids")
@@ -856,6 +1001,14 @@ end
 # Runs update_team_permission_group (PATCH /team/permission_groups/{id}).
 def update_team_permission_group(id, permission_group:)
   patch("/team/permission_groups/#{id}", { permission_group: permission_group })
+end
+# Runs create_time_entrie (POST /time_entries).
+def create_time_entrie(type:, work_order_service_id:)
+  post("/time_entries", { type: type, work_order_service_id: work_order_service_id })
+end
+# Runs update_time_entrie (PATCH /time_entries/{id}).
+def update_time_entrie(id, status:)
+  patch("/time_entries/#{id}", { status: status })
 end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1046,6 +1199,10 @@ end
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
 end
+# Deletes delete_voice_command.
+def delete_voice_command(id)
+  delete("/voice_commands/#{id}")
+end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_orders()
@@ -1193,6 +1350,10 @@ end
 # Runs send_work_order_payment_to_ar (POST /work_orders/{work_order_id}/payments/send_to_ar).
 def send_work_order_payment_to_ar(work_order_id)
   post("/work_orders/#{work_order_id}/payments/send_to_ar")
+end
+# Runs create_work_orders_refund (POST /work_orders/{work_order_id}/refunds).
+def create_work_orders_refund(work_order_id, refund:)
+  post("/work_orders/#{work_order_id}/refunds", { refund: refund })
 end
 # Runs create_work_orders_service (POST /work_orders/{work_order_id}/services).
 def create_work_orders_service(work_order_id, work_order_service:)
@@ -1366,6 +1527,10 @@ end
 # @return [Array<Hash>]
 def get_all_work_orders_summary_vehicle_history(work_order_id)
   paginator_to_a(list_work_orders_summary_vehicle_history(work_order_id), 1000)
+end
+# Runs create_work_orders_void (POST /work_orders/{work_order_id}/voids).
+def create_work_orders_void(work_order_id, payment_id:)
+  post("/work_orders/#{work_order_id}/voids", { payment_id: payment_id })
 end
 # Fetches show_work_order_wip.
 def show_work_order_wip(work_order_id)
