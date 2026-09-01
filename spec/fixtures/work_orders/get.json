@@ -13,6 +13,8 @@
   "location_id": 1,
   "service_advisor_id": 5,
   "assigned_technician_id": null,
+  "sub_status_type_id": null,
+  "payer_customer_id": null,
   "work_order_services_count": 2,
   "inspection_reports_count": 0,
   "customer": {
