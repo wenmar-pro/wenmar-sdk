@@ -106,6 +106,8 @@ module EnrichSpec
       end
     end
 
+    assert_unique_operation_ids!(spec)
+
     name_request_schemas!(spec)
 
     apply_example_overrides!(spec)
@@ -142,48 +144,71 @@ module EnrichSpec
   end
 
   def self.derive_operation_id(path, method)
-    # Sub-actions (e.g. /vehicles/vin_decode) map to a named operationId.
+    # Explicit semantic/action overrides are the stable contract — keep them.
     sub_action = SUB_ACTION_IDS["#{method} #{path}"]
     return sub_action if sub_action
 
-    # Nested/sub-resource endpoints with explicit, stable operationIds.
     nested = NESTED_OPERATION_IDS["#{method} #{path}"]
     return nested if nested
 
     segments = path.split("/").reject(&:empty?)
-    resource = segments[0] # "customers", "vehicles", "work_orders"
-    return nil unless resource
+    return nil if segments.empty?
 
-    singularized = SINGULAR_OVERRIDES[resource] || resource.chomp("s")
+    # The resource chain is the meaningful path context. Drop {param}
+    # placeholders and literal numeric IDs (e.g. /customers/1043910089/merge).
+    # Hyphenated segments (e.g. lead-sources) are normalized to underscores so
+    # the resulting operationId is a valid Go/Ruby identifier.
+    nouns = segments.reject { |s| s.start_with?("{") || s =~ /\A\d+\z/ }.map { |s| s.tr("-", "_") }
+    return nil if nouns.empty?
 
-    # Nested resource paths (e.g. /work_orders/{work_order_id}/payments) get a
-    # distinct operationId so they don't collide with the top-level resource.
-    if segments.length >= 3
-      nested = segments[2]
-      nested_singular = nested.chomp("s")
-      # Deeper nesting (e.g. .../vehicles/{vehicle_id}/history) appends the
-      # final action segment to keep operationIds unique. Use the last
-      # non-path-param segment so sub-actions under a nested collection
-      # (e.g. .../line_items/{id}/pull) don't all collapse to the collection
-      # name. Falls back to segments[4] when the path ends in a param.
-      if segments.length >= 5
-        action = segments.reverse.find { |s| !s.start_with?("{") }
-        return "#{method}_#{resource}_#{nested_singular}_#{action || segments[4]}"
+    last_is_param = segments.last.start_with?("{") || segments.last =~ /\A\d+\z/
+
+    verb = case method
+           when "get"    then last_is_param ? "show" : "list"
+           when "post"   then "create"
+           when "patch", "put" then "update"
+           when "delete" then "delete"
+           else method
+           end
+
+    # Singularize the final noun for single-resource verbs. Keep it plural for
+    # list, and keep terminal action segments intact (e.g. close, hard_delete).
+    singularize_last = case verb
+                       when "list"   then false
+                       when "create" then true
+                       else last_is_param
+                       end
+
+    parts = [verb]
+    nouns.each_with_index do |noun, i|
+      is_last = i == nouns.length - 1
+      parts << (is_last && singularize_last ? singularize(noun) : noun)
+    end
+    parts.join("_")
+  end
+
+  def self.singularize(word)
+    SINGULAR_OVERRIDES[word] || word.chomp("s")
+  end
+
+  def self.assert_unique_operation_ids!(spec)
+    seen = {}
+    duplicates = []
+    spec["paths"].each do |path, methods|
+      methods.each do |method, op|
+        next unless op.is_a?(Hash)
+        id = op["operationId"]
+        next if id.nil?
+        if seen.key?(id)
+          duplicates << "#{id} seen at #{seen[id]} and #{method.upcase} #{path}"
+        else
+          seen[id] = "#{method.upcase} #{path}"
+        end
       end
-      return "#{method}_#{resource}_#{nested_singular}"
     end
-
-    has_id = path.include?("{id}")
-
-    case [method, has_id]
-    when ["get", false] then "list_#{resource}"
-    when ["get", true]  then "show_#{singularized}"
-    when ["post", false] then "create_#{singularized}"
-    when ["patch", true], ["put", true] then "update_#{singularized}"
-    when ["delete", true] then "delete_#{singularized}"
-    when ["delete", false] then "delete_#{resource}"
-    else "#{method}_#{resource}"
-    end
+    return if duplicates.empty?
+    warn "Duplicate operationIds detected:\n#{duplicates.join("\n")}"
+    exit 1
   end
 
   def self.derive_description(operation_id)
