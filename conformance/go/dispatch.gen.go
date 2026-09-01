@@ -27,8 +27,96 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_appointments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAppointments(ctx, &wenmar.ListAppointmentsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointment(ctx, buildWrapper[wenmar.CreateAppointmentRequest]("appointment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_appointments_available_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListAppointmentsAvailableSlots(ctx, &wenmar.ListAppointmentsAvailableSlotsParams{Date: strPtr(args["query"].(map[string]interface{}), "date"), DurationMinutes: intPtr(args["query"].(map[string]interface{}), "duration_minutes")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateAppointmentRequest]("appointment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_approval": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsApproval(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateAppointmentsApprovalRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_cancellation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsCancellation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateAppointmentsCancellationRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_follow_up": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsFollowUp(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateAppointmentsFollowUpRequest]("appointment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_rejection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsRejection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateAppointmentsRejectionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_vehicle_reconciliation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsVehicleReconciliation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.CreateAppointmentsVehicleReconciliationRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_appointments_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateAppointmentsWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateAppointmentsWorkOrderRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -117,6 +205,22 @@ var dispatch = map[string]operationFunc{
 
 "update_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.UpdateConversation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateConversationRequest]("status", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_core_tax_rules": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCoreTaxRules(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_core_tax_rule": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCoreTaxRule(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCoreTaxRuleRequest]("core_tax_rule", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -387,24 +491,120 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_inventory": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListInventory(ctx, &wenmar.ListInventoryParams{Brand: strPtr(args["query"].(map[string]interface{}), "brand"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), StockStatus: strPtr(args["query"].(map[string]interface{}), "stock_status"), Stocked: boolPtr(args["query"].(map[string]interface{}), "stocked")})
+"list_inventory_levels": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListInventoryLevels(ctx, &wenmar.ListInventoryLevelsParams{Brand: strPtr(args["query"].(map[string]interface{}), "brand"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), StockStatus: strPtr(args["query"].(map[string]interface{}), "stock_status"), Stocked: boolPtr(args["query"].(map[string]interface{}), "stocked")})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_inventory_barcode_lookup": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListInventoryBarcodeLookup(ctx, &wenmar.ListInventoryBarcodeLookupParams{Barcode: strPtr(args["query"].(map[string]interface{}), "barcode")})
+"list_inventory_levels_barcode_lookup": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListInventoryLevelsBarcodeLookup(ctx, &wenmar.ListInventoryLevelsBarcodeLookupParams{Barcode: strPtr(args["query"].(map[string]interface{}), "barcode")})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"show_inventory": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowInventory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+"show_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_labels": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListLabels(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_label": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLabel(ctx, buildWrapper[wenmar.CreateLabelRequest]("label", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_label": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLabel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLabelRequest]("label", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_labor_matrices": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListLaborMatrices(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_labor_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLaborMatrice(ctx, buildWrapper[wenmar.CreateLaborMatriceRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_labor_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLaborMatrice(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborMatriceRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_labor_rates": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListLaborRates(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLaborRate(ctx, buildWrapper[wenmar.CreateLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_lead_sources": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListLeadSources(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLeadSource(ctx, buildWrapper[wenmar.CreateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -485,6 +685,30 @@ var dispatch = map[string]operationFunc{
 
 "create_packages_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreatePackagesDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePackagesDuplicateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_parts_matrices": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListPartsMatrices(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_parts_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePartsMatrice(ctx, buildWrapper[wenmar.CreatePartsMatriceRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_parts_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePartsMatrice(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePartsMatriceRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -659,30 +883,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_scan_lookup": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateScanLookup(ctx, buildFlat[wenmar.CreateScanLookupRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_scan_started_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateScanStartedWorkOrder(ctx, buildFlat[wenmar.CreateScanStartedWorkOrderRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_scan_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateScanVehicle(ctx, buildFlat[wenmar.CreateScanVehicleRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_search": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListSearch(ctx, &wenmar.ListSearchParams{Q: strPtr(args["query"].(map[string]interface{}), "q")})
 	if err != nil {
@@ -771,22 +971,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_settings_core_tax_rules": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsCoreTaxRules(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_core_tax_rule": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsCoreTaxRule(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsCoreTaxRuleRequest]("core_tax_rule", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_settings_documents": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListSettingsDocuments(ctx)
 	if err != nil {
@@ -811,104 +995,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_settings_labels": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsLabels(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_label": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsLabel(ctx, buildWrapper[wenmar.CreateSettingsLabelRequest]("label", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_label": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsLabel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsLabelRequest]("label", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_labor_matrices": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsLaborMatrices(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_labor_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsLaborMatrice(ctx, buildWrapper[wenmar.CreateSettingsLaborMatriceRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_labor_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsLaborMatrice(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsLaborMatriceRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_labor_rates": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsLaborRates(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsLaborRate(ctx, buildWrapper[wenmar.CreateSettingsLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_settings_labor_templates": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListSettingsLaborTemplates(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_lead_sources": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsLeadSources(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsLeadSource(ctx, buildWrapper[wenmar.CreateSettingsLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -933,30 +1021,6 @@ var dispatch = map[string]operationFunc{
 
 "list_settings_notifications_edit": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListSettingsNotificationsEdit(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_parts_matrices": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsPartsMatrices(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_parts_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsPartsMatrice(ctx, buildWrapper[wenmar.CreateSettingsPartsMatriceRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_parts_matrice": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsPartsMatrice(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsPartsMatriceRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -995,78 +1059,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_settings_shop_discounts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsShopDiscounts(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsShopDiscount(ctx, buildWrapper[wenmar.CreateSettingsShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_shop_fees": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsShopFees(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsShopFee(ctx, buildWrapper[wenmar.CreateSettingsShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_settings_sub_statuses": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListSettingsSubStatuses(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_settings_sub_statuse": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSettingsSubStatuse(ctx, buildWrapper[wenmar.CreateSettingsSubStatuseRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_settings_sub_statuse": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSettingsSubStatuse(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSettingsSubStatuseRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_tags": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListTags(ctx)
 	if err != nil {
@@ -1099,6 +1091,54 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_shop_discounts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListShopDiscounts(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopDiscount(ctx, buildWrapper[wenmar.CreateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_shop_fees": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListShopFees(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopFee(ctx, buildWrapper[wenmar.CreateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "show_statement": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowStatement(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -1109,6 +1149,30 @@ var dispatch = map[string]operationFunc{
 
 "create_store_credits_void": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateStoreCreditsVoid(ctx, intArg(args["pathParams"].(map[string]interface{}), "store_credit_id"), wenmar.CreateStoreCreditsVoidRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_sub_statuses": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListSubStatuses(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_sub_statuse": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateSubStatuse(ctx, buildWrapper[wenmar.CreateSubStatuseRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_sub_statuse": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateSubStatuse(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSubStatuseRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1181,22 +1245,6 @@ var dispatch = map[string]operationFunc{
 
 "update_team_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.UpdateTeamPermissionGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTeamPermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_time_entrie": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTimeEntrie(ctx, buildFlat[wenmar.CreateTimeEntrieRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_time_entrie": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateTimeEntrie(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTimeEntrieRequest]("status", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1461,14 +1509,6 @@ var dispatch = map[string]operationFunc{
 
 "list_vendors_purchase_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListVendorsPurchaseOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "vendor_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_voice_command": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteVoiceCommand(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2106,7 +2146,18 @@ var dispatch = map[string]operationFunc{
 var allOperations = []string{
 	"list_account",
 	"update_ai_suggestion",
+	"list_appointments",
+	"create_appointment",
 	"list_appointments_available_slots",
+	"delete_appointment",
+	"show_appointment",
+	"update_appointment",
+	"create_appointments_approval",
+	"create_appointments_cancellation",
+	"create_appointments_follow_up",
+	"create_appointments_rejection",
+	"create_appointments_vehicle_reconciliation",
+	"create_appointments_work_order",
 	"update_cash_drawer_banner",
 	"create_catalog_cleanups_application",
 	"list_conversations",
@@ -2118,6 +2169,8 @@ var allOperations = []string{
 	"create_conversations_messages_resend",
 	"show_conversation",
 	"update_conversation",
+	"list_core_tax_rules",
+	"update_core_tax_rule",
 	"list_counter_sales",
 	"create_counter_sale",
 	"list_counter_sales_line_items_brands",
@@ -2151,9 +2204,21 @@ var allOperations = []string{
 	"delete_expense",
 	"update_expense",
 	"list_fleets",
-	"list_inventory",
-	"list_inventory_barcode_lookup",
-	"show_inventory",
+	"list_inventory_levels",
+	"list_inventory_levels_barcode_lookup",
+	"show_inventory_level",
+	"list_labels",
+	"create_label",
+	"update_label",
+	"list_labor_matrices",
+	"create_labor_matrice",
+	"update_labor_matrice",
+	"list_labor_rates",
+	"create_labor_rate",
+	"update_labor_rate",
+	"list_lead_sources",
+	"create_lead_source",
+	"update_lead_source",
 	"show_location",
 	"list_notifications",
 	"create_notifications_bulk_mark_read",
@@ -2164,6 +2229,9 @@ var allOperations = []string{
 	"create_package",
 	"update_package",
 	"create_packages_duplicate",
+	"list_parts_matrices",
+	"create_parts_matrice",
+	"update_parts_matrice",
 	"list_preferences",
 	"list_profile",
 	"list_recent_searches",
@@ -2185,9 +2253,6 @@ var allOperations = []string{
 	"list_reports_store_credit",
 	"list_reports_technician_productivity",
 	"list_reports_work_order_profitability",
-	"create_scan_lookup",
-	"create_scan_started_work_order",
-	"create_scan_vehicle",
 	"list_search",
 	"list_service_categories",
 	"create_service_category",
@@ -2199,49 +2264,32 @@ var allOperations = []string{
 	"list_settings_billing",
 	"list_settings_cash_drawer",
 	"list_settings_close_requirements",
-	"list_settings_core_tax_rules",
-	"update_settings_core_tax_rule",
 	"list_settings_documents",
 	"list_settings_driveon",
 	"list_settings_expenses",
-	"list_settings_labels",
-	"create_settings_label",
-	"update_settings_label",
-	"list_settings_labor_matrices",
-	"create_settings_labor_matrice",
-	"update_settings_labor_matrice",
-	"list_settings_labor_rates",
-	"create_settings_labor_rate",
-	"update_settings_labor_rate",
 	"list_settings_labor_templates",
-	"list_settings_lead_sources",
-	"create_settings_lead_source",
-	"update_settings_lead_source",
 	"list_settings_lead_source_requirements",
 	"list_settings_learning_preferences",
 	"list_settings_notifications_edit",
-	"list_settings_parts_matrices",
-	"create_settings_parts_matrice",
-	"update_settings_parts_matrice",
 	"list_settings_payments",
 	"list_settings_phone_numbers",
 	"list_settings_quickbooks",
 	"list_settings_reminders",
-	"list_settings_shop_discounts",
-	"create_settings_shop_discount",
-	"update_settings_shop_discount",
-	"list_settings_shop_fees",
-	"create_settings_shop_fee",
-	"update_settings_shop_fee",
-	"list_settings_sub_statuses",
-	"create_settings_sub_statuse",
-	"update_settings_sub_statuse",
 	"list_tags",
 	"update_tags",
 	"list_settings_tire_management",
 	"list_settings_trust_levels",
+	"list_shop_discounts",
+	"create_shop_discount",
+	"update_shop_discount",
+	"list_shop_fees",
+	"create_shop_fee",
+	"update_shop_fee",
 	"show_statement",
 	"create_store_credits_void",
+	"list_sub_statuses",
+	"create_sub_statuse",
+	"update_sub_statuse",
 	"list_sublet_packages",
 	"create_sublet_package",
 	"delete_sublet_package",
@@ -2251,8 +2299,6 @@ var allOperations = []string{
 	"list_team_permission_groups",
 	"create_team_permission_group",
 	"update_team_permission_group",
-	"create_time_entrie",
-	"update_time_entrie",
 	"list_tire_storage_slots",
 	"create_tire_storage_slot",
 	"show_tire_storage_slot",
@@ -2286,7 +2332,6 @@ var allOperations = []string{
 	"show_vendor",
 	"update_vendor",
 	"list_vendors_purchase_orders",
-	"delete_voice_command",
 	"list_work_orders",
 	"create_work_order",
 	"delete_work_order",

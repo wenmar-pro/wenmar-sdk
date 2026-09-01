@@ -6,6 +6,13 @@
     "CloseWorkOrderAsPaidRequest",
     "CloseWorkOrderRequest",
     "CloseWorkOrderZeroRequest",
+    "CreateAppointmentRequest",
+    "CreateAppointmentsApprovalRequest",
+    "CreateAppointmentsCancellationRequest",
+    "CreateAppointmentsFollowUpRequest",
+    "CreateAppointmentsRejectionRequest",
+    "CreateAppointmentsVehicleReconciliationRequest",
+    "CreateAppointmentsWorkOrderRequest",
     "CreateCatalogCleanupsApplicationRequest",
     "CreateConversationsBulkMarkReadRequest",
     "CreateConversationsCustomerLinkRequest",
@@ -17,26 +24,22 @@
     "CreateCustomerTagRequest",
     "CreateDriverRequest",
     "CreateExpenseRequest",
+    "CreateLabelRequest",
+    "CreateLaborMatriceRequest",
+    "CreateLaborRateRequest",
+    "CreateLeadSourceRequest",
     "CreateNotificationsBulkMarkReadRequest",
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
+    "CreatePartsMatriceRequest",
     "CreateRecentSearcheRequest",
-    "CreateScanLookupRequest",
-    "CreateScanStartedWorkOrderRequest",
-    "CreateScanVehicleRequest",
     "CreateServiceCategoryRequest",
-    "CreateSettingsLabelRequest",
-    "CreateSettingsLaborMatriceRequest",
-    "CreateSettingsLaborRateRequest",
-    "CreateSettingsLeadSourceRequest",
-    "CreateSettingsPartsMatriceRequest",
-    "CreateSettingsShopDiscountRequest",
-    "CreateSettingsShopFeeRequest",
-    "CreateSettingsSubStatuseRequest",
+    "CreateShopDiscountRequest",
+    "CreateShopFeeRequest",
     "CreateStoreCreditsVoidRequest",
+    "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
     "CreateTeamPermissionGroupRequest",
-    "CreateTimeEntrieRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
@@ -74,30 +77,30 @@
     "UndoPullWorkOrderServiceLineItemRequest",
     "UndoReturnWorkOrderServiceLineItemRequest",
     "UpdateAiSuggestionRequest",
+    "UpdateAppointmentRequest",
     "UpdateCashDrawerBannerRequest",
     "UpdateConversationRequest",
+    "UpdateCoreTaxRuleRequest",
     "UpdateCounterSaleRequest",
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
     "UpdateDriverRequest",
     "UpdateExpenseRequest",
+    "UpdateLabelRequest",
+    "UpdateLaborMatriceRequest",
+    "UpdateLaborRateRequest",
+    "UpdateLeadSourceRequest",
     "UpdateNotificationRequest",
     "UpdatePackageRequest",
+    "UpdatePartsMatriceRequest",
     "UpdateServiceCategoryRequest",
     "UpdateSettingsAccountRequest",
-    "UpdateSettingsCoreTaxRuleRequest",
-    "UpdateSettingsLabelRequest",
-    "UpdateSettingsLaborMatriceRequest",
-    "UpdateSettingsLaborRateRequest",
-    "UpdateSettingsLeadSourceRequest",
-    "UpdateSettingsPartsMatriceRequest",
-    "UpdateSettingsShopDiscountRequest",
-    "UpdateSettingsShopFeeRequest",
-    "UpdateSettingsSubStatuseRequest",
+    "UpdateShopDiscountRequest",
+    "UpdateShopFeeRequest",
+    "UpdateSubStatuseRequest",
     "UpdateSubletPackageRequest",
     "UpdateTagsRequest",
     "UpdateTeamPermissionGroupRequest",
-    "UpdateTimeEntrieRequest",
     "UpdateTireRequest",
     "UpdateVehicleRequest",
     "UpdateVehicleTagRequest",
@@ -164,6 +167,55 @@
       "summary": "update"
     },
     {
+      "id": "list_appointments",
+      "method": "get",
+      "path": "/appointments",
+      "tag": "appointments",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "q",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_appointment",
+      "method": "post",
+      "path": "/appointments",
+      "tag": "appointments",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentRequest",
+      "requestShape": {
+        "wrapper": "appointment"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "list_appointments_available_slots",
       "method": "get",
       "path": "/appointments/available_slots",
@@ -189,6 +241,167 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "available_slots"
+    },
+    {
+      "id": "delete_appointment",
+      "method": "delete",
+      "path": "/appointments/{id}",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_appointment",
+      "method": "get",
+      "path": "/appointments/{id}",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_appointment",
+      "method": "patch",
+      "path": "/appointments/{id}",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateAppointmentRequest",
+      "requestShape": {
+        "wrapper": "appointment"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_appointments_approval",
+      "method": "post",
+      "path": "/appointments/{id}/approvals",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsApprovalRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_appointments_cancellation",
+      "method": "post",
+      "path": "/appointments/{id}/cancellations",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsCancellationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_appointments_follow_up",
+      "method": "post",
+      "path": "/appointments/{id}/follow_ups",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsFollowUpRequest",
+      "requestShape": {
+        "wrapper": "appointment"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_appointments_rejection",
+      "method": "post",
+      "path": "/appointments/{id}/rejections",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsRejectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_appointments_vehicle_reconciliation",
+      "method": "post",
+      "path": "/appointments/{id}/vehicle_reconciliations",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsVehicleReconciliationRequest",
+      "requestShape": {
+        "flat": [
+          "vehicle_action",
+          "vehicle_id"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_appointments_work_order",
+      "method": "post",
+      "path": "/appointments/{id}/work_orders",
+      "tag": "appointments",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateAppointmentsWorkOrderRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
+      "summary": "create"
     },
     {
       "id": "update_cash_drawer_banner",
@@ -371,6 +584,38 @@
       "requestSchema": "UpdateConversationRequest",
       "requestShape": {
         "wrapper": "status"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_core_tax_rules",
+      "method": "get",
+      "path": "/core_tax_rules",
+      "tag": "core_tax_rules",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "update_core_tax_rule",
+      "method": "patch",
+      "path": "/core_tax_rules/{id}",
+      "tag": "core_tax_rules",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateCoreTaxRuleRequest",
+      "requestShape": {
+        "wrapper": "core_tax_rule"
       },
       "paginated": false,
       "responseSchema": null,
@@ -993,10 +1238,10 @@
       "summary": "index"
     },
     {
-      "id": "list_inventory",
+      "id": "list_inventory_levels",
       "method": "get",
-      "path": "/inventory",
-      "tag": "inventory",
+      "path": "/inventory_levels",
+      "tag": "inventory_levels",
       "pathParams": [],
       "queryParams": [
         {
@@ -1044,10 +1289,10 @@
       "summary": "index"
     },
     {
-      "id": "list_inventory_barcode_lookup",
+      "id": "list_inventory_levels_barcode_lookup",
       "method": "get",
-      "path": "/inventory/barcode_lookup",
-      "tag": "inventory",
+      "path": "/inventory_levels/barcode_lookup",
+      "tag": "inventory_levels",
       "pathParams": [],
       "queryParams": [
         {
@@ -1065,10 +1310,10 @@
       "summary": "barcode_lookup"
     },
     {
-      "id": "show_inventory",
+      "id": "show_inventory_level",
       "method": "get",
-      "path": "/inventory/{id}",
-      "tag": "inventory",
+      "path": "/inventory_levels/{id}",
+      "tag": "inventory_levels",
       "pathParams": [
         "id"
       ],
@@ -1079,6 +1324,198 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "list_labels",
+      "method": "get",
+      "path": "/labels",
+      "tag": "labels",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_label",
+      "method": "post",
+      "path": "/labels",
+      "tag": "labels",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateLabelRequest",
+      "requestShape": {
+        "wrapper": "label"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_label",
+      "method": "patch",
+      "path": "/labels/{id}",
+      "tag": "labels",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateLabelRequest",
+      "requestShape": {
+        "wrapper": "label"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_labor_matrices",
+      "method": "get",
+      "path": "/labor_matrices",
+      "tag": "labor_matrices",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_labor_matrice",
+      "method": "post",
+      "path": "/labor_matrices",
+      "tag": "labor_matrices",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateLaborMatriceRequest",
+      "requestShape": {
+        "wrapper": "labor_matrix"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_labor_matrice",
+      "method": "patch",
+      "path": "/labor_matrices/{id}",
+      "tag": "labor_matrices",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateLaborMatriceRequest",
+      "requestShape": {
+        "wrapper": "labor_matrix"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_labor_rates",
+      "method": "get",
+      "path": "/labor_rates",
+      "tag": "labor_rates",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_labor_rate",
+      "method": "post",
+      "path": "/labor_rates",
+      "tag": "labor_rates",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateLaborRateRequest",
+      "requestShape": {
+        "wrapper": "labor_rate"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_labor_rate",
+      "method": "patch",
+      "path": "/labor_rates/{id}",
+      "tag": "labor_rates",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateLaborRateRequest",
+      "requestShape": {
+        "wrapper": "labor_rate"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_lead_sources",
+      "method": "get",
+      "path": "/lead_sources",
+      "tag": "lead_sources",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_lead_source",
+      "method": "post",
+      "path": "/lead_sources",
+      "tag": "lead_sources",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateLeadSourceRequest",
+      "requestShape": {
+        "wrapper": "lead_source"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_lead_source",
+      "method": "patch",
+      "path": "/lead_sources/{id}",
+      "tag": "lead_sources",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateLeadSourceRequest",
+      "requestShape": {
+        "wrapper": "lead_source"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "show_location",
@@ -1239,6 +1676,54 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "duplicate"
+    },
+    {
+      "id": "list_parts_matrices",
+      "method": "get",
+      "path": "/parts_matrices",
+      "tag": "parts_matrices",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_parts_matrice",
+      "method": "post",
+      "path": "/parts_matrices",
+      "tag": "parts_matrices",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreatePartsMatriceRequest",
+      "requestShape": {
+        "wrapper": "parts_matrix"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_parts_matrice",
+      "method": "patch",
+      "path": "/parts_matrices/{id}",
+      "tag": "parts_matrices",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdatePartsMatriceRequest",
+      "requestShape": {
+        "wrapper": "parts_matrix"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_preferences",
@@ -1539,63 +2024,6 @@
       "summary": "show"
     },
     {
-      "id": "create_scan_lookup",
-      "method": "post",
-      "path": "/scan/lookups",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanLookupRequest",
-      "requestShape": {
-        "flat": [
-          "code",
-          "type"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "lookup"
-    },
-    {
-      "id": "create_scan_started_work_order",
-      "method": "post",
-      "path": "/scan/started_work_orders",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanStartedWorkOrderRequest",
-      "requestShape": {
-        "flat": [
-          "outcome",
-          "vehicle_id"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "start_ro"
-    },
-    {
-      "id": "create_scan_vehicle",
-      "method": "post",
-      "path": "/scan/vehicles",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanVehicleRequest",
-      "requestShape": {
-        "flat": [
-          "customer",
-          "vehicle"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create_vehicle_and_start_ro"
-    },
-    {
       "id": "list_search",
       "method": "get",
       "path": "/search",
@@ -1769,38 +2197,6 @@
       "summary": "show"
     },
     {
-      "id": "list_settings_core_tax_rules",
-      "method": "get",
-      "path": "/settings/core_tax_rules",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "update_settings_core_tax_rule",
-      "method": "patch",
-      "path": "/settings/core_tax_rules/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsCoreTaxRuleRequest",
-      "requestShape": {
-        "wrapper": "core_tax_rule"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
       "id": "list_settings_documents",
       "method": "get",
       "path": "/settings/documents",
@@ -1843,150 +2239,6 @@
       "summary": "show"
     },
     {
-      "id": "list_settings_labels",
-      "method": "get",
-      "path": "/settings/labels",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_label",
-      "method": "post",
-      "path": "/settings/labels",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsLabelRequest",
-      "requestShape": {
-        "wrapper": "label"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_label",
-      "method": "patch",
-      "path": "/settings/labels/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsLabelRequest",
-      "requestShape": {
-        "wrapper": "label"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "list_settings_labor_matrices",
-      "method": "get",
-      "path": "/settings/labor_matrices",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_labor_matrice",
-      "method": "post",
-      "path": "/settings/labor_matrices",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsLaborMatriceRequest",
-      "requestShape": {
-        "wrapper": "labor_matrix"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_labor_matrice",
-      "method": "patch",
-      "path": "/settings/labor_matrices/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsLaborMatriceRequest",
-      "requestShape": {
-        "wrapper": "labor_matrix"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "list_settings_labor_rates",
-      "method": "get",
-      "path": "/settings/labor_rates",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_labor_rate",
-      "method": "post",
-      "path": "/settings/labor_rates",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsLaborRateRequest",
-      "requestShape": {
-        "wrapper": "labor_rate"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_labor_rate",
-      "method": "patch",
-      "path": "/settings/labor_rates/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsLaborRateRequest",
-      "requestShape": {
-        "wrapper": "labor_rate"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
       "id": "list_settings_labor_templates",
       "method": "get",
       "path": "/settings/labor_templates",
@@ -1999,54 +2251,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "index"
-    },
-    {
-      "id": "list_settings_lead_sources",
-      "method": "get",
-      "path": "/settings/lead-sources",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_lead_source",
-      "method": "post",
-      "path": "/settings/lead-sources",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsLeadSourceRequest",
-      "requestShape": {
-        "wrapper": "lead_source"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_lead_source",
-      "method": "patch",
-      "path": "/settings/lead-sources/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsLeadSourceRequest",
-      "requestShape": {
-        "wrapper": "lead_source"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
     },
     {
       "id": "list_settings_lead_source_requirements",
@@ -2089,54 +2293,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "edit"
-    },
-    {
-      "id": "list_settings_parts_matrices",
-      "method": "get",
-      "path": "/settings/parts_matrices",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_parts_matrice",
-      "method": "post",
-      "path": "/settings/parts_matrices",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsPartsMatriceRequest",
-      "requestShape": {
-        "wrapper": "parts_matrix"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_parts_matrice",
-      "method": "patch",
-      "path": "/settings/parts_matrices/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsPartsMatriceRequest",
-      "requestShape": {
-        "wrapper": "parts_matrix"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
     },
     {
       "id": "list_settings_payments",
@@ -2193,150 +2349,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
-    },
-    {
-      "id": "list_settings_shop_discounts",
-      "method": "get",
-      "path": "/settings/shop_discounts",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_shop_discount",
-      "method": "post",
-      "path": "/settings/shop_discounts",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsShopDiscountRequest",
-      "requestShape": {
-        "wrapper": "shop_discount_config"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_shop_discount",
-      "method": "patch",
-      "path": "/settings/shop_discounts/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsShopDiscountRequest",
-      "requestShape": {
-        "wrapper": "shop_discount_config"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "list_settings_shop_fees",
-      "method": "get",
-      "path": "/settings/shop_fees",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_shop_fee",
-      "method": "post",
-      "path": "/settings/shop_fees",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsShopFeeRequest",
-      "requestShape": {
-        "wrapper": "shop_fee_config"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_shop_fee",
-      "method": "patch",
-      "path": "/settings/shop_fees/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsShopFeeRequest",
-      "requestShape": {
-        "wrapper": "shop_fee_config"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "list_settings_sub_statuses",
-      "method": "get",
-      "path": "/settings/sub-statuses",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_settings_sub_statuse",
-      "method": "post",
-      "path": "/settings/sub-statuses",
-      "tag": "settings",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateSettingsSubStatuseRequest",
-      "requestShape": {
-        "wrapper": "sub_status_type"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_settings_sub_statuse",
-      "method": "patch",
-      "path": "/settings/sub-statuses/{id}",
-      "tag": "settings",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateSettingsSubStatuseRequest",
-      "requestShape": {
-        "wrapper": "sub_status_type"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
     },
     {
       "id": "list_tags",
@@ -2397,6 +2409,102 @@
       "summary": "show"
     },
     {
+      "id": "list_shop_discounts",
+      "method": "get",
+      "path": "/shop_discounts",
+      "tag": "shop_discounts",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_shop_discount",
+      "method": "post",
+      "path": "/shop_discounts",
+      "tag": "shop_discounts",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateShopDiscountRequest",
+      "requestShape": {
+        "wrapper": "shop_discount_config"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_shop_discount",
+      "method": "patch",
+      "path": "/shop_discounts/{id}",
+      "tag": "shop_discounts",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateShopDiscountRequest",
+      "requestShape": {
+        "wrapper": "shop_discount_config"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_shop_fees",
+      "method": "get",
+      "path": "/shop_fees",
+      "tag": "shop_fees",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_shop_fee",
+      "method": "post",
+      "path": "/shop_fees",
+      "tag": "shop_fees",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateShopFeeRequest",
+      "requestShape": {
+        "wrapper": "shop_fee_config"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_shop_fee",
+      "method": "patch",
+      "path": "/shop_fees/{id}",
+      "tag": "shop_fees",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateShopFeeRequest",
+      "requestShape": {
+        "wrapper": "shop_fee_config"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "show_statement",
       "method": "get",
       "path": "/statements/{id}",
@@ -2429,6 +2537,54 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "list_sub_statuses",
+      "method": "get",
+      "path": "/sub_statuses",
+      "tag": "sub_statuses",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_sub_statuse",
+      "method": "post",
+      "path": "/sub_statuses",
+      "tag": "sub_statuses",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateSubStatuseRequest",
+      "requestShape": {
+        "wrapper": "sub_status_type"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_sub_statuse",
+      "method": "patch",
+      "path": "/sub_statuses/{id}",
+      "tag": "sub_statuses",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateSubStatuseRequest",
+      "requestShape": {
+        "wrapper": "sub_status_type"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_sublet_packages",
@@ -2566,43 +2722,6 @@
       "requestSchema": "UpdateTeamPermissionGroupRequest",
       "requestShape": {
         "wrapper": "permission_group"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "create_time_entrie",
-      "method": "post",
-      "path": "/time_entries",
-      "tag": "time_entries",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateTimeEntrieRequest",
-      "requestShape": {
-        "flat": [
-          "type",
-          "work_order_service_id"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_time_entrie",
-      "method": "patch",
-      "path": "/time_entries/{id}",
-      "tag": "time_entries",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateTimeEntrieRequest",
-      "requestShape": {
-        "wrapper": "status"
       },
       "paginated": false,
       "responseSchema": null,
@@ -3204,22 +3323,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "index"
-    },
-    {
-      "id": "delete_voice_command",
-      "method": "delete",
-      "path": "/voice_commands/{id}",
-      "tag": "voice_commands",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "destroy"
     },
     {
       "id": "list_work_orders",

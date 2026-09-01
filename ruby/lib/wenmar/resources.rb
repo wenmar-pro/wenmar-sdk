@@ -12,6 +12,22 @@ end
 def update_ai_suggestion(id, status:)
   patch("/ai_suggestions/#{id}", { status: status })
 end
+# Lists list_appointments resources (paginated).
+# @return [Wenmar::Paginator]
+def list_appointments(per_page: nil, q: nil, status: nil)
+  params = { per_page: per_page, q: q, status: status }
+  get("/appointments", params.compact)
+end
+
+# Fetches all appointments, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_appointments(per_page: nil, q: nil, status: nil)
+  paginator_to_a(list_appointments(per_page: nil, q: nil, status: nil), 1000)
+end
+# Runs create_appointment (POST /appointments).
+def create_appointment(appointment:)
+  post("/appointments", { appointment: appointment })
+end
 # Lists list_appointments_available_slots resources (paginated).
 # @return [Wenmar::Paginator]
 def list_appointments_available_slots(date: nil, duration_minutes: nil)
@@ -23,6 +39,42 @@ end
 # @return [Array<Hash>]
 def get_all_appointments_available_slots(date: nil, duration_minutes: nil)
   paginator_to_a(list_appointments_available_slots(date: nil, duration_minutes: nil), 1000)
+end
+# Deletes delete_appointment.
+def delete_appointment(id)
+  delete("/appointments/#{id}")
+end
+# Fetches show_appointment.
+def show_appointment(id)
+  get("/appointments/#{id}")
+end
+# Runs update_appointment (PATCH /appointments/{id}).
+def update_appointment(id, appointment:)
+  patch("/appointments/#{id}", { appointment: appointment })
+end
+# Runs create_appointments_approval (POST /appointments/{id}/approvals).
+def create_appointments_approval(id)
+  post("/appointments/#{id}/approvals")
+end
+# Runs create_appointments_cancellation (POST /appointments/{id}/cancellations).
+def create_appointments_cancellation(id)
+  post("/appointments/#{id}/cancellations")
+end
+# Runs create_appointments_follow_up (POST /appointments/{id}/follow_ups).
+def create_appointments_follow_up(id, appointment:)
+  post("/appointments/#{id}/follow_ups", { appointment: appointment })
+end
+# Runs create_appointments_rejection (POST /appointments/{id}/rejections).
+def create_appointments_rejection(id)
+  post("/appointments/#{id}/rejections")
+end
+# Runs create_appointments_vehicle_reconciliation (POST /appointments/{id}/vehicle_reconciliations).
+def create_appointments_vehicle_reconciliation(id, vehicle_action:, vehicle_id:)
+  post("/appointments/#{id}/vehicle_reconciliations", { vehicle_action: vehicle_action, vehicle_id: vehicle_id })
+end
+# Runs create_appointments_work_order (POST /appointments/{id}/work_orders).
+def create_appointments_work_order(id)
+  post("/appointments/#{id}/work_orders")
 end
 # Runs update_cash_drawer_banner (PATCH /cash_drawer_banner).
 def update_cash_drawer_banner(dismissed:)
@@ -81,6 +133,21 @@ end
 # Runs update_conversation (PATCH /conversations/{id}).
 def update_conversation(id, status:)
   patch("/conversations/#{id}", { status: status })
+end
+# Lists list_core_tax_rules resources (paginated).
+# @return [Wenmar::Paginator]
+def list_core_tax_rules()
+  get("/core_tax_rules")
+end
+
+# Fetches all core_tax_rules, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_core_tax_rules()
+  paginator_to_a(list_core_tax_rules(), 1000)
+end
+# Runs update_core_tax_rule (PATCH /core_tax_rules/{id}).
+def update_core_tax_rule(id, core_tax_rule:)
+  patch("/core_tax_rules/#{id}", { core_tax_rule: core_tax_rule })
 end
 # Lists list_counter_sales resources (paginated).
 # @return [Wenmar::Paginator]
@@ -288,26 +355,102 @@ end
 def get_all_fleets()
   paginator_to_a(list_fleets(), 1000)
 end
-# Lists list_inventory resources (paginated).
+# Lists list_inventory_levels resources (paginated).
 # @return [Wenmar::Paginator]
-def list_inventory(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
+def list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
   params = { brand: brand, page: page, per_page: per_page, q: q, stock_status: stock_status, stocked: stocked }
-  get("/inventory", params.compact)
+  get("/inventory_levels", params.compact)
 end
 
-# Fetches all inventory, up to 1000 by default.
+# Fetches all inventory_levels, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_inventory(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
-  paginator_to_a(list_inventory(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil), 1000)
+def get_all_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
+  paginator_to_a(list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil), 1000)
 end
-# Fetches list_inventory_barcode_lookup.
-def list_inventory_barcode_lookup(barcode: nil)
+# Fetches list_inventory_levels_barcode_lookup.
+def list_inventory_levels_barcode_lookup(barcode: nil)
   params = { barcode: barcode }
-      get("/inventory/barcode_lookup", params.compact)
+      get("/inventory_levels/barcode_lookup", params.compact)
 end
-# Fetches show_inventory.
-def show_inventory(id)
-  get("/inventory/#{id}")
+# Fetches show_inventory_level.
+def show_inventory_level(id)
+  get("/inventory_levels/#{id}")
+end
+# Lists list_labels resources (paginated).
+# @return [Wenmar::Paginator]
+def list_labels()
+  get("/labels")
+end
+
+# Fetches all labels, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_labels()
+  paginator_to_a(list_labels(), 1000)
+end
+# Runs create_label (POST /labels).
+def create_label(label:)
+  post("/labels", { label: label })
+end
+# Runs update_label (PATCH /labels/{id}).
+def update_label(id, label:)
+  patch("/labels/#{id}", { label: label })
+end
+# Lists list_labor_matrices resources (paginated).
+# @return [Wenmar::Paginator]
+def list_labor_matrices()
+  get("/labor_matrices")
+end
+
+# Fetches all labor_matrices, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_labor_matrices()
+  paginator_to_a(list_labor_matrices(), 1000)
+end
+# Runs create_labor_matrice (POST /labor_matrices).
+def create_labor_matrice(labor_matrix:)
+  post("/labor_matrices", { labor_matrix: labor_matrix })
+end
+# Runs update_labor_matrice (PATCH /labor_matrices/{id}).
+def update_labor_matrice(id, labor_matrix:)
+  patch("/labor_matrices/#{id}", { labor_matrix: labor_matrix })
+end
+# Lists list_labor_rates resources (paginated).
+# @return [Wenmar::Paginator]
+def list_labor_rates()
+  get("/labor_rates")
+end
+
+# Fetches all labor_rates, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_labor_rates()
+  paginator_to_a(list_labor_rates(), 1000)
+end
+# Runs create_labor_rate (POST /labor_rates).
+def create_labor_rate(labor_rate:)
+  post("/labor_rates", { labor_rate: labor_rate })
+end
+# Runs update_labor_rate (PATCH /labor_rates/{id}).
+def update_labor_rate(id, labor_rate:)
+  patch("/labor_rates/#{id}", { labor_rate: labor_rate })
+end
+# Lists list_lead_sources resources (paginated).
+# @return [Wenmar::Paginator]
+def list_lead_sources()
+  get("/lead_sources")
+end
+
+# Fetches all lead_sources, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_lead_sources()
+  paginator_to_a(list_lead_sources(), 1000)
+end
+# Runs create_lead_source (POST /lead_sources).
+def create_lead_source(lead_source:)
+  post("/lead_sources", { lead_source: lead_source })
+end
+# Runs update_lead_source (PATCH /lead_sources/{id}).
+def update_lead_source(id, lead_source:)
+  patch("/lead_sources/#{id}", { lead_source: lead_source })
 end
 # Fetches show_location.
 def show_location(id)
@@ -369,6 +512,25 @@ end
 # Runs create_packages_duplicate (POST /packages/{id}/duplicate).
 def create_packages_duplicate(id)
   post("/packages/#{id}/duplicate")
+end
+# Lists list_parts_matrices resources (paginated).
+# @return [Wenmar::Paginator]
+def list_parts_matrices()
+  get("/parts_matrices")
+end
+
+# Fetches all parts_matrices, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_parts_matrices()
+  paginator_to_a(list_parts_matrices(), 1000)
+end
+# Runs create_parts_matrice (POST /parts_matrices).
+def create_parts_matrice(parts_matrix:)
+  post("/parts_matrices", { parts_matrix: parts_matrix })
+end
+# Runs update_parts_matrice (PATCH /parts_matrices/{id}).
+def update_parts_matrice(id, parts_matrix:)
+  patch("/parts_matrices/#{id}", { parts_matrix: parts_matrix })
 end
 # Fetches list_preferences.
 def list_preferences()
@@ -454,18 +616,6 @@ end
 def list_reports_work_order_profitability()
   get("/reports/work_order_profitability")
 end
-# Runs create_scan_lookup (POST /scan/lookups).
-def create_scan_lookup(code:, type:)
-  post("/scan/lookups", { code: code, type: type })
-end
-# Runs create_scan_started_work_order (POST /scan/started_work_orders).
-def create_scan_started_work_order(outcome:, vehicle_id:)
-  post("/scan/started_work_orders", { outcome: outcome, vehicle_id: vehicle_id })
-end
-# Runs create_scan_vehicle (POST /scan/vehicles).
-def create_scan_vehicle(customer:, vehicle:)
-  post("/scan/vehicles", { customer: customer, vehicle: vehicle })
-end
 # Fetches list_search.
 def list_search(q: nil)
   params = { q: q }
@@ -518,21 +668,6 @@ end
 def list_settings_close_requirements()
   get("/settings/close_requirements")
 end
-# Lists list_settings_core_tax_rules resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_core_tax_rules()
-  get("/settings/core_tax_rules")
-end
-
-# Fetches all settings_core_tax_rules, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_core_tax_rules()
-  paginator_to_a(list_settings_core_tax_rules(), 1000)
-end
-# Runs update_settings_core_tax_rule (PATCH /settings/core_tax_rules/{id}).
-def update_settings_core_tax_rule(id, core_tax_rule:)
-  patch("/settings/core_tax_rules/#{id}", { core_tax_rule: core_tax_rule })
-end
 # Fetches list_settings_documents.
 def list_settings_documents()
   get("/settings/documents")
@@ -545,63 +680,6 @@ end
 def list_settings_expenses()
   get("/settings/expenses")
 end
-# Lists list_settings_labels resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_labels()
-  get("/settings/labels")
-end
-
-# Fetches all settings_labels, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_labels()
-  paginator_to_a(list_settings_labels(), 1000)
-end
-# Runs create_settings_label (POST /settings/labels).
-def create_settings_label(label:)
-  post("/settings/labels", { label: label })
-end
-# Runs update_settings_label (PATCH /settings/labels/{id}).
-def update_settings_label(id, label:)
-  patch("/settings/labels/#{id}", { label: label })
-end
-# Lists list_settings_labor_matrices resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_labor_matrices()
-  get("/settings/labor_matrices")
-end
-
-# Fetches all settings_labor_matrices, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_labor_matrices()
-  paginator_to_a(list_settings_labor_matrices(), 1000)
-end
-# Runs create_settings_labor_matrice (POST /settings/labor_matrices).
-def create_settings_labor_matrice(labor_matrix:)
-  post("/settings/labor_matrices", { labor_matrix: labor_matrix })
-end
-# Runs update_settings_labor_matrice (PATCH /settings/labor_matrices/{id}).
-def update_settings_labor_matrice(id, labor_matrix:)
-  patch("/settings/labor_matrices/#{id}", { labor_matrix: labor_matrix })
-end
-# Lists list_settings_labor_rates resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_labor_rates()
-  get("/settings/labor_rates")
-end
-
-# Fetches all settings_labor_rates, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_labor_rates()
-  paginator_to_a(list_settings_labor_rates(), 1000)
-end
-# Runs create_settings_labor_rate (POST /settings/labor_rates).
-def create_settings_labor_rate(labor_rate:)
-  post("/settings/labor_rates", { labor_rate: labor_rate })
-end
-# Runs update_settings_labor_rate (PATCH /settings/labor_rates/{id}).
-def update_settings_labor_rate(id, labor_rate:)
-  patch("/settings/labor_rates/#{id}", { labor_rate: labor_rate })
-end
 # Lists list_settings_labor_templates resources (paginated).
 # @return [Wenmar::Paginator]
 def list_settings_labor_templates()
@@ -612,25 +690,6 @@ end
 # @return [Array<Hash>]
 def get_all_settings_labor_templates()
   paginator_to_a(list_settings_labor_templates(), 1000)
-end
-# Lists list_settings_lead_sources resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_lead_sources()
-  get("/settings/lead-sources")
-end
-
-# Fetches all settings_lead_sources, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_lead_sources()
-  paginator_to_a(list_settings_lead_sources(), 1000)
-end
-# Runs create_settings_lead_source (POST /settings/lead-sources).
-def create_settings_lead_source(lead_source:)
-  post("/settings/lead-sources", { lead_source: lead_source })
-end
-# Runs update_settings_lead_source (PATCH /settings/lead-sources/{id}).
-def update_settings_lead_source(id, lead_source:)
-  patch("/settings/lead-sources/#{id}", { lead_source: lead_source })
 end
 # Fetches list_settings_lead_source_requirements.
 def list_settings_lead_source_requirements()
@@ -643,25 +702,6 @@ end
 # Fetches list_settings_notifications_edit.
 def list_settings_notifications_edit()
   get("/settings/notifications/edit")
-end
-# Lists list_settings_parts_matrices resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_parts_matrices()
-  get("/settings/parts_matrices")
-end
-
-# Fetches all settings_parts_matrices, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_parts_matrices()
-  paginator_to_a(list_settings_parts_matrices(), 1000)
-end
-# Runs create_settings_parts_matrice (POST /settings/parts_matrices).
-def create_settings_parts_matrice(parts_matrix:)
-  post("/settings/parts_matrices", { parts_matrix: parts_matrix })
-end
-# Runs update_settings_parts_matrice (PATCH /settings/parts_matrices/{id}).
-def update_settings_parts_matrice(id, parts_matrix:)
-  patch("/settings/parts_matrices/#{id}", { parts_matrix: parts_matrix })
 end
 # Fetches list_settings_payments.
 def list_settings_payments()
@@ -679,63 +719,6 @@ end
 def list_settings_reminders()
   get("/settings/reminders")
 end
-# Lists list_settings_shop_discounts resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_shop_discounts()
-  get("/settings/shop_discounts")
-end
-
-# Fetches all settings_shop_discounts, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_shop_discounts()
-  paginator_to_a(list_settings_shop_discounts(), 1000)
-end
-# Runs create_settings_shop_discount (POST /settings/shop_discounts).
-def create_settings_shop_discount(shop_discount_config:)
-  post("/settings/shop_discounts", { shop_discount_config: shop_discount_config })
-end
-# Runs update_settings_shop_discount (PATCH /settings/shop_discounts/{id}).
-def update_settings_shop_discount(id, shop_discount_config:)
-  patch("/settings/shop_discounts/#{id}", { shop_discount_config: shop_discount_config })
-end
-# Lists list_settings_shop_fees resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_shop_fees()
-  get("/settings/shop_fees")
-end
-
-# Fetches all settings_shop_fees, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_shop_fees()
-  paginator_to_a(list_settings_shop_fees(), 1000)
-end
-# Runs create_settings_shop_fee (POST /settings/shop_fees).
-def create_settings_shop_fee(shop_fee_config:)
-  post("/settings/shop_fees", { shop_fee_config: shop_fee_config })
-end
-# Runs update_settings_shop_fee (PATCH /settings/shop_fees/{id}).
-def update_settings_shop_fee(id, shop_fee_config:)
-  patch("/settings/shop_fees/#{id}", { shop_fee_config: shop_fee_config })
-end
-# Lists list_settings_sub_statuses resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_sub_statuses()
-  get("/settings/sub-statuses")
-end
-
-# Fetches all settings_sub_statuses, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_sub_statuses()
-  paginator_to_a(list_settings_sub_statuses(), 1000)
-end
-# Runs create_settings_sub_statuse (POST /settings/sub-statuses).
-def create_settings_sub_statuse(sub_status_type:)
-  post("/settings/sub-statuses", { sub_status_type: sub_status_type })
-end
-# Runs update_settings_sub_statuse (PATCH /settings/sub-statuses/{id}).
-def update_settings_sub_statuse(id, sub_status_type:)
-  patch("/settings/sub-statuses/#{id}", { sub_status_type: sub_status_type })
-end
 # Fetches list_tags.
 def list_tags()
   get("/settings/tags")
@@ -752,6 +735,44 @@ end
 def list_settings_trust_levels()
   get("/settings/trust_levels")
 end
+# Lists list_shop_discounts resources (paginated).
+# @return [Wenmar::Paginator]
+def list_shop_discounts()
+  get("/shop_discounts")
+end
+
+# Fetches all shop_discounts, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_shop_discounts()
+  paginator_to_a(list_shop_discounts(), 1000)
+end
+# Runs create_shop_discount (POST /shop_discounts).
+def create_shop_discount(shop_discount_config:)
+  post("/shop_discounts", { shop_discount_config: shop_discount_config })
+end
+# Runs update_shop_discount (PATCH /shop_discounts/{id}).
+def update_shop_discount(id, shop_discount_config:)
+  patch("/shop_discounts/#{id}", { shop_discount_config: shop_discount_config })
+end
+# Lists list_shop_fees resources (paginated).
+# @return [Wenmar::Paginator]
+def list_shop_fees()
+  get("/shop_fees")
+end
+
+# Fetches all shop_fees, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_shop_fees()
+  paginator_to_a(list_shop_fees(), 1000)
+end
+# Runs create_shop_fee (POST /shop_fees).
+def create_shop_fee(shop_fee_config:)
+  post("/shop_fees", { shop_fee_config: shop_fee_config })
+end
+# Runs update_shop_fee (PATCH /shop_fees/{id}).
+def update_shop_fee(id, shop_fee_config:)
+  patch("/shop_fees/#{id}", { shop_fee_config: shop_fee_config })
+end
 # Fetches show_statement.
 def show_statement(id)
   get("/statements/#{id}")
@@ -759,6 +780,25 @@ end
 # Runs create_store_credits_void (POST /store_credits/{store_credit_id}/voids).
 def create_store_credits_void(store_credit_id)
   post("/store_credits/#{store_credit_id}/voids")
+end
+# Lists list_sub_statuses resources (paginated).
+# @return [Wenmar::Paginator]
+def list_sub_statuses()
+  get("/sub_statuses")
+end
+
+# Fetches all sub_statuses, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_sub_statuses()
+  paginator_to_a(list_sub_statuses(), 1000)
+end
+# Runs create_sub_statuse (POST /sub_statuses).
+def create_sub_statuse(sub_status_type:)
+  post("/sub_statuses", { sub_status_type: sub_status_type })
+end
+# Runs update_sub_statuse (PATCH /sub_statuses/{id}).
+def update_sub_statuse(id, sub_status_type:)
+  patch("/sub_statuses/#{id}", { sub_status_type: sub_status_type })
 end
 # Lists list_sublet_packages resources (paginated).
 # @return [Wenmar::Paginator]
@@ -816,14 +856,6 @@ end
 # Runs update_team_permission_group (PATCH /team/permission_groups/{id}).
 def update_team_permission_group(id, permission_group:)
   patch("/team/permission_groups/#{id}", { permission_group: permission_group })
-end
-# Runs create_time_entrie (POST /time_entries).
-def create_time_entrie(type:, work_order_service_id:)
-  post("/time_entries", { type: type, work_order_service_id: work_order_service_id })
-end
-# Runs update_time_entrie (PATCH /time_entries/{id}).
-def update_time_entrie(id, status:)
-  patch("/time_entries/#{id}", { status: status })
 end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1013,10 +1045,6 @@ end
 # @return [Array<Hash>]
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
-end
-# Deletes delete_voice_command.
-def delete_voice_command(id)
-  delete("/voice_commands/#{id}")
 end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
