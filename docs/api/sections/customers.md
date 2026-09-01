@@ -788,10 +788,10 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 ## Merge customer
 
 ```
-POST /customers/{id}/merge
+POST /customers/{id}/merges
 ```
 
-Perform merge
+Create
 
 | Param | Type | Required |
 |---|---|---|
@@ -1151,11 +1151,15 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `updated_at` | string | Yes |
 | `closed_at` | any | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | integer | Yes |
+| `service_advisor_id` | any | Yes |
 | `assigned_technician_id` | any | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
+| `payer_customer` | object | No |
 | `vehicle` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
@@ -1168,7 +1172,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `vehicle_arrived_at` | string | Yes |
 | `ready_for_pickup_at` | any | Yes |
 | `completed_at` | any | Yes |
 | `declined_at` | any | Yes |
@@ -1189,21 +1192,28 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `return_method_notes` | any | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
+| `customer_visit_count` | integer | Yes |
+| `customer_total_spend_cents` | integer | Yes |
+| `average_ticket_cents` | integer | Yes |
+| `activity_total` | integer | Yes |
+| `recent_activities` | array of any | Yes |
 | `services_url` | string | Yes |
 | `payments_url` | string | Yes |
 | `wip_url` | string | Yes |
 | `inspection_url` | string | Yes |
 | `parts_url` | string | Yes |
 | `concerns_url` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
 
 `customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`payer_customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -1248,7 +1258,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `phones_attributes` | array of object | No |
 | `first_name` | string | No |
 | `last_name` | string | No |
 | `company_name` | string | No |
@@ -1261,6 +1270,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `discount_percent` | string | No |
 | `po_required` | boolean | No |
 | `emails_attributes` | array of object | No |
+| `phones_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
 
 ---

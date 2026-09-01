@@ -24,7 +24,24 @@ module EnrichSpec
     "get /vehicles/check_duplicate"  => "check_vehicle_duplicate",
     "get /customers/check_duplicate" => "check_customer_duplicate",
     # seed_defaults returns a {created, message} summary, not a ServiceCategory.
-    "post /service_categories/seed_defaults" => "seed_defaults_service_categories"
+    "post /service_categories/seed_defaults" => "seed_defaults_service_categories",
+    # Shipped operationIds (0.4.1) kept stable across the 2026-08-31 path
+    # renames (merge/transfer pluralized; lifecycle flattened) + semantic
+    # names for new surface (close_zero, payment AR send/reverse).
+    "post /customers/{id}/merges"                             => "merge_customer",
+    "post /vehicles/{id}/merges"                              => "merge_vehicle",
+    "post /vehicles/{id}/transfers"                           => "transfer_vehicle",
+    "patch /work_orders/{id}/close"                           => "close_work_order",
+    "patch /work_orders/{id}/close_as_paid"                   => "close_work_order_as_paid",
+    "patch /work_orders/{id}/close_zero"                      => "close_work_order_zero",
+    "patch /work_orders/{id}/decline_all"                     => "decline_all_work_order_services",
+    "patch /work_orders/{id}/reopen"                           => "reopen_work_order",
+    "patch /work_orders/{id}/return_to_board"                 => "return_work_order_to_board",
+    "patch /work_orders/{id}/save_for_later"                  => "save_work_order_for_later",
+    "get /work_orders/{id}/service_history"                   => "show_work_order_service_history",
+    "get /work_orders/{id}/declined_services"                 => "show_work_order_declined_services",
+    "post /work_orders/{work_order_id}/payments/send_to_ar"   => "send_work_order_payment_to_ar",
+    "delete /work_orders/{work_order_id}/payments/reverse_ar" => "reverse_work_order_payment_ar"
   }.freeze
 
   # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
@@ -47,10 +64,7 @@ module EnrichSpec
     "get /work_orders/{work_order_id}/parts"            => "show_work_order_parts",
     "get /work_orders/{work_order_id}/payments"          => "show_work_order_payments",
     "post /work_orders/{work_order_id}/payments"         => "create_work_order_payment",
-    # Full CRUD expansion (2026-08-28): merge/transfer, tags, lookup/prefill
-    "post /customers/{id}/merge"                          => "merge_customer",
-    "patch /vehicles/{id}/transfer"                       => "transfer_vehicle",
-    "post /vehicles/{id}/merge"                           => "merge_vehicle",
+    # Full CRUD expansion (2026-08-28): tags, lookup/prefill
     "get /settings/tags"                                  => "list_tags",
     "patch /settings/tags"                                => "update_tags",
     "get /customers/lookup"                               => "lookup_customer",
@@ -59,25 +73,19 @@ module EnrichSpec
     "get /customers/{customer_id}/vehicles"               => "list_customers_vehicles",
     "get /customers/{customer_id}/work_orders"            => "list_customers_work_orders",
     "get /vehicles/{vehicle_id}/work_orders"              => "list_vehicles_work_orders",
-    # Service Categories custom actions (2026-08-29): deactivate/reactivate/
-    # move_up/move_down are member actions; seed_defaults is a collection action.
-    "patch /service_categories/{id}/deactivate"           => "deactivate_service_category",
-    "patch /service_categories/{id}/reactivate"           => "reactivate_service_category",
-    "patch /service_categories/{id}/move_up"               => "move_up_service_category",
-    "patch /service_categories/{id}/move_down"             => "move_down_service_category",
-    # Work order summary sub-pages (2026-08-29): flattened out of /summary/*
-    "get /work_orders/{work_order_id}/service_history"     => "show_work_order_service_history",
-    "get /work_orders/{work_order_id}/declined_services"    => "show_work_order_declined_services",
-    # Lifecycle + authorization endpoints (synced 2026-08-29)
+    # Authorization endpoints (synced 2026-08-29; paths unchanged 2026-08-31)
     "post /work_orders/{work_order_id}/authorization"                => "create_work_order_authorization",
     "post /work_orders/{work_order_id}/authorization/update_decisions" => "update_work_order_authorization_decisions",
-    "patch /work_orders/{work_order_id}/lifecycle/close"              => "close_work_order",
-    "patch /work_orders/{work_order_id}/lifecycle/close_as_paid"      => "close_work_order_as_paid",
-    "patch /work_orders/{work_order_id}/lifecycle/decline_all"        => "decline_all_work_order_services",
-    "patch /work_orders/{work_order_id}/lifecycle/reopen"             => "reopen_work_order",
-    "patch /work_orders/{work_order_id}/lifecycle/return_to_board"    => "return_work_order_to_board",
-    "patch /work_orders/{work_order_id}/lifecycle/save_for_later"     => "save_work_order_for_later",
-    "patch /work_orders/{work_order_id}/lifecycle/stage_transition"   => "stage_transition_work_order"
+    # Work order service line-item sub-actions (synced 2026-08-31): the
+    # auto-derived id for these deeply-nested paths would all collapse to
+    # "patch_work_orders_service_line_items", so pin stable, distinct ids.
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/add_to_inventory" => "add_work_order_service_line_item_to_inventory",
+    "post /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/duplicate"          => "duplicate_work_order_service_line_item",
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull"              => "pull_work_order_service_line_item",
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/refresh_price"     => "refresh_work_order_service_line_item_price",
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull"         => "undo_pull_work_order_service_line_item",
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return"       => "undo_return_work_order_service_line_item",
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status" => "update_work_order_service_line_item_part_status"
   }.freeze
 
   def self.call(input)
@@ -154,9 +162,13 @@ module EnrichSpec
       nested = segments[2]
       nested_singular = nested.chomp("s")
       # Deeper nesting (e.g. .../vehicles/{vehicle_id}/history) appends the
-      # final segment to keep operationIds unique.
+      # final action segment to keep operationIds unique. Use the last
+      # non-path-param segment so sub-actions under a nested collection
+      # (e.g. .../line_items/{id}/pull) don't all collapse to the collection
+      # name. Falls back to segments[4] when the path ends in a param.
       if segments.length >= 5
-        return "#{method}_#{resource}_#{nested_singular}_#{segments[4]}"
+        action = segments.reverse.find { |s| !s.start_with?("{") }
+        return "#{method}_#{resource}_#{nested_singular}_#{action || segments[4]}"
       end
       return "#{method}_#{resource}_#{nested_singular}"
     end

@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "wenmar"
-  spec.version       = "0.4.1"
+  spec.version       = "0.4.2"
   spec.summary       = "Ruby SDK for the Wenmar Pro API"
   spec.description   = "Idiomatic Ruby client for the Wenmar Pro automotive shop management API."
   spec.authors       = ["Ben D'Angelo"]

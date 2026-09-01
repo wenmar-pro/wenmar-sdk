@@ -48,6 +48,41 @@ List all vendors, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors.json
 ```
 
+## Create vendor
+
+```
+POST /vendors
+```
+
+Create a vendor.
+
+**Response 201** — [Vendor](#vendor-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/vendors.json
+```
+
+## Delete vendor
+
+```
+DELETE /vendors/{id}
+```
+
+Delete a vendor by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/<id>.json
+```
+
 ## Show vendor
 
 ```
@@ -97,6 +132,91 @@ Show a vendor by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/<id>.json
 ```
 
+## Update vendor
+
+```
+PATCH /vendors/{id}
+```
+
+Update a vendor by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200** — [Vendor](#vendor-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+```
+
+## Get vendors purchase order
+
+```
+GET /vendors/{vendor_id}/purchase_orders
+```
+
+Index
+
+| Param | Type | Required |
+|---|---|---|
+| `vendor_id` | integer | Yes |
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `po_number` | integer | Yes |
+| `status` | string | Yes |
+| `order_method` | string | Yes |
+| `payment_method` | string | Yes |
+| `fulfillment_method` | string | Yes |
+| `ordered_at` | string | Yes |
+| `received_at` | any | Yes |
+| `payment_due_at` | any | Yes |
+| `tracking_number` | string | Yes |
+| `notes` | string | Yes |
+| `freight_cost_cents` | integer | Yes |
+| `freight_cost_currency` | string | Yes |
+| `total_cents` | integer | Yes |
+| `subtotal_cents` | integer | Yes |
+| `core_charges_cents` | integer | Yes |
+| `line_items_count` | integer | Yes |
+| `vendor` | object | Yes |
+| `work_order` | object | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`vendor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `number` | integer | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/{vendor_id}/purchase_orders.json
+```
+
 ---
 
 ### Vendor schema {#vendor-schema}
@@ -131,6 +251,21 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
+### CreateVendorRequest schema {#createvendorrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vendor` | object | Yes |
+
+`vendor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+| `vendor_type` | string | Yes |
+| `payment_terms` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -140,4 +275,17 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### UpdateVendorRequest schema {#updatevendorrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vendor` | object | Yes |
+
+`vendor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
 

@@ -557,10 +557,10 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 ## Merge vehicle
 
 ```
-POST /vehicles/{id}/merge
+POST /vehicles/{id}/merges
 ```
 
-Perform merge
+Create
 
 | Param | Type | Required |
 |---|---|---|
@@ -687,73 +687,26 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 ## Transfer vehicle
 
 ```
-PATCH /vehicles/{id}/transfer
+POST /vehicles/{id}/transfers
 ```
 
-Perform transfer
+Create
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 201**
 
 | Field | Type | Required |
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `submodel` | any | Yes |
-| `body_style` | any | Yes |
-| `engine` | any | Yes |
-| `vin` | string | Yes |
-| `license_plate` | string | Yes |
-| `license_plate_state` | string | Yes |
-| `license_plate_country` | string | Yes |
-| `drivetrain` | any | Yes |
-| `transmission` | any | Yes |
-| `color` | any | Yes |
-| `vehicle_type` | string | Yes |
-| `unit_number` | any | Yes |
-| `fleet_identifier` | any | Yes |
-| `production_date` | any | Yes |
-| `annual_safety_expires_at` | any | Yes |
-| `notes` | any | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `last_serviced_at` | any | Yes |
-| `lifetime_revenue_cents` | integer | Yes |
-| `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
-
-`odometer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `reading` | any | Yes |
-| `unit` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+| `vehicle_id` | integer | Yes |
+| `from_customer_id` | integer | Yes |
+| `to_customer_id` | integer | Yes |
+| `status` | string | Yes |
+| `mode` | string | Yes |
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -812,7 +765,7 @@ Perform transfer
 ```
 
 ```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
 ```
 
@@ -918,11 +871,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
 | `customer_id` | integer | Yes |
 | `vin` | string | No |
+| `year` | integer | Yes |
+| `make` | string | Yes |
+| `model` | string | Yes |
 | `submodel` | string | No |
 | `body_style` | string | No |
 | `engine` | string | No |
@@ -1001,11 +954,15 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `updated_at` | string | Yes |
 | `closed_at` | any | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | integer | Yes |
+| `service_advisor_id` | any | Yes |
 | `assigned_technician_id` | any | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
+| `payer_customer` | object | No |
 | `vehicle` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
@@ -1018,7 +975,6 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `vehicle_arrived_at` | string | Yes |
 | `ready_for_pickup_at` | any | Yes |
 | `completed_at` | any | Yes |
 | `declined_at` | any | Yes |
@@ -1039,21 +995,28 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `return_method_notes` | any | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
+| `customer_visit_count` | integer | Yes |
+| `customer_total_spend_cents` | integer | Yes |
+| `average_ticket_cents` | integer | Yes |
+| `activity_total` | integer | Yes |
+| `recent_activities` | array of any | Yes |
 | `services_url` | string | Yes |
 | `payments_url` | string | Yes |
 | `wip_url` | string | Yes |
 | `inspection_url` | string | Yes |
 | `parts_url` | string | Yes |
 | `concerns_url` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
 
 `customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`payer_customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |

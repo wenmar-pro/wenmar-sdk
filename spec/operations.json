@@ -2,44 +2,100 @@
   "version": "2026-08-30",
   "source": "spec/openapi.enriched.yaml",
   "schemas": [
+    "AddWorkOrderServiceLineItemToInventoryRequest",
     "CloseWorkOrderAsPaidRequest",
     "CloseWorkOrderRequest",
+    "CloseWorkOrderZeroRequest",
+    "CreateConversationRequest",
+    "CreateCounterSaleRequest",
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
     "CreateDriverRequest",
+    "CreateExpenseRequest",
+    "CreateNotificationRequest",
+    "CreatePackageRequest",
     "CreateServiceCategoryRequest",
+    "CreateSubletPackageRequest",
+    "CreateTireRequest",
+    "CreateTireStorageSlotRequest",
     "CreateVehicleRequest",
     "CreateVehicleTagRequest",
+    "CreateVendorRequest",
     "CreateWorkOrderAuthorizationRequest",
     "CreateWorkOrderPaymentRequest",
     "CreateWorkOrderRequest",
     "Customer",
-    "DeactivateServiceCategoryRequest",
     "DeclineAllWorkOrderServicesRequest",
     "Driver",
+    "DuplicateWorkOrderServiceLineItemRequest",
     "Error",
     "MergeCustomerRequest",
     "MergeVehicleRequest",
-    "MoveDownServiceCategoryRequest",
-    "MoveUpServiceCategoryRequest",
-    "ReactivateServiceCategoryRequest",
+    "PatchWorkOrdersPostToAccountRequest",
+    "PatchWorkOrdersSendEstimateRequest",
+    "PatchWorkOrdersSendInvoiceSummaryRequest",
+    "PatchWorkOrdersSendReminderRequest",
+    "PatchWorkOrdersServiceAcknowledgePartsRequest",
+    "PatchWorkOrdersServiceAdjustTimeRequest",
+    "PatchWorkOrdersServiceApplyDiscountRequest",
+    "PatchWorkOrdersServiceCompleteServiceRequest",
+    "PatchWorkOrdersServiceLineItemsRequest",
+    "PatchWorkOrdersServicePauseRequest",
+    "PatchWorkOrdersServicePublishRequest",
+    "PatchWorkOrdersServiceRequest",
+    "PatchWorkOrdersServiceResetCompletionRequest",
+    "PatchWorkOrdersServiceReviveRequest",
+    "PatchWorkOrdersServiceStartRequest",
+    "PatchWorkOrdersServiceToggleLaborCompletionRequest",
+    "PatchWorkOrdersServiceToggleLaborTaxRequest",
+    "PatchWorkOrdersServiceUpdateCategoryRequest",
+    "PatchWorkOrdersServiceUpdatePricingModeRequest",
+    "PatchWorkOrdersServiceUpdateServiceTechnicianRequest",
+    "PatchWorkOrdersToggleWaitingForCustomerRequest",
+    "PostConversationsCustomerLinkRequest",
+    "PostConversationsIgnoreRequest",
+    "PostConversationsMessageRequest",
+    "PostConversationsMessageResendsRequest",
+    "PostPackagesDuplicateRequest",
+    "PostTireStorageSlotsCheckOutRequest",
+    "PostWorkOrdersCourtesyCarAssignmentRequest",
+    "PostWorkOrdersLabelRequest",
+    "PostWorkOrdersServiceAddLineItemRequest",
+    "PostWorkOrdersServiceAddPackageRequest",
+    "PostWorkOrdersServiceDuplicateRequest",
+    "PostWorkOrdersServiceLineItemsRequest",
+    "PostWorkOrdersServiceRequest",
+    "PostWorkOrdersServiceUnauthorizeRequest",
+    "PullWorkOrderServiceLineItemRequest",
+    "RefreshWorkOrderServiceLineItemPriceRequest",
     "ReopenWorkOrderRequest",
     "ReturnWorkOrderToBoardRequest",
     "SaveWorkOrderForLaterRequest",
     "SeedDefaultsServiceCategoriesRequest",
+    "SendWorkOrderPaymentToArRequest",
     "ServiceCategory",
-    "StageTransitionWorkOrderRequest",
     "Statement",
     "TransferVehicleRequest",
+    "UndoPullWorkOrderServiceLineItemRequest",
+    "UndoReturnWorkOrderServiceLineItemRequest",
+    "UpdateConversationRequest",
+    "UpdateCounterSaleRequest",
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
     "UpdateDriverRequest",
+    "UpdateExpenseRequest",
+    "UpdateNotificationRequest",
+    "UpdatePackageRequest",
     "UpdateServiceCategoryRequest",
+    "UpdateSubletPackageRequest",
     "UpdateTagsRequest",
+    "UpdateTireRequest",
     "UpdateVehicleRequest",
     "UpdateVehicleTagRequest",
+    "UpdateVendorRequest",
     "UpdateWorkOrderAuthorizationDecisionsRequest",
     "UpdateWorkOrderRequest",
+    "UpdateWorkOrderServiceLineItemPartStatusRequest",
     "Vehicle",
     "Vendor",
     "WorkOrder"
@@ -58,6 +114,237 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "list_conversations",
+      "method": "get",
+      "path": "/conversations",
+      "tag": "conversations",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_conversation",
+      "method": "post",
+      "path": "/conversations/bulk_mark_read",
+      "tag": "conversations",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateConversationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "bulk_mark_read"
+    },
+    {
+      "id": "post_conversations_customer_link",
+      "method": "post",
+      "path": "/conversations/{conversation_id}/customer_links",
+      "tag": "conversations",
+      "pathParams": [
+        "conversation_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostConversationsCustomerLinkRequest",
+      "requestShape": {
+        "wrapper": "customer_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "post_conversations_ignore",
+      "method": "post",
+      "path": "/conversations/{conversation_id}/ignores",
+      "tag": "conversations",
+      "pathParams": [
+        "conversation_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostConversationsIgnoreRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "get_conversations_message",
+      "method": "get",
+      "path": "/conversations/{conversation_id}/messages",
+      "tag": "conversations",
+      "pathParams": [
+        "conversation_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "post_conversations_message",
+      "method": "post",
+      "path": "/conversations/{conversation_id}/messages",
+      "tag": "conversations",
+      "pathParams": [
+        "conversation_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostConversationsMessageRequest",
+      "requestShape": {
+        "wrapper": "message"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "post_conversations_message_resends",
+      "method": "post",
+      "path": "/conversations/{conversation_id}/messages/{id}/resends",
+      "tag": "conversations",
+      "pathParams": [
+        "conversation_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostConversationsMessageResendsRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_conversation",
+      "method": "get",
+      "path": "/conversations/{id}",
+      "tag": "conversations",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_conversation",
+      "method": "patch",
+      "path": "/conversations/{id}",
+      "tag": "conversations",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateConversationRequest",
+      "requestShape": {
+        "wrapper": "status"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_counter_sales",
+      "method": "get",
+      "path": "/counter_sales",
+      "tag": "counter_sales",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_counter_sale",
+      "method": "post",
+      "path": "/counter_sales",
+      "tag": "counter_sales",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateCounterSaleRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_counter_sale",
+      "method": "get",
+      "path": "/counter_sales/{id}",
+      "tag": "counter_sales",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_counter_sale",
+      "method": "patch",
+      "path": "/counter_sales/{id}",
+      "tag": "counter_sales",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateCounterSaleRequest",
+      "requestShape": {
+        "wrapper": "counter_sale"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_courtesy_cars",
+      "method": "get",
+      "path": "/courtesy_cars",
+      "tag": "courtesy_cars",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
     },
     {
       "id": "list_customer_tags",
@@ -473,7 +760,7 @@
     {
       "id": "merge_customer",
       "method": "post",
-      "path": "/customers/{id}/merge",
+      "path": "/customers/{id}/merges",
       "tag": "customers",
       "pathParams": [
         "id"
@@ -486,7 +773,85 @@
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "perform_merge"
+      "summary": "create"
+    },
+    {
+      "id": "list_expenses",
+      "method": "get",
+      "path": "/expenses",
+      "tag": "expenses",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_expense",
+      "method": "post",
+      "path": "/expenses",
+      "tag": "expenses",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateExpenseRequest",
+      "requestShape": {
+        "wrapper": "expense"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_expense",
+      "method": "delete",
+      "path": "/expenses/{id}",
+      "tag": "expenses",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_expense",
+      "method": "patch",
+      "path": "/expenses/{id}",
+      "tag": "expenses",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateExpenseRequest",
+      "requestShape": {
+        "wrapper": "expense"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_fleets",
+      "method": "get",
+      "path": "/fleets",
+      "tag": "fleets",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
     },
     {
       "id": "show_location",
@@ -503,6 +868,136 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "list_notifications",
+      "method": "get",
+      "path": "/notifications",
+      "tag": "notifications",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_notification",
+      "method": "post",
+      "path": "/notifications/bulk_mark_read",
+      "tag": "notifications",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateNotificationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "bulk_mark_read"
+    },
+    {
+      "id": "show_notification",
+      "method": "get",
+      "path": "/notifications/{id}",
+      "tag": "notifications",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_notification",
+      "method": "patch",
+      "path": "/notifications/{id}",
+      "tag": "notifications",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateNotificationRequest",
+      "requestShape": {
+        "wrapper": "read"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "list_packages",
+      "method": "get",
+      "path": "/packages",
+      "tag": "packages",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_package",
+      "method": "post",
+      "path": "/packages",
+      "tag": "packages",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreatePackageRequest",
+      "requestShape": {
+        "wrapper": "package"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_package",
+      "method": "patch",
+      "path": "/packages/{id}",
+      "tag": "packages",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdatePackageRequest",
+      "requestShape": {
+        "wrapper": "package"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "post_packages_duplicate",
+      "method": "post",
+      "path": "/packages/{id}/duplicate",
+      "tag": "packages",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostPackagesDuplicateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
     },
     {
       "id": "list_service_categories",
@@ -585,78 +1080,6 @@
       "summary": "update"
     },
     {
-      "id": "deactivate_service_category",
-      "method": "patch",
-      "path": "/service_categories/{id}/deactivate",
-      "tag": "service_categories",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "DeactivateServiceCategoryRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "deactivate"
-    },
-    {
-      "id": "move_down_service_category",
-      "method": "patch",
-      "path": "/service_categories/{id}/move_down",
-      "tag": "service_categories",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "MoveDownServiceCategoryRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "move_down"
-    },
-    {
-      "id": "move_up_service_category",
-      "method": "patch",
-      "path": "/service_categories/{id}/move_up",
-      "tag": "service_categories",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "MoveUpServiceCategoryRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "move_up"
-    },
-    {
-      "id": "reactivate_service_category",
-      "method": "patch",
-      "path": "/service_categories/{id}/reactivate",
-      "tag": "service_categories",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "ReactivateServiceCategoryRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "reactivate"
-    },
-    {
       "id": "list_tags",
       "method": "get",
       "path": "/settings/tags",
@@ -703,6 +1126,70 @@
       "summary": "show"
     },
     {
+      "id": "list_sublet_packages",
+      "method": "get",
+      "path": "/sublet_packages",
+      "tag": "sublet_packages",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_sublet_package",
+      "method": "post",
+      "path": "/sublet_packages",
+      "tag": "sublet_packages",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateSubletPackageRequest",
+      "requestShape": {
+        "wrapper": "sublet_package"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_sublet_package",
+      "method": "delete",
+      "path": "/sublet_packages/{id}",
+      "tag": "sublet_packages",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_sublet_package",
+      "method": "patch",
+      "path": "/sublet_packages/{id}",
+      "tag": "sublet_packages",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateSubletPackageRequest",
+      "requestShape": {
+        "wrapper": "sublet_package"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "list_team",
       "method": "get",
       "path": "/team/members",
@@ -715,6 +1202,150 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "index"
+    },
+    {
+      "id": "list_tire_storage_slots",
+      "method": "get",
+      "path": "/tire_storage_slots",
+      "tag": "tire_storage_slots",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_tire_storage_slot",
+      "method": "post",
+      "path": "/tire_storage_slots",
+      "tag": "tire_storage_slots",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateTireStorageSlotRequest",
+      "requestShape": {
+        "wrapper": "tire_storage_slot"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_tire_storage_slot",
+      "method": "get",
+      "path": "/tire_storage_slots/{id}",
+      "tag": "tire_storage_slots",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "post_tire_storage_slots_check_out",
+      "method": "post",
+      "path": "/tire_storage_slots/{tire_storage_slot_id}/check_outs",
+      "tag": "tire_storage_slots",
+      "pathParams": [
+        "tire_storage_slot_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostTireStorageSlotsCheckOutRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "list_tires",
+      "method": "get",
+      "path": "/tires",
+      "tag": "tires",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_tire",
+      "method": "post",
+      "path": "/tires",
+      "tag": "tires",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateTireRequest",
+      "requestShape": {
+        "wrapper": "tire"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_tire",
+      "method": "delete",
+      "path": "/tires/{id}",
+      "tag": "tires",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_tire",
+      "method": "get",
+      "path": "/tires/{id}",
+      "tag": "tires",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_tire",
+      "method": "patch",
+      "path": "/tires/{id}",
+      "tag": "tires",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateTireRequest",
+      "requestShape": {
+        "wrapper": "tire"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_vehicle_tags",
@@ -978,7 +1609,7 @@
     {
       "id": "merge_vehicle",
       "method": "post",
-      "path": "/vehicles/{id}/merge",
+      "path": "/vehicles/{id}/merges",
       "tag": "vehicles",
       "pathParams": [
         "id"
@@ -991,12 +1622,12 @@
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "perform_merge"
+      "summary": "create"
     },
     {
       "id": "transfer_vehicle",
-      "method": "patch",
-      "path": "/vehicles/{id}/transfer",
+      "method": "post",
+      "path": "/vehicles/{id}/transfers",
       "tag": "vehicles",
       "pathParams": [
         "id"
@@ -1012,7 +1643,7 @@
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "perform_transfer"
+      "summary": "create"
     },
     {
       "id": "list_vehicles_work_orders",
@@ -1045,6 +1676,38 @@
       "summary": "index"
     },
     {
+      "id": "create_vendor",
+      "method": "post",
+      "path": "/vendors",
+      "tag": "vendors",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateVendorRequest",
+      "requestShape": {
+        "wrapper": "vendor"
+      },
+      "paginated": false,
+      "responseSchema": "Vendor",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_vendor",
+      "method": "delete",
+      "path": "/vendors/{id}",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "show_vendor",
       "method": "get",
       "path": "/vendors/{id}",
@@ -1059,6 +1722,40 @@
       "responseSchema": "Vendor",
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "update_vendor",
+      "method": "patch",
+      "path": "/vendors/{id}",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateVendorRequest",
+      "requestShape": {
+        "wrapper": "vendor"
+      },
+      "paginated": false,
+      "responseSchema": "Vendor",
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "get_vendors_purchase_order",
+      "method": "get",
+      "path": "/vendors/{vendor_id}/purchase_orders",
+      "tag": "vendors",
+      "pathParams": [
+        "vendor_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
     },
     {
       "id": "list_work_orders",
@@ -1141,12 +1838,105 @@
       "summary": "update"
     },
     {
-      "id": "show_work_order_declined_services",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/declined_services",
+      "id": "close_work_order",
+      "method": "patch",
+      "path": "/work_orders/{id}/close",
       "tag": "work_orders",
       "pathParams": [
-        "work_order_id"
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CloseWorkOrderRequest",
+      "requestShape": {
+        "flat": [
+          "closure_type",
+          "closure_reason"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "close"
+    },
+    {
+      "id": "close_work_order_as_paid",
+      "method": "patch",
+      "path": "/work_orders/{id}/close_as_paid",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CloseWorkOrderAsPaidRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "close_as_paid"
+    },
+    {
+      "id": "close_work_order_zero",
+      "method": "patch",
+      "path": "/work_orders/{id}/close_zero",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CloseWorkOrderZeroRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "close_zero"
+    },
+    {
+      "id": "post_work_orders_courtesy_car_assignment",
+      "method": "post",
+      "path": "/work_orders/{id}/courtesy_car_assignment",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersCourtesyCarAssignmentRequest",
+      "requestShape": {
+        "wrapper": "vehicle_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "decline_all_work_order_services",
+      "method": "patch",
+      "path": "/work_orders/{id}/decline_all",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "DeclineAllWorkOrderServicesRequest",
+      "requestShape": {
+        "wrapper": "decline_reason"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "decline_all"
+    },
+    {
+      "id": "show_work_order_declined_services",
+      "method": "get",
+      "path": "/work_orders/{id}/declined_services",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
       ],
       "queryParams": [],
       "requestSchema": null,
@@ -1157,12 +1947,154 @@
       "summary": "show"
     },
     {
-      "id": "show_work_order_service_history",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/service_history",
+      "id": "delete_work_orders_hard_delete",
+      "method": "delete",
+      "path": "/work_orders/{id}/hard_delete",
       "tag": "work_orders",
       "pathParams": [
-        "work_order_id"
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "hard_delete"
+    },
+    {
+      "id": "patch_work_orders_post_to_account",
+      "method": "patch",
+      "path": "/work_orders/{id}/post_to_account",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersPostToAccountRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "post_to_account"
+    },
+    {
+      "id": "reopen_work_order",
+      "method": "patch",
+      "path": "/work_orders/{id}/reopen",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReopenWorkOrderRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reopen"
+    },
+    {
+      "id": "return_work_order_to_board",
+      "method": "patch",
+      "path": "/work_orders/{id}/return_to_board",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReturnWorkOrderToBoardRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "return_to_board"
+    },
+    {
+      "id": "save_work_order_for_later",
+      "method": "patch",
+      "path": "/work_orders/{id}/save_for_later",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "SaveWorkOrderForLaterRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "save_for_later"
+    },
+    {
+      "id": "patch_work_orders_send_estimate",
+      "method": "patch",
+      "path": "/work_orders/{id}/send_estimate",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersSendEstimateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_estimate"
+    },
+    {
+      "id": "patch_work_orders_send_invoice_summary",
+      "method": "patch",
+      "path": "/work_orders/{id}/send_invoice_summary",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersSendInvoiceSummaryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_invoice_summary"
+    },
+    {
+      "id": "patch_work_orders_send_reminder",
+      "method": "patch",
+      "path": "/work_orders/{id}/send_reminder",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersSendReminderRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_reminder"
+    },
+    {
+      "id": "show_work_order_service_history",
+      "method": "get",
+      "path": "/work_orders/{id}/service_history",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
       ],
       "queryParams": [],
       "requestSchema": null,
@@ -1171,6 +2103,24 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "patch_work_orders_toggle_waiting_for_customer",
+      "method": "patch",
+      "path": "/work_orders/{id}/toggle_waiting_for_customer",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersToggleWaitingForCustomerRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "toggle_waiting_for_customer"
     },
     {
       "id": "create_work_order_authorization",
@@ -1213,6 +2163,22 @@
       "summary": "update_decisions"
     },
     {
+      "id": "get_work_orders_concern",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/concerns",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
       "id": "show_work_order_estimate",
       "method": "get",
       "path": "/work_orders/{work_order_id}/estimate",
@@ -1245,133 +2211,39 @@
       "summary": "show"
     },
     {
-      "id": "close_work_order",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/close",
+      "id": "post_work_orders_label",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/labels",
       "tag": "work_orders",
       "pathParams": [
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": "CloseWorkOrderRequest",
+      "requestSchema": "PostWorkOrdersLabelRequest",
       "requestShape": {
-        "flat": [
-          "closure_type",
-          "closure_reason"
-        ]
+        "wrapper": "label_id"
       },
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "close"
+      "summary": "create"
     },
     {
-      "id": "close_work_order_as_paid",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/close_as_paid",
+      "id": "delete_work_orders_label",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/labels/{id}",
       "tag": "work_orders",
       "pathParams": [
-        "work_order_id"
+        "work_order_id",
+        "id"
       ],
       "queryParams": [],
-      "requestSchema": "CloseWorkOrderAsPaidRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "close_as_paid"
-    },
-    {
-      "id": "decline_all_work_order_services",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/decline_all",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "queryParams": [],
-      "requestSchema": "DeclineAllWorkOrderServicesRequest",
-      "requestShape": {
-        "wrapper": "decline_reason"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "decline_all"
-    },
-    {
-      "id": "reopen_work_order",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/reopen",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "queryParams": [],
-      "requestSchema": "ReopenWorkOrderRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "reopen"
-    },
-    {
-      "id": "return_work_order_to_board",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/return_to_board",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "queryParams": [],
-      "requestSchema": "ReturnWorkOrderToBoardRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "return_to_board"
-    },
-    {
-      "id": "save_work_order_for_later",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/save_for_later",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "queryParams": [],
-      "requestSchema": "SaveWorkOrderForLaterRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "save_for_later"
-    },
-    {
-      "id": "stage_transition_work_order",
-      "method": "patch",
-      "path": "/work_orders/{work_order_id}/lifecycle/stage_transition",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "queryParams": [],
-      "requestSchema": "StageTransitionWorkOrderRequest",
-      "requestShape": {
-        "wrapper": "target"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "stage_transition"
+      "summary": "destroy"
     },
     {
       "id": "show_work_order_parts",
@@ -1422,6 +2294,659 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "reverse_work_order_payment_ar",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/payments/reverse_ar",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reverse_ar"
+    },
+    {
+      "id": "send_work_order_payment_to_ar",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/payments/send_to_ar",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "SendWorkOrderPaymentToArRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_to_ar"
+    },
+    {
+      "id": "post_work_orders_service",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceRequest",
+      "requestShape": {
+        "flat": [
+          "work_order_service"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_work_orders_service",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/services/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "patch_work_orders_service",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceRequest",
+      "requestShape": {
+        "wrapper": "work_order_service"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "patch_work_orders_service_acknowledge_parts",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/acknowledge_parts",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceAcknowledgePartsRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "acknowledge_parts"
+    },
+    {
+      "id": "post_work_orders_service_add_line_item",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{id}/add_line_item",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceAddLineItemRequest",
+      "requestShape": {
+        "flat": [
+          "item_type",
+          "name",
+          "amount_cents"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "add_line_item"
+    },
+    {
+      "id": "post_work_orders_service_add_package",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{id}/add_package",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceAddPackageRequest",
+      "requestShape": {
+        "wrapper": "package_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "add_package"
+    },
+    {
+      "id": "get_work_orders_service_adjust_time",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/services/{id}/adjust_time",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "adjust_time"
+    },
+    {
+      "id": "patch_work_orders_service_adjust_time",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/adjust_time",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceAdjustTimeRequest",
+      "requestShape": {
+        "flat": [
+          "hours",
+          "minutes"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "adjust_time"
+    },
+    {
+      "id": "patch_work_orders_service_apply_discount",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/apply_discount",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceApplyDiscountRequest",
+      "requestShape": {
+        "wrapper": "discount"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "apply_discount"
+    },
+    {
+      "id": "patch_work_orders_service_complete_service",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/complete_service",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceCompleteServiceRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "complete_service"
+    },
+    {
+      "id": "post_work_orders_service_duplicate",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{id}/duplicate",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceDuplicateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
+    },
+    {
+      "id": "patch_work_orders_service_pause",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/pause",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServicePauseRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "pause"
+    },
+    {
+      "id": "patch_work_orders_service_publish",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/publish",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServicePublishRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "publish"
+    },
+    {
+      "id": "patch_work_orders_service_reset_completion",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/reset_completion",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceResetCompletionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reset_completion"
+    },
+    {
+      "id": "patch_work_orders_service_revive",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/revive",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceReviveRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "revive"
+    },
+    {
+      "id": "patch_work_orders_service_start",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/start",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceStartRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "start"
+    },
+    {
+      "id": "patch_work_orders_service_toggle_labor_completion",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/toggle_labor_completion",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceToggleLaborCompletionRequest",
+      "requestShape": {
+        "wrapper": "line_item_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "toggle_labor_completion"
+    },
+    {
+      "id": "patch_work_orders_service_toggle_labor_tax",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/toggle_labor_tax",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceToggleLaborTaxRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "toggle_labor_tax"
+    },
+    {
+      "id": "post_work_orders_service_unauthorize",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{id}/unauthorize",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceUnauthorizeRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "unauthorize"
+    },
+    {
+      "id": "patch_work_orders_service_update_category",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/update_category",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceUpdateCategoryRequest",
+      "requestShape": {
+        "wrapper": "category_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update_category"
+    },
+    {
+      "id": "patch_work_orders_service_update_pricing_mode",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/update_pricing_mode",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceUpdatePricingModeRequest",
+      "requestShape": {
+        "wrapper": "work_order_service"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update_pricing_mode"
+    },
+    {
+      "id": "patch_work_orders_service_update_service_technician",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{id}/update_service_technician",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceUpdateServiceTechnicianRequest",
+      "requestShape": {
+        "wrapper": "work_order_service"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update_service_technician"
+    },
+    {
+      "id": "post_work_orders_service_line_items",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PostWorkOrdersServiceLineItemsRequest",
+      "requestShape": {
+        "wrapper": "work_order_line_item"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_work_orders_service_line_items",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "patch_work_orders_service_line_items",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PatchWorkOrdersServiceLineItemsRequest",
+      "requestShape": {
+        "wrapper": "work_order_line_item"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "add_work_order_service_line_item_to_inventory",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/add_to_inventory",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "AddWorkOrderServiceLineItemToInventoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "add_to_inventory"
+    },
+    {
+      "id": "duplicate_work_order_service_line_item",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/duplicate",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "DuplicateWorkOrderServiceLineItemRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
+    },
+    {
+      "id": "pull_work_order_service_line_item",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PullWorkOrderServiceLineItemRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "pull"
+    },
+    {
+      "id": "refresh_work_order_service_line_item_price",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/refresh_price",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "RefreshWorkOrderServiceLineItemPriceRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "refresh_price"
+    },
+    {
+      "id": "undo_pull_work_order_service_line_item",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UndoPullWorkOrderServiceLineItemRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "undo_pull"
+    },
+    {
+      "id": "undo_return_work_order_service_line_item",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UndoReturnWorkOrderServiceLineItemRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "undo_return"
+    },
+    {
+      "id": "update_work_order_service_line_item_part_status",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "service_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrderServiceLineItemPartStatusRequest",
+      "requestShape": {
+        "wrapper": "part_status"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update_part_status"
     },
     {
       "id": "show_work_order_wip",

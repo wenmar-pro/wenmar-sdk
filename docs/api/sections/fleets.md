@@ -1,29 +1,39 @@
-# Team
+# Fleets
 
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
-## List team
+## List fleets
 
 ```
-GET /team/members
+GET /fleets
 ```
 
-List all team, paginated via the Link header.
+List all fleets, paginated via the Link header.
 
 **Response 200** — array
 
 | Field | Type | Required |
 |---|---|---|
+| `type` | string | Yes |
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
-| `email` | any | Yes |
-| `role` | string | Yes |
-| `disabled` | boolean | Yes |
-| `locations` | array of object | Yes |
+| `company_name` | string | Yes |
+| `first_name` | string | Yes |
+| `last_name` | string | Yes |
+| `fleet_identifier` | string | Yes |
+| `marketing_opt_in` | boolean | Yes |
+| `tax_exempt` | boolean | Yes |
+| `vehicles_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+| `phones_count` | integer | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `location` | object | No |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -35,7 +45,7 @@ List all team, paginated via the Link header.
 **Response 403** — [Error](#error-schema) error envelope
 
 ```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/team/members.json
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/fleets.json
 ```
 
 ---

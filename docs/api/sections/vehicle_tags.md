@@ -41,7 +41,7 @@ Create a vehicle tag.
 | `name` | string | Yes |
 | `color` | string | Yes |
 | `color_hex` | string | Yes |
-| `color_class` | string | No |
+| `color_class` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \

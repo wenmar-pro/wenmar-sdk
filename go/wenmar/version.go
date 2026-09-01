@@ -1,4 +1,4 @@
 package wenmar
 
 // Version is the SDK version.
-const Version = "0.4.1"
+const Version = "0.4.2"

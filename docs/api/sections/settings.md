@@ -18,8 +18,6 @@ List all tags, paginated via the Link header.
 | `customer_tags` | array of object | Yes |
 | `vehicle_tags` | array of object | Yes |
 
-**Response 404** — no content.
-
 **Example**
 
 ```json
@@ -99,6 +97,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 | Field | Type | Required |
 |---|---|---|
-| `vehicle_tags` | array of object | No |
 | `customer_tags` | array of object | No |
+| `vehicle_tags` | array of object | No |
 
