@@ -48,6 +48,9 @@
     "CreatePaymentsFailureRequest",
     "CreatePermissionGroupRequest",
     "CreateRecentSearcheRequest",
+    "CreateScanLookupRequest",
+    "CreateScanStartedWorkOrderRequest",
+    "CreateScanVehicleRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
     "CreateShopDiscountsDuplicateRequest",
@@ -56,6 +59,7 @@
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
+    "CreateTimeEntrieRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
@@ -151,6 +155,7 @@
     "UpdateSubStatuseRequest",
     "UpdateSubletPackageRequest",
     "UpdateTagsRequest",
+    "UpdateTimeEntrieRequest",
     "UpdateTireRequest",
     "UpdateUserRequest",
     "UpdateVehicleRequest",
@@ -3057,6 +3062,63 @@
       "summary": "show"
     },
     {
+      "id": "create_scan_lookup",
+      "method": "post",
+      "path": "/scan/lookups",
+      "tag": "scan",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateScanLookupRequest",
+      "requestShape": {
+        "flat": [
+          "code",
+          "type"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "lookup"
+    },
+    {
+      "id": "create_scan_started_work_order",
+      "method": "post",
+      "path": "/scan/started_work_orders",
+      "tag": "scan",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateScanStartedWorkOrderRequest",
+      "requestShape": {
+        "flat": [
+          "outcome",
+          "vehicle_id"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "start_ro"
+    },
+    {
+      "id": "create_scan_vehicle",
+      "method": "post",
+      "path": "/scan/vehicles",
+      "tag": "scan",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateScanVehicleRequest",
+      "requestShape": {
+        "flat": [
+          "customer",
+          "vehicle"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create_vehicle_and_start_ro"
+    },
+    {
       "id": "list_search",
       "method": "get",
       "path": "/search",
@@ -3816,6 +3878,43 @@
       "responseSchema": null,
       "responseBody": false,
       "summary": "deactivate"
+    },
+    {
+      "id": "create_time_entrie",
+      "method": "post",
+      "path": "/time_entries",
+      "tag": "time_entries",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateTimeEntrieRequest",
+      "requestShape": {
+        "flat": [
+          "type",
+          "work_order_service_id"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_time_entrie",
+      "method": "patch",
+      "path": "/time_entries/{id}",
+      "tag": "time_entries",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateTimeEntrieRequest",
+      "requestShape": {
+        "wrapper": "status"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_tire_storage_slots",
@@ -4683,6 +4782,22 @@
       "responseSchema": "PurchaseOrder",
       "responseBody": true,
       "summary": "index"
+    },
+    {
+      "id": "delete_voice_command",
+      "method": "delete",
+      "path": "/voice_commands/{id}",
+      "tag": "voice_commands",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "destroy"
     },
     {
       "id": "list_work_orders",

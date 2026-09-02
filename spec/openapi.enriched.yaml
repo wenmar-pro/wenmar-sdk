@@ -13717,6 +13717,145 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/scan/lookups":
+    post:
+      summary: lookup
+      tags:
+      - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateScanLookupRequest"
+      responses:
+        '200':
+          description: POST /scan/lookups -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  outcome:
+                    type: string
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  vehicle_id:
+                    nullable: true
+                    type: integer
+                  customer_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                required:
+                - outcome
+                - work_order_id
+                - vehicle_id
+                - customer_id
+                - appointment_id
+      description: Create a scan lookup.
+      operationId: create_scan_lookup
+      x-internal: true
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/scan/lookups.json
+      x-wenmar-request-schema: CreateScanLookupRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/scan/started_work_orders":
+    post:
+      summary: start_ro
+      tags:
+      - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateScanStartedWorkOrderRequest"
+      responses:
+        '200':
+          description: POST /scan/started_work_orders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  work_order_id:
+                    type: integer
+                required:
+                - status
+                - work_order_id
+      description: Create a scan started work order.
+      operationId: create_scan_started_work_order
+      x-internal: true
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/scan/started_work_orders.json
+      x-wenmar-request-schema: CreateScanStartedWorkOrderRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/scan/vehicles":
+    post:
+      summary: create_vehicle_and_start_ro
+      tags:
+      - scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateScanVehicleRequest"
+      responses:
+        '200':
+          description: POST /scan/vehicles -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  work_order_id:
+                    type: integer
+                required:
+                - status
+                - work_order_id
+      description: Create a scan vehicle.
+      operationId: create_scan_vehicle
+      x-internal: true
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/scan/vehicles.json
+      x-wenmar-request-schema: CreateScanVehicleRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/search":
     get:
       summary: results
@@ -17266,6 +17405,112 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/sublet_packages/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/time_entries":
+    post:
+      summary: create
+      tags:
+      - time_entries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTimeEntrieRequest"
+      responses:
+        '201':
+          description: POST /time_entries -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+        '401':
+          description: POST /time_entries -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /time_entries -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a time entrie.
+      operationId: create_time_entrie
+      x-internal: true
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/time_entries.json
+      x-wenmar-request-schema: CreateTimeEntrieRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/time_entries/{id}":
+    patch:
+      summary: update
+      tags:
+      - time_entries
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateTimeEntrieRequest"
+      responses:
+        '200':
+          description: PATCH /time_entries/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+      description: Update a time entrie by ID.
+      operationId: update_time_entrie
+      x-internal: true
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/time_entries/<id>.json
+      x-wenmar-request-schema: UpdateTimeEntrieRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -22293,6 +22538,55 @@ paths:
       operationId: list_vendors_purchase_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/{vendor_id}/purchase_orders.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/voice_commands/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - voice_commands
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /voice_commands/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+        '404':
+          description: DELETE /voice_commands/{id} -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Delete a voice command by ID.
+      operationId: delete_voice_command
+      x-internal: true
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/voice_commands/<id>.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -31057,6 +31351,61 @@ components:
           - label
       required:
       - recent_search
+    CreateScanLookupRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        type:
+          type: string
+      required:
+      - code
+      - type
+    CreateScanStartedWorkOrderRequest:
+      type: object
+      properties:
+        outcome:
+          type: string
+        vehicle_id:
+          type: integer
+      required:
+      - outcome
+      - vehicle_id
+    CreateScanVehicleRequest:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            phone:
+              type: string
+          required:
+          - first_name
+          - last_name
+          - phone
+        vehicle:
+          type: object
+          properties:
+            vin:
+              type: string
+            year:
+              type: string
+            make:
+              type: string
+            model:
+              type: string
+          required:
+          - vin
+          - year
+          - make
+          - model
+      required:
+      - customer
+      - vehicle
     CreateServiceCategoryRequest:
       type: object
       properties:
@@ -31281,6 +31630,23 @@ components:
           - name
       required:
       - sublet_package
+    CreateTimeEntrieRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        work_order_service_id:
+          type: integer
+      required:
+      - type
+      - work_order_service_id
+    UpdateTimeEntrieRequest:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
     CreateTireStorageSlotRequest:
       type: object
       properties:

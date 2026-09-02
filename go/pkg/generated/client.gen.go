@@ -340,6 +340,33 @@ type CreateRecentSearcheRequest struct {
 	} `json:"recent_search"`
 }
 
+// CreateScanLookupRequest defines model for CreateScanLookupRequest.
+type CreateScanLookupRequest struct {
+	Code string `json:"code"`
+	Type string `json:"type"`
+}
+
+// CreateScanStartedWorkOrderRequest defines model for CreateScanStartedWorkOrderRequest.
+type CreateScanStartedWorkOrderRequest struct {
+	Outcome   string `json:"outcome"`
+	VehicleId int    `json:"vehicle_id"`
+}
+
+// CreateScanVehicleRequest defines model for CreateScanVehicleRequest.
+type CreateScanVehicleRequest struct {
+	Customer struct {
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+		Phone     string `json:"phone"`
+	} `json:"customer"`
+	Vehicle struct {
+		Make  string `json:"make"`
+		Model string `json:"model"`
+		Vin   string `json:"vin"`
+		Year  string `json:"year"`
+	} `json:"vehicle"`
+}
+
 // CreateServiceCategoryRequest defines model for CreateServiceCategoryRequest.
 type CreateServiceCategoryRequest struct {
 	ServiceCategory struct {
@@ -394,6 +421,12 @@ type CreateSubletPackageRequest struct {
 		Description string `json:"description"`
 		Name        string `json:"name"`
 	} `json:"sublet_package"`
+}
+
+// CreateTimeEntrieRequest defines model for CreateTimeEntrieRequest.
+type CreateTimeEntrieRequest struct {
+	Type               string `json:"type"`
+	WorkOrderServiceId int    `json:"work_order_service_id"`
 }
 
 // CreateTireRequest defines model for CreateTireRequest.
@@ -1285,6 +1318,11 @@ type UpdateTagsRequest struct {
 	} `json:"vehicle_tags,omitempty"`
 }
 
+// UpdateTimeEntrieRequest defines model for UpdateTimeEntrieRequest.
+type UpdateTimeEntrieRequest struct {
+	Status string `json:"status"`
+}
+
 // UpdateTireRequest defines model for UpdateTireRequest.
 type UpdateTireRequest struct {
 	Tire struct {
@@ -2031,6 +2069,15 @@ type CreatePaymentsFailureJSONRequestBody = CreatePaymentsFailureRequest
 // CreateRecentSearcheJSONRequestBody defines body for CreateRecentSearche for application/json ContentType.
 type CreateRecentSearcheJSONRequestBody = CreateRecentSearcheRequest
 
+// CreateScanLookupJSONRequestBody defines body for CreateScanLookup for application/json ContentType.
+type CreateScanLookupJSONRequestBody = CreateScanLookupRequest
+
+// CreateScanStartedWorkOrderJSONRequestBody defines body for CreateScanStartedWorkOrder for application/json ContentType.
+type CreateScanStartedWorkOrderJSONRequestBody = CreateScanStartedWorkOrderRequest
+
+// CreateScanVehicleJSONRequestBody defines body for CreateScanVehicle for application/json ContentType.
+type CreateScanVehicleJSONRequestBody = CreateScanVehicleRequest
+
 // CreateServiceCategoryJSONRequestBody defines body for CreateServiceCategory for application/json ContentType.
 type CreateServiceCategoryJSONRequestBody = CreateServiceCategoryRequest
 
@@ -2081,6 +2128,12 @@ type CreateSubletPackageJSONRequestBody = CreateSubletPackageRequest
 
 // UpdateSubletPackageJSONRequestBody defines body for UpdateSubletPackage for application/json ContentType.
 type UpdateSubletPackageJSONRequestBody = UpdateSubletPackageRequest
+
+// CreateTimeEntrieJSONRequestBody defines body for CreateTimeEntrie for application/json ContentType.
+type CreateTimeEntrieJSONRequestBody = CreateTimeEntrieRequest
+
+// UpdateTimeEntrieJSONRequestBody defines body for UpdateTimeEntrie for application/json ContentType.
+type UpdateTimeEntrieJSONRequestBody = UpdateTimeEntrieRequest
 
 // CreateTireStorageSlotJSONRequestBody defines body for CreateTireStorageSlot for application/json ContentType.
 type CreateTireStorageSlotJSONRequestBody = CreateTireStorageSlotRequest
@@ -4308,6 +4361,60 @@ type ClientInterface interface {
 	// Corresponds with GET /reports/work_order_profitability (the `ListReportsWorkOrderProfitability` operationId).
 	ListReportsWorkOrderProfitability(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateScanLookupWithBody lookup
+	//
+	// Create a scan lookup.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+	CreateScanLookupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateScanLookup lookup
+	//
+	// Create a scan lookup.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+	CreateScanLookup(ctx context.Context, body CreateScanLookupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateScanStartedWorkOrderWithBody start_ro
+	//
+	// Create a scan started work order.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+	CreateScanStartedWorkOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateScanStartedWorkOrder start_ro
+	//
+	// Create a scan started work order.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+	CreateScanStartedWorkOrder(ctx context.Context, body CreateScanStartedWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateScanVehicleWithBody create_vehicle_and_start_ro
+	//
+	// Create a scan vehicle.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+	CreateScanVehicleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateScanVehicle create_vehicle_and_start_ro
+	//
+	// Create a scan vehicle.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+	CreateScanVehicle(ctx context.Context, body CreateScanVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListSearch results
 	//
 	// List all search, paginated via the Link header.
@@ -4833,6 +4940,42 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateTimeEntrieWithBody create
+	//
+	// Create a time entrie.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+	CreateTimeEntrieWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateTimeEntrie create
+	//
+	// Create a time entrie.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+	CreateTimeEntrie(ctx context.Context, body CreateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateTimeEntrieWithBody update
+	//
+	// Update a time entrie by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+	UpdateTimeEntrieWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateTimeEntrie update
+	//
+	// Update a time entrie by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+	UpdateTimeEntrie(ctx context.Context, id int, body UpdateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListTireStorageSlots index
 	//
@@ -5395,6 +5538,13 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /vendors/{vendor_id}/purchase_orders (the `ListVendorsPurchaseOrders` operationId).
 	ListVendorsPurchaseOrders(ctx context.Context, vendorId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteVoiceCommand destroy
+	//
+	// Delete a voice command by ID.
+	//
+	// Corresponds with DELETE /voice_commands/{id} (the `DeleteVoiceCommand` operationId).
+	DeleteVoiceCommand(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListWorkOrders index
 	//
@@ -10796,6 +10946,120 @@ func (c *Client) ListReportsWorkOrderProfitability(ctx context.Context, reqEdito
 	return c.Client.Do(req)
 }
 
+// CreateScanLookupWithBody lookup
+//
+// Create a scan lookup.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+func (c *Client) CreateScanLookupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanLookupRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateScanLookup lookup
+//
+// Create a scan lookup.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+func (c *Client) CreateScanLookup(ctx context.Context, body CreateScanLookupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanLookupRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateScanStartedWorkOrderWithBody start_ro
+//
+// Create a scan started work order.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+func (c *Client) CreateScanStartedWorkOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanStartedWorkOrderRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateScanStartedWorkOrder start_ro
+//
+// Create a scan started work order.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+func (c *Client) CreateScanStartedWorkOrder(ctx context.Context, body CreateScanStartedWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanStartedWorkOrderRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateScanVehicleWithBody create_vehicle_and_start_ro
+//
+// Create a scan vehicle.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+func (c *Client) CreateScanVehicleWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanVehicleRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateScanVehicle create_vehicle_and_start_ro
+//
+// Create a scan vehicle.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+func (c *Client) CreateScanVehicle(ctx context.Context, body CreateScanVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateScanVehicleRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListSearch results
 //
 // List all search, paginated via the Link header.
@@ -11972,6 +12236,82 @@ func (c *Client) UpdateSubletPackage(ctx context.Context, id int, body UpdateSub
 // Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateSubletPackagesDeactivateRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateTimeEntrieWithBody create
+//
+// Create a time entrie.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+func (c *Client) CreateTimeEntrieWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateTimeEntrieRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateTimeEntrie create
+//
+// Create a time entrie.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+func (c *Client) CreateTimeEntrie(ctx context.Context, body CreateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateTimeEntrieRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateTimeEntrieWithBody update
+//
+// Update a time entrie by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+func (c *Client) UpdateTimeEntrieWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateTimeEntrieRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateTimeEntrie update
+//
+// Update a time entrie by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+func (c *Client) UpdateTimeEntrie(ctx context.Context, id int, body UpdateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateTimeEntrieRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -13234,6 +13574,23 @@ func (c *Client) UpdateVendor(ctx context.Context, id int, body UpdateVendorJSON
 // Corresponds with GET /vendors/{vendor_id}/purchase_orders (the `ListVendorsPurchaseOrders` operationId).
 func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListVendorsPurchaseOrdersRequest(c.Server, vendorId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteVoiceCommand destroy
+//
+// Delete a voice command by ID.
+//
+// Corresponds with DELETE /voice_commands/{id} (the `DeleteVoiceCommand` operationId).
+func (c *Client) DeleteVoiceCommand(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteVoiceCommandRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -22339,6 +22696,126 @@ func NewListReportsWorkOrderProfitabilityRequest(server string) (*http.Request, 
 	return req, nil
 }
 
+// NewCreateScanLookupRequest calls the generic CreateScanLookup builder with application/json body
+func NewCreateScanLookupRequest(server string, body CreateScanLookupJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateScanLookupRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateScanLookupRequestWithBody constructs an http.Request for the CreateScanLookup method, with any body, and a specified content type
+func NewCreateScanLookupRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/scan/lookups")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateScanStartedWorkOrderRequest calls the generic CreateScanStartedWorkOrder builder with application/json body
+func NewCreateScanStartedWorkOrderRequest(server string, body CreateScanStartedWorkOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateScanStartedWorkOrderRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateScanStartedWorkOrderRequestWithBody constructs an http.Request for the CreateScanStartedWorkOrder method, with any body, and a specified content type
+func NewCreateScanStartedWorkOrderRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/scan/started_work_orders")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateScanVehicleRequest calls the generic CreateScanVehicle builder with application/json body
+func NewCreateScanVehicleRequest(server string, body CreateScanVehicleJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateScanVehicleRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateScanVehicleRequestWithBody constructs an http.Request for the CreateScanVehicle method, with any body, and a specified content type
+func NewCreateScanVehicleRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/scan/vehicles")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListSearchRequest constructs an http.Request for the ListSearch method
 func NewListSearchRequest(server string, params *ListSearchParams) (*http.Request, error) {
 	var err error
@@ -24025,6 +24502,93 @@ func NewUpdateSubletPackagesDeactivateRequest(server string, id int) (*http.Requ
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewCreateTimeEntrieRequest calls the generic CreateTimeEntrie builder with application/json body
+func NewCreateTimeEntrieRequest(server string, body CreateTimeEntrieJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateTimeEntrieRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateTimeEntrieRequestWithBody constructs an http.Request for the CreateTimeEntrie method, with any body, and a specified content type
+func NewCreateTimeEntrieRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/time_entries")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateTimeEntrieRequest calls the generic UpdateTimeEntrie builder with application/json body
+func NewUpdateTimeEntrieRequest(server string, id int, body UpdateTimeEntrieJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateTimeEntrieRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateTimeEntrieRequestWithBody constructs an http.Request for the UpdateTimeEntrie method, with any body, and a specified content type
+func NewUpdateTimeEntrieRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/time_entries/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -26088,6 +26652,40 @@ func NewListVendorsPurchaseOrdersRequest(server string, vendorId int) (*http.Req
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewDeleteVoiceCommandRequest constructs an http.Request for the DeleteVoiceCommand method
+func NewDeleteVoiceCommandRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/voice_commands/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31893,6 +32491,60 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /reports/work_order_profitability (the `ListReportsWorkOrderProfitability` operationId).
 	ListReportsWorkOrderProfitabilityWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListReportsWorkOrderProfitabilityResponse, error)
 
+	// CreateScanLookupWithBodyWithResponse lookup
+	//
+	// Create a scan lookup.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+	CreateScanLookupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanLookupResponse, error)
+
+	// CreateScanLookupWithResponse lookup
+	//
+	// Create a scan lookup.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+	CreateScanLookupWithResponse(ctx context.Context, body CreateScanLookupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanLookupResponse, error)
+
+	// CreateScanStartedWorkOrderWithBodyWithResponse start_ro
+	//
+	// Create a scan started work order.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+	CreateScanStartedWorkOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanStartedWorkOrderResponse, error)
+
+	// CreateScanStartedWorkOrderWithResponse start_ro
+	//
+	// Create a scan started work order.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+	CreateScanStartedWorkOrderWithResponse(ctx context.Context, body CreateScanStartedWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanStartedWorkOrderResponse, error)
+
+	// CreateScanVehicleWithBodyWithResponse create_vehicle_and_start_ro
+	//
+	// Create a scan vehicle.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+	CreateScanVehicleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanVehicleResponse, error)
+
+	// CreateScanVehicleWithResponse create_vehicle_and_start_ro
+	//
+	// Create a scan vehicle.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+	CreateScanVehicleWithResponse(ctx context.Context, body CreateScanVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanVehicleResponse, error)
+
 	// ListSearchWithResponse results
 	//
 	// List all search, paginated via the Link header.
@@ -32482,6 +33134,42 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateSubletPackagesDeactivateResponse, error)
+
+	// CreateTimeEntrieWithBodyWithResponse create
+	//
+	// Create a time entrie.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+	CreateTimeEntrieWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTimeEntrieResponse, error)
+
+	// CreateTimeEntrieWithResponse create
+	//
+	// Create a time entrie.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+	CreateTimeEntrieWithResponse(ctx context.Context, body CreateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTimeEntrieResponse, error)
+
+	// UpdateTimeEntrieWithBodyWithResponse update
+	//
+	// Update a time entrie by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+	UpdateTimeEntrieWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTimeEntrieResponse, error)
+
+	// UpdateTimeEntrieWithResponse update
+	//
+	// Update a time entrie by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+	UpdateTimeEntrieWithResponse(ctx context.Context, id int, body UpdateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTimeEntrieResponse, error)
 
 	// ListTireStorageSlotsWithResponse index
 	//
@@ -33096,6 +33784,15 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /vendors/{vendor_id}/purchase_orders (the `ListVendorsPurchaseOrders` operationId).
 	ListVendorsPurchaseOrdersWithResponse(ctx context.Context, vendorId int, reqEditors ...RequestEditorFn) (*ListVendorsPurchaseOrdersResponse, error)
+
+	// DeleteVoiceCommandWithResponse destroy
+	//
+	// Delete a voice command by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /voice_commands/{id} (the `DeleteVoiceCommand` operationId).
+	DeleteVoiceCommandWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteVoiceCommandResponse, error)
 
 	// ListWorkOrdersWithResponse index
 	//
@@ -46536,6 +47233,153 @@ func (r ListReportsWorkOrderProfitabilityResponse) ContentType() string {
 	return ""
 }
 
+type CreateScanLookupResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppointmentId *int   `json:"appointment_id"`
+		CustomerId    *int   `json:"customer_id"`
+		Outcome       string `json:"outcome"`
+		VehicleId     *int   `json:"vehicle_id"`
+		WorkOrderId   *int   `json:"work_order_id"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateScanLookupResponse) GetJSON200() *struct {
+	AppointmentId *int   `json:"appointment_id"`
+	CustomerId    *int   `json:"customer_id"`
+	Outcome       string `json:"outcome"`
+	VehicleId     *int   `json:"vehicle_id"`
+	WorkOrderId   *int   `json:"work_order_id"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateScanLookupResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateScanLookupResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateScanLookupResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateScanLookupResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateScanStartedWorkOrderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Status      string `json:"status"`
+		WorkOrderId int    `json:"work_order_id"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateScanStartedWorkOrderResponse) GetJSON200() *struct {
+	Status      string `json:"status"`
+	WorkOrderId int    `json:"work_order_id"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateScanStartedWorkOrderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateScanStartedWorkOrderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateScanStartedWorkOrderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateScanStartedWorkOrderResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateScanVehicleResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Status      string `json:"status"`
+		WorkOrderId int    `json:"work_order_id"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateScanVehicleResponse) GetJSON200() *struct {
+	Status      string `json:"status"`
+	WorkOrderId int    `json:"work_order_id"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateScanVehicleResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateScanVehicleResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateScanVehicleResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateScanVehicleResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListSearchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -49975,6 +50819,118 @@ func (r UpdateSubletPackagesDeactivateResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateSubletPackagesDeactivateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateTimeEntrieResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		Status string `json:"status"`
+	}
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateTimeEntrieResponse) GetJSON201() *struct {
+	Status string `json:"status"`
+} {
+	return r.JSON201
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r CreateTimeEntrieResponse) GetJSON401() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON401
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateTimeEntrieResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateTimeEntrieResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateTimeEntrieResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateTimeEntrieResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateTimeEntrieResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateTimeEntrieResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Status string `json:"status"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateTimeEntrieResponse) GetJSON200() *struct {
+	Status string `json:"status"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateTimeEntrieResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateTimeEntrieResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateTimeEntrieResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateTimeEntrieResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -54241,6 +55197,62 @@ func (r ListVendorsPurchaseOrdersResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ListVendorsPurchaseOrdersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteVoiceCommandResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Status string `json:"status"`
+	}
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DeleteVoiceCommandResponse) GetJSON200() *struct {
+	Status string `json:"status"`
+} {
+	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r DeleteVoiceCommandResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteVoiceCommandResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteVoiceCommandResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteVoiceCommandResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteVoiceCommandResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -63007,6 +64019,96 @@ func (c *ClientWithResponses) ListReportsWorkOrderProfitabilityWithResponse(ctx 
 	return ParseListReportsWorkOrderProfitabilityResponse(rsp)
 }
 
+// CreateScanLookupWithBodyWithResponse lookup
+//
+// Create a scan lookup.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+func (c *ClientWithResponses) CreateScanLookupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanLookupResponse, error) {
+	rsp, err := c.CreateScanLookupWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanLookupResponse(rsp)
+}
+
+// CreateScanLookupWithResponse lookup
+//
+// Create a scan lookup.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/lookups (the `CreateScanLookup` operationId).
+func (c *ClientWithResponses) CreateScanLookupWithResponse(ctx context.Context, body CreateScanLookupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanLookupResponse, error) {
+	rsp, err := c.CreateScanLookup(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanLookupResponse(rsp)
+}
+
+// CreateScanStartedWorkOrderWithBodyWithResponse start_ro
+//
+// Create a scan started work order.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+func (c *ClientWithResponses) CreateScanStartedWorkOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanStartedWorkOrderResponse, error) {
+	rsp, err := c.CreateScanStartedWorkOrderWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanStartedWorkOrderResponse(rsp)
+}
+
+// CreateScanStartedWorkOrderWithResponse start_ro
+//
+// Create a scan started work order.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/started_work_orders (the `CreateScanStartedWorkOrder` operationId).
+func (c *ClientWithResponses) CreateScanStartedWorkOrderWithResponse(ctx context.Context, body CreateScanStartedWorkOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanStartedWorkOrderResponse, error) {
+	rsp, err := c.CreateScanStartedWorkOrder(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanStartedWorkOrderResponse(rsp)
+}
+
+// CreateScanVehicleWithBodyWithResponse create_vehicle_and_start_ro
+//
+// Create a scan vehicle.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+func (c *ClientWithResponses) CreateScanVehicleWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateScanVehicleResponse, error) {
+	rsp, err := c.CreateScanVehicleWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanVehicleResponse(rsp)
+}
+
+// CreateScanVehicleWithResponse create_vehicle_and_start_ro
+//
+// Create a scan vehicle.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /scan/vehicles (the `CreateScanVehicle` operationId).
+func (c *ClientWithResponses) CreateScanVehicleWithResponse(ctx context.Context, body CreateScanVehicleJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateScanVehicleResponse, error) {
+	rsp, err := c.CreateScanVehicle(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateScanVehicleResponse(rsp)
+}
+
 // ListSearchWithResponse results
 //
 // List all search, paginated via the Link header.
@@ -63991,6 +65093,66 @@ func (c *ClientWithResponses) UpdateSubletPackagesDeactivateWithResponse(ctx con
 		return nil, err
 	}
 	return ParseUpdateSubletPackagesDeactivateResponse(rsp)
+}
+
+// CreateTimeEntrieWithBodyWithResponse create
+//
+// Create a time entrie.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+func (c *ClientWithResponses) CreateTimeEntrieWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTimeEntrieResponse, error) {
+	rsp, err := c.CreateTimeEntrieWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateTimeEntrieResponse(rsp)
+}
+
+// CreateTimeEntrieWithResponse create
+//
+// Create a time entrie.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /time_entries (the `CreateTimeEntrie` operationId).
+func (c *ClientWithResponses) CreateTimeEntrieWithResponse(ctx context.Context, body CreateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTimeEntrieResponse, error) {
+	rsp, err := c.CreateTimeEntrie(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateTimeEntrieResponse(rsp)
+}
+
+// UpdateTimeEntrieWithBodyWithResponse update
+//
+// Update a time entrie by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+func (c *ClientWithResponses) UpdateTimeEntrieWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTimeEntrieResponse, error) {
+	rsp, err := c.UpdateTimeEntrieWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateTimeEntrieResponse(rsp)
+}
+
+// UpdateTimeEntrieWithResponse update
+//
+// Update a time entrie by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /time_entries/{id} (the `UpdateTimeEntrie` operationId).
+func (c *ClientWithResponses) UpdateTimeEntrieWithResponse(ctx context.Context, id int, body UpdateTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTimeEntrieResponse, error) {
+	rsp, err := c.UpdateTimeEntrie(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateTimeEntrieResponse(rsp)
 }
 
 // ListTireStorageSlotsWithResponse index
@@ -65025,6 +66187,21 @@ func (c *ClientWithResponses) ListVendorsPurchaseOrdersWithResponse(ctx context.
 		return nil, err
 	}
 	return ParseListVendorsPurchaseOrdersResponse(rsp)
+}
+
+// DeleteVoiceCommandWithResponse destroy
+//
+// Delete a voice command by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /voice_commands/{id} (the `DeleteVoiceCommand` operationId).
+func (c *ClientWithResponses) DeleteVoiceCommandWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteVoiceCommandResponse, error) {
+	rsp, err := c.DeleteVoiceCommand(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteVoiceCommandResponse(rsp)
 }
 
 // ListWorkOrdersWithResponse index
@@ -74915,6 +76092,96 @@ func ParseListReportsWorkOrderProfitabilityResponse(rsp *http.Response) (*ListRe
 	return response, nil
 }
 
+// ParseCreateScanLookupResponse parses an HTTP response from a CreateScanLookupWithResponse call
+func ParseCreateScanLookupResponse(rsp *http.Response) (*CreateScanLookupResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateScanLookupResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppointmentId *int   `json:"appointment_id"`
+			CustomerId    *int   `json:"customer_id"`
+			Outcome       string `json:"outcome"`
+			VehicleId     *int   `json:"vehicle_id"`
+			WorkOrderId   *int   `json:"work_order_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateScanStartedWorkOrderResponse parses an HTTP response from a CreateScanStartedWorkOrderWithResponse call
+func ParseCreateScanStartedWorkOrderResponse(rsp *http.Response) (*CreateScanStartedWorkOrderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateScanStartedWorkOrderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Status      string `json:"status"`
+			WorkOrderId int    `json:"work_order_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateScanVehicleResponse parses an HTTP response from a CreateScanVehicleWithResponse call
+func ParseCreateScanVehicleResponse(rsp *http.Response) (*CreateScanVehicleResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateScanVehicleResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Status      string `json:"status"`
+			WorkOrderId int    `json:"work_order_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListSearchResponse parses an HTTP response from a ListSearchWithResponse call
 func ParseListSearchResponse(rsp *http.Response) (*ListSearchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -77106,6 +78373,80 @@ func ParseUpdateSubletPackagesDeactivateResponse(rsp *http.Response) (*UpdateSub
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateTimeEntrieResponse parses an HTTP response from a CreateTimeEntrieWithResponse call
+func ParseCreateTimeEntrieResponse(rsp *http.Response) (*CreateTimeEntrieResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateTimeEntrieResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			Status string `json:"status"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateTimeEntrieResponse parses an HTTP response from a UpdateTimeEntrieWithResponse call
+func ParseUpdateTimeEntrieResponse(rsp *http.Response) (*UpdateTimeEntrieResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateTimeEntrieResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Status string `json:"status"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
@@ -79817,6 +81158,43 @@ func ParseListVendorsPurchaseOrdersResponse(rsp *http.Response) (*ListVendorsPur
 			headers.XTotalCount = &value
 		}
 		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseDeleteVoiceCommandResponse parses an HTTP response from a DeleteVoiceCommandWithResponse call
+func ParseDeleteVoiceCommandResponse(rsp *http.Response) (*DeleteVoiceCommandResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteVoiceCommandResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Status string `json:"status"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
 	}
 
 	return response, nil

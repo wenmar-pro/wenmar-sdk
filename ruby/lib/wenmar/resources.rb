@@ -882,6 +882,18 @@ end
 def list_reports_work_order_profitability()
   get("/reports/work_order_profitability")
 end
+# Runs create_scan_lookup (POST /scan/lookups).
+def create_scan_lookup(code:, type:)
+  post("/scan/lookups", { code: code, type: type })
+end
+# Runs create_scan_started_work_order (POST /scan/started_work_orders).
+def create_scan_started_work_order(outcome:, vehicle_id:)
+  post("/scan/started_work_orders", { outcome: outcome, vehicle_id: vehicle_id })
+end
+# Runs create_scan_vehicle (POST /scan/vehicles).
+def create_scan_vehicle(customer:, vehicle:)
+  post("/scan/vehicles", { customer: customer, vehicle: vehicle })
+end
 # Fetches list_search.
 def list_search(q: nil)
   params = { q: q }
@@ -1127,6 +1139,14 @@ end
 # Runs update_sublet_packages_deactivate (PATCH /sublet_packages/{id}/deactivate).
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
+end
+# Runs create_time_entrie (POST /time_entries).
+def create_time_entrie(type:, work_order_service_id:)
+  post("/time_entries", { type: type, work_order_service_id: work_order_service_id })
+end
+# Runs update_time_entrie (PATCH /time_entries/{id}).
+def update_time_entrie(id, status:)
+  patch("/time_entries/#{id}", { status: status })
 end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1391,6 +1411,10 @@ end
 # @return [Array<Hash>]
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
+end
+# Deletes delete_voice_command.
+def delete_voice_command(id)
+  delete("/voice_commands/#{id}")
 end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]

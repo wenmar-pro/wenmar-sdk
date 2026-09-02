@@ -182,6 +182,9 @@ type (
 	ListReportsStoreCreditResponse = gen.ListReportsStoreCreditResponse
 	ListReportsTechnicianProductivityResponse = gen.ListReportsTechnicianProductivityResponse
 	ListReportsWorkOrderProfitabilityResponse = gen.ListReportsWorkOrderProfitabilityResponse
+	CreateScanLookupResponse = gen.CreateScanLookupResponse
+	CreateScanStartedWorkOrderResponse = gen.CreateScanStartedWorkOrderResponse
+	CreateScanVehicleResponse = gen.CreateScanVehicleResponse
 	ListSearchResponse = gen.ListSearchResponse
 	ListServiceCategoriesResponse = gen.ListServiceCategoriesResponse
 	CreateServiceCategoryResponse = gen.CreateServiceCategoryResponse
@@ -231,6 +234,8 @@ type (
 	DeleteSubletPackageResponse = gen.DeleteSubletPackageResponse
 	UpdateSubletPackageResponse = gen.UpdateSubletPackageResponse
 	UpdateSubletPackagesDeactivateResponse = gen.UpdateSubletPackagesDeactivateResponse
+	CreateTimeEntrieResponse = gen.CreateTimeEntrieResponse
+	UpdateTimeEntrieResponse = gen.UpdateTimeEntrieResponse
 	ListTireStorageSlotsResponse = gen.ListTireStorageSlotsResponse
 	CreateTireStorageSlotResponse = gen.CreateTireStorageSlotResponse
 	ShowTireStorageSlotResponse = gen.ShowTireStorageSlotResponse
@@ -279,6 +284,7 @@ type (
 	ShowVendorResponse = gen.ShowVendorResponse
 	UpdateVendorResponse = gen.UpdateVendorResponse
 	ListVendorsPurchaseOrdersResponse = gen.ListVendorsPurchaseOrdersResponse
+	DeleteVoiceCommandResponse = gen.DeleteVoiceCommandResponse
 	ListWorkOrdersResponse = gen.ListWorkOrdersResponse
 	CreateWorkOrderResponse = gen.CreateWorkOrderResponse
 	DeleteWorkOrderResponse = gen.DeleteWorkOrderResponse
@@ -435,6 +441,9 @@ type (
 	CreatePaymentsConfirmationRequest = gen.CreatePaymentsConfirmationRequest
 	CreatePaymentsFailureRequest = gen.CreatePaymentsFailureRequest
 	CreateRecentSearcheRequest = gen.CreateRecentSearcheRequest
+	CreateScanLookupRequest = gen.CreateScanLookupRequest
+	CreateScanStartedWorkOrderRequest = gen.CreateScanStartedWorkOrderRequest
+	CreateScanVehicleRequest = gen.CreateScanVehicleRequest
 	CreateServiceCategoryRequest = gen.CreateServiceCategoryRequest
 	SeedDefaultsServiceCategoriesRequest = gen.SeedDefaultsServiceCategoriesRequest
 	UpdateServiceCategoryRequest = gen.UpdateServiceCategoryRequest
@@ -452,6 +461,8 @@ type (
 	UpdateSubStatuseRequest = gen.UpdateSubStatuseRequest
 	CreateSubletPackageRequest = gen.CreateSubletPackageRequest
 	UpdateSubletPackageRequest = gen.UpdateSubletPackageRequest
+	CreateTimeEntrieRequest = gen.CreateTimeEntrieRequest
+	UpdateTimeEntrieRequest = gen.UpdateTimeEntrieRequest
 	CreateTireStorageSlotRequest = gen.CreateTireStorageSlotRequest
 	CreateTireStorageSlotsCheckOutRequest = gen.CreateTireStorageSlotsCheckOutRequest
 	CreateTireRequest = gen.CreateTireRequest

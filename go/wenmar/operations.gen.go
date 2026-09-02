@@ -2793,6 +2793,57 @@ func (c *Client) ListReportsWorkOrderProfitability(ctx context.Context) (*ListRe
 	return resp, nil
 }
 
+// CreateScanLookup runs the create_scan_lookup operation (POST /scan/lookups).
+func (c *Client) CreateScanLookup(ctx context.Context, body CreateScanLookupRequest) (*CreateScanLookupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateScanLookup"})
+	resp, err := c.gen.CreateScanLookupWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanLookup"}, OperationResult{Operation: "CreateScanLookup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanLookup"}, OperationResult{Operation: "CreateScanLookup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanLookup"}, OperationResult{Operation: "CreateScanLookup"})
+	return resp, nil
+}
+
+// CreateScanStartedWorkOrder runs the create_scan_started_work_order operation (POST /scan/started_work_orders).
+func (c *Client) CreateScanStartedWorkOrder(ctx context.Context, body CreateScanStartedWorkOrderRequest) (*CreateScanStartedWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateScanStartedWorkOrder"})
+	resp, err := c.gen.CreateScanStartedWorkOrderWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanStartedWorkOrder"}, OperationResult{Operation: "CreateScanStartedWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanStartedWorkOrder"}, OperationResult{Operation: "CreateScanStartedWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanStartedWorkOrder"}, OperationResult{Operation: "CreateScanStartedWorkOrder"})
+	return resp, nil
+}
+
+// CreateScanVehicle runs the create_scan_vehicle operation (POST /scan/vehicles).
+func (c *Client) CreateScanVehicle(ctx context.Context, body CreateScanVehicleRequest) (*CreateScanVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateScanVehicle"})
+	resp, err := c.gen.CreateScanVehicleWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanVehicle"}, OperationResult{Operation: "CreateScanVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanVehicle"}, OperationResult{Operation: "CreateScanVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateScanVehicle"}, OperationResult{Operation: "CreateScanVehicle"})
+	return resp, nil
+}
+
 // ListSearch runs the list_search operation (GET /search).
 func (c *Client) ListSearch(ctx context.Context, params *ListSearchParams) (*ListSearchResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListSearch"})
@@ -3626,6 +3677,40 @@ func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int) (*U
 	return resp, nil
 }
 
+// CreateTimeEntrie runs the create_time_entrie operation (POST /time_entries).
+func (c *Client) CreateTimeEntrie(ctx context.Context, body CreateTimeEntrieRequest) (*CreateTimeEntrieResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTimeEntrie"})
+	resp, err := c.gen.CreateTimeEntrieWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTimeEntrie"}, OperationResult{Operation: "CreateTimeEntrie", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTimeEntrie"}, OperationResult{Operation: "CreateTimeEntrie", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTimeEntrie"}, OperationResult{Operation: "CreateTimeEntrie"})
+	return resp, nil
+}
+
+// UpdateTimeEntrie runs the update_time_entrie operation (PATCH /time_entries/{id}).
+func (c *Client) UpdateTimeEntrie(ctx context.Context, id int, body UpdateTimeEntrieRequest) (*UpdateTimeEntrieResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTimeEntrie"})
+	resp, err := c.gen.UpdateTimeEntrieWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTimeEntrie"}, OperationResult{Operation: "UpdateTimeEntrie", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTimeEntrie"}, OperationResult{Operation: "UpdateTimeEntrie", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTimeEntrie"}, OperationResult{Operation: "UpdateTimeEntrie"})
+	return resp, nil
+}
+
 // ListTireStorageSlots runs the list_tire_storage_slots operation (GET /tire_storage_slots).
 func (c *Client) ListTireStorageSlots(ctx context.Context) (*ListTireStorageSlotsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListTireStorageSlots"})
@@ -4439,6 +4524,23 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVendorsPurchaseOrders"}, OperationResult{Operation: "ListVendorsPurchaseOrders"})
+	return resp, nil
+}
+
+// DeleteVoiceCommand runs the delete_voice_command operation (DELETE /voice_commands/{id}).
+func (c *Client) DeleteVoiceCommand(ctx context.Context, id int) (*DeleteVoiceCommandResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteVoiceCommand"})
+	resp, err := c.gen.DeleteVoiceCommandWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVoiceCommand"}, OperationResult{Operation: "DeleteVoiceCommand", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVoiceCommand"}, OperationResult{Operation: "DeleteVoiceCommand", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVoiceCommand"}, OperationResult{Operation: "DeleteVoiceCommand"})
 	return resp, nil
 }
 
@@ -6015,6 +6117,9 @@ func (c *Client) GetAllOrdersSubletOrders(ctx context.Context) ([]SubletOrder, e
 
 
 
+
+
+
 // GetAllServiceCategories auto-paginates list_service_categories, following the Link header up to
 // 1000 items by default.
 func (c *Client) GetAllServiceCategories(ctx context.Context) ([]ServiceCategory, error) {
@@ -6071,6 +6176,8 @@ func (c *Client) GetAllStatementsPayments(ctx context.Context, statementId int) 
 	}
 	return collectAll[Statement](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
+
+
 
 
 
@@ -6173,6 +6280,7 @@ func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int) 
 	}
 	return collectAll[PurchaseOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
+
 
 // GetAllWorkOrders auto-paginates list_work_orders, following the Link header up to
 // 1000 items by default.
