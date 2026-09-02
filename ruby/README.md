@@ -67,7 +67,7 @@ All 76 operations are generated into `resources.rb`. Key methods:
 | Create vehicle | `create_vehicle(vehicle:)` |
 | Show vehicle | `show_vehicle(id)` |
 | Update vehicle | `update_vehicle(id, vehicle:)` |
-| Delete vehicle | `delete_vehicle(id)` |
+| Trash vehicle | `trash_vehicle(id)` |
 | Decode VIN | `decode_vin(vin:)` |
 | Check duplicates | `check_vehicle_duplicate(vin:)` |
 | List work orders | `list_work_orders` |

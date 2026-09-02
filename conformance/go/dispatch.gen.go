@@ -348,7 +348,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -475,14 +475,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "show_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -499,8 +491,32 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"archive_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveCustomerRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "merge_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.MergeCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeCustomerRequest]("source_customer_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreCustomerRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"trash_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashCustomerRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -1980,7 +1996,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVehicles(ctx, &wenmar.ListVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
+	resp, err := c.ListVehicles(ctx, &wenmar.ListVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
 	if err != nil {
 		return nil, err
 	}
@@ -2043,14 +2059,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "show_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -2067,6 +2075,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"archive_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVehicleRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "merge_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.MergeVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeVehicleRequest]("source_vehicle_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
@@ -2075,8 +2091,24 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"restore_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVehicleRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "transfer_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.TransferVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.TransferVehicleRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"trash_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVehicleRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2107,14 +2139,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "show_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -2125,6 +2149,30 @@ var dispatch = map[string]operationFunc{
 
 "update_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.UpdateVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateVendorRequest]("vendor", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"archive_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVendorRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVendorRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"trash_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVendorRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2764,7 +2812,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_paginated": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -2780,7 +2828,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_with_params_paginated": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -2788,7 +2836,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_with_params": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), TagIds: nil, Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -2890,10 +2938,12 @@ var allOperations = []string{
 	"list_customers_vehicles",
 	"list_customers_vehicles_history",
 	"list_customers_work_orders",
-	"delete_customer",
 	"show_customer",
 	"update_customer",
+	"archive_customer",
 	"merge_customer",
+	"restore_customer",
+	"trash_customer",
 	"list_expenses",
 	"create_expense",
 	"delete_expense",
@@ -3086,17 +3136,21 @@ var allOperations = []string{
 	"lookup_vehicle",
 	"prefill_vehicle",
 	"decode_vin",
-	"delete_vehicle",
 	"show_vehicle",
 	"update_vehicle",
+	"archive_vehicle",
 	"merge_vehicle",
+	"restore_vehicle",
 	"transfer_vehicle",
+	"trash_vehicle",
 	"list_vehicles_work_orders",
 	"list_vendors",
 	"create_vendor",
-	"delete_vendor",
 	"show_vendor",
 	"update_vendor",
+	"archive_vendor",
+	"restore_vendor",
+	"trash_vendor",
 	"list_vendors_purchase_orders",
 	"delete_voice_command",
 	"list_work_orders",

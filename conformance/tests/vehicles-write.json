@@ -31,20 +31,6 @@
     }
   },
   {
-    "name": "delete_vehicle_success",
-    "operation": "delete_vehicle",
-    "method": "DELETE",
-    "path": "/vehicles/1",
-    "pathParams": { "id": 1 },
-    "mockResponses": [
-      { "status": 204, "body": null }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
     "name": "decode_vin_success",
     "operation": "decode_vin",
     "method": "GET",
@@ -88,6 +74,51 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "trash_vehicle_success",
+    "operation": "trash_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "make": "Honda", "status": "trashed", "trashed_at": "2026-09-02T00:00:00.000Z" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "trashed" }
+    }
+  },
+  {
+    "name": "archive_vehicle_success",
+    "operation": "archive_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "make": "Honda", "status": "archived" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "archived" }
+    }
+  },
+  {
+    "name": "restore_vehicle_success",
+    "operation": "restore_vehicle",
+    "method": "PATCH",
+    "path": "/vehicles/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "make": "Honda", "status": "active", "trashed_at": null } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "active" }
     }
   }
 ]

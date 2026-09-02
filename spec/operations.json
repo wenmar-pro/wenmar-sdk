@@ -3,6 +3,9 @@
   "source": "spec/openapi.enriched.yaml",
   "schemas": [
     "AddWorkOrderServiceLineItemToInventoryRequest",
+    "ArchiveCustomerRequest",
+    "ArchiveVehicleRequest",
+    "ArchiveVendorRequest",
     "BroadcastCampaign",
     "CloseWorkOrderAsPaidRequest",
     "CloseWorkOrderRequest",
@@ -107,6 +110,9 @@
     "ReopenInspectionReportRequest",
     "ReopenWorkOrderRequest",
     "ResetInspectionReportRequest",
+    "RestoreCustomerRequest",
+    "RestoreVehicleRequest",
+    "RestoreVendorRequest",
     "RetryInspectionReportRecordingRequest",
     "ReturnOrder",
     "ReturnWorkOrderToBoardRequest",
@@ -120,6 +126,9 @@
     "SubletOrder",
     "ToggleInspectionRequest",
     "TransferVehicleRequest",
+    "TrashCustomerRequest",
+    "TrashVehicleRequest",
+    "TrashVendorRequest",
     "UndoPullWorkOrderServiceLineItemRequest",
     "UndoReturnWorkOrderServiceLineItemRequest",
     "UnpublishInspectionReportRequest",
@@ -964,6 +973,12 @@
           "description": null
         },
         {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
           "name": "tag_ids",
           "type": "array",
           "required": false,
@@ -1264,22 +1279,6 @@
       "summary": "index"
     },
     {
-      "id": "delete_customer",
-      "method": "delete",
-      "path": "/customers/{id}",
-      "tag": "customers",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
       "id": "show_customer",
       "method": "get",
       "path": "/customers/{id}",
@@ -1314,6 +1313,24 @@
       "summary": "update"
     },
     {
+      "id": "archive_customer",
+      "method": "patch",
+      "path": "/customers/{id}/archive",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ArchiveCustomerRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
       "id": "merge_customer",
       "method": "post",
       "path": "/customers/{id}/merges",
@@ -1330,6 +1347,42 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "restore_customer",
+      "method": "patch",
+      "path": "/customers/{id}/restore",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "RestoreCustomerRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "trash_customer",
+      "method": "patch",
+      "path": "/customers/{id}/trash",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "TrashCustomerRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_expenses",
@@ -4413,6 +4466,12 @@
           "type": "integer",
           "required": false,
           "description": null
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": null
         }
       ],
       "requestSchema": null,
@@ -4583,22 +4642,6 @@
       "summary": "vin_decode"
     },
     {
-      "id": "delete_vehicle",
-      "method": "delete",
-      "path": "/vehicles/{id}",
-      "tag": "vehicles",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
       "id": "show_vehicle",
       "method": "get",
       "path": "/vehicles/{id}",
@@ -4633,6 +4676,24 @@
       "summary": "update"
     },
     {
+      "id": "archive_vehicle",
+      "method": "patch",
+      "path": "/vehicles/{id}/archive",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ArchiveVehicleRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
       "id": "merge_vehicle",
       "method": "post",
       "path": "/vehicles/{id}/merges",
@@ -4649,6 +4710,24 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "restore_vehicle",
+      "method": "patch",
+      "path": "/vehicles/{id}/restore",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "RestoreVehicleRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
     },
     {
       "id": "transfer_vehicle",
@@ -4670,6 +4749,24 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "trash_vehicle",
+      "method": "patch",
+      "path": "/vehicles/{id}/trash",
+      "tag": "vehicles",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "TrashVehicleRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_vehicles_work_orders",
@@ -4718,22 +4815,6 @@
       "summary": "create"
     },
     {
-      "id": "delete_vendor",
-      "method": "delete",
-      "path": "/vendors/{id}",
-      "tag": "vendors",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
       "id": "show_vendor",
       "method": "get",
       "path": "/vendors/{id}",
@@ -4766,6 +4847,60 @@
       "responseSchema": "Vendor",
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "archive_vendor",
+      "method": "patch",
+      "path": "/vendors/{id}/archive",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ArchiveVendorRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
+      "id": "restore_vendor",
+      "method": "patch",
+      "path": "/vendors/{id}/restore",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "RestoreVendorRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "trash_vendor",
+      "method": "patch",
+      "path": "/vendors/{id}/trash",
+      "tag": "vendors",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "TrashVendorRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_vendors_purchase_orders",

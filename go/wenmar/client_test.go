@@ -145,17 +145,18 @@ func TestClient_UpdateVehicle(t *testing.T) {
 	}
 }
 
-func TestClient_DeleteVehicle(t *testing.T) {
+func TestClient_TrashVehicle(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete || r.URL.Path != "/vehicles/1" {
-			t.Errorf("expected DELETE /vehicles/1, got %s %s", r.Method, r.URL.Path)
+		if r.Method != http.MethodPatch || r.URL.Path != "/vehicles/1/trash" {
+			t.Errorf("expected PATCH /vehicles/1/trash, got %s %s", r.Method, r.URL.Path)
 		}
-		w.WriteHeader(http.StatusNoContent)
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"id":1,"status":"trashed"}`))
 	}))
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_, err := c.DeleteVehicle(ctx, 1)
+	_, err := c.TrashVehicle(ctx, 1, TrashVehicleRequest{})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

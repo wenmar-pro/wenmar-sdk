@@ -74,13 +74,13 @@
     "expect": { "requestCount": 1, "noError": true }
   },
   {
-    "name": "delete_customer_success",
-    "operation": "delete_customer",
-    "method": "DELETE",
-    "path": "/customers/10",
+    "name": "trash_customer_success",
+    "operation": "trash_customer",
+    "method": "PATCH",
+    "path": "/customers/10/trash",
     "pathParams": { "id": 10 },
-    "mockResponses": [ { "status": 204, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
+    "mockResponses": [ { "status": 200, "body": { "id": 10, "status": "trashed" } } ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "trashed" } }
   },
   {
     "name": "list_customer_tags_success",
@@ -393,13 +393,13 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
   {
-    "name": "delete_vendor_success",
-    "operation": "delete_vendor",
-    "method": "DELETE",
-    "path": "/vendors/1",
+    "name": "trash_vendor_success",
+    "operation": "trash_vendor",
+    "method": "PATCH",
+    "path": "/vendors/1/trash",
     "pathParams": { "id": 1 },
-    "mockResponses": [ { "status": 204, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
+    "mockResponses": [ { "status": 200, "body": { "id": 1, "status": "trashed" } } ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "trashed" } }
   },
   {
     "name": "update_vendor_success",

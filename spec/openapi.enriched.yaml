@@ -4251,6 +4251,11 @@ paths:
                       - id
                       - name
                       - url
+                    status:
+                      type: string
+                    trashed_at:
+                      nullable: true
+                      type: string
                   required:
                   - type
                   - id
@@ -4585,6 +4590,11 @@ paths:
         schema:
           type: integer
       - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
         in: query
         required: false
         schema:
@@ -5370,59 +5380,6 @@ paths:
         - 504
         method-gated: true
   "/customers/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - customers
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '202':
-          description: DELETE /customers/{id} -> 202
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Customer"
-        '403':
-          description: DELETE /customers/{id} -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: DELETE /customers/{id} -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: Delete a customer by ID.
-      operationId: delete_customer
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
     get:
       summary: show
       tags:
@@ -5493,6 +5450,185 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
       x-wenmar-request-schema: UpdateCustomerRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveCustomerRequest"
+      responses:
+        '200':
+          description: PATCH /customers/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  full_name:
+                    type: string
+                  company_name:
+                    nullable: true
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  marketing_opt_in:
+                    type: boolean
+                  tax_exempt:
+                    type: boolean
+                  vehicles_count:
+                    type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        address:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - address
+                      - label
+                      - primary
+                  phones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        number:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - number
+                      - label
+                      - primary
+                  addresses:
+                    type: array
+                    items: {}
+                  outstanding_balance_cents:
+                    type: integer
+                  total_revenue_cents:
+                    type: integer
+                  store_credit_cents:
+                    type: integer
+                  last_visit_at:
+                    nullable: true
+                    type: string
+                  statements_count:
+                    type: integer
+                  currency:
+                    type: string
+                required:
+                - type
+                - id
+                - full_name
+                - company_name
+                - first_name
+                - last_name
+                - fleet_identifier
+                - marketing_opt_in
+                - tax_exempt
+                - vehicles_count
+                - emails_count
+                - phones_count
+                - status
+                - trashed_at
+                - vehicles_url
+                - work_orders_url
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
+                - outstanding_balance_cents
+                - total_revenue_cents
+                - store_credit_cents
+                - last_visit_at
+                - statements_count
+                - currency
+      description:
+      operationId: archive_customer
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: ArchiveCustomerRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -5625,6 +5761,11 @@ paths:
                     type: integer
                   currency:
                     type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                 required:
                 - type
                 - id
@@ -5687,6 +5828,385 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
       x-wenmar-request-schema: MergeCustomerRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreCustomerRequest"
+      responses:
+        '200':
+          description: PATCH /customers/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  full_name:
+                    type: string
+                  company_name:
+                    nullable: true
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  marketing_opt_in:
+                    type: boolean
+                  tax_exempt:
+                    type: boolean
+                  vehicles_count:
+                    type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        address:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - address
+                      - label
+                      - primary
+                  phones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        number:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - number
+                      - label
+                      - primary
+                  addresses:
+                    type: array
+                    items: {}
+                  outstanding_balance_cents:
+                    type: integer
+                  total_revenue_cents:
+                    type: integer
+                  store_credit_cents:
+                    type: integer
+                  last_visit_at:
+                    nullable: true
+                    type: string
+                  statements_count:
+                    type: integer
+                  currency:
+                    type: string
+                required:
+                - type
+                - id
+                - full_name
+                - company_name
+                - first_name
+                - last_name
+                - fleet_identifier
+                - marketing_opt_in
+                - tax_exempt
+                - vehicles_count
+                - emails_count
+                - phones_count
+                - status
+                - trashed_at
+                - vehicles_url
+                - work_orders_url
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
+                - outstanding_balance_cents
+                - total_revenue_cents
+                - store_credit_cents
+                - last_visit_at
+                - statements_count
+                - currency
+      description:
+      operationId: restore_customer
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: RestoreCustomerRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - customers
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: PATCH /customers/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  full_name:
+                    type: string
+                  company_name:
+                    nullable: true
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  marketing_opt_in:
+                    type: boolean
+                  tax_exempt:
+                    type: boolean
+                  vehicles_count:
+                    type: integer
+                  emails_count:
+                    type: integer
+                  phones_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  vehicles_url:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        address:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - address
+                      - label
+                      - primary
+                  phones:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        number:
+                          type: string
+                        label:
+                          type: string
+                        primary:
+                          type: boolean
+                      required:
+                      - id
+                      - number
+                      - label
+                      - primary
+                  addresses:
+                    type: array
+                    items: {}
+                  outstanding_balance_cents:
+                    type: integer
+                  total_revenue_cents:
+                    type: integer
+                  store_credit_cents:
+                    type: integer
+                  last_visit_at:
+                    nullable: true
+                    type: string
+                  statements_count:
+                    type: integer
+                  currency:
+                    type: string
+                required:
+                - type
+                - id
+                - full_name
+                - company_name
+                - first_name
+                - last_name
+                - fleet_identifier
+                - marketing_opt_in
+                - tax_exempt
+                - vehicles_count
+                - emails_count
+                - phones_count
+                - status
+                - trashed_at
+                - vehicles_url
+                - work_orders_url
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - emails
+                - phones
+                - addresses
+                - outstanding_balance_cents
+                - total_revenue_cents
+                - store_credit_cents
+                - last_visit_at
+                - statements_count
+                - currency
+        '403':
+          description: PATCH /customers/{id}/trash -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: PATCH /customers/{id}/trash -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashCustomerRequest"
+      description:
+      operationId: trash_customer
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+      x-wenmar-request-schema: TrashCustomerRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -6168,6 +6688,11 @@ paths:
                       - id
                       - name
                       - url
+                    status:
+                      type: string
+                    trashed_at:
+                      nullable: true
+                      type: string
                   required:
                   - type
                   - id
@@ -21309,6 +21834,11 @@ paths:
         required: false
         schema:
           type: integer
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
       description: List all vehicles, paginated via the Link header.
       operationId: list_vehicles
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -21713,48 +22243,6 @@ paths:
         - 504
         method-gated: true
   "/vehicles/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - vehicles
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '202':
-          description: DELETE /vehicles/{id} -> 202
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Vehicle"
-        '422':
-          description: DELETE /vehicles/{id} -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: Delete a vehicle by ID.
-      operationId: delete_vehicle
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
     get:
       summary: show
       tags:
@@ -21825,6 +22313,199 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
       x-wenmar-request-schema: UpdateVehicleRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - vehicles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveVehicleRequest"
+      responses:
+        '200':
+          description: PATCH /vehicles/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  last_serviced_at:
+                    nullable: true
+                    type: string
+                  lifetime_revenue_cents:
+                    type: integer
+                  open_work_orders_count:
+                    type: integer
+                  appointments_count:
+                    type: integer
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - last_serviced_at
+                - lifetime_revenue_cents
+                - open_work_orders_count
+                - appointments_count
+      description:
+      operationId: archive_vehicle
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: ArchiveVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -21965,6 +22646,11 @@ paths:
                     type: integer
                   appointments_count:
                     type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                 required:
                 - type
                 - id
@@ -22022,6 +22708,199 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
       x-wenmar-request-schema: MergeVehicleRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - vehicles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreVehicleRequest"
+      responses:
+        '200':
+          description: PATCH /vehicles/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  last_serviced_at:
+                    nullable: true
+                    type: string
+                  lifetime_revenue_cents:
+                    type: integer
+                  open_work_orders_count:
+                    type: integer
+                  appointments_count:
+                    type: integer
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - last_serviced_at
+                - lifetime_revenue_cents
+                - open_work_orders_count
+                - appointments_count
+      description:
+      operationId: restore_vehicle
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: RestoreVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -22162,6 +23041,11 @@ paths:
                     type: integer
                   appointments_count:
                     type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                 required:
                 - type
                 - id
@@ -22230,6 +23114,209 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
       x-wenmar-request-schema: TransferVehicleRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vehicles/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - vehicles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashVehicleRequest"
+      responses:
+        '200':
+          description: PATCH /vehicles/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  last_serviced_at:
+                    nullable: true
+                    type: string
+                  lifetime_revenue_cents:
+                    type: integer
+                  open_work_orders_count:
+                    type: integer
+                  appointments_count:
+                    type: integer
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - last_serviced_at
+                - lifetime_revenue_cents
+                - open_work_orders_count
+                - appointments_count
+        '422':
+          description: PATCH /vehicles/{id}/trash -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description:
+      operationId: trash_vehicle
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vehicles/<id>.json
+      x-wenmar-request-schema: TrashVehicleRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -22394,33 +23481,6 @@ paths:
         - 504
         method-gated: true
   "/vendors/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - vendors
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '204':
-          description: DELETE /vendors/{id} -> 204
-      description: Delete a vendor by ID.
-      operationId: delete_vendor
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
     get:
       summary: show
       tags:
@@ -22491,6 +23551,341 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
       x-wenmar-request-schema: UpdateVendorRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vendors/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - vendors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveVendorRequest"
+      responses:
+        '200':
+          description: PATCH /vendors/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  vendor_type:
+                    type: string
+                  payment_terms:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  phone:
+                    type: string
+                  email:
+                    type: string
+                  website:
+                    type: string
+                  account_number:
+                    type: string
+                  notes:
+                    type: string
+                  quick_order:
+                    type: boolean
+                  order_url_template:
+                    nullable: true
+                    type: string
+                  catalog_url_template:
+                    nullable: true
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - vendor_type
+                - payment_terms
+                - status
+                - trashed_at
+                - phone
+                - email
+                - website
+                - account_number
+                - notes
+                - quick_order
+                - order_url_template
+                - catalog_url_template
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description:
+      operationId: archive_vendor
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+      x-wenmar-request-schema: ArchiveVendorRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vendors/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - vendors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreVendorRequest"
+      responses:
+        '200':
+          description: PATCH /vendors/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  vendor_type:
+                    type: string
+                  payment_terms:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  phone:
+                    type: string
+                  email:
+                    type: string
+                  website:
+                    type: string
+                  account_number:
+                    type: string
+                  notes:
+                    type: string
+                  quick_order:
+                    type: boolean
+                  order_url_template:
+                    nullable: true
+                    type: string
+                  catalog_url_template:
+                    nullable: true
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - vendor_type
+                - payment_terms
+                - status
+                - trashed_at
+                - phone
+                - email
+                - website
+                - account_number
+                - notes
+                - quick_order
+                - order_url_template
+                - catalog_url_template
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description:
+      operationId: restore_vendor
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+      x-wenmar-request-schema: RestoreVendorRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/vendors/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - vendors
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashVendorRequest"
+      responses:
+        '200':
+          description: PATCH /vendors/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  vendor_type:
+                    type: string
+                  payment_terms:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  phone:
+                    type: string
+                  email:
+                    type: string
+                  website:
+                    type: string
+                  account_number:
+                    type: string
+                  notes:
+                    type: string
+                  quick_order:
+                    type: boolean
+                  order_url_template:
+                    nullable: true
+                    type: string
+                  catalog_url_template:
+                    nullable: true
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - vendor_type
+                - payment_terms
+                - status
+                - trashed_at
+                - phone
+                - email
+                - website
+                - account_number
+                - notes
+                - quick_order
+                - order_url_template
+                - catalog_url_template
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description:
+      operationId: trash_vendor
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+      x-wenmar-request-schema: TrashVendorRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -29395,6 +30790,11 @@ components:
           type: integer
         currency:
           type: string
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
       required:
       - type
       - id
@@ -29708,6 +31108,11 @@ components:
           type: integer
         appointments_count:
           type: integer
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
       required:
       - type
       - id
@@ -30429,12 +31834,16 @@ components:
           type: string
         app_url:
           type: string
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
       required:
       - id
       - name
       - vendor_type
       - payment_terms
-      - active
       - phone
       - email
       - website
@@ -30862,8 +32271,13 @@ components:
                 - postal_code
                 - country
                 - is_billing
+            status:
+              type: string
       required:
       - customer
+    ArchiveCustomerRequest:
+      type: object
+      properties: {}
     MergeCustomerRequest:
       type: object
       properties:
@@ -30871,6 +32285,12 @@ components:
           type: integer
       required:
       - source_customer_id
+    RestoreCustomerRequest:
+      type: object
+      properties: {}
+    TrashCustomerRequest:
+      type: object
+      properties: {}
     CreateExpenseRequest:
       type: object
       properties:
@@ -31858,10 +33278,10 @@ components:
               type: array
               items: {}
           required:
-          - customer_id
-          - year
           - make
           - model
+          - year
+          - customer_id
       required:
       - vehicle
     UpdateVehicleRequest:
@@ -31904,6 +33324,9 @@ components:
           - make
       required:
       - vehicle
+    ArchiveVehicleRequest:
+      type: object
+      properties: {}
     MergeVehicleRequest:
       type: object
       properties:
@@ -31911,6 +33334,9 @@ components:
           type: integer
       required:
       - source_vehicle_id
+    RestoreVehicleRequest:
+      type: object
+      properties: {}
     TransferVehicleRequest:
       type: object
       properties:
@@ -31921,6 +33347,9 @@ components:
       required:
       - customer_id
       - mode
+    TrashVehicleRequest:
+      type: object
+      properties: {}
     CreateVendorRequest:
       type: object
       properties:
@@ -31951,6 +33380,15 @@ components:
           - name
       required:
       - vendor
+    ArchiveVendorRequest:
+      type: object
+      properties: {}
+    RestoreVendorRequest:
+      type: object
+      properties: {}
+    TrashVendorRequest:
+      type: object
+      properties: {}
     CreateWorkOrderRequest:
       type: object
       properties:
@@ -32103,7 +33541,7 @@ components:
             method:
               type: string
             amount_cents:
-              type: string
+              type: number
               format: float
           required:
           - method

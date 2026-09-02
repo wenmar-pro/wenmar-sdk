@@ -112,5 +112,50 @@
       "noError": true,
       "responseBody": { "path": "0.id", "equals": 2 }
     }
+  },
+  {
+    "name": "trash_customer_success",
+    "operation": "trash_customer",
+    "method": "PATCH",
+    "path": "/customers/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "John Smith", "status": "trashed", "trashed_at": "2026-09-02T00:00:00.000Z" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "trashed" }
+    }
+  },
+  {
+    "name": "archive_customer_success",
+    "operation": "archive_customer",
+    "method": "PATCH",
+    "path": "/customers/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "John Smith", "status": "archived" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "archived" }
+    }
+  },
+  {
+    "name": "restore_customer_success",
+    "operation": "restore_customer",
+    "method": "PATCH",
+    "path": "/customers/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "full_name": "John Smith", "status": "active", "trashed_at": null } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "active" }
+    }
   }
 ]

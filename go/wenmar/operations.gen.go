@@ -991,23 +991,6 @@ func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*
 	return resp, nil
 }
 
-// DeleteCustomer runs the delete_customer operation (DELETE /customers/{id}).
-func (c *Client) DeleteCustomer(ctx context.Context, id int) (*DeleteCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCustomer"})
-	resp, err := c.gen.DeleteCustomerWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCustomer"}, OperationResult{Operation: "DeleteCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCustomer"}, OperationResult{Operation: "DeleteCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCustomer"}, OperationResult{Operation: "DeleteCustomer"})
-	return resp, nil
-}
-
 // ShowCustomer runs the show_customer operation (GET /customers/{id}).
 func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomer"})
@@ -1042,6 +1025,23 @@ func (c *Client) UpdateCustomer(ctx context.Context, id int, body UpdateCustomer
 	return resp, nil
 }
 
+// ArchiveCustomer runs the archive_customer operation (PATCH /customers/{id}/archive).
+func (c *Client) ArchiveCustomer(ctx context.Context, id int, body ArchiveCustomerRequest) (*ArchiveCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveCustomer"})
+	resp, err := c.gen.ArchiveCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer"})
+	return resp, nil
+}
+
 // MergeCustomer runs the merge_customer operation (POST /customers/{id}/merges).
 func (c *Client) MergeCustomer(ctx context.Context, id int, body MergeCustomerRequest) (*MergeCustomerResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeCustomer"})
@@ -1056,6 +1056,40 @@ func (c *Client) MergeCustomer(ctx context.Context, id int, body MergeCustomerRe
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer"})
+	return resp, nil
+}
+
+// RestoreCustomer runs the restore_customer operation (PATCH /customers/{id}/restore).
+func (c *Client) RestoreCustomer(ctx context.Context, id int, body RestoreCustomerRequest) (*RestoreCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreCustomer"})
+	resp, err := c.gen.RestoreCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer"})
+	return resp, nil
+}
+
+// TrashCustomer runs the trash_customer operation (PATCH /customers/{id}/trash).
+func (c *Client) TrashCustomer(ctx context.Context, id int, body TrashCustomerRequest) (*TrashCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashCustomer"})
+	resp, err := c.gen.TrashCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer"})
 	return resp, nil
 }
 
@@ -4323,23 +4357,6 @@ func (c *Client) DecodeVin(ctx context.Context, params *DecodeVinParams) (*Decod
 	return resp, nil
 }
 
-// DeleteVehicle runs the delete_vehicle operation (DELETE /vehicles/{id}).
-func (c *Client) DeleteVehicle(ctx context.Context, id int) (*DeleteVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteVehicle"})
-	resp, err := c.gen.DeleteVehicleWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVehicle"}, OperationResult{Operation: "DeleteVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVehicle"}, OperationResult{Operation: "DeleteVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVehicle"}, OperationResult{Operation: "DeleteVehicle"})
-	return resp, nil
-}
-
 // ShowVehicle runs the show_vehicle operation (GET /vehicles/{id}).
 func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVehicle"})
@@ -4374,6 +4391,23 @@ func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleRe
 	return resp, nil
 }
 
+// ArchiveVehicle runs the archive_vehicle operation (PATCH /vehicles/{id}/archive).
+func (c *Client) ArchiveVehicle(ctx context.Context, id int, body ArchiveVehicleRequest) (*ArchiveVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVehicle"})
+	resp, err := c.gen.ArchiveVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle"})
+	return resp, nil
+}
+
 // MergeVehicle runs the merge_vehicle operation (POST /vehicles/{id}/merges).
 func (c *Client) MergeVehicle(ctx context.Context, id int, body MergeVehicleRequest) (*MergeVehicleResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeVehicle"})
@@ -4391,6 +4425,23 @@ func (c *Client) MergeVehicle(ctx context.Context, id int, body MergeVehicleRequ
 	return resp, nil
 }
 
+// RestoreVehicle runs the restore_vehicle operation (PATCH /vehicles/{id}/restore).
+func (c *Client) RestoreVehicle(ctx context.Context, id int, body RestoreVehicleRequest) (*RestoreVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVehicle"})
+	resp, err := c.gen.RestoreVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle"})
+	return resp, nil
+}
+
 // TransferVehicle runs the transfer_vehicle operation (POST /vehicles/{id}/transfers).
 func (c *Client) TransferVehicle(ctx context.Context, id int, body TransferVehicleRequest) (*TransferVehicleResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TransferVehicle"})
@@ -4405,6 +4456,23 @@ func (c *Client) TransferVehicle(ctx context.Context, id int, body TransferVehic
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle"})
+	return resp, nil
+}
+
+// TrashVehicle runs the trash_vehicle operation (PATCH /vehicles/{id}/trash).
+func (c *Client) TrashVehicle(ctx context.Context, id int, body TrashVehicleRequest) (*TrashVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVehicle"})
+	resp, err := c.gen.TrashVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle"})
 	return resp, nil
 }
 
@@ -4459,23 +4527,6 @@ func (c *Client) CreateVendor(ctx context.Context, body CreateVendorRequest) (*C
 	return resp, nil
 }
 
-// DeleteVendor runs the delete_vendor operation (DELETE /vendors/{id}).
-func (c *Client) DeleteVendor(ctx context.Context, id int) (*DeleteVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteVendor"})
-	resp, err := c.gen.DeleteVendorWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVendor"}, OperationResult{Operation: "DeleteVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVendor"}, OperationResult{Operation: "DeleteVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteVendor"}, OperationResult{Operation: "DeleteVendor"})
-	return resp, nil
-}
-
 // ShowVendor runs the show_vendor operation (GET /vendors/{id}).
 func (c *Client) ShowVendor(ctx context.Context, id int) (*ShowVendorResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVendor"})
@@ -4507,6 +4558,57 @@ func (c *Client) UpdateVendor(ctx context.Context, id int, body UpdateVendorRequ
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor"})
+	return resp, nil
+}
+
+// ArchiveVendor runs the archive_vendor operation (PATCH /vendors/{id}/archive).
+func (c *Client) ArchiveVendor(ctx context.Context, id int, body ArchiveVendorRequest) (*ArchiveVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVendor"})
+	resp, err := c.gen.ArchiveVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor"})
+	return resp, nil
+}
+
+// RestoreVendor runs the restore_vendor operation (PATCH /vendors/{id}/restore).
+func (c *Client) RestoreVendor(ctx context.Context, id int, body RestoreVendorRequest) (*RestoreVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVendor"})
+	resp, err := c.gen.RestoreVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor"})
+	return resp, nil
+}
+
+// TrashVendor runs the trash_vendor operation (PATCH /vendors/{id}/trash).
+func (c *Client) TrashVendor(ctx context.Context, id int, body TrashVendorRequest) (*TrashVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVendor"})
+	resp, err := c.gen.TrashVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor"})
 	return resp, nil
 }
 
@@ -5995,6 +6097,8 @@ func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int) 
 
 
 
+
+
 // GetAllInspections auto-paginates list_inspections, following the Link header up to
 // 1000 items by default.
 func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsParams) ([]Inspection, error) {
@@ -6247,6 +6351,8 @@ func (c *Client) GetAllLookupVehicle(ctx context.Context, params *LookupVehicleP
 
 
 
+
+
 // GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header up to
 // 1000 items by default.
 func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int) ([]WorkOrder, error) {
@@ -6266,6 +6372,8 @@ func (c *Client) GetAllVendors(ctx context.Context) ([]Vendor, error) {
 	}
 	return collectAll[Vendor](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
 }
+
+
 
 
 

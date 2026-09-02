@@ -239,15 +239,15 @@ def update_customer_tag(id, name:)
 end
 # Lists list_customers resources (paginated).
 # @return [Wenmar::Paginator]
-def list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, tag_ids: nil, type: nil)
-  params = { has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, tag_ids: tag_ids, type: type }
+def list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil)
+  params = { has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, status: status, tag_ids: tag_ids, type: type }
   get("/customers", params.compact)
 end
 
 # Fetches all customers, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, tag_ids: nil, type: nil)
-  paginator_to_a(list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, tag_ids: nil, type: nil), 1000)
+def get_all_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil)
+  paginator_to_a(list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil), 1000)
 end
 # Runs create_customer (POST /customers).
 def create_customer(customer:)
@@ -340,10 +340,6 @@ end
 def get_all_customers_work_orders(customer_id)
   paginator_to_a(list_customers_work_orders(customer_id), 1000)
 end
-# Deletes delete_customer.
-def delete_customer(id)
-  delete("/customers/#{id}")
-end
 # Fetches show_customer.
 def show_customer(id)
   get("/customers/#{id}")
@@ -352,9 +348,21 @@ end
 def update_customer(id, customer:)
   patch("/customers/#{id}", { customer: customer })
 end
+# Runs archive_customer (PATCH /customers/{id}/archive).
+def archive_customer(id)
+  patch("/customers/#{id}/archive")
+end
 # Runs merge_customer (POST /customers/{id}/merges).
 def merge_customer(id, source_customer_id:)
   post("/customers/#{id}/merges", { source_customer_id: source_customer_id })
+end
+# Runs restore_customer (PATCH /customers/{id}/restore).
+def restore_customer(id)
+  patch("/customers/#{id}/restore")
+end
+# Runs trash_customer (PATCH /customers/{id}/trash).
+def trash_customer(id)
+  patch("/customers/#{id}/trash")
 end
 # Lists list_expenses resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1300,15 +1308,15 @@ def update_vehicle_tag(id, name:)
 end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
-def list_vehicles(customer_id: nil, page: nil, per_page: nil)
-  params = { customer_id: customer_id, page: page, per_page: per_page }
+def list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
+  params = { customer_id: customer_id, page: page, per_page: per_page, status: status }
   get("/vehicles", params.compact)
 end
 
 # Fetches all vehicles, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_vehicles(customer_id: nil, page: nil, per_page: nil)
-  paginator_to_a(list_vehicles(customer_id: nil, page: nil, per_page: nil), 1000)
+def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
+  paginator_to_a(list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil), 1000)
 end
 # Runs create_vehicle (POST /vehicles).
 def create_vehicle(vehicle:)
@@ -1345,10 +1353,6 @@ def decode_vin(vin: nil)
   params = { vin: vin }
       get("/vehicles/vin_decode", params.compact)
 end
-# Deletes delete_vehicle.
-def delete_vehicle(id)
-  delete("/vehicles/#{id}")
-end
 # Fetches show_vehicle.
 def show_vehicle(id)
   get("/vehicles/#{id}")
@@ -1357,13 +1361,25 @@ end
 def update_vehicle(id, vehicle:)
   patch("/vehicles/#{id}", { vehicle: vehicle })
 end
+# Runs archive_vehicle (PATCH /vehicles/{id}/archive).
+def archive_vehicle(id)
+  patch("/vehicles/#{id}/archive")
+end
 # Runs merge_vehicle (POST /vehicles/{id}/merges).
 def merge_vehicle(id, source_vehicle_id:)
   post("/vehicles/#{id}/merges", { source_vehicle_id: source_vehicle_id })
 end
+# Runs restore_vehicle (PATCH /vehicles/{id}/restore).
+def restore_vehicle(id)
+  patch("/vehicles/#{id}/restore")
+end
 # Runs transfer_vehicle (POST /vehicles/{id}/transfers).
 def transfer_vehicle(id, customer_id:, mode:)
   post("/vehicles/#{id}/transfers", { customer_id: customer_id, mode: mode })
+end
+# Runs trash_vehicle (PATCH /vehicles/{id}/trash).
+def trash_vehicle(id)
+  patch("/vehicles/#{id}/trash")
 end
 # Lists list_vehicles_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1391,10 +1407,6 @@ end
 def create_vendor(vendor:)
   post("/vendors", { vendor: vendor })
 end
-# Deletes delete_vendor.
-def delete_vendor(id)
-  delete("/vendors/#{id}")
-end
 # Fetches show_vendor.
 def show_vendor(id)
   get("/vendors/#{id}")
@@ -1402,6 +1414,18 @@ end
 # Runs update_vendor (PATCH /vendors/{id}).
 def update_vendor(id, vendor:)
   patch("/vendors/#{id}", { vendor: vendor })
+end
+# Runs archive_vendor (PATCH /vendors/{id}/archive).
+def archive_vendor(id)
+  patch("/vendors/#{id}/archive")
+end
+# Runs restore_vendor (PATCH /vendors/{id}/restore).
+def restore_vendor(id)
+  patch("/vendors/#{id}/restore")
+end
+# Runs trash_vendor (PATCH /vendors/{id}/trash).
+def trash_vendor(id)
+  patch("/vendors/#{id}/trash")
 end
 # Lists list_vendors_purchase_orders resources (paginated).
 # @return [Wenmar::Paginator]

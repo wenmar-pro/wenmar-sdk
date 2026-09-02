@@ -9,14 +9,14 @@ module Wenmar
         list_customers create_customer check_customer_duplicate lookup_customer
         list_customers_drivers create_driver delete_driver show_driver update_driver
         list_customers_statements list_customers_vehicles list_customers_vehicles_history
-        list_customers_work_orders delete_customer show_customer update_customer merge_customer
+        list_customers_work_orders show_customer update_customer merge_customer trash_customer archive_customer restore_customer
         show_location list_service_categories create_service_category seed_defaults_service_categories
         delete_service_category update_service_category
         list_tags update_tags show_statement list_users list_permission_groups list_vehicle_tags
         create_vehicle_tag delete_vehicle_tag update_vehicle_tag
         list_vehicles create_vehicle check_vehicle_duplicate lookup_vehicle prefill_vehicle decode_vin
-        delete_vehicle show_vehicle update_vehicle merge_vehicle transfer_vehicle
-        list_vehicles_work_orders list_vendors show_vendor
+        show_vehicle update_vehicle merge_vehicle transfer_vehicle trash_vehicle archive_vehicle restore_vehicle
+        list_vehicles_work_orders list_vendors show_vendor trash_vendor archive_vendor restore_vendor
         list_work_orders create_work_order delete_work_order show_work_order update_work_order
         show_work_order_declined_services show_work_order_service_history
         create_work_order_authorization update_work_order_authorization_decisions

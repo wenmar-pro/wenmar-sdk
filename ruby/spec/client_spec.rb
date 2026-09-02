@@ -70,10 +70,12 @@ module Wenmar
       assert_equal "Toyota", result["make"]
     end
 
-    def test_delete_vehicle
-      stub_api(:delete, "/vehicles/1", nil, status: 204)
+    def test_trash_vehicle
+      stub_request(:patch, "#{@base_url}/vehicles/1/trash")
+        .to_return(status: 200, body: { id: 1, status: "trashed" }.to_json, headers: { "Content-Type" => "application/json" })
       client = Client.new(token: "test", base_url: @base_url)
-      assert_nil client.delete_vehicle(1)
+      result = client.trash_vehicle(1)
+      assert_equal "trashed", result["status"]
     end
 
     def test_decode_vin
