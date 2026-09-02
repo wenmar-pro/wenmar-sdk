@@ -1,3 +1,5 @@
 *.gem
 .worktrees/
 docs/scalar/openapi.enriched.yaml
+docs/handoffs
+docs/superpowers
