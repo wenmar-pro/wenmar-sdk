@@ -16989,6 +16989,152 @@ paths:
                 - error
       description: GET /reports/work_order_profitability
       operationId: GET_reports_work_order_profitability
+  "/scan/lookups":
+    post:
+      summary: lookup
+      tags:
+      - Shop::Scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                type:
+                  type: string
+              required:
+              - code
+              - type
+      responses:
+        '200':
+          description: POST /scan/lookups -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  outcome:
+                    type: string
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  vehicle_id:
+                    nullable: true
+                    type: integer
+                  customer_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                required:
+                - outcome
+                - work_order_id
+                - vehicle_id
+                - customer_id
+                - appointment_id
+      description: POST /scan/lookups
+      operationId: POST_scan_lookups
+      x-internal: true
+  "/scan/started_work_orders":
+    post:
+      summary: start_ro
+      tags:
+      - Shop::Scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outcome:
+                  type: string
+                vehicle_id:
+                  type: integer
+              required:
+              - outcome
+              - vehicle_id
+      responses:
+        '200':
+          description: POST /scan/started_work_orders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  work_order_id:
+                    type: integer
+                required:
+                - status
+                - work_order_id
+      description: POST /scan/started_work_orders
+      operationId: POST_scan_started_work_orders
+      x-internal: true
+  "/scan/vehicles":
+    post:
+      summary: create_vehicle_and_start_ro
+      tags:
+      - Shop::Scan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    phone:
+                      type: string
+                  required:
+                  - first_name
+                  - last_name
+                  - phone
+                vehicle:
+                  type: object
+                  properties:
+                    vin:
+                      type: string
+                    year:
+                      type: string
+                    make:
+                      type: string
+                    model:
+                      type: string
+                  required:
+                  - vin
+                  - year
+                  - make
+                  - model
+              required:
+              - customer
+              - vehicle
+      responses:
+        '200':
+          description: POST /scan/vehicles -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  work_order_id:
+                    type: integer
+                required:
+                - status
+                - work_order_id
+      description: POST /scan/vehicles
+      operationId: POST_scan_vehicles
+      x-internal: true
   "/search":
     get:
       summary: results
@@ -20732,6 +20878,121 @@ paths:
                 - error
       description: PATCH /sublet_packages/{id}/deactivate
       operationId: PATCH_sublet_packages_id_deactivate
+  "/time_entries":
+    post:
+      summary: create
+      tags:
+      - Shop::TimeEntry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                work_order_service_id:
+                  type: integer
+              required:
+              - type
+              - work_order_service_id
+      responses:
+        '201':
+          description: POST /time_entries -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+        '401':
+          description: POST /time_entries -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '422':
+          description: POST /time_entries -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: POST /time_entries
+      operationId: POST_time_entries
+      x-internal: true
+  "/time_entries/{id}":
+    patch:
+      summary: update
+      tags:
+      - Shop::TimeEntry
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+              required:
+              - status
+      responses:
+        '200':
+          description: PATCH /time_entries/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+      description: PATCH /time_entries/{id}
+      operationId: PATCH_time_entries_id_
+      x-internal: true
   "/tire_storage_slots":
     get:
       summary: index
@@ -26924,6 +27185,55 @@ paths:
               description: Records per page
       description: GET /vendors/{vendor_id}/purchase_orders
       operationId: GET_vendors_vendor_id_purchase_orders
+  "/voice_commands/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::VoiceCommand
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: DELETE /voice_commands/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                - status
+        '404':
+          description: DELETE /voice_commands/{id} -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: DELETE /voice_commands/{id}
+      operationId: DELETE_voice_commands_id_
+      x-internal: true
   "/work_orders":
     get:
       summary: index
