@@ -63,12 +63,37 @@ type CloseWorkOrderZeroRequest = map[string]interface{}
 // CompleteInspectionReportRequest defines model for CompleteInspectionReportRequest.
 type CompleteInspectionReportRequest = map[string]interface{}
 
+// CreateAppointmentRequest defines model for CreateAppointmentRequest.
+type CreateAppointmentRequest struct {
+	Appointment struct {
+		CustomerId   int    `json:"customer_id"`
+		IntakeMethod string `json:"intake_method"`
+		StartsAt     string `json:"starts_at"`
+		VehicleId    int    `json:"vehicle_id"`
+	} `json:"appointment"`
+}
+
+// CreateAppointmentsApprovalRequest defines model for CreateAppointmentsApprovalRequest.
+type CreateAppointmentsApprovalRequest = map[string]interface{}
+
+// CreateAppointmentsCancellationRequest defines model for CreateAppointmentsCancellationRequest.
+type CreateAppointmentsCancellationRequest = map[string]interface{}
+
 // CreateAppointmentsFollowUpRequest defines model for CreateAppointmentsFollowUpRequest.
 type CreateAppointmentsFollowUpRequest struct {
 	Appointment struct {
 		FollowUpReason string `json:"follow_up_reason"`
 		StartsAt       string `json:"starts_at"`
 	} `json:"appointment"`
+}
+
+// CreateAppointmentsRejectionRequest defines model for CreateAppointmentsRejectionRequest.
+type CreateAppointmentsRejectionRequest = map[string]interface{}
+
+// CreateAppointmentsVehicleReconciliationRequest defines model for CreateAppointmentsVehicleReconciliationRequest.
+type CreateAppointmentsVehicleReconciliationRequest struct {
+	VehicleAction string `json:"vehicle_action"`
+	VehicleId     int    `json:"vehicle_id"`
 }
 
 // CreateAppointmentsWorkOrderRequest defines model for CreateAppointmentsWorkOrderRequest.
@@ -154,12 +179,27 @@ type CreateCustomerTagRequest struct {
 	Name string `json:"name"`
 }
 
+// CreateCustomersExportRequest defines model for CreateCustomersExportRequest.
+type CreateCustomersExportRequest = map[string]interface{}
+
 // CreateDriverRequest defines model for CreateDriverRequest.
 type CreateDriverRequest struct {
 	Driver struct {
 		FullName string `json:"full_name"`
 		Phone    string `json:"phone"`
 	} `json:"driver"`
+}
+
+// CreateExpenseRequest defines model for CreateExpenseRequest.
+type CreateExpenseRequest struct {
+	Expense struct {
+		Amount        int    `json:"amount"`
+		Category      string `json:"category"`
+		Description   string `json:"description"`
+		ExpenseDate   string `json:"expense_date"`
+		Payee         string `json:"payee"`
+		PaymentMethod string `json:"payment_method"`
+	} `json:"expense"`
 }
 
 // CreateInspectionReportRequest defines model for CreateInspectionReportRequest.
@@ -222,13 +262,36 @@ type CreateLeadSourceRequest struct {
 	} `json:"lead_source"`
 }
 
+// CreateLeadSourcesSeedDefaultRequest defines model for CreateLeadSourcesSeedDefaultRequest.
+type CreateLeadSourcesSeedDefaultRequest = map[string]interface{}
+
 // CreateNotificationsBulkMarkReadRequest defines model for CreateNotificationsBulkMarkReadRequest.
 type CreateNotificationsBulkMarkReadRequest struct {
 	NotificationIds *[]int `json:"notification_ids,omitempty"`
 }
 
+// CreateOrdersPurchaseOrderRequest defines model for CreateOrdersPurchaseOrderRequest.
+type CreateOrdersPurchaseOrderRequest struct {
+	PurchaseOrder struct {
+		FulfillmentMethod string `json:"fulfillment_method"`
+		LineItems         struct {
+			N0 struct {
+				Description     string `json:"description"`
+				PartId          int    `json:"part_id"`
+				QuantityOrdered int    `json:"quantity_ordered"`
+				UnitCost        string `json:"unit_cost"`
+			} `json:"0"`
+		} `json:"line_items"`
+		PaymentMethod string `json:"payment_method"`
+		VendorId      int    `json:"vendor_id"`
+	} `json:"purchase_order"`
+}
+
 // CreateOrdersPurchaseOrdersCancellationRequest defines model for CreateOrdersPurchaseOrdersCancellationRequest.
 type CreateOrdersPurchaseOrdersCancellationRequest = map[string]interface{}
+
+// CreateOrdersReturnOrdersRefundCompletionRequest defines model for CreateOrdersReturnOrdersRefundCompletionRequest.
+type CreateOrdersReturnOrdersRefundCompletionRequest = map[string]interface{}
 
 // CreatePackageRequest defines model for CreatePackageRequest.
 type CreatePackageRequest struct {
@@ -249,6 +312,15 @@ type CreatePartsMatriceRequest struct {
 		Name      string `json:"name"`
 	} `json:"parts_matrix"`
 }
+
+// CreatePaymentsCancellationRequest defines model for CreatePaymentsCancellationRequest.
+type CreatePaymentsCancellationRequest = map[string]interface{}
+
+// CreatePaymentsConfirmationRequest defines model for CreatePaymentsConfirmationRequest.
+type CreatePaymentsConfirmationRequest = map[string]interface{}
+
+// CreatePaymentsFailureRequest defines model for CreatePaymentsFailureRequest.
+type CreatePaymentsFailureRequest = map[string]interface{}
 
 // CreatePermissionGroupRequest defines model for CreatePermissionGroupRequest.
 type CreatePermissionGroupRequest struct {
@@ -287,6 +359,9 @@ type CreateShopDiscountRequest struct {
 	} `json:"shop_discount_config"`
 }
 
+// CreateShopDiscountsDuplicateRequest defines model for CreateShopDiscountsDuplicateRequest.
+type CreateShopDiscountsDuplicateRequest = map[string]interface{}
+
 // CreateShopFeeRequest defines model for CreateShopFeeRequest.
 type CreateShopFeeRequest struct {
 	ShopFeeConfig struct {
@@ -296,6 +371,9 @@ type CreateShopFeeRequest struct {
 		Name    string  `json:"name"`
 	} `json:"shop_fee_config"`
 }
+
+// CreateShopFeesDuplicateRequest defines model for CreateShopFeesDuplicateRequest.
+type CreateShopFeesDuplicateRequest = map[string]interface{}
 
 // CreateStoreCreditsVoidRequest defines model for CreateStoreCreditsVoidRequest.
 type CreateStoreCreditsVoidRequest = map[string]interface{}
@@ -422,6 +500,14 @@ type CreateWorkOrderAuthorizationRequest struct {
 	ServiceIds []int `json:"service_ids"`
 }
 
+// CreateWorkOrderPaymentRequest defines model for CreateWorkOrderPaymentRequest.
+type CreateWorkOrderPaymentRequest struct {
+	Payment struct {
+		AmountCents string `json:"amount_cents"`
+		Method      string `json:"method"`
+	} `json:"payment"`
+}
+
 // CreateWorkOrderRequest defines model for CreateWorkOrderRequest.
 type CreateWorkOrderRequest struct {
 	WorkOrder struct {
@@ -435,9 +521,25 @@ type CreateWorkOrdersCourtesyCarAssignmentRequest struct {
 	VehicleId int `json:"vehicle_id"`
 }
 
+// CreateWorkOrdersFeeExclusionRequest defines model for CreateWorkOrdersFeeExclusionRequest.
+type CreateWorkOrdersFeeExclusionRequest struct {
+	WorkOrderFeeExclusion struct {
+		ShopFeeConfigId int `json:"shop_fee_config_id"`
+	} `json:"work_order_fee_exclusion"`
+}
+
 // CreateWorkOrdersLabelRequest defines model for CreateWorkOrdersLabelRequest.
 type CreateWorkOrdersLabelRequest struct {
 	LabelId int `json:"label_id"`
+}
+
+// CreateWorkOrdersRefundRequest defines model for CreateWorkOrdersRefundRequest.
+type CreateWorkOrdersRefundRequest struct {
+	Refund struct {
+		Amount    string `json:"amount"`
+		PaymentId int    `json:"payment_id"`
+		Reason    string `json:"reason"`
+	} `json:"refund"`
 }
 
 // CreateWorkOrdersServiceRequest defines model for CreateWorkOrdersServiceRequest.
@@ -478,6 +580,11 @@ type CreateWorkOrdersServicesLineItemRequest struct {
 
 // CreateWorkOrdersServicesUnauthorizeRequest defines model for CreateWorkOrdersServicesUnauthorizeRequest.
 type CreateWorkOrdersServicesUnauthorizeRequest = map[string]interface{}
+
+// CreateWorkOrdersVoidRequest defines model for CreateWorkOrdersVoidRequest.
+type CreateWorkOrdersVoidRequest struct {
+	PaymentId int `json:"payment_id"`
+}
 
 // Customer defines model for Customer.
 type Customer struct {
@@ -660,26 +767,31 @@ type PullWorkOrderServiceLineItemRequest = map[string]interface{}
 
 // PurchaseOrder defines model for PurchaseOrder.
 type PurchaseOrder struct {
-	AppUrl              string `json:"app_url"`
-	CoreChargesCents    int    `json:"core_charges_cents"`
-	CreatedAt           string `json:"created_at"`
+	AppUrl           string `json:"app_url"`
+	CoreChargesCents int    `json:"core_charges_cents"`
+	CreatedAt        string `json:"created_at"`
+	Creator          struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
 	FreightCostCents    int    `json:"freight_cost_cents"`
 	FreightCostCurrency string `json:"freight_cost_currency"`
 	FulfillmentMethod   string `json:"fulfillment_method"`
 	Id                  int    `json:"id"`
 	LineItems           []struct {
-		CoreChargeCents  int    `json:"core_charge_cents"`
-		CreatedAt        string `json:"created_at"`
-		Id               int    `json:"id"`
-		PartId           int    `json:"part_id"`
-		PartName         string `json:"part_name"`
-		PartNumber       string `json:"part_number"`
-		QuantityOrdered  string `json:"quantity_ordered"`
-		QuantityReceived string `json:"quantity_received"`
-		Status           string `json:"status"`
-		UnitCostCents    int    `json:"unit_cost_cents"`
-		UpdatedAt        string `json:"updated_at"`
-		VendorPartNumber string `json:"vendor_part_number"`
+		CoreChargeCents  int     `json:"core_charge_cents"`
+		CreatedAt        string  `json:"created_at"`
+		Id               int     `json:"id"`
+		PartId           int     `json:"part_id"`
+		PartName         string  `json:"part_name"`
+		PartNumber       string  `json:"part_number"`
+		QuantityOrdered  string  `json:"quantity_ordered"`
+		QuantityReceived string  `json:"quantity_received"`
+		Status           string  `json:"status"`
+		UnitCostCents    int     `json:"unit_cost_cents"`
+		UpdatedAt        string  `json:"updated_at"`
+		VendorPartNumber *string `json:"vendor_part_number"`
 	} `json:"line_items"`
 	LineItemsCount int `json:"line_items_count"`
 	Location       struct {
@@ -687,32 +799,27 @@ type PurchaseOrder struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Notes          string  `json:"notes"`
-	OrderMethod    string  `json:"order_method"`
-	OrderedAt      string  `json:"ordered_at"`
-	PaymentDueAt   *string `json:"payment_due_at"`
-	PaymentMethod  string  `json:"payment_method"`
-	PoNumber       int     `json:"po_number"`
-	ReceivedAt     *string `json:"received_at"`
-	Status         string  `json:"status"`
-	SubtotalCents  string  `json:"subtotal_cents"`
-	TotalCents     string  `json:"total_cents"`
-	TrackingNumber string  `json:"tracking_number"`
-	Type           string  `json:"type"`
-	UpdatedAt      string  `json:"updated_at"`
-	Url            string  `json:"url"`
+	Notes          *string     `json:"notes"`
+	OrderMethod    string      `json:"order_method"`
+	OrderedAt      string      `json:"ordered_at"`
+	PaymentDueAt   *string     `json:"payment_due_at"`
+	PaymentMethod  string      `json:"payment_method"`
+	PoNumber       int         `json:"po_number"`
+	ReceivedAt     *string     `json:"received_at"`
+	Status         string      `json:"status"`
+	SubtotalCents  string      `json:"subtotal_cents"`
+	TotalCents     string      `json:"total_cents"`
+	TrackingNumber interface{} `json:"tracking_number"`
+	Type           string      `json:"type"`
+	UpdatedAt      string      `json:"updated_at"`
+	Url            string      `json:"url"`
 	Vendor         struct {
 		Id   int    `json:"id"`
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"vendor"`
-	VendorInvoiceNumber     string  `json:"vendor_invoice_number"`
-	VendorInvoiceReceivedAt *string `json:"vendor_invoice_received_at"`
-	WorkOrder               struct {
-		Id     int    `json:"id"`
-		Number int    `json:"number"`
-		Url    string `json:"url"`
-	} `json:"work_order"`
+	VendorInvoiceNumber     interface{} `json:"vendor_invoice_number"`
+	VendorInvoiceReceivedAt *string     `json:"vendor_invoice_received_at"`
 }
 
 // ReassignInspectionReportRequest defines model for ReassignInspectionReportRequest.
@@ -737,6 +844,62 @@ type ResetInspectionReportRequest = map[string]interface{}
 
 // RetryInspectionReportRecordingRequest defines model for RetryInspectionReportRecordingRequest.
 type RetryInspectionReportRecordingRequest = map[string]interface{}
+
+// ReturnOrder defines model for ReturnOrder.
+type ReturnOrder struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Creator   struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
+	CreditMethod    interface{} `json:"credit_method"`
+	Id              int         `json:"id"`
+	IsWarrantyClaim bool        `json:"is_warranty_claim"`
+	LineItems       []struct {
+		CoreChargeCents         int     `json:"core_charge_cents"`
+		CoreCreditedCents       int     `json:"core_credited_cents"`
+		CreatedAt               string  `json:"created_at"`
+		Id                      int     `json:"id"`
+		Notes                   *string `json:"notes"`
+		PartId                  int     `json:"part_id"`
+		PartType                string  `json:"part_type"`
+		PurchaseOrderLineItemId *int    `json:"purchase_order_line_item_id"`
+		Quantity                float32 `json:"quantity"`
+		RestockingFeeCents      int     `json:"restocking_fee_cents"`
+		RestockingFeePercent    string  `json:"restocking_fee_percent"`
+		UnitCostCents           int     `json:"unit_cost_cents"`
+		UpdatedAt               string  `json:"updated_at"`
+	} `json:"line_items"`
+	LineItemsCount int `json:"line_items_count"`
+	Location       struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Notes              *string     `json:"notes"`
+	ReasonCode         interface{} `json:"reason_code"`
+	RefundCompletedAt  *string     `json:"refund_completed_at"`
+	RestockingFeeCents int         `json:"restocking_fee_cents"`
+	ReturnNumber       int         `json:"return_number"`
+	RmaNumber          interface{} `json:"rma_number"`
+	ShippingFeeCents   int         `json:"shipping_fee_cents"`
+	Status             string      `json:"status"`
+	Type               string      `json:"type"`
+	UpdatedAt          string      `json:"updated_at"`
+	Url                string      `json:"url"`
+	Vendor             struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"vendor"`
+	WorkOrder struct {
+		Id     int    `json:"id"`
+		Number int    `json:"number"`
+		Url    string `json:"url"`
+	} `json:"work_order"`
+}
 
 // ReturnWorkOrderToBoardRequest defines model for ReturnWorkOrderToBoardRequest.
 type ReturnWorkOrderToBoardRequest = map[string]interface{}
@@ -775,32 +938,42 @@ type SetDefaultInspectionRequest = map[string]interface{}
 
 // Statement defines model for Statement.
 type Statement struct {
-	AppUrl    string `json:"app_url"`
-	CreatedAt string `json:"created_at"`
-	Customer  struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
 		FullName string `json:"full_name"`
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
 	} `json:"customer"`
-	DueDate         string  `json:"due_date"`
-	EndDate         string  `json:"end_date"`
-	Id              int     `json:"id"`
-	SentAt          *string `json:"sent_at"`
-	StartDate       string  `json:"start_date"`
-	StatementDate   string  `json:"statement_date"`
-	StatementNumber string  `json:"statement_number"`
-	Status          string  `json:"status"`
-	Totals          struct {
-		BalanceDueCents       int    `json:"balance_due_cents"`
-		CreditsCents          int    `json:"credits_cents"`
-		Currency              string `json:"currency"`
-		NewChargesCents       int    `json:"new_charges_cents"`
-		PaymentsReceivedCents int    `json:"payments_received_cents"`
-		PreviousBalanceCents  int    `json:"previous_balance_cents"`
-	} `json:"totals"`
-	UpdatedAt string  `json:"updated_at"`
-	Url       string  `json:"url"`
-	ViewedAt  *string `json:"viewed_at"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
 }
 
 // SubletOrder defines model for SubletOrder.
@@ -863,6 +1036,13 @@ type UnpublishInspectionReportRequest = map[string]interface{}
 // UpdateAiSuggestionRequest defines model for UpdateAiSuggestionRequest.
 type UpdateAiSuggestionRequest struct {
 	Status string `json:"status"`
+}
+
+// UpdateAppointmentRequest defines model for UpdateAppointmentRequest.
+type UpdateAppointmentRequest struct {
+	Appointment struct {
+		CustomerConcern string `json:"customer_concern"`
+	} `json:"appointment"`
 }
 
 // UpdateCashDrawerBannerRequest defines model for UpdateCashDrawerBannerRequest.
@@ -938,6 +1118,13 @@ type UpdateDriverRequest struct {
 	} `json:"driver"`
 }
 
+// UpdateExpenseRequest defines model for UpdateExpenseRequest.
+type UpdateExpenseRequest struct {
+	Expense struct {
+		Description string `json:"description"`
+	} `json:"expense"`
+}
+
 // UpdateInspectionRequest defines model for UpdateInspectionRequest.
 type UpdateInspectionRequest struct {
 	Inspection struct {
@@ -1000,6 +1187,13 @@ type UpdateOrdersPurchaseOrderRequest struct {
 	} `json:"purchase_order"`
 }
 
+// UpdateOrdersReturnOrderRequest defines model for UpdateOrdersReturnOrderRequest.
+type UpdateOrdersReturnOrderRequest struct {
+	ReturnOrder struct {
+		RmaNumber string `json:"rma_number"`
+	} `json:"return_order"`
+}
+
 // UpdateOrdersSubletOrdersMarkPaymentCompleteRequest defines model for UpdateOrdersSubletOrdersMarkPaymentCompleteRequest.
 type UpdateOrdersSubletOrdersMarkPaymentCompleteRequest struct {
 	PaymentMethod  string `json:"payment_method"`
@@ -1041,6 +1235,13 @@ type UpdateSettingsAccountRequest struct {
 	Account struct {
 		Name string `json:"name"`
 	} `json:"account"`
+}
+
+// UpdateSettingsLaborTemplateRequest defines model for UpdateSettingsLaborTemplateRequest.
+type UpdateSettingsLaborTemplateRequest struct {
+	LaborTemplate struct {
+		DefaultHours float32 `json:"default_hours"`
+	} `json:"labor_template"`
 }
 
 // UpdateShopDiscountRequest defines model for UpdateShopDiscountRequest.
@@ -1153,6 +1354,11 @@ type UpdateWorkOrderServiceLineItemPartStatusRequest struct {
 	PartStatus string `json:"part_status"`
 }
 
+// UpdateWorkOrdersCourtesyCarAssignmentRequest defines model for UpdateWorkOrdersCourtesyCarAssignmentRequest.
+type UpdateWorkOrdersCourtesyCarAssignmentRequest struct {
+	ActionType string `json:"action_type"`
+}
+
 // UpdateWorkOrdersPostToAccountRequest defines model for UpdateWorkOrdersPostToAccountRequest.
 type UpdateWorkOrdersPostToAccountRequest = map[string]interface{}
 
@@ -1169,6 +1375,7 @@ type UpdateWorkOrdersSendReminderRequest = map[string]interface{}
 type UpdateWorkOrdersServiceRequest struct {
 	WorkOrderService struct {
 		Name        *string `json:"name,omitempty"`
+		Position    *int    `json:"position,omitempty"`
 		PricingMode *string `json:"pricing_mode,omitempty"`
 	} `json:"work_order_service"`
 }
@@ -1206,6 +1413,11 @@ type UpdateWorkOrdersServicesPauseRequest = map[string]interface{}
 
 // UpdateWorkOrdersServicesPublishRequest defines model for UpdateWorkOrdersServicesPublishRequest.
 type UpdateWorkOrdersServicesPublishRequest = map[string]interface{}
+
+// UpdateWorkOrdersServicesReorderRequest defines model for UpdateWorkOrdersServicesReorderRequest.
+type UpdateWorkOrdersServicesReorderRequest struct {
+	ServiceIds []int `json:"service_ids"`
+}
 
 // UpdateWorkOrdersServicesResetCompletionRequest defines model for UpdateWorkOrdersServicesResetCompletionRequest.
 type UpdateWorkOrdersServicesResetCompletionRequest = map[string]interface{}
@@ -1545,6 +1757,7 @@ type ListUsersParams struct {
 type ListVehiclesParams struct {
 	CustomerId *int `form:"customer_id,omitempty" json:"customer_id,omitempty"`
 	Page       *int `form:"page,omitempty" json:"page,omitempty"`
+	PerPage    *int `form:"per_page,omitempty" json:"per_page,omitempty"`
 }
 
 // ListVehiclesAutocompleteParams defines parameters for ListVehiclesAutocomplete.
@@ -1580,6 +1793,11 @@ type DecodeVinParams struct {
 	Vin *string `form:"vin,omitempty" json:"vin,omitempty"`
 }
 
+// ListWorkOrdersParams defines parameters for ListWorkOrders.
+type ListWorkOrdersParams struct {
+	PerPage *int `form:"per_page,omitempty" json:"per_page,omitempty"`
+}
+
 // ListWorkOrdersSummaryActivityParams defines parameters for ListWorkOrdersSummaryActivity.
 type ListWorkOrdersSummaryActivityParams struct {
 	Category *string `form:"category,omitempty" json:"category,omitempty"`
@@ -1588,8 +1806,26 @@ type ListWorkOrdersSummaryActivityParams struct {
 // UpdateAiSuggestionJSONRequestBody defines body for UpdateAiSuggestion for application/json ContentType.
 type UpdateAiSuggestionJSONRequestBody = UpdateAiSuggestionRequest
 
+// CreateAppointmentJSONRequestBody defines body for CreateAppointment for application/json ContentType.
+type CreateAppointmentJSONRequestBody = CreateAppointmentRequest
+
+// UpdateAppointmentJSONRequestBody defines body for UpdateAppointment for application/json ContentType.
+type UpdateAppointmentJSONRequestBody = UpdateAppointmentRequest
+
+// CreateAppointmentsApprovalJSONRequestBody defines body for CreateAppointmentsApproval for application/json ContentType.
+type CreateAppointmentsApprovalJSONRequestBody = CreateAppointmentsApprovalRequest
+
+// CreateAppointmentsCancellationJSONRequestBody defines body for CreateAppointmentsCancellation for application/json ContentType.
+type CreateAppointmentsCancellationJSONRequestBody = CreateAppointmentsCancellationRequest
+
 // CreateAppointmentsFollowUpJSONRequestBody defines body for CreateAppointmentsFollowUp for application/json ContentType.
 type CreateAppointmentsFollowUpJSONRequestBody = CreateAppointmentsFollowUpRequest
+
+// CreateAppointmentsRejectionJSONRequestBody defines body for CreateAppointmentsRejection for application/json ContentType.
+type CreateAppointmentsRejectionJSONRequestBody = CreateAppointmentsRejectionRequest
+
+// CreateAppointmentsVehicleReconciliationJSONRequestBody defines body for CreateAppointmentsVehicleReconciliation for application/json ContentType.
+type CreateAppointmentsVehicleReconciliationJSONRequestBody = CreateAppointmentsVehicleReconciliationRequest
 
 // CreateAppointmentsWorkOrderJSONRequestBody defines body for CreateAppointmentsWorkOrder for application/json ContentType.
 type CreateAppointmentsWorkOrderJSONRequestBody = CreateAppointmentsWorkOrderRequest
@@ -1645,6 +1881,9 @@ type UpdateCustomerTagJSONRequestBody = UpdateCustomerTagRequest
 // CreateCustomerJSONRequestBody defines body for CreateCustomer for application/json ContentType.
 type CreateCustomerJSONRequestBody = CreateCustomerRequest
 
+// CreateCustomersExportJSONRequestBody defines body for CreateCustomersExport for application/json ContentType.
+type CreateCustomersExportJSONRequestBody = CreateCustomersExportRequest
+
 // CreateDriverJSONRequestBody defines body for CreateDriver for application/json ContentType.
 type CreateDriverJSONRequestBody = CreateDriverRequest
 
@@ -1656,6 +1895,12 @@ type UpdateCustomerJSONRequestBody = UpdateCustomerRequest
 
 // MergeCustomerJSONRequestBody defines body for MergeCustomer for application/json ContentType.
 type MergeCustomerJSONRequestBody = MergeCustomerRequest
+
+// CreateExpenseJSONRequestBody defines body for CreateExpense for application/json ContentType.
+type CreateExpenseJSONRequestBody = CreateExpenseRequest
+
+// UpdateExpenseJSONRequestBody defines body for UpdateExpense for application/json ContentType.
+type UpdateExpenseJSONRequestBody = UpdateExpenseRequest
 
 // CreateInspectionReportJSONRequestBody defines body for CreateInspectionReport for application/json ContentType.
 type CreateInspectionReportJSONRequestBody = CreateInspectionReportRequest
@@ -1729,6 +1974,9 @@ type UpdateLaborRateJSONRequestBody = UpdateLaborRateRequest
 // CreateLeadSourceJSONRequestBody defines body for CreateLeadSource for application/json ContentType.
 type CreateLeadSourceJSONRequestBody = CreateLeadSourceRequest
 
+// CreateLeadSourcesSeedDefaultJSONRequestBody defines body for CreateLeadSourcesSeedDefault for application/json ContentType.
+type CreateLeadSourcesSeedDefaultJSONRequestBody = CreateLeadSourcesSeedDefaultRequest
+
 // UpdateLeadSourceJSONRequestBody defines body for UpdateLeadSource for application/json ContentType.
 type UpdateLeadSourceJSONRequestBody = UpdateLeadSourceRequest
 
@@ -1738,11 +1986,20 @@ type CreateNotificationsBulkMarkReadJSONRequestBody = CreateNotificationsBulkMar
 // UpdateNotificationJSONRequestBody defines body for UpdateNotification for application/json ContentType.
 type UpdateNotificationJSONRequestBody = UpdateNotificationRequest
 
+// CreateOrdersPurchaseOrderJSONRequestBody defines body for CreateOrdersPurchaseOrder for application/json ContentType.
+type CreateOrdersPurchaseOrderJSONRequestBody = CreateOrdersPurchaseOrderRequest
+
 // UpdateOrdersPurchaseOrderJSONRequestBody defines body for UpdateOrdersPurchaseOrder for application/json ContentType.
 type UpdateOrdersPurchaseOrderJSONRequestBody = UpdateOrdersPurchaseOrderRequest
 
 // CreateOrdersPurchaseOrdersCancellationJSONRequestBody defines body for CreateOrdersPurchaseOrdersCancellation for application/json ContentType.
 type CreateOrdersPurchaseOrdersCancellationJSONRequestBody = CreateOrdersPurchaseOrdersCancellationRequest
+
+// UpdateOrdersReturnOrderJSONRequestBody defines body for UpdateOrdersReturnOrder for application/json ContentType.
+type UpdateOrdersReturnOrderJSONRequestBody = UpdateOrdersReturnOrderRequest
+
+// CreateOrdersReturnOrdersRefundCompletionJSONRequestBody defines body for CreateOrdersReturnOrdersRefundCompletion for application/json ContentType.
+type CreateOrdersReturnOrdersRefundCompletionJSONRequestBody = CreateOrdersReturnOrdersRefundCompletionRequest
 
 // UpdateOrdersSubletOrdersMarkPaymentCompleteJSONRequestBody defines body for UpdateOrdersSubletOrdersMarkPaymentComplete for application/json ContentType.
 type UpdateOrdersSubletOrdersMarkPaymentCompleteJSONRequestBody = UpdateOrdersSubletOrdersMarkPaymentCompleteRequest
@@ -1762,6 +2019,15 @@ type CreatePartsMatriceJSONRequestBody = CreatePartsMatriceRequest
 // UpdatePartsMatriceJSONRequestBody defines body for UpdatePartsMatrice for application/json ContentType.
 type UpdatePartsMatriceJSONRequestBody = UpdatePartsMatriceRequest
 
+// CreatePaymentsCancellationJSONRequestBody defines body for CreatePaymentsCancellation for application/json ContentType.
+type CreatePaymentsCancellationJSONRequestBody = CreatePaymentsCancellationRequest
+
+// CreatePaymentsConfirmationJSONRequestBody defines body for CreatePaymentsConfirmation for application/json ContentType.
+type CreatePaymentsConfirmationJSONRequestBody = CreatePaymentsConfirmationRequest
+
+// CreatePaymentsFailureJSONRequestBody defines body for CreatePaymentsFailure for application/json ContentType.
+type CreatePaymentsFailureJSONRequestBody = CreatePaymentsFailureRequest
+
 // CreateRecentSearcheJSONRequestBody defines body for CreateRecentSearche for application/json ContentType.
 type CreateRecentSearcheJSONRequestBody = CreateRecentSearcheRequest
 
@@ -1777,6 +2043,9 @@ type UpdateServiceCategoryJSONRequestBody = UpdateServiceCategoryRequest
 // UpdateSettingsAccountJSONRequestBody defines body for UpdateSettingsAccount for application/json ContentType.
 type UpdateSettingsAccountJSONRequestBody = UpdateSettingsAccountRequest
 
+// UpdateSettingsLaborTemplateJSONRequestBody defines body for UpdateSettingsLaborTemplate for application/json ContentType.
+type UpdateSettingsLaborTemplateJSONRequestBody = UpdateSettingsLaborTemplateRequest
+
 // UpdateTagsJSONRequestBody defines body for UpdateTags for application/json ContentType.
 type UpdateTagsJSONRequestBody = UpdateTagsRequest
 
@@ -1786,11 +2055,17 @@ type CreateShopDiscountJSONRequestBody = CreateShopDiscountRequest
 // UpdateShopDiscountJSONRequestBody defines body for UpdateShopDiscount for application/json ContentType.
 type UpdateShopDiscountJSONRequestBody = UpdateShopDiscountRequest
 
+// CreateShopDiscountsDuplicateJSONRequestBody defines body for CreateShopDiscountsDuplicate for application/json ContentType.
+type CreateShopDiscountsDuplicateJSONRequestBody = CreateShopDiscountsDuplicateRequest
+
 // CreateShopFeeJSONRequestBody defines body for CreateShopFee for application/json ContentType.
 type CreateShopFeeJSONRequestBody = CreateShopFeeRequest
 
 // UpdateShopFeeJSONRequestBody defines body for UpdateShopFee for application/json ContentType.
 type UpdateShopFeeJSONRequestBody = UpdateShopFeeRequest
+
+// CreateShopFeesDuplicateJSONRequestBody defines body for CreateShopFeesDuplicate for application/json ContentType.
+type CreateShopFeesDuplicateJSONRequestBody = CreateShopFeesDuplicateRequest
 
 // CreateStoreCreditsVoidJSONRequestBody defines body for CreateStoreCreditsVoid for application/json ContentType.
 type CreateStoreCreditsVoidJSONRequestBody = CreateStoreCreditsVoidRequest
@@ -1888,6 +2163,9 @@ type CloseWorkOrderAsPaidJSONRequestBody = CloseWorkOrderAsPaidRequest
 // CloseWorkOrderZeroJSONRequestBody defines body for CloseWorkOrderZero for application/json ContentType.
 type CloseWorkOrderZeroJSONRequestBody = CloseWorkOrderZeroRequest
 
+// UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody defines body for UpdateWorkOrdersCourtesyCarAssignment for application/json ContentType.
+type UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody = UpdateWorkOrdersCourtesyCarAssignmentRequest
+
 // CreateWorkOrdersCourtesyCarAssignmentJSONRequestBody defines body for CreateWorkOrdersCourtesyCarAssignment for application/json ContentType.
 type CreateWorkOrdersCourtesyCarAssignmentJSONRequestBody = CreateWorkOrdersCourtesyCarAssignmentRequest
 
@@ -1924,14 +2202,26 @@ type CreateWorkOrderAuthorizationJSONRequestBody = CreateWorkOrderAuthorizationR
 // UpdateWorkOrderAuthorizationDecisionsJSONRequestBody defines body for UpdateWorkOrderAuthorizationDecisions for application/json ContentType.
 type UpdateWorkOrderAuthorizationDecisionsJSONRequestBody = UpdateWorkOrderAuthorizationDecisionsRequest
 
+// CreateWorkOrdersFeeExclusionJSONRequestBody defines body for CreateWorkOrdersFeeExclusion for application/json ContentType.
+type CreateWorkOrdersFeeExclusionJSONRequestBody = CreateWorkOrdersFeeExclusionRequest
+
 // CreateWorkOrdersLabelJSONRequestBody defines body for CreateWorkOrdersLabel for application/json ContentType.
 type CreateWorkOrdersLabelJSONRequestBody = CreateWorkOrdersLabelRequest
+
+// CreateWorkOrderPaymentJSONRequestBody defines body for CreateWorkOrderPayment for application/json ContentType.
+type CreateWorkOrderPaymentJSONRequestBody = CreateWorkOrderPaymentRequest
 
 // SendWorkOrderPaymentToArJSONRequestBody defines body for SendWorkOrderPaymentToAr for application/json ContentType.
 type SendWorkOrderPaymentToArJSONRequestBody = SendWorkOrderPaymentToArRequest
 
+// CreateWorkOrdersRefundJSONRequestBody defines body for CreateWorkOrdersRefund for application/json ContentType.
+type CreateWorkOrdersRefundJSONRequestBody = CreateWorkOrdersRefundRequest
+
 // CreateWorkOrdersServiceJSONRequestBody defines body for CreateWorkOrdersService for application/json ContentType.
 type CreateWorkOrdersServiceJSONRequestBody = CreateWorkOrdersServiceRequest
+
+// UpdateWorkOrdersServicesReorderJSONRequestBody defines body for UpdateWorkOrdersServicesReorder for application/json ContentType.
+type UpdateWorkOrdersServicesReorderJSONRequestBody = UpdateWorkOrdersServicesReorderRequest
 
 // UpdateWorkOrdersServiceJSONRequestBody defines body for UpdateWorkOrdersService for application/json ContentType.
 type UpdateWorkOrdersServiceJSONRequestBody = UpdateWorkOrdersServiceRequest
@@ -2016,6 +2306,9 @@ type UndoReturnWorkOrderServiceLineItemJSONRequestBody = UndoReturnWorkOrderServ
 
 // UpdateWorkOrderServiceLineItemPartStatusJSONRequestBody defines body for UpdateWorkOrderServiceLineItemPartStatus for application/json ContentType.
 type UpdateWorkOrderServiceLineItemPartStatusJSONRequestBody = UpdateWorkOrderServiceLineItemPartStatusRequest
+
+// CreateWorkOrdersVoidJSONRequestBody defines body for CreateWorkOrdersVoid for application/json ContentType.
+type CreateWorkOrdersVoidJSONRequestBody = CreateWorkOrdersVoidRequest
 
 // RequestEditorFn is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -2123,12 +2416,23 @@ type ClientInterface interface {
 	// Corresponds with GET /appointments (the `ListAppointments` operationId).
 	ListAppointments(ctx context.Context, params *ListAppointmentsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateAppointmentWithBody create
+	//
+	// Create a appointment.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /appointments (the `CreateAppointment` operationId).
+	CreateAppointmentWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateAppointment create
 	//
 	// Create a appointment.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /appointments (the `CreateAppointment` operationId).
-	CreateAppointment(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateAppointment(ctx context.Context, body CreateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAppointmentsAvailableSlots available_slots
 	//
@@ -2151,26 +2455,59 @@ type ClientInterface interface {
 	// Corresponds with GET /appointments/{id} (the `ShowAppointment` operationId).
 	ShowAppointment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UpdateAppointmentWithBody update
+	//
+	// Update a appointment by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
+	UpdateAppointmentWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateAppointment update
 	//
 	// Update a appointment by ID.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
-	UpdateAppointment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateAppointment(ctx context.Context, id int, body UpdateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAppointmentsApprovalWithBody create
+	//
+	// Create a appointments approval.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
+	CreateAppointmentsApprovalWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAppointmentsApproval create
 	//
 	// Create a appointments approval.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
-	CreateAppointmentsApproval(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateAppointmentsApproval(ctx context.Context, id int, body CreateAppointmentsApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAppointmentsCancellationWithBody create
+	//
+	// Create a appointments cancellation.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
+	CreateAppointmentsCancellationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAppointmentsCancellation create
 	//
 	// Create a appointments cancellation.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
-	CreateAppointmentsCancellation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateAppointmentsCancellation(ctx context.Context, id int, body CreateAppointmentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAppointmentsFollowUpWithBody create
 	//
@@ -2190,19 +2527,41 @@ type ClientInterface interface {
 	// Corresponds with POST /appointments/{id}/follow_ups (the `CreateAppointmentsFollowUp` operationId).
 	CreateAppointmentsFollowUp(ctx context.Context, id int, body CreateAppointmentsFollowUpJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateAppointmentsRejectionWithBody create
+	//
+	// Create a appointments rejection.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
+	CreateAppointmentsRejectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateAppointmentsRejection create
 	//
 	// Create a appointments rejection.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
-	CreateAppointmentsRejection(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateAppointmentsRejection(ctx context.Context, id int, body CreateAppointmentsRejectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateAppointmentsVehicleReconciliationWithBody create
+	//
+	// Create a appointments vehicle reconciliation.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
+	CreateAppointmentsVehicleReconciliationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAppointmentsVehicleReconciliation create
 	//
 	// Create a appointments vehicle reconciliation.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
-	CreateAppointmentsVehicleReconciliation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateAppointmentsVehicleReconciliation(ctx context.Context, id int, body CreateAppointmentsVehicleReconciliationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAppointmentsWorkOrderWithBody create
 	//
@@ -2623,6 +2982,31 @@ type ClientInterface interface {
 	// Corresponds with GET /customers/check_duplicate (the `CheckCustomerDuplicate` operationId).
 	CheckCustomerDuplicate(ctx context.Context, params *CheckCustomerDuplicateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateCustomersExportWithBody create
+	//
+	// Create a customers export.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+	CreateCustomersExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomersExport create
+	//
+	// Create a customers export.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+	CreateCustomersExport(ctx context.Context, body CreateCustomersExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListCustomersExportDownload download
+	//
+	// List all customers export download, paginated via the Link header.
+	//
+	// Corresponds with GET /customers/export/{id}/download (the `ListCustomersExportDownload` operationId).
+	ListCustomersExportDownload(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// LookupCustomer lookup
 	//
 	// Corresponds with GET /customers/lookup (the `LookupCustomer` operationId).
@@ -2766,12 +3150,23 @@ type ClientInterface interface {
 	// Corresponds with GET /expenses (the `ListExpenses` operationId).
 	ListExpenses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateExpenseWithBody create
+	//
+	// Create a expense.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /expenses (the `CreateExpense` operationId).
+	CreateExpenseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateExpense create
 	//
 	// Create a expense.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /expenses (the `CreateExpense` operationId).
-	CreateExpense(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateExpense(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteExpense destroy
 	//
@@ -2780,12 +3175,23 @@ type ClientInterface interface {
 	// Corresponds with DELETE /expenses/{id} (the `DeleteExpense` operationId).
 	DeleteExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UpdateExpenseWithBody update
+	//
+	// Update a expense by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
+	UpdateExpenseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateExpense update
 	//
 	// Update a expense by ID.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
-	UpdateExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateExpense(ctx context.Context, id int, body UpdateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListFleets index
 	//
@@ -3194,6 +3600,13 @@ type ClientInterface interface {
 	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
 	CreateLaborMatrice(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteLaborMatrice destroy
+	//
+	// Delete a labor matrice by ID.
+	//
+	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
+	DeleteLaborMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateLaborMatriceWithBody update
 	//
 	// Update a labor matrice by ID.
@@ -3237,6 +3650,13 @@ type ClientInterface interface {
 	// Corresponds with POST /labor_rates (the `CreateLaborRate` operationId).
 	CreateLaborRate(ctx context.Context, body CreateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteLaborRate destroy
+	//
+	// Delete a labor rate by ID.
+	//
+	// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
+	DeleteLaborRate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateLaborRateWithBody update
 	//
 	// Update a labor rate by ID.
@@ -3279,6 +3699,31 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /lead_sources (the `CreateLeadSource` operationId).
 	CreateLeadSource(ctx context.Context, body CreateLeadSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateLeadSourcesSeedDefaultWithBody seed_defaults
+	//
+	// Create a lead sources seed default.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+	CreateLeadSourcesSeedDefaultWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateLeadSourcesSeedDefault seed_defaults
+	//
+	// Create a lead sources seed default.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+	CreateLeadSourcesSeedDefault(ctx context.Context, body CreateLeadSourcesSeedDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteLeadSource destroy
+	//
+	// Delete a lead source by ID.
+	//
+	// Corresponds with DELETE /lead_sources/{id} (the `DeleteLeadSource` operationId).
+	DeleteLeadSource(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateLeadSourceWithBody update
 	//
@@ -3362,12 +3807,23 @@ type ClientInterface interface {
 	// Corresponds with GET /orders/purchase_orders (the `ListOrdersPurchaseOrders` operationId).
 	ListOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateOrdersPurchaseOrderWithBody create
+	//
+	// Create a orders purchase order.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
+	CreateOrdersPurchaseOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateOrdersPurchaseOrder create
 	//
 	// Create a orders purchase order.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
-	CreateOrdersPurchaseOrder(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrdersPurchaseOrder(ctx context.Context, body CreateOrdersPurchaseOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteOrdersPurchaseOrder destroy
 	//
@@ -3440,19 +3896,41 @@ type ClientInterface interface {
 	// Corresponds with GET /orders/return_orders/{id} (the `ShowOrdersReturnOrder` operationId).
 	ShowOrdersReturnOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// UpdateOrdersReturnOrderWithBody update
+	//
+	// Update a orders return order by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
+	UpdateOrdersReturnOrderWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateOrdersReturnOrder update
 	//
 	// Update a orders return order by ID.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
-	UpdateOrdersReturnOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateOrdersReturnOrder(ctx context.Context, id int, body UpdateOrdersReturnOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateOrdersReturnOrdersRefundCompletionWithBody create
+	//
+	// Create a orders return orders refund completion.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
+	CreateOrdersReturnOrdersRefundCompletionWithBody(ctx context.Context, returnOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOrdersReturnOrdersRefundCompletion create
 	//
 	// Create a orders return orders refund completion.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
-	CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListOrdersSubletOrders index
 	//
@@ -3572,6 +4050,13 @@ type ClientInterface interface {
 	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
 	CreatePartsMatrice(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeletePartsMatrice destroy
+	//
+	// Delete a parts matrice by ID.
+	//
+	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
+	DeletePartsMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdatePartsMatriceWithBody update
 	//
 	// Update a parts matrice by ID.
@@ -3611,26 +4096,59 @@ type ClientInterface interface {
 	// Corresponds with GET /payments/{id} (the `ShowPayment` operationId).
 	ShowPayment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreatePaymentsCancellationWithBody create
+	//
+	// Create a payments cancellation.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
+	CreatePaymentsCancellationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreatePaymentsCancellation create
 	//
 	// Create a payments cancellation.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
-	CreatePaymentsCancellation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreatePaymentsCancellation(ctx context.Context, id int, body CreatePaymentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePaymentsConfirmationWithBody create
+	//
+	// Create a payments confirmation.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
+	CreatePaymentsConfirmationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePaymentsConfirmation create
 	//
 	// Create a payments confirmation.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
-	CreatePaymentsConfirmation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreatePaymentsConfirmation(ctx context.Context, id int, body CreatePaymentsConfirmationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePaymentsFailureWithBody create
+	//
+	// Create a payments failure.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
+	CreatePaymentsFailureWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePaymentsFailure create
 	//
 	// Create a payments failure.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
-	CreatePaymentsFailure(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreatePaymentsFailure(ctx context.Context, id int, body CreatePaymentsFailureJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPreferences show
 	//
@@ -3935,6 +4453,31 @@ type ClientInterface interface {
 	// Corresponds with GET /settings/labor_templates (the `ListSettingsLaborTemplates` operationId).
 	ListSettingsLaborTemplates(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteSettingsLaborTemplate destroy
+	//
+	// Delete a settings labor template by ID.
+	//
+	// Corresponds with DELETE /settings/labor_templates/{id} (the `DeleteSettingsLaborTemplate` operationId).
+	DeleteSettingsLaborTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSettingsLaborTemplateWithBody update
+	//
+	// Update a settings labor template by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+	UpdateSettingsLaborTemplateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSettingsLaborTemplate update
+	//
+	// Update a settings labor template by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+	UpdateSettingsLaborTemplate(ctx context.Context, id int, body UpdateSettingsLaborTemplateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListSettingsLeadSourceRequirements show
 	//
 	// List all settings lead source requirements, paginated via the Link header.
@@ -4048,6 +4591,13 @@ type ClientInterface interface {
 	// Corresponds with POST /shop_discounts (the `CreateShopDiscount` operationId).
 	CreateShopDiscount(ctx context.Context, body CreateShopDiscountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteShopDiscount destroy
+	//
+	// Delete a shop discount by ID.
+	//
+	// Corresponds with DELETE /shop_discounts/{id} (the `DeleteShopDiscount` operationId).
+	DeleteShopDiscount(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateShopDiscountWithBody update
 	//
 	// Update a shop discount by ID.
@@ -4065,6 +4615,24 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /shop_discounts/{id} (the `UpdateShopDiscount` operationId).
 	UpdateShopDiscount(ctx context.Context, id int, body UpdateShopDiscountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateShopDiscountsDuplicateWithBody duplicate
+	//
+	// Create a shop discounts duplicate.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+	CreateShopDiscountsDuplicateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateShopDiscountsDuplicate duplicate
+	//
+	// Create a shop discounts duplicate.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+	CreateShopDiscountsDuplicate(ctx context.Context, id int, body CreateShopDiscountsDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListShopFees index
 	//
@@ -4091,6 +4659,13 @@ type ClientInterface interface {
 	// Corresponds with POST /shop_fees (the `CreateShopFee` operationId).
 	CreateShopFee(ctx context.Context, body CreateShopFeeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteShopFee destroy
+	//
+	// Delete a shop fee by ID.
+	//
+	// Corresponds with DELETE /shop_fees/{id} (the `DeleteShopFee` operationId).
+	DeleteShopFee(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// UpdateShopFeeWithBody update
 	//
 	// Update a shop fee by ID.
@@ -4108,6 +4683,24 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /shop_fees/{id} (the `UpdateShopFee` operationId).
 	UpdateShopFee(ctx context.Context, id int, body UpdateShopFeeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateShopFeesDuplicateWithBody duplicate
+	//
+	// Create a shop fees duplicate.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+	CreateShopFeesDuplicateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateShopFeesDuplicate duplicate
+	//
+	// Create a shop fees duplicate.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+	CreateShopFeesDuplicate(ctx context.Context, id int, body CreateShopFeesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowStatement show
 	//
@@ -4808,7 +5401,7 @@ type ClientInterface interface {
 	// List all work orders, paginated via the Link header.
 	//
 	// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
-	ListWorkOrders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrderWithBody create
 	//
@@ -4901,6 +5494,31 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /work_orders/{id}/close_zero (the `CloseWorkOrderZero` operationId).
 	CloseWorkOrderZero(ctx context.Context, id int, body CloseWorkOrderZeroJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteWorkOrdersCourtesyCarAssignment destroy
+	//
+	// Delete a work orders courtesy car assignment by ID.
+	//
+	// Corresponds with DELETE /work_orders/{id}/courtesy_car_assignment (the `DeleteWorkOrdersCourtesyCarAssignment` operationId).
+	DeleteWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrdersCourtesyCarAssignmentWithBody update
+	//
+	// Update a work orders courtesy car assignment by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+	UpdateWorkOrdersCourtesyCarAssignmentWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrdersCourtesyCarAssignment update
+	//
+	// Update a work orders courtesy car assignment by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+	UpdateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrdersCourtesyCarAssignmentWithBody create
 	//
@@ -5137,6 +5755,31 @@ type ClientInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/estimate (the `ShowWorkOrderEstimate` operationId).
 	ShowWorkOrderEstimate(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateWorkOrdersFeeExclusionWithBody create
+	//
+	// Create a work orders fee exclusion.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+	CreateWorkOrdersFeeExclusionWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrdersFeeExclusion create
+	//
+	// Create a work orders fee exclusion.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+	CreateWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteWorkOrdersFeeExclusion destroy
+	//
+	// Delete a work orders fee exclusion by ID.
+	//
+	// Corresponds with DELETE /work_orders/{work_order_id}/fee_exclusions/{id} (the `DeleteWorkOrdersFeeExclusion` operationId).
+	DeleteWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ShowWorkOrderInspection show
 	//
 	// Show a work order inspection by ID.
@@ -5183,12 +5826,23 @@ type ClientInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/payments (the `ShowWorkOrderPayments` operationId).
 	ShowWorkOrderPayments(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateWorkOrderPaymentWithBody create
+	//
+	// Create a work order payment.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
+	CreateWorkOrderPaymentWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateWorkOrderPayment create
 	//
 	// Create a work order payment.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
-	CreateWorkOrderPayment(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateWorkOrderPayment(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ReverseWorkOrderPaymentAr reverse_ar
 	//
@@ -5209,12 +5863,23 @@ type ClientInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payments/send_to_ar (the `SendWorkOrderPaymentToAr` operationId).
 	SendWorkOrderPaymentToAr(ctx context.Context, workOrderId int, body SendWorkOrderPaymentToArJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateWorkOrdersRefundWithBody create
+	//
+	// Create a work orders refund.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
+	CreateWorkOrdersRefundWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateWorkOrdersRefund create
 	//
 	// Create a work orders refund.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
-	CreateWorkOrdersRefund(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrdersServiceWithBody create
 	//
@@ -5233,6 +5898,24 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/services (the `CreateWorkOrdersService` operationId).
 	CreateWorkOrdersService(ctx context.Context, workOrderId int, body CreateWorkOrdersServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrdersServicesReorderWithBody reorder
+	//
+	// Update a work orders services reorder by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+	UpdateWorkOrdersServicesReorderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrdersServicesReorder reorder
+	//
+	// Update a work orders services reorder by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+	UpdateWorkOrdersServicesReorder(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteWorkOrdersService destroy
 	//
@@ -5763,12 +6446,23 @@ type ClientInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/summary/vehicle_history (the `ListWorkOrdersSummaryVehicleHistory` operationId).
 	ListWorkOrdersSummaryVehicleHistory(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateWorkOrdersVoidWithBody create
+	//
+	// Create a work orders void.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
+	CreateWorkOrdersVoidWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateWorkOrdersVoid create
 	//
 	// Create a work orders void.
 	//
+	// Takes a body of the `application/json` content type.
+	//
 	// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
-	CreateWorkOrdersVoid(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateWorkOrdersVoid(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowWorkOrderWip show
 	//
@@ -5850,13 +6544,34 @@ func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsP
 	return c.Client.Do(req)
 }
 
+// CreateAppointmentWithBody create
+//
+// Create a appointment.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /appointments (the `CreateAppointment` operationId).
+func (c *Client) CreateAppointmentWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateAppointment create
 //
 // Create a appointment.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /appointments (the `CreateAppointment` operationId).
-func (c *Client) CreateAppointment(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAppointmentRequest(c.Server)
+func (c *Client) CreateAppointment(ctx context.Context, body CreateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5918,13 +6633,53 @@ func (c *Client) ShowAppointment(ctx context.Context, id int, reqEditors ...Requ
 	return c.Client.Do(req)
 }
 
+// UpdateAppointmentWithBody update
+//
+// Update a appointment by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
+func (c *Client) UpdateAppointmentWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAppointmentRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateAppointment update
 //
 // Update a appointment by ID.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
-func (c *Client) UpdateAppointment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateAppointmentRequest(c.Server, id)
+func (c *Client) UpdateAppointment(ctx context.Context, id int, body UpdateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAppointmentRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAppointmentsApprovalWithBody create
+//
+// Create a appointments approval.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
+func (c *Client) CreateAppointmentsApprovalWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsApprovalRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5939,9 +6694,30 @@ func (c *Client) UpdateAppointment(ctx context.Context, id int, reqEditors ...Re
 //
 // Create a appointments approval.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
-func (c *Client) CreateAppointmentsApproval(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAppointmentsApprovalRequest(c.Server, id)
+func (c *Client) CreateAppointmentsApproval(ctx context.Context, id int, body CreateAppointmentsApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsApprovalRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAppointmentsCancellationWithBody create
+//
+// Create a appointments cancellation.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
+func (c *Client) CreateAppointmentsCancellationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsCancellationRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5956,9 +6732,11 @@ func (c *Client) CreateAppointmentsApproval(ctx context.Context, id int, reqEdit
 //
 // Create a appointments cancellation.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
-func (c *Client) CreateAppointmentsCancellation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAppointmentsCancellationRequest(c.Server, id)
+func (c *Client) CreateAppointmentsCancellation(ctx context.Context, id int, body CreateAppointmentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsCancellationRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6007,13 +6785,53 @@ func (c *Client) CreateAppointmentsFollowUp(ctx context.Context, id int, body Cr
 	return c.Client.Do(req)
 }
 
+// CreateAppointmentsRejectionWithBody create
+//
+// Create a appointments rejection.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
+func (c *Client) CreateAppointmentsRejectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsRejectionRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateAppointmentsRejection create
 //
 // Create a appointments rejection.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
-func (c *Client) CreateAppointmentsRejection(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAppointmentsRejectionRequest(c.Server, id)
+func (c *Client) CreateAppointmentsRejection(ctx context.Context, id int, body CreateAppointmentsRejectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsRejectionRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateAppointmentsVehicleReconciliationWithBody create
+//
+// Create a appointments vehicle reconciliation.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
+func (c *Client) CreateAppointmentsVehicleReconciliationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsVehicleReconciliationRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6028,9 +6846,11 @@ func (c *Client) CreateAppointmentsRejection(ctx context.Context, id int, reqEdi
 //
 // Create a appointments vehicle reconciliation.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
-func (c *Client) CreateAppointmentsVehicleReconciliation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateAppointmentsVehicleReconciliationRequest(c.Server, id)
+func (c *Client) CreateAppointmentsVehicleReconciliation(ctx context.Context, id int, body CreateAppointmentsVehicleReconciliationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateAppointmentsVehicleReconciliationRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6970,6 +7790,61 @@ func (c *Client) CheckCustomerDuplicate(ctx context.Context, params *CheckCustom
 	return c.Client.Do(req)
 }
 
+// CreateCustomersExportWithBody create
+//
+// Create a customers export.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+func (c *Client) CreateCustomersExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomersExportRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateCustomersExport create
+//
+// Create a customers export.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+func (c *Client) CreateCustomersExport(ctx context.Context, body CreateCustomersExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomersExportRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListCustomersExportDownload download
+//
+// List all customers export download, paginated via the Link header.
+//
+// Corresponds with GET /customers/export/{id}/download (the `ListCustomersExportDownload` operationId).
+func (c *Client) ListCustomersExportDownload(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomersExportDownloadRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // LookupCustomer lookup
 //
 // Corresponds with GET /customers/lookup (the `LookupCustomer` operationId).
@@ -7303,13 +8178,34 @@ func (c *Client) ListExpenses(ctx context.Context, reqEditors ...RequestEditorFn
 	return c.Client.Do(req)
 }
 
+// CreateExpenseWithBody create
+//
+// Create a expense.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /expenses (the `CreateExpense` operationId).
+func (c *Client) CreateExpenseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpenseRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateExpense create
 //
 // Create a expense.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /expenses (the `CreateExpense` operationId).
-func (c *Client) CreateExpense(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateExpenseRequest(c.Server)
+func (c *Client) CreateExpense(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpenseRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7337,13 +8233,34 @@ func (c *Client) DeleteExpense(ctx context.Context, id int, reqEditors ...Reques
 	return c.Client.Do(req)
 }
 
+// UpdateExpenseWithBody update
+//
+// Update a expense by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
+func (c *Client) UpdateExpenseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateExpenseRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateExpense update
 //
 // Update a expense by ID.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
-func (c *Client) UpdateExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateExpenseRequest(c.Server, id)
+func (c *Client) UpdateExpense(ctx context.Context, id int, body UpdateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateExpenseRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8291,6 +9208,23 @@ func (c *Client) CreateLaborMatrice(ctx context.Context, body CreateLaborMatrice
 	return c.Client.Do(req)
 }
 
+// DeleteLaborMatrice destroy
+//
+// Delete a labor matrice by ID.
+//
+// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
+func (c *Client) DeleteLaborMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteLaborMatriceRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateLaborMatriceWithBody update
 //
 // Update a labor matrice by ID.
@@ -8384,6 +9318,23 @@ func (c *Client) CreateLaborRate(ctx context.Context, body CreateLaborRateJSONRe
 	return c.Client.Do(req)
 }
 
+// DeleteLaborRate destroy
+//
+// Delete a labor rate by ID.
+//
+// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
+func (c *Client) DeleteLaborRate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteLaborRateRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateLaborRateWithBody update
 //
 // Update a labor rate by ID.
@@ -8467,6 +9418,61 @@ func (c *Client) CreateLeadSourceWithBody(ctx context.Context, contentType strin
 // Corresponds with POST /lead_sources (the `CreateLeadSource` operationId).
 func (c *Client) CreateLeadSource(ctx context.Context, body CreateLeadSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateLeadSourceRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateLeadSourcesSeedDefaultWithBody seed_defaults
+//
+// Create a lead sources seed default.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+func (c *Client) CreateLeadSourcesSeedDefaultWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateLeadSourcesSeedDefaultRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateLeadSourcesSeedDefault seed_defaults
+//
+// Create a lead sources seed default.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+func (c *Client) CreateLeadSourcesSeedDefault(ctx context.Context, body CreateLeadSourcesSeedDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateLeadSourcesSeedDefaultRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteLeadSource destroy
+//
+// Delete a lead source by ID.
+//
+// Corresponds with DELETE /lead_sources/{id} (the `DeleteLeadSource` operationId).
+func (c *Client) DeleteLeadSource(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteLeadSourceRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -8659,13 +9665,34 @@ func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrder
 	return c.Client.Do(req)
 }
 
+// CreateOrdersPurchaseOrderWithBody create
+//
+// Create a orders purchase order.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
+func (c *Client) CreateOrdersPurchaseOrderWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrdersPurchaseOrderRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateOrdersPurchaseOrder create
 //
 // Create a orders purchase order.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
-func (c *Client) CreateOrdersPurchaseOrder(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrdersPurchaseOrderRequest(c.Server)
+func (c *Client) CreateOrdersPurchaseOrder(ctx context.Context, body CreateOrdersPurchaseOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrdersPurchaseOrderRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8837,13 +9864,53 @@ func (c *Client) ShowOrdersReturnOrder(ctx context.Context, id int, reqEditors .
 	return c.Client.Do(req)
 }
 
+// UpdateOrdersReturnOrderWithBody update
+//
+// Update a orders return order by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
+func (c *Client) UpdateOrdersReturnOrderWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateOrdersReturnOrderRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateOrdersReturnOrder update
 //
 // Update a orders return order by ID.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
-func (c *Client) UpdateOrdersReturnOrder(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateOrdersReturnOrderRequest(c.Server, id)
+func (c *Client) UpdateOrdersReturnOrder(ctx context.Context, id int, body UpdateOrdersReturnOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateOrdersReturnOrderRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateOrdersReturnOrdersRefundCompletionWithBody create
+//
+// Create a orders return orders refund completion.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
+func (c *Client) CreateOrdersReturnOrdersRefundCompletionWithBody(ctx context.Context, returnOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrdersReturnOrdersRefundCompletionRequestWithBody(c.Server, returnOrderId, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8858,9 +9925,11 @@ func (c *Client) UpdateOrdersReturnOrder(ctx context.Context, id int, reqEditors
 //
 // Create a orders return orders refund completion.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
-func (c *Client) CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateOrdersReturnOrdersRefundCompletionRequest(c.Server, returnOrderId)
+func (c *Client) CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateOrdersReturnOrdersRefundCompletionRequest(c.Server, returnOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9129,6 +10198,23 @@ func (c *Client) CreatePartsMatrice(ctx context.Context, body CreatePartsMatrice
 	return c.Client.Do(req)
 }
 
+// DeletePartsMatrice destroy
+//
+// Delete a parts matrice by ID.
+//
+// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
+func (c *Client) DeletePartsMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeletePartsMatriceRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdatePartsMatriceWithBody update
 //
 // Update a parts matrice by ID.
@@ -9218,13 +10304,53 @@ func (c *Client) ShowPayment(ctx context.Context, id int, reqEditors ...RequestE
 	return c.Client.Do(req)
 }
 
+// CreatePaymentsCancellationWithBody create
+//
+// Create a payments cancellation.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
+func (c *Client) CreatePaymentsCancellationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsCancellationRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreatePaymentsCancellation create
 //
 // Create a payments cancellation.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
-func (c *Client) CreatePaymentsCancellation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePaymentsCancellationRequest(c.Server, id)
+func (c *Client) CreatePaymentsCancellation(ctx context.Context, id int, body CreatePaymentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsCancellationRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreatePaymentsConfirmationWithBody create
+//
+// Create a payments confirmation.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
+func (c *Client) CreatePaymentsConfirmationWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsConfirmationRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9239,9 +10365,30 @@ func (c *Client) CreatePaymentsCancellation(ctx context.Context, id int, reqEdit
 //
 // Create a payments confirmation.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
-func (c *Client) CreatePaymentsConfirmation(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePaymentsConfirmationRequest(c.Server, id)
+func (c *Client) CreatePaymentsConfirmation(ctx context.Context, id int, body CreatePaymentsConfirmationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsConfirmationRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreatePaymentsFailureWithBody create
+//
+// Create a payments failure.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
+func (c *Client) CreatePaymentsFailureWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsFailureRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9256,9 +10403,11 @@ func (c *Client) CreatePaymentsConfirmation(ctx context.Context, id int, reqEdit
 //
 // Create a payments failure.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
-func (c *Client) CreatePaymentsFailure(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePaymentsFailureRequest(c.Server, id)
+func (c *Client) CreatePaymentsFailure(ctx context.Context, id int, body CreatePaymentsFailureJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentsFailureRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9982,6 +11131,61 @@ func (c *Client) ListSettingsLaborTemplates(ctx context.Context, reqEditors ...R
 	return c.Client.Do(req)
 }
 
+// DeleteSettingsLaborTemplate destroy
+//
+// Delete a settings labor template by ID.
+//
+// Corresponds with DELETE /settings/labor_templates/{id} (the `DeleteSettingsLaborTemplate` operationId).
+func (c *Client) DeleteSettingsLaborTemplate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteSettingsLaborTemplateRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSettingsLaborTemplateWithBody update
+//
+// Update a settings labor template by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+func (c *Client) UpdateSettingsLaborTemplateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSettingsLaborTemplateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSettingsLaborTemplate update
+//
+// Update a settings labor template by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+func (c *Client) UpdateSettingsLaborTemplate(ctx context.Context, id int, body UpdateSettingsLaborTemplateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSettingsLaborTemplateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListSettingsLeadSourceRequirements show
 //
 // List all settings lead source requirements, paginated via the Link header.
@@ -10245,6 +11449,23 @@ func (c *Client) CreateShopDiscount(ctx context.Context, body CreateShopDiscount
 	return c.Client.Do(req)
 }
 
+// DeleteShopDiscount destroy
+//
+// Delete a shop discount by ID.
+//
+// Corresponds with DELETE /shop_discounts/{id} (the `DeleteShopDiscount` operationId).
+func (c *Client) DeleteShopDiscount(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteShopDiscountRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateShopDiscountWithBody update
 //
 // Update a shop discount by ID.
@@ -10273,6 +11494,44 @@ func (c *Client) UpdateShopDiscountWithBody(ctx context.Context, id int, content
 // Corresponds with PATCH /shop_discounts/{id} (the `UpdateShopDiscount` operationId).
 func (c *Client) UpdateShopDiscount(ctx context.Context, id int, body UpdateShopDiscountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateShopDiscountRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateShopDiscountsDuplicateWithBody duplicate
+//
+// Create a shop discounts duplicate.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+func (c *Client) CreateShopDiscountsDuplicateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateShopDiscountsDuplicateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateShopDiscountsDuplicate duplicate
+//
+// Create a shop discounts duplicate.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+func (c *Client) CreateShopDiscountsDuplicate(ctx context.Context, id int, body CreateShopDiscountsDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateShopDiscountsDuplicateRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -10338,6 +11597,23 @@ func (c *Client) CreateShopFee(ctx context.Context, body CreateShopFeeJSONReques
 	return c.Client.Do(req)
 }
 
+// DeleteShopFee destroy
+//
+// Delete a shop fee by ID.
+//
+// Corresponds with DELETE /shop_fees/{id} (the `DeleteShopFee` operationId).
+func (c *Client) DeleteShopFee(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteShopFeeRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // UpdateShopFeeWithBody update
 //
 // Update a shop fee by ID.
@@ -10366,6 +11642,44 @@ func (c *Client) UpdateShopFeeWithBody(ctx context.Context, id int, contentType 
 // Corresponds with PATCH /shop_fees/{id} (the `UpdateShopFee` operationId).
 func (c *Client) UpdateShopFee(ctx context.Context, id int, body UpdateShopFeeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateShopFeeRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateShopFeesDuplicateWithBody duplicate
+//
+// Create a shop fees duplicate.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+func (c *Client) CreateShopFeesDuplicateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateShopFeesDuplicateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateShopFeesDuplicate duplicate
+//
+// Create a shop fees duplicate.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+func (c *Client) CreateShopFeesDuplicate(ctx context.Context, id int, body CreateShopFeesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateShopFeesDuplicateRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -11935,8 +13249,8 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int, re
 // List all work orders, paginated via the Link header.
 //
 // Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
-func (c *Client) ListWorkOrders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListWorkOrdersRequest(c.Server)
+func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListWorkOrdersRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -12149,6 +13463,61 @@ func (c *Client) CloseWorkOrderZeroWithBody(ctx context.Context, id int, content
 // Corresponds with PATCH /work_orders/{id}/close_zero (the `CloseWorkOrderZero` operationId).
 func (c *Client) CloseWorkOrderZero(ctx context.Context, id int, body CloseWorkOrderZeroJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCloseWorkOrderZeroRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteWorkOrdersCourtesyCarAssignment destroy
+//
+// Delete a work orders courtesy car assignment by ID.
+//
+// Corresponds with DELETE /work_orders/{id}/courtesy_car_assignment (the `DeleteWorkOrdersCourtesyCarAssignment` operationId).
+func (c *Client) DeleteWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteWorkOrdersCourtesyCarAssignmentRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrdersCourtesyCarAssignmentWithBody update
+//
+// Update a work orders courtesy car assignment by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+func (c *Client) UpdateWorkOrdersCourtesyCarAssignmentWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrdersCourtesyCarAssignmentRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrdersCourtesyCarAssignment update
+//
+// Update a work orders courtesy car assignment by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+func (c *Client) UpdateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrdersCourtesyCarAssignmentRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12684,6 +14053,61 @@ func (c *Client) ShowWorkOrderEstimate(ctx context.Context, workOrderId int, req
 	return c.Client.Do(req)
 }
 
+// CreateWorkOrdersFeeExclusionWithBody create
+//
+// Create a work orders fee exclusion.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+func (c *Client) CreateWorkOrdersFeeExclusionWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersFeeExclusionRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrdersFeeExclusion create
+//
+// Create a work orders fee exclusion.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+func (c *Client) CreateWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersFeeExclusionRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteWorkOrdersFeeExclusion destroy
+//
+// Delete a work orders fee exclusion by ID.
+//
+// Corresponds with DELETE /work_orders/{work_order_id}/fee_exclusions/{id} (the `DeleteWorkOrdersFeeExclusion` operationId).
+func (c *Client) DeleteWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteWorkOrdersFeeExclusionRequest(c.Server, workOrderId, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ShowWorkOrderInspection show
 //
 // Show a work order inspection by ID.
@@ -12790,13 +14214,34 @@ func (c *Client) ShowWorkOrderPayments(ctx context.Context, workOrderId int, req
 	return c.Client.Do(req)
 }
 
+// CreateWorkOrderPaymentWithBody create
+//
+// Create a work order payment.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
+func (c *Client) CreateWorkOrderPaymentWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderPaymentRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateWorkOrderPayment create
 //
 // Create a work order payment.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
-func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrderPaymentRequest(c.Server, workOrderId)
+func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderPaymentRequest(c.Server, workOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12856,13 +14301,34 @@ func (c *Client) SendWorkOrderPaymentToAr(ctx context.Context, workOrderId int, 
 	return c.Client.Do(req)
 }
 
+// CreateWorkOrdersRefundWithBody create
+//
+// Create a work orders refund.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
+func (c *Client) CreateWorkOrdersRefundWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersRefundRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateWorkOrdersRefund create
 //
 // Create a work orders refund.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
-func (c *Client) CreateWorkOrdersRefund(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersRefundRequest(c.Server, workOrderId)
+func (c *Client) CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersRefundRequest(c.Server, workOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12901,6 +14367,44 @@ func (c *Client) CreateWorkOrdersServiceWithBody(ctx context.Context, workOrderI
 // Corresponds with POST /work_orders/{work_order_id}/services (the `CreateWorkOrdersService` operationId).
 func (c *Client) CreateWorkOrdersService(ctx context.Context, workOrderId int, body CreateWorkOrdersServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateWorkOrdersServiceRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrdersServicesReorderWithBody reorder
+//
+// Update a work orders services reorder by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+func (c *Client) UpdateWorkOrdersServicesReorderWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrdersServicesReorderRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrdersServicesReorder reorder
+//
+// Update a work orders services reorder by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+func (c *Client) UpdateWorkOrdersServicesReorder(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrdersServicesReorderRequest(c.Server, workOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -14070,13 +15574,34 @@ func (c *Client) ListWorkOrdersSummaryVehicleHistory(ctx context.Context, workOr
 	return c.Client.Do(req)
 }
 
+// CreateWorkOrdersVoidWithBody create
+//
+// Create a work orders void.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
+func (c *Client) CreateWorkOrdersVoidWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersVoidRequestWithBody(c.Server, workOrderId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateWorkOrdersVoid create
 //
 // Create a work orders void.
 //
+// Takes a body of the `application/json` content type.
+//
 // Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
-func (c *Client) CreateWorkOrdersVoid(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersVoidRequest(c.Server, workOrderId)
+func (c *Client) CreateWorkOrdersVoid(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersVoidRequest(c.Server, workOrderId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -14256,8 +15781,19 @@ func NewListAppointmentsRequest(server string, params *ListAppointmentsParams) (
 	return req, nil
 }
 
-// NewCreateAppointmentRequest constructs an http.Request for the CreateAppointment method
-func NewCreateAppointmentRequest(server string) (*http.Request, error) {
+// NewCreateAppointmentRequest calls the generic CreateAppointment builder with application/json body
+func NewCreateAppointmentRequest(server string, body CreateAppointmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAppointmentRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateAppointmentRequestWithBody constructs an http.Request for the CreateAppointment method, with any body, and a specified content type
+func NewCreateAppointmentRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -14275,10 +15811,12 @@ func NewCreateAppointmentRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -14417,8 +15955,19 @@ func NewShowAppointmentRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewUpdateAppointmentRequest constructs an http.Request for the UpdateAppointment method
-func NewUpdateAppointmentRequest(server string, id int) (*http.Request, error) {
+// NewUpdateAppointmentRequest calls the generic UpdateAppointment builder with application/json body
+func NewUpdateAppointmentRequest(server string, id int, body UpdateAppointmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAppointmentRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateAppointmentRequestWithBody constructs an http.Request for the UpdateAppointment method, with any body, and a specified content type
+func NewUpdateAppointmentRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14443,16 +15992,29 @@ func NewUpdateAppointmentRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreateAppointmentsApprovalRequest constructs an http.Request for the CreateAppointmentsApproval method
-func NewCreateAppointmentsApprovalRequest(server string, id int) (*http.Request, error) {
+// NewCreateAppointmentsApprovalRequest calls the generic CreateAppointmentsApproval builder with application/json body
+func NewCreateAppointmentsApprovalRequest(server string, id int, body CreateAppointmentsApprovalJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAppointmentsApprovalRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateAppointmentsApprovalRequestWithBody constructs an http.Request for the CreateAppointmentsApproval method, with any body, and a specified content type
+func NewCreateAppointmentsApprovalRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14477,16 +16039,29 @@ func NewCreateAppointmentsApprovalRequest(server string, id int) (*http.Request,
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreateAppointmentsCancellationRequest constructs an http.Request for the CreateAppointmentsCancellation method
-func NewCreateAppointmentsCancellationRequest(server string, id int) (*http.Request, error) {
+// NewCreateAppointmentsCancellationRequest calls the generic CreateAppointmentsCancellation builder with application/json body
+func NewCreateAppointmentsCancellationRequest(server string, id int, body CreateAppointmentsCancellationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAppointmentsCancellationRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateAppointmentsCancellationRequestWithBody constructs an http.Request for the CreateAppointmentsCancellation method, with any body, and a specified content type
+func NewCreateAppointmentsCancellationRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14511,10 +16086,12 @@ func NewCreateAppointmentsCancellationRequest(server string, id int) (*http.Requ
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -14566,8 +16143,19 @@ func NewCreateAppointmentsFollowUpRequestWithBody(server string, id int, content
 	return req, nil
 }
 
-// NewCreateAppointmentsRejectionRequest constructs an http.Request for the CreateAppointmentsRejection method
-func NewCreateAppointmentsRejectionRequest(server string, id int) (*http.Request, error) {
+// NewCreateAppointmentsRejectionRequest calls the generic CreateAppointmentsRejection builder with application/json body
+func NewCreateAppointmentsRejectionRequest(server string, id int, body CreateAppointmentsRejectionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAppointmentsRejectionRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateAppointmentsRejectionRequestWithBody constructs an http.Request for the CreateAppointmentsRejection method, with any body, and a specified content type
+func NewCreateAppointmentsRejectionRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14592,16 +16180,29 @@ func NewCreateAppointmentsRejectionRequest(server string, id int) (*http.Request
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreateAppointmentsVehicleReconciliationRequest constructs an http.Request for the CreateAppointmentsVehicleReconciliation method
-func NewCreateAppointmentsVehicleReconciliationRequest(server string, id int) (*http.Request, error) {
+// NewCreateAppointmentsVehicleReconciliationRequest calls the generic CreateAppointmentsVehicleReconciliation builder with application/json body
+func NewCreateAppointmentsVehicleReconciliationRequest(server string, id int, body CreateAppointmentsVehicleReconciliationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateAppointmentsVehicleReconciliationRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateAppointmentsVehicleReconciliationRequestWithBody constructs an http.Request for the CreateAppointmentsVehicleReconciliation method, with any body, and a specified content type
+func NewCreateAppointmentsVehicleReconciliationRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14626,10 +16227,12 @@ func NewCreateAppointmentsVehicleReconciliationRequest(server string, id int) (*
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -16066,6 +17669,80 @@ func NewCheckCustomerDuplicateRequest(server string, params *CheckCustomerDuplic
 	return req, nil
 }
 
+// NewCreateCustomersExportRequest calls the generic CreateCustomersExport builder with application/json body
+func NewCreateCustomersExportRequest(server string, body CreateCustomersExportJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateCustomersExportRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateCustomersExportRequestWithBody constructs an http.Request for the CreateCustomersExport method, with any body, and a specified content type
+func NewCreateCustomersExportRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/export")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListCustomersExportDownloadRequest constructs an http.Request for the ListCustomersExportDownload method
+func NewListCustomersExportDownloadRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/export/%s/download", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewLookupCustomerRequest constructs an http.Request for the LookupCustomer method
 func NewLookupCustomerRequest(server string, params *LookupCustomerParams) (*http.Request, error) {
 	var err error
@@ -16681,8 +18358,19 @@ func NewListExpensesRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewCreateExpenseRequest constructs an http.Request for the CreateExpense method
-func NewCreateExpenseRequest(server string) (*http.Request, error) {
+// NewCreateExpenseRequest calls the generic CreateExpense builder with application/json body
+func NewCreateExpenseRequest(server string, body CreateExpenseJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateExpenseRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateExpenseRequestWithBody constructs an http.Request for the CreateExpense method, with any body, and a specified content type
+func NewCreateExpenseRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -16700,10 +18388,12 @@ func NewCreateExpenseRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -16742,8 +18432,19 @@ func NewDeleteExpenseRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewUpdateExpenseRequest constructs an http.Request for the UpdateExpense method
-func NewUpdateExpenseRequest(server string, id int) (*http.Request, error) {
+// NewUpdateExpenseRequest calls the generic UpdateExpense builder with application/json body
+func NewUpdateExpenseRequest(server string, id int, body UpdateExpenseJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateExpenseRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateExpenseRequestWithBody constructs an http.Request for the UpdateExpense method, with any body, and a specified content type
+func NewUpdateExpenseRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -16768,10 +18469,12 @@ func NewUpdateExpenseRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -18315,6 +20018,40 @@ func NewCreateLaborMatriceRequestWithBody(server string, contentType string, bod
 	return req, nil
 }
 
+// NewDeleteLaborMatriceRequest constructs an http.Request for the DeleteLaborMatrice method
+func NewDeleteLaborMatriceRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/labor_matrices/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUpdateLaborMatriceRequest calls the generic UpdateLaborMatrice builder with application/json body
 func NewUpdateLaborMatriceRequest(server string, id int, body UpdateLaborMatriceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -18429,6 +20166,40 @@ func NewCreateLaborRateRequestWithBody(server string, contentType string, body i
 	return req, nil
 }
 
+// NewDeleteLaborRateRequest constructs an http.Request for the DeleteLaborRate method
+func NewDeleteLaborRateRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/labor_rates/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUpdateLaborRateRequest calls the generic UpdateLaborRate builder with application/json body
 func NewUpdateLaborRateRequest(server string, id int, body UpdateLaborRateJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -18539,6 +20310,80 @@ func NewCreateLeadSourceRequestWithBody(server string, contentType string, body 
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateLeadSourcesSeedDefaultRequest calls the generic CreateLeadSourcesSeedDefault builder with application/json body
+func NewCreateLeadSourcesSeedDefaultRequest(server string, body CreateLeadSourcesSeedDefaultJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateLeadSourcesSeedDefaultRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateLeadSourcesSeedDefaultRequestWithBody constructs an http.Request for the CreateLeadSourcesSeedDefault method, with any body, and a specified content type
+func NewCreateLeadSourcesSeedDefaultRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/lead_sources/seed_defaults")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteLeadSourceRequest constructs an http.Request for the DeleteLeadSource method
+func NewDeleteLeadSourceRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/lead_sources/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -18850,8 +20695,19 @@ func NewListOrdersPurchaseOrdersRequest(server string, params *ListOrdersPurchas
 	return req, nil
 }
 
-// NewCreateOrdersPurchaseOrderRequest constructs an http.Request for the CreateOrdersPurchaseOrder method
-func NewCreateOrdersPurchaseOrderRequest(server string) (*http.Request, error) {
+// NewCreateOrdersPurchaseOrderRequest calls the generic CreateOrdersPurchaseOrder builder with application/json body
+func NewCreateOrdersPurchaseOrderRequest(server string, body CreateOrdersPurchaseOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateOrdersPurchaseOrderRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateOrdersPurchaseOrderRequestWithBody constructs an http.Request for the CreateOrdersPurchaseOrder method, with any body, and a specified content type
+func NewCreateOrdersPurchaseOrderRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -18869,10 +20725,12 @@ func NewCreateOrdersPurchaseOrderRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -19134,8 +20992,19 @@ func NewShowOrdersReturnOrderRequest(server string, id int) (*http.Request, erro
 	return req, nil
 }
 
-// NewUpdateOrdersReturnOrderRequest constructs an http.Request for the UpdateOrdersReturnOrder method
-func NewUpdateOrdersReturnOrderRequest(server string, id int) (*http.Request, error) {
+// NewUpdateOrdersReturnOrderRequest calls the generic UpdateOrdersReturnOrder builder with application/json body
+func NewUpdateOrdersReturnOrderRequest(server string, id int, body UpdateOrdersReturnOrderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateOrdersReturnOrderRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateOrdersReturnOrderRequestWithBody constructs an http.Request for the UpdateOrdersReturnOrder method, with any body, and a specified content type
+func NewUpdateOrdersReturnOrderRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19160,16 +21029,29 @@ func NewUpdateOrdersReturnOrderRequest(server string, id int) (*http.Request, er
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreateOrdersReturnOrdersRefundCompletionRequest constructs an http.Request for the CreateOrdersReturnOrdersRefundCompletion method
-func NewCreateOrdersReturnOrdersRefundCompletionRequest(server string, returnOrderId int) (*http.Request, error) {
+// NewCreateOrdersReturnOrdersRefundCompletionRequest calls the generic CreateOrdersReturnOrdersRefundCompletion builder with application/json body
+func NewCreateOrdersReturnOrdersRefundCompletionRequest(server string, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateOrdersReturnOrdersRefundCompletionRequestWithBody(server, returnOrderId, "application/json", bodyReader)
+}
+
+// NewCreateOrdersReturnOrdersRefundCompletionRequestWithBody constructs an http.Request for the CreateOrdersReturnOrdersRefundCompletion method, with any body, and a specified content type
+func NewCreateOrdersReturnOrdersRefundCompletionRequestWithBody(server string, returnOrderId int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19194,10 +21076,12 @@ func NewCreateOrdersReturnOrdersRefundCompletionRequest(server string, returnOrd
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -19531,6 +21415,40 @@ func NewCreatePartsMatriceRequestWithBody(server string, contentType string, bod
 	return req, nil
 }
 
+// NewDeletePartsMatriceRequest constructs an http.Request for the DeletePartsMatrice method
+func NewDeletePartsMatriceRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/parts_matrices/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUpdatePartsMatriceRequest calls the generic UpdatePartsMatrice builder with application/json body
 func NewUpdatePartsMatriceRequest(server string, id int, body UpdatePartsMatriceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -19693,8 +21611,19 @@ func NewShowPaymentRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewCreatePaymentsCancellationRequest constructs an http.Request for the CreatePaymentsCancellation method
-func NewCreatePaymentsCancellationRequest(server string, id int) (*http.Request, error) {
+// NewCreatePaymentsCancellationRequest calls the generic CreatePaymentsCancellation builder with application/json body
+func NewCreatePaymentsCancellationRequest(server string, id int, body CreatePaymentsCancellationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreatePaymentsCancellationRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreatePaymentsCancellationRequestWithBody constructs an http.Request for the CreatePaymentsCancellation method, with any body, and a specified content type
+func NewCreatePaymentsCancellationRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19719,16 +21648,29 @@ func NewCreatePaymentsCancellationRequest(server string, id int) (*http.Request,
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreatePaymentsConfirmationRequest constructs an http.Request for the CreatePaymentsConfirmation method
-func NewCreatePaymentsConfirmationRequest(server string, id int) (*http.Request, error) {
+// NewCreatePaymentsConfirmationRequest calls the generic CreatePaymentsConfirmation builder with application/json body
+func NewCreatePaymentsConfirmationRequest(server string, id int, body CreatePaymentsConfirmationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreatePaymentsConfirmationRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreatePaymentsConfirmationRequestWithBody constructs an http.Request for the CreatePaymentsConfirmation method, with any body, and a specified content type
+func NewCreatePaymentsConfirmationRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19753,16 +21695,29 @@ func NewCreatePaymentsConfirmationRequest(server string, id int) (*http.Request,
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewCreatePaymentsFailureRequest constructs an http.Request for the CreatePaymentsFailure method
-func NewCreatePaymentsFailureRequest(server string, id int) (*http.Request, error) {
+// NewCreatePaymentsFailureRequest calls the generic CreatePaymentsFailure builder with application/json body
+func NewCreatePaymentsFailureRequest(server string, id int, body CreatePaymentsFailureJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreatePaymentsFailureRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreatePaymentsFailureRequestWithBody constructs an http.Request for the CreatePaymentsFailure method, with any body, and a specified content type
+func NewCreatePaymentsFailureRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19787,10 +21742,12 @@ func NewCreatePaymentsFailureRequest(server string, id int) (*http.Request, erro
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -20880,6 +22837,87 @@ func NewListSettingsLaborTemplatesRequest(server string) (*http.Request, error) 
 	return req, nil
 }
 
+// NewDeleteSettingsLaborTemplateRequest constructs an http.Request for the DeleteSettingsLaborTemplate method
+func NewDeleteSettingsLaborTemplateRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/settings/labor_templates/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateSettingsLaborTemplateRequest calls the generic UpdateSettingsLaborTemplate builder with application/json body
+func NewUpdateSettingsLaborTemplateRequest(server string, id int, body UpdateSettingsLaborTemplateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateSettingsLaborTemplateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateSettingsLaborTemplateRequestWithBody constructs an http.Request for the UpdateSettingsLaborTemplate method, with any body, and a specified content type
+func NewUpdateSettingsLaborTemplateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/settings/labor_templates/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListSettingsLeadSourceRequirementsRequest constructs an http.Request for the ListSettingsLeadSourceRequirements method
 func NewListSettingsLeadSourceRequirementsRequest(server string) (*http.Request, error) {
 	var err error
@@ -21257,6 +23295,40 @@ func NewCreateShopDiscountRequestWithBody(server string, contentType string, bod
 	return req, nil
 }
 
+// NewDeleteShopDiscountRequest constructs an http.Request for the DeleteShopDiscount method
+func NewDeleteShopDiscountRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/shop_discounts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUpdateShopDiscountRequest calls the generic UpdateShopDiscount builder with application/json body
 func NewUpdateShopDiscountRequest(server string, id int, body UpdateShopDiscountJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -21295,6 +23367,53 @@ func NewUpdateShopDiscountRequestWithBody(server string, id int, contentType str
 	}
 
 	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateShopDiscountsDuplicateRequest calls the generic CreateShopDiscountsDuplicate builder with application/json body
+func NewCreateShopDiscountsDuplicateRequest(server string, id int, body CreateShopDiscountsDuplicateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateShopDiscountsDuplicateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateShopDiscountsDuplicateRequestWithBody constructs an http.Request for the CreateShopDiscountsDuplicate method, with any body, and a specified content type
+func NewCreateShopDiscountsDuplicateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/shop_discounts/%s/duplicate", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -21371,6 +23490,40 @@ func NewCreateShopFeeRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
+// NewDeleteShopFeeRequest constructs an http.Request for the DeleteShopFee method
+func NewDeleteShopFeeRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/shop_fees/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewUpdateShopFeeRequest calls the generic UpdateShopFee builder with application/json body
 func NewUpdateShopFeeRequest(server string, id int, body UpdateShopFeeJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -21409,6 +23562,53 @@ func NewUpdateShopFeeRequestWithBody(server string, id int, contentType string, 
 	}
 
 	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateShopFeesDuplicateRequest calls the generic CreateShopFeesDuplicate builder with application/json body
+func NewCreateShopFeesDuplicateRequest(server string, id int, body CreateShopFeesDuplicateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateShopFeesDuplicateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCreateShopFeesDuplicateRequestWithBody constructs an http.Request for the CreateShopFeesDuplicate method, with any body, and a specified content type
+func NewCreateShopFeesDuplicateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/shop_fees/%s/duplicate", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -23010,6 +25210,18 @@ func NewListVehiclesRequest(server string, params *ListVehiclesParams) (*http.Re
 
 		}
 
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if encoded := queryValues.Encode(); encoded != "" {
 			rawQueryFragments = append(rawQueryFragments, encoded)
 		}
@@ -23884,7 +26096,7 @@ func NewListVendorsPurchaseOrdersRequest(server string, vendorId int) (*http.Req
 }
 
 // NewListWorkOrdersRequest constructs an http.Request for the ListWorkOrders method
-func NewListWorkOrdersRequest(server string) (*http.Request, error) {
+func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -23900,6 +26112,33 @@ func NewListWorkOrdersRequest(server string) (*http.Request, error) {
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.PerPage != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -24187,6 +26426,87 @@ func NewCloseWorkOrderZeroRequestWithBody(server string, id int, contentType str
 	}
 
 	operationPath := fmt.Sprintf("/work_orders/%s/close_zero", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteWorkOrdersCourtesyCarAssignmentRequest constructs an http.Request for the DeleteWorkOrdersCourtesyCarAssignment method
+func NewDeleteWorkOrdersCourtesyCarAssignmentRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/courtesy_car_assignment", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateWorkOrdersCourtesyCarAssignmentRequest calls the generic UpdateWorkOrdersCourtesyCarAssignment builder with application/json body
+func NewUpdateWorkOrdersCourtesyCarAssignmentRequest(server string, id int, body UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrdersCourtesyCarAssignmentRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrdersCourtesyCarAssignmentRequestWithBody constructs an http.Request for the UpdateWorkOrdersCourtesyCarAssignment method, with any body, and a specified content type
+func NewUpdateWorkOrdersCourtesyCarAssignmentRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/courtesy_car_assignment", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -24940,6 +27260,94 @@ func NewShowWorkOrderEstimateRequest(server string, workOrderId int) (*http.Requ
 	return req, nil
 }
 
+// NewCreateWorkOrdersFeeExclusionRequest calls the generic CreateWorkOrdersFeeExclusion builder with application/json body
+func NewCreateWorkOrdersFeeExclusionRequest(server string, workOrderId int, body CreateWorkOrdersFeeExclusionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrdersFeeExclusionRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrdersFeeExclusionRequestWithBody constructs an http.Request for the CreateWorkOrdersFeeExclusion method, with any body, and a specified content type
+func NewCreateWorkOrdersFeeExclusionRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/fee_exclusions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewDeleteWorkOrdersFeeExclusionRequest constructs an http.Request for the DeleteWorkOrdersFeeExclusion method
+func NewDeleteWorkOrdersFeeExclusionRequest(server string, workOrderId int, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/fee_exclusions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewShowWorkOrderInspectionRequest constructs an http.Request for the ShowWorkOrderInspection method
 func NewShowWorkOrderInspectionRequest(server string, workOrderId int) (*http.Request, error) {
 	var err error
@@ -25130,8 +27538,19 @@ func NewShowWorkOrderPaymentsRequest(server string, workOrderId int) (*http.Requ
 	return req, nil
 }
 
-// NewCreateWorkOrderPaymentRequest constructs an http.Request for the CreateWorkOrderPayment method
-func NewCreateWorkOrderPaymentRequest(server string, workOrderId int) (*http.Request, error) {
+// NewCreateWorkOrderPaymentRequest calls the generic CreateWorkOrderPayment builder with application/json body
+func NewCreateWorkOrderPaymentRequest(server string, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrderPaymentRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrderPaymentRequestWithBody constructs an http.Request for the CreateWorkOrderPayment method, with any body, and a specified content type
+func NewCreateWorkOrderPaymentRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -25156,10 +27575,12 @@ func NewCreateWorkOrderPaymentRequest(server string, workOrderId int) (*http.Req
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -25245,8 +27666,19 @@ func NewSendWorkOrderPaymentToArRequestWithBody(server string, workOrderId int, 
 	return req, nil
 }
 
-// NewCreateWorkOrdersRefundRequest constructs an http.Request for the CreateWorkOrdersRefund method
-func NewCreateWorkOrdersRefundRequest(server string, workOrderId int) (*http.Request, error) {
+// NewCreateWorkOrdersRefundRequest calls the generic CreateWorkOrdersRefund builder with application/json body
+func NewCreateWorkOrdersRefundRequest(server string, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrdersRefundRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrdersRefundRequestWithBody constructs an http.Request for the CreateWorkOrdersRefund method, with any body, and a specified content type
+func NewCreateWorkOrdersRefundRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -25271,10 +27703,12 @@ func NewCreateWorkOrdersRefundRequest(server string, workOrderId int) (*http.Req
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -25317,6 +27751,53 @@ func NewCreateWorkOrdersServiceRequestWithBody(server string, workOrderId int, c
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateWorkOrdersServicesReorderRequest calls the generic UpdateWorkOrdersServicesReorder builder with application/json body
+func NewUpdateWorkOrdersServicesReorderRequest(server string, workOrderId int, body UpdateWorkOrdersServicesReorderJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrdersServicesReorderRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrdersServicesReorderRequestWithBody constructs an http.Request for the UpdateWorkOrdersServicesReorder method, with any body, and a specified content type
+func NewUpdateWorkOrdersServicesReorderRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/services/reorder", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -27187,8 +29668,19 @@ func NewListWorkOrdersSummaryVehicleHistoryRequest(server string, workOrderId in
 	return req, nil
 }
 
-// NewCreateWorkOrdersVoidRequest constructs an http.Request for the CreateWorkOrdersVoid method
-func NewCreateWorkOrdersVoidRequest(server string, workOrderId int) (*http.Request, error) {
+// NewCreateWorkOrdersVoidRequest calls the generic CreateWorkOrdersVoid builder with application/json body
+func NewCreateWorkOrdersVoidRequest(server string, workOrderId int, body CreateWorkOrdersVoidJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrdersVoidRequestWithBody(server, workOrderId, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrdersVoidRequestWithBody constructs an http.Request for the CreateWorkOrdersVoid method, with any body, and a specified content type
+func NewCreateWorkOrdersVoidRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -27213,10 +29705,12 @@ func NewCreateWorkOrdersVoidRequest(server string, workOrderId int) (*http.Reque
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -27335,14 +29829,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /appointments (the `ListAppointments` operationId).
 	ListAppointmentsWithResponse(ctx context.Context, params *ListAppointmentsParams, reqEditors ...RequestEditorFn) (*ListAppointmentsResponse, error)
 
+	// CreateAppointmentWithBodyWithResponse create
+	//
+	// Create a appointment.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /appointments (the `CreateAppointment` operationId).
+	CreateAppointmentWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error)
+
 	// CreateAppointmentWithResponse create
 	//
 	// Create a appointment.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /appointments (the `CreateAppointment` operationId).
-	CreateAppointmentWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error)
+	CreateAppointmentWithResponse(ctx context.Context, body CreateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error)
 
 	// ListAppointmentsAvailableSlotsWithResponse available_slots
 	//
@@ -27371,32 +29874,59 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /appointments/{id} (the `ShowAppointment` operationId).
 	ShowAppointmentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowAppointmentResponse, error)
 
+	// UpdateAppointmentWithBodyWithResponse update
+	//
+	// Update a appointment by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
+	UpdateAppointmentWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error)
+
 	// UpdateAppointmentWithResponse update
 	//
 	// Update a appointment by ID.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
-	UpdateAppointmentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error)
+	UpdateAppointmentWithResponse(ctx context.Context, id int, body UpdateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error)
+
+	// CreateAppointmentsApprovalWithBodyWithResponse create
+	//
+	// Create a appointments approval.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
+	CreateAppointmentsApprovalWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error)
 
 	// CreateAppointmentsApprovalWithResponse create
 	//
 	// Create a appointments approval.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
-	CreateAppointmentsApprovalWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error)
+	CreateAppointmentsApprovalWithResponse(ctx context.Context, id int, body CreateAppointmentsApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error)
+
+	// CreateAppointmentsCancellationWithBodyWithResponse create
+	//
+	// Create a appointments cancellation.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
+	CreateAppointmentsCancellationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error)
 
 	// CreateAppointmentsCancellationWithResponse create
 	//
 	// Create a appointments cancellation.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
-	CreateAppointmentsCancellationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error)
+	CreateAppointmentsCancellationWithResponse(ctx context.Context, id int, body CreateAppointmentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error)
 
 	// CreateAppointmentsFollowUpWithBodyWithResponse create
 	//
@@ -27416,23 +29946,41 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /appointments/{id}/follow_ups (the `CreateAppointmentsFollowUp` operationId).
 	CreateAppointmentsFollowUpWithResponse(ctx context.Context, id int, body CreateAppointmentsFollowUpJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsFollowUpResponse, error)
 
+	// CreateAppointmentsRejectionWithBodyWithResponse create
+	//
+	// Create a appointments rejection.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
+	CreateAppointmentsRejectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error)
+
 	// CreateAppointmentsRejectionWithResponse create
 	//
 	// Create a appointments rejection.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
-	CreateAppointmentsRejectionWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error)
+	CreateAppointmentsRejectionWithResponse(ctx context.Context, id int, body CreateAppointmentsRejectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error)
+
+	// CreateAppointmentsVehicleReconciliationWithBodyWithResponse create
+	//
+	// Create a appointments vehicle reconciliation.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
+	CreateAppointmentsVehicleReconciliationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error)
 
 	// CreateAppointmentsVehicleReconciliationWithResponse create
 	//
 	// Create a appointments vehicle reconciliation.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
-	CreateAppointmentsVehicleReconciliationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error)
+	CreateAppointmentsVehicleReconciliationWithResponse(ctx context.Context, id int, body CreateAppointmentsVehicleReconciliationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error)
 
 	// CreateAppointmentsWorkOrderWithBodyWithResponse create
 	//
@@ -27883,6 +30431,33 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /customers/check_duplicate (the `CheckCustomerDuplicate` operationId).
 	CheckCustomerDuplicateWithResponse(ctx context.Context, params *CheckCustomerDuplicateParams, reqEditors ...RequestEditorFn) (*CheckCustomerDuplicateResponse, error)
 
+	// CreateCustomersExportWithBodyWithResponse create
+	//
+	// Create a customers export.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+	CreateCustomersExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomersExportResponse, error)
+
+	// CreateCustomersExportWithResponse create
+	//
+	// Create a customers export.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+	CreateCustomersExportWithResponse(ctx context.Context, body CreateCustomersExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomersExportResponse, error)
+
+	// ListCustomersExportDownloadWithResponse download
+	//
+	// List all customers export download, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/export/{id}/download (the `ListCustomersExportDownload` operationId).
+	ListCustomersExportDownloadWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ListCustomersExportDownloadResponse, error)
+
 	// LookupCustomerWithResponse lookup
 	//
 	// Returns a wrapper object for the known response body format(s).
@@ -28048,14 +30623,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /expenses (the `ListExpenses` operationId).
 	ListExpensesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListExpensesResponse, error)
 
+	// CreateExpenseWithBodyWithResponse create
+	//
+	// Create a expense.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /expenses (the `CreateExpense` operationId).
+	CreateExpenseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error)
+
 	// CreateExpenseWithResponse create
 	//
 	// Create a expense.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /expenses (the `CreateExpense` operationId).
-	CreateExpenseWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error)
+	CreateExpenseWithResponse(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error)
 
 	// DeleteExpenseWithResponse destroy
 	//
@@ -28066,14 +30650,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with DELETE /expenses/{id} (the `DeleteExpense` operationId).
 	DeleteExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteExpenseResponse, error)
 
+	// UpdateExpenseWithBodyWithResponse update
+	//
+	// Update a expense by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
+	UpdateExpenseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error)
+
 	// UpdateExpenseWithResponse update
 	//
 	// Update a expense by ID.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
-	UpdateExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error)
+	UpdateExpenseWithResponse(ctx context.Context, id int, body UpdateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error)
 
 	// ListFleetsWithResponse index
 	//
@@ -28508,6 +31101,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
 	CreateLaborMatriceWithResponse(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborMatriceResponse, error)
 
+	// DeleteLaborMatriceWithResponse destroy
+	//
+	// Delete a labor matrice by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
+	DeleteLaborMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatriceResponse, error)
+
 	// UpdateLaborMatriceWithBodyWithResponse update
 	//
 	// Update a labor matrice by ID.
@@ -28553,6 +31155,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /labor_rates (the `CreateLaborRate` operationId).
 	CreateLaborRateWithResponse(ctx context.Context, body CreateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborRateResponse, error)
 
+	// DeleteLaborRateWithResponse destroy
+	//
+	// Delete a labor rate by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
+	DeleteLaborRateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborRateResponse, error)
+
 	// UpdateLaborRateWithBodyWithResponse update
 	//
 	// Update a labor rate by ID.
@@ -28597,6 +31208,33 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /lead_sources (the `CreateLeadSource` operationId).
 	CreateLeadSourceWithResponse(ctx context.Context, body CreateLeadSourceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLeadSourceResponse, error)
+
+	// CreateLeadSourcesSeedDefaultWithBodyWithResponse seed_defaults
+	//
+	// Create a lead sources seed default.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+	CreateLeadSourcesSeedDefaultWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLeadSourcesSeedDefaultResponse, error)
+
+	// CreateLeadSourcesSeedDefaultWithResponse seed_defaults
+	//
+	// Create a lead sources seed default.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+	CreateLeadSourcesSeedDefaultWithResponse(ctx context.Context, body CreateLeadSourcesSeedDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLeadSourcesSeedDefaultResponse, error)
+
+	// DeleteLeadSourceWithResponse destroy
+	//
+	// Delete a lead source by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /lead_sources/{id} (the `DeleteLeadSource` operationId).
+	DeleteLeadSourceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLeadSourceResponse, error)
 
 	// UpdateLeadSourceWithBodyWithResponse update
 	//
@@ -28688,14 +31326,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /orders/purchase_orders (the `ListOrdersPurchaseOrders` operationId).
 	ListOrdersPurchaseOrdersWithResponse(ctx context.Context, params *ListOrdersPurchaseOrdersParams, reqEditors ...RequestEditorFn) (*ListOrdersPurchaseOrdersResponse, error)
 
+	// CreateOrdersPurchaseOrderWithBodyWithResponse create
+	//
+	// Create a orders purchase order.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
+	CreateOrdersPurchaseOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error)
+
 	// CreateOrdersPurchaseOrderWithResponse create
 	//
 	// Create a orders purchase order.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
-	CreateOrdersPurchaseOrderWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error)
+	CreateOrdersPurchaseOrderWithResponse(ctx context.Context, body CreateOrdersPurchaseOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error)
 
 	// DeleteOrdersPurchaseOrderWithResponse destroy
 	//
@@ -28778,23 +31425,41 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /orders/return_orders/{id} (the `ShowOrdersReturnOrder` operationId).
 	ShowOrdersReturnOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowOrdersReturnOrderResponse, error)
 
+	// UpdateOrdersReturnOrderWithBodyWithResponse update
+	//
+	// Update a orders return order by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
+	UpdateOrdersReturnOrderWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error)
+
 	// UpdateOrdersReturnOrderWithResponse update
 	//
 	// Update a orders return order by ID.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
-	UpdateOrdersReturnOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error)
+	UpdateOrdersReturnOrderWithResponse(ctx context.Context, id int, body UpdateOrdersReturnOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error)
+
+	// CreateOrdersReturnOrdersRefundCompletionWithBodyWithResponse create
+	//
+	// Create a orders return orders refund completion.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
+	CreateOrdersReturnOrdersRefundCompletionWithBodyWithResponse(ctx context.Context, returnOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error)
 
 	// CreateOrdersReturnOrdersRefundCompletionWithResponse create
 	//
 	// Create a orders return orders refund completion.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
-	CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx context.Context, returnOrderId int, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error)
+	CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error)
 
 	// ListOrdersSubletOrdersWithResponse index
 	//
@@ -28922,6 +31587,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
 	CreatePartsMatriceWithResponse(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePartsMatriceResponse, error)
 
+	// DeletePartsMatriceWithResponse destroy
+	//
+	// Delete a parts matrice by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
+	DeletePartsMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatriceResponse, error)
+
 	// UpdatePartsMatriceWithBodyWithResponse update
 	//
 	// Update a parts matrice by ID.
@@ -28967,32 +31641,59 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /payments/{id} (the `ShowPayment` operationId).
 	ShowPaymentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowPaymentResponse, error)
 
+	// CreatePaymentsCancellationWithBodyWithResponse create
+	//
+	// Create a payments cancellation.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
+	CreatePaymentsCancellationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error)
+
 	// CreatePaymentsCancellationWithResponse create
 	//
 	// Create a payments cancellation.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
-	CreatePaymentsCancellationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error)
+	CreatePaymentsCancellationWithResponse(ctx context.Context, id int, body CreatePaymentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error)
+
+	// CreatePaymentsConfirmationWithBodyWithResponse create
+	//
+	// Create a payments confirmation.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
+	CreatePaymentsConfirmationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error)
 
 	// CreatePaymentsConfirmationWithResponse create
 	//
 	// Create a payments confirmation.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
-	CreatePaymentsConfirmationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error)
+	CreatePaymentsConfirmationWithResponse(ctx context.Context, id int, body CreatePaymentsConfirmationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error)
+
+	// CreatePaymentsFailureWithBodyWithResponse create
+	//
+	// Create a payments failure.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
+	CreatePaymentsFailureWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error)
 
 	// CreatePaymentsFailureWithResponse create
 	//
 	// Create a payments failure.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
-	CreatePaymentsFailureWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error)
+	CreatePaymentsFailureWithResponse(ctx context.Context, id int, body CreatePaymentsFailureJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error)
 
 	// ListPreferencesWithResponse show
 	//
@@ -29359,6 +32060,33 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /settings/labor_templates (the `ListSettingsLaborTemplates` operationId).
 	ListSettingsLaborTemplatesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsLaborTemplatesResponse, error)
 
+	// DeleteSettingsLaborTemplateWithResponse destroy
+	//
+	// Delete a settings labor template by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /settings/labor_templates/{id} (the `DeleteSettingsLaborTemplate` operationId).
+	DeleteSettingsLaborTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteSettingsLaborTemplateResponse, error)
+
+	// UpdateSettingsLaborTemplateWithBodyWithResponse update
+	//
+	// Update a settings labor template by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+	UpdateSettingsLaborTemplateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSettingsLaborTemplateResponse, error)
+
+	// UpdateSettingsLaborTemplateWithResponse update
+	//
+	// Update a settings labor template by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+	UpdateSettingsLaborTemplateWithResponse(ctx context.Context, id int, body UpdateSettingsLaborTemplateJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSettingsLaborTemplateResponse, error)
+
 	// ListSettingsLeadSourceRequirementsWithResponse show
 	//
 	// List all settings lead source requirements, paginated via the Link header.
@@ -29494,6 +32222,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /shop_discounts (the `CreateShopDiscount` operationId).
 	CreateShopDiscountWithResponse(ctx context.Context, body CreateShopDiscountJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopDiscountResponse, error)
 
+	// DeleteShopDiscountWithResponse destroy
+	//
+	// Delete a shop discount by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /shop_discounts/{id} (the `DeleteShopDiscount` operationId).
+	DeleteShopDiscountWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteShopDiscountResponse, error)
+
 	// UpdateShopDiscountWithBodyWithResponse update
 	//
 	// Update a shop discount by ID.
@@ -29511,6 +32248,24 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /shop_discounts/{id} (the `UpdateShopDiscount` operationId).
 	UpdateShopDiscountWithResponse(ctx context.Context, id int, body UpdateShopDiscountJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateShopDiscountResponse, error)
+
+	// CreateShopDiscountsDuplicateWithBodyWithResponse duplicate
+	//
+	// Create a shop discounts duplicate.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+	CreateShopDiscountsDuplicateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateShopDiscountsDuplicateResponse, error)
+
+	// CreateShopDiscountsDuplicateWithResponse duplicate
+	//
+	// Create a shop discounts duplicate.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+	CreateShopDiscountsDuplicateWithResponse(ctx context.Context, id int, body CreateShopDiscountsDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopDiscountsDuplicateResponse, error)
 
 	// ListShopFeesWithResponse index
 	//
@@ -29539,6 +32294,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /shop_fees (the `CreateShopFee` operationId).
 	CreateShopFeeWithResponse(ctx context.Context, body CreateShopFeeJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopFeeResponse, error)
 
+	// DeleteShopFeeWithResponse destroy
+	//
+	// Delete a shop fee by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /shop_fees/{id} (the `DeleteShopFee` operationId).
+	DeleteShopFeeWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteShopFeeResponse, error)
+
 	// UpdateShopFeeWithBodyWithResponse update
 	//
 	// Update a shop fee by ID.
@@ -29556,6 +32320,24 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /shop_fees/{id} (the `UpdateShopFee` operationId).
 	UpdateShopFeeWithResponse(ctx context.Context, id int, body UpdateShopFeeJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateShopFeeResponse, error)
+
+	// CreateShopFeesDuplicateWithBodyWithResponse duplicate
+	//
+	// Create a shop fees duplicate.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+	CreateShopFeesDuplicateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateShopFeesDuplicateResponse, error)
+
+	// CreateShopFeesDuplicateWithResponse duplicate
+	//
+	// Create a shop fees duplicate.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+	CreateShopFeesDuplicateWithResponse(ctx context.Context, id int, body CreateShopFeesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopFeesDuplicateResponse, error)
 
 	// ShowStatementWithResponse show
 	//
@@ -30322,7 +33104,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
-	ListWorkOrdersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error)
+	ListWorkOrdersWithResponse(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error)
 
 	// CreateWorkOrderWithBodyWithResponse create
 	//
@@ -30419,6 +33201,33 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /work_orders/{id}/close_zero (the `CloseWorkOrderZero` operationId).
 	CloseWorkOrderZeroWithResponse(ctx context.Context, id int, body CloseWorkOrderZeroJSONRequestBody, reqEditors ...RequestEditorFn) (*CloseWorkOrderZeroResponse, error)
+
+	// DeleteWorkOrdersCourtesyCarAssignmentWithResponse destroy
+	//
+	// Delete a work orders courtesy car assignment by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /work_orders/{id}/courtesy_car_assignment (the `DeleteWorkOrdersCourtesyCarAssignment` operationId).
+	DeleteWorkOrdersCourtesyCarAssignmentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersCourtesyCarAssignmentResponse, error)
+
+	// UpdateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse update
+	//
+	// Update a work orders courtesy car assignment by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+	UpdateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error)
+
+	// UpdateWorkOrdersCourtesyCarAssignmentWithResponse update
+	//
+	// Update a work orders courtesy car assignment by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+	UpdateWorkOrdersCourtesyCarAssignmentWithResponse(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error)
 
 	// CreateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse create
 	//
@@ -30665,6 +33474,33 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/estimate (the `ShowWorkOrderEstimate` operationId).
 	ShowWorkOrderEstimateWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderEstimateResponse, error)
 
+	// CreateWorkOrdersFeeExclusionWithBodyWithResponse create
+	//
+	// Create a work orders fee exclusion.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+	CreateWorkOrdersFeeExclusionWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersFeeExclusionResponse, error)
+
+	// CreateWorkOrdersFeeExclusionWithResponse create
+	//
+	// Create a work orders fee exclusion.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+	CreateWorkOrdersFeeExclusionWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersFeeExclusionResponse, error)
+
+	// DeleteWorkOrdersFeeExclusionWithResponse destroy
+	//
+	// Delete a work orders fee exclusion by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /work_orders/{work_order_id}/fee_exclusions/{id} (the `DeleteWorkOrdersFeeExclusion` operationId).
+	DeleteWorkOrdersFeeExclusionWithResponse(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersFeeExclusionResponse, error)
+
 	// ShowWorkOrderInspectionWithResponse show
 	//
 	// Show a work order inspection by ID.
@@ -30719,14 +33555,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/payments (the `ShowWorkOrderPayments` operationId).
 	ShowWorkOrderPaymentsWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderPaymentsResponse, error)
 
+	// CreateWorkOrderPaymentWithBodyWithResponse create
+	//
+	// Create a work order payment.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
+	CreateWorkOrderPaymentWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error)
+
 	// CreateWorkOrderPaymentWithResponse create
 	//
 	// Create a work order payment.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
-	CreateWorkOrderPaymentWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error)
+	CreateWorkOrderPaymentWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error)
 
 	// ReverseWorkOrderPaymentArWithResponse reverse_ar
 	//
@@ -30749,14 +33594,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payments/send_to_ar (the `SendWorkOrderPaymentToAr` operationId).
 	SendWorkOrderPaymentToArWithResponse(ctx context.Context, workOrderId int, body SendWorkOrderPaymentToArJSONRequestBody, reqEditors ...RequestEditorFn) (*SendWorkOrderPaymentToArResponse, error)
 
+	// CreateWorkOrdersRefundWithBodyWithResponse create
+	//
+	// Create a work orders refund.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
+	CreateWorkOrdersRefundWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error)
+
 	// CreateWorkOrdersRefundWithResponse create
 	//
 	// Create a work orders refund.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
-	CreateWorkOrdersRefundWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error)
+	CreateWorkOrdersRefundWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error)
 
 	// CreateWorkOrdersServiceWithBodyWithResponse create
 	//
@@ -30775,6 +33629,24 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/services (the `CreateWorkOrdersService` operationId).
 	CreateWorkOrdersServiceWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersServiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServiceResponse, error)
+
+	// UpdateWorkOrdersServicesReorderWithBodyWithResponse reorder
+	//
+	// Update a work orders services reorder by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+	UpdateWorkOrdersServicesReorderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesReorderResponse, error)
+
+	// UpdateWorkOrdersServicesReorderWithResponse reorder
+	//
+	// Update a work orders services reorder by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+	UpdateWorkOrdersServicesReorderWithResponse(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesReorderResponse, error)
 
 	// DeleteWorkOrdersServiceWithResponse destroy
 	//
@@ -31319,14 +34191,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /work_orders/{work_order_id}/summary/vehicle_history (the `ListWorkOrdersSummaryVehicleHistory` operationId).
 	ListWorkOrdersSummaryVehicleHistoryWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ListWorkOrdersSummaryVehicleHistoryResponse, error)
 
+	// CreateWorkOrdersVoidWithBodyWithResponse create
+	//
+	// Create a work orders void.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
+	CreateWorkOrdersVoidWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error)
+
 	// CreateWorkOrdersVoidWithResponse create
 	//
 	// Create a work orders void.
 	//
-	// Returns a wrapper object for the known response body format(s).
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
-	CreateWorkOrdersVoidWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error)
+	CreateWorkOrdersVoidWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error)
 
 	// ShowWorkOrderWipWithResponse show
 	//
@@ -31494,19 +34375,117 @@ func (r UpdateAiSuggestionResponse) ContentType() string {
 	return ""
 }
 
+// ListAppointmentsResponse200Headers the declared response headers of an HTTP 200 response for ListAppointments
+type ListAppointmentsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListAppointmentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AllDay            bool        `json:"all_day"`
+		AppUrl            string      `json:"app_url"`
+		AppointmentSource interface{} `json:"appointment_source"`
+		AppointmentType   string      `json:"appointment_type"`
+		CreatedAt         string      `json:"created_at"`
+		Customer          *struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerConcern          interface{} `json:"customer_concern"`
+		CustomerEmail            string      `json:"customer_email"`
+		CustomerName             string      `json:"customer_name"`
+		CustomerPhone            string      `json:"customer_phone"`
+		EndsAt                   string      `json:"ends_at"`
+		EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+		FollowUpReason           *string     `json:"follow_up_reason"`
+		Id                       int         `json:"id"`
+		IntakeMethod             string      `json:"intake_method"`
+		LicensePlate             interface{} `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make           interface{} `json:"make"`
+		Model          *string     `json:"model"`
+		ServiceAdvisor struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt  string                  `json:"starts_at"`
+		Status    string                  `json:"status"`
+		Submodel  *string                 `json:"submodel"`
+		Type      string                  `json:"type"`
+		UpdatedAt string                  `json:"updated_at"`
+		Url       string                  `json:"url"`
+		Vehicle   *map[string]interface{} `json:"vehicle"`
+		Vin       interface{}             `json:"vin"`
+		WorkOrder interface{}             `json:"work_order"`
+		Year      interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListAppointmentsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAppointmentsResponse) GetJSON200() *[]struct {
+	AllDay            bool        `json:"all_day"`
+	AppUrl            string      `json:"app_url"`
+	AppointmentSource interface{} `json:"appointment_source"`
+	AppointmentType   string      `json:"appointment_type"`
+	CreatedAt         string      `json:"created_at"`
+	Customer          *struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerConcern          interface{} `json:"customer_concern"`
+	CustomerEmail            string      `json:"customer_email"`
+	CustomerName             string      `json:"customer_name"`
+	CustomerPhone            string      `json:"customer_phone"`
+	EndsAt                   string      `json:"ends_at"`
+	EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+	FollowUpReason           *string     `json:"follow_up_reason"`
+	Id                       int         `json:"id"`
+	IntakeMethod             string      `json:"intake_method"`
+	LicensePlate             interface{} `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make           interface{} `json:"make"`
+	Model          *string     `json:"model"`
+	ServiceAdvisor struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt  string                  `json:"starts_at"`
+	Status    string                  `json:"status"`
+	Submodel  *string                 `json:"submodel"`
+	Type      string                  `json:"type"`
+	UpdatedAt string                  `json:"updated_at"`
+	Url       string                  `json:"url"`
+	Vehicle   *map[string]interface{} `json:"vehicle"`
+	Vin       interface{}             `json:"vin"`
+	WorkOrder interface{}             `json:"work_order"`
+	Year      interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListAppointmentsResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListAppointmentsResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -31542,6 +34521,73 @@ func (r ListAppointmentsResponse) ContentType() string {
 type CreateAppointmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AllDay             bool    `json:"all_day"`
+		AppUrl             string  `json:"app_url"`
+		AppointmentSource  string  `json:"appointment_source"`
+		AppointmentType    string  `json:"appointment_type"`
+		ApproveUrl         string  `json:"approve_url"`
+		CancelUrl          string  `json:"cancel_url"`
+		ConfirmationSentAt *string `json:"confirmation_sent_at"`
+		CreatedAt          string  `json:"created_at"`
+		Customer           struct {
+			AppUrl      string `json:"app_url"`
+			EmailsCount int    `json:"emails_count"`
+			FullName    string `json:"full_name"`
+			Id          int    `json:"id"`
+			PhonesCount int    `json:"phones_count"`
+			Url         string `json:"url"`
+		} `json:"customer"`
+		CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+		CustomerConcern          interface{} `json:"customer_concern"`
+		CustomerConfirmed        bool        `json:"customer_confirmed"`
+		CustomerEmail            interface{} `json:"customer_email"`
+		CustomerInitiated        bool        `json:"customer_initiated"`
+		CustomerName             *string     `json:"customer_name"`
+		CustomerPhone            interface{} `json:"customer_phone"`
+		EndsAt                   string      `json:"ends_at"`
+		EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+		FollowUpReason           *string     `json:"follow_up_reason"`
+		FollowUpUrl              string      `json:"follow_up_url"`
+		Id                       int         `json:"id"`
+		IntakeMethod             string      `json:"intake_method"`
+		LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+		LicensePlate             interface{} `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make              interface{} `json:"make"`
+		MessagesCount     int         `json:"messages_count"`
+		Model             *string     `json:"model"`
+		RejectUrl         string      `json:"reject_url"`
+		ReminderSentAt    *string     `json:"reminder_sent_at"`
+		RescheduledFromId *int        `json:"rescheduled_from_id"`
+		ReschedulesCount  int         `json:"reschedules_count"`
+		ServiceAdvisor    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt  string  `json:"starts_at"`
+		Status    string  `json:"status"`
+		Submodel  *string `json:"submodel"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+		Vehicle   struct {
+			AppUrl      string `json:"app_url"`
+			DisplayName string `json:"display_name"`
+			Id          int    `json:"id"`
+			Url         string `json:"url"`
+		} `json:"vehicle"`
+		Vin          interface{} `json:"vin"`
+		WorkOrder    interface{} `json:"work_order"`
+		WorkOrderUrl string      `json:"work_order_url"`
+		Year         interface{} `json:"year"`
+	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -31551,9 +34597,77 @@ type CreateAppointmentResponse struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateAppointmentResponse) GetJSON201() *struct {
+	AllDay             bool    `json:"all_day"`
+	AppUrl             string  `json:"app_url"`
+	AppointmentSource  string  `json:"appointment_source"`
+	AppointmentType    string  `json:"appointment_type"`
+	ApproveUrl         string  `json:"approve_url"`
+	CancelUrl          string  `json:"cancel_url"`
+	ConfirmationSentAt *string `json:"confirmation_sent_at"`
+	CreatedAt          string  `json:"created_at"`
+	Customer           struct {
+		AppUrl      string `json:"app_url"`
+		EmailsCount int    `json:"emails_count"`
+		FullName    string `json:"full_name"`
+		Id          int    `json:"id"`
+		PhonesCount int    `json:"phones_count"`
+		Url         string `json:"url"`
+	} `json:"customer"`
+	CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+	CustomerConcern          interface{} `json:"customer_concern"`
+	CustomerConfirmed        bool        `json:"customer_confirmed"`
+	CustomerEmail            interface{} `json:"customer_email"`
+	CustomerInitiated        bool        `json:"customer_initiated"`
+	CustomerName             *string     `json:"customer_name"`
+	CustomerPhone            interface{} `json:"customer_phone"`
+	EndsAt                   string      `json:"ends_at"`
+	EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+	FollowUpReason           *string     `json:"follow_up_reason"`
+	FollowUpUrl              string      `json:"follow_up_url"`
+	Id                       int         `json:"id"`
+	IntakeMethod             string      `json:"intake_method"`
+	LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+	LicensePlate             interface{} `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make              interface{} `json:"make"`
+	MessagesCount     int         `json:"messages_count"`
+	Model             *string     `json:"model"`
+	RejectUrl         string      `json:"reject_url"`
+	ReminderSentAt    *string     `json:"reminder_sent_at"`
+	RescheduledFromId *int        `json:"rescheduled_from_id"`
+	ReschedulesCount  int         `json:"reschedules_count"`
+	ServiceAdvisor    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt  string  `json:"starts_at"`
+	Status    string  `json:"status"`
+	Submodel  *string `json:"submodel"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+	Vehicle   struct {
+		AppUrl      string `json:"app_url"`
+		DisplayName string `json:"display_name"`
+		Id          int    `json:"id"`
+		Url         string `json:"url"`
+	} `json:"vehicle"`
+	Vin          interface{} `json:"vin"`
+	WorkOrder    interface{} `json:"work_order"`
+	WorkOrderUrl string      `json:"work_order_url"`
+	Year         interface{} `json:"year"`
+} {
+	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -31571,9 +34685,7 @@ func (r CreateAppointmentResponse) GetJSON422() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateAppointmentResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateAppointmentResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -31707,16 +34819,127 @@ func (r DeleteAppointmentResponse) ContentType() string {
 type ShowAppointmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay                   bool                    `json:"all_day"`
+		AppUrl                   string                  `json:"app_url"`
+		AppointmentSource        interface{}             `json:"appointment_source"`
+		AppointmentType          string                  `json:"appointment_type"`
+		ApproveUrl               string                  `json:"approve_url"`
+		CancelUrl                string                  `json:"cancel_url"`
+		ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+		CreatedAt                string                  `json:"created_at"`
+		Customer                 *map[string]interface{} `json:"customer"`
+		CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+		CustomerConcern          interface{}             `json:"customer_concern"`
+		CustomerConfirmed        bool                    `json:"customer_confirmed"`
+		CustomerEmail            string                  `json:"customer_email"`
+		CustomerInitiated        bool                    `json:"customer_initiated"`
+		CustomerName             string                  `json:"customer_name"`
+		CustomerPhone            string                  `json:"customer_phone"`
+		EndsAt                   string                  `json:"ends_at"`
+		EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+		FollowUpReason           *string                 `json:"follow_up_reason"`
+		FollowUpUrl              string                  `json:"follow_up_url"`
+		Id                       int                     `json:"id"`
+		IntakeMethod             string                  `json:"intake_method"`
+		LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+		LicensePlate             interface{}             `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make                interface{} `json:"make"`
+		MessagesCount       int         `json:"messages_count"`
+		Model               *string     `json:"model"`
+		ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+		RejectUrl           string      `json:"reject_url"`
+		ReminderSentAt      *string     `json:"reminder_sent_at"`
+		RescheduledFromId   *int        `json:"rescheduled_from_id"`
+		ReschedulesCount    int         `json:"reschedules_count"`
+		ServiceAdvisor      struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt     string                  `json:"starts_at"`
+		Status       string                  `json:"status"`
+		Submodel     *string                 `json:"submodel"`
+		Type         string                  `json:"type"`
+		UpdatedAt    string                  `json:"updated_at"`
+		Url          string                  `json:"url"`
+		Vehicle      *map[string]interface{} `json:"vehicle"`
+		Vin          interface{}             `json:"vin"`
+		WorkOrder    interface{}             `json:"work_order"`
+		WorkOrderUrl string                  `json:"work_order_url"`
+		Year         interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowAppointmentResponse) GetJSON200() *struct {
+	AllDay                   bool                    `json:"all_day"`
+	AppUrl                   string                  `json:"app_url"`
+	AppointmentSource        interface{}             `json:"appointment_source"`
+	AppointmentType          string                  `json:"appointment_type"`
+	ApproveUrl               string                  `json:"approve_url"`
+	CancelUrl                string                  `json:"cancel_url"`
+	ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+	CreatedAt                string                  `json:"created_at"`
+	Customer                 *map[string]interface{} `json:"customer"`
+	CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+	CustomerConcern          interface{}             `json:"customer_concern"`
+	CustomerConfirmed        bool                    `json:"customer_confirmed"`
+	CustomerEmail            string                  `json:"customer_email"`
+	CustomerInitiated        bool                    `json:"customer_initiated"`
+	CustomerName             string                  `json:"customer_name"`
+	CustomerPhone            string                  `json:"customer_phone"`
+	EndsAt                   string                  `json:"ends_at"`
+	EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+	FollowUpReason           *string                 `json:"follow_up_reason"`
+	FollowUpUrl              string                  `json:"follow_up_url"`
+	Id                       int                     `json:"id"`
+	IntakeMethod             string                  `json:"intake_method"`
+	LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+	LicensePlate             interface{}             `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make                interface{} `json:"make"`
+	MessagesCount       int         `json:"messages_count"`
+	Model               *string     `json:"model"`
+	ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+	RejectUrl           string      `json:"reject_url"`
+	ReminderSentAt      *string     `json:"reminder_sent_at"`
+	RescheduledFromId   *int        `json:"rescheduled_from_id"`
+	ReschedulesCount    int         `json:"reschedules_count"`
+	ServiceAdvisor      struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt     string                  `json:"starts_at"`
+	Status       string                  `json:"status"`
+	Submodel     *string                 `json:"submodel"`
+	Type         string                  `json:"type"`
+	UpdatedAt    string                  `json:"updated_at"`
+	Url          string                  `json:"url"`
+	Vehicle      *map[string]interface{} `json:"vehicle"`
+	Vin          interface{}             `json:"vin"`
+	WorkOrder    interface{}             `json:"work_order"`
+	WorkOrderUrl string                  `json:"work_order_url"`
+	Year         interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ShowAppointmentResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ShowAppointmentResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -31752,16 +34975,127 @@ func (r ShowAppointmentResponse) ContentType() string {
 type UpdateAppointmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay                   bool                    `json:"all_day"`
+		AppUrl                   string                  `json:"app_url"`
+		AppointmentSource        interface{}             `json:"appointment_source"`
+		AppointmentType          string                  `json:"appointment_type"`
+		ApproveUrl               string                  `json:"approve_url"`
+		CancelUrl                string                  `json:"cancel_url"`
+		ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+		CreatedAt                string                  `json:"created_at"`
+		Customer                 *map[string]interface{} `json:"customer"`
+		CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+		CustomerConcern          string                  `json:"customer_concern"`
+		CustomerConfirmed        bool                    `json:"customer_confirmed"`
+		CustomerEmail            string                  `json:"customer_email"`
+		CustomerInitiated        bool                    `json:"customer_initiated"`
+		CustomerName             string                  `json:"customer_name"`
+		CustomerPhone            string                  `json:"customer_phone"`
+		EndsAt                   string                  `json:"ends_at"`
+		EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+		FollowUpReason           *string                 `json:"follow_up_reason"`
+		FollowUpUrl              string                  `json:"follow_up_url"`
+		Id                       int                     `json:"id"`
+		IntakeMethod             string                  `json:"intake_method"`
+		LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+		LicensePlate             interface{}             `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make                interface{} `json:"make"`
+		MessagesCount       int         `json:"messages_count"`
+		Model               *string     `json:"model"`
+		ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+		RejectUrl           string      `json:"reject_url"`
+		ReminderSentAt      *string     `json:"reminder_sent_at"`
+		RescheduledFromId   *int        `json:"rescheduled_from_id"`
+		ReschedulesCount    int         `json:"reschedules_count"`
+		ServiceAdvisor      struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt     string                  `json:"starts_at"`
+		Status       string                  `json:"status"`
+		Submodel     *string                 `json:"submodel"`
+		Type         string                  `json:"type"`
+		UpdatedAt    string                  `json:"updated_at"`
+		Url          string                  `json:"url"`
+		Vehicle      *map[string]interface{} `json:"vehicle"`
+		Vin          interface{}             `json:"vin"`
+		WorkOrder    interface{}             `json:"work_order"`
+		WorkOrderUrl string                  `json:"work_order_url"`
+		Year         interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAppointmentResponse) GetJSON200() *struct {
+	AllDay                   bool                    `json:"all_day"`
+	AppUrl                   string                  `json:"app_url"`
+	AppointmentSource        interface{}             `json:"appointment_source"`
+	AppointmentType          string                  `json:"appointment_type"`
+	ApproveUrl               string                  `json:"approve_url"`
+	CancelUrl                string                  `json:"cancel_url"`
+	ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+	CreatedAt                string                  `json:"created_at"`
+	Customer                 *map[string]interface{} `json:"customer"`
+	CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+	CustomerConcern          string                  `json:"customer_concern"`
+	CustomerConfirmed        bool                    `json:"customer_confirmed"`
+	CustomerEmail            string                  `json:"customer_email"`
+	CustomerInitiated        bool                    `json:"customer_initiated"`
+	CustomerName             string                  `json:"customer_name"`
+	CustomerPhone            string                  `json:"customer_phone"`
+	EndsAt                   string                  `json:"ends_at"`
+	EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+	FollowUpReason           *string                 `json:"follow_up_reason"`
+	FollowUpUrl              string                  `json:"follow_up_url"`
+	Id                       int                     `json:"id"`
+	IntakeMethod             string                  `json:"intake_method"`
+	LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+	LicensePlate             interface{}             `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make                interface{} `json:"make"`
+	MessagesCount       int         `json:"messages_count"`
+	Model               *string     `json:"model"`
+	ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+	RejectUrl           string      `json:"reject_url"`
+	ReminderSentAt      *string     `json:"reminder_sent_at"`
+	RescheduledFromId   *int        `json:"rescheduled_from_id"`
+	ReschedulesCount    int         `json:"reschedules_count"`
+	ServiceAdvisor      struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt     string                  `json:"starts_at"`
+	Status       string                  `json:"status"`
+	Submodel     *string                 `json:"submodel"`
+	Type         string                  `json:"type"`
+	UpdatedAt    string                  `json:"updated_at"`
+	Url          string                  `json:"url"`
+	Vehicle      *map[string]interface{} `json:"vehicle"`
+	Vin          interface{}             `json:"vin"`
+	WorkOrder    interface{}             `json:"work_order"`
+	WorkOrderUrl string                  `json:"work_order_url"`
+	Year         interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r UpdateAppointmentResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r UpdateAppointmentResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -31797,16 +35131,127 @@ func (r UpdateAppointmentResponse) ContentType() string {
 type CreateAppointmentsApprovalResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay                   bool                    `json:"all_day"`
+		AppUrl                   string                  `json:"app_url"`
+		AppointmentSource        interface{}             `json:"appointment_source"`
+		AppointmentType          string                  `json:"appointment_type"`
+		ApproveUrl               string                  `json:"approve_url"`
+		CancelUrl                string                  `json:"cancel_url"`
+		ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+		CreatedAt                string                  `json:"created_at"`
+		Customer                 *map[string]interface{} `json:"customer"`
+		CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+		CustomerConcern          interface{}             `json:"customer_concern"`
+		CustomerConfirmed        bool                    `json:"customer_confirmed"`
+		CustomerEmail            string                  `json:"customer_email"`
+		CustomerInitiated        bool                    `json:"customer_initiated"`
+		CustomerName             string                  `json:"customer_name"`
+		CustomerPhone            string                  `json:"customer_phone"`
+		EndsAt                   string                  `json:"ends_at"`
+		EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+		FollowUpReason           *string                 `json:"follow_up_reason"`
+		FollowUpUrl              string                  `json:"follow_up_url"`
+		Id                       int                     `json:"id"`
+		IntakeMethod             string                  `json:"intake_method"`
+		LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+		LicensePlate             interface{}             `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make                interface{} `json:"make"`
+		MessagesCount       int         `json:"messages_count"`
+		Model               *string     `json:"model"`
+		ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+		RejectUrl           string      `json:"reject_url"`
+		ReminderSentAt      *string     `json:"reminder_sent_at"`
+		RescheduledFromId   *int        `json:"rescheduled_from_id"`
+		ReschedulesCount    int         `json:"reschedules_count"`
+		ServiceAdvisor      struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt     string                  `json:"starts_at"`
+		Status       string                  `json:"status"`
+		Submodel     *string                 `json:"submodel"`
+		Type         string                  `json:"type"`
+		UpdatedAt    string                  `json:"updated_at"`
+		Url          string                  `json:"url"`
+		Vehicle      *map[string]interface{} `json:"vehicle"`
+		Vin          interface{}             `json:"vin"`
+		WorkOrder    interface{}             `json:"work_order"`
+		WorkOrderUrl string                  `json:"work_order_url"`
+		Year         interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateAppointmentsApprovalResponse) GetJSON200() *struct {
+	AllDay                   bool                    `json:"all_day"`
+	AppUrl                   string                  `json:"app_url"`
+	AppointmentSource        interface{}             `json:"appointment_source"`
+	AppointmentType          string                  `json:"appointment_type"`
+	ApproveUrl               string                  `json:"approve_url"`
+	CancelUrl                string                  `json:"cancel_url"`
+	ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+	CreatedAt                string                  `json:"created_at"`
+	Customer                 *map[string]interface{} `json:"customer"`
+	CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+	CustomerConcern          interface{}             `json:"customer_concern"`
+	CustomerConfirmed        bool                    `json:"customer_confirmed"`
+	CustomerEmail            string                  `json:"customer_email"`
+	CustomerInitiated        bool                    `json:"customer_initiated"`
+	CustomerName             string                  `json:"customer_name"`
+	CustomerPhone            string                  `json:"customer_phone"`
+	EndsAt                   string                  `json:"ends_at"`
+	EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+	FollowUpReason           *string                 `json:"follow_up_reason"`
+	FollowUpUrl              string                  `json:"follow_up_url"`
+	Id                       int                     `json:"id"`
+	IntakeMethod             string                  `json:"intake_method"`
+	LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+	LicensePlate             interface{}             `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make                interface{} `json:"make"`
+	MessagesCount       int         `json:"messages_count"`
+	Model               *string     `json:"model"`
+	ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+	RejectUrl           string      `json:"reject_url"`
+	ReminderSentAt      *string     `json:"reminder_sent_at"`
+	RescheduledFromId   *int        `json:"rescheduled_from_id"`
+	ReschedulesCount    int         `json:"reschedules_count"`
+	ServiceAdvisor      struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt     string                  `json:"starts_at"`
+	Status       string                  `json:"status"`
+	Submodel     *string                 `json:"submodel"`
+	Type         string                  `json:"type"`
+	UpdatedAt    string                  `json:"updated_at"`
+	Url          string                  `json:"url"`
+	Vehicle      *map[string]interface{} `json:"vehicle"`
+	Vin          interface{}             `json:"vin"`
+	WorkOrder    interface{}             `json:"work_order"`
+	WorkOrderUrl string                  `json:"work_order_url"`
+	Year         interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateAppointmentsApprovalResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateAppointmentsApprovalResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -31842,16 +35287,127 @@ func (r CreateAppointmentsApprovalResponse) ContentType() string {
 type CreateAppointmentsCancellationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay                   bool                    `json:"all_day"`
+		AppUrl                   string                  `json:"app_url"`
+		AppointmentSource        interface{}             `json:"appointment_source"`
+		AppointmentType          string                  `json:"appointment_type"`
+		ApproveUrl               string                  `json:"approve_url"`
+		CancelUrl                string                  `json:"cancel_url"`
+		ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+		CreatedAt                string                  `json:"created_at"`
+		Customer                 *map[string]interface{} `json:"customer"`
+		CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+		CustomerConcern          interface{}             `json:"customer_concern"`
+		CustomerConfirmed        bool                    `json:"customer_confirmed"`
+		CustomerEmail            string                  `json:"customer_email"`
+		CustomerInitiated        bool                    `json:"customer_initiated"`
+		CustomerName             string                  `json:"customer_name"`
+		CustomerPhone            string                  `json:"customer_phone"`
+		EndsAt                   string                  `json:"ends_at"`
+		EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+		FollowUpReason           *string                 `json:"follow_up_reason"`
+		FollowUpUrl              string                  `json:"follow_up_url"`
+		Id                       int                     `json:"id"`
+		IntakeMethod             string                  `json:"intake_method"`
+		LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+		LicensePlate             interface{}             `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make                interface{} `json:"make"`
+		MessagesCount       int         `json:"messages_count"`
+		Model               *string     `json:"model"`
+		ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+		RejectUrl           string      `json:"reject_url"`
+		ReminderSentAt      *string     `json:"reminder_sent_at"`
+		RescheduledFromId   *int        `json:"rescheduled_from_id"`
+		ReschedulesCount    int         `json:"reschedules_count"`
+		ServiceAdvisor      struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt     string                  `json:"starts_at"`
+		Status       string                  `json:"status"`
+		Submodel     *string                 `json:"submodel"`
+		Type         string                  `json:"type"`
+		UpdatedAt    string                  `json:"updated_at"`
+		Url          string                  `json:"url"`
+		Vehicle      *map[string]interface{} `json:"vehicle"`
+		Vin          interface{}             `json:"vin"`
+		WorkOrder    interface{}             `json:"work_order"`
+		WorkOrderUrl string                  `json:"work_order_url"`
+		Year         interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateAppointmentsCancellationResponse) GetJSON200() *struct {
+	AllDay                   bool                    `json:"all_day"`
+	AppUrl                   string                  `json:"app_url"`
+	AppointmentSource        interface{}             `json:"appointment_source"`
+	AppointmentType          string                  `json:"appointment_type"`
+	ApproveUrl               string                  `json:"approve_url"`
+	CancelUrl                string                  `json:"cancel_url"`
+	ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+	CreatedAt                string                  `json:"created_at"`
+	Customer                 *map[string]interface{} `json:"customer"`
+	CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+	CustomerConcern          interface{}             `json:"customer_concern"`
+	CustomerConfirmed        bool                    `json:"customer_confirmed"`
+	CustomerEmail            string                  `json:"customer_email"`
+	CustomerInitiated        bool                    `json:"customer_initiated"`
+	CustomerName             string                  `json:"customer_name"`
+	CustomerPhone            string                  `json:"customer_phone"`
+	EndsAt                   string                  `json:"ends_at"`
+	EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+	FollowUpReason           *string                 `json:"follow_up_reason"`
+	FollowUpUrl              string                  `json:"follow_up_url"`
+	Id                       int                     `json:"id"`
+	IntakeMethod             string                  `json:"intake_method"`
+	LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+	LicensePlate             interface{}             `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make                interface{} `json:"make"`
+	MessagesCount       int         `json:"messages_count"`
+	Model               *string     `json:"model"`
+	ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+	RejectUrl           string      `json:"reject_url"`
+	ReminderSentAt      *string     `json:"reminder_sent_at"`
+	RescheduledFromId   *int        `json:"rescheduled_from_id"`
+	ReschedulesCount    int         `json:"reschedules_count"`
+	ServiceAdvisor      struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt     string                  `json:"starts_at"`
+	Status       string                  `json:"status"`
+	Submodel     *string                 `json:"submodel"`
+	Type         string                  `json:"type"`
+	UpdatedAt    string                  `json:"updated_at"`
+	Url          string                  `json:"url"`
+	Vehicle      *map[string]interface{} `json:"vehicle"`
+	Vin          interface{}             `json:"vin"`
+	WorkOrder    interface{}             `json:"work_order"`
+	WorkOrderUrl string                  `json:"work_order_url"`
+	Year         interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateAppointmentsCancellationResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateAppointmentsCancellationResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -32056,16 +35612,127 @@ func (r CreateAppointmentsFollowUpResponse) ContentType() string {
 type CreateAppointmentsRejectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay                   bool                    `json:"all_day"`
+		AppUrl                   string                  `json:"app_url"`
+		AppointmentSource        interface{}             `json:"appointment_source"`
+		AppointmentType          string                  `json:"appointment_type"`
+		ApproveUrl               string                  `json:"approve_url"`
+		CancelUrl                string                  `json:"cancel_url"`
+		ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+		CreatedAt                string                  `json:"created_at"`
+		Customer                 *map[string]interface{} `json:"customer"`
+		CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+		CustomerConcern          interface{}             `json:"customer_concern"`
+		CustomerConfirmed        bool                    `json:"customer_confirmed"`
+		CustomerEmail            string                  `json:"customer_email"`
+		CustomerInitiated        bool                    `json:"customer_initiated"`
+		CustomerName             string                  `json:"customer_name"`
+		CustomerPhone            string                  `json:"customer_phone"`
+		EndsAt                   string                  `json:"ends_at"`
+		EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+		FollowUpReason           *string                 `json:"follow_up_reason"`
+		FollowUpUrl              string                  `json:"follow_up_url"`
+		Id                       int                     `json:"id"`
+		IntakeMethod             string                  `json:"intake_method"`
+		LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+		LicensePlate             interface{}             `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make                interface{} `json:"make"`
+		MessagesCount       int         `json:"messages_count"`
+		Model               *string     `json:"model"`
+		ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+		RejectUrl           string      `json:"reject_url"`
+		ReminderSentAt      *string     `json:"reminder_sent_at"`
+		RescheduledFromId   *int        `json:"rescheduled_from_id"`
+		ReschedulesCount    int         `json:"reschedules_count"`
+		ServiceAdvisor      struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt     string                  `json:"starts_at"`
+		Status       string                  `json:"status"`
+		Submodel     *string                 `json:"submodel"`
+		Type         string                  `json:"type"`
+		UpdatedAt    string                  `json:"updated_at"`
+		Url          string                  `json:"url"`
+		Vehicle      *map[string]interface{} `json:"vehicle"`
+		Vin          interface{}             `json:"vin"`
+		WorkOrder    interface{}             `json:"work_order"`
+		WorkOrderUrl string                  `json:"work_order_url"`
+		Year         interface{}             `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateAppointmentsRejectionResponse) GetJSON200() *struct {
+	AllDay                   bool                    `json:"all_day"`
+	AppUrl                   string                  `json:"app_url"`
+	AppointmentSource        interface{}             `json:"appointment_source"`
+	AppointmentType          string                  `json:"appointment_type"`
+	ApproveUrl               string                  `json:"approve_url"`
+	CancelUrl                string                  `json:"cancel_url"`
+	ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+	CreatedAt                string                  `json:"created_at"`
+	Customer                 *map[string]interface{} `json:"customer"`
+	CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+	CustomerConcern          interface{}             `json:"customer_concern"`
+	CustomerConfirmed        bool                    `json:"customer_confirmed"`
+	CustomerEmail            string                  `json:"customer_email"`
+	CustomerInitiated        bool                    `json:"customer_initiated"`
+	CustomerName             string                  `json:"customer_name"`
+	CustomerPhone            string                  `json:"customer_phone"`
+	EndsAt                   string                  `json:"ends_at"`
+	EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+	FollowUpReason           *string                 `json:"follow_up_reason"`
+	FollowUpUrl              string                  `json:"follow_up_url"`
+	Id                       int                     `json:"id"`
+	IntakeMethod             string                  `json:"intake_method"`
+	LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+	LicensePlate             interface{}             `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make                interface{} `json:"make"`
+	MessagesCount       int         `json:"messages_count"`
+	Model               *string     `json:"model"`
+	ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+	RejectUrl           string      `json:"reject_url"`
+	ReminderSentAt      *string     `json:"reminder_sent_at"`
+	RescheduledFromId   *int        `json:"rescheduled_from_id"`
+	ReschedulesCount    int         `json:"reschedules_count"`
+	ServiceAdvisor      struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt     string                  `json:"starts_at"`
+	Status       string                  `json:"status"`
+	Submodel     *string                 `json:"submodel"`
+	Type         string                  `json:"type"`
+	UpdatedAt    string                  `json:"updated_at"`
+	Url          string                  `json:"url"`
+	Vehicle      *map[string]interface{} `json:"vehicle"`
+	Vin          interface{}             `json:"vin"`
+	WorkOrder    interface{}             `json:"work_order"`
+	WorkOrderUrl string                  `json:"work_order_url"`
+	Year         interface{}             `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateAppointmentsRejectionResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateAppointmentsRejectionResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -32101,16 +35768,149 @@ func (r CreateAppointmentsRejectionResponse) ContentType() string {
 type CreateAppointmentsVehicleReconciliationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AllDay             bool        `json:"all_day"`
+		AppUrl             string      `json:"app_url"`
+		AppointmentSource  interface{} `json:"appointment_source"`
+		AppointmentType    string      `json:"appointment_type"`
+		ApproveUrl         string      `json:"approve_url"`
+		CancelUrl          string      `json:"cancel_url"`
+		ConfirmationSentAt *string     `json:"confirmation_sent_at"`
+		CreatedAt          string      `json:"created_at"`
+		Customer           struct {
+			AppUrl      string `json:"app_url"`
+			EmailsCount int    `json:"emails_count"`
+			FullName    string `json:"full_name"`
+			Id          int    `json:"id"`
+			PhonesCount int    `json:"phones_count"`
+			Url         string `json:"url"`
+		} `json:"customer"`
+		CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+		CustomerConcern          interface{} `json:"customer_concern"`
+		CustomerConfirmed        bool        `json:"customer_confirmed"`
+		CustomerEmail            string      `json:"customer_email"`
+		CustomerInitiated        bool        `json:"customer_initiated"`
+		CustomerName             string      `json:"customer_name"`
+		CustomerPhone            string      `json:"customer_phone"`
+		EndsAt                   string      `json:"ends_at"`
+		EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+		FollowUpReason           *string     `json:"follow_up_reason"`
+		FollowUpUrl              string      `json:"follow_up_url"`
+		Id                       int         `json:"id"`
+		IntakeMethod             string      `json:"intake_method"`
+		LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+		LicensePlate             interface{} `json:"license_plate"`
+		Location                 struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Make              interface{} `json:"make"`
+		MessagesCount     int         `json:"messages_count"`
+		Model             *string     `json:"model"`
+		RejectUrl         string      `json:"reject_url"`
+		ReminderSentAt    *string     `json:"reminder_sent_at"`
+		RescheduledFromId *int        `json:"rescheduled_from_id"`
+		ReschedulesCount  int         `json:"reschedules_count"`
+		ServiceAdvisor    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"service_advisor"`
+		StartsAt  string  `json:"starts_at"`
+		Status    string  `json:"status"`
+		Submodel  *string `json:"submodel"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+		Vehicle   struct {
+			AppUrl      string `json:"app_url"`
+			DisplayName string `json:"display_name"`
+			Id          int    `json:"id"`
+			Url         string `json:"url"`
+		} `json:"vehicle"`
+		Vin          interface{} `json:"vin"`
+		WorkOrder    interface{} `json:"work_order"`
+		WorkOrderUrl string      `json:"work_order_url"`
+		Year         interface{} `json:"year"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateAppointmentsVehicleReconciliationResponse) GetJSON200() *struct {
+	AllDay             bool        `json:"all_day"`
+	AppUrl             string      `json:"app_url"`
+	AppointmentSource  interface{} `json:"appointment_source"`
+	AppointmentType    string      `json:"appointment_type"`
+	ApproveUrl         string      `json:"approve_url"`
+	CancelUrl          string      `json:"cancel_url"`
+	ConfirmationSentAt *string     `json:"confirmation_sent_at"`
+	CreatedAt          string      `json:"created_at"`
+	Customer           struct {
+		AppUrl      string `json:"app_url"`
+		EmailsCount int    `json:"emails_count"`
+		FullName    string `json:"full_name"`
+		Id          int    `json:"id"`
+		PhonesCount int    `json:"phones_count"`
+		Url         string `json:"url"`
+	} `json:"customer"`
+	CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+	CustomerConcern          interface{} `json:"customer_concern"`
+	CustomerConfirmed        bool        `json:"customer_confirmed"`
+	CustomerEmail            string      `json:"customer_email"`
+	CustomerInitiated        bool        `json:"customer_initiated"`
+	CustomerName             string      `json:"customer_name"`
+	CustomerPhone            string      `json:"customer_phone"`
+	EndsAt                   string      `json:"ends_at"`
+	EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+	FollowUpReason           *string     `json:"follow_up_reason"`
+	FollowUpUrl              string      `json:"follow_up_url"`
+	Id                       int         `json:"id"`
+	IntakeMethod             string      `json:"intake_method"`
+	LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+	LicensePlate             interface{} `json:"license_plate"`
+	Location                 struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Make              interface{} `json:"make"`
+	MessagesCount     int         `json:"messages_count"`
+	Model             *string     `json:"model"`
+	RejectUrl         string      `json:"reject_url"`
+	ReminderSentAt    *string     `json:"reminder_sent_at"`
+	RescheduledFromId *int        `json:"rescheduled_from_id"`
+	ReschedulesCount  int         `json:"reschedules_count"`
+	ServiceAdvisor    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"service_advisor"`
+	StartsAt  string  `json:"starts_at"`
+	Status    string  `json:"status"`
+	Submodel  *string `json:"submodel"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+	Vehicle   struct {
+		AppUrl      string `json:"app_url"`
+		DisplayName string `json:"display_name"`
+		Id          int    `json:"id"`
+		Url         string `json:"url"`
+	} `json:"vehicle"`
+	Vin          interface{} `json:"vin"`
+	WorkOrder    interface{} `json:"work_order"`
+	WorkOrderUrl string      `json:"work_order_url"`
+	Year         interface{} `json:"year"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateAppointmentsVehicleReconciliationResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateAppointmentsVehicleReconciliationResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -34441,6 +38241,103 @@ func (r CheckCustomerDuplicateResponse) ContentType() string {
 	return ""
 }
 
+type CreateCustomersExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Customer
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateCustomersExportResponse) GetJSON200() *Customer {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateCustomersExportResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateCustomersExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateCustomersExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateCustomersExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateCustomersExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListCustomersExportDownloadResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListCustomersExportDownloadResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListCustomersExportDownloadResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListCustomersExportDownloadResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListCustomersExportDownloadResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListCustomersExportDownloadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // LookupCustomerResponse200Headers the declared response headers of an HTTP 200 response for LookupCustomer
 type LookupCustomerResponse200Headers struct {
 	Link        *string
@@ -35227,19 +39124,92 @@ func (r MergeCustomerResponse) ContentType() string {
 	return ""
 }
 
+// ListExpensesResponse200Headers the declared response headers of an HTTP 200 response for ListExpenses
+type ListExpensesResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListExpensesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AmountCents    int    `json:"amount_cents"`
+		AmountCurrency string `json:"amount_currency"`
+		AppUrl         string `json:"app_url"`
+		Category       string `json:"category"`
+		CreatedAt      string `json:"created_at"`
+		Creator        struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"creator"`
+		Description string `json:"description"`
+		ExpenseDate string `json:"expense_date"`
+		Id          int    `json:"id"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Payee          string  `json:"payee"`
+		PaymentMethod  string  `json:"payment_method"`
+		RecurrenceRule *string `json:"recurrence_rule"`
+		Recurring      bool    `json:"recurring"`
+		UpdatedAt      string  `json:"updated_at"`
+		Url            string  `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
 		Error Error `json:"error"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListExpensesResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListExpensesResponse) GetJSON200() *[]struct {
+	AmountCents    int    `json:"amount_cents"`
+	AmountCurrency string `json:"amount_currency"`
+	AppUrl         string `json:"app_url"`
+	Category       string `json:"category"`
+	CreatedAt      string `json:"created_at"`
+	Creator        struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
+	Description string `json:"description"`
+	ExpenseDate string `json:"expense_date"`
+	Id          int    `json:"id"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Payee          string  `json:"payee"`
+	PaymentMethod  string  `json:"payment_method"`
+	RecurrenceRule *string `json:"recurrence_rule"`
+	Recurring      bool    `json:"recurring"`
+	UpdatedAt      string  `json:"updated_at"`
+	Url            string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListExpensesResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListExpensesResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListExpensesResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -35275,14 +39245,69 @@ func (r ListExpensesResponse) ContentType() string {
 type CreateExpenseResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AmountCents    int    `json:"amount_cents"`
+		AmountCurrency string `json:"amount_currency"`
+		AppUrl         string `json:"app_url"`
+		Category       string `json:"category"`
+		CreatedAt      string `json:"created_at"`
+		Creator        struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"creator"`
+		Description string `json:"description"`
+		ExpenseDate string `json:"expense_date"`
+		Id          int    `json:"id"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Payee          string  `json:"payee"`
+		PaymentMethod  string  `json:"payment_method"`
+		RecurrenceRule *string `json:"recurrence_rule"`
+		Recurring      bool    `json:"recurring"`
+		UpdatedAt      string  `json:"updated_at"`
+		Url            string  `json:"url"`
+	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateExpenseResponse) GetJSON201() *struct {
+	AmountCents    int    `json:"amount_cents"`
+	AmountCurrency string `json:"amount_currency"`
+	AppUrl         string `json:"app_url"`
+	Category       string `json:"category"`
+	CreatedAt      string `json:"created_at"`
+	Creator        struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
+	Description string `json:"description"`
+	ExpenseDate string `json:"expense_date"`
+	Id          int    `json:"id"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Payee          string  `json:"payee"`
+	PaymentMethod  string  `json:"payment_method"`
+	RecurrenceRule *string `json:"recurrence_rule"`
+	Recurring      bool    `json:"recurring"`
+	UpdatedAt      string  `json:"updated_at"`
+	Url            string  `json:"url"`
+} {
+	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -35293,9 +39318,7 @@ func (r CreateExpenseResponse) GetJSON403() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateExpenseResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateExpenseResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -35365,16 +39388,69 @@ func (r DeleteExpenseResponse) ContentType() string {
 type UpdateExpenseResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents    int    `json:"amount_cents"`
+		AmountCurrency string `json:"amount_currency"`
+		AppUrl         string `json:"app_url"`
+		Category       string `json:"category"`
+		CreatedAt      string `json:"created_at"`
+		Creator        struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"creator"`
+		Description string `json:"description"`
+		ExpenseDate string `json:"expense_date"`
+		Id          int    `json:"id"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Payee          string  `json:"payee"`
+		PaymentMethod  string  `json:"payment_method"`
+		RecurrenceRule *string `json:"recurrence_rule"`
+		Recurring      bool    `json:"recurring"`
+		UpdatedAt      string  `json:"updated_at"`
+		Url            string  `json:"url"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateExpenseResponse) GetJSON200() *struct {
+	AmountCents    int    `json:"amount_cents"`
+	AmountCurrency string `json:"amount_currency"`
+	AppUrl         string `json:"app_url"`
+	Category       string `json:"category"`
+	CreatedAt      string `json:"created_at"`
+	Creator        struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
+	Description string `json:"description"`
+	ExpenseDate string `json:"expense_date"`
+	Id          int    `json:"id"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Payee          string  `json:"payee"`
+	PaymentMethod  string  `json:"payment_method"`
+	RecurrenceRule *string `json:"recurrence_rule"`
+	Recurring      bool    `json:"recurring"`
+	UpdatedAt      string  `json:"updated_at"`
+	Url            string  `json:"url"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r UpdateExpenseResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r UpdateExpenseResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -37662,6 +41738,40 @@ func (r CreateLaborMatriceResponse) ContentType() string {
 	return ""
 }
 
+type DeleteLaborMatriceResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteLaborMatriceResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteLaborMatriceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteLaborMatriceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteLaborMatriceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdateLaborMatriceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -37877,6 +41987,40 @@ func (r CreateLaborRateResponse) ContentType() string {
 	return ""
 }
 
+type DeleteLaborRateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteLaborRateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteLaborRateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteLaborRateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteLaborRateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdateLaborRateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -38080,6 +42224,103 @@ func (r CreateLeadSourceResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateLeadSourceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateLeadSourcesSeedDefaultResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		Active        bool   `json:"active"`
+		AppUrl        string `json:"app_url"`
+		Category      string `json:"category"`
+		CreatedAt     string `json:"created_at"`
+		Id            int    `json:"id"`
+		Name          string `json:"name"`
+		Position      int    `json:"position"`
+		SystemDefault bool   `json:"system_default"`
+		UpdatedAt     string `json:"updated_at"`
+		Url           string `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateLeadSourcesSeedDefaultResponse) GetJSON200() *[]struct {
+	Active        bool   `json:"active"`
+	AppUrl        string `json:"app_url"`
+	Category      string `json:"category"`
+	CreatedAt     string `json:"created_at"`
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	Position      int    `json:"position"`
+	SystemDefault bool   `json:"system_default"`
+	UpdatedAt     string `json:"updated_at"`
+	Url           string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateLeadSourcesSeedDefaultResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateLeadSourcesSeedDefaultResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateLeadSourcesSeedDefaultResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateLeadSourcesSeedDefaultResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteLeadSourceResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteLeadSourceResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteLeadSourceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteLeadSourceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteLeadSourceResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -38556,6 +42797,8 @@ func (r ListOrdersPurchaseOrdersResponse) ContentType() string {
 type CreateOrdersPurchaseOrderResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *PurchaseOrder
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -38565,9 +42808,12 @@ type CreateOrdersPurchaseOrderResponse struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateOrdersPurchaseOrderResponse) GetJSON201() *PurchaseOrder {
+	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -38585,9 +42831,7 @@ func (r CreateOrdersPurchaseOrderResponse) GetJSON404() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateOrdersPurchaseOrderResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateOrdersPurchaseOrderResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -38777,17 +43021,31 @@ func (r CreateOrdersPurchaseOrdersCancellationResponse) ContentType() string {
 	return ""
 }
 
+// ListOrdersReturnOrdersResponse200Headers the declared response headers of an HTTP 200 response for ListOrdersReturnOrders
+type ListOrdersReturnOrdersResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListOrdersReturnOrdersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]ReturnOrder
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListOrdersReturnOrdersResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListOrdersReturnOrdersResponse) GetJSON200() *[]ReturnOrder {
+	return r.JSON200
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -38798,9 +43056,7 @@ func (r ListOrdersReturnOrdersResponse) GetJSON403() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListOrdersReturnOrdersResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListOrdersReturnOrdersResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -38870,16 +43126,19 @@ func (r DeleteOrdersReturnOrderResponse) ContentType() string {
 type ShowOrdersReturnOrderResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReturnOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowOrdersReturnOrderResponse) GetJSON200() *ReturnOrder {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ShowOrdersReturnOrderResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ShowOrdersReturnOrderResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -38915,16 +43174,19 @@ func (r ShowOrdersReturnOrderResponse) ContentType() string {
 type UpdateOrdersReturnOrderResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReturnOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateOrdersReturnOrderResponse) GetJSON200() *ReturnOrder {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r UpdateOrdersReturnOrderResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r UpdateOrdersReturnOrderResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -38960,16 +43222,19 @@ func (r UpdateOrdersReturnOrderResponse) ContentType() string {
 type CreateOrdersReturnOrdersRefundCompletionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReturnOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateOrdersReturnOrdersRefundCompletionResponse) GetJSON200() *ReturnOrder {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateOrdersReturnOrdersRefundCompletionResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateOrdersReturnOrdersRefundCompletionResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39014,6 +43279,10 @@ type ListOrdersSubletOrdersResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]SubletOrder
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListOrdersSubletOrdersResponse200Headers
 }
@@ -39021,6 +43290,13 @@ type ListOrdersSubletOrdersResponse struct {
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListOrdersSubletOrdersResponse) GetJSON200() *[]SubletOrder {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListOrdersSubletOrdersResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -39669,6 +43945,40 @@ func (r CreatePartsMatriceResponse) ContentType() string {
 	return ""
 }
 
+type DeletePartsMatriceResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeletePartsMatriceResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeletePartsMatriceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeletePartsMatriceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeletePartsMatriceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdatePartsMatriceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -39742,17 +44052,105 @@ func (r UpdatePartsMatriceResponse) ContentType() string {
 	return ""
 }
 
+// ListPaymentsResponse200Headers the declared response headers of an HTTP 200 response for ListPayments
+type ListPaymentsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListPaymentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
+	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListPaymentsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListPaymentsResponse) GetJSON200() *[]struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -39763,9 +44161,7 @@ func (r ListPaymentsResponse) GetJSON403() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListPaymentsResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListPaymentsResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39798,19 +44194,105 @@ func (r ListPaymentsResponse) ContentType() string {
 	return ""
 }
 
+// ListPaymentsPendingResponse200Headers the declared response headers of an HTTP 200 response for ListPaymentsPending
+type ListPaymentsPendingResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListPaymentsPendingResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListPaymentsPendingResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListPaymentsPendingResponse) GetJSON200() *[]struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListPaymentsPendingResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListPaymentsPendingResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39846,16 +44328,93 @@ func (r ListPaymentsPendingResponse) ContentType() string {
 type ShowPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowPaymentResponse) GetJSON200() *struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ShowPaymentResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ShowPaymentResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39891,16 +44450,93 @@ func (r ShowPaymentResponse) ContentType() string {
 type CreatePaymentsCancellationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        string  `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreatePaymentsCancellationResponse) GetJSON200() *struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        string  `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreatePaymentsCancellationResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreatePaymentsCancellationResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39936,16 +44572,93 @@ func (r CreatePaymentsCancellationResponse) ContentType() string {
 type CreatePaymentsConfirmationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreatePaymentsConfirmationResponse) GetJSON200() *struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreatePaymentsConfirmationResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreatePaymentsConfirmationResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -39981,16 +44694,93 @@ func (r CreatePaymentsConfirmationResponse) ContentType() string {
 type CreatePaymentsFailureResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
 	}
+	// JSON500 the response for an HTTP 500 `application/json` response
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreatePaymentsFailureResponse) GetJSON200() *struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreatePaymentsFailureResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreatePaymentsFailureResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -40413,6 +45203,10 @@ type ListReportsAccountingResponse struct {
 		} `json:"tax"`
 		Url string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40440,6 +45234,13 @@ func (r ListReportsAccountingResponse) GetJSON200() *struct {
 	Url string `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsAccountingResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40490,6 +45291,10 @@ type ListReportsArAgingResponse struct {
 		} `json:"totals"`
 		Url string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40509,6 +45314,13 @@ func (r ListReportsArAgingResponse) GetJSON200() *struct {
 	Url string `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsArAgingResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40563,6 +45375,10 @@ type ListReportsDeclinedWorkResponse struct {
 		TotalSavedForLaterCents int                    `json:"total_saved_for_later_cents"`
 		Url                     string                 `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40586,6 +45402,13 @@ func (r ListReportsDeclinedWorkResponse) GetJSON200() *struct {
 	Url                     string                 `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsDeclinedWorkResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40633,6 +45456,10 @@ type ListReportsEndOfDayResponse struct {
 		TotalSalesByMethod       map[string]interface{} `json:"total_sales_by_method"`
 		Url                      string                 `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40649,6 +45476,13 @@ func (r ListReportsEndOfDayResponse) GetJSON200() *struct {
 	Url                      string                 `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsEndOfDayResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40712,6 +45546,10 @@ type ListReportsFinancialResponse struct {
 		} `json:"tax"`
 		Url string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40744,6 +45582,13 @@ func (r ListReportsFinancialResponse) GetJSON200() *struct {
 	Url string `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsFinancialResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40792,6 +45637,10 @@ type ListReportsOpenWorkResponse struct {
 		TotalSavedForLaterCents  int                    `json:"total_saved_for_later_cents"`
 		Url                      string                 `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40809,6 +45658,13 @@ func (r ListReportsOpenWorkResponse) GetJSON200() *struct {
 	Url                      string                 `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsOpenWorkResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40856,6 +45712,10 @@ type ListReportsPartsPurchasesResponse struct {
 		TotalSpendCents int           `json:"total_spend_cents"`
 		Url             string        `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40872,6 +45732,13 @@ func (r ListReportsPartsPurchasesResponse) GetJSON200() *struct {
 	Url             string        `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsPartsPurchasesResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -40918,6 +45785,10 @@ type ListReportsPartsUsageResponse struct {
 		TotalRevenueCents int           `json:"total_revenue_cents"`
 		Url               string        `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -40933,6 +45804,13 @@ func (r ListReportsPartsUsageResponse) GetJSON200() *struct {
 	Url               string        `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsPartsUsageResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -41102,6 +45980,10 @@ type ListReportsProfitAndLossResponse struct {
 		TotalOperatingExpensesCents int    `json:"total_operating_expenses_cents"`
 		Url                         string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41140,6 +46022,13 @@ func (r ListReportsProfitAndLossResponse) GetJSON200() *struct {
 	Url                         string `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsProfitAndLossResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -41232,6 +46121,10 @@ type ListReportsSalesSummaryResponse struct {
 		} `json:"totals"`
 		Url string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41295,6 +46188,13 @@ func (r ListReportsSalesSummaryResponse) GetJSON200() *struct {
 	return r.JSON200
 }
 
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsSalesSummaryResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
 // GetBody returns the raw response body bytes
 func (r ListReportsSalesSummaryResponse) GetBody() []byte {
 	return r.Body
@@ -41335,6 +46235,10 @@ type ListReportsServiceCategoriesResponse struct {
 		StartDate string        `json:"start_date"`
 		Url       string        `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41346,6 +46250,13 @@ func (r ListReportsServiceCategoriesResponse) GetJSON200() *struct {
 	Url       string        `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsServiceCategoriesResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -41389,6 +46300,10 @@ type ListReportsStoreCreditResponse struct {
 		TotalLiabilityCents  int           `json:"total_liability_cents"`
 		Url                  string        `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41401,6 +46316,13 @@ func (r ListReportsStoreCreditResponse) GetJSON200() *struct {
 	Url                  string        `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsStoreCreditResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -41459,6 +46381,10 @@ type ListReportsTechnicianProductivityResponse struct {
 		Totals    *map[string]interface{} `json:"totals"`
 		Url       string                  `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41486,6 +46412,13 @@ func (r ListReportsTechnicianProductivityResponse) GetJSON200() *struct {
 	Url       string                  `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsTechnicianProductivityResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -41539,6 +46472,10 @@ type ListReportsWorkOrderProfitabilityResponse struct {
 		} `json:"totals"`
 		Url string `json:"url"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
@@ -41561,6 +46498,13 @@ func (r ListReportsWorkOrderProfitabilityResponse) GetJSON200() *struct {
 	Url string `json:"url"`
 } {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsWorkOrderProfitabilityResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -42615,6 +47559,101 @@ func (r ListSettingsLaborTemplatesResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ListSettingsLaborTemplatesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteSettingsLaborTemplateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteSettingsLaborTemplateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteSettingsLaborTemplateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteSettingsLaborTemplateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteSettingsLaborTemplateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateSettingsLaborTemplateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string `json:"app_url"`
+		CreatedAt    string `json:"created_at"`
+		DefaultHours string `json:"default_hours"`
+		Description  string `json:"description"`
+		Id           int    `json:"id"`
+		LastUsedAt   string `json:"last_used_at"`
+		UpdatedAt    string `json:"updated_at"`
+		Url          string `json:"url"`
+		UsageCount   int    `json:"usage_count"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateSettingsLaborTemplateResponse) GetJSON200() *struct {
+	AppUrl       string `json:"app_url"`
+	CreatedAt    string `json:"created_at"`
+	DefaultHours string `json:"default_hours"`
+	Description  string `json:"description"`
+	Id           int    `json:"id"`
+	LastUsedAt   string `json:"last_used_at"`
+	UpdatedAt    string `json:"updated_at"`
+	Url          string `json:"url"`
+	UsageCount   int    `json:"usage_count"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateSettingsLaborTemplateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateSettingsLaborTemplateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateSettingsLaborTemplateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateSettingsLaborTemplateResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -43724,6 +48763,40 @@ func (r CreateShopDiscountResponse) ContentType() string {
 	return ""
 }
 
+type DeleteShopDiscountResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteShopDiscountResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteShopDiscountResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteShopDiscountResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteShopDiscountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdateShopDiscountResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -43783,6 +48856,71 @@ func (r UpdateShopDiscountResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateShopDiscountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateShopDiscountsDuplicateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		Active       bool     `json:"active"`
+		AmountCents  int      `json:"amount_cents"`
+		AppUrl       string   `json:"app_url"`
+		Category     string   `json:"category"`
+		CreatedAt    string   `json:"created_at"`
+		DiscountType string   `json:"discount_type"`
+		Id           int      `json:"id"`
+		Name         string   `json:"name"`
+		Percentage   *float32 `json:"percentage"`
+		UpdatedAt    string   `json:"updated_at"`
+		Url          string   `json:"url"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateShopDiscountsDuplicateResponse) GetJSON201() *struct {
+	Active       bool     `json:"active"`
+	AmountCents  int      `json:"amount_cents"`
+	AppUrl       string   `json:"app_url"`
+	Category     string   `json:"category"`
+	CreatedAt    string   `json:"created_at"`
+	DiscountType string   `json:"discount_type"`
+	Id           int      `json:"id"`
+	Name         string   `json:"name"`
+	Percentage   *float32 `json:"percentage"`
+	UpdatedAt    string   `json:"updated_at"`
+	Url          string   `json:"url"`
+} {
+	return r.JSON201
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateShopDiscountsDuplicateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateShopDiscountsDuplicateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateShopDiscountsDuplicateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateShopDiscountsDuplicateResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -43943,6 +49081,40 @@ func (r CreateShopFeeResponse) ContentType() string {
 	return ""
 }
 
+type DeleteShopFeeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteShopFeeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteShopFeeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteShopFeeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteShopFeeResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdateShopFeeResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -44010,6 +49182,73 @@ func (r UpdateShopFeeResponse) ContentType() string {
 	return ""
 }
 
+type CreateShopFeesDuplicateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		Active      bool     `json:"active"`
+		AmountCents int      `json:"amount_cents"`
+		AppUrl      string   `json:"app_url"`
+		AppliesTo   string   `json:"applies_to"`
+		CreatedAt   string   `json:"created_at"`
+		FeeType     string   `json:"fee_type"`
+		Id          int      `json:"id"`
+		IsTaxable   bool     `json:"is_taxable"`
+		Name        string   `json:"name"`
+		Percentage  *float32 `json:"percentage"`
+		UpdatedAt   string   `json:"updated_at"`
+		Url         string   `json:"url"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateShopFeesDuplicateResponse) GetJSON201() *struct {
+	Active      bool     `json:"active"`
+	AmountCents int      `json:"amount_cents"`
+	AppUrl      string   `json:"app_url"`
+	AppliesTo   string   `json:"applies_to"`
+	CreatedAt   string   `json:"created_at"`
+	FeeType     string   `json:"fee_type"`
+	Id          int      `json:"id"`
+	IsTaxable   bool     `json:"is_taxable"`
+	Name        string   `json:"name"`
+	Percentage  *float32 `json:"percentage"`
+	UpdatedAt   string   `json:"updated_at"`
+	Url         string   `json:"url"`
+} {
+	return r.JSON201
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateShopFeesDuplicateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateShopFeesDuplicateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateShopFeesDuplicateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateShopFeesDuplicateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowStatementResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -44062,19 +49301,31 @@ func (r ShowStatementResponse) ContentType() string {
 	return ""
 }
 
+// ListStatementsPaymentsResponse200Headers the declared response headers of an HTTP 200 response for ListStatementsPayments
+type ListStatementsPaymentsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
 type ListStatementsPaymentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]Statement
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListStatementsPaymentsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListStatementsPaymentsResponse) GetJSON200() *[]Statement {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ListStatementsPaymentsResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ListStatementsPaymentsResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -48711,6 +53962,10 @@ type ListVendorsResponse struct {
 	JSON401 *struct {
 		Error Error `json:"error"`
 	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListVendorsResponse200Headers
 }
@@ -48725,6 +53980,13 @@ func (r ListVendorsResponse) GetJSON401() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON401
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListVendorsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -49941,7 +55203,7 @@ func (r CloseWorkOrderZeroResponse) ContentType() string {
 	return ""
 }
 
-type CreateWorkOrdersCourtesyCarAssignmentResponse struct {
+type DeleteWorkOrdersCourtesyCarAssignmentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -49949,8 +55211,101 @@ type CreateWorkOrdersCourtesyCarAssignmentResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r DeleteWorkOrdersCourtesyCarAssignmentResponse) GetJSON200() *WorkOrder {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteWorkOrdersCourtesyCarAssignmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteWorkOrdersCourtesyCarAssignmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteWorkOrdersCourtesyCarAssignmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteWorkOrdersCourtesyCarAssignmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateWorkOrdersCourtesyCarAssignmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *WorkOrder
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateWorkOrdersCourtesyCarAssignmentResponse) GetJSON200() *WorkOrder {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrdersCourtesyCarAssignmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrdersCourtesyCarAssignmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrdersCourtesyCarAssignmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrdersCourtesyCarAssignmentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateWorkOrdersCourtesyCarAssignmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *WorkOrder
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r CreateWorkOrdersCourtesyCarAssignmentResponse) GetJSON200() *WorkOrder {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateWorkOrdersCourtesyCarAssignmentResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -51491,6 +56846,103 @@ func (r ShowWorkOrderEstimateResponse) ContentType() string {
 	return ""
 }
 
+type CreateWorkOrdersFeeExclusionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *WorkOrder
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrdersFeeExclusionResponse) GetJSON201() *WorkOrder {
+	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateWorkOrdersFeeExclusionResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateWorkOrdersFeeExclusionResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkOrdersFeeExclusionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkOrdersFeeExclusionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkOrdersFeeExclusionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkOrdersFeeExclusionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteWorkOrdersFeeExclusionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteWorkOrdersFeeExclusionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteWorkOrdersFeeExclusionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteWorkOrdersFeeExclusionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteWorkOrdersFeeExclusionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowWorkOrderInspectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -51537,11 +56989,22 @@ type CreateWorkOrdersLabelResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *WorkOrder
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r CreateWorkOrdersLabelResponse) GetJSON200() *WorkOrder {
 	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateWorkOrdersLabelResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
@@ -51658,16 +57121,19 @@ func (r ShowWorkOrderPartsResponse) ContentType() string {
 type ShowWorkOrderPaymentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *WorkOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowWorkOrderPaymentsResponse) GetJSON200() *WorkOrder {
+	return r.JSON200
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r ShowWorkOrderPaymentsResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r ShowWorkOrderPaymentsResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -51703,6 +57169,8 @@ func (r ShowWorkOrderPaymentsResponse) ContentType() string {
 type CreateWorkOrderPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *WorkOrder
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -51712,9 +57180,12 @@ type CreateWorkOrderPaymentResponse struct {
 		Error Error `json:"error"`
 	}
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrderPaymentResponse) GetJSON201() *WorkOrder {
+	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -51732,9 +57203,7 @@ func (r CreateWorkOrderPaymentResponse) GetJSON422() *struct {
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateWorkOrderPaymentResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateWorkOrderPaymentResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -52240,16 +57709,19 @@ func (r SendWorkOrderPaymentToArResponse) ContentType() string {
 type CreateWorkOrdersRefundResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *WorkOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrdersRefundResponse) GetJSON201() *WorkOrder {
+	return r.JSON201
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateWorkOrdersRefundResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateWorkOrdersRefundResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -52328,6 +57800,40 @@ func (r CreateWorkOrdersServiceResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateWorkOrdersServiceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateWorkOrdersServicesReorderResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrdersServicesReorderResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrdersServicesReorderResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrdersServicesReorderResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrdersServicesReorderResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -53875,16 +59381,19 @@ func (r ListWorkOrdersSummaryVehicleHistoryResponse) ContentType() string {
 type CreateWorkOrdersVoidResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *WorkOrder
 	// JSON500 the response for an HTTP 500 `application/json` response
-	JSON500 *struct {
-		Error Error `json:"error"`
-	}
+	JSON500 *map[string]interface{}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrdersVoidResponse) GetJSON201() *WorkOrder {
+	return r.JSON201
 }
 
 // GetJSON500 returns the response for an HTTP 500 `application/json` response
-func (r CreateWorkOrdersVoidResponse) GetJSON500() *struct {
-	Error Error `json:"error"`
-} {
+func (r CreateWorkOrdersVoidResponse) GetJSON500() *map[string]interface{} {
 	return r.JSON500
 }
 
@@ -54018,15 +59527,30 @@ func (c *ClientWithResponses) ListAppointmentsWithResponse(ctx context.Context, 
 	return ParseListAppointmentsResponse(rsp)
 }
 
+// CreateAppointmentWithBodyWithResponse create
+//
+// Create a appointment.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /appointments (the `CreateAppointment` operationId).
+func (c *ClientWithResponses) CreateAppointmentWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error) {
+	rsp, err := c.CreateAppointmentWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAppointmentResponse(rsp)
+}
+
 // CreateAppointmentWithResponse create
 //
 // Create a appointment.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /appointments (the `CreateAppointment` operationId).
-func (c *ClientWithResponses) CreateAppointmentWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error) {
-	rsp, err := c.CreateAppointment(ctx, reqEditors...)
+func (c *ClientWithResponses) CreateAppointmentWithResponse(ctx context.Context, body CreateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentResponse, error) {
+	rsp, err := c.CreateAppointment(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -54078,45 +59602,90 @@ func (c *ClientWithResponses) ShowAppointmentWithResponse(ctx context.Context, i
 	return ParseShowAppointmentResponse(rsp)
 }
 
-// UpdateAppointmentWithResponse update
+// UpdateAppointmentWithBodyWithResponse update
 //
 // Update a appointment by ID.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
-func (c *ClientWithResponses) UpdateAppointmentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error) {
-	rsp, err := c.UpdateAppointment(ctx, id, reqEditors...)
+func (c *ClientWithResponses) UpdateAppointmentWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error) {
+	rsp, err := c.UpdateAppointmentWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateAppointmentResponse(rsp)
 }
 
-// CreateAppointmentsApprovalWithResponse create
+// UpdateAppointmentWithResponse update
+//
+// Update a appointment by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /appointments/{id} (the `UpdateAppointment` operationId).
+func (c *ClientWithResponses) UpdateAppointmentWithResponse(ctx context.Context, id int, body UpdateAppointmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAppointmentResponse, error) {
+	rsp, err := c.UpdateAppointment(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAppointmentResponse(rsp)
+}
+
+// CreateAppointmentsApprovalWithBodyWithResponse create
 //
 // Create a appointments approval.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
-func (c *ClientWithResponses) CreateAppointmentsApprovalWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error) {
-	rsp, err := c.CreateAppointmentsApproval(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreateAppointmentsApprovalWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error) {
+	rsp, err := c.CreateAppointmentsApprovalWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateAppointmentsApprovalResponse(rsp)
 }
 
+// CreateAppointmentsApprovalWithResponse create
+//
+// Create a appointments approval.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /appointments/{id}/approvals (the `CreateAppointmentsApproval` operationId).
+func (c *ClientWithResponses) CreateAppointmentsApprovalWithResponse(ctx context.Context, id int, body CreateAppointmentsApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsApprovalResponse, error) {
+	rsp, err := c.CreateAppointmentsApproval(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAppointmentsApprovalResponse(rsp)
+}
+
+// CreateAppointmentsCancellationWithBodyWithResponse create
+//
+// Create a appointments cancellation.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
+func (c *ClientWithResponses) CreateAppointmentsCancellationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error) {
+	rsp, err := c.CreateAppointmentsCancellationWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAppointmentsCancellationResponse(rsp)
+}
+
 // CreateAppointmentsCancellationWithResponse create
 //
 // Create a appointments cancellation.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /appointments/{id}/cancellations (the `CreateAppointmentsCancellation` operationId).
-func (c *ClientWithResponses) CreateAppointmentsCancellationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error) {
-	rsp, err := c.CreateAppointmentsCancellation(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreateAppointmentsCancellationWithResponse(ctx context.Context, id int, body CreateAppointmentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsCancellationResponse, error) {
+	rsp, err := c.CreateAppointmentsCancellation(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -54153,30 +59722,60 @@ func (c *ClientWithResponses) CreateAppointmentsFollowUpWithResponse(ctx context
 	return ParseCreateAppointmentsFollowUpResponse(rsp)
 }
 
-// CreateAppointmentsRejectionWithResponse create
+// CreateAppointmentsRejectionWithBodyWithResponse create
 //
 // Create a appointments rejection.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
-func (c *ClientWithResponses) CreateAppointmentsRejectionWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error) {
-	rsp, err := c.CreateAppointmentsRejection(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreateAppointmentsRejectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error) {
+	rsp, err := c.CreateAppointmentsRejectionWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateAppointmentsRejectionResponse(rsp)
 }
 
+// CreateAppointmentsRejectionWithResponse create
+//
+// Create a appointments rejection.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /appointments/{id}/rejections (the `CreateAppointmentsRejection` operationId).
+func (c *ClientWithResponses) CreateAppointmentsRejectionWithResponse(ctx context.Context, id int, body CreateAppointmentsRejectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsRejectionResponse, error) {
+	rsp, err := c.CreateAppointmentsRejection(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAppointmentsRejectionResponse(rsp)
+}
+
+// CreateAppointmentsVehicleReconciliationWithBodyWithResponse create
+//
+// Create a appointments vehicle reconciliation.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
+func (c *ClientWithResponses) CreateAppointmentsVehicleReconciliationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error) {
+	rsp, err := c.CreateAppointmentsVehicleReconciliationWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateAppointmentsVehicleReconciliationResponse(rsp)
+}
+
 // CreateAppointmentsVehicleReconciliationWithResponse create
 //
 // Create a appointments vehicle reconciliation.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /appointments/{id}/vehicle_reconciliations (the `CreateAppointmentsVehicleReconciliation` operationId).
-func (c *ClientWithResponses) CreateAppointmentsVehicleReconciliationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error) {
-	rsp, err := c.CreateAppointmentsVehicleReconciliation(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreateAppointmentsVehicleReconciliationWithResponse(ctx context.Context, id int, body CreateAppointmentsVehicleReconciliationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateAppointmentsVehicleReconciliationResponse, error) {
+	rsp, err := c.CreateAppointmentsVehicleReconciliation(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -54938,6 +60537,51 @@ func (c *ClientWithResponses) CheckCustomerDuplicateWithResponse(ctx context.Con
 	return ParseCheckCustomerDuplicateResponse(rsp)
 }
 
+// CreateCustomersExportWithBodyWithResponse create
+//
+// Create a customers export.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+func (c *ClientWithResponses) CreateCustomersExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomersExportResponse, error) {
+	rsp, err := c.CreateCustomersExportWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomersExportResponse(rsp)
+}
+
+// CreateCustomersExportWithResponse create
+//
+// Create a customers export.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customers/export (the `CreateCustomersExport` operationId).
+func (c *ClientWithResponses) CreateCustomersExportWithResponse(ctx context.Context, body CreateCustomersExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomersExportResponse, error) {
+	rsp, err := c.CreateCustomersExport(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomersExportResponse(rsp)
+}
+
+// ListCustomersExportDownloadWithResponse download
+//
+// List all customers export download, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/export/{id}/download (the `ListCustomersExportDownload` operationId).
+func (c *ClientWithResponses) ListCustomersExportDownloadWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ListCustomersExportDownloadResponse, error) {
+	rsp, err := c.ListCustomersExportDownload(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListCustomersExportDownloadResponse(rsp)
+}
+
 // LookupCustomerWithResponse lookup
 //
 // Returns a wrapper object for the known response body format(s).
@@ -55217,15 +60861,30 @@ func (c *ClientWithResponses) ListExpensesWithResponse(ctx context.Context, reqE
 	return ParseListExpensesResponse(rsp)
 }
 
+// CreateExpenseWithBodyWithResponse create
+//
+// Create a expense.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /expenses (the `CreateExpense` operationId).
+func (c *ClientWithResponses) CreateExpenseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error) {
+	rsp, err := c.CreateExpenseWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateExpenseResponse(rsp)
+}
+
 // CreateExpenseWithResponse create
 //
 // Create a expense.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /expenses (the `CreateExpense` operationId).
-func (c *ClientWithResponses) CreateExpenseWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error) {
-	rsp, err := c.CreateExpense(ctx, reqEditors...)
+func (c *ClientWithResponses) CreateExpenseWithResponse(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error) {
+	rsp, err := c.CreateExpense(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -55247,15 +60906,30 @@ func (c *ClientWithResponses) DeleteExpenseWithResponse(ctx context.Context, id 
 	return ParseDeleteExpenseResponse(rsp)
 }
 
+// UpdateExpenseWithBodyWithResponse update
+//
+// Update a expense by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
+func (c *ClientWithResponses) UpdateExpenseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error) {
+	rsp, err := c.UpdateExpenseWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateExpenseResponse(rsp)
+}
+
 // UpdateExpenseWithResponse update
 //
 // Update a expense by ID.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /expenses/{id} (the `UpdateExpense` operationId).
-func (c *ClientWithResponses) UpdateExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error) {
-	rsp, err := c.UpdateExpense(ctx, id, reqEditors...)
+func (c *ClientWithResponses) UpdateExpenseWithResponse(ctx context.Context, id int, body UpdateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateExpenseResponse, error) {
+	rsp, err := c.UpdateExpense(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -56013,6 +61687,21 @@ func (c *ClientWithResponses) CreateLaborMatriceWithResponse(ctx context.Context
 	return ParseCreateLaborMatriceResponse(rsp)
 }
 
+// DeleteLaborMatriceWithResponse destroy
+//
+// Delete a labor matrice by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
+func (c *ClientWithResponses) DeleteLaborMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatriceResponse, error) {
+	rsp, err := c.DeleteLaborMatrice(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteLaborMatriceResponse(rsp)
+}
+
 // UpdateLaborMatriceWithBodyWithResponse update
 //
 // Update a labor matrice by ID.
@@ -56088,6 +61777,21 @@ func (c *ClientWithResponses) CreateLaborRateWithResponse(ctx context.Context, b
 	return ParseCreateLaborRateResponse(rsp)
 }
 
+// DeleteLaborRateWithResponse destroy
+//
+// Delete a labor rate by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
+func (c *ClientWithResponses) DeleteLaborRateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborRateResponse, error) {
+	rsp, err := c.DeleteLaborRate(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteLaborRateResponse(rsp)
+}
+
 // UpdateLaborRateWithBodyWithResponse update
 //
 // Update a labor rate by ID.
@@ -56161,6 +61865,51 @@ func (c *ClientWithResponses) CreateLeadSourceWithResponse(ctx context.Context, 
 		return nil, err
 	}
 	return ParseCreateLeadSourceResponse(rsp)
+}
+
+// CreateLeadSourcesSeedDefaultWithBodyWithResponse seed_defaults
+//
+// Create a lead sources seed default.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+func (c *ClientWithResponses) CreateLeadSourcesSeedDefaultWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLeadSourcesSeedDefaultResponse, error) {
+	rsp, err := c.CreateLeadSourcesSeedDefaultWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateLeadSourcesSeedDefaultResponse(rsp)
+}
+
+// CreateLeadSourcesSeedDefaultWithResponse seed_defaults
+//
+// Create a lead sources seed default.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /lead_sources/seed_defaults (the `CreateLeadSourcesSeedDefault` operationId).
+func (c *ClientWithResponses) CreateLeadSourcesSeedDefaultWithResponse(ctx context.Context, body CreateLeadSourcesSeedDefaultJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLeadSourcesSeedDefaultResponse, error) {
+	rsp, err := c.CreateLeadSourcesSeedDefault(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateLeadSourcesSeedDefaultResponse(rsp)
+}
+
+// DeleteLeadSourceWithResponse destroy
+//
+// Delete a lead source by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /lead_sources/{id} (the `DeleteLeadSource` operationId).
+func (c *ClientWithResponses) DeleteLeadSourceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLeadSourceResponse, error) {
+	rsp, err := c.DeleteLeadSource(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteLeadSourceResponse(rsp)
 }
 
 // UpdateLeadSourceWithBodyWithResponse update
@@ -56313,15 +62062,30 @@ func (c *ClientWithResponses) ListOrdersPurchaseOrdersWithResponse(ctx context.C
 	return ParseListOrdersPurchaseOrdersResponse(rsp)
 }
 
+// CreateOrdersPurchaseOrderWithBodyWithResponse create
+//
+// Create a orders purchase order.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
+func (c *ClientWithResponses) CreateOrdersPurchaseOrderWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error) {
+	rsp, err := c.CreateOrdersPurchaseOrderWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrdersPurchaseOrderResponse(rsp)
+}
+
 // CreateOrdersPurchaseOrderWithResponse create
 //
 // Create a orders purchase order.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /orders/purchase_orders (the `CreateOrdersPurchaseOrder` operationId).
-func (c *ClientWithResponses) CreateOrdersPurchaseOrderWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error) {
-	rsp, err := c.CreateOrdersPurchaseOrder(ctx, reqEditors...)
+func (c *ClientWithResponses) CreateOrdersPurchaseOrderWithResponse(ctx context.Context, body CreateOrdersPurchaseOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrdersPurchaseOrderResponse, error) {
+	rsp, err := c.CreateOrdersPurchaseOrder(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -56463,30 +62227,60 @@ func (c *ClientWithResponses) ShowOrdersReturnOrderWithResponse(ctx context.Cont
 	return ParseShowOrdersReturnOrderResponse(rsp)
 }
 
-// UpdateOrdersReturnOrderWithResponse update
+// UpdateOrdersReturnOrderWithBodyWithResponse update
 //
 // Update a orders return order by ID.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
-func (c *ClientWithResponses) UpdateOrdersReturnOrderWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error) {
-	rsp, err := c.UpdateOrdersReturnOrder(ctx, id, reqEditors...)
+func (c *ClientWithResponses) UpdateOrdersReturnOrderWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error) {
+	rsp, err := c.UpdateOrdersReturnOrderWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateOrdersReturnOrderResponse(rsp)
 }
 
+// UpdateOrdersReturnOrderWithResponse update
+//
+// Update a orders return order by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /orders/return_orders/{id} (the `UpdateOrdersReturnOrder` operationId).
+func (c *ClientWithResponses) UpdateOrdersReturnOrderWithResponse(ctx context.Context, id int, body UpdateOrdersReturnOrderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOrdersReturnOrderResponse, error) {
+	rsp, err := c.UpdateOrdersReturnOrder(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateOrdersReturnOrderResponse(rsp)
+}
+
+// CreateOrdersReturnOrdersRefundCompletionWithBodyWithResponse create
+//
+// Create a orders return orders refund completion.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
+func (c *ClientWithResponses) CreateOrdersReturnOrdersRefundCompletionWithBodyWithResponse(ctx context.Context, returnOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error) {
+	rsp, err := c.CreateOrdersReturnOrdersRefundCompletionWithBody(ctx, returnOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateOrdersReturnOrdersRefundCompletionResponse(rsp)
+}
+
 // CreateOrdersReturnOrdersRefundCompletionWithResponse create
 //
 // Create a orders return orders refund completion.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /orders/return_orders/{return_order_id}/refund_completions (the `CreateOrdersReturnOrdersRefundCompletion` operationId).
-func (c *ClientWithResponses) CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx context.Context, returnOrderId int, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error) {
-	rsp, err := c.CreateOrdersReturnOrdersRefundCompletion(ctx, returnOrderId, reqEditors...)
+func (c *ClientWithResponses) CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrdersReturnOrdersRefundCompletionResponse, error) {
+	rsp, err := c.CreateOrdersReturnOrdersRefundCompletion(ctx, returnOrderId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -56703,6 +62497,21 @@ func (c *ClientWithResponses) CreatePartsMatriceWithResponse(ctx context.Context
 	return ParseCreatePartsMatriceResponse(rsp)
 }
 
+// DeletePartsMatriceWithResponse destroy
+//
+// Delete a parts matrice by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
+func (c *ClientWithResponses) DeletePartsMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatriceResponse, error) {
+	rsp, err := c.DeletePartsMatrice(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeletePartsMatriceResponse(rsp)
+}
+
 // UpdatePartsMatriceWithBodyWithResponse update
 //
 // Update a parts matrice by ID.
@@ -56778,45 +62587,90 @@ func (c *ClientWithResponses) ShowPaymentWithResponse(ctx context.Context, id in
 	return ParseShowPaymentResponse(rsp)
 }
 
-// CreatePaymentsCancellationWithResponse create
+// CreatePaymentsCancellationWithBodyWithResponse create
 //
 // Create a payments cancellation.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
-func (c *ClientWithResponses) CreatePaymentsCancellationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error) {
-	rsp, err := c.CreatePaymentsCancellation(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreatePaymentsCancellationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error) {
+	rsp, err := c.CreatePaymentsCancellationWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePaymentsCancellationResponse(rsp)
 }
 
-// CreatePaymentsConfirmationWithResponse create
+// CreatePaymentsCancellationWithResponse create
+//
+// Create a payments cancellation.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /payments/{id}/cancellation (the `CreatePaymentsCancellation` operationId).
+func (c *ClientWithResponses) CreatePaymentsCancellationWithResponse(ctx context.Context, id int, body CreatePaymentsCancellationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsCancellationResponse, error) {
+	rsp, err := c.CreatePaymentsCancellation(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePaymentsCancellationResponse(rsp)
+}
+
+// CreatePaymentsConfirmationWithBodyWithResponse create
 //
 // Create a payments confirmation.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
-func (c *ClientWithResponses) CreatePaymentsConfirmationWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error) {
-	rsp, err := c.CreatePaymentsConfirmation(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreatePaymentsConfirmationWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error) {
+	rsp, err := c.CreatePaymentsConfirmationWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePaymentsConfirmationResponse(rsp)
 }
 
+// CreatePaymentsConfirmationWithResponse create
+//
+// Create a payments confirmation.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /payments/{id}/confirmation (the `CreatePaymentsConfirmation` operationId).
+func (c *ClientWithResponses) CreatePaymentsConfirmationWithResponse(ctx context.Context, id int, body CreatePaymentsConfirmationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsConfirmationResponse, error) {
+	rsp, err := c.CreatePaymentsConfirmation(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePaymentsConfirmationResponse(rsp)
+}
+
+// CreatePaymentsFailureWithBodyWithResponse create
+//
+// Create a payments failure.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
+func (c *ClientWithResponses) CreatePaymentsFailureWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error) {
+	rsp, err := c.CreatePaymentsFailureWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePaymentsFailureResponse(rsp)
+}
+
 // CreatePaymentsFailureWithResponse create
 //
 // Create a payments failure.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /payments/{id}/failure (the `CreatePaymentsFailure` operationId).
-func (c *ClientWithResponses) CreatePaymentsFailureWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error) {
-	rsp, err := c.CreatePaymentsFailure(ctx, id, reqEditors...)
+func (c *ClientWithResponses) CreatePaymentsFailureWithResponse(ctx context.Context, id int, body CreatePaymentsFailureJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentsFailureResponse, error) {
+	rsp, err := c.CreatePaymentsFailure(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -57434,6 +63288,51 @@ func (c *ClientWithResponses) ListSettingsLaborTemplatesWithResponse(ctx context
 	return ParseListSettingsLaborTemplatesResponse(rsp)
 }
 
+// DeleteSettingsLaborTemplateWithResponse destroy
+//
+// Delete a settings labor template by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /settings/labor_templates/{id} (the `DeleteSettingsLaborTemplate` operationId).
+func (c *ClientWithResponses) DeleteSettingsLaborTemplateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteSettingsLaborTemplateResponse, error) {
+	rsp, err := c.DeleteSettingsLaborTemplate(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteSettingsLaborTemplateResponse(rsp)
+}
+
+// UpdateSettingsLaborTemplateWithBodyWithResponse update
+//
+// Update a settings labor template by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+func (c *ClientWithResponses) UpdateSettingsLaborTemplateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSettingsLaborTemplateResponse, error) {
+	rsp, err := c.UpdateSettingsLaborTemplateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSettingsLaborTemplateResponse(rsp)
+}
+
+// UpdateSettingsLaborTemplateWithResponse update
+//
+// Update a settings labor template by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /settings/labor_templates/{id} (the `UpdateSettingsLaborTemplate` operationId).
+func (c *ClientWithResponses) UpdateSettingsLaborTemplateWithResponse(ctx context.Context, id int, body UpdateSettingsLaborTemplateJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSettingsLaborTemplateResponse, error) {
+	rsp, err := c.UpdateSettingsLaborTemplate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSettingsLaborTemplateResponse(rsp)
+}
+
 // ListSettingsLeadSourceRequirementsWithResponse show
 //
 // List all settings lead source requirements, paginated via the Link header.
@@ -57659,6 +63558,21 @@ func (c *ClientWithResponses) CreateShopDiscountWithResponse(ctx context.Context
 	return ParseCreateShopDiscountResponse(rsp)
 }
 
+// DeleteShopDiscountWithResponse destroy
+//
+// Delete a shop discount by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /shop_discounts/{id} (the `DeleteShopDiscount` operationId).
+func (c *ClientWithResponses) DeleteShopDiscountWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteShopDiscountResponse, error) {
+	rsp, err := c.DeleteShopDiscount(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteShopDiscountResponse(rsp)
+}
+
 // UpdateShopDiscountWithBodyWithResponse update
 //
 // Update a shop discount by ID.
@@ -57687,6 +63601,36 @@ func (c *ClientWithResponses) UpdateShopDiscountWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseUpdateShopDiscountResponse(rsp)
+}
+
+// CreateShopDiscountsDuplicateWithBodyWithResponse duplicate
+//
+// Create a shop discounts duplicate.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+func (c *ClientWithResponses) CreateShopDiscountsDuplicateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateShopDiscountsDuplicateResponse, error) {
+	rsp, err := c.CreateShopDiscountsDuplicateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateShopDiscountsDuplicateResponse(rsp)
+}
+
+// CreateShopDiscountsDuplicateWithResponse duplicate
+//
+// Create a shop discounts duplicate.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /shop_discounts/{id}/duplicate (the `CreateShopDiscountsDuplicate` operationId).
+func (c *ClientWithResponses) CreateShopDiscountsDuplicateWithResponse(ctx context.Context, id int, body CreateShopDiscountsDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopDiscountsDuplicateResponse, error) {
+	rsp, err := c.CreateShopDiscountsDuplicate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateShopDiscountsDuplicateResponse(rsp)
 }
 
 // ListShopFeesWithResponse index
@@ -57734,6 +63678,21 @@ func (c *ClientWithResponses) CreateShopFeeWithResponse(ctx context.Context, bod
 	return ParseCreateShopFeeResponse(rsp)
 }
 
+// DeleteShopFeeWithResponse destroy
+//
+// Delete a shop fee by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /shop_fees/{id} (the `DeleteShopFee` operationId).
+func (c *ClientWithResponses) DeleteShopFeeWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteShopFeeResponse, error) {
+	rsp, err := c.DeleteShopFee(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteShopFeeResponse(rsp)
+}
+
 // UpdateShopFeeWithBodyWithResponse update
 //
 // Update a shop fee by ID.
@@ -57762,6 +63721,36 @@ func (c *ClientWithResponses) UpdateShopFeeWithResponse(ctx context.Context, id 
 		return nil, err
 	}
 	return ParseUpdateShopFeeResponse(rsp)
+}
+
+// CreateShopFeesDuplicateWithBodyWithResponse duplicate
+//
+// Create a shop fees duplicate.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+func (c *ClientWithResponses) CreateShopFeesDuplicateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateShopFeesDuplicateResponse, error) {
+	rsp, err := c.CreateShopFeesDuplicateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateShopFeesDuplicateResponse(rsp)
+}
+
+// CreateShopFeesDuplicateWithResponse duplicate
+//
+// Create a shop fees duplicate.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /shop_fees/{id}/duplicate (the `CreateShopFeesDuplicate` operationId).
+func (c *ClientWithResponses) CreateShopFeesDuplicateWithResponse(ctx context.Context, id int, body CreateShopFeesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateShopFeesDuplicateResponse, error) {
+	rsp, err := c.CreateShopFeesDuplicate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateShopFeesDuplicateResponse(rsp)
 }
 
 // ShowStatementWithResponse show
@@ -59045,8 +65034,8 @@ func (c *ClientWithResponses) ListVendorsPurchaseOrdersWithResponse(ctx context.
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /work_orders (the `ListWorkOrders` operationId).
-func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error) {
-	rsp, err := c.ListWorkOrders(ctx, reqEditors...)
+func (c *ClientWithResponses) ListWorkOrdersWithResponse(ctx context.Context, params *ListWorkOrdersParams, reqEditors ...RequestEditorFn) (*ListWorkOrdersResponse, error) {
+	rsp, err := c.ListWorkOrders(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -59219,6 +65208,51 @@ func (c *ClientWithResponses) CloseWorkOrderZeroWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseCloseWorkOrderZeroResponse(rsp)
+}
+
+// DeleteWorkOrdersCourtesyCarAssignmentWithResponse destroy
+//
+// Delete a work orders courtesy car assignment by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /work_orders/{id}/courtesy_car_assignment (the `DeleteWorkOrdersCourtesyCarAssignment` operationId).
+func (c *ClientWithResponses) DeleteWorkOrdersCourtesyCarAssignmentWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersCourtesyCarAssignmentResponse, error) {
+	rsp, err := c.DeleteWorkOrdersCourtesyCarAssignment(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteWorkOrdersCourtesyCarAssignmentResponse(rsp)
+}
+
+// UpdateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse update
+//
+// Update a work orders courtesy car assignment by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+func (c *ClientWithResponses) UpdateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error) {
+	rsp, err := c.UpdateWorkOrdersCourtesyCarAssignmentWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrdersCourtesyCarAssignmentResponse(rsp)
+}
+
+// UpdateWorkOrdersCourtesyCarAssignmentWithResponse update
+//
+// Update a work orders courtesy car assignment by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{id}/courtesy_car_assignment (the `UpdateWorkOrdersCourtesyCarAssignment` operationId).
+func (c *ClientWithResponses) UpdateWorkOrdersCourtesyCarAssignmentWithResponse(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error) {
+	rsp, err := c.UpdateWorkOrdersCourtesyCarAssignment(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrdersCourtesyCarAssignmentResponse(rsp)
 }
 
 // CreateWorkOrdersCourtesyCarAssignmentWithBodyWithResponse create
@@ -59640,6 +65674,51 @@ func (c *ClientWithResponses) ShowWorkOrderEstimateWithResponse(ctx context.Cont
 	return ParseShowWorkOrderEstimateResponse(rsp)
 }
 
+// CreateWorkOrdersFeeExclusionWithBodyWithResponse create
+//
+// Create a work orders fee exclusion.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersFeeExclusionWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersFeeExclusionResponse, error) {
+	rsp, err := c.CreateWorkOrdersFeeExclusionWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrdersFeeExclusionResponse(rsp)
+}
+
+// CreateWorkOrdersFeeExclusionWithResponse create
+//
+// Create a work orders fee exclusion.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/fee_exclusions (the `CreateWorkOrdersFeeExclusion` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersFeeExclusionWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersFeeExclusionResponse, error) {
+	rsp, err := c.CreateWorkOrdersFeeExclusion(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrdersFeeExclusionResponse(rsp)
+}
+
+// DeleteWorkOrdersFeeExclusionWithResponse destroy
+//
+// Delete a work orders fee exclusion by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /work_orders/{work_order_id}/fee_exclusions/{id} (the `DeleteWorkOrdersFeeExclusion` operationId).
+func (c *ClientWithResponses) DeleteWorkOrdersFeeExclusionWithResponse(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersFeeExclusionResponse, error) {
+	rsp, err := c.DeleteWorkOrdersFeeExclusion(ctx, workOrderId, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteWorkOrdersFeeExclusionResponse(rsp)
+}
+
 // ShowWorkOrderInspectionWithResponse show
 //
 // Show a work order inspection by ID.
@@ -59730,15 +65809,30 @@ func (c *ClientWithResponses) ShowWorkOrderPaymentsWithResponse(ctx context.Cont
 	return ParseShowWorkOrderPaymentsResponse(rsp)
 }
 
+// CreateWorkOrderPaymentWithBodyWithResponse create
+//
+// Create a work order payment.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
+func (c *ClientWithResponses) CreateWorkOrderPaymentWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error) {
+	rsp, err := c.CreateWorkOrderPaymentWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderPaymentResponse(rsp)
+}
+
 // CreateWorkOrderPaymentWithResponse create
 //
 // Create a work order payment.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /work_orders/{work_order_id}/payments (the `CreateWorkOrderPayment` operationId).
-func (c *ClientWithResponses) CreateWorkOrderPaymentWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error) {
-	rsp, err := c.CreateWorkOrderPayment(ctx, workOrderId, reqEditors...)
+func (c *ClientWithResponses) CreateWorkOrderPaymentWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderPaymentResponse, error) {
+	rsp, err := c.CreateWorkOrderPayment(ctx, workOrderId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -59784,15 +65878,30 @@ func (c *ClientWithResponses) SendWorkOrderPaymentToArWithResponse(ctx context.C
 	return ParseSendWorkOrderPaymentToArResponse(rsp)
 }
 
+// CreateWorkOrdersRefundWithBodyWithResponse create
+//
+// Create a work orders refund.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersRefundWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error) {
+	rsp, err := c.CreateWorkOrdersRefundWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrdersRefundResponse(rsp)
+}
+
 // CreateWorkOrdersRefundWithResponse create
 //
 // Create a work orders refund.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersRefundWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error) {
-	rsp, err := c.CreateWorkOrdersRefund(ctx, workOrderId, reqEditors...)
+func (c *ClientWithResponses) CreateWorkOrdersRefundWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error) {
+	rsp, err := c.CreateWorkOrdersRefund(ctx, workOrderId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -59827,6 +65936,36 @@ func (c *ClientWithResponses) CreateWorkOrdersServiceWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseCreateWorkOrdersServiceResponse(rsp)
+}
+
+// UpdateWorkOrdersServicesReorderWithBodyWithResponse reorder
+//
+// Update a work orders services reorder by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+func (c *ClientWithResponses) UpdateWorkOrdersServicesReorderWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesReorderResponse, error) {
+	rsp, err := c.UpdateWorkOrdersServicesReorderWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrdersServicesReorderResponse(rsp)
+}
+
+// UpdateWorkOrdersServicesReorderWithResponse reorder
+//
+// Update a work orders services reorder by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_orders/{work_order_id}/services/reorder (the `UpdateWorkOrdersServicesReorder` operationId).
+func (c *ClientWithResponses) UpdateWorkOrdersServicesReorderWithResponse(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesReorderResponse, error) {
+	rsp, err := c.UpdateWorkOrdersServicesReorder(ctx, workOrderId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrdersServicesReorderResponse(rsp)
 }
 
 // DeleteWorkOrdersServiceWithResponse destroy
@@ -60750,15 +66889,30 @@ func (c *ClientWithResponses) ListWorkOrdersSummaryVehicleHistoryWithResponse(ct
 	return ParseListWorkOrdersSummaryVehicleHistoryResponse(rsp)
 }
 
+// CreateWorkOrdersVoidWithBodyWithResponse create
+//
+// Create a work orders void.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersVoidWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error) {
+	rsp, err := c.CreateWorkOrdersVoidWithBody(ctx, workOrderId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrdersVoidResponse(rsp)
+}
+
 // CreateWorkOrdersVoidWithResponse create
 //
 // Create a work orders void.
 //
-// Returns a wrapper object for the known response body format(s).
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /work_orders/{work_order_id}/voids (the `CreateWorkOrdersVoid` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersVoidWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error) {
-	rsp, err := c.CreateWorkOrdersVoid(ctx, workOrderId, reqEditors...)
+func (c *ClientWithResponses) CreateWorkOrdersVoidWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersVoidResponse, error) {
+	rsp, err := c.CreateWorkOrdersVoid(ctx, workOrderId, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -60897,15 +67051,90 @@ func ParseListAppointmentsResponse(rsp *http.Response) (*ListAppointmentsRespons
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AllDay            bool        `json:"all_day"`
+			AppUrl            string      `json:"app_url"`
+			AppointmentSource interface{} `json:"appointment_source"`
+			AppointmentType   string      `json:"appointment_type"`
+			CreatedAt         string      `json:"created_at"`
+			Customer          *struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerConcern          interface{} `json:"customer_concern"`
+			CustomerEmail            string      `json:"customer_email"`
+			CustomerName             string      `json:"customer_name"`
+			CustomerPhone            string      `json:"customer_phone"`
+			EndsAt                   string      `json:"ends_at"`
+			EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+			FollowUpReason           *string     `json:"follow_up_reason"`
+			Id                       int         `json:"id"`
+			IntakeMethod             string      `json:"intake_method"`
+			LicensePlate             interface{} `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make           interface{} `json:"make"`
+			Model          *string     `json:"model"`
+			ServiceAdvisor struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt  string                  `json:"starts_at"`
+			Status    string                  `json:"status"`
+			Submodel  *string                 `json:"submodel"`
+			Type      string                  `json:"type"`
+			UpdatedAt string                  `json:"updated_at"`
+			Url       string                  `json:"url"`
+			Vehicle   *map[string]interface{} `json:"vehicle"`
+			Vin       interface{}             `json:"vin"`
+			WorkOrder interface{}             `json:"work_order"`
+			Year      interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListAppointmentsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -60925,6 +67154,78 @@ func ParseCreateAppointmentResponse(rsp *http.Response) (*CreateAppointmentRespo
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AllDay             bool    `json:"all_day"`
+			AppUrl             string  `json:"app_url"`
+			AppointmentSource  string  `json:"appointment_source"`
+			AppointmentType    string  `json:"appointment_type"`
+			ApproveUrl         string  `json:"approve_url"`
+			CancelUrl          string  `json:"cancel_url"`
+			ConfirmationSentAt *string `json:"confirmation_sent_at"`
+			CreatedAt          string  `json:"created_at"`
+			Customer           struct {
+				AppUrl      string `json:"app_url"`
+				EmailsCount int    `json:"emails_count"`
+				FullName    string `json:"full_name"`
+				Id          int    `json:"id"`
+				PhonesCount int    `json:"phones_count"`
+				Url         string `json:"url"`
+			} `json:"customer"`
+			CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+			CustomerConcern          interface{} `json:"customer_concern"`
+			CustomerConfirmed        bool        `json:"customer_confirmed"`
+			CustomerEmail            interface{} `json:"customer_email"`
+			CustomerInitiated        bool        `json:"customer_initiated"`
+			CustomerName             *string     `json:"customer_name"`
+			CustomerPhone            interface{} `json:"customer_phone"`
+			EndsAt                   string      `json:"ends_at"`
+			EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+			FollowUpReason           *string     `json:"follow_up_reason"`
+			FollowUpUrl              string      `json:"follow_up_url"`
+			Id                       int         `json:"id"`
+			IntakeMethod             string      `json:"intake_method"`
+			LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+			LicensePlate             interface{} `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make              interface{} `json:"make"`
+			MessagesCount     int         `json:"messages_count"`
+			Model             *string     `json:"model"`
+			RejectUrl         string      `json:"reject_url"`
+			ReminderSentAt    *string     `json:"reminder_sent_at"`
+			RescheduledFromId *int        `json:"rescheduled_from_id"`
+			ReschedulesCount  int         `json:"reschedules_count"`
+			ServiceAdvisor    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt  string  `json:"starts_at"`
+			Status    string  `json:"status"`
+			Submodel  *string `json:"submodel"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
+			Vehicle   struct {
+				AppUrl      string `json:"app_url"`
+				DisplayName string `json:"display_name"`
+				Id          int    `json:"id"`
+				Url         string `json:"url"`
+			} `json:"vehicle"`
+			Vin          interface{} `json:"vin"`
+			WorkOrder    interface{} `json:"work_order"`
+			WorkOrderUrl string      `json:"work_order_url"`
+			Year         interface{} `json:"year"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -60944,9 +67245,7 @@ func ParseCreateAppointmentResponse(rsp *http.Response) (*CreateAppointmentRespo
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61047,10 +67346,72 @@ func ParseShowAppointmentResponse(rsp *http.Response) (*ShowAppointmentResponse,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay                   bool                    `json:"all_day"`
+			AppUrl                   string                  `json:"app_url"`
+			AppointmentSource        interface{}             `json:"appointment_source"`
+			AppointmentType          string                  `json:"appointment_type"`
+			ApproveUrl               string                  `json:"approve_url"`
+			CancelUrl                string                  `json:"cancel_url"`
+			ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+			CreatedAt                string                  `json:"created_at"`
+			Customer                 *map[string]interface{} `json:"customer"`
+			CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+			CustomerConcern          interface{}             `json:"customer_concern"`
+			CustomerConfirmed        bool                    `json:"customer_confirmed"`
+			CustomerEmail            string                  `json:"customer_email"`
+			CustomerInitiated        bool                    `json:"customer_initiated"`
+			CustomerName             string                  `json:"customer_name"`
+			CustomerPhone            string                  `json:"customer_phone"`
+			EndsAt                   string                  `json:"ends_at"`
+			EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+			FollowUpReason           *string                 `json:"follow_up_reason"`
+			FollowUpUrl              string                  `json:"follow_up_url"`
+			Id                       int                     `json:"id"`
+			IntakeMethod             string                  `json:"intake_method"`
+			LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+			LicensePlate             interface{}             `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make                interface{} `json:"make"`
+			MessagesCount       int         `json:"messages_count"`
+			Model               *string     `json:"model"`
+			ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+			RejectUrl           string      `json:"reject_url"`
+			ReminderSentAt      *string     `json:"reminder_sent_at"`
+			RescheduledFromId   *int        `json:"rescheduled_from_id"`
+			ReschedulesCount    int         `json:"reschedules_count"`
+			ServiceAdvisor      struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt     string                  `json:"starts_at"`
+			Status       string                  `json:"status"`
+			Submodel     *string                 `json:"submodel"`
+			Type         string                  `json:"type"`
+			UpdatedAt    string                  `json:"updated_at"`
+			Url          string                  `json:"url"`
+			Vehicle      *map[string]interface{} `json:"vehicle"`
+			Vin          interface{}             `json:"vin"`
+			WorkOrder    interface{}             `json:"work_order"`
+			WorkOrderUrl string                  `json:"work_order_url"`
+			Year         interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case rsp.StatusCode == 304:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61075,10 +67436,69 @@ func ParseUpdateAppointmentResponse(rsp *http.Response) (*UpdateAppointmentRespo
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay                   bool                    `json:"all_day"`
+			AppUrl                   string                  `json:"app_url"`
+			AppointmentSource        interface{}             `json:"appointment_source"`
+			AppointmentType          string                  `json:"appointment_type"`
+			ApproveUrl               string                  `json:"approve_url"`
+			CancelUrl                string                  `json:"cancel_url"`
+			ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+			CreatedAt                string                  `json:"created_at"`
+			Customer                 *map[string]interface{} `json:"customer"`
+			CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+			CustomerConcern          string                  `json:"customer_concern"`
+			CustomerConfirmed        bool                    `json:"customer_confirmed"`
+			CustomerEmail            string                  `json:"customer_email"`
+			CustomerInitiated        bool                    `json:"customer_initiated"`
+			CustomerName             string                  `json:"customer_name"`
+			CustomerPhone            string                  `json:"customer_phone"`
+			EndsAt                   string                  `json:"ends_at"`
+			EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+			FollowUpReason           *string                 `json:"follow_up_reason"`
+			FollowUpUrl              string                  `json:"follow_up_url"`
+			Id                       int                     `json:"id"`
+			IntakeMethod             string                  `json:"intake_method"`
+			LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+			LicensePlate             interface{}             `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make                interface{} `json:"make"`
+			MessagesCount       int         `json:"messages_count"`
+			Model               *string     `json:"model"`
+			ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+			RejectUrl           string      `json:"reject_url"`
+			ReminderSentAt      *string     `json:"reminder_sent_at"`
+			RescheduledFromId   *int        `json:"rescheduled_from_id"`
+			ReschedulesCount    int         `json:"reschedules_count"`
+			ServiceAdvisor      struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt     string                  `json:"starts_at"`
+			Status       string                  `json:"status"`
+			Submodel     *string                 `json:"submodel"`
+			Type         string                  `json:"type"`
+			UpdatedAt    string                  `json:"updated_at"`
+			Url          string                  `json:"url"`
+			Vehicle      *map[string]interface{} `json:"vehicle"`
+			Vin          interface{}             `json:"vin"`
+			WorkOrder    interface{}             `json:"work_order"`
+			WorkOrderUrl string                  `json:"work_order_url"`
+			Year         interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61103,10 +67523,69 @@ func ParseCreateAppointmentsApprovalResponse(rsp *http.Response) (*CreateAppoint
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay                   bool                    `json:"all_day"`
+			AppUrl                   string                  `json:"app_url"`
+			AppointmentSource        interface{}             `json:"appointment_source"`
+			AppointmentType          string                  `json:"appointment_type"`
+			ApproveUrl               string                  `json:"approve_url"`
+			CancelUrl                string                  `json:"cancel_url"`
+			ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+			CreatedAt                string                  `json:"created_at"`
+			Customer                 *map[string]interface{} `json:"customer"`
+			CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+			CustomerConcern          interface{}             `json:"customer_concern"`
+			CustomerConfirmed        bool                    `json:"customer_confirmed"`
+			CustomerEmail            string                  `json:"customer_email"`
+			CustomerInitiated        bool                    `json:"customer_initiated"`
+			CustomerName             string                  `json:"customer_name"`
+			CustomerPhone            string                  `json:"customer_phone"`
+			EndsAt                   string                  `json:"ends_at"`
+			EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+			FollowUpReason           *string                 `json:"follow_up_reason"`
+			FollowUpUrl              string                  `json:"follow_up_url"`
+			Id                       int                     `json:"id"`
+			IntakeMethod             string                  `json:"intake_method"`
+			LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+			LicensePlate             interface{}             `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make                interface{} `json:"make"`
+			MessagesCount       int         `json:"messages_count"`
+			Model               *string     `json:"model"`
+			ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+			RejectUrl           string      `json:"reject_url"`
+			ReminderSentAt      *string     `json:"reminder_sent_at"`
+			RescheduledFromId   *int        `json:"rescheduled_from_id"`
+			ReschedulesCount    int         `json:"reschedules_count"`
+			ServiceAdvisor      struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt     string                  `json:"starts_at"`
+			Status       string                  `json:"status"`
+			Submodel     *string                 `json:"submodel"`
+			Type         string                  `json:"type"`
+			UpdatedAt    string                  `json:"updated_at"`
+			Url          string                  `json:"url"`
+			Vehicle      *map[string]interface{} `json:"vehicle"`
+			Vin          interface{}             `json:"vin"`
+			WorkOrder    interface{}             `json:"work_order"`
+			WorkOrderUrl string                  `json:"work_order_url"`
+			Year         interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61131,10 +67610,69 @@ func ParseCreateAppointmentsCancellationResponse(rsp *http.Response) (*CreateApp
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay                   bool                    `json:"all_day"`
+			AppUrl                   string                  `json:"app_url"`
+			AppointmentSource        interface{}             `json:"appointment_source"`
+			AppointmentType          string                  `json:"appointment_type"`
+			ApproveUrl               string                  `json:"approve_url"`
+			CancelUrl                string                  `json:"cancel_url"`
+			ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+			CreatedAt                string                  `json:"created_at"`
+			Customer                 *map[string]interface{} `json:"customer"`
+			CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+			CustomerConcern          interface{}             `json:"customer_concern"`
+			CustomerConfirmed        bool                    `json:"customer_confirmed"`
+			CustomerEmail            string                  `json:"customer_email"`
+			CustomerInitiated        bool                    `json:"customer_initiated"`
+			CustomerName             string                  `json:"customer_name"`
+			CustomerPhone            string                  `json:"customer_phone"`
+			EndsAt                   string                  `json:"ends_at"`
+			EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+			FollowUpReason           *string                 `json:"follow_up_reason"`
+			FollowUpUrl              string                  `json:"follow_up_url"`
+			Id                       int                     `json:"id"`
+			IntakeMethod             string                  `json:"intake_method"`
+			LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+			LicensePlate             interface{}             `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make                interface{} `json:"make"`
+			MessagesCount       int         `json:"messages_count"`
+			Model               *string     `json:"model"`
+			ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+			RejectUrl           string      `json:"reject_url"`
+			ReminderSentAt      *string     `json:"reminder_sent_at"`
+			RescheduledFromId   *int        `json:"rescheduled_from_id"`
+			ReschedulesCount    int         `json:"reschedules_count"`
+			ServiceAdvisor      struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt     string                  `json:"starts_at"`
+			Status       string                  `json:"status"`
+			Submodel     *string                 `json:"submodel"`
+			Type         string                  `json:"type"`
+			UpdatedAt    string                  `json:"updated_at"`
+			Url          string                  `json:"url"`
+			Vehicle      *map[string]interface{} `json:"vehicle"`
+			Vin          interface{}             `json:"vin"`
+			WorkOrder    interface{}             `json:"work_order"`
+			WorkOrderUrl string                  `json:"work_order_url"`
+			Year         interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61249,10 +67787,69 @@ func ParseCreateAppointmentsRejectionResponse(rsp *http.Response) (*CreateAppoin
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay                   bool                    `json:"all_day"`
+			AppUrl                   string                  `json:"app_url"`
+			AppointmentSource        interface{}             `json:"appointment_source"`
+			AppointmentType          string                  `json:"appointment_type"`
+			ApproveUrl               string                  `json:"approve_url"`
+			CancelUrl                string                  `json:"cancel_url"`
+			ConfirmationSentAt       *string                 `json:"confirmation_sent_at"`
+			CreatedAt                string                  `json:"created_at"`
+			Customer                 *map[string]interface{} `json:"customer"`
+			CustomerArrivedAt        *string                 `json:"customer_arrived_at"`
+			CustomerConcern          interface{}             `json:"customer_concern"`
+			CustomerConfirmed        bool                    `json:"customer_confirmed"`
+			CustomerEmail            string                  `json:"customer_email"`
+			CustomerInitiated        bool                    `json:"customer_initiated"`
+			CustomerName             string                  `json:"customer_name"`
+			CustomerPhone            string                  `json:"customer_phone"`
+			EndsAt                   string                  `json:"ends_at"`
+			EstimatedDurationMinutes int                     `json:"estimated_duration_minutes"`
+			FollowUpReason           *string                 `json:"follow_up_reason"`
+			FollowUpUrl              string                  `json:"follow_up_url"`
+			Id                       int                     `json:"id"`
+			IntakeMethod             string                  `json:"intake_method"`
+			LatestRescheduleId       *int                    `json:"latest_reschedule_id"`
+			LicensePlate             interface{}             `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make                interface{} `json:"make"`
+			MessagesCount       int         `json:"messages_count"`
+			Model               *string     `json:"model"`
+			ReconcileVehicleUrl string      `json:"reconcile_vehicle_url"`
+			RejectUrl           string      `json:"reject_url"`
+			ReminderSentAt      *string     `json:"reminder_sent_at"`
+			RescheduledFromId   *int        `json:"rescheduled_from_id"`
+			ReschedulesCount    int         `json:"reschedules_count"`
+			ServiceAdvisor      struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt     string                  `json:"starts_at"`
+			Status       string                  `json:"status"`
+			Submodel     *string                 `json:"submodel"`
+			Type         string                  `json:"type"`
+			UpdatedAt    string                  `json:"updated_at"`
+			Url          string                  `json:"url"`
+			Vehicle      *map[string]interface{} `json:"vehicle"`
+			Vin          interface{}             `json:"vin"`
+			WorkOrder    interface{}             `json:"work_order"`
+			WorkOrderUrl string                  `json:"work_order_url"`
+			Year         interface{}             `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -61277,10 +67874,80 @@ func ParseCreateAppointmentsVehicleReconciliationResponse(rsp *http.Response) (*
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AllDay             bool        `json:"all_day"`
+			AppUrl             string      `json:"app_url"`
+			AppointmentSource  interface{} `json:"appointment_source"`
+			AppointmentType    string      `json:"appointment_type"`
+			ApproveUrl         string      `json:"approve_url"`
+			CancelUrl          string      `json:"cancel_url"`
+			ConfirmationSentAt *string     `json:"confirmation_sent_at"`
+			CreatedAt          string      `json:"created_at"`
+			Customer           struct {
+				AppUrl      string `json:"app_url"`
+				EmailsCount int    `json:"emails_count"`
+				FullName    string `json:"full_name"`
+				Id          int    `json:"id"`
+				PhonesCount int    `json:"phones_count"`
+				Url         string `json:"url"`
+			} `json:"customer"`
+			CustomerArrivedAt        *string     `json:"customer_arrived_at"`
+			CustomerConcern          interface{} `json:"customer_concern"`
+			CustomerConfirmed        bool        `json:"customer_confirmed"`
+			CustomerEmail            string      `json:"customer_email"`
+			CustomerInitiated        bool        `json:"customer_initiated"`
+			CustomerName             string      `json:"customer_name"`
+			CustomerPhone            string      `json:"customer_phone"`
+			EndsAt                   string      `json:"ends_at"`
+			EstimatedDurationMinutes int         `json:"estimated_duration_minutes"`
+			FollowUpReason           *string     `json:"follow_up_reason"`
+			FollowUpUrl              string      `json:"follow_up_url"`
+			Id                       int         `json:"id"`
+			IntakeMethod             string      `json:"intake_method"`
+			LatestRescheduleId       *int        `json:"latest_reschedule_id"`
+			LicensePlate             interface{} `json:"license_plate"`
+			Location                 struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Make              interface{} `json:"make"`
+			MessagesCount     int         `json:"messages_count"`
+			Model             *string     `json:"model"`
+			RejectUrl         string      `json:"reject_url"`
+			ReminderSentAt    *string     `json:"reminder_sent_at"`
+			RescheduledFromId *int        `json:"rescheduled_from_id"`
+			ReschedulesCount  int         `json:"reschedules_count"`
+			ServiceAdvisor    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"service_advisor"`
+			StartsAt  string  `json:"starts_at"`
+			Status    string  `json:"status"`
+			Submodel  *string `json:"submodel"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
+			Vehicle   struct {
+				AppUrl      string `json:"app_url"`
+				DisplayName string `json:"display_name"`
+				Id          int    `json:"id"`
+				Url         string `json:"url"`
+			} `json:"vehicle"`
+			Vin          interface{} `json:"vin"`
+			WorkOrder    interface{} `json:"work_order"`
+			WorkOrderUrl string      `json:"work_order_url"`
+			Year         interface{} `json:"year"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -62827,6 +69494,69 @@ func ParseCheckCustomerDuplicateResponse(rsp *http.Response) (*CheckCustomerDupl
 	return response, nil
 }
 
+// ParseCreateCustomersExportResponse parses an HTTP response from a CreateCustomersExportWithResponse call
+func ParseCreateCustomersExportResponse(rsp *http.Response) (*CreateCustomersExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateCustomersExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Customer
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListCustomersExportDownloadResponse parses an HTTP response from a ListCustomersExportDownloadWithResponse call
+func ParseListCustomersExportDownloadResponse(rsp *http.Response) (*ListCustomersExportDownloadResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListCustomersExportDownloadResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseLookupCustomerResponse parses an HTTP response from a LookupCustomerWithResponse call
 func ParseLookupCustomerResponse(rsp *http.Response) (*LookupCustomerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -63445,15 +70175,81 @@ func ParseListExpensesResponse(rsp *http.Response) (*ListExpensesResponse, error
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AmountCents    int    `json:"amount_cents"`
+			AmountCurrency string `json:"amount_currency"`
+			AppUrl         string `json:"app_url"`
+			Category       string `json:"category"`
+			CreatedAt      string `json:"created_at"`
+			Creator        struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"creator"`
+			Description string `json:"description"`
+			ExpenseDate string `json:"expense_date"`
+			Id          int    `json:"id"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Payee          string  `json:"payee"`
+			PaymentMethod  string  `json:"payment_method"`
+			RecurrenceRule *string `json:"recurrence_rule"`
+			Recurring      bool    `json:"recurring"`
+			UpdatedAt      string  `json:"updated_at"`
+			Url            string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListExpensesResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -63473,6 +70269,38 @@ func ParseCreateExpenseResponse(rsp *http.Response) (*CreateExpenseResponse, err
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AmountCents    int    `json:"amount_cents"`
+			AmountCurrency string `json:"amount_currency"`
+			AppUrl         string `json:"app_url"`
+			Category       string `json:"category"`
+			CreatedAt      string `json:"created_at"`
+			Creator        struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"creator"`
+			Description string `json:"description"`
+			ExpenseDate string `json:"expense_date"`
+			Id          int    `json:"id"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Payee          string  `json:"payee"`
+			PaymentMethod  string  `json:"payment_method"`
+			RecurrenceRule *string `json:"recurrence_rule"`
+			Recurring      bool    `json:"recurring"`
+			UpdatedAt      string  `json:"updated_at"`
+			Url            string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -63483,9 +70311,7 @@ func ParseCreateExpenseResponse(rsp *http.Response) (*CreateExpenseResponse, err
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -63526,10 +70352,40 @@ func ParseUpdateExpenseResponse(rsp *http.Response) (*UpdateExpenseResponse, err
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AmountCents    int    `json:"amount_cents"`
+			AmountCurrency string `json:"amount_currency"`
+			AppUrl         string `json:"app_url"`
+			Category       string `json:"category"`
+			CreatedAt      string `json:"created_at"`
+			Creator        struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"creator"`
+			Description string `json:"description"`
+			ExpenseDate string `json:"expense_date"`
+			Id          int    `json:"id"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Payee          string  `json:"payee"`
+			PaymentMethod  string  `json:"payment_method"`
+			RecurrenceRule *string `json:"recurrence_rule"`
+			Recurring      bool    `json:"recurring"`
+			UpdatedAt      string  `json:"updated_at"`
+			Url            string  `json:"url"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -64973,6 +71829,22 @@ func ParseCreateLaborMatriceResponse(rsp *http.Response) (*CreateLaborMatriceRes
 	return response, nil
 }
 
+// ParseDeleteLaborMatriceResponse parses an HTTP response from a DeleteLaborMatriceWithResponse call
+func ParseDeleteLaborMatriceResponse(rsp *http.Response) (*DeleteLaborMatriceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteLaborMatriceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseUpdateLaborMatriceResponse parses an HTTP response from a UpdateLaborMatriceWithResponse call
 func ParseUpdateLaborMatriceResponse(rsp *http.Response) (*UpdateLaborMatriceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -65123,6 +71995,22 @@ func ParseCreateLaborRateResponse(rsp *http.Response) (*CreateLaborRateResponse,
 	return response, nil
 }
 
+// ParseDeleteLaborRateResponse parses an HTTP response from a DeleteLaborRateWithResponse call
+func ParseDeleteLaborRateResponse(rsp *http.Response) (*DeleteLaborRateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteLaborRateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseUpdateLaborRateResponse parses an HTTP response from a UpdateLaborRateWithResponse call
 func ParseUpdateLaborRateResponse(rsp *http.Response) (*UpdateLaborRateResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -65265,6 +72153,59 @@ func ParseCreateLeadSourceResponse(rsp *http.Response) (*CreateLeadSourceRespons
 		}
 		response.JSON403 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseCreateLeadSourcesSeedDefaultResponse parses an HTTP response from a CreateLeadSourcesSeedDefaultWithResponse call
+func ParseCreateLeadSourcesSeedDefaultResponse(rsp *http.Response) (*CreateLeadSourcesSeedDefaultResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateLeadSourcesSeedDefaultResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			Active        bool   `json:"active"`
+			AppUrl        string `json:"app_url"`
+			Category      string `json:"category"`
+			CreatedAt     string `json:"created_at"`
+			Id            int    `json:"id"`
+			Name          string `json:"name"`
+			Position      int    `json:"position"`
+			SystemDefault bool   `json:"system_default"`
+			UpdatedAt     string `json:"updated_at"`
+			Url           string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteLeadSourceResponse parses an HTTP response from a DeleteLeadSourceWithResponse call
+func ParseDeleteLeadSourceResponse(rsp *http.Response) (*DeleteLeadSourceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteLeadSourceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
 	}
 
 	return response, nil
@@ -65615,6 +72556,13 @@ func ParseCreateOrdersPurchaseOrderResponse(rsp *http.Response) (*CreateOrdersPu
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest PurchaseOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -65634,9 +72582,7 @@ func ParseCreateOrdersPurchaseOrderResponse(rsp *http.Response) (*CreateOrdersPu
 		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -65758,6 +72704,13 @@ func ParseListOrdersReturnOrdersResponse(rsp *http.Response) (*ListOrdersReturnO
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []ReturnOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -65768,14 +72721,39 @@ func ParseListOrdersReturnOrdersResponse(rsp *http.Response) (*ListOrdersReturnO
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListOrdersReturnOrdersResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -65811,10 +72789,15 @@ func ParseShowOrdersReturnOrderResponse(rsp *http.Response) (*ShowOrdersReturnOr
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReturnOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -65839,10 +72822,15 @@ func ParseUpdateOrdersReturnOrderResponse(rsp *http.Response) (*UpdateOrdersRetu
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReturnOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -65867,10 +72855,15 @@ func ParseCreateOrdersReturnOrdersRefundCompletionResponse(rsp *http.Response) (
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReturnOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -65901,6 +72894,15 @@ func ParseListOrdersSubletOrdersResponse(rsp *http.Response) (*ListOrdersSubletO
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -66349,6 +73351,22 @@ func ParseCreatePartsMatriceResponse(rsp *http.Response) (*CreatePartsMatriceRes
 	return response, nil
 }
 
+// ParseDeletePartsMatriceResponse parses an HTTP response from a DeletePartsMatriceWithResponse call
+func ParseDeletePartsMatriceResponse(rsp *http.Response) (*DeletePartsMatriceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeletePartsMatriceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseUpdatePartsMatriceResponse parses an HTTP response from a UpdatePartsMatriceWithResponse call
 func ParseUpdatePartsMatriceResponse(rsp *http.Response) (*UpdatePartsMatriceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -66405,6 +73423,50 @@ func ParseListPaymentsResponse(rsp *http.Response) (*ListPaymentsResponse, error
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -66415,14 +73477,39 @@ func ParseListPaymentsResponse(rsp *http.Response) (*ListPaymentsResponse, error
 		response.JSON403 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListPaymentsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -66442,15 +73529,84 @@ func ParseListPaymentsPendingResponse(rsp *http.Response) (*ListPaymentsPendingR
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListPaymentsPendingResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -66470,10 +73626,52 @@ func ParseShowPaymentResponse(rsp *http.Response) (*ShowPaymentResponse, error) 
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -66498,10 +73696,52 @@ func ParseCreatePaymentsCancellationResponse(rsp *http.Response) (*CreatePayment
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        string  `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -66526,10 +73766,52 @@ func ParseCreatePaymentsConfirmationResponse(rsp *http.Response) (*CreatePayment
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -66554,10 +73836,52 @@ func ParseCreatePaymentsFailureResponse(rsp *http.Response) (*CreatePaymentsFail
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Error Error `json:"error"`
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
 		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -66819,6 +74143,15 @@ func ParseListReportsAccountingResponse(rsp *http.Response) (*ListReportsAccount
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -66858,6 +74191,15 @@ func ParseListReportsArAgingResponse(rsp *http.Response) (*ListReportsArAgingRes
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -66903,6 +74245,15 @@ func ParseListReportsDeclinedWorkResponse(rsp *http.Response) (*ListReportsDecli
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -66939,6 +74290,15 @@ func ParseListReportsEndOfDayResponse(rsp *http.Response) (*ListReportsEndOfDayR
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -66993,6 +74353,15 @@ func ParseListReportsFinancialResponse(rsp *http.Response) (*ListReportsFinancia
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67031,6 +74400,15 @@ func ParseListReportsOpenWorkResponse(rsp *http.Response) (*ListReportsOpenWorkR
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67068,6 +74446,15 @@ func ParseListReportsPartsPurchasesResponse(rsp *http.Response) (*ListReportsPar
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67103,6 +74490,15 @@ func ParseListReportsPartsUsageResponse(rsp *http.Response) (*ListReportsPartsUs
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -67222,6 +74618,15 @@ func ParseListReportsProfitAndLossResponse(rsp *http.Response) (*ListReportsProf
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67304,6 +74709,15 @@ func ParseListReportsSalesSummaryResponse(rsp *http.Response) (*ListReportsSales
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67335,6 +74749,15 @@ func ParseListReportsServiceCategoriesResponse(rsp *http.Response) (*ListReports
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -67368,6 +74791,15 @@ func ParseListReportsStoreCreditResponse(rsp *http.Response) (*ListReportsStoreC
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -67417,6 +74849,15 @@ func ParseListReportsTechnicianProductivityResponse(rsp *http.Response) (*ListRe
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -67459,6 +74900,15 @@ func ParseListReportsWorkOrderProfitabilityResponse(rsp *http.Response) (*ListRe
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -68135,6 +75585,58 @@ func ParseListSettingsLaborTemplatesResponse(rsp *http.Response) (*ListSettingsL
 	return response, nil
 }
 
+// ParseDeleteSettingsLaborTemplateResponse parses an HTTP response from a DeleteSettingsLaborTemplateWithResponse call
+func ParseDeleteSettingsLaborTemplateResponse(rsp *http.Response) (*DeleteSettingsLaborTemplateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteSettingsLaborTemplateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseUpdateSettingsLaborTemplateResponse parses an HTTP response from a UpdateSettingsLaborTemplateWithResponse call
+func ParseUpdateSettingsLaborTemplateResponse(rsp *http.Response) (*UpdateSettingsLaborTemplateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateSettingsLaborTemplateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string `json:"app_url"`
+			CreatedAt    string `json:"created_at"`
+			DefaultHours string `json:"default_hours"`
+			Description  string `json:"description"`
+			Id           int    `json:"id"`
+			LastUsedAt   string `json:"last_used_at"`
+			UpdatedAt    string `json:"updated_at"`
+			Url          string `json:"url"`
+			UsageCount   int    `json:"usage_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListSettingsLeadSourceRequirementsResponse parses an HTTP response from a ListSettingsLeadSourceRequirementsWithResponse call
 func ParseListSettingsLeadSourceRequirementsResponse(rsp *http.Response) (*ListSettingsLeadSourceRequirementsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -68798,6 +76300,22 @@ func ParseCreateShopDiscountResponse(rsp *http.Response) (*CreateShopDiscountRes
 	return response, nil
 }
 
+// ParseDeleteShopDiscountResponse parses an HTTP response from a DeleteShopDiscountWithResponse call
+func ParseDeleteShopDiscountResponse(rsp *http.Response) (*DeleteShopDiscountResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteShopDiscountResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseUpdateShopDiscountResponse parses an HTTP response from a UpdateShopDiscountWithResponse call
 func ParseUpdateShopDiscountResponse(rsp *http.Response) (*UpdateShopDiscountResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -68830,6 +76348,44 @@ func ParseUpdateShopDiscountResponse(rsp *http.Response) (*UpdateShopDiscountRes
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateShopDiscountsDuplicateResponse parses an HTTP response from a CreateShopDiscountsDuplicateWithResponse call
+func ParseCreateShopDiscountsDuplicateResponse(rsp *http.Response) (*CreateShopDiscountsDuplicateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateShopDiscountsDuplicateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			Active       bool     `json:"active"`
+			AmountCents  int      `json:"amount_cents"`
+			AppUrl       string   `json:"app_url"`
+			Category     string   `json:"category"`
+			CreatedAt    string   `json:"created_at"`
+			DiscountType string   `json:"discount_type"`
+			Id           int      `json:"id"`
+			Name         string   `json:"name"`
+			Percentage   *float32 `json:"percentage"`
+			UpdatedAt    string   `json:"updated_at"`
+			Url          string   `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
 
 	}
 
@@ -68950,6 +76506,22 @@ func ParseCreateShopFeeResponse(rsp *http.Response) (*CreateShopFeeResponse, err
 	return response, nil
 }
 
+// ParseDeleteShopFeeResponse parses an HTTP response from a DeleteShopFeeWithResponse call
+func ParseDeleteShopFeeResponse(rsp *http.Response) (*DeleteShopFeeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteShopFeeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseUpdateShopFeeResponse parses an HTTP response from a UpdateShopFeeWithResponse call
 func ParseUpdateShopFeeResponse(rsp *http.Response) (*UpdateShopFeeResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -68983,6 +76555,45 @@ func ParseUpdateShopFeeResponse(rsp *http.Response) (*UpdateShopFeeResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateShopFeesDuplicateResponse parses an HTTP response from a CreateShopFeesDuplicateWithResponse call
+func ParseCreateShopFeesDuplicateResponse(rsp *http.Response) (*CreateShopFeesDuplicateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateShopFeesDuplicateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			Active      bool     `json:"active"`
+			AmountCents int      `json:"amount_cents"`
+			AppUrl      string   `json:"app_url"`
+			AppliesTo   string   `json:"applies_to"`
+			CreatedAt   string   `json:"created_at"`
+			FeeType     string   `json:"fee_type"`
+			Id          int      `json:"id"`
+			IsTaxable   bool     `json:"is_taxable"`
+			Name        string   `json:"name"`
+			Percentage  *float32 `json:"percentage"`
+			UpdatedAt   string   `json:"updated_at"`
+			Url         string   `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
 
 	}
 
@@ -69038,15 +76649,47 @@ func ParseListStatementsPaymentsResponse(rsp *http.Response) (*ListStatementsPay
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Statement
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON500 = &dest
 
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListStatementsPaymentsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil
@@ -71973,6 +79616,15 @@ func ParseListVendorsResponse(rsp *http.Response) (*ListVendorsResponse, error) 
 		}
 		response.JSON401 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	switch {
@@ -72722,6 +80374,58 @@ func ParseCloseWorkOrderZeroResponse(rsp *http.Response) (*CloseWorkOrderZeroRes
 	return response, nil
 }
 
+// ParseDeleteWorkOrdersCourtesyCarAssignmentResponse parses an HTTP response from a DeleteWorkOrdersCourtesyCarAssignmentWithResponse call
+func ParseDeleteWorkOrdersCourtesyCarAssignmentResponse(rsp *http.Response) (*DeleteWorkOrdersCourtesyCarAssignmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteWorkOrdersCourtesyCarAssignmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrdersCourtesyCarAssignmentResponse parses an HTTP response from a UpdateWorkOrdersCourtesyCarAssignmentWithResponse call
+func ParseUpdateWorkOrdersCourtesyCarAssignmentResponse(rsp *http.Response) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrdersCourtesyCarAssignmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateWorkOrdersCourtesyCarAssignmentResponse parses an HTTP response from a CreateWorkOrdersCourtesyCarAssignmentWithResponse call
 func ParseCreateWorkOrdersCourtesyCarAssignmentResponse(rsp *http.Response) (*CreateWorkOrdersCourtesyCarAssignmentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -72742,6 +80446,15 @@ func ParseCreateWorkOrdersCourtesyCarAssignmentResponse(rsp *http.Response) (*Cr
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
 
 	}
 
@@ -73672,6 +81385,66 @@ func ParseShowWorkOrderEstimateResponse(rsp *http.Response) (*ShowWorkOrderEstim
 	return response, nil
 }
 
+// ParseCreateWorkOrdersFeeExclusionResponse parses an HTTP response from a CreateWorkOrdersFeeExclusionWithResponse call
+func ParseCreateWorkOrdersFeeExclusionResponse(rsp *http.Response) (*CreateWorkOrdersFeeExclusionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkOrdersFeeExclusionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteWorkOrdersFeeExclusionResponse parses an HTTP response from a DeleteWorkOrdersFeeExclusionWithResponse call
+func ParseDeleteWorkOrdersFeeExclusionResponse(rsp *http.Response) (*DeleteWorkOrdersFeeExclusionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteWorkOrdersFeeExclusionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseShowWorkOrderInspectionResponse parses an HTTP response from a ShowWorkOrderInspectionWithResponse call
 func ParseShowWorkOrderInspectionResponse(rsp *http.Response) (*ShowWorkOrderInspectionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -73718,6 +81491,18 @@ func ParseCreateWorkOrdersLabelResponse(rsp *http.Response) (*CreateWorkOrdersLa
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case rsp.StatusCode == 422:
+		break // No content-type
 
 	}
 
@@ -73790,10 +81575,15 @@ func ParseShowWorkOrderPaymentsResponse(rsp *http.Response) (*ShowWorkOrderPayme
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -73818,6 +81608,13 @@ func ParseCreateWorkOrderPaymentResponse(rsp *http.Response) (*CreateWorkOrderPa
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
 			Error Error `json:"error"`
@@ -73837,9 +81634,7 @@ func ParseCreateWorkOrderPaymentResponse(rsp *http.Response) (*CreateWorkOrderPa
 		response.JSON422 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
-		}
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -74110,10 +81905,15 @@ func ParseCreateWorkOrdersRefundResponse(rsp *http.Response) (*CreateWorkOrdersR
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -74154,6 +81954,22 @@ func ParseCreateWorkOrdersServiceResponse(rsp *http.Response) (*CreateWorkOrders
 		}
 		response.JSON422 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrdersServicesReorderResponse parses an HTTP response from a UpdateWorkOrdersServicesReorderWithResponse call
+func ParseUpdateWorkOrdersServicesReorderResponse(rsp *http.Response) (*UpdateWorkOrdersServicesReorderResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrdersServicesReorderResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
 	}
 
 	return response, nil
@@ -75236,10 +83052,15 @@ func ParseCreateWorkOrdersVoidResponse(rsp *http.Response) (*CreateWorkOrdersVoi
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest struct {
-			Error Error `json:"error"`
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest WorkOrder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
 		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest map[string]interface{}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

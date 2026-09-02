@@ -40,13 +40,13 @@ List all conversations, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/conversations.json
 ```
 
-## Create conversation
+## Create conversations bulk mark read
 
 ```
 POST /conversations/bulk_mark_read
 ```
 
-Create a conversation.
+Create a conversations bulk mark read.
 
 **Response 200**
 
@@ -60,13 +60,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/conversations/bulk_mark_read.json
 ```
 
-## Post conversations customer link
+## Create conversations customer link
 
 ```
 POST /conversations/{conversation_id}/customer_links
 ```
 
-Create
+Create a conversations customer link.
 
 | Param | Type | Required |
 |---|---|---|
@@ -100,13 +100,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/conversations/{conversation_id}/customer_links.json
 ```
 
-## Post conversations ignore
+## Create conversations ignore
 
 ```
 POST /conversations/{conversation_id}/ignores
 ```
 
-Create
+Create a conversations ignore.
 
 | Param | Type | Required |
 |---|---|---|
@@ -140,13 +140,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/conversations/{conversation_id}/ignores.json
 ```
 
-## Get conversations message
+## List conversations messages
 
 ```
 GET /conversations/{conversation_id}/messages
 ```
 
-Index
+List all conversations messages, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
@@ -162,23 +162,23 @@ Index
 | `channel` | string | Yes |
 | `status` | string | Yes |
 | `body` | string | Yes |
-| `work_order_id` | any | Yes |
-| `statement_id` | any | Yes |
-| `appointment_id` | any | Yes |
-| `read_at` | any | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `statement_id` | integer \| null | Yes |
+| `appointment_id` | integer \| null | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/conversations/{conversation_id}/messages.json
 ```
 
-## Post conversations message
+## Create conversations message
 
 ```
 POST /conversations/{conversation_id}/messages
 ```
 
-Create
+Create a conversations message.
 
 | Param | Type | Required |
 |---|---|---|
@@ -195,10 +195,10 @@ Create
 | `status` | string | Yes |
 | `body` | string | Yes |
 | `sender` | object | Yes |
-| `work_order_id` | any | Yes |
-| `statement_id` | any | Yes |
-| `appointment_id` | any | Yes |
-| `read_at` | any | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `statement_id` | integer \| null | Yes |
+| `appointment_id` | integer \| null | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 
 `sender` — object:
@@ -212,13 +212,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/conversations/{conversation_id}/messages.json
 ```
 
-## Post conversations message resends
+## Create conversations messages resend
 
 ```
 POST /conversations/{conversation_id}/messages/{id}/resends
 ```
 
-Create
+Create a conversations messages resend.
 
 | Param | Type | Required |
 |---|---|---|
@@ -235,10 +235,10 @@ Create
 | `channel` | string | Yes |
 | `status` | string | Yes |
 | `body` | string | Yes |
-| `work_order_id` | any | Yes |
-| `statement_id` | any | Yes |
-| `appointment_id` | any | Yes |
-| `read_at` | any | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `statement_id` | integer \| null | Yes |
+| `appointment_id` | integer \| null | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 
 ```bash
@@ -327,7 +327,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### PostConversationsCustomerLinkRequest schema {#postconversationscustomerlinkrequest-schema}
+### CreateConversationsCustomerLinkRequest schema {#createconversationscustomerlinkrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -335,7 +335,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### PostConversationsMessageRequest schema {#postconversationsmessagerequest-schema}
+### CreateConversationsMessageRequest schema {#createconversationsmessagerequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

@@ -27,6 +27,8 @@ Show a location by ID.
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
+**Response 401** — [Error](#error-schema) error envelope
+
 **Response 403** — [Error](#error-schema) error envelope
 
 **Example**

@@ -18,8 +18,8 @@ List all counter sales, paginated via the Link header.
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
 | `status` | string | Yes |
-| `walk_in_name` | any | Yes |
-| `notes` | any | Yes |
+| `walk_in_name` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |
 | `tax_total_cents` | integer | Yes |
 | `total_cents` | integer | Yes |
@@ -67,8 +67,8 @@ Create a counter sale.
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
 | `status` | string | Yes |
-| `walk_in_name` | any | Yes |
-| `notes` | any | Yes |
+| `walk_in_name` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |
 | `tax_total_cents` | integer | Yes |
 | `total_cents` | integer | Yes |
@@ -104,6 +104,24 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/counter_sales.json
 ```
 
+## List counter sales line items brands
+
+```
+GET /counter_sales/{counter_sale_id}/line_items/brands
+```
+
+List all counter sales line items brands, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `counter_sale_id` | integer | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/counter_sales/{counter_sale_id}/line_items/brands.json
+```
+
 ## Show counter sale
 
 ```
@@ -123,8 +141,8 @@ Show a counter sale by ID.
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
 | `status` | string | Yes |
-| `walk_in_name` | any | Yes |
-| `notes` | any | Yes |
+| `walk_in_name` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |
 | `tax_total_cents` | integer | Yes |
 | `total_cents` | integer | Yes |
@@ -176,7 +194,7 @@ Update a counter sale by ID.
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
 | `status` | string | Yes |
-| `walk_in_name` | any | Yes |
+| `walk_in_name` | string \| null | Yes |
 | `notes` | string | Yes |
 | `subtotal_cents` | integer | Yes |
 | `tax_total_cents` | integer | Yes |

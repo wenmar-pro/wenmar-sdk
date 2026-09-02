@@ -20,22 +20,22 @@ List all courtesy cars, paginated via the Link header.
 | `make` | string | Yes |
 | `model` | string | Yes |
 | `year` | integer | Yes |
-| `submodel` | any | Yes |
-| `body_style` | any | Yes |
-| `engine` | any | Yes |
+| `submodel` | string \| null | Yes |
+| `body_style` | string \| null | Yes |
+| `engine` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | any | Yes |
-| `transmission` | any | Yes |
-| `color` | any | Yes |
+| `drivetrain` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vehicle_type` | string | Yes |
-| `unit_number` | any | Yes |
-| `fleet_identifier` | any | Yes |
-| `production_date` | any | Yes |
-| `annual_safety_expires_at` | any | Yes |
-| `notes` | any | Yes |
+| `unit_number` | string \| null | Yes |
+| `fleet_identifier` | string \| null | Yes |
+| `production_date` | string \| null | Yes |
+| `annual_safety_expires_at` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `odometer` | object | Yes |
 | `work_orders_count` | integer | Yes |
 | `work_orders_url` | string | Yes |
@@ -49,7 +49,7 @@ List all courtesy cars, paginated via the Link header.
 `odometer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `reading` | any | Yes |
+| `reading` | number \| null | Yes |
 | `unit` | string | Yes |
 
 `customer` — object:

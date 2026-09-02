@@ -19,13 +19,13 @@ List all tire storage slots, paginated via the Link header.
 | `slot_label` | string | Yes |
 | `season` | string | Yes |
 | `season_label` | string | Yes |
-| `tire_set_description` | any | Yes |
+| `tire_set_description` | string \| null | Yes |
 | `stored_at` | string | Yes |
-| `released_at` | any | Yes |
+| `released_at` | string \| null | Yes |
 | `currently_stored` | boolean | Yes |
-| `storage_fee_cents` | any | Yes |
-| `fee_type` | any | Yes |
-| `notes` | any | Yes |
+| `storage_fee_cents` | integer \| null | Yes |
+| `fee_type` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
 | `location` | object | Yes |
@@ -75,13 +75,13 @@ Create a tire storage slot.
 | `slot_label` | string | Yes |
 | `season` | string | Yes |
 | `season_label` | string | Yes |
-| `tire_set_description` | any | Yes |
+| `tire_set_description` | string \| null | Yes |
 | `stored_at` | string | Yes |
-| `released_at` | any | Yes |
+| `released_at` | string \| null | Yes |
 | `currently_stored` | boolean | Yes |
-| `storage_fee_cents` | any | Yes |
-| `fee_type` | any | Yes |
-| `notes` | any | Yes |
+| `storage_fee_cents` | integer \| null | Yes |
+| `fee_type` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
 | `location` | object | Yes |
@@ -138,13 +138,13 @@ Show a tire storage slot by ID.
 | `slot_label` | string | Yes |
 | `season` | string | Yes |
 | `season_label` | string | Yes |
-| `tire_set_description` | any | Yes |
+| `tire_set_description` | string \| null | Yes |
 | `stored_at` | string | Yes |
-| `released_at` | any | Yes |
+| `released_at` | string \| null | Yes |
 | `currently_stored` | boolean | Yes |
-| `storage_fee_cents` | any | Yes |
-| `fee_type` | any | Yes |
-| `notes` | any | Yes |
+| `storage_fee_cents` | integer \| null | Yes |
+| `fee_type` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
 | `location` | object | Yes |
@@ -178,13 +178,13 @@ Show a tire storage slot by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/tire_storage_slots/<id>.json
 ```
 
-## Post tire storage slots check out
+## Create tire storage slots check out
 
 ```
 POST /tire_storage_slots/{tire_storage_slot_id}/check_outs
 ```
 
-Create
+Create a tire storage slots check out.
 
 | Param | Type | Required |
 |---|---|---|
@@ -198,13 +198,13 @@ Create
 | `slot_label` | string | Yes |
 | `season` | string | Yes |
 | `season_label` | string | Yes |
-| `tire_set_description` | any | Yes |
+| `tire_set_description` | string \| null | Yes |
 | `stored_at` | string | Yes |
 | `released_at` | string | Yes |
 | `currently_stored` | boolean | Yes |
-| `storage_fee_cents` | any | Yes |
-| `fee_type` | any | Yes |
-| `notes` | any | Yes |
+| `storage_fee_cents` | integer \| null | Yes |
+| `fee_type` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
 | `location` | object | Yes |

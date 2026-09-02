@@ -8,7 +8,12 @@
     "CloseWorkOrderRequest",
     "CloseWorkOrderZeroRequest",
     "CompleteInspectionReportRequest",
+    "CreateAppointmentRequest",
+    "CreateAppointmentsApprovalRequest",
+    "CreateAppointmentsCancellationRequest",
     "CreateAppointmentsFollowUpRequest",
+    "CreateAppointmentsRejectionRequest",
+    "CreateAppointmentsVehicleReconciliationRequest",
     "CreateAppointmentsWorkOrderRequest",
     "CreateCampaignRequest",
     "CreateCatalogCleanupsApplicationRequest",
@@ -20,7 +25,9 @@
     "CreateCounterSaleRequest",
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
+    "CreateCustomersExportRequest",
     "CreateDriverRequest",
+    "CreateExpenseRequest",
     "CreateInspectionReportRequest",
     "CreateInspectionRequest",
     "CreateInventoryLevelRequest",
@@ -28,16 +35,24 @@
     "CreateLaborMatriceRequest",
     "CreateLaborRateRequest",
     "CreateLeadSourceRequest",
+    "CreateLeadSourcesSeedDefaultRequest",
     "CreateNotificationsBulkMarkReadRequest",
+    "CreateOrdersPurchaseOrderRequest",
     "CreateOrdersPurchaseOrdersCancellationRequest",
+    "CreateOrdersReturnOrdersRefundCompletionRequest",
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
     "CreatePartsMatriceRequest",
+    "CreatePaymentsCancellationRequest",
+    "CreatePaymentsConfirmationRequest",
+    "CreatePaymentsFailureRequest",
     "CreatePermissionGroupRequest",
     "CreateRecentSearcheRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
+    "CreateShopDiscountsDuplicateRequest",
     "CreateShopFeeRequest",
+    "CreateShopFeesDuplicateRequest",
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
@@ -55,15 +70,19 @@
     "CreateVehicleTagRequest",
     "CreateVendorRequest",
     "CreateWorkOrderAuthorizationRequest",
+    "CreateWorkOrderPaymentRequest",
     "CreateWorkOrderRequest",
     "CreateWorkOrdersCourtesyCarAssignmentRequest",
+    "CreateWorkOrdersFeeExclusionRequest",
     "CreateWorkOrdersLabelRequest",
+    "CreateWorkOrdersRefundRequest",
     "CreateWorkOrdersServiceRequest",
     "CreateWorkOrdersServicesAddLineItemRequest",
     "CreateWorkOrdersServicesAddPackageRequest",
     "CreateWorkOrdersServicesDuplicateRequest",
     "CreateWorkOrdersServicesLineItemRequest",
     "CreateWorkOrdersServicesUnauthorizeRequest",
+    "CreateWorkOrdersVoidRequest",
     "Customer",
     "DeclineAllWorkOrderServicesRequest",
     "Driver",
@@ -85,6 +104,7 @@
     "ReopenWorkOrderRequest",
     "ResetInspectionReportRequest",
     "RetryInspectionReportRecordingRequest",
+    "ReturnOrder",
     "ReturnWorkOrderToBoardRequest",
     "SaveWorkOrderForLaterRequest",
     "SeedDefaultsServiceCategoriesRequest",
@@ -100,6 +120,7 @@
     "UndoReturnWorkOrderServiceLineItemRequest",
     "UnpublishInspectionReportRequest",
     "UpdateAiSuggestionRequest",
+    "UpdateAppointmentRequest",
     "UpdateCashDrawerBannerRequest",
     "UpdateConversationRequest",
     "UpdateCoreTaxRuleRequest",
@@ -107,6 +128,7 @@
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
     "UpdateDriverRequest",
+    "UpdateExpenseRequest",
     "UpdateInspectionRequest",
     "UpdateInventoryLevelRequest",
     "UpdateInventoryLevelsStockRequest",
@@ -116,12 +138,14 @@
     "UpdateLeadSourceRequest",
     "UpdateNotificationRequest",
     "UpdateOrdersPurchaseOrderRequest",
+    "UpdateOrdersReturnOrderRequest",
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
     "UpdatePackageRequest",
     "UpdatePartsMatriceRequest",
     "UpdatePermissionGroupRequest",
     "UpdateServiceCategoryRequest",
     "UpdateSettingsAccountRequest",
+    "UpdateSettingsLaborTemplateRequest",
     "UpdateShopDiscountRequest",
     "UpdateShopFeeRequest",
     "UpdateSubStatuseRequest",
@@ -135,6 +159,7 @@
     "UpdateWorkOrderAuthorizationDecisionsRequest",
     "UpdateWorkOrderRequest",
     "UpdateWorkOrderServiceLineItemPartStatusRequest",
+    "UpdateWorkOrdersCourtesyCarAssignmentRequest",
     "UpdateWorkOrdersPostToAccountRequest",
     "UpdateWorkOrdersSendEstimateRequest",
     "UpdateWorkOrdersSendInvoiceSummaryRequest",
@@ -147,6 +172,7 @@
     "UpdateWorkOrdersServicesLineItemRequest",
     "UpdateWorkOrdersServicesPauseRequest",
     "UpdateWorkOrdersServicesPublishRequest",
+    "UpdateWorkOrdersServicesReorderRequest",
     "UpdateWorkOrdersServicesResetCompletionRequest",
     "UpdateWorkOrdersServicesReviveRequest",
     "UpdateWorkOrdersServicesStartRequest",
@@ -221,9 +247,9 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -233,11 +259,13 @@
       "tag": "appointments",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateAppointmentRequest",
+      "requestShape": {
+        "wrapper": "appointment"
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -296,7 +324,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -308,11 +336,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "UpdateAppointmentRequest",
+      "requestShape": {
+        "wrapper": "appointment"
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -324,11 +354,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateAppointmentsApprovalRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -340,11 +372,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateAppointmentsCancellationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -374,11 +408,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateAppointmentsRejectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -390,11 +426,16 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateAppointmentsVehicleReconciliationRequest",
+      "requestShape": {
+        "flat": [
+          "vehicle_action",
+          "vehicle_id"
+        ]
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -1007,6 +1048,38 @@
       "summary": "check_duplicate"
     },
     {
+      "id": "create_customers_export",
+      "method": "post",
+      "path": "/customers/export",
+      "tag": "customers",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateCustomersExportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": "Customer",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "list_customers_export_download",
+      "method": "get",
+      "path": "/customers/export/{id}/download",
+      "tag": "customers",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": null,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "download"
+    },
+    {
       "id": "lookup_customer",
       "method": "get",
       "path": "/customers/lookup",
@@ -1262,9 +1335,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -1274,11 +1347,13 @@
       "tag": "expenses",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateExpenseRequest",
+      "requestShape": {
+        "wrapper": "expense"
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -1306,11 +1381,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "UpdateExpenseRequest",
+      "requestShape": {
+        "wrapper": "expense"
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -1941,6 +2018,22 @@
       "summary": "create"
     },
     {
+      "id": "delete_labor_matrice",
+      "method": "delete",
+      "path": "/labor_matrices/{id}",
+      "tag": "labor_matrices",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "update_labor_matrice",
       "method": "patch",
       "path": "/labor_matrices/{id}",
@@ -1989,6 +2082,22 @@
       "summary": "create"
     },
     {
+      "id": "delete_labor_rate",
+      "method": "delete",
+      "path": "/labor_rates/{id}",
+      "tag": "labor_rates",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "update_labor_rate",
       "method": "patch",
       "path": "/labor_rates/{id}",
@@ -2035,6 +2144,38 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "create_lead_sources_seed_default",
+      "method": "post",
+      "path": "/lead_sources/seed_defaults",
+      "tag": "lead_sources",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateLeadSourcesSeedDefaultRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "seed_defaults"
+    },
+    {
+      "id": "delete_lead_source",
+      "method": "delete",
+      "path": "/lead_sources/{id}",
+      "tag": "lead_sources",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
     },
     {
       "id": "update_lead_source",
@@ -2174,11 +2315,13 @@
       "tag": "orders",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateOrdersPurchaseOrderRequest",
+      "requestShape": {
+        "wrapper": "purchase_order"
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "PurchaseOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -2258,9 +2401,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "paginated": true,
+      "responseSchema": "ReturnOrder",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -2291,8 +2434,8 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "ReturnOrder",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -2304,11 +2447,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "UpdateOrdersReturnOrderRequest",
+      "requestShape": {
+        "wrapper": "return_order"
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "ReturnOrder",
+      "responseBody": true,
       "summary": "update"
     },
     {
@@ -2320,11 +2465,13 @@
         "return_order_id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateOrdersReturnOrdersRefundCompletionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "ReturnOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -2473,6 +2620,22 @@
       "summary": "create"
     },
     {
+      "id": "delete_parts_matrice",
+      "method": "delete",
+      "path": "/parts_matrices/{id}",
+      "tag": "parts_matrices",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "update_parts_matrice",
       "method": "patch",
       "path": "/parts_matrices/{id}",
@@ -2506,9 +2669,9 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -2520,9 +2683,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
+      "paginated": true,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "pending"
     },
     {
@@ -2538,7 +2701,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -2550,11 +2713,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreatePaymentsCancellationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -2566,11 +2731,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreatePaymentsConfirmationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -2582,11 +2749,13 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreatePaymentsFailureRequest",
+      "requestShape": {
+        "wrapper": null
+      },
       "paginated": false,
       "responseSchema": null,
-      "responseBody": false,
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -3117,6 +3286,40 @@
       "summary": "index"
     },
     {
+      "id": "delete_settings_labor_template",
+      "method": "delete",
+      "path": "/settings/labor_templates/{id}",
+      "tag": "settings",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_settings_labor_template",
+      "method": "patch",
+      "path": "/settings/labor_templates/{id}",
+      "tag": "settings",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateSettingsLaborTemplateRequest",
+      "requestShape": {
+        "wrapper": "labor_template"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "list_settings_lead_source_requirements",
       "method": "get",
       "path": "/settings/lead_source_requirements",
@@ -3303,6 +3506,22 @@
       "summary": "create"
     },
     {
+      "id": "delete_shop_discount",
+      "method": "delete",
+      "path": "/shop_discounts/{id}",
+      "tag": "shop_discounts",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "update_shop_discount",
       "method": "patch",
       "path": "/shop_discounts/{id}",
@@ -3319,6 +3538,24 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "create_shop_discounts_duplicate",
+      "method": "post",
+      "path": "/shop_discounts/{id}/duplicate",
+      "tag": "shop_discounts",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateShopDiscountsDuplicateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
     },
     {
       "id": "list_shop_fees",
@@ -3351,6 +3588,22 @@
       "summary": "create"
     },
     {
+      "id": "delete_shop_fee",
+      "method": "delete",
+      "path": "/shop_fees/{id}",
+      "tag": "shop_fees",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "update_shop_fee",
       "method": "patch",
       "path": "/shop_fees/{id}",
@@ -3367,6 +3620,24 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "create_shop_fees_duplicate",
+      "method": "post",
+      "path": "/shop_fees/{id}/duplicate",
+      "tag": "shop_fees",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateShopFeesDuplicateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
     },
     {
       "id": "show_statement",
@@ -3395,9 +3666,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "paginated": true,
+      "responseSchema": "Statement",
+      "responseBody": true,
       "summary": "index"
     },
     {
@@ -4037,6 +4308,12 @@
           "type": "integer",
           "required": false,
           "description": null
+        },
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
         }
       ],
       "requestSchema": null,
@@ -4413,7 +4690,14 @@
       "path": "/work_orders",
       "tag": "work_orders",
       "pathParams": [],
-      "queryParams": [],
+      "queryParams": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
       "requestSchema": null,
       "requestShape": null,
       "paginated": true,
@@ -4543,6 +4827,40 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "close_zero"
+    },
+    {
+      "id": "delete_work_orders_courtesy_car_assignment",
+      "method": "delete",
+      "path": "/work_orders/{id}/courtesy_car_assignment",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_work_orders_courtesy_car_assignment",
+      "method": "patch",
+      "path": "/work_orders/{id}/courtesy_car_assignment",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrdersCourtesyCarAssignmentRequest",
+      "requestShape": {
+        "wrapper": "action_type"
+      },
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "create_work_orders_courtesy_car_assignment",
@@ -4845,6 +5163,41 @@
       "summary": "show"
     },
     {
+      "id": "create_work_orders_fee_exclusion",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/fee_exclusions",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrdersFeeExclusionRequest",
+      "requestShape": {
+        "wrapper": "work_order_fee_exclusion"
+      },
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_work_orders_fee_exclusion",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/fee_exclusions/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "show_work_order_inspection",
       "method": "get",
       "path": "/work_orders/{work_order_id}/inspection",
@@ -4923,8 +5276,8 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "show"
     },
     {
@@ -4936,11 +5289,13 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateWorkOrderPaymentRequest",
+      "requestShape": {
+        "wrapper": "payment"
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -4986,11 +5341,13 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateWorkOrdersRefundRequest",
+      "requestShape": {
+        "wrapper": "refund"
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {
@@ -5012,6 +5369,24 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "update_work_orders_services_reorder",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/services/reorder",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrdersServicesReorderRequest",
+      "requestShape": {
+        "wrapper": "service_ids"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "reorder"
     },
     {
       "id": "delete_work_orders_service",
@@ -5692,11 +6067,13 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
+      "requestSchema": "CreateWorkOrdersVoidRequest",
+      "requestShape": {
+        "wrapper": "payment_id"
+      },
       "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
       "summary": "create"
     },
     {

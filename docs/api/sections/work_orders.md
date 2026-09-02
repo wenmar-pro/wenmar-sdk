@@ -358,6 +358,8 @@ Show a work order by ID.
 
 **Response 200** — [WorkOrder](#workorder-schema)
 
+**Response 401** — [Error](#error-schema) error envelope
+
 **Example**
 
 ```json
@@ -618,18 +620,18 @@ Close
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `closed_at` | string | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -638,17 +640,17 @@ Close
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
 | `declined_at` | string \| null | Yes |
-| `decline_reason` | any | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -658,11 +660,11 @@ Close
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
 | `closure_reason` | string | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -678,6 +680,10 @@ Close
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -741,18 +747,18 @@ Close as paid
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `closed_at` | string | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -761,17 +767,17 @@ Close as paid
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -780,12 +786,12 @@ Close as paid
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -801,6 +807,10 @@ Close as paid
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -862,18 +872,18 @@ Close zero
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `closed_at` | string | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -882,17 +892,17 @@ Close zero
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -901,12 +911,12 @@ Close zero
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -922,6 +932,10 @@ Close zero
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -962,121 +976,19 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders courtesy car assignment
+## Create work orders courtesy car assignment
 
 ```
 POST /work_orders/{id}/courtesy_car_assignment
 ```
 
-Create
+Create a work orders courtesy car assignment.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -1104,18 +1016,18 @@ Decline all
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
 | `sub_status_type_id` | integer | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -1124,15 +1036,15 @@ Decline all
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
 | `declined_at` | string | Yes |
 | `decline_reason` | string | Yes |
 | `discount_cents` | integer | Yes |
@@ -1143,12 +1055,12 @@ Decline all
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -1164,6 +1076,10 @@ Decline all
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1242,18 +1158,7 @@ Delete a work orders hard delete by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 202**
-
-| Field | Type | Required |
-|---|---|---|
-| `status` | string | Yes |
-| `resource` | object | Yes |
-
-`resource` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
+**Response 202** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -1261,121 +1166,19 @@ Delete a work orders hard delete by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders post to account
+## Update work orders post to account
 
 ```
 PATCH /work_orders/{id}/post_to_account
 ```
 
-Post to account
+Update a work orders post to account by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | string | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | integer | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -1403,18 +1206,18 @@ Reopen
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -1423,17 +1226,17 @@ Reopen
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -1442,12 +1245,12 @@ Reopen
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -1463,6 +1266,10 @@ Reopen
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1526,18 +1333,18 @@ Return to board
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -1546,17 +1353,17 @@ Return to board
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -1565,12 +1372,12 @@ Return to board
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -1586,6 +1393,10 @@ Return to board
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1647,18 +1458,18 @@ Save for later
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
+| `payer_customer_id` | integer \| null | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -1667,17 +1478,17 @@ Save for later
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -1686,12 +1497,12 @@ Save for later
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -1707,6 +1518,10 @@ Save for later
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1747,363 +1562,57 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders send estimate
+## Update work orders send estimate
 
 ```
 PATCH /work_orders/{id}/send_estimate
 ```
 
-Send estimate
+Update a work orders send estimate by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders send invoice summary
+## Update work orders send invoice summary
 
 ```
 PATCH /work_orders/{id}/send_invoice_summary
 ```
 
-Send invoice summary
+Update a work orders send invoice summary by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders send reminder
+## Update work orders send reminder
 
 ```
 PATCH /work_orders/{id}/send_reminder
 ```
 
-Send reminder
+Update a work orders send reminder by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2137,121 +1646,21 @@ Show a work order service history by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders toggle waiting for customer
+## Update work orders toggle waiting for customer
 
 ```
 PATCH /work_orders/{id}/toggle_waiting_for_customer
 ```
 
-Toggle waiting for customer
+Update a work orders toggle waiting for customer by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [WorkOrder](#workorder-schema)
 
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 403** — no content.
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2270,109 +1679,7 @@ Create a work order authorization.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | integer \| null | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | string | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | string \| null | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -2395,151 +1702,26 @@ Update a work order authorization decisions by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | integer | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | string | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | string | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/authorization/update_decisions.json
 ```
 
-## Get work orders concern
+## List work orders concerns
 
 ```
 GET /work_orders/{work_order_id}/concerns
 ```
 
-Index
+List all work orders concerns, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `body` | string | Yes |
-| `source` | string | Yes |
-| `severity` | any | Yes |
-| `finding_notes` | string | Yes |
-| `position` | integer | Yes |
-| `converted` | boolean | Yes |
-| `converted_service_id` | any | Yes |
-| `added_by_name` | any | No |
-| `finding_added_by_name` | any | Yes |
-| `created_at` | string | Yes |
-| `creator` | object | No |
-
-`creator` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | any | Yes |
-| `name` | any | Yes |
-| `url` | any | Yes |
+**Response 200** — array of [WorkOrder](#workorder-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/concerns.json
@@ -2557,70 +1739,7 @@ Show a work order estimate by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `services` | array of object | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Example**
 
@@ -2720,70 +1839,7 @@ Show a work order inspection by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `inspection_reports` | array of object | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Example**
 
@@ -2850,121 +1906,19 @@ Show a work order inspection by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/inspection.json
 ```
 
-## Post work orders label
+## Create work orders label
 
 ```
 POST /work_orders/{work_order_id}/labels
 ```
 
-Create
+Create a work orders label.
 
 | Param | Type | Required |
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2984,109 +1938,7 @@ Delete a work orders label by ID.
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
@@ -3104,70 +1956,7 @@ Show a work order parts by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `services` | array of object | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Example**
 
@@ -3267,70 +2056,7 @@ Show a work order payments by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `payments` | array of object | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 500** — [Error](#error-schema) error envelope
 
 **Example**
 
@@ -3430,55 +2156,11 @@ Create a work order payment.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `amount_cents` | integer | Yes |
-| `method` | string | Yes |
-| `processor_status` | any | Yes |
-| `is_refund` | boolean | Yes |
-| `processed_at` | string | Yes |
-| `reference` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `work_order_id` | integer | Yes |
-| `customer_id` | integer | Yes |
-| `work_order` | object | Yes |
-| `customer` | object | Yes |
-| `processed_by` | object | Yes |
-| `location` | object | No |
-
-`work_order` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`processed_by` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
 **Response 403** — [Error](#error-schema) error envelope
 
 **Response 422** — [Error](#error-schema) error envelope
+
+**Response 500** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -3506,18 +2188,18 @@ Reverse ar
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
 | `payer_customer_id` | integer | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -3526,17 +2208,17 @@ Reverse ar
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -3545,12 +2227,12 @@ Reverse ar
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -3566,6 +2248,10 @@ Reverse ar
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -3626,18 +2312,18 @@ Send to ar
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
+| `sub_status_type_id` | integer \| null | Yes |
 | `payer_customer_id` | integer | Yes |
-| `vehicle_arrived_at` | any | Yes |
+| `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
@@ -3646,17 +2332,17 @@ Send to ar
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -3665,12 +2351,12 @@ Send to ar
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -3686,6 +2372,10 @@ Send to ar
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -3726,46 +2416,38 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/payments/send_to_ar.json
 ```
 
-## Post work orders service
+## Create work orders refund
 
 ```
-POST /work_orders/{work_order_id}/services
+POST /work_orders/{work_order_id}/refunds
 ```
 
-Create
+Create a work orders refund.
 
 | Param | Type | Required |
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 201**
+**Response 500** — [Error](#error-schema) error envelope
 
-| Field | Type | Required |
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/refunds.json
+```
+
+## Create work orders service
+
+```
+POST /work_orders/{work_order_id}/services
+```
+
+Create a work orders service.
+
+| Param | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+| `work_order_id` | integer | Yes |
+
+**Response 201** — [WorkOrder](#workorder-schema)
 
 **Response 404** — no content.
 
@@ -3795,135 +2477,62 @@ Delete a work orders service by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service
+## Update work orders service
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}
 ```
 
-Update
+Update a work orders service by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [WorkOrder](#workorder-schema)
 
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 403** — no content.
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service acknowledge parts
+## Update work orders services acknowledge parts
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/acknowledge_parts
 ```
 
-Acknowledge parts
+Update a work orders services acknowledge parts by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders service add line item
+## Create work orders services add line item
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/add_line_item
 ```
 
-Add line item
+Create a work orders services add line item.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `fee_type` | any | Yes |
-| `fee_on_labor` | boolean | Yes |
-| `fee_on_parts` | boolean | Yes |
-| `fee_on_sublets` | boolean | Yes |
+**Response 201** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -3932,47 +2541,20 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders service add package
+## Create work orders services add package
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/add_package
 ```
 
-Add package
+Create a work orders services add package.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 404** — no content.
 
@@ -3981,13 +2563,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Get work orders service adjust time
+## List work orders services adjust time
 
 ```
 GET /work_orders/{work_order_id}/services/{id}/adjust_time
 ```
 
-Adjust time
+List all work orders services adjust time, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
@@ -4000,141 +2582,60 @@ Adjust time
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service adjust time
+## Update work orders services adjust time
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/adjust_time
 ```
 
-Adjust time
+Update a work orders services adjust time by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | string | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service apply discount
+## Update work orders services apply discount
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/apply_discount
 ```
 
-Apply discount
+Update a work orders services apply discount by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service complete service
+## Update work orders services complete service
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/complete_service
 ```
 
-Complete service
+Update a work orders services complete service by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | string | Yes |
-| `completed_at` | string | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -4143,188 +2644,80 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders service duplicate
+## Create work orders services duplicate
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/duplicate
 ```
 
-Duplicate
+Create a work orders services duplicate.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 201** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service pause
+## Update work orders services pause
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/pause
 ```
 
-Pause
+Update a work orders services pause by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | string | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service publish
+## Update work orders services publish
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/publish
 ```
 
-Publish
+Update a work orders services publish by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service reset completion
+## Update work orders services reset completion
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/reset_completion
 ```
 
-Reset completion
+Update a work orders services reset completion by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -4333,94 +2726,40 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service revive
+## Update work orders services revive
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/revive
 ```
 
-Revive
+Update a work orders services revive by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service start
+## Update work orders services start
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/start
 ```
 
-Start
+Update a work orders services start by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | string | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -4429,229 +2768,100 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service toggle labor completion
+## Update work orders services toggle labor completion
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_completion
 ```
 
-Toggle labor completion
+Update a work orders services toggle labor completion by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `hours` | any | Yes |
-| `rate_cents` | any | Yes |
-| `technician_id` | any | Yes |
-| `labor_rate_id` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service toggle labor tax
+## Update work orders services toggle labor tax
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_tax
 ```
 
-Toggle labor tax
+Update a work orders services toggle labor tax by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders service unauthorize
+## Create work orders services unauthorize
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/unauthorize
 ```
 
-Unauthorize
+Create a work orders services unauthorize.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service update category
+## Update work orders services update category
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/update_category
 ```
 
-Update category
+Update a work orders services update category by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | integer | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service update pricing mode
+## Update work orders services update pricing mode
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/update_pricing_mode
 ```
 
-Update pricing mode
+Update a work orders services update pricing mode by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | any | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -4660,116 +2870,53 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service update service technician
+## Update work orders services update service technician
 
 ```
 PATCH /work_orders/{work_order_id}/services/{id}/update_service_technician
 ```
 
-Update service technician
+Update a work orders services update service technician by ID.
 
 | Param | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `service_type` | string | Yes |
-| `authorization_status` | string | Yes |
-| `pricing_mode` | string | Yes |
-| `technician_id` | integer | Yes |
-| `technician` | object | Yes |
-| `category_id` | any | Yes |
-| `ordinal` | integer | Yes |
-| `discount_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `sublet_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
-| `started_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `authorized_at` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `line_items` | array of object | Yes |
-
-`technician` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Post work orders service line items
+## Create work orders services line item
 
 ```
 POST /work_orders/{work_order_id}/services/{service_id}/line_items
 ```
 
-Create
+Create a work orders services line item.
 
 | Param | Type | Required |
 |---|---|---|
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `hours` | string | No |
-| `rate_cents` | integer | No |
-| `technician_id` | any | No |
-| `labor_rate_id` | integer | No |
-| `part_type` | string | No |
-| `part_status` | string | No |
-| `vendor_id` | any | No |
-| `vendor_part_number` | any | No |
-| `unit_cost_cents` | integer | No |
-| `brand` | any | No |
-| `dot_code` | any | No |
-| `tire_size` | any | No |
+**Response 201** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/services/{service_id}/line_items.json
 ```
 
-## Delete work orders service line items
+## Delete work orders services line item
 
 ```
 DELETE /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
 ```
 
-Delete a work orders service line items by ID.
+Delete a work orders services line item by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -4783,13 +2930,13 @@ Delete a work orders service line items by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Patch work orders service line items
+## Update work orders services line item
 
 ```
 PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
 ```
 
-Update
+Update a work orders services line item by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -4797,32 +2944,7 @@ Update
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -4843,32 +2965,7 @@ Add to inventory
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -4889,32 +2986,7 @@ Duplicate
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 201** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -4935,32 +3007,7 @@ Pull
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -4981,32 +3028,7 @@ Refresh price
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -5029,32 +3051,7 @@ Undo pull
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -5075,32 +3072,7 @@ Undo return
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -5121,38 +3093,107 @@ Update a work order service line item part status by ID.
 | `service_id` | integer | Yes |
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `item_type` | string | Yes |
-| `description` | string | Yes |
-| `quantity` | string | Yes |
-| `unit_price_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `tax_total_cents` | integer | Yes |
-| `pricing_mode` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `is_warranty` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `notes` | any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `part_type` | string | Yes |
-| `part_status` | string | Yes |
-| `vendor_id` | any | Yes |
-| `vendor_part_number` | any | Yes |
-| `unit_cost_cents` | integer | Yes |
-| `brand` | any | Yes |
-| `dot_code` | any | Yes |
-| `tire_size` | any | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
+```
+
+## List work orders summary activity
+
+```
+GET /work_orders/{work_order_id}/summary/activity
+```
+
+List all work orders summary activity, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `category` | string | No |
+| `work_order_id` | integer | Yes |
+
+**Response 200** — array of [WorkOrder](#workorder-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/activity.json
+```
+
+## List work orders summary appointments
+
+```
+GET /work_orders/{work_order_id}/summary/appointments
+```
+
+List all work orders summary appointments, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 200** — array of [WorkOrder](#workorder-schema)
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/appointments.json
+```
+
+## List work orders summary authorization logs
+
+```
+GET /work_orders/{work_order_id}/summary/authorization_logs
+```
+
+List all work orders summary authorization logs, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 200** — array of [WorkOrder](#workorder-schema)
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/authorization_logs.json
+```
+
+## List work orders summary vehicle history
+
+```
+GET /work_orders/{work_order_id}/summary/vehicle_history
+```
+
+List all work orders summary vehicle history, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 200** — array of [WorkOrder](#workorder-schema)
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/vehicle_history.json
+```
+
+## Create work orders void
+
+```
+POST /work_orders/{work_order_id}/voids
+```
+
+Create a work orders void.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 500** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/voids.json
 ```
 
 ## Show work order WIP
@@ -5167,70 +3208,7 @@ Show a work order wip by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `type` | string | Yes |
-| `id` | integer | Yes |
-| `work_order_number` | integer | Yes |
-| `status` | string | Yes |
-| `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
-| `authorized` | boolean | Yes |
-| `paid` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
-| `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
-| `sub_status_type_id` | any | Yes |
-| `payer_customer_id` | any | Yes |
-| `vehicle_arrived_at` | any | Yes |
-| `work_order_services_count` | integer | Yes |
-| `inspection_reports_count` | integer | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `totals` | object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `services` | array of object | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `make` | string | Yes |
-| `model` | string | Yes |
-| `year` | integer | Yes |
-| `vin` | string | Yes |
-| `url` | string | Yes |
-
-`totals` — object:
-| Field | Type | Required |
-|---|---|---|
-| `subtotal_cents` | integer | Yes |
-| `tax_cents` | integer | Yes |
-| `total_cents` | integer | Yes |
-| `paid_cents` | integer | Yes |
-| `remaining_cents` | integer | Yes |
-| `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Example**
 
@@ -5329,38 +3307,37 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `work_order_number` | integer | Yes |
 | `status` | string | Yes |
 | `intake_method` | string | Yes |
-| `scheduled_for` | any | Yes |
+| `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
 | `paid` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `closed_at` | any | Yes |
+| `closed_at` | string \| null | Yes |
 | `location_id` | integer | Yes |
-| `service_advisor_id` | any | Yes |
-| `assigned_technician_id` | any | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `assigned_technician_id` | integer \| null | Yes |
 | `sub_status_type_id` | integer \| null | Yes |
 | `payer_customer_id` | integer \| null | Yes |
 | `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
 | `customer` | object | Yes |
-| `payer_customer` | object | No |
 | `vehicle` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `odometer_in` | any | Yes |
-| `odometer_out` | any | Yes |
+| `odometer_in` | integer \| null | Yes |
+| `odometer_out` | integer \| null | Yes |
 | `odometer_unit` | string | Yes |
-| `authorized_at` | any | Yes |
+| `authorized_at` | string \| null | Yes |
 | `authorized_total_cents` | integer | Yes |
 | `customer_notified` | boolean | Yes |
 | `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | any | Yes |
-| `completed_at` | any | Yes |
-| `declined_at` | any | Yes |
-| `decline_reason` | any | Yes |
+| `ready_for_pickup_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `declined_at` | string \| null | Yes |
+| `decline_reason` | string \| null | Yes |
 | `discount_cents` | integer | Yes |
 | `fees_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -5369,12 +3346,12 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `subcontracts_cents` | integer | Yes |
 | `credit_balance_cents` | integer | Yes |
 | `saved_for_later` | boolean | Yes |
-| `closure_reason` | any | Yes |
-| `closure_reason_notes` | any | Yes |
-| `notes` | any | Yes |
-| `purchase_order_number` | any | Yes |
+| `closure_reason` | string \| null | Yes |
+| `closure_reason_notes` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `purchase_order_number` | string \| null | Yes |
 | `return_method` | string | Yes |
-| `return_method_notes` | any | Yes |
+| `return_method_notes` | string \| null | Yes |
 | `vehicle_keys_location` | string | Yes |
 | `vehicle_location` | string | Yes |
 | `customer_visit_count` | integer | Yes |
@@ -5390,15 +3367,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `concerns_url` | string | Yes |
 | `service_history_url` | string | Yes |
 | `declined_services_url` | string | Yes |
+| `activity_url` | string | Yes |
+| `vehicle_history_url` | string | Yes |
+| `appointments_url` | string | Yes |
+| `authorization_logs_url` | string | Yes |
+| `payer_customer` | object | No |
 
 `customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`payer_customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -5430,6 +3405,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
+| `url` | string | Yes |
+
+`payer_customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
 | `url` | string | Yes |
 
 ---
@@ -5469,10 +3451,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order` — object:
 | Field | Type | Required |
 |---|---|---|
-| `payer_customer_id` | integer | No |
+| `vehicle_arrived_at` | string | No |
 | `intake_method` | string | No |
 | `sub_status_type_id` | integer | No |
-| `vehicle_arrived_at` | string | No |
+| `payer_customer_id` | integer | No |
 
 ---
 
@@ -5485,7 +3467,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PostWorkOrdersCourtesyCarAssignmentRequest schema {#postworkorderscourtesycarassignmentrequest-schema}
+### CreateWorkOrdersCourtesyCarAssignmentRequest schema {#createworkorderscourtesycarassignmentrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5529,7 +3511,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PostWorkOrdersLabelRequest schema {#postworkorderslabelrequest-schema}
+### CreateWorkOrdersLabelRequest schema {#createworkorderslabelrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5537,21 +3519,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### CreateWorkOrderPaymentRequest schema {#createworkorderpaymentrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `payment` | object | Yes |
-
-`payment` — object:
-| Field | Type | Required |
-|---|---|---|
-| `method` | string | Yes |
-| `amount_cents` | number | Yes |
-
----
-
-### PostWorkOrdersServiceRequest schema {#postworkordersservicerequest-schema}
+### CreateWorkOrdersServiceRequest schema {#createworkordersservicerequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5566,7 +3534,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceRequest schema {#patchworkordersservicerequest-schema}
+### UpdateWorkOrdersServiceRequest schema {#updateworkordersservicerequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5575,12 +3543,12 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order_service` — object:
 | Field | Type | Required |
 |---|---|---|
-| `name` | string | No |
 | `pricing_mode` | string | No |
+| `name` | string | No |
 
 ---
 
-### PostWorkOrdersServiceAddLineItemRequest schema {#postworkordersserviceaddlineitemrequest-schema}
+### CreateWorkOrdersServicesAddLineItemRequest schema {#createworkordersservicesaddlineitemrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5590,7 +3558,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PostWorkOrdersServiceAddPackageRequest schema {#postworkordersserviceaddpackagerequest-schema}
+### CreateWorkOrdersServicesAddPackageRequest schema {#createworkordersservicesaddpackagerequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5598,7 +3566,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceAdjustTimeRequest schema {#patchworkordersserviceadjusttimerequest-schema}
+### UpdateWorkOrdersServicesAdjustTimeRequest schema {#updateworkordersservicesadjusttimerequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5607,7 +3575,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceApplyDiscountRequest schema {#patchworkordersserviceapplydiscountrequest-schema}
+### UpdateWorkOrdersServicesApplyDiscountRequest schema {#updateworkordersservicesapplydiscountrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5622,7 +3590,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceToggleLaborCompletionRequest schema {#patchworkordersservicetogglelaborcompletionrequest-schema}
+### UpdateWorkOrdersServicesToggleLaborCompletionRequest schema {#updateworkordersservicestogglelaborcompletionrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5630,7 +3598,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceUpdateCategoryRequest schema {#patchworkordersserviceupdatecategoryrequest-schema}
+### UpdateWorkOrdersServicesUpdateCategoryRequest schema {#updateworkordersservicesupdatecategoryrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5638,7 +3606,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceUpdatePricingModeRequest schema {#patchworkordersserviceupdatepricingmoderequest-schema}
+### UpdateWorkOrdersServicesUpdatePricingModeRequest schema {#updateworkordersservicesupdatepricingmoderequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5651,7 +3619,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PatchWorkOrdersServiceUpdateServiceTechnicianRequest schema {#patchworkordersserviceupdateservicetechnicianrequest-schema}
+### UpdateWorkOrdersServicesUpdateServiceTechnicianRequest schema {#updateworkordersservicesupdateservicetechnicianrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5664,7 +3632,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### PostWorkOrdersServiceLineItemsRequest schema {#postworkordersservicelineitemsrequest-schema}
+### CreateWorkOrdersServicesLineItemRequest schema {#createworkordersserviceslineitemrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -5675,14 +3643,14 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `item_type` | string | Yes |
 | `description` | string | Yes |
-| `hours` | number | No |
-| `labor_rate_id` | integer | No |
 | `unit_price` | string | No |
 | `quantity` | integer | No |
+| `hours` | number | No |
+| `labor_rate_id` | integer | No |
 
 ---
 
-### PatchWorkOrdersServiceLineItemsRequest schema {#patchworkordersservicelineitemsrequest-schema}
+### UpdateWorkOrdersServicesLineItemRequest schema {#updateworkordersserviceslineitemrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

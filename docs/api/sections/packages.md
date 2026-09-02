@@ -19,13 +19,13 @@ List all packages, paginated via the Link header.
 | `name` | string | Yes |
 | `description` | string | Yes |
 | `service_type` | string | Yes |
-| `category_id` | any | Yes |
-| `category_name` | any | Yes |
+| `category_id` | integer \| null | Yes |
+| `category_name` | string \| null | Yes |
 | `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
+| `customer_notes` | string \| null | Yes |
 | `show_tech_with_cert` | boolean | Yes |
 | `triggers_tire_storage` | boolean | Yes |
-| `price_cents` | any | Yes |
+| `price_cents` | integer \| null | Yes |
 | `active` | boolean | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
@@ -58,13 +58,13 @@ Create a package.
 | `name` | string | Yes |
 | `description` | string | Yes |
 | `service_type` | string | Yes |
-| `category_id` | any | Yes |
-| `category_name` | any | Yes |
-| `estimated_hours` | any | Yes |
-| `customer_notes` | any | Yes |
+| `category_id` | integer \| null | Yes |
+| `category_name` | string \| null | Yes |
+| `estimated_hours` | number \| null | Yes |
+| `customer_notes` | string \| null | Yes |
 | `show_tech_with_cert` | boolean | Yes |
 | `triggers_tire_storage` | boolean | Yes |
-| `price_cents` | any | Yes |
+| `price_cents` | integer \| null | Yes |
 | `active` | boolean | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
@@ -104,13 +104,13 @@ Update a package by ID.
 | `name` | string | Yes |
 | `description` | string | Yes |
 | `service_type` | string | Yes |
-| `category_id` | any | Yes |
-| `category_name` | any | Yes |
+| `category_id` | integer \| null | Yes |
+| `category_name` | string \| null | Yes |
 | `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
+| `customer_notes` | string \| null | Yes |
 | `show_tech_with_cert` | boolean | Yes |
 | `triggers_tire_storage` | boolean | Yes |
-| `price_cents` | any | Yes |
+| `price_cents` | integer \| null | Yes |
 | `active` | boolean | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
@@ -123,18 +123,20 @@ Update a package by ID.
 | `name` | string | Yes |
 | `url` | string | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
 ```
 
-## Post packages duplicate
+## Create packages duplicate
 
 ```
 POST /packages/{id}/duplicate
 ```
 
-Duplicate
+Create a packages duplicate.
 
 | Param | Type | Required |
 |---|---|---|
@@ -148,13 +150,13 @@ Duplicate
 | `name` | string | Yes |
 | `description` | string | Yes |
 | `service_type` | string | Yes |
-| `category_id` | any | Yes |
-| `category_name` | any | Yes |
+| `category_id` | integer \| null | Yes |
+| `category_name` | string \| null | Yes |
 | `estimated_hours` | string | Yes |
-| `customer_notes` | any | Yes |
+| `customer_notes` | string \| null | Yes |
 | `show_tech_with_cert` | boolean | Yes |
 | `triggers_tire_storage` | boolean | Yes |
-| `price_cents` | any | Yes |
+| `price_cents` | integer \| null | Yes |
 | `active` | boolean | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
@@ -166,6 +168,8 @@ Duplicate
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \

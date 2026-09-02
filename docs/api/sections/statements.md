@@ -56,6 +56,24 @@ Show a statement by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/<id>.json
 ```
 
+## List statements payments
+
+```
+GET /statements/{statement_id}/payments
+```
+
+List all statements payments, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `statement_id` | integer | Yes |
+
+**Response 500** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/{statement_id}/payments.json
+```
+
 ---
 
 ### Statement schema {#statement-schema}
@@ -70,8 +88,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `end_date` | string | Yes |
 | `due_date` | string | Yes |
 | `totals` | object | Yes |
-| `sent_at` | any | Yes |
-| `viewed_at` | any | Yes |
+| `sent_at` | string \| null | Yes |
+| `viewed_at` | string \| null | Yes |
 | `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |

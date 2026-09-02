@@ -20,7 +20,7 @@ List all notifications, paginated via the Link header.
 | `title` | string | Yes |
 | `message_body` | string | Yes |
 | `read` | boolean | Yes |
-| `read_at` | any | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
@@ -32,13 +32,13 @@ List all notifications, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/notifications.json
 ```
 
-## Create notification
+## Create notifications bulk mark read
 
 ```
 POST /notifications/bulk_mark_read
 ```
 
-Create a notification.
+Create a notifications bulk mark read.
 
 **Response 200**
 
@@ -131,7 +131,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### CreateNotificationRequest schema {#createnotificationrequest-schema}
+### CreateNotificationsBulkMarkReadRequest schema {#createnotificationsbulkmarkreadrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

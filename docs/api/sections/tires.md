@@ -25,16 +25,16 @@ List all tires, paginated via the Link header.
 | `size_rim_diameter` | string | Yes |
 | `brand` | string | Yes |
 | `model` | string | Yes |
-| `load_index` | any | Yes |
-| `speed_rating` | any | Yes |
-| `dot_serial` | any | Yes |
+| `load_index` | string \| null | Yes |
+| `speed_rating` | string \| null | Yes |
+| `dot_serial` | string \| null | Yes |
 | `dot_registered` | boolean | Yes |
-| `dot_registered_at` | any | Yes |
-| `purchase_date` | any | Yes |
+| `dot_registered_at` | string \| null | Yes |
+| `purchase_date` | string \| null | Yes |
 | `tread_depth_new_mm` | string | Yes |
-| `tread_depth_mm` | any | Yes |
+| `tread_depth_mm` | number \| null | Yes |
 | `source` | string | Yes |
-| `notes` | any | Yes |
+| `notes` | string \| null | Yes |
 | `vehicle` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -73,17 +73,17 @@ Create a tire.
 | `size_aspect_ratio` | integer | Yes |
 | `size_rim_diameter` | string | Yes |
 | `brand` | string | Yes |
-| `model` | any | Yes |
-| `load_index` | any | Yes |
-| `speed_rating` | any | Yes |
-| `dot_serial` | any | Yes |
+| `model` | string \| null | Yes |
+| `load_index` | string \| null | Yes |
+| `speed_rating` | string \| null | Yes |
+| `dot_serial` | string \| null | Yes |
 | `dot_registered` | boolean | Yes |
-| `dot_registered_at` | any | Yes |
-| `purchase_date` | any | Yes |
+| `dot_registered_at` | string \| null | Yes |
+| `purchase_date` | string \| null | Yes |
 | `tread_depth_new_mm` | string | Yes |
-| `tread_depth_mm` | any | Yes |
+| `tread_depth_mm` | number \| null | Yes |
 | `source` | string | Yes |
-| `notes` | any | Yes |
+| `notes` | string \| null | Yes |
 | `vehicle` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -148,16 +148,16 @@ Show a tire by ID.
 | `size_rim_diameter` | string | Yes |
 | `brand` | string | Yes |
 | `model` | string | Yes |
-| `load_index` | any | Yes |
-| `speed_rating` | any | Yes |
-| `dot_serial` | any | Yes |
+| `load_index` | string \| null | Yes |
+| `speed_rating` | string \| null | Yes |
+| `dot_serial` | string \| null | Yes |
 | `dot_registered` | boolean | Yes |
-| `dot_registered_at` | any | Yes |
-| `purchase_date` | any | Yes |
+| `dot_registered_at` | string \| null | Yes |
+| `purchase_date` | string \| null | Yes |
 | `tread_depth_new_mm` | string | Yes |
-| `tread_depth_mm` | any | Yes |
+| `tread_depth_mm` | number \| null | Yes |
 | `source` | string | Yes |
-| `notes` | any | Yes |
+| `notes` | string \| null | Yes |
 | `vehicle` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -201,16 +201,16 @@ Update a tire by ID.
 | `size_rim_diameter` | string | Yes |
 | `brand` | string | Yes |
 | `model` | string | Yes |
-| `load_index` | any | Yes |
-| `speed_rating` | any | Yes |
-| `dot_serial` | any | Yes |
+| `load_index` | string \| null | Yes |
+| `speed_rating` | string \| null | Yes |
+| `dot_serial` | string \| null | Yes |
 | `dot_registered` | boolean | Yes |
-| `dot_registered_at` | any | Yes |
-| `purchase_date` | any | Yes |
+| `dot_registered_at` | string \| null | Yes |
+| `purchase_date` | string \| null | Yes |
 | `tread_depth_new_mm` | string | Yes |
-| `tread_depth_mm` | any | Yes |
+| `tread_depth_mm` | number \| null | Yes |
 | `source` | string | Yes |
-| `notes` | any | Yes |
+| `notes` | string \| null | Yes |
 | `vehicle` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |

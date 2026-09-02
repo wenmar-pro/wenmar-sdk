@@ -158,7 +158,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `description` | any | Yes |
+| `description` | string \| null | Yes |
 | `service_type` | string | Yes |
 | `icon` | string \| null | Yes |
 | `color` | string \| null | Yes |
@@ -208,7 +208,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `service_category` — object:
 | Field | Type | Required |
 |---|---|---|
-| `name` | string | No |
 | `active` | boolean | No |
+| `name` | string | No |
 | `position` | integer | No |
 

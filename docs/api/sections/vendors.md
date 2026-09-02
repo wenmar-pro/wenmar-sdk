@@ -13,6 +13,8 @@ List all vendors, paginated via the Link header.
 
 **Response 200** — array of [Vendor](#vendor-schema)
 
+**Response 401** — [Error](#error-schema) error envelope
+
 **Example**
 
 ```json
@@ -151,67 +153,19 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
 ```
 
-## Get vendors purchase order
+## List vendors purchase orders
 
 ```
 GET /vendors/{vendor_id}/purchase_orders
 ```
 
-Index
+List all vendors purchase orders, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
 | `vendor_id` | integer | Yes |
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `po_number` | integer | Yes |
-| `status` | string | Yes |
-| `order_method` | string | Yes |
-| `payment_method` | string | Yes |
-| `fulfillment_method` | string | Yes |
-| `ordered_at` | string | Yes |
-| `received_at` | any | Yes |
-| `payment_due_at` | any | Yes |
-| `tracking_number` | string | Yes |
-| `notes` | string | Yes |
-| `freight_cost_cents` | integer | Yes |
-| `freight_cost_currency` | string | Yes |
-| `total_cents` | integer | Yes |
-| `subtotal_cents` | integer | Yes |
-| `core_charges_cents` | integer | Yes |
-| `line_items_count` | integer | Yes |
-| `vendor` | object | Yes |
-| `work_order` | object | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-`vendor` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`work_order` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `number` | integer | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — array of [PurchaseOrder](#purchaseorder-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/{vendor_id}/purchase_orders.json
@@ -234,8 +188,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `account_number` | string | Yes |
 | `notes` | string | Yes |
 | `quick_order` | boolean | Yes |
-| `order_url_template` | any | Yes |
-| `catalog_url_template` | any | Yes |
+| `order_url_template` | string \| null | Yes |
+| `catalog_url_template` | string \| null | Yes |
 | `location` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -248,6 +202,18 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+---
+
+### Error schema {#error-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `code` | string | Yes |
+| `message` | string | Yes |
+| `field_errors` | object | Yes |
+
+`field_errors` — object:
 
 ---
 
@@ -266,18 +232,6 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### Error schema {#error-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `code` | string | Yes |
-| `message` | string | Yes |
-| `field_errors` | object | Yes |
-
-`field_errors` — object:
-
----
-
 ### UpdateVendorRequest schema {#updatevendorrequest-schema}
 
 | Field | Type | Required |
@@ -288,4 +242,60 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `name` | string | Yes |
+
+---
+
+### PurchaseOrder schema {#purchaseorder-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `po_number` | integer | Yes |
+| `status` | string | Yes |
+| `order_method` | string | Yes |
+| `payment_method` | string | Yes |
+| `fulfillment_method` | string | Yes |
+| `tracking_number` | string | Yes |
+| `vendor_invoice_number` | string | Yes |
+| `vendor_invoice_received_at` | string \| null | Yes |
+| `notes` | string | Yes |
+| `freight_cost_cents` | integer | Yes |
+| `freight_cost_currency` | string | Yes |
+| `subtotal_cents` | string | Yes |
+| `total_cents` | string | Yes |
+| `core_charges_cents` | integer | Yes |
+| `line_items_count` | integer | Yes |
+| `ordered_at` | string | Yes |
+| `received_at` | string \| null | Yes |
+| `payment_due_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `vendor` | object | Yes |
+| `work_order` | object | Yes |
+| `location` | object | Yes |
+| `line_items` | array of object | Yes |
+
+`vendor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `number` | integer | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 

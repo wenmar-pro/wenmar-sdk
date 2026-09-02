@@ -21,7 +21,7 @@ List all sublet packages, paginated via the Link header.
 | `active` | boolean | Yes |
 | `default_fulfillment_status` | string | Yes |
 | `default_payment_status` | string | Yes |
-| `default_payment_method` | any | Yes |
+| `default_payment_method` | string \| null | Yes |
 | `sublet_package_lines_count` | integer | Yes |
 | `location` | object | Yes |
 | `created_at` | string | Yes |
@@ -58,7 +58,7 @@ Create a sublet package.
 | `active` | boolean | Yes |
 | `default_fulfillment_status` | string | Yes |
 | `default_payment_status` | string | Yes |
-| `default_payment_method` | any | Yes |
+| `default_payment_method` | string \| null | Yes |
 | `sublet_package_lines_count` | integer | Yes |
 | `location` | object | Yes |
 | `created_at` | string | Yes |
@@ -120,7 +120,7 @@ Update a sublet package by ID.
 | `active` | boolean | Yes |
 | `default_fulfillment_status` | string | Yes |
 | `default_payment_status` | string | Yes |
-| `default_payment_method` | any | Yes |
+| `default_payment_method` | string \| null | Yes |
 | `sublet_package_lines_count` | integer | Yes |
 | `location` | object | Yes |
 | `created_at` | string | Yes |
@@ -134,6 +134,27 @@ Update a sublet package by ID.
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/sublet_packages/<id>.json
+```
+
+## Update sublet packages deactivate
+
+```
+PATCH /sublet_packages/{id}/deactivate
+```
+
+Update a sublet packages deactivate by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
