@@ -56,7 +56,7 @@ class EnrichSpecTest < Minitest::Test
   def test_adds_sub_action_operation_ids
     result = enrich(@input)
     assert_equal "decode_vin", result["paths"]["/vehicles/vin_decode"]["get"]["operationId"]
-    assert_equal "check_duplicate", result["paths"]["/vehicles/check_duplicate"]["get"]["operationId"]
+    assert_equal "check_vehicle_duplicate", result["paths"]["/vehicles/check_duplicate"]["get"]["operationId"]
   end
 
   def test_adds_tags_grouped_by_resource
@@ -156,6 +156,36 @@ class EnrichSpecTest < Minitest::Test
     input = make_spec_with("/work_orders" => { "post" => { "responses" => {} } })
     result = enrich(input)
     assert_equal "create_work_order", result["paths"]["/work_orders"]["post"]["operationId"]
+  end
+
+  def test_nested_settings_do_not_collide_with_top_level_settings
+    result = enrich(make_spec_with(
+      "/settings" => { "get" => { "responses" => {} } },
+      "/work_orders/{work_order_id}/settings" => { "get" => { "responses" => {} } }
+    ))
+
+    assert_equal "list_settings", result["paths"]["/settings"]["get"]["operationId"]
+    assert_equal "list_work_orders_settings", result["paths"]["/work_orders/{work_order_id}/settings"]["get"]["operationId"]
+  end
+
+  def test_nested_reports_do_not_collide_with_top_level_reports
+    result = enrich(make_spec_with(
+      "/reports/performance" => { "get" => { "responses" => {} } },
+      "/work_orders/{work_order_id}/reports/performance" => { "get" => { "responses" => {} } }
+    ))
+
+    assert_equal "list_reports_performance", result["paths"]["/reports/performance"]["get"]["operationId"]
+    assert_equal "list_work_orders_reports_performance", result["paths"]["/work_orders/{work_order_id}/reports/performance"]["get"]["operationId"]
+  end
+
+  def test_nested_work_orders_include_parent_chain
+    result = enrich(make_spec_with(
+      "/customers/{customer_id}/work_orders" => { "get" => { "responses" => {} } },
+      "/vehicles/{vehicle_id}/work_orders" => { "get" => { "responses" => {} } }
+    ))
+
+    assert_equal "list_customers_work_orders", result["paths"]["/customers/{customer_id}/work_orders"]["get"]["operationId"]
+    assert_equal "list_vehicles_work_orders", result["paths"]["/vehicles/{vehicle_id}/work_orders"]["get"]["operationId"]
   end
 
   def test_adds_curl_example_to_each_operation
