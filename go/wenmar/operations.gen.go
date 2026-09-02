@@ -3405,57 +3405,6 @@ func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int) (*U
 	return resp, nil
 }
 
-// ListTeamPermissionGroups runs the list_team_permission_groups operation (GET /team/permission_groups).
-func (c *Client) ListTeamPermissionGroups(ctx context.Context) (*ListTeamPermissionGroupsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListTeamPermissionGroups"})
-	resp, err := c.gen.ListTeamPermissionGroupsWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTeamPermissionGroups"}, OperationResult{Operation: "ListTeamPermissionGroups", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTeamPermissionGroups"}, OperationResult{Operation: "ListTeamPermissionGroups", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTeamPermissionGroups"}, OperationResult{Operation: "ListTeamPermissionGroups"})
-	return resp, nil
-}
-
-// CreateTeamPermissionGroup runs the create_team_permission_group operation (POST /team/permission_groups).
-func (c *Client) CreateTeamPermissionGroup(ctx context.Context, body CreateTeamPermissionGroupRequest) (*CreateTeamPermissionGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTeamPermissionGroup"})
-	resp, err := c.gen.CreateTeamPermissionGroupWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTeamPermissionGroup"}, OperationResult{Operation: "CreateTeamPermissionGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTeamPermissionGroup"}, OperationResult{Operation: "CreateTeamPermissionGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTeamPermissionGroup"}, OperationResult{Operation: "CreateTeamPermissionGroup"})
-	return resp, nil
-}
-
-// UpdateTeamPermissionGroup runs the update_team_permission_group operation (PATCH /team/permission_groups/{id}).
-func (c *Client) UpdateTeamPermissionGroup(ctx context.Context, id int, body UpdateTeamPermissionGroupRequest) (*UpdateTeamPermissionGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTeamPermissionGroup"})
-	resp, err := c.gen.UpdateTeamPermissionGroupWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTeamPermissionGroup"}, OperationResult{Operation: "UpdateTeamPermissionGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTeamPermissionGroup"}, OperationResult{Operation: "UpdateTeamPermissionGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTeamPermissionGroup"}, OperationResult{Operation: "UpdateTeamPermissionGroup"})
-	return resp, nil
-}
-
 // ListTireStorageSlots runs the list_tire_storage_slots operation (GET /tire_storage_slots).
 func (c *Client) ListTireStorageSlots(ctx context.Context) (*ListTireStorageSlotsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListTireStorageSlots"})
@@ -3640,6 +3589,57 @@ func (c *Client) CreateUser(ctx context.Context, body CreateUserRequest) (*Creat
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser"})
+	return resp, nil
+}
+
+// ListPermissionGroups runs the list_permission_groups operation (GET /users/permission_groups).
+func (c *Client) ListPermissionGroups(ctx context.Context) (*ListPermissionGroupsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListPermissionGroups"})
+	resp, err := c.gen.ListPermissionGroupsWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups"})
+	return resp, nil
+}
+
+// CreatePermissionGroup runs the create_permission_group operation (POST /users/permission_groups).
+func (c *Client) CreatePermissionGroup(ctx context.Context, body CreatePermissionGroupRequest) (*CreatePermissionGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePermissionGroup"})
+	resp, err := c.gen.CreatePermissionGroupWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup"})
+	return resp, nil
+}
+
+// UpdatePermissionGroup runs the update_permission_group operation (PATCH /users/permission_groups/{id}).
+func (c *Client) UpdatePermissionGroup(ctx context.Context, id int, body UpdatePermissionGroupRequest) (*UpdatePermissionGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePermissionGroup"})
+	resp, err := c.gen.UpdatePermissionGroupWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup"})
 	return resp, nil
 }
 

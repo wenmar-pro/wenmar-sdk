@@ -33,6 +33,7 @@
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
     "CreatePartsMatriceRequest",
+    "CreatePermissionGroupRequest",
     "CreateRecentSearcheRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
@@ -40,7 +41,6 @@
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
-    "CreateTeamPermissionGroupRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
@@ -119,6 +119,7 @@
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
     "UpdatePackageRequest",
     "UpdatePartsMatriceRequest",
+    "UpdatePermissionGroupRequest",
     "UpdateServiceCategoryRequest",
     "UpdateSettingsAccountRequest",
     "UpdateShopDiscountRequest",
@@ -126,7 +127,6 @@
     "UpdateSubStatuseRequest",
     "UpdateSubletPackageRequest",
     "UpdateTagsRequest",
-    "UpdateTeamPermissionGroupRequest",
     "UpdateTireRequest",
     "UpdateUserRequest",
     "UpdateVehicleRequest",
@@ -3547,54 +3547,6 @@
       "summary": "deactivate"
     },
     {
-      "id": "list_team_permission_groups",
-      "method": "get",
-      "path": "/team/permission_groups",
-      "tag": "team",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_team_permission_group",
-      "method": "post",
-      "path": "/team/permission_groups",
-      "tag": "team",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateTeamPermissionGroupRequest",
-      "requestShape": {
-        "wrapper": "permission_group"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_team_permission_group",
-      "method": "patch",
-      "path": "/team/permission_groups/{id}",
-      "tag": "team",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateTeamPermissionGroupRequest",
-      "requestShape": {
-        "wrapper": "permission_group"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
       "id": "list_tire_storage_slots",
       "method": "get",
       "path": "/tire_storage_slots",
@@ -3780,6 +3732,54 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "list_permission_groups",
+      "method": "get",
+      "path": "/users/permission_groups",
+      "tag": "users",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_permission_group",
+      "method": "post",
+      "path": "/users/permission_groups",
+      "tag": "users",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreatePermissionGroupRequest",
+      "requestShape": {
+        "wrapper": "permission_group"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_permission_group",
+      "method": "patch",
+      "path": "/users/permission_groups/{id}",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdatePermissionGroupRequest",
+      "requestShape": {
+        "wrapper": "permission_group"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "delete_user",

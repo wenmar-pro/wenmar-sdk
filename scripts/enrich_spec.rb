@@ -108,7 +108,14 @@ module EnrichSpec
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/refresh_price"     => "refresh_work_order_service_line_item_price",
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull"         => "undo_pull_work_order_service_line_item",
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return"       => "undo_return_work_order_service_line_item",
-    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status" => "update_work_order_service_line_item_part_status"
+    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status" => "update_work_order_service_line_item_part_status",
+    # Permission groups (retired /team namespace, 2026-09-01): the auto-derived
+    # id would be list_users_permission_groups; pin the semantic names.
+    "get /users/permission_groups"              => "list_permission_groups",
+    "post /users/permission_groups"             => "create_permission_group",
+    "get /users/permission_groups/{id}"         => "show_permission_group",
+    "patch /users/permission_groups/{id}"       => "update_permission_group",
+    "delete /users/permission_groups/{id}"       => "delete_permission_group"
   }.freeze
 
   def self.call(input)

@@ -14028,330 +14028,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/team/permission_groups":
-    get:
-      summary: index
-      tags:
-      - team
-      responses:
-        '200':
-          description: GET /team/permission_groups -> 200
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    description:
-                      nullable: true
-                      type: string
-                    role:
-                      nullable: true
-                      type: string
-                    can_perform_work:
-                      type: boolean
-                    can_dispatch_work:
-                      type: boolean
-                    can_message_customers:
-                      type: boolean
-                    can_manage_technicians:
-                      type: boolean
-                    can_override_inspections:
-                      type: boolean
-                    can_perform_inspections:
-                      type: boolean
-                    can_view_all_active_work_orders:
-                      type: boolean
-                    can_close_reopen_work_orders:
-                      type: boolean
-                    can_hard_delete_work_orders:
-                      type: boolean
-                    can_edit_permissions:
-                      type: boolean
-                    can_view_job_board:
-                      type: boolean
-                    can_view_metrics:
-                      type: boolean
-                    can_view_activity_feed:
-                      type: boolean
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    url:
-                      type: string
-                    app_url:
-                      type: string
-                  required:
-                  - id
-                  - name
-                  - description
-                  - role
-                  - can_perform_work
-                  - can_dispatch_work
-                  - can_message_customers
-                  - can_manage_technicians
-                  - can_override_inspections
-                  - can_perform_inspections
-                  - can_view_all_active_work_orders
-                  - can_close_reopen_work_orders
-                  - can_hard_delete_work_orders
-                  - can_edit_permissions
-                  - can_view_job_board
-                  - can_view_metrics
-                  - can_view_activity_feed
-                  - created_at
-                  - updated_at
-                  - url
-                  - app_url
-          headers:
-            Link:
-              schema:
-                type: string
-              description: RFC 5988 pagination links
-            X-Total-Count:
-              schema:
-                type: integer
-              description: Total matching records
-            X-Per-Page:
-              schema:
-                type: integer
-              description: Records per page
-        '403':
-          description: GET /team/permission_groups -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all team permission groups, paginated via the Link header.
-      operationId: list_team_permission_groups
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/team/permission_groups.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-    post:
-      summary: create
-      tags:
-      - team
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateTeamPermissionGroupRequest"
-      responses:
-        '201':
-          description: POST /team/permission_groups -> 201
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  description:
-                    nullable: true
-                    type: string
-                  role:
-                    nullable: true
-                    type: string
-                  can_perform_work:
-                    type: boolean
-                  can_dispatch_work:
-                    type: boolean
-                  can_message_customers:
-                    type: boolean
-                  can_manage_technicians:
-                    type: boolean
-                  can_override_inspections:
-                    type: boolean
-                  can_perform_inspections:
-                    type: boolean
-                  can_view_all_active_work_orders:
-                    type: boolean
-                  can_close_reopen_work_orders:
-                    type: boolean
-                  can_hard_delete_work_orders:
-                    type: boolean
-                  can_edit_permissions:
-                    type: boolean
-                  can_view_job_board:
-                    type: boolean
-                  can_view_metrics:
-                    type: boolean
-                  can_view_activity_feed:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - description
-                - role
-                - can_perform_work
-                - can_dispatch_work
-                - can_message_customers
-                - can_manage_technicians
-                - can_override_inspections
-                - can_perform_inspections
-                - can_view_all_active_work_orders
-                - can_close_reopen_work_orders
-                - can_hard_delete_work_orders
-                - can_edit_permissions
-                - can_view_job_board
-                - can_view_metrics
-                - can_view_activity_feed
-                - created_at
-                - updated_at
-                - url
-                - app_url
-      description: Create a team permission group.
-      operationId: create_team_permission_group
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/team/permission_groups.json
-      x-wenmar-request-schema: CreateTeamPermissionGroupRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/team/permission_groups/{id}":
-    patch:
-      summary: update
-      tags:
-      - team
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateTeamPermissionGroupRequest"
-      responses:
-        '200':
-          description: PATCH /team/permission_groups/{id} -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  description:
-                    nullable: true
-                    type: string
-                  role:
-                    nullable: true
-                    type: string
-                  can_perform_work:
-                    type: boolean
-                  can_dispatch_work:
-                    type: boolean
-                  can_message_customers:
-                    type: boolean
-                  can_manage_technicians:
-                    type: boolean
-                  can_override_inspections:
-                    type: boolean
-                  can_perform_inspections:
-                    type: boolean
-                  can_view_all_active_work_orders:
-                    type: boolean
-                  can_close_reopen_work_orders:
-                    type: boolean
-                  can_hard_delete_work_orders:
-                    type: boolean
-                  can_edit_permissions:
-                    type: boolean
-                  can_view_job_board:
-                    type: boolean
-                  can_view_metrics:
-                    type: boolean
-                  can_view_activity_feed:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - description
-                - role
-                - can_perform_work
-                - can_dispatch_work
-                - can_message_customers
-                - can_manage_technicians
-                - can_override_inspections
-                - can_perform_inspections
-                - can_view_all_active_work_orders
-                - can_close_reopen_work_orders
-                - can_hard_delete_work_orders
-                - can_edit_permissions
-                - can_view_job_board
-                - can_view_metrics
-                - can_view_activity_feed
-                - created_at
-                - updated_at
-                - url
-                - app_url
-      description: Update a team permission group by ID.
-      operationId: update_team_permission_group
-      x-curl-example: |-
-        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/team/permission_groups/<id>.json
-      x-wenmar-request-schema: UpdateTeamPermissionGroupRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/tire_storage_slots":
     get:
       summary: index
@@ -15813,6 +15489,330 @@ paths:
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/users.json
       x-wenmar-request-schema: CreateUserRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/users/permission_groups":
+    get:
+      summary: index
+      tags:
+      - users
+      responses:
+        '200':
+          description: GET /users/permission_groups -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                      type: string
+                    role:
+                      nullable: true
+                      type: string
+                    can_perform_work:
+                      type: boolean
+                    can_dispatch_work:
+                      type: boolean
+                    can_message_customers:
+                      type: boolean
+                    can_manage_technicians:
+                      type: boolean
+                    can_override_inspections:
+                      type: boolean
+                    can_perform_inspections:
+                      type: boolean
+                    can_view_all_active_work_orders:
+                      type: boolean
+                    can_close_reopen_work_orders:
+                      type: boolean
+                    can_hard_delete_work_orders:
+                      type: boolean
+                    can_edit_permissions:
+                      type: boolean
+                    can_view_job_board:
+                      type: boolean
+                    can_view_metrics:
+                      type: boolean
+                    can_view_activity_feed:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - role
+                  - can_perform_work
+                  - can_dispatch_work
+                  - can_message_customers
+                  - can_manage_technicians
+                  - can_override_inspections
+                  - can_perform_inspections
+                  - can_view_all_active_work_orders
+                  - can_close_reopen_work_orders
+                  - can_hard_delete_work_orders
+                  - can_edit_permissions
+                  - can_view_job_board
+                  - can_view_metrics
+                  - can_view_activity_feed
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '403':
+          description: GET /users/permission_groups -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all permission groups, paginated via the Link header.
+      operationId: list_permission_groups
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/users/permission_groups.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePermissionGroupRequest"
+      responses:
+        '201':
+          description: POST /users/permission_groups -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  role:
+                    nullable: true
+                    type: string
+                  can_perform_work:
+                    type: boolean
+                  can_dispatch_work:
+                    type: boolean
+                  can_message_customers:
+                    type: boolean
+                  can_manage_technicians:
+                    type: boolean
+                  can_override_inspections:
+                    type: boolean
+                  can_perform_inspections:
+                    type: boolean
+                  can_view_all_active_work_orders:
+                    type: boolean
+                  can_close_reopen_work_orders:
+                    type: boolean
+                  can_hard_delete_work_orders:
+                    type: boolean
+                  can_edit_permissions:
+                    type: boolean
+                  can_view_job_board:
+                    type: boolean
+                  can_view_metrics:
+                    type: boolean
+                  can_view_activity_feed:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - role
+                - can_perform_work
+                - can_dispatch_work
+                - can_message_customers
+                - can_manage_technicians
+                - can_override_inspections
+                - can_perform_inspections
+                - can_view_all_active_work_orders
+                - can_close_reopen_work_orders
+                - can_hard_delete_work_orders
+                - can_edit_permissions
+                - can_view_job_board
+                - can_view_metrics
+                - can_view_activity_feed
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Create a permission group.
+      operationId: create_permission_group
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/users/permission_groups.json
+      x-wenmar-request-schema: CreatePermissionGroupRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/users/permission_groups/{id}":
+    patch:
+      summary: update
+      tags:
+      - users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdatePermissionGroupRequest"
+      responses:
+        '200':
+          description: PATCH /users/permission_groups/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  role:
+                    nullable: true
+                    type: string
+                  can_perform_work:
+                    type: boolean
+                  can_dispatch_work:
+                    type: boolean
+                  can_message_customers:
+                    type: boolean
+                  can_manage_technicians:
+                    type: boolean
+                  can_override_inspections:
+                    type: boolean
+                  can_perform_inspections:
+                    type: boolean
+                  can_view_all_active_work_orders:
+                    type: boolean
+                  can_close_reopen_work_orders:
+                    type: boolean
+                  can_hard_delete_work_orders:
+                    type: boolean
+                  can_edit_permissions:
+                    type: boolean
+                  can_view_job_board:
+                    type: boolean
+                  can_view_metrics:
+                    type: boolean
+                  can_view_activity_feed:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - role
+                - can_perform_work
+                - can_dispatch_work
+                - can_message_customers
+                - can_manage_technicians
+                - can_override_inspections
+                - can_perform_inspections
+                - can_view_all_active_work_orders
+                - can_close_reopen_work_orders
+                - can_hard_delete_work_orders
+                - can_edit_permissions
+                - can_view_job_board
+                - can_view_metrics
+                - can_view_activity_feed
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Update a permission group by ID.
+      operationId: update_permission_group
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/users/permission_groups/<id>.json
+      x-wenmar-request-schema: UpdatePermissionGroupRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -27376,33 +27376,6 @@ components:
           - name
       required:
       - sublet_package
-    CreateTeamPermissionGroupRequest:
-      type: object
-      properties:
-        permission_group:
-          type: object
-          properties:
-            name:
-              type: string
-            can_perform_work:
-              type: boolean
-          required:
-          - name
-          - can_perform_work
-      required:
-      - permission_group
-    UpdateTeamPermissionGroupRequest:
-      type: object
-      properties:
-        permission_group:
-          type: object
-          properties:
-            name:
-              type: string
-          required:
-          - name
-      required:
-      - permission_group
     CreateTireStorageSlotRequest:
       type: object
       properties:
@@ -27495,6 +27468,33 @@ components:
           - can_perform_work
       required:
       - user
+    CreatePermissionGroupRequest:
+      type: object
+      properties:
+        permission_group:
+          type: object
+          properties:
+            name:
+              type: string
+            can_perform_work:
+              type: boolean
+          required:
+          - name
+          - can_perform_work
+      required:
+      - permission_group
+    UpdatePermissionGroupRequest:
+      type: object
+      properties:
+        permission_group:
+          type: object
+          properties:
+            name:
+              type: string
+          required:
+          - name
+      required:
+      - permission_group
     UpdateUserRequest:
       type: object
       properties:

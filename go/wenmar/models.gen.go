@@ -217,9 +217,6 @@ type (
 	DeleteSubletPackageResponse = gen.DeleteSubletPackageResponse
 	UpdateSubletPackageResponse = gen.UpdateSubletPackageResponse
 	UpdateSubletPackagesDeactivateResponse = gen.UpdateSubletPackagesDeactivateResponse
-	ListTeamPermissionGroupsResponse = gen.ListTeamPermissionGroupsResponse
-	CreateTeamPermissionGroupResponse = gen.CreateTeamPermissionGroupResponse
-	UpdateTeamPermissionGroupResponse = gen.UpdateTeamPermissionGroupResponse
 	ListTireStorageSlotsResponse = gen.ListTireStorageSlotsResponse
 	CreateTireStorageSlotResponse = gen.CreateTireStorageSlotResponse
 	ShowTireStorageSlotResponse = gen.ShowTireStorageSlotResponse
@@ -231,6 +228,9 @@ type (
 	UpdateTireResponse = gen.UpdateTireResponse
 	ListUsersResponse = gen.ListUsersResponse
 	CreateUserResponse = gen.CreateUserResponse
+	ListPermissionGroupsResponse = gen.ListPermissionGroupsResponse
+	CreatePermissionGroupResponse = gen.CreatePermissionGroupResponse
+	UpdatePermissionGroupResponse = gen.UpdatePermissionGroupResponse
 	DeleteUserResponse = gen.DeleteUserResponse
 	ShowUserResponse = gen.ShowUserResponse
 	UpdateUserResponse = gen.UpdateUserResponse
@@ -414,13 +414,13 @@ type (
 	UpdateSubStatuseRequest = gen.UpdateSubStatuseRequest
 	CreateSubletPackageRequest = gen.CreateSubletPackageRequest
 	UpdateSubletPackageRequest = gen.UpdateSubletPackageRequest
-	CreateTeamPermissionGroupRequest = gen.CreateTeamPermissionGroupRequest
-	UpdateTeamPermissionGroupRequest = gen.UpdateTeamPermissionGroupRequest
 	CreateTireStorageSlotRequest = gen.CreateTireStorageSlotRequest
 	CreateTireStorageSlotsCheckOutRequest = gen.CreateTireStorageSlotsCheckOutRequest
 	CreateTireRequest = gen.CreateTireRequest
 	UpdateTireRequest = gen.UpdateTireRequest
 	CreateUserRequest = gen.CreateUserRequest
+	CreatePermissionGroupRequest = gen.CreatePermissionGroupRequest
+	UpdatePermissionGroupRequest = gen.UpdatePermissionGroupRequest
 	UpdateUserRequest = gen.UpdateUserRequest
 	CreateUsersDisableRequest = gen.CreateUsersDisableRequest
 	CreateUsersEnableRequest = gen.CreateUsersEnableRequest

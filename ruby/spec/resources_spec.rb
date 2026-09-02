@@ -12,7 +12,7 @@ module Wenmar
         list_customers_work_orders delete_customer show_customer update_customer merge_customer
         show_location list_service_categories create_service_category seed_defaults_service_categories
         delete_service_category update_service_category
-        list_tags update_tags show_statement list_team_members list_team_permission_groups list_vehicle_tags
+        list_tags update_tags show_statement list_users list_permission_groups list_vehicle_tags
         create_vehicle_tag delete_vehicle_tag update_vehicle_tag
         list_vehicles create_vehicle check_vehicle_duplicate lookup_vehicle prefill_vehicle decode_vin
         delete_vehicle show_vehicle update_vehicle merge_vehicle transfer_vehicle

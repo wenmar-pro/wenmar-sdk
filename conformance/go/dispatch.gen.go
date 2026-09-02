@@ -1611,30 +1611,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_team_permission_groups": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListTeamPermissionGroups(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_team_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTeamPermissionGroup(ctx, buildWrapper[wenmar.CreateTeamPermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_team_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateTeamPermissionGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTeamPermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_tire_storage_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListTireStorageSlots(ctx)
 	if err != nil {
@@ -1717,6 +1693,30 @@ var dispatch = map[string]operationFunc{
 
 "create_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateUser(ctx, buildWrapper[wenmar.CreateUserRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_permission_groups": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListPermissionGroups(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePermissionGroup(ctx, buildWrapper[wenmar.CreatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePermissionGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2840,9 +2840,6 @@ var allOperations = []string{
 	"delete_sublet_package",
 	"update_sublet_package",
 	"update_sublet_packages_deactivate",
-	"list_team_permission_groups",
-	"create_team_permission_group",
-	"update_team_permission_group",
 	"list_tire_storage_slots",
 	"create_tire_storage_slot",
 	"show_tire_storage_slot",
@@ -2854,6 +2851,9 @@ var allOperations = []string{
 	"update_tire",
 	"list_users",
 	"create_user",
+	"list_permission_groups",
+	"create_permission_group",
+	"update_permission_group",
 	"delete_user",
 	"show_user",
 	"update_user",

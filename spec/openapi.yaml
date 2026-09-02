@@ -16758,325 +16758,6 @@ paths:
                 - error
       description: PATCH /sublet_packages/{id}/deactivate
       operationId: PATCH_sublet_packages_id_deactivate
-  "/team/permission_groups":
-    get:
-      summary: index
-      tags:
-      - Shop::Team::PermissionGroup
-      responses:
-        '200':
-          description: GET /team/permission_groups -> 200
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    description:
-                      nullable: true
-                      type: string
-                    role:
-                      nullable: true
-                      type: string
-                    can_perform_work:
-                      type: boolean
-                    can_dispatch_work:
-                      type: boolean
-                    can_message_customers:
-                      type: boolean
-                    can_manage_technicians:
-                      type: boolean
-                    can_override_inspections:
-                      type: boolean
-                    can_perform_inspections:
-                      type: boolean
-                    can_view_all_active_work_orders:
-                      type: boolean
-                    can_close_reopen_work_orders:
-                      type: boolean
-                    can_hard_delete_work_orders:
-                      type: boolean
-                    can_edit_permissions:
-                      type: boolean
-                    can_view_job_board:
-                      type: boolean
-                    can_view_metrics:
-                      type: boolean
-                    can_view_activity_feed:
-                      type: boolean
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    url:
-                      type: string
-                    app_url:
-                      type: string
-                  required:
-                  - id
-                  - name
-                  - description
-                  - role
-                  - can_perform_work
-                  - can_dispatch_work
-                  - can_message_customers
-                  - can_manage_technicians
-                  - can_override_inspections
-                  - can_perform_inspections
-                  - can_view_all_active_work_orders
-                  - can_close_reopen_work_orders
-                  - can_hard_delete_work_orders
-                  - can_edit_permissions
-                  - can_view_job_board
-                  - can_view_metrics
-                  - can_view_activity_feed
-                  - created_at
-                  - updated_at
-                  - url
-                  - app_url
-          headers:
-            Link:
-              schema:
-                type: string
-              description: RFC 5988 pagination links
-            X-Total-Count:
-              schema:
-                type: integer
-              description: Total matching records
-            X-Per-Page:
-              schema:
-                type: integer
-              description: Records per page
-        '403':
-          description: GET /team/permission_groups -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /team/permission_groups
-      operationId: GET_team_permission_groups
-    post:
-      summary: create
-      tags:
-      - Shop::Team::PermissionGroup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                permission_group:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    can_perform_work:
-                      type: boolean
-                  required:
-                  - name
-                  - can_perform_work
-              required:
-              - permission_group
-      responses:
-        '201':
-          description: POST /team/permission_groups -> 201
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  description:
-                    nullable: true
-                    type: string
-                  role:
-                    nullable: true
-                    type: string
-                  can_perform_work:
-                    type: boolean
-                  can_dispatch_work:
-                    type: boolean
-                  can_message_customers:
-                    type: boolean
-                  can_manage_technicians:
-                    type: boolean
-                  can_override_inspections:
-                    type: boolean
-                  can_perform_inspections:
-                    type: boolean
-                  can_view_all_active_work_orders:
-                    type: boolean
-                  can_close_reopen_work_orders:
-                    type: boolean
-                  can_hard_delete_work_orders:
-                    type: boolean
-                  can_edit_permissions:
-                    type: boolean
-                  can_view_job_board:
-                    type: boolean
-                  can_view_metrics:
-                    type: boolean
-                  can_view_activity_feed:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - description
-                - role
-                - can_perform_work
-                - can_dispatch_work
-                - can_message_customers
-                - can_manage_technicians
-                - can_override_inspections
-                - can_perform_inspections
-                - can_view_all_active_work_orders
-                - can_close_reopen_work_orders
-                - can_hard_delete_work_orders
-                - can_edit_permissions
-                - can_view_job_board
-                - can_view_metrics
-                - can_view_activity_feed
-                - created_at
-                - updated_at
-                - url
-                - app_url
-      description: POST /team/permission_groups
-      operationId: POST_team_permission_groups
-  "/team/permission_groups/{id}":
-    patch:
-      summary: update
-      tags:
-      - Shop::Team::PermissionGroup
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                permission_group:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                  required:
-                  - name
-              required:
-              - permission_group
-      responses:
-        '200':
-          description: PATCH /team/permission_groups/{id} -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  description:
-                    nullable: true
-                    type: string
-                  role:
-                    nullable: true
-                    type: string
-                  can_perform_work:
-                    type: boolean
-                  can_dispatch_work:
-                    type: boolean
-                  can_message_customers:
-                    type: boolean
-                  can_manage_technicians:
-                    type: boolean
-                  can_override_inspections:
-                    type: boolean
-                  can_perform_inspections:
-                    type: boolean
-                  can_view_all_active_work_orders:
-                    type: boolean
-                  can_close_reopen_work_orders:
-                    type: boolean
-                  can_hard_delete_work_orders:
-                    type: boolean
-                  can_edit_permissions:
-                    type: boolean
-                  can_view_job_board:
-                    type: boolean
-                  can_view_metrics:
-                    type: boolean
-                  can_view_activity_feed:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - description
-                - role
-                - can_perform_work
-                - can_dispatch_work
-                - can_message_customers
-                - can_manage_technicians
-                - can_override_inspections
-                - can_perform_inspections
-                - can_view_all_active_work_orders
-                - can_close_reopen_work_orders
-                - can_hard_delete_work_orders
-                - can_edit_permissions
-                - can_view_job_board
-                - can_view_metrics
-                - can_view_activity_feed
-                - created_at
-                - updated_at
-                - url
-                - app_url
-      description: PATCH /team/permission_groups/{id}
-      operationId: PATCH_team_permission_groups_id_
   "/tire_storage_slots":
     get:
       summary: index
@@ -18524,6 +18205,325 @@ paths:
                 - capabilities
       description: POST /users
       operationId: POST_users
+  "/users/permission_groups":
+    get:
+      summary: index
+      tags:
+      - Shop::Users::PermissionGroup
+      responses:
+        '200':
+          description: GET /users/permission_groups -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      nullable: true
+                      type: string
+                    role:
+                      nullable: true
+                      type: string
+                    can_perform_work:
+                      type: boolean
+                    can_dispatch_work:
+                      type: boolean
+                    can_message_customers:
+                      type: boolean
+                    can_manage_technicians:
+                      type: boolean
+                    can_override_inspections:
+                      type: boolean
+                    can_perform_inspections:
+                      type: boolean
+                    can_view_all_active_work_orders:
+                      type: boolean
+                    can_close_reopen_work_orders:
+                      type: boolean
+                    can_hard_delete_work_orders:
+                      type: boolean
+                    can_edit_permissions:
+                      type: boolean
+                    can_view_job_board:
+                      type: boolean
+                    can_view_metrics:
+                      type: boolean
+                    can_view_activity_feed:
+                      type: boolean
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - role
+                  - can_perform_work
+                  - can_dispatch_work
+                  - can_message_customers
+                  - can_manage_technicians
+                  - can_override_inspections
+                  - can_perform_inspections
+                  - can_view_all_active_work_orders
+                  - can_close_reopen_work_orders
+                  - can_hard_delete_work_orders
+                  - can_edit_permissions
+                  - can_view_job_board
+                  - can_view_metrics
+                  - can_view_activity_feed
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '403':
+          description: GET /users/permission_groups -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /users/permission_groups
+      operationId: GET_users_permission_groups
+    post:
+      summary: create
+      tags:
+      - Shop::Users::PermissionGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permission_group:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    can_perform_work:
+                      type: boolean
+                  required:
+                  - name
+                  - can_perform_work
+              required:
+              - permission_group
+      responses:
+        '201':
+          description: POST /users/permission_groups -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  role:
+                    nullable: true
+                    type: string
+                  can_perform_work:
+                    type: boolean
+                  can_dispatch_work:
+                    type: boolean
+                  can_message_customers:
+                    type: boolean
+                  can_manage_technicians:
+                    type: boolean
+                  can_override_inspections:
+                    type: boolean
+                  can_perform_inspections:
+                    type: boolean
+                  can_view_all_active_work_orders:
+                    type: boolean
+                  can_close_reopen_work_orders:
+                    type: boolean
+                  can_hard_delete_work_orders:
+                    type: boolean
+                  can_edit_permissions:
+                    type: boolean
+                  can_view_job_board:
+                    type: boolean
+                  can_view_metrics:
+                    type: boolean
+                  can_view_activity_feed:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - role
+                - can_perform_work
+                - can_dispatch_work
+                - can_message_customers
+                - can_manage_technicians
+                - can_override_inspections
+                - can_perform_inspections
+                - can_view_all_active_work_orders
+                - can_close_reopen_work_orders
+                - can_hard_delete_work_orders
+                - can_edit_permissions
+                - can_view_job_board
+                - can_view_metrics
+                - can_view_activity_feed
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: POST /users/permission_groups
+      operationId: POST_users_permission_groups
+  "/users/permission_groups/{id}":
+    patch:
+      summary: update
+      tags:
+      - Shop::Users::PermissionGroup
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permission_group:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - permission_group
+      responses:
+        '200':
+          description: PATCH /users/permission_groups/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  role:
+                    nullable: true
+                    type: string
+                  can_perform_work:
+                    type: boolean
+                  can_dispatch_work:
+                    type: boolean
+                  can_message_customers:
+                    type: boolean
+                  can_manage_technicians:
+                    type: boolean
+                  can_override_inspections:
+                    type: boolean
+                  can_perform_inspections:
+                    type: boolean
+                  can_view_all_active_work_orders:
+                    type: boolean
+                  can_close_reopen_work_orders:
+                    type: boolean
+                  can_hard_delete_work_orders:
+                    type: boolean
+                  can_edit_permissions:
+                    type: boolean
+                  can_view_job_board:
+                    type: boolean
+                  can_view_metrics:
+                    type: boolean
+                  can_view_activity_feed:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - role
+                - can_perform_work
+                - can_dispatch_work
+                - can_message_customers
+                - can_manage_technicians
+                - can_override_inspections
+                - can_perform_inspections
+                - can_view_all_active_work_orders
+                - can_close_reopen_work_orders
+                - can_hard_delete_work_orders
+                - can_edit_permissions
+                - can_view_job_board
+                - can_view_metrics
+                - can_view_activity_feed
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: PATCH /users/permission_groups/{id}
+      operationId: PATCH_users_permission_groups_id_
   "/users/{id}":
     delete:
       summary: destroy

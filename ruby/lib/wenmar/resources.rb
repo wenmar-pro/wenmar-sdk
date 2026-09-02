@@ -1034,25 +1034,6 @@ end
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
 end
-# Lists list_team_permission_groups resources (paginated).
-# @return [Wenmar::Paginator]
-def list_team_permission_groups()
-  get("/team/permission_groups")
-end
-
-# Fetches all team_permission_groups, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_team_permission_groups()
-  paginator_to_a(list_team_permission_groups(), 1000)
-end
-# Runs create_team_permission_group (POST /team/permission_groups).
-def create_team_permission_group(permission_group:)
-  post("/team/permission_groups", { permission_group: permission_group })
-end
-# Runs update_team_permission_group (PATCH /team/permission_groups/{id}).
-def update_team_permission_group(id, permission_group:)
-  patch("/team/permission_groups/#{id}", { permission_group: permission_group })
-end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
 def list_tire_storage_slots()
@@ -1118,6 +1099,25 @@ end
 # Runs create_user (POST /users).
 def create_user(user:)
   post("/users", { user: user })
+end
+# Lists list_permission_groups resources (paginated).
+# @return [Wenmar::Paginator]
+def list_permission_groups()
+  get("/users/permission_groups")
+end
+
+# Fetches all permission_groups, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_permission_groups()
+  paginator_to_a(list_permission_groups(), 1000)
+end
+# Runs create_permission_group (POST /users/permission_groups).
+def create_permission_group(permission_group:)
+  post("/users/permission_groups", { permission_group: permission_group })
+end
+# Runs update_permission_group (PATCH /users/permission_groups/{id}).
+def update_permission_group(id, permission_group:)
+  patch("/users/permission_groups/#{id}", { permission_group: permission_group })
 end
 # Deletes delete_user.
 def delete_user(id)

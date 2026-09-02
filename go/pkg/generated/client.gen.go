@@ -250,6 +250,14 @@ type CreatePartsMatriceRequest struct {
 	} `json:"parts_matrix"`
 }
 
+// CreatePermissionGroupRequest defines model for CreatePermissionGroupRequest.
+type CreatePermissionGroupRequest struct {
+	PermissionGroup struct {
+		CanPerformWork bool   `json:"can_perform_work"`
+		Name           string `json:"name"`
+	} `json:"permission_group"`
+}
+
 // CreateRecentSearcheRequest defines model for CreateRecentSearcheRequest.
 type CreateRecentSearcheRequest struct {
 	RecentSearch struct {
@@ -308,14 +316,6 @@ type CreateSubletPackageRequest struct {
 		Description string `json:"description"`
 		Name        string `json:"name"`
 	} `json:"sublet_package"`
-}
-
-// CreateTeamPermissionGroupRequest defines model for CreateTeamPermissionGroupRequest.
-type CreateTeamPermissionGroupRequest struct {
-	PermissionGroup struct {
-		CanPerformWork bool   `json:"can_perform_work"`
-		Name           string `json:"name"`
-	} `json:"permission_group"`
 }
 
 // CreateTireRequest defines model for CreateTireRequest.
@@ -1020,6 +1020,13 @@ type UpdatePartsMatriceRequest struct {
 	} `json:"parts_matrix"`
 }
 
+// UpdatePermissionGroupRequest defines model for UpdatePermissionGroupRequest.
+type UpdatePermissionGroupRequest struct {
+	PermissionGroup struct {
+		Name string `json:"name"`
+	} `json:"permission_group"`
+}
+
 // UpdateServiceCategoryRequest defines model for UpdateServiceCategoryRequest.
 type UpdateServiceCategoryRequest struct {
 	ServiceCategory struct {
@@ -1075,13 +1082,6 @@ type UpdateTagsRequest struct {
 		UnderscoreDestroy string `json:"_destroy"`
 		Id                int    `json:"id"`
 	} `json:"vehicle_tags,omitempty"`
-}
-
-// UpdateTeamPermissionGroupRequest defines model for UpdateTeamPermissionGroupRequest.
-type UpdateTeamPermissionGroupRequest struct {
-	PermissionGroup struct {
-		Name string `json:"name"`
-	} `json:"permission_group"`
 }
 
 // UpdateTireRequest defines model for UpdateTireRequest.
@@ -1807,12 +1807,6 @@ type CreateSubletPackageJSONRequestBody = CreateSubletPackageRequest
 // UpdateSubletPackageJSONRequestBody defines body for UpdateSubletPackage for application/json ContentType.
 type UpdateSubletPackageJSONRequestBody = UpdateSubletPackageRequest
 
-// CreateTeamPermissionGroupJSONRequestBody defines body for CreateTeamPermissionGroup for application/json ContentType.
-type CreateTeamPermissionGroupJSONRequestBody = CreateTeamPermissionGroupRequest
-
-// UpdateTeamPermissionGroupJSONRequestBody defines body for UpdateTeamPermissionGroup for application/json ContentType.
-type UpdateTeamPermissionGroupJSONRequestBody = UpdateTeamPermissionGroupRequest
-
 // CreateTireStorageSlotJSONRequestBody defines body for CreateTireStorageSlot for application/json ContentType.
 type CreateTireStorageSlotJSONRequestBody = CreateTireStorageSlotRequest
 
@@ -1827,6 +1821,12 @@ type UpdateTireJSONRequestBody = UpdateTireRequest
 
 // CreateUserJSONRequestBody defines body for CreateUser for application/json ContentType.
 type CreateUserJSONRequestBody = CreateUserRequest
+
+// CreatePermissionGroupJSONRequestBody defines body for CreatePermissionGroup for application/json ContentType.
+type CreatePermissionGroupJSONRequestBody = CreatePermissionGroupRequest
+
+// UpdatePermissionGroupJSONRequestBody defines body for UpdatePermissionGroup for application/json ContentType.
+type UpdatePermissionGroupJSONRequestBody = UpdatePermissionGroupRequest
 
 // UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
 type UpdateUserJSONRequestBody = UpdateUserRequest
@@ -4241,49 +4241,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListTeamPermissionGroups index
-	//
-	// List all team permission groups, paginated via the Link header.
-	//
-	// Corresponds with GET /team/permission_groups (the `ListTeamPermissionGroups` operationId).
-	ListTeamPermissionGroups(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateTeamPermissionGroupWithBody create
-	//
-	// Create a team permission group.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-	CreateTeamPermissionGroupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateTeamPermissionGroup create
-	//
-	// Create a team permission group.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-	CreateTeamPermissionGroup(ctx context.Context, body CreateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateTeamPermissionGroupWithBody update
-	//
-	// Update a team permission group by ID.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-	UpdateTeamPermissionGroupWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateTeamPermissionGroup update
-	//
-	// Update a team permission group by ID.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-	UpdateTeamPermissionGroup(ctx context.Context, id int, body UpdateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListTireStorageSlots index
 	//
 	// List all tire storage slots, paginated via the Link header.
@@ -4415,6 +4372,49 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /users (the `CreateUser` operationId).
 	CreateUser(ctx context.Context, body CreateUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListPermissionGroups index
+	//
+	// List all permission groups, paginated via the Link header.
+	//
+	// Corresponds with GET /users/permission_groups (the `ListPermissionGroups` operationId).
+	ListPermissionGroups(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePermissionGroupWithBody create
+	//
+	// Create a permission group.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+	CreatePermissionGroupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePermissionGroup create
+	//
+	// Create a permission group.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+	CreatePermissionGroup(ctx context.Context, body CreatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdatePermissionGroupWithBody update
+	//
+	// Update a permission group by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+	UpdatePermissionGroupWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdatePermissionGroup update
+	//
+	// Update a permission group by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+	UpdatePermissionGroup(ctx context.Context, id int, body UpdatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteUser destroy
 	//
@@ -10668,99 +10668,6 @@ func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int, req
 	return c.Client.Do(req)
 }
 
-// ListTeamPermissionGroups index
-//
-// List all team permission groups, paginated via the Link header.
-//
-// Corresponds with GET /team/permission_groups (the `ListTeamPermissionGroups` operationId).
-func (c *Client) ListTeamPermissionGroups(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListTeamPermissionGroupsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateTeamPermissionGroupWithBody create
-//
-// Create a team permission group.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-func (c *Client) CreateTeamPermissionGroupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateTeamPermissionGroupRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateTeamPermissionGroup create
-//
-// Create a team permission group.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-func (c *Client) CreateTeamPermissionGroup(ctx context.Context, body CreateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateTeamPermissionGroupRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateTeamPermissionGroupWithBody update
-//
-// Update a team permission group by ID.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-func (c *Client) UpdateTeamPermissionGroupWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateTeamPermissionGroupRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateTeamPermissionGroup update
-//
-// Update a team permission group by ID.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-func (c *Client) UpdateTeamPermissionGroup(ctx context.Context, id int, body UpdateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateTeamPermissionGroupRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // ListTireStorageSlots index
 //
 // List all tire storage slots, paginated via the Link header.
@@ -11043,6 +10950,99 @@ func (c *Client) CreateUserWithBody(ctx context.Context, contentType string, bod
 // Corresponds with POST /users (the `CreateUser` operationId).
 func (c *Client) CreateUser(ctx context.Context, body CreateUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateUserRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListPermissionGroups index
+//
+// List all permission groups, paginated via the Link header.
+//
+// Corresponds with GET /users/permission_groups (the `ListPermissionGroups` operationId).
+func (c *Client) ListPermissionGroups(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListPermissionGroupsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreatePermissionGroupWithBody create
+//
+// Create a permission group.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+func (c *Client) CreatePermissionGroupWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePermissionGroupRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreatePermissionGroup create
+//
+// Create a permission group.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+func (c *Client) CreatePermissionGroup(ctx context.Context, body CreatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePermissionGroupRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdatePermissionGroupWithBody update
+//
+// Update a permission group by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+func (c *Client) UpdatePermissionGroupWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdatePermissionGroupRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdatePermissionGroup update
+//
+// Update a permission group by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+func (c *Client) UpdatePermissionGroup(ctx context.Context, id int, body UpdatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdatePermissionGroupRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -21829,120 +21829,6 @@ func NewUpdateSubletPackagesDeactivateRequest(server string, id int) (*http.Requ
 	return req, nil
 }
 
-// NewListTeamPermissionGroupsRequest constructs an http.Request for the ListTeamPermissionGroups method
-func NewListTeamPermissionGroupsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/team/permission_groups")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateTeamPermissionGroupRequest calls the generic CreateTeamPermissionGroup builder with application/json body
-func NewCreateTeamPermissionGroupRequest(server string, body CreateTeamPermissionGroupJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateTeamPermissionGroupRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateTeamPermissionGroupRequestWithBody constructs an http.Request for the CreateTeamPermissionGroup method, with any body, and a specified content type
-func NewCreateTeamPermissionGroupRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/team/permission_groups")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewUpdateTeamPermissionGroupRequest calls the generic UpdateTeamPermissionGroup builder with application/json body
-func NewUpdateTeamPermissionGroupRequest(server string, id int, body UpdateTeamPermissionGroupJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateTeamPermissionGroupRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewUpdateTeamPermissionGroupRequestWithBody constructs an http.Request for the UpdateTeamPermissionGroup method, with any body, and a specified content type
-func NewUpdateTeamPermissionGroupRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/team/permission_groups/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListTireStorageSlotsRequest constructs an http.Request for the ListTireStorageSlots method
 func NewListTireStorageSlotsRequest(server string) (*http.Request, error) {
 	var err error
@@ -22370,6 +22256,120 @@ func NewCreateUserRequestWithBody(server string, contentType string, body io.Rea
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListPermissionGroupsRequest constructs an http.Request for the ListPermissionGroups method
+func NewListPermissionGroupsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/permission_groups")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreatePermissionGroupRequest calls the generic CreatePermissionGroup builder with application/json body
+func NewCreatePermissionGroupRequest(server string, body CreatePermissionGroupJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreatePermissionGroupRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreatePermissionGroupRequestWithBody constructs an http.Request for the CreatePermissionGroup method, with any body, and a specified content type
+func NewCreatePermissionGroupRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/permission_groups")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdatePermissionGroupRequest calls the generic UpdatePermissionGroup builder with application/json body
+func NewUpdatePermissionGroupRequest(server string, id int, body UpdatePermissionGroupJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdatePermissionGroupRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdatePermissionGroupRequestWithBody constructs an http.Request for the UpdatePermissionGroup method, with any body, and a specified content type
+func NewUpdatePermissionGroupRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/users/permission_groups/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -29701,51 +29701,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateSubletPackagesDeactivateResponse, error)
 
-	// ListTeamPermissionGroupsWithResponse index
-	//
-	// List all team permission groups, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /team/permission_groups (the `ListTeamPermissionGroups` operationId).
-	ListTeamPermissionGroupsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListTeamPermissionGroupsResponse, error)
-
-	// CreateTeamPermissionGroupWithBodyWithResponse create
-	//
-	// Create a team permission group.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-	CreateTeamPermissionGroupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTeamPermissionGroupResponse, error)
-
-	// CreateTeamPermissionGroupWithResponse create
-	//
-	// Create a team permission group.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-	CreateTeamPermissionGroupWithResponse(ctx context.Context, body CreateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTeamPermissionGroupResponse, error)
-
-	// UpdateTeamPermissionGroupWithBodyWithResponse update
-	//
-	// Update a team permission group by ID.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-	UpdateTeamPermissionGroupWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTeamPermissionGroupResponse, error)
-
-	// UpdateTeamPermissionGroupWithResponse update
-	//
-	// Update a team permission group by ID.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-	UpdateTeamPermissionGroupWithResponse(ctx context.Context, id int, body UpdateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTeamPermissionGroupResponse, error)
-
 	// ListTireStorageSlotsWithResponse index
 	//
 	// List all tire storage slots, paginated via the Link header.
@@ -29889,6 +29844,51 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /users (the `CreateUser` operationId).
 	CreateUserWithResponse(ctx context.Context, body CreateUserJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateUserResponse, error)
+
+	// ListPermissionGroupsWithResponse index
+	//
+	// List all permission groups, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /users/permission_groups (the `ListPermissionGroups` operationId).
+	ListPermissionGroupsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListPermissionGroupsResponse, error)
+
+	// CreatePermissionGroupWithBodyWithResponse create
+	//
+	// Create a permission group.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+	CreatePermissionGroupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePermissionGroupResponse, error)
+
+	// CreatePermissionGroupWithResponse create
+	//
+	// Create a permission group.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+	CreatePermissionGroupWithResponse(ctx context.Context, body CreatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePermissionGroupResponse, error)
+
+	// UpdatePermissionGroupWithBodyWithResponse update
+	//
+	// Update a permission group by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+	UpdatePermissionGroupWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePermissionGroupResponse, error)
+
+	// UpdatePermissionGroupWithResponse update
+	//
+	// Update a permission group by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+	UpdatePermissionGroupWithResponse(ctx context.Context, id int, body UpdatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePermissionGroupResponse, error)
 
 	// DeleteUserWithResponse destroy
 	//
@@ -44730,281 +44730,6 @@ func (r UpdateSubletPackagesDeactivateResponse) ContentType() string {
 	return ""
 }
 
-// ListTeamPermissionGroupsResponse200Headers the declared response headers of an HTTP 200 response for ListTeamPermissionGroups
-type ListTeamPermissionGroupsResponse200Headers struct {
-	Link        *string
-	XPerPage    *int
-	XTotalCount *int
-}
-
-type ListTeamPermissionGroupsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]struct {
-		AppUrl                     string  `json:"app_url"`
-		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-		CanDispatchWork            bool    `json:"can_dispatch_work"`
-		CanEditPermissions         bool    `json:"can_edit_permissions"`
-		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-		CanManageTechnicians       bool    `json:"can_manage_technicians"`
-		CanMessageCustomers        bool    `json:"can_message_customers"`
-		CanOverrideInspections     bool    `json:"can_override_inspections"`
-		CanPerformInspections      bool    `json:"can_perform_inspections"`
-		CanPerformWork             bool    `json:"can_perform_work"`
-		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-		CanViewJobBoard            bool    `json:"can_view_job_board"`
-		CanViewMetrics             bool    `json:"can_view_metrics"`
-		CreatedAt                  string  `json:"created_at"`
-		Description                *string `json:"description"`
-		Id                         int     `json:"id"`
-		Name                       string  `json:"name"`
-		Role                       *string `json:"role"`
-		UpdatedAt                  string  `json:"updated_at"`
-		Url                        string  `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *ListTeamPermissionGroupsResponse200Headers
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListTeamPermissionGroupsResponse) GetJSON200() *[]struct {
-	AppUrl                     string  `json:"app_url"`
-	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-	CanDispatchWork            bool    `json:"can_dispatch_work"`
-	CanEditPermissions         bool    `json:"can_edit_permissions"`
-	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-	CanManageTechnicians       bool    `json:"can_manage_technicians"`
-	CanMessageCustomers        bool    `json:"can_message_customers"`
-	CanOverrideInspections     bool    `json:"can_override_inspections"`
-	CanPerformInspections      bool    `json:"can_perform_inspections"`
-	CanPerformWork             bool    `json:"can_perform_work"`
-	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-	CanViewJobBoard            bool    `json:"can_view_job_board"`
-	CanViewMetrics             bool    `json:"can_view_metrics"`
-	CreatedAt                  string  `json:"created_at"`
-	Description                *string `json:"description"`
-	Id                         int     `json:"id"`
-	Name                       string  `json:"name"`
-	Role                       *string `json:"role"`
-	UpdatedAt                  string  `json:"updated_at"`
-	Url                        string  `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListTeamPermissionGroupsResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListTeamPermissionGroupsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListTeamPermissionGroupsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListTeamPermissionGroupsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListTeamPermissionGroupsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateTeamPermissionGroupResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		AppUrl                     string  `json:"app_url"`
-		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-		CanDispatchWork            bool    `json:"can_dispatch_work"`
-		CanEditPermissions         bool    `json:"can_edit_permissions"`
-		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-		CanManageTechnicians       bool    `json:"can_manage_technicians"`
-		CanMessageCustomers        bool    `json:"can_message_customers"`
-		CanOverrideInspections     bool    `json:"can_override_inspections"`
-		CanPerformInspections      bool    `json:"can_perform_inspections"`
-		CanPerformWork             bool    `json:"can_perform_work"`
-		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-		CanViewJobBoard            bool    `json:"can_view_job_board"`
-		CanViewMetrics             bool    `json:"can_view_metrics"`
-		CreatedAt                  string  `json:"created_at"`
-		Description                *string `json:"description"`
-		Id                         int     `json:"id"`
-		Name                       string  `json:"name"`
-		Role                       *string `json:"role"`
-		UpdatedAt                  string  `json:"updated_at"`
-		Url                        string  `json:"url"`
-	}
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateTeamPermissionGroupResponse) GetJSON201() *struct {
-	AppUrl                     string  `json:"app_url"`
-	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-	CanDispatchWork            bool    `json:"can_dispatch_work"`
-	CanEditPermissions         bool    `json:"can_edit_permissions"`
-	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-	CanManageTechnicians       bool    `json:"can_manage_technicians"`
-	CanMessageCustomers        bool    `json:"can_message_customers"`
-	CanOverrideInspections     bool    `json:"can_override_inspections"`
-	CanPerformInspections      bool    `json:"can_perform_inspections"`
-	CanPerformWork             bool    `json:"can_perform_work"`
-	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-	CanViewJobBoard            bool    `json:"can_view_job_board"`
-	CanViewMetrics             bool    `json:"can_view_metrics"`
-	CreatedAt                  string  `json:"created_at"`
-	Description                *string `json:"description"`
-	Id                         int     `json:"id"`
-	Name                       string  `json:"name"`
-	Role                       *string `json:"role"`
-	UpdatedAt                  string  `json:"updated_at"`
-	Url                        string  `json:"url"`
-} {
-	return r.JSON201
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateTeamPermissionGroupResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateTeamPermissionGroupResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateTeamPermissionGroupResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateTeamPermissionGroupResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type UpdateTeamPermissionGroupResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                     string  `json:"app_url"`
-		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-		CanDispatchWork            bool    `json:"can_dispatch_work"`
-		CanEditPermissions         bool    `json:"can_edit_permissions"`
-		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-		CanManageTechnicians       bool    `json:"can_manage_technicians"`
-		CanMessageCustomers        bool    `json:"can_message_customers"`
-		CanOverrideInspections     bool    `json:"can_override_inspections"`
-		CanPerformInspections      bool    `json:"can_perform_inspections"`
-		CanPerformWork             bool    `json:"can_perform_work"`
-		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-		CanViewJobBoard            bool    `json:"can_view_job_board"`
-		CanViewMetrics             bool    `json:"can_view_metrics"`
-		CreatedAt                  string  `json:"created_at"`
-		Description                *string `json:"description"`
-		Id                         int     `json:"id"`
-		Name                       string  `json:"name"`
-		Role                       *string `json:"role"`
-		UpdatedAt                  string  `json:"updated_at"`
-		Url                        string  `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateTeamPermissionGroupResponse) GetJSON200() *struct {
-	AppUrl                     string  `json:"app_url"`
-	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-	CanDispatchWork            bool    `json:"can_dispatch_work"`
-	CanEditPermissions         bool    `json:"can_edit_permissions"`
-	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-	CanManageTechnicians       bool    `json:"can_manage_technicians"`
-	CanMessageCustomers        bool    `json:"can_message_customers"`
-	CanOverrideInspections     bool    `json:"can_override_inspections"`
-	CanPerformInspections      bool    `json:"can_perform_inspections"`
-	CanPerformWork             bool    `json:"can_perform_work"`
-	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-	CanViewJobBoard            bool    `json:"can_view_job_board"`
-	CanViewMetrics             bool    `json:"can_view_metrics"`
-	CreatedAt                  string  `json:"created_at"`
-	Description                *string `json:"description"`
-	Id                         int     `json:"id"`
-	Name                       string  `json:"name"`
-	Role                       *string `json:"role"`
-	UpdatedAt                  string  `json:"updated_at"`
-	Url                        string  `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r UpdateTeamPermissionGroupResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdateTeamPermissionGroupResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateTeamPermissionGroupResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateTeamPermissionGroupResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 // ListTireStorageSlotsResponse200Headers the declared response headers of an HTTP 200 response for ListTireStorageSlots
 type ListTireStorageSlotsResponse200Headers struct {
 	Link        *string
@@ -46179,6 +45904,281 @@ func (r CreateUserResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateUserResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ListPermissionGroupsResponse200Headers the declared response headers of an HTTP 200 response for ListPermissionGroups
+type ListPermissionGroupsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListPermissionGroupsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl                     string  `json:"app_url"`
+		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+		CanDispatchWork            bool    `json:"can_dispatch_work"`
+		CanEditPermissions         bool    `json:"can_edit_permissions"`
+		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+		CanManageTechnicians       bool    `json:"can_manage_technicians"`
+		CanMessageCustomers        bool    `json:"can_message_customers"`
+		CanOverrideInspections     bool    `json:"can_override_inspections"`
+		CanPerformInspections      bool    `json:"can_perform_inspections"`
+		CanPerformWork             bool    `json:"can_perform_work"`
+		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+		CanViewJobBoard            bool    `json:"can_view_job_board"`
+		CanViewMetrics             bool    `json:"can_view_metrics"`
+		CreatedAt                  string  `json:"created_at"`
+		Description                *string `json:"description"`
+		Id                         int     `json:"id"`
+		Name                       string  `json:"name"`
+		Role                       *string `json:"role"`
+		UpdatedAt                  string  `json:"updated_at"`
+		Url                        string  `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListPermissionGroupsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListPermissionGroupsResponse) GetJSON200() *[]struct {
+	AppUrl                     string  `json:"app_url"`
+	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+	CanDispatchWork            bool    `json:"can_dispatch_work"`
+	CanEditPermissions         bool    `json:"can_edit_permissions"`
+	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+	CanManageTechnicians       bool    `json:"can_manage_technicians"`
+	CanMessageCustomers        bool    `json:"can_message_customers"`
+	CanOverrideInspections     bool    `json:"can_override_inspections"`
+	CanPerformInspections      bool    `json:"can_perform_inspections"`
+	CanPerformWork             bool    `json:"can_perform_work"`
+	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+	CanViewJobBoard            bool    `json:"can_view_job_board"`
+	CanViewMetrics             bool    `json:"can_view_metrics"`
+	CreatedAt                  string  `json:"created_at"`
+	Description                *string `json:"description"`
+	Id                         int     `json:"id"`
+	Name                       string  `json:"name"`
+	Role                       *string `json:"role"`
+	UpdatedAt                  string  `json:"updated_at"`
+	Url                        string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListPermissionGroupsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListPermissionGroupsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListPermissionGroupsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListPermissionGroupsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListPermissionGroupsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreatePermissionGroupResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AppUrl                     string  `json:"app_url"`
+		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+		CanDispatchWork            bool    `json:"can_dispatch_work"`
+		CanEditPermissions         bool    `json:"can_edit_permissions"`
+		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+		CanManageTechnicians       bool    `json:"can_manage_technicians"`
+		CanMessageCustomers        bool    `json:"can_message_customers"`
+		CanOverrideInspections     bool    `json:"can_override_inspections"`
+		CanPerformInspections      bool    `json:"can_perform_inspections"`
+		CanPerformWork             bool    `json:"can_perform_work"`
+		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+		CanViewJobBoard            bool    `json:"can_view_job_board"`
+		CanViewMetrics             bool    `json:"can_view_metrics"`
+		CreatedAt                  string  `json:"created_at"`
+		Description                *string `json:"description"`
+		Id                         int     `json:"id"`
+		Name                       string  `json:"name"`
+		Role                       *string `json:"role"`
+		UpdatedAt                  string  `json:"updated_at"`
+		Url                        string  `json:"url"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreatePermissionGroupResponse) GetJSON201() *struct {
+	AppUrl                     string  `json:"app_url"`
+	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+	CanDispatchWork            bool    `json:"can_dispatch_work"`
+	CanEditPermissions         bool    `json:"can_edit_permissions"`
+	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+	CanManageTechnicians       bool    `json:"can_manage_technicians"`
+	CanMessageCustomers        bool    `json:"can_message_customers"`
+	CanOverrideInspections     bool    `json:"can_override_inspections"`
+	CanPerformInspections      bool    `json:"can_perform_inspections"`
+	CanPerformWork             bool    `json:"can_perform_work"`
+	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+	CanViewJobBoard            bool    `json:"can_view_job_board"`
+	CanViewMetrics             bool    `json:"can_view_metrics"`
+	CreatedAt                  string  `json:"created_at"`
+	Description                *string `json:"description"`
+	Id                         int     `json:"id"`
+	Name                       string  `json:"name"`
+	Role                       *string `json:"role"`
+	UpdatedAt                  string  `json:"updated_at"`
+	Url                        string  `json:"url"`
+} {
+	return r.JSON201
+}
+
+// GetBody returns the raw response body bytes
+func (r CreatePermissionGroupResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreatePermissionGroupResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreatePermissionGroupResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreatePermissionGroupResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdatePermissionGroupResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                     string  `json:"app_url"`
+		CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+		CanDispatchWork            bool    `json:"can_dispatch_work"`
+		CanEditPermissions         bool    `json:"can_edit_permissions"`
+		CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+		CanManageTechnicians       bool    `json:"can_manage_technicians"`
+		CanMessageCustomers        bool    `json:"can_message_customers"`
+		CanOverrideInspections     bool    `json:"can_override_inspections"`
+		CanPerformInspections      bool    `json:"can_perform_inspections"`
+		CanPerformWork             bool    `json:"can_perform_work"`
+		CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+		CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+		CanViewJobBoard            bool    `json:"can_view_job_board"`
+		CanViewMetrics             bool    `json:"can_view_metrics"`
+		CreatedAt                  string  `json:"created_at"`
+		Description                *string `json:"description"`
+		Id                         int     `json:"id"`
+		Name                       string  `json:"name"`
+		Role                       *string `json:"role"`
+		UpdatedAt                  string  `json:"updated_at"`
+		Url                        string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdatePermissionGroupResponse) GetJSON200() *struct {
+	AppUrl                     string  `json:"app_url"`
+	CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+	CanDispatchWork            bool    `json:"can_dispatch_work"`
+	CanEditPermissions         bool    `json:"can_edit_permissions"`
+	CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+	CanManageTechnicians       bool    `json:"can_manage_technicians"`
+	CanMessageCustomers        bool    `json:"can_message_customers"`
+	CanOverrideInspections     bool    `json:"can_override_inspections"`
+	CanPerformInspections      bool    `json:"can_perform_inspections"`
+	CanPerformWork             bool    `json:"can_perform_work"`
+	CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+	CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+	CanViewJobBoard            bool    `json:"can_view_job_board"`
+	CanViewMetrics             bool    `json:"can_view_metrics"`
+	CreatedAt                  string  `json:"created_at"`
+	Description                *string `json:"description"`
+	Id                         int     `json:"id"`
+	Name                       string  `json:"name"`
+	Role                       *string `json:"role"`
+	UpdatedAt                  string  `json:"updated_at"`
+	Url                        string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdatePermissionGroupResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdatePermissionGroupResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdatePermissionGroupResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdatePermissionGroupResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -58004,81 +58004,6 @@ func (c *ClientWithResponses) UpdateSubletPackagesDeactivateWithResponse(ctx con
 	return ParseUpdateSubletPackagesDeactivateResponse(rsp)
 }
 
-// ListTeamPermissionGroupsWithResponse index
-//
-// List all team permission groups, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /team/permission_groups (the `ListTeamPermissionGroups` operationId).
-func (c *ClientWithResponses) ListTeamPermissionGroupsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListTeamPermissionGroupsResponse, error) {
-	rsp, err := c.ListTeamPermissionGroups(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListTeamPermissionGroupsResponse(rsp)
-}
-
-// CreateTeamPermissionGroupWithBodyWithResponse create
-//
-// Create a team permission group.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-func (c *ClientWithResponses) CreateTeamPermissionGroupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateTeamPermissionGroupResponse, error) {
-	rsp, err := c.CreateTeamPermissionGroupWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateTeamPermissionGroupResponse(rsp)
-}
-
-// CreateTeamPermissionGroupWithResponse create
-//
-// Create a team permission group.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /team/permission_groups (the `CreateTeamPermissionGroup` operationId).
-func (c *ClientWithResponses) CreateTeamPermissionGroupWithResponse(ctx context.Context, body CreateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateTeamPermissionGroupResponse, error) {
-	rsp, err := c.CreateTeamPermissionGroup(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateTeamPermissionGroupResponse(rsp)
-}
-
-// UpdateTeamPermissionGroupWithBodyWithResponse update
-//
-// Update a team permission group by ID.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-func (c *ClientWithResponses) UpdateTeamPermissionGroupWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTeamPermissionGroupResponse, error) {
-	rsp, err := c.UpdateTeamPermissionGroupWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateTeamPermissionGroupResponse(rsp)
-}
-
-// UpdateTeamPermissionGroupWithResponse update
-//
-// Update a team permission group by ID.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /team/permission_groups/{id} (the `UpdateTeamPermissionGroup` operationId).
-func (c *ClientWithResponses) UpdateTeamPermissionGroupWithResponse(ctx context.Context, id int, body UpdateTeamPermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTeamPermissionGroupResponse, error) {
-	rsp, err := c.UpdateTeamPermissionGroup(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateTeamPermissionGroupResponse(rsp)
-}
-
 // ListTireStorageSlotsWithResponse index
 //
 // List all tire storage slots, paginated via the Link header.
@@ -58317,6 +58242,81 @@ func (c *ClientWithResponses) CreateUserWithResponse(ctx context.Context, body C
 		return nil, err
 	}
 	return ParseCreateUserResponse(rsp)
+}
+
+// ListPermissionGroupsWithResponse index
+//
+// List all permission groups, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /users/permission_groups (the `ListPermissionGroups` operationId).
+func (c *ClientWithResponses) ListPermissionGroupsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListPermissionGroupsResponse, error) {
+	rsp, err := c.ListPermissionGroups(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListPermissionGroupsResponse(rsp)
+}
+
+// CreatePermissionGroupWithBodyWithResponse create
+//
+// Create a permission group.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+func (c *ClientWithResponses) CreatePermissionGroupWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePermissionGroupResponse, error) {
+	rsp, err := c.CreatePermissionGroupWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePermissionGroupResponse(rsp)
+}
+
+// CreatePermissionGroupWithResponse create
+//
+// Create a permission group.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /users/permission_groups (the `CreatePermissionGroup` operationId).
+func (c *ClientWithResponses) CreatePermissionGroupWithResponse(ctx context.Context, body CreatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePermissionGroupResponse, error) {
+	rsp, err := c.CreatePermissionGroup(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePermissionGroupResponse(rsp)
+}
+
+// UpdatePermissionGroupWithBodyWithResponse update
+//
+// Update a permission group by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+func (c *ClientWithResponses) UpdatePermissionGroupWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePermissionGroupResponse, error) {
+	rsp, err := c.UpdatePermissionGroupWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdatePermissionGroupResponse(rsp)
+}
+
+// UpdatePermissionGroupWithResponse update
+//
+// Update a permission group by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /users/permission_groups/{id} (the `UpdatePermissionGroup` operationId).
+func (c *ClientWithResponses) UpdatePermissionGroupWithResponse(ctx context.Context, id int, body UpdatePermissionGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePermissionGroupResponse, error) {
+	rsp, err := c.UpdatePermissionGroup(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdatePermissionGroupResponse(rsp)
 }
 
 // DeleteUserWithResponse destroy
@@ -69469,186 +69469,6 @@ func ParseUpdateSubletPackagesDeactivateResponse(rsp *http.Response) (*UpdateSub
 	return response, nil
 }
 
-// ParseListTeamPermissionGroupsResponse parses an HTTP response from a ListTeamPermissionGroupsWithResponse call
-func ParseListTeamPermissionGroupsResponse(rsp *http.Response) (*ListTeamPermissionGroupsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListTeamPermissionGroupsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []struct {
-			AppUrl                     string  `json:"app_url"`
-			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-			CanDispatchWork            bool    `json:"can_dispatch_work"`
-			CanEditPermissions         bool    `json:"can_edit_permissions"`
-			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-			CanManageTechnicians       bool    `json:"can_manage_technicians"`
-			CanMessageCustomers        bool    `json:"can_message_customers"`
-			CanOverrideInspections     bool    `json:"can_override_inspections"`
-			CanPerformInspections      bool    `json:"can_perform_inspections"`
-			CanPerformWork             bool    `json:"can_perform_work"`
-			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-			CanViewJobBoard            bool    `json:"can_view_job_board"`
-			CanViewMetrics             bool    `json:"can_view_metrics"`
-			CreatedAt                  string  `json:"created_at"`
-			Description                *string `json:"description"`
-			Id                         int     `json:"id"`
-			Name                       string  `json:"name"`
-			Role                       *string `json:"role"`
-			UpdatedAt                  string  `json:"updated_at"`
-			Url                        string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	switch {
-	case rsp.StatusCode == 200:
-		var headers ListTeamPermissionGroupsResponse200Headers
-		if values := rsp.Header.Values("Link"); len(values) > 0 {
-			var value string
-			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.Link = &value
-		}
-		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
-			var value int
-			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.XPerPage = &value
-		}
-		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
-			var value int
-			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.XTotalCount = &value
-		}
-		response.Headers200 = &headers
-	}
-
-	return response, nil
-}
-
-// ParseCreateTeamPermissionGroupResponse parses an HTTP response from a CreateTeamPermissionGroupWithResponse call
-func ParseCreateTeamPermissionGroupResponse(rsp *http.Response) (*CreateTeamPermissionGroupResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateTeamPermissionGroupResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			AppUrl                     string  `json:"app_url"`
-			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-			CanDispatchWork            bool    `json:"can_dispatch_work"`
-			CanEditPermissions         bool    `json:"can_edit_permissions"`
-			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-			CanManageTechnicians       bool    `json:"can_manage_technicians"`
-			CanMessageCustomers        bool    `json:"can_message_customers"`
-			CanOverrideInspections     bool    `json:"can_override_inspections"`
-			CanPerformInspections      bool    `json:"can_perform_inspections"`
-			CanPerformWork             bool    `json:"can_perform_work"`
-			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-			CanViewJobBoard            bool    `json:"can_view_job_board"`
-			CanViewMetrics             bool    `json:"can_view_metrics"`
-			CreatedAt                  string  `json:"created_at"`
-			Description                *string `json:"description"`
-			Id                         int     `json:"id"`
-			Name                       string  `json:"name"`
-			Role                       *string `json:"role"`
-			UpdatedAt                  string  `json:"updated_at"`
-			Url                        string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateTeamPermissionGroupResponse parses an HTTP response from a UpdateTeamPermissionGroupWithResponse call
-func ParseUpdateTeamPermissionGroupResponse(rsp *http.Response) (*UpdateTeamPermissionGroupResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateTeamPermissionGroupResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                     string  `json:"app_url"`
-			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
-			CanDispatchWork            bool    `json:"can_dispatch_work"`
-			CanEditPermissions         bool    `json:"can_edit_permissions"`
-			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
-			CanManageTechnicians       bool    `json:"can_manage_technicians"`
-			CanMessageCustomers        bool    `json:"can_message_customers"`
-			CanOverrideInspections     bool    `json:"can_override_inspections"`
-			CanPerformInspections      bool    `json:"can_perform_inspections"`
-			CanPerformWork             bool    `json:"can_perform_work"`
-			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
-			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
-			CanViewJobBoard            bool    `json:"can_view_job_board"`
-			CanViewMetrics             bool    `json:"can_view_metrics"`
-			CreatedAt                  string  `json:"created_at"`
-			Description                *string `json:"description"`
-			Id                         int     `json:"id"`
-			Name                       string  `json:"name"`
-			Role                       *string `json:"role"`
-			UpdatedAt                  string  `json:"updated_at"`
-			Url                        string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseListTireStorageSlotsResponse parses an HTTP response from a ListTireStorageSlotsWithResponse call
 func ParseListTireStorageSlotsResponse(rsp *http.Response) (*ListTireStorageSlotsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -70365,6 +70185,186 @@ func ParseCreateUserResponse(rsp *http.Response) (*CreateUserResponse, error) {
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListPermissionGroupsResponse parses an HTTP response from a ListPermissionGroupsWithResponse call
+func ParseListPermissionGroupsResponse(rsp *http.Response) (*ListPermissionGroupsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListPermissionGroupsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl                     string  `json:"app_url"`
+			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+			CanDispatchWork            bool    `json:"can_dispatch_work"`
+			CanEditPermissions         bool    `json:"can_edit_permissions"`
+			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+			CanManageTechnicians       bool    `json:"can_manage_technicians"`
+			CanMessageCustomers        bool    `json:"can_message_customers"`
+			CanOverrideInspections     bool    `json:"can_override_inspections"`
+			CanPerformInspections      bool    `json:"can_perform_inspections"`
+			CanPerformWork             bool    `json:"can_perform_work"`
+			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+			CanViewJobBoard            bool    `json:"can_view_job_board"`
+			CanViewMetrics             bool    `json:"can_view_metrics"`
+			CreatedAt                  string  `json:"created_at"`
+			Description                *string `json:"description"`
+			Id                         int     `json:"id"`
+			Name                       string  `json:"name"`
+			Role                       *string `json:"role"`
+			UpdatedAt                  string  `json:"updated_at"`
+			Url                        string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListPermissionGroupsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseCreatePermissionGroupResponse parses an HTTP response from a CreatePermissionGroupWithResponse call
+func ParseCreatePermissionGroupResponse(rsp *http.Response) (*CreatePermissionGroupResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreatePermissionGroupResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AppUrl                     string  `json:"app_url"`
+			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+			CanDispatchWork            bool    `json:"can_dispatch_work"`
+			CanEditPermissions         bool    `json:"can_edit_permissions"`
+			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+			CanManageTechnicians       bool    `json:"can_manage_technicians"`
+			CanMessageCustomers        bool    `json:"can_message_customers"`
+			CanOverrideInspections     bool    `json:"can_override_inspections"`
+			CanPerformInspections      bool    `json:"can_perform_inspections"`
+			CanPerformWork             bool    `json:"can_perform_work"`
+			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+			CanViewJobBoard            bool    `json:"can_view_job_board"`
+			CanViewMetrics             bool    `json:"can_view_metrics"`
+			CreatedAt                  string  `json:"created_at"`
+			Description                *string `json:"description"`
+			Id                         int     `json:"id"`
+			Name                       string  `json:"name"`
+			Role                       *string `json:"role"`
+			UpdatedAt                  string  `json:"updated_at"`
+			Url                        string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdatePermissionGroupResponse parses an HTTP response from a UpdatePermissionGroupWithResponse call
+func ParseUpdatePermissionGroupResponse(rsp *http.Response) (*UpdatePermissionGroupResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdatePermissionGroupResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                     string  `json:"app_url"`
+			CanCloseReopenWorkOrders   bool    `json:"can_close_reopen_work_orders"`
+			CanDispatchWork            bool    `json:"can_dispatch_work"`
+			CanEditPermissions         bool    `json:"can_edit_permissions"`
+			CanHardDeleteWorkOrders    bool    `json:"can_hard_delete_work_orders"`
+			CanManageTechnicians       bool    `json:"can_manage_technicians"`
+			CanMessageCustomers        bool    `json:"can_message_customers"`
+			CanOverrideInspections     bool    `json:"can_override_inspections"`
+			CanPerformInspections      bool    `json:"can_perform_inspections"`
+			CanPerformWork             bool    `json:"can_perform_work"`
+			CanViewActivityFeed        bool    `json:"can_view_activity_feed"`
+			CanViewAllActiveWorkOrders bool    `json:"can_view_all_active_work_orders"`
+			CanViewJobBoard            bool    `json:"can_view_job_board"`
+			CanViewMetrics             bool    `json:"can_view_metrics"`
+			CreatedAt                  string  `json:"created_at"`
+			Description                *string `json:"description"`
+			Id                         int     `json:"id"`
+			Name                       string  `json:"name"`
+			Role                       *string `json:"role"`
+			UpdatedAt                  string  `json:"updated_at"`
+			Url                        string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
