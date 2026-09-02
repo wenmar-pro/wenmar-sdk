@@ -16,36 +16,56 @@ module EnrichSpec
     "service_categories" => "ServiceCategory",
     "purchase_orders" => "PurchaseOrder",
     "return_orders" => "ReturnOrder",
-    "sublet_orders" => "SubletOrder"
+    "sublet_orders" => "SubletOrder",
+    "inspections" => "Inspection",
+    "inspection_reports" => "InspectionReport",
+    "campaigns" => "BroadcastCampaign"
   }.freeze
 
-  # Collection sub-actions that are NOT standard CRUD on a resource. The key is
-  # "METHOD path"; the value is the semantic operationId. The physical path may
-  # differ from the operation name (e.g. /vehicles/vin_decode -> decode_vin).
-  SUB_ACTION_IDS = {
-    "get /vehicles/vin_decode"       => "decode_vin",
-    "get /vehicles/check_duplicate"  => "check_vehicle_duplicate",
-    "get /customers/check_duplicate" => "check_customer_duplicate",
-    # seed_defaults returns a {created, message} summary, not a ServiceCategory.
-    "post /service_categories/seed_defaults" => "seed_defaults_service_categories",
-    # Shipped operationIds (0.4.1) kept stable across the 2026-08-31 path
-    # renames (merge/transfer pluralized; lifecycle flattened) + semantic
-    # names for new surface (close_zero, payment AR send/reverse).
-    "post /customers/{id}/merges"                             => "merge_customer",
-    "post /vehicles/{id}/merges"                              => "merge_vehicle",
-    "post /vehicles/{id}/transfers"                           => "transfer_vehicle",
-    "patch /work_orders/{id}/close"                           => "close_work_order",
-    "patch /work_orders/{id}/close_as_paid"                   => "close_work_order_as_paid",
-    "patch /work_orders/{id}/close_zero"                      => "close_work_order_zero",
-    "patch /work_orders/{id}/decline_all"                     => "decline_all_work_order_services",
-    "patch /work_orders/{id}/reopen"                           => "reopen_work_order",
-    "patch /work_orders/{id}/return_to_board"                 => "return_work_order_to_board",
-    "patch /work_orders/{id}/save_for_later"                  => "save_work_order_for_later",
-    "get /work_orders/{id}/service_history"                   => "show_work_order_service_history",
-    "get /work_orders/{id}/declined_services"                 => "show_work_order_declined_services",
-    "post /work_orders/{work_order_id}/payments/send_to_ar"   => "send_work_order_payment_to_ar",
-    "delete /work_orders/{work_order_id}/payments/reverse_ar" => "reverse_work_order_payment_ar"
-  }.freeze
+    # Collection sub-actions that are NOT standard CRUD on a resource. The key is
+    # "METHOD path"; the value is the semantic operationId. The physical path may
+    # differ from the operation name (e.g. /vehicles/vin_decode -> decode_vin).
+    SUB_ACTION_IDS = {
+      "get /vehicles/vin_decode"       => "decode_vin",
+      "get /vehicles/check_duplicate"  => "check_vehicle_duplicate",
+      "get /customers/check_duplicate" => "check_customer_duplicate",
+      # seed_defaults returns a {created, message} summary, not a ServiceCategory.
+      "post /service_categories/seed_defaults" => "seed_defaults_service_categories",
+      # Shipped operationIds (0.4.1) kept stable across the 2026-08-31 path
+      # renames (merge/transfer pluralized; lifecycle flattened) + semantic
+      # names for new surface (close_zero, payment AR send/reverse).
+      "post /customers/{id}/merges"                             => "merge_customer",
+      "post /vehicles/{id}/merges"                              => "merge_vehicle",
+      "post /vehicles/{id}/transfers"                           => "transfer_vehicle",
+      "patch /work_orders/{id}/close"                           => "close_work_order",
+      "patch /work_orders/{id}/close_as_paid"                   => "close_work_order_as_paid",
+      "patch /work_orders/{id}/close_zero"                      => "close_work_order_zero",
+      "patch /work_orders/{id}/decline_all"                     => "decline_all_work_order_services",
+      "patch /work_orders/{id}/reopen"                           => "reopen_work_order",
+      "patch /work_orders/{id}/return_to_board"                 => "return_work_order_to_board",
+      "patch /work_orders/{id}/save_for_later"                  => "save_work_order_for_later",
+      "get /work_orders/{id}/service_history"                   => "show_work_order_service_history",
+      "get /work_orders/{id}/declined_services"                 => "show_work_order_declined_services",
+      "post /work_orders/{work_order_id}/payments/send_to_ar"   => "send_work_order_payment_to_ar",
+      "delete /work_orders/{work_order_id}/payments/reverse_ar" => "reverse_work_order_payment_ar",
+      # Inspections lifecycle (state-change sub-actions, 2026-09-01).
+      "patch /inspections/{id}/toggle"       => "toggle_inspection",
+      "patch /inspections/{id}/set_default"  => "set_default_inspection",
+      "patch /inspections/{id}/remove_default" => "remove_default_inspection",
+      # Inspection reports lifecycle + nested group/mark_all.
+      "patch /inspection_reports/{id}/complete"   => "complete_inspection_report",
+      "patch /inspection_reports/{id}/reopen"     => "reopen_inspection_report",
+      "patch /inspection_reports/{id}/publish"    => "publish_inspection_report",
+      "patch /inspection_reports/{id}/unpublish"  => "unpublish_inspection_report",
+      "patch /inspection_reports/{id}/reset"      => "reset_inspection_report",
+      "patch /inspection_reports/{id}/reassign"   => "reassign_inspection_report",
+      "get /inspection_reports/{id}/group"        => "show_inspection_report_group",
+      "post /inspection_reports/{id}/mark_all"    => "mark_all_inspection_report",
+      "post /inspection_reports/{id}/retry_recording" => "retry_inspection_report_recording",
+      # Campaign lifecycle.
+      "post /campaigns/{id}/send_campaign" => "send_campaign",
+      "post /campaigns/{id}/duplicate"     => "duplicate_campaign",
+    }.freeze
 
   # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
   # id would collide (e.g. drivers list vs show both derive to get_customers_driver)

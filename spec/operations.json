@@ -3,16 +3,14 @@
   "source": "spec/openapi.enriched.yaml",
   "schemas": [
     "AddWorkOrderServiceLineItemToInventoryRequest",
+    "BroadcastCampaign",
     "CloseWorkOrderAsPaidRequest",
     "CloseWorkOrderRequest",
     "CloseWorkOrderZeroRequest",
-    "CreateAppointmentRequest",
-    "CreateAppointmentsApprovalRequest",
-    "CreateAppointmentsCancellationRequest",
+    "CompleteInspectionReportRequest",
     "CreateAppointmentsFollowUpRequest",
-    "CreateAppointmentsRejectionRequest",
-    "CreateAppointmentsVehicleReconciliationRequest",
     "CreateAppointmentsWorkOrderRequest",
+    "CreateCampaignRequest",
     "CreateCatalogCleanupsApplicationRequest",
     "CreateConversationsBulkMarkReadRequest",
     "CreateConversationsCustomerLinkRequest",
@@ -23,26 +21,19 @@
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
     "CreateDriverRequest",
-    "CreateExpenseRequest",
+    "CreateInspectionReportRequest",
+    "CreateInspectionRequest",
     "CreateInventoryLevelRequest",
     "CreateLabelRequest",
     "CreateLaborMatriceRequest",
     "CreateLaborRateRequest",
     "CreateLeadSourceRequest",
     "CreateNotificationsBulkMarkReadRequest",
-    "CreateOrdersPurchaseOrderRequest",
     "CreateOrdersPurchaseOrdersCancellationRequest",
-    "CreateOrdersReturnOrdersRefundCompletionRequest",
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
     "CreatePartsMatriceRequest",
-    "CreatePaymentsCancellationRequest",
-    "CreatePaymentsConfirmationRequest",
-    "CreatePaymentsFailureRequest",
     "CreateRecentSearcheRequest",
-    "CreateScanLookupRequest",
-    "CreateScanStartedWorkOrderRequest",
-    "CreateScanVehicleRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
     "CreateShopFeeRequest",
@@ -50,50 +41,65 @@
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
     "CreateTeamPermissionGroupRequest",
-    "CreateTimeEntrieRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
+    "CreateUserRequest",
+    "CreateUsersDisableRequest",
+    "CreateUsersEnableRequest",
+    "CreateUsersResetPinRequest",
+    "CreateUsersSendConfirmationRequest",
+    "CreateUsersSendPasswordResetRequest",
+    "CreateUsersUnlockRequest",
     "CreateVehicleRequest",
     "CreateVehicleTagRequest",
     "CreateVendorRequest",
     "CreateWorkOrderAuthorizationRequest",
-    "CreateWorkOrderPaymentRequest",
     "CreateWorkOrderRequest",
     "CreateWorkOrdersCourtesyCarAssignmentRequest",
     "CreateWorkOrdersLabelRequest",
-    "CreateWorkOrdersRefundRequest",
     "CreateWorkOrdersServiceRequest",
     "CreateWorkOrdersServicesAddLineItemRequest",
     "CreateWorkOrdersServicesAddPackageRequest",
     "CreateWorkOrdersServicesDuplicateRequest",
     "CreateWorkOrdersServicesLineItemRequest",
     "CreateWorkOrdersServicesUnauthorizeRequest",
-    "CreateWorkOrdersVoidRequest",
     "Customer",
     "DeclineAllWorkOrderServicesRequest",
     "Driver",
+    "DuplicateCampaignRequest",
     "DuplicateWorkOrderServiceLineItemRequest",
     "Error",
+    "Inspection",
+    "InspectionReport",
+    "MarkAllInspectionReportRequest",
     "MergeCustomerRequest",
     "MergeVehicleRequest",
+    "PublishInspectionReportRequest",
     "PullWorkOrderServiceLineItemRequest",
     "PurchaseOrder",
+    "ReassignInspectionReportRequest",
     "RefreshWorkOrderServiceLineItemPriceRequest",
+    "RemoveDefaultInspectionRequest",
+    "ReopenInspectionReportRequest",
     "ReopenWorkOrderRequest",
-    "ReturnOrder",
+    "ResetInspectionReportRequest",
+    "RetryInspectionReportRecordingRequest",
     "ReturnWorkOrderToBoardRequest",
     "SaveWorkOrderForLaterRequest",
     "SeedDefaultsServiceCategoriesRequest",
+    "SendCampaignRequest",
     "SendWorkOrderPaymentToArRequest",
     "ServiceCategory",
+    "SetDefaultInspectionRequest",
     "Statement",
     "SubletOrder",
+    "ToggleInspectionRequest",
     "TransferVehicleRequest",
     "UndoPullWorkOrderServiceLineItemRequest",
     "UndoReturnWorkOrderServiceLineItemRequest",
+    "UnpublishInspectionReportRequest",
     "UpdateAiSuggestionRequest",
-    "UpdateAppointmentRequest",
     "UpdateCashDrawerBannerRequest",
     "UpdateConversationRequest",
     "UpdateCoreTaxRuleRequest",
@@ -101,7 +107,7 @@
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
     "UpdateDriverRequest",
-    "UpdateExpenseRequest",
+    "UpdateInspectionRequest",
     "UpdateInventoryLevelRequest",
     "UpdateInventoryLevelsStockRequest",
     "UpdateLabelRequest",
@@ -110,7 +116,6 @@
     "UpdateLeadSourceRequest",
     "UpdateNotificationRequest",
     "UpdateOrdersPurchaseOrderRequest",
-    "UpdateOrdersReturnOrderRequest",
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
     "UpdatePackageRequest",
     "UpdatePartsMatriceRequest",
@@ -122,8 +127,8 @@
     "UpdateSubletPackageRequest",
     "UpdateTagsRequest",
     "UpdateTeamPermissionGroupRequest",
-    "UpdateTimeEntrieRequest",
     "UpdateTireRequest",
+    "UpdateUserRequest",
     "UpdateVehicleRequest",
     "UpdateVehicleTagRequest",
     "UpdateVendorRequest",
@@ -216,9 +221,9 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
+      "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "index"
     },
     {
@@ -228,13 +233,11 @@
       "tag": "appointments",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": "CreateAppointmentRequest",
-      "requestShape": {
-        "wrapper": "appointment"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -293,7 +296,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "show"
     },
     {
@@ -305,13 +308,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "UpdateAppointmentRequest",
-      "requestShape": {
-        "wrapper": "appointment"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "update"
     },
     {
@@ -323,13 +324,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateAppointmentsApprovalRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -341,13 +340,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateAppointmentsCancellationRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -377,13 +374,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateAppointmentsRejectionRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -395,16 +390,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateAppointmentsVehicleReconciliationRequest",
-      "requestShape": {
-        "flat": [
-          "vehicle_action",
-          "vehicle_id"
-        ]
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -424,6 +414,88 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "list_campaigns",
+      "method": "get",
+      "path": "/campaigns",
+      "tag": "campaigns",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": "BroadcastCampaign",
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_campaign",
+      "method": "post",
+      "path": "/campaigns",
+      "tag": "campaigns",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateCampaignRequest",
+      "requestShape": {
+        "wrapper": "broadcast_campaign"
+      },
+      "paginated": false,
+      "responseSchema": "BroadcastCampaign",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_campaign",
+      "method": "get",
+      "path": "/campaigns/{id}",
+      "tag": "campaigns",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "BroadcastCampaign",
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "duplicate_campaign",
+      "method": "post",
+      "path": "/campaigns/{id}/duplicate",
+      "tag": "campaigns",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "DuplicateCampaignRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "duplicate"
+    },
+    {
+      "id": "send_campaign",
+      "method": "post",
+      "path": "/campaigns/{id}/send_campaign",
+      "tag": "campaigns",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "SendCampaignRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_campaign"
     },
     {
       "id": "update_cash_drawer_banner",
@@ -1190,9 +1262,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
+      "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "index"
     },
     {
@@ -1202,13 +1274,11 @@
       "tag": "expenses",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": "CreateExpenseRequest",
-      "requestShape": {
-        "wrapper": "expense"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -1236,13 +1306,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "UpdateExpenseRequest",
-      "requestShape": {
-        "wrapper": "expense"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "update"
     },
     {
@@ -1258,6 +1326,385 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "index"
+    },
+    {
+      "id": "create_inspection_report",
+      "method": "post",
+      "path": "/inspection_reports",
+      "tag": "inspection_reports",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "inspection_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "work_order_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": "CreateInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": "InspectionReport",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_inspection_report",
+      "method": "delete",
+      "path": "/inspection_reports/{id}",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_inspection_report",
+      "method": "get",
+      "path": "/inspection_reports/{id}",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "InspectionReport",
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "complete_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/complete",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CompleteInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "complete"
+    },
+    {
+      "id": "show_inspection_report_group",
+      "method": "get",
+      "path": "/inspection_reports/{id}/group",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [
+        {
+          "name": "group_name",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "group"
+    },
+    {
+      "id": "mark_all_inspection_report",
+      "method": "post",
+      "path": "/inspection_reports/{id}/mark_all",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "MarkAllInspectionReportRequest",
+      "requestShape": {
+        "flat": [
+          "status",
+          "group_name"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "mark_all"
+    },
+    {
+      "id": "publish_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/publish",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "PublishInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "publish"
+    },
+    {
+      "id": "reassign_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/reassign",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReassignInspectionReportRequest",
+      "requestShape": {
+        "wrapper": "user_id"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reassign"
+    },
+    {
+      "id": "reopen_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/reopen",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ReopenInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reopen"
+    },
+    {
+      "id": "reset_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/reset",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ResetInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reset"
+    },
+    {
+      "id": "retry_inspection_report_recording",
+      "method": "post",
+      "path": "/inspection_reports/{id}/retry_recording",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [
+        {
+          "name": "recording_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": "RetryInspectionReportRecordingRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "retry_recording"
+    },
+    {
+      "id": "unpublish_inspection_report",
+      "method": "patch",
+      "path": "/inspection_reports/{id}/unpublish",
+      "tag": "inspection_reports",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UnpublishInspectionReportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "unpublish"
+    },
+    {
+      "id": "list_inspections",
+      "method": "get",
+      "path": "/inspections",
+      "tag": "inspections",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_inspection",
+      "method": "post",
+      "path": "/inspections",
+      "tag": "inspections",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateInspectionRequest",
+      "requestShape": {
+        "wrapper": "inspection"
+      },
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_inspection",
+      "method": "delete",
+      "path": "/inspections/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_inspection",
+      "method": "get",
+      "path": "/inspections/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateInspectionRequest",
+      "requestShape": {
+        "wrapper": "inspection"
+      },
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "remove_default_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/remove_default",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "RemoveDefaultInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "remove_default"
+    },
+    {
+      "id": "set_default_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/set_default",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "SetDefaultInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "set_default"
+    },
+    {
+      "id": "toggle_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/toggle",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "ToggleInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "toggle"
     },
     {
       "id": "list_inventory_levels",
@@ -1727,13 +2174,11 @@
       "tag": "orders",
       "pathParams": [],
       "queryParams": [],
-      "requestSchema": "CreateOrdersPurchaseOrderRequest",
-      "requestShape": {
-        "wrapper": "purchase_order"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "PurchaseOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -1813,9 +2258,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
-      "responseSchema": "ReturnOrder",
-      "responseBody": true,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "index"
     },
     {
@@ -1846,8 +2291,8 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": false,
-      "responseSchema": "ReturnOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "show"
     },
     {
@@ -1859,13 +2304,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "UpdateOrdersReturnOrderRequest",
-      "requestShape": {
-        "wrapper": "return_order"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "ReturnOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "update"
     },
     {
@@ -1877,13 +2320,11 @@
         "return_order_id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateOrdersReturnOrdersRefundCompletionRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "ReturnOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -2065,9 +2506,9 @@
       ],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
+      "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "index"
     },
     {
@@ -2079,9 +2520,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
+      "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "pending"
     },
     {
@@ -2097,7 +2538,7 @@
       "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "show"
     },
     {
@@ -2109,13 +2550,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreatePaymentsCancellationRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -2127,13 +2566,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreatePaymentsConfirmationRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -2145,13 +2582,11 @@
         "id"
       ],
       "queryParams": [],
-      "requestSchema": "CreatePaymentsFailureRequest",
-      "requestShape": {
-        "wrapper": null
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
       "responseSchema": null,
-      "responseBody": true,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -2451,63 +2886,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
-    },
-    {
-      "id": "create_scan_lookup",
-      "method": "post",
-      "path": "/scan/lookups",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanLookupRequest",
-      "requestShape": {
-        "flat": [
-          "code",
-          "type"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "lookup"
-    },
-    {
-      "id": "create_scan_started_work_order",
-      "method": "post",
-      "path": "/scan/started_work_orders",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanStartedWorkOrderRequest",
-      "requestShape": {
-        "flat": [
-          "outcome",
-          "vehicle_id"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "start_ro"
-    },
-    {
-      "id": "create_scan_vehicle",
-      "method": "post",
-      "path": "/scan/vehicles",
-      "tag": "scan",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateScanVehicleRequest",
-      "requestShape": {
-        "flat": [
-          "customer",
-          "vehicle"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create_vehicle_and_start_ro"
     },
     {
       "id": "list_search",
@@ -3017,9 +3395,9 @@
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
-      "paginated": true,
-      "responseSchema": "Statement",
-      "responseBody": true,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "index"
     },
     {
@@ -3169,20 +3547,6 @@
       "summary": "deactivate"
     },
     {
-      "id": "list_team_members",
-      "method": "get",
-      "path": "/team/members",
-      "tag": "team",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
       "id": "list_team_permission_groups",
       "method": "get",
       "path": "/team/permission_groups",
@@ -3224,43 +3588,6 @@
       "requestSchema": "UpdateTeamPermissionGroupRequest",
       "requestShape": {
         "wrapper": "permission_group"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
-      "id": "create_time_entrie",
-      "method": "post",
-      "path": "/time_entries",
-      "tag": "time_entries",
-      "pathParams": [],
-      "queryParams": [],
-      "requestSchema": "CreateTimeEntrieRequest",
-      "requestShape": {
-        "flat": [
-          "type",
-          "work_order_service_id"
-        ]
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_time_entrie",
-      "method": "patch",
-      "path": "/time_entries/{id}",
-      "tag": "time_entries",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": "UpdateTimeEntrieRequest",
-      "requestShape": {
-        "wrapper": "status"
       },
       "paginated": false,
       "responseSchema": null,
@@ -3410,6 +3737,223 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "list_users",
+      "method": "get",
+      "path": "/users",
+      "tag": "users",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_user",
+      "method": "post",
+      "path": "/users",
+      "tag": "users",
+      "pathParams": [],
+      "queryParams": [],
+      "requestSchema": "CreateUserRequest",
+      "requestShape": {
+        "wrapper": "user"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_user",
+      "method": "delete",
+      "path": "/users/{id}",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_user",
+      "method": "get",
+      "path": "/users/{id}",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_user",
+      "method": "patch",
+      "path": "/users/{id}",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "UpdateUserRequest",
+      "requestShape": {
+        "wrapper": "user"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_users_disable",
+      "method": "post",
+      "path": "/users/{id}/disable",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersDisableRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "disable"
+    },
+    {
+      "id": "create_users_enable",
+      "method": "post",
+      "path": "/users/{id}/enable",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersEnableRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "enable"
+    },
+    {
+      "id": "list_users_qr_code",
+      "method": "get",
+      "path": "/users/{id}/qr_code",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "qr_code"
+    },
+    {
+      "id": "create_users_reset_pin",
+      "method": "post",
+      "path": "/users/{id}/reset_pin",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersResetPinRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reset_pin"
+    },
+    {
+      "id": "create_users_send_confirmation",
+      "method": "post",
+      "path": "/users/{id}/send_confirmation",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersSendConfirmationRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_confirmation"
+    },
+    {
+      "id": "create_users_send_password_reset",
+      "method": "post",
+      "path": "/users/{id}/send_password_reset",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersSendPasswordResetRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "send_password_reset"
+    },
+    {
+      "id": "create_users_unlock",
+      "method": "post",
+      "path": "/users/{id}/unlock",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "queryParams": [],
+      "requestSchema": "CreateUsersUnlockRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "unlock"
     },
     {
       "id": "list_vehicle_tags",
@@ -3862,22 +4406,6 @@
       "responseSchema": "PurchaseOrder",
       "responseBody": true,
       "summary": "index"
-    },
-    {
-      "id": "delete_voice_command",
-      "method": "delete",
-      "path": "/voice_commands/{id}",
-      "tag": "voice_commands",
-      "pathParams": [
-        "id"
-      ],
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "destroy"
     },
     {
       "id": "list_work_orders",
@@ -4395,8 +4923,8 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "show"
     },
     {
@@ -4408,13 +4936,11 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateWorkOrderPaymentRequest",
-      "requestShape": {
-        "wrapper": "payment"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -4460,13 +4986,11 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersRefundRequest",
-      "requestShape": {
-        "wrapper": "refund"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "create"
     },
     {
@@ -5168,13 +5692,11 @@
         "work_order_id"
       ],
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersVoidRequest",
-      "requestShape": {
-        "wrapper": "payment_id"
-      },
+      "requestSchema": null,
+      "requestShape": null,
       "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
+      "responseSchema": null,
+      "responseBody": false,
       "summary": "create"
     },
     {
