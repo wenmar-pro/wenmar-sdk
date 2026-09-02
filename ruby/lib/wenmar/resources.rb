@@ -391,8 +391,9 @@ def get_all_fleets()
   paginator_to_a(list_fleets(), 1000)
 end
 # Runs create_inspection_report (POST /inspection_reports).
-def create_inspection_report()
-  post("/inspection_reports")
+def create_inspection_report(inspection_id: nil, work_order_id: nil)
+  params = { inspection_id: inspection_id, work_order_id: work_order_id }
+  post("/inspection_reports", params.compact)
 end
 # Deletes delete_inspection_report.
 def delete_inspection_report(id)
@@ -432,8 +433,9 @@ def reset_inspection_report(id)
   patch("/inspection_reports/#{id}/reset")
 end
 # Runs retry_inspection_report_recording (POST /inspection_reports/{id}/retry_recording).
-def retry_inspection_report_recording(id)
-  post("/inspection_reports/#{id}/retry_recording")
+def retry_inspection_report_recording(id, recording_id: nil)
+  params = { recording_id: recording_id }
+  post("/inspection_reports/#{id}/retry_recording", params.compact)
 end
 # Runs unpublish_inspection_report (PATCH /inspection_reports/{id}/unpublish).
 def unpublish_inspection_report(id)

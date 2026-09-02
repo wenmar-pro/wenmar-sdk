@@ -121,34 +121,53 @@ def build_method(op)
     end
   when "post", "patch"
     verb = method
+    query_kw = query.map { |q| "#{q["name"]}: nil" }
+    params_line = if query.empty?
+      ""
+    else
+      "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
+    end
     if body_keys.empty?
       # no body or empty body
-      body = body_keys.empty? ? "" : "{}"
-      call_body = body.empty? ? "" : ", #{body}"
-      sig = pos.join(", ")
+      sig = (pos + query_kw).join(", ")
+      call_args = +"\"#{substituted}\""
+      call_args << ", params.compact" unless query.empty?
+      body_lines = [params_line, "#{verb}(#{call_args})"].reject(&:empty?)
       <<~RUBY
         # Runs #{m} (#{verb.upcase} #{path}).
         def #{m}(#{sig.empty? ? "" : sig})
-          #{verb}("#{substituted}"#{call_body})
+          #{body_lines.join("\n  ")}
         end
       RUBY
     else
       kw = body_keys.map { |k| "#{k}:" }
-      sig = (pos + kw).join(", ")
+      sig = (pos + kw + query_kw).join(", ")
       body = "{ #{body_keys.map { |k| "#{k}: #{k}" }.join(", ")} }"
+      call_args = +"\"#{substituted}\", #{body}"
+      call_args << ", params.compact" unless query.empty?
+      body_lines = [params_line, "#{verb}(#{call_args})"].reject(&:empty?)
       <<~RUBY
         # Runs #{m} (#{verb.upcase} #{path}).
         def #{m}(#{sig.empty? ? "" : sig})
-          #{verb}("#{substituted}", #{body})
+          #{body_lines.join("\n  ")}
         end
       RUBY
     end
   when "delete"
-    sig = pos.join(", ")
+    query_kw = query.map { |q| "#{q["name"]}: nil" }
+    sig = (pos + query_kw).join(", ")
+    params_line = if query.empty?
+      ""
+    else
+      "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
+    end
+    call_args = +"\"#{substituted}\""
+    call_args << ", params.compact" unless query.empty?
+    body_lines = [params_line, "delete(#{call_args})"].reject(&:empty?)
     <<~RUBY
       # Deletes #{m}.
       def #{m}(#{sig.empty? ? "" : sig})
-        delete("#{substituted}")
+        #{body_lines.join("\n  ")}
       end
     RUBY
   end

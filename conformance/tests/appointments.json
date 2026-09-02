@@ -1,0 +1,184 @@
+[
+  {
+    "name": "list_appointments_success",
+    "operation": "list_appointments",
+    "method": "GET",
+    "path": "/appointments",
+    "query": { "status": "scheduled" },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.customer_name", "equals": "Jane Doe" }
+    }
+  },
+  {
+    "name": "show_appointment_success",
+    "operation": "show_appointment",
+    "method": "GET",
+    "path": "/appointments/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "scheduled" }
+    }
+  },
+  {
+    "name": "create_appointment_success",
+    "operation": "create_appointment",
+    "method": "POST",
+    "path": "/appointments",
+    "requestBody": { "appointment": { "customer_name": "Jane Doe", "starts_at": "2026-09-02T10:00:00Z" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "update_appointment_success",
+    "operation": "update_appointment",
+    "method": "PATCH",
+    "path": "/appointments/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "appointment": { "customer_concern": "Brakes squealing" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_concern": "Brakes squealing" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "customer_concern", "equals": "Brakes squealing" }
+    }
+  },
+  {
+    "name": "delete_appointment_success",
+    "operation": "delete_appointment",
+    "method": "DELETE",
+    "path": "/appointments/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_appointments_available_slots_success",
+    "operation": "list_appointments_available_slots",
+    "method": "GET",
+    "path": "/appointments/available_slots",
+    "query": { "date": "2026-09-02", "duration_minutes": 60 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "starts_at": "2026-09-02T10:00:00Z", "ends_at": "2026-09-02T11:00:00Z" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.starts_at", "equals": "2026-09-02T10:00:00Z" }
+    }
+  },
+  {
+    "name": "create_appointments_approval_success",
+    "operation": "create_appointments_approval",
+    "method": "POST",
+    "path": "/appointments/1/approvals",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "approved" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "approved" }
+    }
+  },
+  {
+    "name": "create_appointments_cancellation_success",
+    "operation": "create_appointments_cancellation",
+    "method": "POST",
+    "path": "/appointments/1/cancellations",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "cancelled" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "cancelled" }
+    }
+  },
+  {
+    "name": "create_appointments_follow_up_success",
+    "operation": "create_appointments_follow_up",
+    "method": "POST",
+    "path": "/appointments/1/follow_ups",
+    "pathParams": { "id": 1 },
+    "requestBody": { "appointment": { "follow_up_reason": "customer_unreachable" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "follow_up", "follow_up_reason": "customer_unreachable" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "follow_up_reason", "equals": "customer_unreachable" }
+    }
+  },
+  {
+    "name": "create_appointments_rejection_success",
+    "operation": "create_appointments_rejection",
+    "method": "POST",
+    "path": "/appointments/1/rejections",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "rejected" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "rejected" }
+    }
+  },
+  {
+    "name": "create_appointments_vehicle_reconciliation_success",
+    "operation": "create_appointments_vehicle_reconciliation",
+    "method": "POST",
+    "path": "/appointments/1/vehicle_reconciliations",
+    "pathParams": { "id": 1 },
+    "requestBody": { "vehicle_action": "create", "vehicle_id": 5 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "vehicle": { "id": 5 } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "vehicle.id", "equals": 5 }
+    }
+  },
+  {
+    "name": "create_appointments_work_order_success",
+    "operation": "create_appointments_work_order",
+    "method": "POST",
+    "path": "/appointments/1/work_orders",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "work_order": { "id": 9 } } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "work_order.id", "equals": 9 }
+    }
+  }
+]

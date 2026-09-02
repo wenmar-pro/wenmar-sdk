@@ -1,0 +1,463 @@
+[
+  {
+    "name": "list_labor_rates_success",
+    "operation": "list_labor_rates",
+    "method": "GET",
+    "path": "/labor_rates",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Standard", "rate_cents": 9500 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Standard" } }
+  },
+  {
+    "name": "create_labor_rate_success",
+    "operation": "create_labor_rate",
+    "method": "POST",
+    "path": "/labor_rates",
+    "requestBody": { "labor_rate": { "name": "Diagnostic", "rate_cents": 12000 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Diagnostic", "rate_cents": 12000 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_labor_rate_success",
+    "operation": "update_labor_rate",
+    "method": "PATCH",
+    "path": "/labor_rates/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "labor_rate": { "rate_cents": 13000 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Diagnostic", "rate_cents": 13000 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "rate_cents", "equals": 13000 } }
+  },
+  {
+    "name": "delete_labor_rate_success",
+    "operation": "delete_labor_rate",
+    "method": "DELETE",
+    "path": "/labor_rates/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_labor_matrices_success",
+    "operation": "list_labor_matrices",
+    "method": "GET",
+    "path": "/labor_matrices",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Brake Labor", "description": "Brake service labor matrix" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Brake Labor" } }
+  },
+  {
+    "name": "create_labor_matrice_success",
+    "operation": "create_labor_matrice",
+    "method": "POST",
+    "path": "/labor_matrices",
+    "requestBody": { "labor_matrix": { "name": "Suspension Labor" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Suspension Labor" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_labor_matrice_success",
+    "operation": "update_labor_matrice",
+    "method": "PATCH",
+    "path": "/labor_matrices/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "labor_matrix": { "name": "Suspension Labor (Updated)" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Suspension Labor (Updated)" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Suspension Labor (Updated)" } }
+  },
+  {
+    "name": "delete_labor_matrice_success",
+    "operation": "delete_labor_matrice",
+    "method": "DELETE",
+    "path": "/labor_matrices/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_labels_success",
+    "operation": "list_labels",
+    "method": "GET",
+    "path": "/labels",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "VIP", "color": "gold" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "VIP" } }
+  },
+  {
+    "name": "create_label_success",
+    "operation": "create_label",
+    "method": "POST",
+    "path": "/labels",
+    "requestBody": { "label": { "name": "Fleet", "color": "blue" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Fleet", "color": "blue" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_label_success",
+    "operation": "update_label",
+    "method": "PATCH",
+    "path": "/labels/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "label": { "color": "green" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Fleet", "color": "green" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "color", "equals": "green" } }
+  },
+  {
+    "name": "list_sub_statuses_success",
+    "operation": "list_sub_statuses",
+    "method": "GET",
+    "path": "/sub_statuses",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Waiting on Parts", "status_type": "in_progress" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Waiting on Parts" } }
+  },
+  {
+    "name": "create_sub_statuse_success",
+    "operation": "create_sub_statuse",
+    "method": "POST",
+    "path": "/sub_statuses",
+    "requestBody": { "sub_status_type": { "name": "Awaiting Approval", "status_type": "in_progress" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Awaiting Approval", "status_type": "in_progress" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_sub_statuse_success",
+    "operation": "update_sub_statuse",
+    "method": "PATCH",
+    "path": "/sub_statuses/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "sub_status_type": { "name": "Awaiting Approval (Updated)" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Awaiting Approval (Updated)", "status_type": "in_progress" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Awaiting Approval (Updated)" } }
+  },
+  {
+    "name": "list_lead_sources_success",
+    "operation": "list_lead_sources",
+    "method": "GET",
+    "path": "/lead_sources",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Walk-in", "active": true } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Walk-in" } }
+  },
+  {
+    "name": "create_lead_source_success",
+    "operation": "create_lead_source",
+    "method": "POST",
+    "path": "/lead_sources",
+    "requestBody": { "lead_source": { "name": "Google" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Google", "active": true } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_lead_source_success",
+    "operation": "update_lead_source",
+    "method": "PATCH",
+    "path": "/lead_sources/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "lead_source": { "name": "Google Ads" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Google Ads", "active": true } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Google Ads" } }
+  },
+  {
+    "name": "delete_lead_source_success",
+    "operation": "delete_lead_source",
+    "method": "DELETE",
+    "path": "/lead_sources/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_lead_sources_seed_default_success",
+    "operation": "create_lead_sources_seed_default",
+    "method": "POST",
+    "path": "/lead_sources/seed_defaults",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Walk-in", "active": true } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Walk-in" } }
+  },
+  {
+    "name": "list_shop_fees_success",
+    "operation": "list_shop_fees",
+    "method": "GET",
+    "path": "/shop_fees",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Shop Supplies", "amount_cents": 500 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Shop Supplies" } }
+  },
+  {
+    "name": "create_shop_fee_success",
+    "operation": "create_shop_fee",
+    "method": "POST",
+    "path": "/shop_fees",
+    "requestBody": { "shop_fee_config": { "name": "Environmental Fee", "amount_cents": 250 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Environmental Fee", "amount_cents": 250 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_shop_fee_success",
+    "operation": "update_shop_fee",
+    "method": "PATCH",
+    "path": "/shop_fees/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "shop_fee_config": { "amount_cents": 300 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Environmental Fee", "amount_cents": 300 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "amount_cents", "equals": 300 } }
+  },
+  {
+    "name": "delete_shop_fee_success",
+    "operation": "delete_shop_fee",
+    "method": "DELETE",
+    "path": "/shop_fees/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_shop_fees_duplicate_success",
+    "operation": "create_shop_fees_duplicate",
+    "method": "POST",
+    "path": "/shop_fees/1/duplicate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 3, "name": "Shop Supplies (Copy)", "amount_cents": 500 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 3 } }
+  },
+  {
+    "name": "list_shop_discounts_success",
+    "operation": "list_shop_discounts",
+    "method": "GET",
+    "path": "/shop_discounts",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Senior Discount", "percent": 10 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Senior Discount" } }
+  },
+  {
+    "name": "create_shop_discount_success",
+    "operation": "create_shop_discount",
+    "method": "POST",
+    "path": "/shop_discounts",
+    "requestBody": { "shop_discount_config": { "name": "Military Discount", "percent": 15 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Military Discount", "percent": 15 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_shop_discount_success",
+    "operation": "update_shop_discount",
+    "method": "PATCH",
+    "path": "/shop_discounts/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "shop_discount_config": { "percent": 20 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Military Discount", "percent": 20 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "percent", "equals": 20 } }
+  },
+  {
+    "name": "delete_shop_discount_success",
+    "operation": "delete_shop_discount",
+    "method": "DELETE",
+    "path": "/shop_discounts/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_shop_discounts_duplicate_success",
+    "operation": "create_shop_discounts_duplicate",
+    "method": "POST",
+    "path": "/shop_discounts/1/duplicate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 3, "name": "Senior Discount (Copy)", "percent": 10 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 3 } }
+  },
+  {
+    "name": "list_parts_matrices_success",
+    "operation": "list_parts_matrices",
+    "method": "GET",
+    "path": "/parts_matrices",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Brake Pads", "description": "Brake pad parts matrix" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Brake Pads" } }
+  },
+  {
+    "name": "create_parts_matrice_success",
+    "operation": "create_parts_matrice",
+    "method": "POST",
+    "path": "/parts_matrices",
+    "requestBody": { "parts_matrix": { "name": "Oil Filters" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Oil Filters" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_parts_matrice_success",
+    "operation": "update_parts_matrice",
+    "method": "PATCH",
+    "path": "/parts_matrices/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "parts_matrix": { "name": "Oil Filters (Updated)" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Oil Filters (Updated)" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Oil Filters (Updated)" } }
+  },
+  {
+    "name": "delete_parts_matrice_success",
+    "operation": "delete_parts_matrice",
+    "method": "DELETE",
+    "path": "/parts_matrices/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_core_tax_rules_success",
+    "operation": "list_core_tax_rules",
+    "method": "GET",
+    "path": "/core_tax_rules",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "State Sales Tax", "rate": 0.07 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "State Sales Tax" } }
+  },
+  {
+    "name": "update_core_tax_rule_success",
+    "operation": "update_core_tax_rule",
+    "method": "PATCH",
+    "path": "/core_tax_rules/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "core_tax_rule": { "rate": 0.08 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "State Sales Tax", "rate": 0.08 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "rate", "equals": 0.08 } }
+  },
+  {
+    "name": "list_preferences_success",
+    "operation": "list_preferences",
+    "method": "GET",
+    "path": "/preferences",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "distance_unit": "mi" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "currency", "equals": "USD" } }
+  },
+  {
+    "name": "list_profile_success",
+    "operation": "list_profile",
+    "method": "GET",
+    "path": "/profile",
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Jane Doe", "email": "jane@example.com" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Jane Doe" } }
+  },
+  {
+    "name": "list_recent_searches_success",
+    "operation": "list_recent_searches",
+    "method": "GET",
+    "path": "/recent_searches",
+    "mockResponses": [
+      { "status": 200, "body": { "recents": [ { "id": 1, "query": "brake pads", "resource_type": "parts" } ] } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "recents.0.query", "equals": "brake pads" } }
+  },
+  {
+    "name": "create_recent_searche_success",
+    "operation": "create_recent_searche",
+    "method": "POST",
+    "path": "/recent_searches",
+    "requestBody": { "recent_search": { "query": "oil change", "resource_type": "services" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "query": "oil change", "resource_type": "services" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "delete_recent_searche_success",
+    "operation": "delete_recent_searche",
+    "method": "DELETE",
+    "path": "/recent_searches/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 200, "body": { "id": 2 } } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "delete_recent_searches_clear_success",
+    "operation": "delete_recent_searches_clear",
+    "method": "DELETE",
+    "path": "/recent_searches/clear",
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_settings_labor_templates_success",
+    "operation": "list_settings_labor_templates",
+    "method": "GET",
+    "path": "/settings/labor_templates",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Standard Labor", "hours": 1.0 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Standard Labor" } }
+  },
+  {
+    "name": "update_settings_labor_template_success",
+    "operation": "update_settings_labor_template",
+    "method": "PATCH",
+    "path": "/settings/labor_templates/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "labor_template": { "hours": 1.5 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Standard Labor", "hours": 1.5 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "hours", "equals": 1.5 } }
+  },
+  {
+    "name": "delete_settings_labor_template_success",
+    "operation": "delete_settings_labor_template",
+    "method": "DELETE",
+    "path": "/settings/labor_templates/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  }
+]

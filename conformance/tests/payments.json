@@ -1,0 +1,91 @@
+[
+  {
+    "name": "list_payments_success",
+    "operation": "list_payments",
+    "method": "GET",
+    "path": "/payments",
+    "query": { "method": "cash" },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.amount_cents", "equals": 5000 }
+    }
+  },
+  {
+    "name": "list_payments_pending_success",
+    "operation": "list_payments_pending",
+    "method": "GET",
+    "path": "/payments/pending",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.id", "equals": 1 }
+    }
+  },
+  {
+    "name": "show_payment_success",
+    "operation": "show_payment",
+    "method": "GET",
+    "path": "/payments/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash", "processor_status": "succeeded" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "processor_status", "equals": "succeeded" }
+    }
+  },
+  {
+    "name": "create_payments_cancellation_success",
+    "operation": "create_payments_cancellation",
+    "method": "POST",
+    "path": "/payments/1/cancellation",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash", "voided": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "voided", "equals": true }
+    }
+  },
+  {
+    "name": "create_payments_confirmation_success",
+    "operation": "create_payments_confirmation",
+    "method": "POST",
+    "path": "/payments/1/confirmation",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash", "processor_status": "succeeded" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "processor_status", "equals": "succeeded" }
+    }
+  },
+  {
+    "name": "create_payments_failure_success",
+    "operation": "create_payments_failure",
+    "method": "POST",
+    "path": "/payments/1/failure",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "amount_cents": 5000, "currency": "CAD", "method": "cash", "processor_status": "failed" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "processor_status", "equals": "failed" }
+    }
+  }
+]

@@ -1,0 +1,566 @@
+[
+  {
+    "name": "create_work_orders_courtesy_car_assignment_success",
+    "operation": "create_work_orders_courtesy_car_assignment",
+    "method": "POST",
+    "path": "/work_orders/1/courtesy_car_assignment",
+    "pathParams": { "id": 1 },
+    "requestBody": { "vehicle_id": 20 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_courtesy_car_assignment_success",
+    "operation": "update_work_orders_courtesy_car_assignment",
+    "method": "PATCH",
+    "path": "/work_orders/1/courtesy_car_assignment",
+    "pathParams": { "id": 1 },
+    "requestBody": { "action_type": "assign" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "open" } }
+  },
+  {
+    "name": "delete_work_orders_courtesy_car_assignment_success",
+    "operation": "delete_work_orders_courtesy_car_assignment",
+    "method": "DELETE",
+    "path": "/work_orders/1/courtesy_car_assignment",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_order_authorization_success",
+    "operation": "create_work_order_authorization",
+    "method": "POST",
+    "path": "/work_orders/1/authorization",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "authorization_method": "sms", "service_ids": [1], "service_decisions": {} },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_order_authorization_decisions_success",
+    "operation": "update_work_order_authorization_decisions",
+    "method": "POST",
+    "path": "/work_orders/1/authorization/update_decisions",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "service_decision_reasons": [] },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "list_work_orders_concerns_success",
+    "operation": "list_work_orders_concerns",
+    "method": "GET",
+    "path": "/work_orders/1/concerns",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_work_orders_summary_activity_success",
+    "operation": "list_work_orders_summary_activity",
+    "method": "GET",
+    "path": "/work_orders/1/summary/activity",
+    "pathParams": { "work_order_id": 1 },
+    "query": {},
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_work_orders_summary_appointments_success",
+    "operation": "list_work_orders_summary_appointments",
+    "method": "GET",
+    "path": "/work_orders/1/summary/appointments",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_work_orders_summary_authorization_logs_success",
+    "operation": "list_work_orders_summary_authorization_logs",
+    "method": "GET",
+    "path": "/work_orders/1/summary/authorization_logs",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_work_orders_summary_vehicle_history_success",
+    "operation": "list_work_orders_summary_vehicle_history",
+    "method": "GET",
+    "path": "/work_orders/1/summary/vehicle_history",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_work_orders_fee_exclusion_success",
+    "operation": "create_work_orders_fee_exclusion",
+    "method": "POST",
+    "path": "/work_orders/1/fee_exclusions",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "work_order_fee_exclusion": { "fee_id": 5 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "delete_work_orders_fee_exclusion_success",
+    "operation": "delete_work_orders_fee_exclusion",
+    "method": "DELETE",
+    "path": "/work_orders/1/fee_exclusions/5",
+    "pathParams": { "work_order_id": 1, "id": 5 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_work_orders_label_success",
+    "operation": "create_work_orders_label",
+    "method": "POST",
+    "path": "/work_orders/1/labels",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "label_id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "delete_work_orders_label_success",
+    "operation": "delete_work_orders_label",
+    "method": "DELETE",
+    "path": "/work_orders/1/labels/3",
+    "pathParams": { "work_order_id": 1, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "reverse_work_order_payment_ar_success",
+    "operation": "reverse_work_order_payment_ar",
+    "method": "DELETE",
+    "path": "/work_orders/1/payments/reverse_ar",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "send_work_order_payment_to_ar_success",
+    "operation": "send_work_order_payment_to_ar",
+    "method": "POST",
+    "path": "/work_orders/1/payments/send_to_ar",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_refund_success",
+    "operation": "create_work_orders_refund",
+    "method": "POST",
+    "path": "/work_orders/1/refunds",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "refund": { "amount_cents": 5000, "method": "credit" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_void_success",
+    "operation": "create_work_orders_void",
+    "method": "POST",
+    "path": "/work_orders/1/voids",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "payment_id": 10 },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_service_success",
+    "operation": "create_work_orders_service",
+    "method": "POST",
+    "path": "/work_orders/1/services",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "work_order_service": { "name": "Oil Change", "category_id": 1 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_service_success",
+    "operation": "update_work_orders_service",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "work_order_service": { "name": "Brake Service" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "delete_work_orders_service_success",
+    "operation": "delete_work_orders_service",
+    "method": "DELETE",
+    "path": "/work_orders/1/services/2",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_work_orders_services_reorder_success",
+    "operation": "update_work_orders_services_reorder",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/reorder",
+    "pathParams": { "work_order_id": 1 },
+    "requestBody": { "service_ids": [3, 1, 2] },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_work_orders_services_acknowledge_parts_success",
+    "operation": "update_work_orders_services_acknowledge_parts",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/acknowledge_parts",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_services_add_line_item_success",
+    "operation": "create_work_orders_services_add_line_item",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/add_line_item",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "item_type": "part", "name": "Brake Pad", "amount_cents": 5000 },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_services_add_package_success",
+    "operation": "create_work_orders_services_add_package",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/add_package",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "package_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "list_work_orders_services_adjust_time_success",
+    "operation": "list_work_orders_services_adjust_time",
+    "method": "GET",
+    "path": "/work_orders/1/services/2/adjust_time",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [ { "status": 200, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_work_orders_services_adjust_time_success",
+    "operation": "update_work_orders_services_adjust_time",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/adjust_time",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "hours": 1, "minutes": 30 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_apply_discount_success",
+    "operation": "update_work_orders_services_apply_discount",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/apply_discount",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "discount": { "percent": 10 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_complete_service_success",
+    "operation": "update_work_orders_services_complete_service",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/complete_service",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_services_duplicate_success",
+    "operation": "create_work_orders_services_duplicate",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/duplicate",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_pause_success",
+    "operation": "update_work_orders_services_pause",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/pause",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_publish_success",
+    "operation": "update_work_orders_services_publish",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/publish",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_reset_completion_success",
+    "operation": "update_work_orders_services_reset_completion",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/reset_completion",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_revive_success",
+    "operation": "update_work_orders_services_revive",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/revive",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_start_success",
+    "operation": "update_work_orders_services_start",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/start",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_toggle_labor_completion_success",
+    "operation": "update_work_orders_services_toggle_labor_completion",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/toggle_labor_completion",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "line_item_id": 5 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_toggle_labor_tax_success",
+    "operation": "update_work_orders_services_toggle_labor_tax",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/toggle_labor_tax",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_services_unauthorize_success",
+    "operation": "create_work_orders_services_unauthorize",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/unauthorize",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_update_category_success",
+    "operation": "update_work_orders_services_update_category",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/update_category",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "category_id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_update_pricing_mode_success",
+    "operation": "update_work_orders_services_update_pricing_mode",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/update_pricing_mode",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "work_order_service": { "pricing_mode": "flat" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_update_service_technician_success",
+    "operation": "update_work_orders_services_update_service_technician",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/update_service_technician",
+    "pathParams": { "work_order_id": 1, "id": 2 },
+    "requestBody": { "work_order_service": { "technician_id": 5 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_work_orders_services_line_item_success",
+    "operation": "create_work_orders_services_line_item",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/line_items",
+    "pathParams": { "work_order_id": 1, "service_id": 2 },
+    "requestBody": { "work_order_line_item": { "name": "Oil Filter", "amount_cents": 1500 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_orders_services_line_item_success",
+    "operation": "update_work_orders_services_line_item",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "requestBody": { "work_order_line_item": { "amount_cents": 2000 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "delete_work_orders_services_line_item_success",
+    "operation": "delete_work_orders_services_line_item",
+    "method": "DELETE",
+    "path": "/work_orders/1/services/2/line_items/3",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "add_work_order_service_line_item_to_inventory_success",
+    "operation": "add_work_order_service_line_item_to_inventory",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/add_to_inventory",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "duplicate_work_order_service_line_item_success",
+    "operation": "duplicate_work_order_service_line_item",
+    "method": "POST",
+    "path": "/work_orders/1/services/2/line_items/3/duplicate",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "pull_work_order_service_line_item_success",
+    "operation": "pull_work_order_service_line_item",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/pull",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "refresh_work_order_service_line_item_price_success",
+    "operation": "refresh_work_order_service_line_item_price",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/refresh_price",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "undo_pull_work_order_service_line_item_success",
+    "operation": "undo_pull_work_order_service_line_item",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/undo_pull",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "undo_return_work_order_service_line_item_success",
+    "operation": "undo_return_work_order_service_line_item",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/undo_return",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_work_order_service_line_item_part_status_success",
+    "operation": "update_work_order_service_line_item_part_status",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/2/line_items/3/update_part_status",
+    "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
+    "requestBody": { "part_status": "ordered" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  }
+]

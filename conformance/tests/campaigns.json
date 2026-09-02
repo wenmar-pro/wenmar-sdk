@@ -1,0 +1,76 @@
+[
+  {
+    "name": "list_campaigns_success",
+    "operation": "list_campaigns",
+    "method": "GET",
+    "path": "/campaigns",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "broadcast_campaign", "name": "Spring Sale", "status": "draft", "recipient_count": 0 } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.name", "equals": "Spring Sale" }
+    }
+  },
+  {
+    "name": "show_campaign_success",
+    "operation": "show_campaign",
+    "method": "GET",
+    "path": "/campaigns/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "broadcast_campaign", "name": "Spring Sale", "status": "draft", "recipient_count": 0 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "draft" }
+    }
+  },
+  {
+    "name": "create_campaign_success",
+    "operation": "create_campaign",
+    "method": "POST",
+    "path": "/campaigns",
+    "requestBody": { "broadcast_campaign": { "name": "Spring Sale", "sms_body": "20% off all brake work!" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "broadcast_campaign", "name": "Spring Sale", "status": "draft", "recipient_count": 0 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "duplicate_campaign_success",
+    "operation": "duplicate_campaign",
+    "method": "POST",
+    "path": "/campaigns/1/duplicate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "type": "broadcast_campaign", "name": "Spring Sale (Copy)", "status": "draft", "recipient_count": 0 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 2 }
+    }
+  },
+  {
+    "name": "send_campaign_success",
+    "operation": "send_campaign",
+    "method": "POST",
+    "path": "/campaigns/1/send_campaign",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "broadcast_campaign", "name": "Spring Sale", "status": "sending", "recipient_count": 10 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "sending" }
+    }
+  }
+]

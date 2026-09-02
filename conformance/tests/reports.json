@@ -1,0 +1,173 @@
+[
+  {
+    "name": "list_reports_performance_success",
+    "operation": "list_reports_performance",
+    "method": "GET",
+    "path": "/reports/performance",
+    "mockResponses": [
+      { "status": 200, "body": { "view_type": "daily", "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "kpi_summary": { "revenue_cents": 100000 }, "daily_target_cents": 5000, "revenue_series": [], "car_count_series": [], "aro_series": [], "top_services": [], "retention": {}, "url": "https://api.example.com/reports/performance", "app_url": "https://app.example.com/reports/performance" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "view_type", "equals": "daily" } }
+  },
+  {
+    "name": "list_reports_sales_summary_success",
+    "operation": "list_reports_sales_summary",
+    "method": "GET",
+    "path": "/reports/sales_summary",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "totals": { "revenue_cents": 100000 }, "car_count": 10, "invoice_count": 8, "aro_cents": 12500, "segment_gp": {}, "kpi_summary": {}, "url": "https://api.example.com/reports/sales_summary", "app_url": "https://app.example.com/reports/sales_summary" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "car_count", "equals": 10 } }
+  },
+  {
+    "name": "list_reports_accounting_success",
+    "operation": "list_reports_accounting",
+    "method": "GET",
+    "path": "/reports/accounting",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "tax": { "tax_collected_by_province": {}, "tax_collected_by_type": {}, "taxable_vs_exempt": { "exempt_cents": 0, "taxable_cents": 0 }, "total_tax_collected_cents": 0 }, "payments": { "collected_by_payment_method": {}, "payment_count": 0, "total_collected_cents": 0 }, "outstanding_balances": [], "outstanding_total": 5000, "url": "https://api.example.com/reports/accounting", "app_url": "https://app.example.com/reports/accounting" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "outstanding_total", "equals": 5000 } }
+  },
+  {
+    "name": "list_reports_ar_aging_success",
+    "operation": "list_reports_ar_aging",
+    "method": "GET",
+    "path": "/reports/ar_aging",
+    "mockResponses": [
+      { "status": 200, "body": { "rows": [], "totals": {}, "credit_rows": [], "credits_total_cents": 0, "url": "https://api.example.com/reports/ar_aging", "app_url": "https://app.example.com/reports/ar_aging" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "credits_total_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_work_order_profitability_success",
+    "operation": "list_reports_work_order_profitability",
+    "method": "GET",
+    "path": "/reports/work_order_profitability",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "totals": {}, "url": "https://api.example.com/reports/work_order_profitability", "app_url": "https://app.example.com/reports/work_order_profitability" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "currency", "equals": "USD" } }
+  },
+  {
+    "name": "list_reports_technician_productivity_success",
+    "operation": "list_reports_technician_productivity",
+    "method": "GET",
+    "path": "/reports/technician_productivity",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "totals": {}, "period_comparison": {}, "url": "https://api.example.com/reports/technician_productivity", "app_url": "https://app.example.com/reports/technician_productivity" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "currency", "equals": "USD" } }
+  },
+  {
+    "name": "list_reports_declined_work_success",
+    "operation": "list_reports_declined_work",
+    "method": "GET",
+    "path": "/reports/declined_work",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "total_declined_value_cents": 0, "declined_count": 0, "category_breakdown": {}, "aging_buckets": {}, "saved_for_later": [], "total_saved_for_later_cents": 0, "url": "https://api.example.com/reports/declined_work", "app_url": "https://app.example.com/reports/declined_work" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "declined_count", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_parts_usage_success",
+    "operation": "list_reports_parts_usage",
+    "method": "GET",
+    "path": "/reports/parts_usage",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "total_cost_cents": 0, "total_revenue_cents": 0, "total_gp_cents": 0, "url": "https://api.example.com/reports/parts_usage", "app_url": "https://app.example.com/reports/parts_usage" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "total_cost_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_parts_purchases_success",
+    "operation": "list_reports_parts_purchases",
+    "method": "GET",
+    "path": "/reports/parts_purchases",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "total_spend_cents": 0, "po_count": 0, "return_count": 0, "net_units": 0, "url": "https://api.example.com/reports/parts_purchases", "app_url": "https://app.example.com/reports/parts_purchases" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "po_count", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_open_work_success",
+    "operation": "list_reports_open_work",
+    "method": "GET",
+    "path": "/reports/open_work",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "total_estimated_value_cents": 0, "status_summary": {}, "stuck_work": [], "saved_for_later": [], "total_saved_for_later_cents": 0, "url": "https://api.example.com/reports/open_work", "app_url": "https://app.example.com/reports/open_work" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "total_estimated_value_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_end_of_day_success",
+    "operation": "list_reports_end_of_day",
+    "method": "GET",
+    "path": "/reports/end_of_day",
+    "mockResponses": [
+      { "status": 200, "body": { "date": "2026-08-31", "total_sales_by_method": {}, "ar_postings_cents": 0, "ar_payments_collected_cents": 0, "store_credit_issued_cents": 0, "store_credit_applied_cents": 0, "over_short_cents": 0, "total_cashiered_cents": 0, "url": "https://api.example.com/reports/end_of_day", "app_url": "https://app.example.com/reports/end_of_day" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "date", "equals": "2026-08-31" } }
+  },
+  {
+    "name": "list_reports_profit_and_loss_success",
+    "operation": "list_reports_profit_and_loss",
+    "method": "GET",
+    "path": "/reports/profit_and_loss",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "revenue": {}, "net_revenue_cents": 0, "cogs": {}, "gross_profit_cents": 0, "operating_expenses": {}, "total_operating_expenses_cents": 0, "net_income_cents": 0, "url": "https://api.example.com/reports/profit_and_loss", "app_url": "https://app.example.com/reports/profit_and_loss" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "net_income_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_service_categories_success",
+    "operation": "list_reports_service_categories",
+    "method": "GET",
+    "path": "/reports/service_categories",
+    "mockResponses": [
+      { "status": 200, "body": { "start_date": "2026-08-01", "end_date": "2026-08-31", "rows": [], "url": "https://api.example.com/reports/service_categories", "app_url": "https://app.example.com/reports/service_categories" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "start_date", "equals": "2026-08-01" } }
+  },
+  {
+    "name": "list_reports_store_credit_success",
+    "operation": "list_reports_store_credit",
+    "method": "GET",
+    "path": "/reports/store_credit",
+    "mockResponses": [
+      { "status": 200, "body": { "total_liability_cents": 0, "average_balance_cents": 0, "customers_with_balance": [], "all_transactions": [], "url": "https://api.example.com/reports/store_credit", "app_url": "https://app.example.com/reports/store_credit" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "total_liability_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_reports_financial_success",
+    "operation": "list_reports_financial",
+    "method": "GET",
+    "path": "/reports/financial",
+    "mockResponses": [
+      { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "tab": "revenue", "revenue": {}, "tax": {}, "payments": {}, "url": "https://api.example.com/reports/financial", "app_url": "https://app.example.com/reports/financial" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "tab", "equals": "revenue" } }
+  },
+  {
+    "name": "create_customers_export_success",
+    "operation": "create_customers_export",
+    "method": "POST",
+    "path": "/customers/export",
+    "mockResponses": [
+      { "status": 200, "body": { "export_log_id": 42, "status": "pending" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "pending" } }
+  },
+  {
+    "name": "list_customers_export_download_not_ready",
+    "operation": "list_customers_export_download",
+    "method": "GET",
+    "path": "/customers/export/42/download",
+    "pathParams": { "id": 42 },
+    "mockResponses": [
+      { "status": 404, "body": { "error": { "code": "not_found", "message": "Export is not ready yet" } } }
+    ],
+    "expect": { "requestCount": 1, "noError": false, "errorCode": "not_found", "errorStatus": 404 }
+  }
+]

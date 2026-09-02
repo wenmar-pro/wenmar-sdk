@@ -1,0 +1,102 @@
+[
+  {
+    "name": "list_conversations_success",
+    "operation": "list_conversations",
+    "method": "GET",
+    "path": "/conversations",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "channel": "sms", "status": "open", "reply_state": "awaiting_reply", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "app_url": "https://app.example.com/conversations/1", "created_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.status", "equals": "open" } }
+  },
+  {
+    "name": "show_conversation_success",
+    "operation": "show_conversation",
+    "method": "GET",
+    "path": "/conversations/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "channel": "sms", "status": "open", "reply_state": "awaiting_reply", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "app_url": "https://app.example.com/conversations/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_conversation_success",
+    "operation": "update_conversation",
+    "method": "PATCH",
+    "path": "/conversations/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "status": "read" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "channel": "sms", "status": "read", "reply_state": "awaiting_reply", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "app_url": "https://app.example.com/conversations/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "read" } }
+  },
+  {
+    "name": "create_conversations_bulk_mark_read_success",
+    "operation": "create_conversations_bulk_mark_read",
+    "method": "POST",
+    "path": "/conversations/bulk_mark_read",
+    "mockResponses": [
+      { "status": 200, "body": { "ok": true, "affected": 3 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "affected", "equals": 3 } }
+  },
+  {
+    "name": "create_conversations_customer_link_success",
+    "operation": "create_conversations_customer_link",
+    "method": "POST",
+    "path": "/conversations/1/customer_links",
+    "pathParams": { "conversation_id": 1 },
+    "requestBody": { "customer_id": 10 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "channel": "sms", "status": "open", "reply_state": "awaiting_reply", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "app_url": "https://app.example.com/conversations/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "customer.id", "equals": 10 } }
+  },
+  {
+    "name": "create_conversations_ignore_success",
+    "operation": "create_conversations_ignore",
+    "method": "POST",
+    "path": "/conversations/1/ignores",
+    "pathParams": { "conversation_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "channel": "sms", "status": "ignored", "reply_state": "awaiting_reply", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "app_url": "https://app.example.com/conversations/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "ignored" } }
+  },
+  {
+    "name": "list_conversations_messages_success",
+    "operation": "list_conversations_messages",
+    "method": "GET",
+    "path": "/conversations/1/messages",
+    "pathParams": { "conversation_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "conversation_id": 1, "body": "Hello", "channel": "sms", "direction": "inbound", "status": "delivered", "created_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.body", "equals": "Hello" } }
+  },
+  {
+    "name": "create_conversations_message_success",
+    "operation": "create_conversations_message",
+    "method": "POST",
+    "path": "/conversations/1/messages",
+    "pathParams": { "conversation_id": 1 },
+    "requestBody": { "message": { "body": "Hello" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "conversation_id": 1, "body": "Hello", "channel": "sms", "direction": "outbound", "status": "queued", "sender": { "id": 5, "name": "Jane Service" }, "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "create_conversations_messages_resend_success",
+    "operation": "create_conversations_messages_resend",
+    "method": "POST",
+    "path": "/conversations/1/messages/5/resends",
+    "pathParams": { "conversation_id": 1, "id": 5 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 5, "conversation_id": 1, "body": "Hello", "channel": "sms", "direction": "outbound", "status": "queued", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 5 } }
+  }
+]

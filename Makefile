@@ -1,4 +1,4 @@
-.PHONY: check test conformance enrich generate docs scalar check-conformance-parity
+.PHONY: check test conformance enrich generate docs scalar check-conformance-parity check-ruby-signature-parity
 
 generate: enrich ## Run the full codegen pipeline from the enriched spec
 	cd go && go generate ./...
@@ -31,7 +31,10 @@ conformance: ## Run both conformance suites
 check-conformance-parity: ## Verify manifest <-> dispatch <-> test parity
 	ruby scripts/check_conformance_parity.rb
 
-check: enrich generate docs test conformance check-conformance-parity ## Full CI check — fails on drift
+check-ruby-signature-parity: ## Verify Ruby dispatch kwargs are accepted by the client
+	ruby scripts/check_ruby_signature_parity.rb
+
+check: enrich generate docs test conformance check-conformance-parity check-ruby-signature-parity ## Full CI check — fails on drift
 	@echo "Checking for generated-file drift..."
 	@if ! git diff --exit-code spec/openapi.enriched.yaml; then \
 		echo "::error::openapi.enriched.yaml has drifted. Run 'make enrich' and commit."; \

@@ -1,0 +1,108 @@
+[
+  {
+    "name": "list_inventory_levels_success",
+    "operation": "list_inventory_levels",
+    "method": "GET",
+    "path": "/inventory_levels",
+    "query": { "stocked": true },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "part_number": "BRK-001", "description": "Brake Pad Set", "stocked": true } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.part_number", "equals": "BRK-001" }
+    }
+  },
+  {
+    "name": "show_inventory_level_success",
+    "operation": "show_inventory_level",
+    "method": "GET",
+    "path": "/inventory_levels/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "part_number": "BRK-001", "description": "Brake Pad Set", "stocked": true, "on_hand": 12 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "on_hand", "equals": 12 }
+    }
+  },
+  {
+    "name": "create_inventory_level_success",
+    "operation": "create_inventory_level",
+    "method": "POST",
+    "path": "/inventory_levels",
+    "requestBody": { "part": { "part_number": "BRK-001", "description": "Brake Pad Set", "stocked": true } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "part_number": "BRK-001", "description": "Brake Pad Set", "stocked": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "update_inventory_level_success",
+    "operation": "update_inventory_level",
+    "method": "PATCH",
+    "path": "/inventory_levels/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "part": { "description": "Brake Pad Set Premium" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "part_number": "BRK-001", "description": "Brake Pad Set Premium", "stocked": true } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "description", "equals": "Brake Pad Set Premium" }
+    }
+  },
+  {
+    "name": "delete_inventory_level_success",
+    "operation": "delete_inventory_level",
+    "method": "DELETE",
+    "path": "/inventory_levels/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "list_inventory_levels_barcode_lookup_success",
+    "operation": "list_inventory_levels_barcode_lookup",
+    "method": "GET",
+    "path": "/inventory_levels/barcode_lookup",
+    "query": { "barcode": "1234567890123" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "part_number": "BRK-001", "barcode": "1234567890123" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "barcode", "equals": "1234567890123" }
+    }
+  },
+  {
+    "name": "update_inventory_levels_stock_success",
+    "operation": "update_inventory_levels_stock",
+    "method": "PATCH",
+    "path": "/inventory_levels/1/stock",
+    "pathParams": { "id": 1 },
+    "requestBody": { "inventory_level": { "on_hand": 15 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "part_number": "BRK-001", "stocked": true, "on_hand": 15 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "on_hand", "equals": 15 }
+    }
+  }
+]

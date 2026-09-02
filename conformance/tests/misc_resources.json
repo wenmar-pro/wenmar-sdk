@@ -1,0 +1,619 @@
+[
+  {
+    "name": "list_vehicles_success",
+    "operation": "list_vehicles",
+    "method": "GET",
+    "path": "/vehicles",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 20, "type": "vehicle", "make": "Honda", "model": "Civic", "year": 2020, "vin": "1HGCM82633A004352", "vehicle_type": "car", "license_plate_country": "US", "odometer": { "reading": 182340, "unit": "mi" }, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/vehicles/20", "app_url": "https://app.example.com/vehicles/20", "work_orders_url": "https://api.example.com/vehicles/20/work_orders", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.make", "equals": "Honda" } }
+  },
+  {
+    "name": "list_vehicles_autocomplete_success",
+    "operation": "list_vehicles_autocomplete",
+    "method": "GET",
+    "path": "/vehicles/autocomplete",
+    "query": {},
+    "mockResponses": [ { "status": 200, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_vehicles_customer_vehicles_success",
+    "operation": "list_vehicles_customer_vehicles",
+    "method": "GET",
+    "path": "/vehicles/customer_vehicles",
+    "query": {},
+    "mockResponses": [ { "status": 200, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_vehicles_work_orders_success",
+    "operation": "list_vehicles_work_orders",
+    "method": "GET",
+    "path": "/vehicles/20/work_orders",
+    "pathParams": { "vehicle_id": 20 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_customers_vehicles_success",
+    "operation": "list_customers_vehicles",
+    "method": "GET",
+    "path": "/customers/10/vehicles",
+    "pathParams": { "customer_id": 10 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_customers_vehicles_history_success",
+    "operation": "list_customers_vehicles_history",
+    "method": "GET",
+    "path": "/customers/10/vehicles/20/history",
+    "pathParams": { "customer_id": 10, "vehicle_id": 20 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 20, "type": "vehicle", "make": "Honda", "model": "Civic", "year": 2020, "vin": "1HGCM82633A004352", "vehicle_type": "car", "license_plate_country": "US", "odometer": { "reading": 182340, "unit": "mi" }, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/vehicles/20", "app_url": "https://app.example.com/vehicles/20", "work_orders_url": "https://api.example.com/vehicles/20/work_orders", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 20 } }
+  },
+  {
+    "name": "list_customers_work_orders_success",
+    "operation": "list_customers_work_orders",
+    "method": "GET",
+    "path": "/customers/10/work_orders",
+    "pathParams": { "customer_id": 10 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_customers_merge_success",
+    "operation": "list_customers_merge",
+    "method": "GET",
+    "path": "/customers/1043910089/merge",
+    "mockResponses": [ { "status": 200, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "delete_customer_success",
+    "operation": "delete_customer",
+    "method": "DELETE",
+    "path": "/customers/10",
+    "pathParams": { "id": 10 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_customer_tags_success",
+    "operation": "list_customer_tags",
+    "method": "GET",
+    "path": "/customer_tags",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "VIP" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "VIP" } }
+  },
+  {
+    "name": "delete_customer_tag_success",
+    "operation": "delete_customer_tag",
+    "method": "DELETE",
+    "path": "/customer_tags/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_customer_tag_success",
+    "operation": "update_customer_tag",
+    "method": "PATCH",
+    "path": "/customer_tags/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "name": "VIP" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "VIP" } }
+  },
+  {
+    "name": "list_vehicle_tags_success",
+    "operation": "list_vehicle_tags",
+    "method": "GET",
+    "path": "/vehicle_tags",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Fleet" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Fleet" } }
+  },
+  {
+    "name": "delete_vehicle_tag_success",
+    "operation": "delete_vehicle_tag",
+    "method": "DELETE",
+    "path": "/vehicle_tags/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Fleet" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_vehicle_tag_success",
+    "operation": "update_vehicle_tag",
+    "method": "PATCH",
+    "path": "/vehicle_tags/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "name": "Fleet" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Fleet" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Fleet" } }
+  },
+  {
+    "name": "list_expenses_success",
+    "operation": "list_expenses",
+    "method": "GET",
+    "path": "/expenses",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "amount_cents": 5000, "amount_currency": "USD", "category": "supplies", "description": "Supplies", "creator": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "url": "https://api.example.com/expenses/1", "app_url": "https://app.example.com/expenses/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.category", "equals": "supplies" } }
+  },
+  {
+    "name": "create_expense_success",
+    "operation": "create_expense",
+    "method": "POST",
+    "path": "/expenses",
+    "requestBody": { "expense": { "amount_cents": 5000, "description": "Supplies" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "amount_cents": 5000, "amount_currency": "USD", "category": "supplies", "description": "Supplies", "creator": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "url": "https://api.example.com/expenses/2", "app_url": "https://app.example.com/expenses/2", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "delete_expense_success",
+    "operation": "delete_expense",
+    "method": "DELETE",
+    "path": "/expenses/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_expense_success",
+    "operation": "update_expense",
+    "method": "PATCH",
+    "path": "/expenses/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "expense": { "amount_cents": 6000 } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "amount_cents": 6000, "amount_currency": "USD", "category": "supplies", "description": "Supplies", "creator": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "url": "https://api.example.com/expenses/1", "app_url": "https://app.example.com/expenses/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "amount_cents", "equals": 6000 } }
+  },
+  {
+    "name": "list_tires_success",
+    "operation": "list_tires",
+    "method": "GET",
+    "path": "/tires",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "brand": "Michelin", "size": "225/45R17", "url": "https://api.example.com/tires/1", "app_url": "https://app.example.com/tires/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.brand", "equals": "Michelin" } }
+  },
+  {
+    "name": "create_tire_success",
+    "operation": "create_tire",
+    "method": "POST",
+    "path": "/tires",
+    "requestBody": { "tire": { "brand": "Michelin", "size": "225/45R17" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "brand": "Michelin", "size": "225/45R17", "url": "https://api.example.com/tires/2", "app_url": "https://app.example.com/tires/2", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "show_tire_success",
+    "operation": "show_tire",
+    "method": "GET",
+    "path": "/tires/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "brand": "Michelin", "size": "225/45R17", "url": "https://api.example.com/tires/1", "app_url": "https://app.example.com/tires/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_tire_success",
+    "operation": "update_tire",
+    "method": "PATCH",
+    "path": "/tires/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "tire": { "brand": "Bridgestone" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "brand": "Bridgestone", "size": "225/45R17", "url": "https://api.example.com/tires/1", "app_url": "https://app.example.com/tires/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "brand", "equals": "Bridgestone" } }
+  },
+  {
+    "name": "delete_tire_success",
+    "operation": "delete_tire",
+    "method": "DELETE",
+    "path": "/tires/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_tire_storage_slots_success",
+    "operation": "list_tire_storage_slots",
+    "method": "GET",
+    "path": "/tire_storage_slots",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "slot_label": "A-1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "currently_stored": false, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "url": "https://api.example.com/tire_storage_slots/1", "app_url": "https://app.example.com/tire_storage_slots/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.slot_label", "equals": "A-1" } }
+  },
+  {
+    "name": "create_tire_storage_slot_success",
+    "operation": "create_tire_storage_slot",
+    "method": "POST",
+    "path": "/tire_storage_slots",
+    "requestBody": { "tire_storage_slot": { "location": "A-1" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "slot_label": "A-1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "currently_stored": false, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "url": "https://api.example.com/tire_storage_slots/2", "app_url": "https://app.example.com/tire_storage_slots/2", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "show_tire_storage_slot_success",
+    "operation": "show_tire_storage_slot",
+    "method": "GET",
+    "path": "/tire_storage_slots/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "slot_label": "A-1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "currently_stored": false, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "url": "https://api.example.com/tire_storage_slots/1", "app_url": "https://app.example.com/tire_storage_slots/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_tire_storage_slots_check_out_success",
+    "operation": "create_tire_storage_slots_check_out",
+    "method": "POST",
+    "path": "/tire_storage_slots/1/check_outs",
+    "pathParams": { "tire_storage_slot_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "slot_label": "A-1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "currently_stored": false, "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "url": "https://api.example.com/tire_storage_slots/1", "app_url": "https://app.example.com/tire_storage_slots/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "list_packages_success",
+    "operation": "list_packages",
+    "method": "GET",
+    "path": "/packages",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Brake Special", "active": true, "description": "Brake pads and labor", "url": "https://api.example.com/packages/1", "app_url": "https://app.example.com/packages/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Brake Special" } }
+  },
+  {
+    "name": "create_package_success",
+    "operation": "create_package",
+    "method": "POST",
+    "path": "/packages",
+    "requestBody": { "package": { "name": "Brake Special" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Brake Special", "active": true, "description": "", "url": "https://api.example.com/packages/2", "app_url": "https://app.example.com/packages/2", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_package_success",
+    "operation": "update_package",
+    "method": "PATCH",
+    "path": "/packages/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "package": { "name": "Brake Special (Updated)" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Brake Special (Updated)", "active": true, "description": "Brake pads and labor", "url": "https://api.example.com/packages/1", "app_url": "https://app.example.com/packages/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Brake Special (Updated)" } }
+  },
+  {
+    "name": "create_packages_duplicate_success",
+    "operation": "create_packages_duplicate",
+    "method": "POST",
+    "path": "/packages/1/duplicate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 3, "name": "Brake Special (Copy)", "active": true, "description": "Brake pads and labor", "url": "https://api.example.com/packages/3", "app_url": "https://app.example.com/packages/3", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 3 } }
+  },
+  {
+    "name": "list_sublet_packages_success",
+    "operation": "list_sublet_packages",
+    "method": "GET",
+    "path": "/sublet_packages",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Alignment", "active": true, "default_fulfillment_status": "pending", "default_payment_status": "unpaid", "url": "https://api.example.com/sublet_packages/1", "app_url": "https://app.example.com/sublet_packages/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Alignment" } }
+  },
+  {
+    "name": "create_sublet_package_success",
+    "operation": "create_sublet_package",
+    "method": "POST",
+    "path": "/sublet_packages",
+    "requestBody": { "sublet_package": { "name": "Alignment" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Alignment", "active": true, "default_fulfillment_status": "pending", "default_payment_status": "unpaid", "url": "https://api.example.com/sublet_packages/2", "app_url": "https://app.example.com/sublet_packages/2", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "delete_sublet_package_success",
+    "operation": "delete_sublet_package",
+    "method": "DELETE",
+    "path": "/sublet_packages/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_sublet_package_success",
+    "operation": "update_sublet_package",
+    "method": "PATCH",
+    "path": "/sublet_packages/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "sublet_package": { "name": "Alignment (Updated)" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Alignment (Updated)", "active": true, "default_fulfillment_status": "pending", "default_payment_status": "unpaid", "url": "https://api.example.com/sublet_packages/1", "app_url": "https://app.example.com/sublet_packages/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Alignment (Updated)" } }
+  },
+  {
+    "name": "update_sublet_packages_deactivate_success",
+    "operation": "update_sublet_packages_deactivate",
+    "method": "PATCH",
+    "path": "/sublet_packages/1/deactivate",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_vendor_success",
+    "operation": "create_vendor",
+    "method": "POST",
+    "path": "/vendors",
+    "requestBody": { "vendor": { "name": "NAPA" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "name": "NAPA", "active": true, "url": "https://api.example.com/vendors/1", "app_url": "https://app.example.com/vendors/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "delete_vendor_success",
+    "operation": "delete_vendor",
+    "method": "DELETE",
+    "path": "/vendors/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "update_vendor_success",
+    "operation": "update_vendor",
+    "method": "PATCH",
+    "path": "/vendors/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "vendor": { "name": "NAPA Auto" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "NAPA Auto", "active": true, "url": "https://api.example.com/vendors/1", "app_url": "https://app.example.com/vendors/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "NAPA Auto" } }
+  },
+  {
+    "name": "list_vendors_purchase_orders_success",
+    "operation": "list_vendors_purchase_orders",
+    "method": "GET",
+    "path": "/vendors/1/purchase_orders",
+    "pathParams": { "vendor_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_notifications_success",
+    "operation": "list_notifications",
+    "method": "GET",
+    "path": "/notifications",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "message_body": "Work order closed", "read": false, "url": "https://api.example.com/notifications/1", "app_url": "https://app.example.com/notifications/1", "created_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.read", "equals": false } }
+  },
+  {
+    "name": "create_notifications_bulk_mark_read_success",
+    "operation": "create_notifications_bulk_mark_read",
+    "method": "POST",
+    "path": "/notifications/bulk_mark_read",
+    "mockResponses": [
+      { "status": 200, "body": { "ok": true, "affected": 2 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "affected", "equals": 2 } }
+  },
+  {
+    "name": "show_notification_success",
+    "operation": "show_notification",
+    "method": "GET",
+    "path": "/notifications/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "message_body": "Work order closed", "read": false, "url": "https://api.example.com/notifications/1", "app_url": "https://app.example.com/notifications/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_notification_success",
+    "operation": "update_notification",
+    "method": "PATCH",
+    "path": "/notifications/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "read": true },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "message_body": "Work order closed", "read": true, "url": "https://api.example.com/notifications/1", "app_url": "https://app.example.com/notifications/1", "created_at": "2026-01-01T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "read", "equals": true } }
+  },
+  {
+    "name": "list_fleets_success",
+    "operation": "list_fleets",
+    "method": "GET",
+    "path": "/fleets",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "company_name": "Acme Corp", "fleet_identifier": "ACME-1", "first_name": "Jane", "emails_count": 1, "url": "https://api.example.com/fleets/1", "app_url": "https://app.example.com/fleets/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.company_name", "equals": "Acme Corp" } }
+  },
+  {
+    "name": "list_courtesy_cars_success",
+    "operation": "list_courtesy_cars",
+    "method": "GET",
+    "path": "/courtesy_cars",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "make": "Honda", "model": "Civic", "year": 2020, "vin": "1HGCM82633A004352", "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "url": "https://api.example.com/courtesy_cars/1", "app_url": "https://app.example.com/courtesy_cars/1", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.make", "equals": "Honda" } }
+  },
+  {
+    "name": "list_search_success",
+    "operation": "list_search",
+    "method": "GET",
+    "path": "/search",
+    "query": {},
+    "mockResponses": [
+      { "status": 200, "body": { "announcement": "", "groups": [] } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "announcement", "equals": "" } }
+  },
+  {
+    "name": "list_statements_payments_success",
+    "operation": "list_statements_payments",
+    "method": "GET",
+    "path": "/statements/1/payments",
+    "pathParams": { "statement_id": 1 },
+    "mockResponses": [ { "status": 200, "body": [] } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_store_credits_void_success",
+    "operation": "create_store_credits_void",
+    "method": "POST",
+    "path": "/store_credits/1/voids",
+    "pathParams": { "store_credit_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "voided" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "voided" } }
+  },
+  {
+    "name": "create_scan_lookup_success",
+    "operation": "create_scan_lookup",
+    "method": "POST",
+    "path": "/scan/lookups",
+    "requestBody": { "code": "123456", "type": "part" },
+    "mockResponses": [
+      { "status": 200, "body": { "outcome": "found", "customer_id": 10, "vehicle_id": 20, "work_order_id": 1 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "outcome", "equals": "found" } }
+  },
+  {
+    "name": "create_scan_started_work_order_success",
+    "operation": "create_scan_started_work_order",
+    "method": "POST",
+    "path": "/scan/started_work_orders",
+    "requestBody": { "outcome": "started", "vehicle_id": 20 },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "started", "work_order_id": 1 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "started" } }
+  },
+  {
+    "name": "create_scan_vehicle_success",
+    "operation": "create_scan_vehicle",
+    "method": "POST",
+    "path": "/scan/vehicles",
+    "requestBody": { "customer": { "id": 10 }, "vehicle": { "vin": "1HGCM82633A004352" } },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "found", "work_order_id": 1 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "found" } }
+  },
+  {
+    "name": "create_time_entrie_success",
+    "operation": "create_time_entrie",
+    "method": "POST",
+    "path": "/time_entries",
+    "requestBody": { "type": "clock_in", "work_order_service_id": 1 },
+    "mockResponses": [
+      { "status": 201, "body": { "status": "clocked_in" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "clocked_in" } }
+  },
+  {
+    "name": "update_time_entrie_success",
+    "operation": "update_time_entrie",
+    "method": "PATCH",
+    "path": "/time_entries/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "status": "clocked_out" },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "clocked_out" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "clocked_out" } }
+  },
+  {
+    "name": "delete_voice_command_success",
+    "operation": "delete_voice_command",
+    "method": "DELETE",
+    "path": "/voice_commands/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "deleted" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "deleted" } }
+  },
+  {
+    "name": "update_ai_suggestion_success",
+    "operation": "update_ai_suggestion",
+    "method": "PATCH",
+    "path": "/ai_suggestions/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "status": "accepted" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "status": "accepted" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "accepted" } }
+  },
+  {
+    "name": "update_cash_drawer_banner_success",
+    "operation": "update_cash_drawer_banner",
+    "method": "PATCH",
+    "path": "/cash_drawer_banner",
+    "requestBody": { "dismissed": true },
+    "mockResponses": [ { "status": 200, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_catalog_cleanups_application_success",
+    "operation": "create_catalog_cleanups_application",
+    "method": "POST",
+    "path": "/catalog_cleanups/1/applications",
+    "pathParams": { "catalog_cleanup_id": 1 },
+    "requestBody": { "category": "brake_pads" },
+    "mockResponses": [
+      { "status": 200, "body": { "status": "applied", "applied_count": 3 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "applied_count", "equals": 3 } }
+  }
+]

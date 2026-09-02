@@ -93,22 +93,26 @@ module Wenmar
       response
     end
 
-    def post(path, body = nil)
+    def post(path, body = nil, params = {})
       response = @write_connection.post(path) do |req|
+        req.params.merge!(params) unless params.empty?
         req.body = body.to_json if body
       end
       handle_response(response)
     end
 
-    def patch(path, body = nil)
+    def patch(path, body = nil, params = {})
       response = @write_connection.patch(path) do |req|
+        req.params.merge!(params) unless params.empty?
         req.body = body.to_json if body
       end
       handle_response(response)
     end
 
-    def delete(path)
-      response = @write_connection.delete(path)
+    def delete(path, params = {})
+      response = @write_connection.delete(path) do |req|
+        req.params.merge!(params) unless params.empty?
+      end
       handle_response(response)
     end
 

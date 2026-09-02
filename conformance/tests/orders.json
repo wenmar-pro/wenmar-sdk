@@ -1,0 +1,209 @@
+[
+  {
+    "name": "list_orders_purchase_orders_success",
+    "operation": "list_orders_purchase_orders",
+    "method": "GET",
+    "path": "/orders/purchase_orders",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "50000" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.po_number", "equals": 1001 }
+    }
+  },
+  {
+    "name": "show_orders_purchase_order_success",
+    "operation": "show_orders_purchase_order",
+    "method": "GET",
+    "path": "/orders/purchase_orders/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "50000" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "open" }
+    }
+  },
+  {
+    "name": "create_orders_purchase_order_success",
+    "operation": "create_orders_purchase_order",
+    "method": "POST",
+    "path": "/orders/purchase_orders",
+    "requestBody": { "purchase_order": { "vendor_id": 2 } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "0" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "id", "equals": 1 }
+    }
+  },
+  {
+    "name": "update_orders_purchase_order_success",
+    "operation": "update_orders_purchase_order",
+    "method": "PATCH",
+    "path": "/orders/purchase_orders/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "purchase_order": { "notes": "Rush order" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "notes": "Rush order" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "notes", "equals": "Rush order" }
+    }
+  },
+  {
+    "name": "delete_orders_purchase_order_success",
+    "operation": "delete_orders_purchase_order",
+    "method": "DELETE",
+    "path": "/orders/purchase_orders/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "create_orders_purchase_orders_cancellation_success",
+    "operation": "create_orders_purchase_orders_cancellation",
+    "method": "POST",
+    "path": "/orders/purchase_orders/1/cancellations",
+    "pathParams": { "purchase_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "cancelled" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "cancelled" }
+    }
+  },
+  {
+    "name": "list_orders_return_orders_success",
+    "operation": "list_orders_return_orders",
+    "method": "GET",
+    "path": "/orders/return_orders",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "return_order", "return_number": 1001, "status": "open" } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.return_number", "equals": 1001 }
+    }
+  },
+  {
+    "name": "show_orders_return_order_success",
+    "operation": "show_orders_return_order",
+    "method": "GET",
+    "path": "/orders/return_orders/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "open" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "open" }
+    }
+  },
+  {
+    "name": "update_orders_return_order_success",
+    "operation": "update_orders_return_order",
+    "method": "PATCH",
+    "path": "/orders/return_orders/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "return_order": { "notes": "Returned damaged" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "open", "notes": "Returned damaged" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "notes", "equals": "Returned damaged" }
+    }
+  },
+  {
+    "name": "delete_orders_return_order_success",
+    "operation": "delete_orders_return_order",
+    "method": "DELETE",
+    "path": "/orders/return_orders/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": null }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "create_orders_return_orders_refund_completion_success",
+    "operation": "create_orders_return_orders_refund_completion",
+    "method": "POST",
+    "path": "/orders/return_orders/1/refund_completions",
+    "pathParams": { "return_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "refunded" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "refunded" }
+    }
+  },
+  {
+    "name": "list_orders_sublet_orders_success",
+    "operation": "list_orders_sublet_orders",
+    "method": "GET",
+    "path": "/orders/sublet_orders",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "sublet_order", "sublet_number": 1001, "title": "Machine Shop", "total_cents": 15000 } ] }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "0.sublet_number", "equals": 1001 }
+    }
+  },
+  {
+    "name": "show_orders_sublet_order_success",
+    "operation": "show_orders_sublet_order",
+    "method": "GET",
+    "path": "/orders/sublet_orders/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "sublet_order", "sublet_number": 1001, "title": "Machine Shop", "total_cents": 15000 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "title", "equals": "Machine Shop" }
+    }
+  },
+  {
+    "name": "update_orders_sublet_orders_mark_payment_complete_success",
+    "operation": "update_orders_sublet_orders_mark_payment_complete",
+    "method": "PATCH",
+    "path": "/orders/sublet_orders/mark_payment_complete",
+    "requestBody": { "sublet_order_ids": [1, 2] },
+    "mockResponses": [
+      { "status": 200, "body": { "updated": 2 } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "updated", "equals": 2 }
+    }
+  }
+]

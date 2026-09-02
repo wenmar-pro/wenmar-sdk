@@ -1,0 +1,568 @@
+[
+  {
+    "name": "list_inspections_success",
+    "operation": "list_inspections",
+    "method": "GET",
+    "path": "/inspections",
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 1,
+            "type": "inspection",
+            "name": "Courtesy Check",
+            "active": true
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "0.name",
+        "equals": "Courtesy Check"
+      }
+    }
+  },
+  {
+    "name": "show_inspection_success",
+    "operation": "show_inspection",
+    "method": "GET",
+    "path": "/inspections/1",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "active": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "name",
+        "equals": "Courtesy Check"
+      }
+    }
+  },
+  {
+    "name": "create_inspection_success",
+    "operation": "create_inspection",
+    "method": "POST",
+    "path": "/inspections",
+    "requestBody": {
+      "inspection": {
+        "name": "Courtesy Check",
+        "description": "Standard courtesy inspection"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "active": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "update_inspection_success",
+    "operation": "update_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "inspection": {
+        "description": "Updated description"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "description": "Updated description",
+          "active": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "description",
+        "equals": "Updated description"
+      }
+    }
+  },
+  {
+    "name": "delete_inspection_success",
+    "operation": "delete_inspection",
+    "method": "DELETE",
+    "path": "/inspections/1",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 204,
+        "body": null
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "set_default_inspection_success",
+    "operation": "set_default_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/set_default",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "is_default": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "is_default",
+        "equals": true
+      }
+    }
+  },
+  {
+    "name": "remove_default_inspection_success",
+    "operation": "remove_default_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/remove_default",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "is_default": false
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "is_default",
+        "equals": false
+      }
+    }
+  },
+  {
+    "name": "toggle_inspection_success",
+    "operation": "toggle_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/toggle",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection",
+          "name": "Courtesy Check",
+          "active": false
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "active",
+        "equals": false
+      }
+    }
+  },
+  {
+    "name": "show_inspection_report_success",
+    "operation": "show_inspection_report",
+    "method": "GET",
+    "path": "/inspection_reports/1",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress",
+          "work_order_id": 5
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "status",
+        "equals": "in_progress"
+      }
+    }
+  },
+  {
+    "name": "create_inspection_report_success",
+    "operation": "create_inspection_report",
+    "method": "POST",
+    "path": "/inspection_reports",
+    "query": {
+      "inspection_id": 1,
+      "work_order_id": 5
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress",
+          "work_order_id": 5
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "work_order_id",
+        "equals": 5
+      }
+    }
+  },
+  {
+    "name": "delete_inspection_report_success",
+    "operation": "delete_inspection_report",
+    "method": "DELETE",
+    "path": "/inspection_reports/1",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 204,
+        "body": null
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "complete_inspection_report_success",
+    "operation": "complete_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/complete",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "completed",
+          "completed": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "completed",
+        "equals": true
+      }
+    }
+  },
+  {
+    "name": "publish_inspection_report_success",
+    "operation": "publish_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/publish",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "published": true
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "published",
+        "equals": true
+      }
+    }
+  },
+  {
+    "name": "unpublish_inspection_report_success",
+    "operation": "unpublish_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/unpublish",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "published": false
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "published",
+        "equals": false
+      }
+    }
+  },
+  {
+    "name": "reopen_inspection_report_success",
+    "operation": "reopen_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/reopen",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress",
+          "completed": false
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "completed",
+        "equals": false
+      }
+    }
+  },
+  {
+    "name": "reset_inspection_report_success",
+    "operation": "reset_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/reset",
+    "pathParams": {
+      "id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "status",
+        "equals": "in_progress"
+      }
+    }
+  },
+  {
+    "name": "reassign_inspection_report_success",
+    "operation": "reassign_inspection_report",
+    "method": "PATCH",
+    "path": "/inspection_reports/1/reassign",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "user_id": 3
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "show_inspection_report_group_success",
+    "operation": "show_inspection_report_group",
+    "method": "GET",
+    "path": "/inspection_reports/1/group",
+    "pathParams": {
+      "id": 1
+    },
+    "query": {
+      "group_name": "Brakes"
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "name": "Brakes",
+          "items": []
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "name",
+        "equals": "Brakes"
+      }
+    }
+  },
+  {
+    "name": "mark_all_inspection_report_success",
+    "operation": "mark_all_inspection_report",
+    "method": "POST",
+    "path": "/inspection_reports/1/mark_all",
+    "pathParams": {
+      "id": 1
+    },
+    "requestBody": {
+      "checked": true
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "retry_inspection_report_recording_success",
+    "operation": "retry_inspection_report_recording",
+    "method": "POST",
+    "path": "/inspection_reports/1/retry_recording",
+    "pathParams": {
+      "id": 1
+    },
+    "query": {
+      "recording_id": 7
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "inspection_report",
+          "name": "Courtesy Check",
+          "status": "in_progress"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  }
+]

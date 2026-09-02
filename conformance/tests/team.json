@@ -1,0 +1,166 @@
+[
+  {
+    "name": "list_users_success",
+    "operation": "list_users",
+    "method": "GET",
+    "path": "/users",
+    "query": { "per_page": 2 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.full_name", "equals": "Jane Doe" } }
+  },
+  {
+    "name": "create_user_success",
+    "operation": "create_user",
+    "method": "POST",
+    "path": "/users",
+    "requestBody": { "user": { "full_name": "John Smith", "email": "john@example.com", "role": "technician" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "type": "technician", "full_name": "John Smith", "email": "john@example.com", "initials": "JS", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": false, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-02T00:00:00Z", "updated_at": "2026-01-02T00:00:00Z", "url": "https://api.example.com/users/2", "app_url": "https://app.example.com/users/2", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "show_user_success",
+    "operation": "show_user",
+    "method": "GET",
+    "path": "/users/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "full_name", "equals": "Jane Doe" } }
+  },
+  {
+    "name": "update_user_success",
+    "operation": "update_user",
+    "method": "PATCH",
+    "path": "/users/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "user": { "full_name": "Jane Doe-Smith" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe-Smith", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-03T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "full_name", "equals": "Jane Doe-Smith" } }
+  },
+  {
+    "name": "delete_user_success",
+    "operation": "delete_user",
+    "method": "DELETE",
+    "path": "/users/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [ { "status": 204, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_permission_groups_success",
+    "operation": "list_permission_groups",
+    "method": "GET",
+    "path": "/users/permission_groups",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Technician", "description": "Standard technician", "role": "technician", "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_edit_permissions": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "url": "https://api.example.com/users/permission_groups/1", "app_url": "https://app.example.com/users/permission_groups/1" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Technician" } }
+  },
+  {
+    "name": "create_permission_group_success",
+    "operation": "create_permission_group",
+    "method": "POST",
+    "path": "/users/permission_groups",
+    "requestBody": { "permission_group": { "name": "Service Advisor", "can_message_customers": true } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "Service Advisor", "description": null, "role": null, "can_perform_work": false, "can_dispatch_work": true, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": false, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": true, "can_hard_delete_work_orders": false, "can_edit_permissions": false, "can_view_job_board": true, "can_view_metrics": true, "can_view_activity_feed": true, "created_at": "2026-01-02T00:00:00Z", "updated_at": "2026-01-02T00:00:00Z", "url": "https://api.example.com/users/permission_groups/2", "app_url": "https://app.example.com/users/permission_groups/2" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  },
+  {
+    "name": "update_permission_group_success",
+    "operation": "update_permission_group",
+    "method": "PATCH",
+    "path": "/users/permission_groups/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "permission_group": { "can_view_metrics": false } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "Service Advisor", "description": null, "role": null, "can_perform_work": false, "can_dispatch_work": true, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": false, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": true, "can_hard_delete_work_orders": false, "can_edit_permissions": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "created_at": "2026-01-02T00:00:00Z", "updated_at": "2026-01-03T00:00:00Z", "url": "https://api.example.com/users/permission_groups/2", "app_url": "https://app.example.com/users/permission_groups/2" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "can_view_metrics", "equals": false } }
+  },
+  {
+    "name": "create_users_disable_success",
+    "operation": "create_users_disable",
+    "method": "POST",
+    "path": "/users/1/disable",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": true, "disabled_at": "2026-01-04T00:00:00Z", "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-04T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "disabled", "equals": true } }
+  },
+  {
+    "name": "create_users_enable_success",
+    "operation": "create_users_enable",
+    "method": "POST",
+    "path": "/users/1/enable",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-05T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "disabled", "equals": false } }
+  },
+  {
+    "name": "list_users_qr_code_success",
+    "operation": "list_users_qr_code",
+    "method": "GET",
+    "path": "/users/1/qr_code",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": "2026-01-06T00:00:00Z", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-06T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "qr_token_generated_at", "equals": "2026-01-06T00:00:00Z" } }
+  },
+  {
+    "name": "create_users_reset_pin_success",
+    "operation": "create_users_reset_pin",
+    "method": "POST",
+    "path": "/users/1/reset_pin",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-07T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_users_send_confirmation_success",
+    "operation": "create_users_send_confirmation",
+    "method": "POST",
+    "path": "/users/1/send_confirmation",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-08T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_users_send_password_reset_success",
+    "operation": "create_users_send_password_reset",
+    "method": "POST",
+    "path": "/users/1/send_password_reset",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-09T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "create_users_unlock_success",
+    "operation": "create_users_unlock",
+    "method": "POST",
+    "path": "/users/1/unlock",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "type": "technician", "full_name": "Jane Doe", "email": "jane@example.com", "initials": "JD", "role": "technician", "disabled": false, "disabled_at": null, "locked": false, "confirmed": true, "hourly_cost_cents": 0, "hourly_cost_currency": "USD", "certification_number": null, "certification_label": null, "mfa_enabled": false, "mfa_required": false, "qr_token_generated_at": null, "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-10T00:00:00Z", "url": "https://api.example.com/users/1", "app_url": "https://app.example.com/users/1", "location": { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" }, "locations": [ { "id": 1, "name": "Main Shop", "url": "https://api.example.com/locations/1" } ], "capabilities": { "can_perform_work": true, "can_dispatch_work": false, "can_message_customers": true, "can_manage_technicians": false, "can_override_inspections": false, "can_perform_inspections": true, "can_view_all_active_work_orders": true, "can_close_reopen_work_orders": false, "can_hard_delete_work_orders": false, "can_view_job_board": true, "can_view_metrics": false, "can_view_activity_feed": true, "can_edit_permissions": false } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "locked", "equals": false } }
+  }
+]
