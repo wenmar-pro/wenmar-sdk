@@ -68,7 +68,7 @@ List all statements payments, paginated via the Link header.
 |---|---|---|
 | `statement_id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — array of [Statement](#statement-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/{statement_id}/payments.json
@@ -81,36 +81,52 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `statement_number` | string | Yes |
-| `status` | string | Yes |
-| `statement_date` | string | Yes |
-| `start_date` | string | Yes |
-| `end_date` | string | Yes |
-| `due_date` | string | Yes |
-| `totals` | object | Yes |
-| `sent_at` | string \| null | Yes |
-| `viewed_at` | string \| null | Yes |
-| `customer` | object | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
 
-`totals` — object:
+`work_order` — object:
 | Field | Type | Required |
 |---|---|---|
-| `previous_balance_cents` | integer | Yes |
-| `new_charges_cents` | integer | Yes |
-| `payments_received_cents` | integer | Yes |
-| `credits_cents` | integer | Yes |
-| `balance_due_cents` | integer | Yes |
-| `currency` | string | Yes |
+| `id` | integer | Yes |
+| `url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 ---

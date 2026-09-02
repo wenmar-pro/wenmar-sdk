@@ -62,6 +62,24 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/shop_discounts.json
 ```
 
+## Delete shop discount
+
+```
+DELETE /shop_discounts/{id}
+```
+
+Delete a shop discount by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/shop_discounts/<id>.json
+```
+
 ## Update shop discount
 
 ```
@@ -92,6 +110,39 @@ Update a shop discount by ID.
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/shop_discounts/<id>.json
+```
+
+## Create shop discounts duplicate
+
+```
+POST /shop_discounts/{id}/duplicate
+```
+
+Create a shop discounts duplicate.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 201**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `discount_type` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `percentage` | number \| null | Yes |
+| `active` | boolean | Yes |
+| `category` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/shop_discounts/<id>.json
 ```
 

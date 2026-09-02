@@ -17,17 +17,17 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Appointments
 
-- **GET /appointments** ?per_page,q,status -> 500: error envelope
-- **POST /appointments** -> 403: error envelope | 422: error envelope | 500: error envelope
+- **GET /appointments** ?per_page,q,status -> 200: array of object | 500: object
+- **POST /appointments** -> 201: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url} | 403: error envelope | 422: error envelope | 500: object
 - **GET /appointments/available_slots** ?date,duration_minutes -> 200: array of object
 - **DELETE /appointments/{id}** ?id -> no content
-- **GET /appointments/{id}** ?id -> 500: error envelope
-- **PATCH /appointments/{id}** ?id -> 500: error envelope
-- **POST /appointments/{id}/approvals** ?id -> 500: error envelope
-- **POST /appointments/{id}/cancellations** ?id -> 500: error envelope
+- **GET /appointments/{id}** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url,reconcile_vehicle_url} | no content | 500: object
+- **PATCH /appointments/{id}** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url,reconcile_vehicle_url} | 500: object
+- **POST /appointments/{id}/approvals** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url,reconcile_vehicle_url} | 500: object
+- **POST /appointments/{id}/cancellations** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url,reconcile_vehicle_url} | 500: object
 - **POST /appointments/{id}/follow_ups** ?id -> 201: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url}
-- **POST /appointments/{id}/rejections** ?id -> 500: error envelope
-- **POST /appointments/{id}/vehicle_reconciliations** ?id -> 500: error envelope
+- **POST /appointments/{id}/rejections** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url,reconcile_vehicle_url} | 500: object
+- **POST /appointments/{id}/vehicle_reconciliations** ?id -> 200: object{id,type,status,appointment_type,appointment_source,intake_method,all_day,starts_at,ends_at,estimated_duration_minutes,customer_name,customer_email,customer_phone,customer_concern,follow_up_reason,year,make,model,submodel,vin,license_plate,url,app_url,customer,vehicle,service_advisor,work_order,location,created_at,updated_at,customer_confirmed,confirmation_sent_at,reminder_sent_at,customer_arrived_at,customer_initiated,rescheduled_from_id,latest_reschedule_id,messages_count,reschedules_count,approve_url,reject_url,cancel_url,follow_up_url,work_order_url} | 500: object
 - **POST /appointments/{id}/work_orders** ?id -> 201: WorkOrder
 
 ## Campaigns
@@ -88,6 +88,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **POST /customers** -> 201: Customer | 403: error envelope | 422: error envelope
 - **GET /customers/1043910089/merge** -> no content
 - **GET /customers/check_duplicate** ?email,first_name,last_name,phone -> 200: object{matches} | 403: error envelope
+- **POST /customers/export** -> 200: Customer | 403: error envelope
+- **GET /customers/export/{id}/download** ?id -> no content | 404: error envelope
 - **GET /customers/lookup** ?id,query -> 200: array of Customer | 403: error envelope
 - **GET /customers/{customer_id}/drivers** ?customer_id -> 200: array of Driver
 - **POST /customers/{customer_id}/drivers** ?customer_id -> 201: Driver | 422: error envelope
@@ -105,10 +107,10 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Expenses
 
-- **GET /expenses** -> 500: error envelope
-- **POST /expenses** -> 403: error envelope | 500: error envelope
+- **GET /expenses** -> 200: array of object | 403: error envelope | 500: object
+- **POST /expenses** -> 201: object{id,payee,category,description,amount_cents,amount_currency,expense_date,payment_method,recurring,recurrence_rule,creator,location,created_at,updated_at,url,app_url} | 403: error envelope | 500: object
 - **DELETE /expenses/{id}** ?id -> no content
-- **PATCH /expenses/{id}** ?id -> 500: error envelope
+- **PATCH /expenses/{id}** ?id -> 200: object{id,payee,category,description,amount_cents,amount_currency,expense_date,payment_method,recurring,recurrence_rule,creator,location,created_at,updated_at,url,app_url} | 500: object
 
 ## Fleets
 
@@ -160,18 +162,22 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /labor_matrices** -> 200: array of object
 - **POST /labor_matrices** -> 201: object{id,name,matrix_type,active,tiers,created_at,updated_at,url,app_url} | 403: error envelope
+- **DELETE /labor_matrices/{id}** ?id -> no content
 - **PATCH /labor_matrices/{id}** ?id -> 200: object{id,name,matrix_type,active,tiers,created_at,updated_at,url,app_url}
 
 ## Labor Rates
 
 - **GET /labor_rates** -> 200: array of object
 - **POST /labor_rates** -> 201: object{id,name,rate_cents,cost_per_hour_cents,is_default,active,created_at,updated_at,url,app_url} | 403: error envelope
+- **DELETE /labor_rates/{id}** ?id -> no content
 - **PATCH /labor_rates/{id}** ?id -> 200: object{id,name,rate_cents,cost_per_hour_cents,is_default,active,created_at,updated_at,url,app_url}
 
 ## Lead Sources
 
 - **GET /lead_sources** -> 200: array of object
 - **POST /lead_sources** -> 201: object{id,name,category,system_default,active,position,created_at,updated_at,url,app_url} | 403: error envelope
+- **POST /lead_sources/seed_defaults** -> 200: array of object
+- **DELETE /lead_sources/{id}** ?id -> no content
 - **PATCH /lead_sources/{id}** ?id -> 200: object{id,name,category,system_default,active,position,created_at,updated_at,url,app_url}
 
 ## Locations
@@ -188,17 +194,17 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 ## Orders
 
 - **GET /orders/purchase_orders** ?page,per_page,vendor_id -> 200: array of PurchaseOrder
-- **POST /orders/purchase_orders** -> 403: error envelope | 404: error envelope | 500: error envelope
+- **POST /orders/purchase_orders** -> 201: PurchaseOrder | 403: error envelope | 404: error envelope | 500: object
 - **DELETE /orders/purchase_orders/{id}** ?id -> no content
 - **GET /orders/purchase_orders/{id}** ?id -> 200: PurchaseOrder | no content
 - **PATCH /orders/purchase_orders/{id}** ?id -> 200: PurchaseOrder
 - **POST /orders/purchase_orders/{purchase_order_id}/cancellations** ?purchase_order_id -> 200: PurchaseOrder
-- **GET /orders/return_orders** -> 403: error envelope | 500: error envelope
+- **GET /orders/return_orders** -> 200: array of ReturnOrder | 403: error envelope | 500: object
 - **DELETE /orders/return_orders/{id}** ?id -> no content
-- **GET /orders/return_orders/{id}** ?id -> 500: error envelope
-- **PATCH /orders/return_orders/{id}** ?id -> 500: error envelope
-- **POST /orders/return_orders/{return_order_id}/refund_completions** ?return_order_id -> 500: error envelope
-- **GET /orders/sublet_orders** -> 200: array of SubletOrder
+- **GET /orders/return_orders/{id}** ?id -> 200: ReturnOrder | 500: object
+- **PATCH /orders/return_orders/{id}** ?id -> 200: ReturnOrder | 500: object
+- **POST /orders/return_orders/{return_order_id}/refund_completions** ?return_order_id -> 200: ReturnOrder | 500: object
+- **GET /orders/sublet_orders** -> 200: array of SubletOrder | 403: error envelope
 - **PATCH /orders/sublet_orders/mark_payment_complete** -> 200: SubletOrder
 - **GET /orders/sublet_orders/{id}** ?id -> 200: SubletOrder | 403: error envelope
 
@@ -213,16 +219,17 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /parts_matrices** -> 200: array of object
 - **POST /parts_matrices** -> 201: object{id,name,is_default,active,default_multiplier,max_markup_cents,tiers,created_at,updated_at,url,app_url} | 403: error envelope
+- **DELETE /parts_matrices/{id}** ?id -> no content
 - **PATCH /parts_matrices/{id}** ?id -> 200: object{id,name,is_default,active,default_multiplier,max_markup_cents,tiers,created_at,updated_at,url,app_url}
 
 ## Payments
 
-- **GET /payments** ?method -> 403: error envelope | 500: error envelope
-- **GET /payments/pending** -> 500: error envelope
-- **GET /payments/{id}** ?id -> 500: error envelope
-- **POST /payments/{id}/cancellation** ?id -> 500: error envelope
-- **POST /payments/{id}/confirmation** ?id -> 500: error envelope
-- **POST /payments/{id}/failure** ?id -> 500: error envelope
+- **GET /payments** ?method -> 200: array of object | 403: error envelope | 500: object
+- **GET /payments/pending** -> 200: array of object | 500: object
+- **GET /payments/{id}** ?id -> 200: object{id,amount_cents,currency,method,processor_status,is_refund,is_adjustment,voided,voided_at,processed_at,reference,created_at,updated_at,work_order_id,customer_id,url,app_url,work_order,customer,processed_by,location} | 500: object
+- **POST /payments/{id}/cancellation** ?id -> 200: object{id,amount_cents,currency,method,processor_status,is_refund,is_adjustment,voided,voided_at,processed_at,reference,created_at,updated_at,work_order_id,customer_id,url,app_url,work_order,customer,processed_by,location} | 500: object
+- **POST /payments/{id}/confirmation** ?id -> 200: object{id,amount_cents,currency,method,processor_status,is_refund,is_adjustment,voided,voided_at,processed_at,reference,created_at,updated_at,work_order_id,customer_id,url,app_url,work_order,customer,processed_by,location} | 500: object
+- **POST /payments/{id}/failure** ?id -> 200: object{id,amount_cents,currency,method,processor_status,is_refund,is_adjustment,voided,voided_at,processed_at,reference,created_at,updated_at,work_order_id,customer_id,url,app_url,work_order,customer,processed_by,location} | 500: object
 
 ## Preferences
 
@@ -241,21 +248,27 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Reports
 
-- **GET /reports/accounting** -> 200: object{currency,start_date,end_date,tax,payments,outstanding_balances,outstanding_total,url,app_url}
-- **GET /reports/ar_aging** -> 200: object{rows,totals,credit_rows,credits_total_cents,url,app_url}
-- **GET /reports/declined_work** -> 200: object{currency,start_date,end_date,rows,total_declined_value_cents,declined_count,category_breakdown,aging_buckets,saved_for_later,total_saved_for_later_cents,url,app_url}
-- **GET /reports/end_of_day** -> 200: object{date,total_sales_by_method,ar_postings_cents,ar_payments_collected_cents,store_credit_issued_cents,store_credit_applied_cents,over_short_cents,total_cashiered_cents,url,app_url}
-- **GET /reports/financial** -> 200: object{currency,start_date,end_date,tab,revenue,tax,payments,url,app_url}
-- **GET /reports/open_work** -> 200: object{currency,start_date,end_date,rows,total_estimated_value_cents,status_summary,stuck_work,saved_for_later,total_saved_for_later_cents,url,app_url}
-- **GET /reports/parts_purchases** -> 200: object{currency,start_date,end_date,rows,total_spend_cents,po_count,return_count,net_units,url,app_url}
-- **GET /reports/parts_usage** -> 200: object{currency,start_date,end_date,rows,total_cost_cents,total_revenue_cents,total_gp_cents,url,app_url}
+- **GET /reports/accounting** -> 200: object{currency,start_date,end_date,tax,payments,outstanding_balances,outstanding_total,url,app_url} | 403: error envelope
+- **GET /reports/ar_aging** -> 200: object{rows,totals,credit_rows,credits_total_cents,url,app_url} | 403: error envelope
+- **GET /reports/declined_work** -> 200: object{currency,start_date,end_date,rows,total_declined_value_cents,declined_count,category_breakdown,aging_buckets,saved_for_later,total_saved_for_later_cents,url,app_url} | 403: error envelope
+- **GET /reports/end_of_day** -> 200: object{date,total_sales_by_method,ar_postings_cents,ar_payments_collected_cents,store_credit_issued_cents,store_credit_applied_cents,over_short_cents,total_cashiered_cents,url,app_url} | 403: error envelope
+- **GET /reports/financial** -> 200: object{currency,start_date,end_date,tab,revenue,tax,payments,url,app_url} | 403: error envelope
+- **GET /reports/open_work** -> 200: object{currency,start_date,end_date,rows,total_estimated_value_cents,status_summary,stuck_work,saved_for_later,total_saved_for_later_cents,url,app_url} | 403: error envelope
+- **GET /reports/parts_purchases** -> 200: object{currency,start_date,end_date,rows,total_spend_cents,po_count,return_count,net_units,url,app_url} | 403: error envelope
+- **GET /reports/parts_usage** -> 200: object{currency,start_date,end_date,rows,total_cost_cents,total_revenue_cents,total_gp_cents,url,app_url} | 403: error envelope
 - **GET /reports/performance** -> 200: object{view_type,currency,start_date,end_date,kpi_summary,daily_target_cents,revenue_series,car_count_series,aro_series,top_services,retention,url,app_url} | 403: error envelope
-- **GET /reports/profit_and_loss** -> 200: object{currency,start_date,end_date,revenue,net_revenue_cents,cogs,gross_profit_cents,operating_expenses,total_operating_expenses_cents,net_income_cents,url,app_url}
-- **GET /reports/sales_summary** -> 200: object{currency,start_date,end_date,rows,totals,car_count,invoice_count,aro_cents,segment_gp,kpi_summary,url,app_url}
-- **GET /reports/service_categories** -> 200: object{start_date,end_date,rows,url,app_url}
-- **GET /reports/store_credit** -> 200: object{total_liability_cents,average_balance_cents,customers_with_balance,all_transactions,url,app_url}
-- **GET /reports/technician_productivity** -> 200: object{currency,start_date,end_date,rows,totals,period_comparison,url,app_url}
-- **GET /reports/work_order_profitability** -> 200: object{currency,start_date,end_date,rows,totals,url,app_url}
+- **GET /reports/profit_and_loss** -> 200: object{currency,start_date,end_date,revenue,net_revenue_cents,cogs,gross_profit_cents,operating_expenses,total_operating_expenses_cents,net_income_cents,url,app_url} | 403: error envelope
+- **GET /reports/sales_summary** -> 200: object{currency,start_date,end_date,rows,totals,car_count,invoice_count,aro_cents,segment_gp,kpi_summary,url,app_url} | 403: error envelope
+- **GET /reports/service_categories** -> 200: object{start_date,end_date,rows,url,app_url} | 403: error envelope
+- **GET /reports/store_credit** -> 200: object{total_liability_cents,average_balance_cents,customers_with_balance,all_transactions,url,app_url} | 403: error envelope
+- **GET /reports/technician_productivity** -> 200: object{currency,start_date,end_date,rows,totals,period_comparison,url,app_url} | 403: error envelope
+- **GET /reports/work_order_profitability** -> 200: object{currency,start_date,end_date,rows,totals,url,app_url} | 403: error envelope
+
+## Scan
+
+- **POST /scan/lookups** -> 200: object{outcome,work_order_id,vehicle_id,customer_id,appointment_id}
+- **POST /scan/started_work_orders** -> 200: object{status,work_order_id}
+- **POST /scan/vehicles** -> 200: object{status,work_order_id}
 
 ## Search
 
@@ -280,6 +293,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **GET /settings/driveon** -> 200: object{id,name,cash_drawer_enabled,default_starting_float_cents,driveon_station_number,expenses_enabled,tire_management_enabled,oil_change_reminders_enabled,tire_swap_reminders_enabled,brake_inspection_reminders_enabled,battery_check_reminders_enabled,close_requirements,lead_source_requirements,url,app_url}
 - **GET /settings/expenses** -> 200: object{id,name,cash_drawer_enabled,default_starting_float_cents,driveon_station_number,expenses_enabled,tire_management_enabled,oil_change_reminders_enabled,tire_swap_reminders_enabled,brake_inspection_reminders_enabled,battery_check_reminders_enabled,close_requirements,lead_source_requirements,url,app_url}
 - **GET /settings/labor_templates** -> 200: array of object | 403: error envelope
+- **DELETE /settings/labor_templates/{id}** ?id -> no content
+- **PATCH /settings/labor_templates/{id}** ?id -> 200: object{id,description,default_hours,usage_count,last_used_at,created_at,updated_at,url,app_url}
 - **GET /settings/lead_source_requirements** -> 200: object{id,name,cash_drawer_enabled,default_starting_float_cents,driveon_station_number,expenses_enabled,tire_management_enabled,oil_change_reminders_enabled,tire_swap_reminders_enabled,brake_inspection_reminders_enabled,battery_check_reminders_enabled,close_requirements,lead_source_requirements,url,app_url}
 - **GET /settings/learning_preferences** -> 200: object{preferences,url,app_url}
 - **GET /settings/notifications/edit** -> 200: object{email_fallback_enabled,url,app_url}
@@ -296,18 +311,22 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /shop_discounts** -> 200: array of object
 - **POST /shop_discounts** -> 201: object{id,name,discount_type,amount_cents,percentage,active,category,created_at,updated_at,url,app_url} | 403: error envelope
+- **DELETE /shop_discounts/{id}** ?id -> no content
 - **PATCH /shop_discounts/{id}** ?id -> 200: object{id,name,discount_type,amount_cents,percentage,active,category,created_at,updated_at,url,app_url}
+- **POST /shop_discounts/{id}/duplicate** ?id -> 201: object{id,name,discount_type,amount_cents,percentage,active,category,created_at,updated_at,url,app_url}
 
 ## Shop Fees
 
 - **GET /shop_fees** -> 200: array of object
 - **POST /shop_fees** -> 201: object{id,name,fee_type,amount_cents,percentage,active,applies_to,is_taxable,created_at,updated_at,url,app_url} | 403: error envelope
+- **DELETE /shop_fees/{id}** ?id -> no content
 - **PATCH /shop_fees/{id}** ?id -> 200: object{id,name,fee_type,amount_cents,percentage,active,applies_to,is_taxable,created_at,updated_at,url,app_url}
+- **POST /shop_fees/{id}/duplicate** ?id -> 201: object{id,name,fee_type,amount_cents,percentage,active,applies_to,is_taxable,created_at,updated_at,url,app_url}
 
 ## Statements
 
 - **GET /statements/{id}** ?id -> 200: Statement | 404: error envelope
-- **GET /statements/{statement_id}/payments** ?statement_id -> 500: error envelope
+- **GET /statements/{statement_id}/payments** ?statement_id -> 200: array of Statement | 500: object
 
 ## Store Credits
 
@@ -327,11 +346,10 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **PATCH /sublet_packages/{id}** ?id -> 200: object{id,name,description,active,default_fulfillment_status,default_payment_status,default_payment_method,sublet_package_lines_count,location,created_at,updated_at,url,app_url} | 403: error envelope
 - **PATCH /sublet_packages/{id}/deactivate** ?id -> 403: error envelope
 
-## Team
+## Time Entries
 
-- **GET /team/permission_groups** -> 200: array of object | 403: error envelope
-- **POST /team/permission_groups** -> 201: object{id,name,description,role,can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_hard_delete_work_orders,can_edit_permissions,can_view_job_board,can_view_metrics,can_view_activity_feed,created_at,updated_at,url,app_url}
-- **PATCH /team/permission_groups/{id}** ?id -> 200: object{id,name,description,role,can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_hard_delete_work_orders,can_edit_permissions,can_view_job_board,can_view_metrics,can_view_activity_feed,created_at,updated_at,url,app_url}
+- **POST /time_entries** -> 201: object{status} | 401: error envelope | 422: error envelope
+- **PATCH /time_entries/{id}** ?id -> 200: object{status}
 
 ## Tire Storage Slots
 
@@ -352,6 +370,9 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /users** ?page,per_page -> 200: array of object | 403: error envelope
 - **POST /users** -> 201: object{id,type,full_name,email,initials,role,disabled,disabled_at,locked,confirmed,hourly_cost_cents,hourly_cost_currency,certification_number,certification_label,mfa_enabled,mfa_required,qr_token_generated_at,created_at,updated_at,url,app_url,location,locations,capabilities}
+- **GET /users/permission_groups** -> 200: array of object | 403: error envelope
+- **POST /users/permission_groups** -> 201: object{id,name,description,role,can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_hard_delete_work_orders,can_edit_permissions,can_view_job_board,can_view_metrics,can_view_activity_feed,created_at,updated_at,url,app_url}
+- **PATCH /users/permission_groups/{id}** ?id -> 200: object{id,name,description,role,can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_hard_delete_work_orders,can_edit_permissions,can_view_job_board,can_view_metrics,can_view_activity_feed,created_at,updated_at,url,app_url}
 - **DELETE /users/{id}** ?id -> no content | 403: error envelope
 - **GET /users/{id}** ?id -> 200: object{id,type,full_name,email,initials,role,disabled,disabled_at,locked,confirmed,hourly_cost_cents,hourly_cost_currency,certification_number,certification_label,mfa_enabled,mfa_required,qr_token_generated_at,created_at,updated_at,url,app_url,location,locations,capabilities}
 - **PATCH /users/{id}** ?id -> 200: object{id,type,full_name,email,initials,role,disabled,disabled_at,locked,confirmed,hourly_cost_cents,hourly_cost_currency,certification_number,certification_label,mfa_enabled,mfa_required,qr_token_generated_at,created_at,updated_at,url,app_url,location,locations,capabilities}
@@ -372,7 +393,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Vehicles
 
-- **GET /vehicles** ?customer_id,page -> 200: array of Vehicle | 403: error envelope
+- **GET /vehicles** ?customer_id,page,per_page -> 200: array of Vehicle | 403: error envelope
 - **POST /vehicles** -> 201: Vehicle | 403: error envelope | 422: error envelope
 - **GET /vehicles/autocomplete** ?type -> 403: error envelope
 - **GET /vehicles/check_duplicate** ?vin -> 200: object{matches} | 403: error envelope
@@ -389,16 +410,20 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Vendors
 
-- **GET /vendors** -> 200: array of Vendor | 401: error envelope
+- **GET /vendors** -> 200: array of Vendor | 401: error envelope | 403: error envelope
 - **POST /vendors** -> 201: Vendor | 403: error envelope
 - **DELETE /vendors/{id}** ?id -> no content
 - **GET /vendors/{id}** ?id -> 200: Vendor | 404: error envelope
 - **PATCH /vendors/{id}** ?id -> 200: Vendor
 - **GET /vendors/{vendor_id}/purchase_orders** ?vendor_id -> 200: array of PurchaseOrder
 
+## Voice Commands
+
+- **DELETE /voice_commands/{id}** ?id -> 200: object{status} | 404: error envelope
+
 ## Work Orders
 
-- **GET /work_orders** -> 200: array of WorkOrder | 403: error envelope
+- **GET /work_orders** ?per_page -> 200: array of WorkOrder | 403: error envelope
 - **POST /work_orders** -> 201: WorkOrder
 - **DELETE /work_orders/{id}** ?id -> no content
 - **GET /work_orders/{id}** ?id -> 200: WorkOrder | 401: error envelope
@@ -406,7 +431,9 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **PATCH /work_orders/{id}/close** ?id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url} | 422: error envelope
 - **PATCH /work_orders/{id}/close_as_paid** ?id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url}
 - **PATCH /work_orders/{id}/close_zero** ?id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url}
-- **POST /work_orders/{id}/courtesy_car_assignment** ?id -> 200: WorkOrder
+- **DELETE /work_orders/{id}/courtesy_car_assignment** ?id -> 200: WorkOrder
+- **PATCH /work_orders/{id}/courtesy_car_assignment** ?id -> 200: WorkOrder
+- **POST /work_orders/{id}/courtesy_car_assignment** ?id -> 200: WorkOrder | 403: error envelope
 - **PATCH /work_orders/{id}/decline_all** ?id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url}
 - **GET /work_orders/{id}/declined_services** ?id -> 200: array of object
 - **DELETE /work_orders/{id}/hard_delete** ?id -> 202: WorkOrder | 422: error envelope
@@ -423,16 +450,19 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **POST /work_orders/{work_order_id}/authorization/update_decisions** ?work_order_id -> 200: WorkOrder
 - **GET /work_orders/{work_order_id}/concerns** ?work_order_id -> 200: array of WorkOrder
 - **GET /work_orders/{work_order_id}/estimate** ?work_order_id -> 200: WorkOrder
+- **POST /work_orders/{work_order_id}/fee_exclusions** ?work_order_id -> 201: WorkOrder | 403: error envelope | 422: error envelope
+- **DELETE /work_orders/{work_order_id}/fee_exclusions/{id}** ?id,work_order_id -> no content
 - **GET /work_orders/{work_order_id}/inspection** ?work_order_id -> 200: WorkOrder
-- **POST /work_orders/{work_order_id}/labels** ?work_order_id -> 200: WorkOrder
+- **POST /work_orders/{work_order_id}/labels** ?work_order_id -> 200: WorkOrder | 403: error envelope | no content
 - **DELETE /work_orders/{work_order_id}/labels/{id}** ?id,work_order_id -> 200: WorkOrder
 - **GET /work_orders/{work_order_id}/parts** ?work_order_id -> 200: WorkOrder
-- **GET /work_orders/{work_order_id}/payments** ?work_order_id -> 500: error envelope
-- **POST /work_orders/{work_order_id}/payments** ?work_order_id -> 403: error envelope | 422: error envelope | 500: error envelope
+- **GET /work_orders/{work_order_id}/payments** ?work_order_id -> 200: WorkOrder | 500: object
+- **POST /work_orders/{work_order_id}/payments** ?work_order_id -> 201: WorkOrder | 403: error envelope | 422: error envelope | 500: object
 - **DELETE /work_orders/{work_order_id}/payments/reverse_ar** ?work_order_id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url}
 - **POST /work_orders/{work_order_id}/payments/send_to_ar** ?work_order_id -> 200: object{type,id,work_order_number,status,intake_method,scheduled_for,authorized,paid,created_at,updated_at,closed_at,location_id,service_advisor_id,assigned_technician_id,sub_status_type_id,payer_customer_id,vehicle_arrived_at,work_order_services_count,inspection_reports_count,customer,vehicle,totals,url,app_url,location,odometer_in,odometer_out,odometer_unit,authorized_at,authorized_total_cents,customer_notified,customer_notified_ready,ready_for_pickup_at,completed_at,declined_at,decline_reason,discount_cents,fees_cents,parts_cents,labor_cents,tires_cents,subcontracts_cents,credit_balance_cents,saved_for_later,closure_reason,closure_reason_notes,notes,purchase_order_number,return_method,return_method_notes,vehicle_keys_location,vehicle_location,customer_visit_count,customer_total_spend_cents,average_ticket_cents,activity_total,recent_activities,services_url,payments_url,wip_url,inspection_url,parts_url,concerns_url,service_history_url,declined_services_url,activity_url,vehicle_history_url,appointments_url,authorization_logs_url}
-- **POST /work_orders/{work_order_id}/refunds** ?work_order_id -> 500: error envelope
+- **POST /work_orders/{work_order_id}/refunds** ?work_order_id -> 201: WorkOrder | 500: object
 - **POST /work_orders/{work_order_id}/services** ?work_order_id -> 201: WorkOrder | no content | 422: error envelope
+- **PATCH /work_orders/{work_order_id}/services/reorder** ?work_order_id -> no content
 - **DELETE /work_orders/{work_order_id}/services/{id}** ?id,work_order_id -> no content
 - **PATCH /work_orders/{work_order_id}/services/{id}** ?id,work_order_id -> 200: WorkOrder | no content
 - **PATCH /work_orders/{work_order_id}/services/{id}/acknowledge_parts** ?id,work_order_id -> 200: WorkOrder
@@ -468,8 +498,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **GET /work_orders/{work_order_id}/summary/appointments** ?work_order_id -> 200: array of WorkOrder
 - **GET /work_orders/{work_order_id}/summary/authorization_logs** ?work_order_id -> 200: array of WorkOrder
 - **GET /work_orders/{work_order_id}/summary/vehicle_history** ?work_order_id -> 200: array of WorkOrder
-- **POST /work_orders/{work_order_id}/voids** ?work_order_id -> 500: error envelope
-- **GET /work_orders/{work_order_id}/wip** ?work_order_id -> 200: WorkOrder
+- **POST /work_orders/{work_order_id}/voids** ?work_order_id -> 201: WorkOrder | 500: object
+- **GET /work_orders/{work_order_id}/wip** ?work_order_id -> 200: WorkOrder | no content
 
 
 ## Schemas
@@ -478,17 +508,24 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **BroadcastCampaign**: {id*:integer, type*:string, name*:string, status*:string, sms_body*:string, filters*:object, recipient_count*:integer, sent_count*:integer, failed_count*:integer, progress_percentage*:integer, sent_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, creator*:object{id,name,url}, location*:object{id,name,url}}
 - **Customer**: {type*:string, id*:integer, full_name*:string, company_name*:string, first_name*:string, last_name*:string, fleet_identifier*:string, marketing_opt_in*:boolean, tax_exempt*:boolean, vehicles_count*:integer, emails_count*:integer, phones_count*:integer, vehicles_url*:string, work_orders_url*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, emails*:array of object, phones*:array of object, addresses*:array of object, outstanding_balance_cents*:integer, total_revenue_cents*:integer, store_credit_cents*:integer, last_visit_at*:string, statements_count*:integer, currency*:string}
 - **Driver**: {id*:integer, full_name*:string, phone*:string, email*:string, customer*:object{id,full_name,url}, work_orders_count*:integer, work_orders_url*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **Statement**: {id*:integer, statement_number*:string, status*:string, statement_date*:string, start_date*:string, end_date*:string, due_date*:string, totals*:object{previous_balance_cents,new_charges_cents,payments_received_cents,credits_cents,balance_due_cents,currency}, sent_at*:string, viewed_at*:string, customer*:object{id,full_name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **Statement**: {id*:integer, amount_cents*:integer, currency*:string, method*:string, processor_status*:string, is_refund*:boolean, is_adjustment*:boolean, voided*:boolean, voided_at*:string, processed_at*:string, reference*:string, created_at*:string, updated_at*:string, work_order_id*:integer, customer_id*:integer, url*:string, app_url*:string, work_order*:object{id,url}, customer*:object{id,full_name,url}, processed_by*:object{id,full_name,url}, location*:object{id,name,url}}
 - **Vehicle**: {type*:string, id*:integer, make*:string, model*:string, year*:integer, submodel*:string, body_style*:string, engine*:string, vin*:string, license_plate*:string, license_plate_state*:string, license_plate_country*:string, drivetrain*:string, transmission*:string, color*:string, vehicle_type*:string, unit_number*:string, fleet_identifier*:string, production_date*:string, annual_safety_expires_at*:string, notes*:string, odometer*:object{reading,unit}, work_orders_count*:integer, work_orders_url*:string, customer*:object{id,full_name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, last_serviced_at*:string, lifetime_revenue_cents*:integer, open_work_orders_count*:integer, appointments_count*:integer}
 - **InspectionReport**: {id*:integer, type*:string, name*:string, status*:string, work_order_id*:integer, quick_finding*:boolean, published*:boolean, completed*:boolean, items_count*:integer, checked_count*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups*:array of any}
 - **Inspection**: {id*:integer, type*:string, name*:string, description*:string, active*:boolean, is_default*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups*:array of object}
-- **PurchaseOrder**: {id*:integer, type*:string, po_number*:integer, status*:string, order_method*:string, payment_method*:string, fulfillment_method*:string, tracking_number*:string, vendor_invoice_number*:string, vendor_invoice_received_at*:string, notes*:string, freight_cost_cents*:integer, freight_cost_currency*:string, subtotal_cents*:string, total_cents*:string, core_charges_cents*:integer, line_items_count*:integer, ordered_at*:string, received_at*:string, payment_due_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order*:object{id,number,url}, location*:object{id,name,url}, line_items*:array of object}
+- **PurchaseOrder**: {id*:integer, type*:string, po_number*:integer, status*:string, order_method*:string, payment_method*:string, fulfillment_method*:string, tracking_number*:any, vendor_invoice_number*:any, vendor_invoice_received_at*:string, notes*:string, freight_cost_cents*:integer, freight_cost_currency*:string, subtotal_cents*:string, total_cents*:string, core_charges_cents*:integer, line_items_count*:integer, ordered_at*:string, received_at*:string, payment_due_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, creator*:object{id,name,url}, location*:object{id,name,url}, line_items*:array of object}
+- **ReturnOrder**: {id*:integer, type*:string, return_number*:integer, status*:string, credit_method*:any, reason_code*:any, rma_number*:any, is_warranty_claim*:boolean, restocking_fee_cents*:integer, shipping_fee_cents*:integer, notes*:string, line_items_count*:integer, refund_completed_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order*:object{id,number,url}, creator*:object{id,name,url}, location*:object{id,name,url}, line_items*:array of object}
 - **SubletOrder**: {id*:integer, type*:string, sublet_number*:integer, title*:string, payment_status*:string, payment_method*:any, total_cents*:integer, total_cost_cents*:integer, margin_cents*:integer, margin_percentage*:integer, sent_to_ap*:boolean, vendor_paid_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order*:object{id,number,url}, work_order_service*:object{id,name}, location*:object{id,name,url}}
 - **ServiceCategory**: {id*:integer, name*:string, description*:string, service_type*:string, icon*:string, color*:string, active*:boolean, position*:integer, canonical*:boolean, canonical_key*:string, job_count*:integer, url*:string, app_url*:string}
 - **Vendor**: {id*:integer, name*:string, vendor_type*:string, payment_terms*:string, active*:boolean, phone*:string, email*:string, website*:string, account_number*:string, notes*:string, quick_order*:boolean, order_url_template*:string, catalog_url_template*:string, location*:object{id,name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
 - **Error**: {code*:string, message*:string, field_errors*:object}
 - **UpdateAiSuggestionRequest**: {status*:string}
+- **CreateAppointmentRequest**: {appointment*:object{starts_at,customer_id,vehicle_id,intake_method}}
+- **UpdateAppointmentRequest**: {appointment*:object{customer_concern}}
+- **CreateAppointmentsApprovalRequest**: {}
+- **CreateAppointmentsCancellationRequest**: {}
 - **CreateAppointmentsFollowUpRequest**: {appointment*:object{starts_at,follow_up_reason}}
+- **CreateAppointmentsRejectionRequest**: {}
+- **CreateAppointmentsVehicleReconciliationRequest**: {vehicle_action*:string, vehicle_id*:integer}
 - **CreateAppointmentsWorkOrderRequest**: {}
 - **CreateCampaignRequest**: {broadcast_campaign*:object{name,sms_body}}
 - **DuplicateCampaignRequest**: {}
@@ -507,10 +544,13 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateCustomerTagRequest**: {name*:string}
 - **UpdateCustomerTagRequest**: {name*:string}
 - **CreateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,tax_exempt_number,notes,marketing_opt_in,discount_percent,po_required,tag_ids,emails_attributes,phones_attributes,addresses_attributes}}
+- **CreateCustomersExportRequest**: {}
 - **CreateDriverRequest**: {driver*:object{full_name,phone}}
 - **UpdateDriverRequest**: {driver*:object{full_name}}
 - **UpdateCustomerRequest**: {customer*:object{emails_attributes,first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,notes,marketing_opt_in,discount_percent,po_required,phones_attributes,addresses_attributes}}
 - **MergeCustomerRequest**: {source_customer_id*:integer}
+- **CreateExpenseRequest**: {expense*:object{payee,category,description,amount,expense_date,payment_method}}
+- **UpdateExpenseRequest**: {expense*:object{description}}
 - **CreateInspectionReportRequest**: {}
 - **CompleteInspectionReportRequest**: {}
 - **MarkAllInspectionReportRequest**: {status*:string, group_name*:string}
@@ -535,39 +575,54 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateLaborRateRequest**: {labor_rate*:object{name,rate,is_default,active}}
 - **UpdateLaborRateRequest**: {labor_rate*:object{active}}
 - **CreateLeadSourceRequest**: {lead_source*:object{name,category}}
+- **CreateLeadSourcesSeedDefaultRequest**: {}
 - **UpdateLeadSourceRequest**: {lead_source*:object{active}}
 - **CreateNotificationsBulkMarkReadRequest**: {notification_ids:array of integer}
 - **UpdateNotificationRequest**: {read*:boolean}
+- **CreateOrdersPurchaseOrderRequest**: {purchase_order*:object{vendor_id,payment_method,fulfillment_method,line_items}}
 - **UpdateOrdersPurchaseOrderRequest**: {purchase_order*:object{tracking_number}}
 - **CreateOrdersPurchaseOrdersCancellationRequest**: {}
+- **UpdateOrdersReturnOrderRequest**: {return_order*:object{rma_number}}
+- **CreateOrdersReturnOrdersRefundCompletionRequest**: {}
 - **UpdateOrdersSubletOrdersMarkPaymentCompleteRequest**: {sublet_order_ids*:array of integer, payment_method*:string}
 - **CreatePackageRequest**: {package*:object{name,description}}
 - **UpdatePackageRequest**: {package*:object{active}}
 - **CreatePackagesDuplicateRequest**: {}
 - **CreatePartsMatriceRequest**: {parts_matrix*:object{name,is_default,active}}
 - **UpdatePartsMatriceRequest**: {parts_matrix*:object{name}}
+- **CreatePaymentsCancellationRequest**: {}
+- **CreatePaymentsConfirmationRequest**: {}
+- **CreatePaymentsFailureRequest**: {}
 - **CreateRecentSearcheRequest**: {recent_search*:object{query,result_type,result_id,label}}
+- **CreateScanLookupRequest**: {code*:string, type*:string}
+- **CreateScanStartedWorkOrderRequest**: {outcome*:string, vehicle_id*:integer}
+- **CreateScanVehicleRequest**: {customer*:object{first_name,last_name,phone}, vehicle*:object{vin,year,make,model}}
 - **CreateServiceCategoryRequest**: {service_category*:object{name,service_type,icon}}
 - **SeedDefaultsServiceCategoriesRequest**: {}
 - **UpdateServiceCategoryRequest**: {service_category*:object{active,name,position}}
 - **UpdateSettingsAccountRequest**: {account*:object{name}}
+- **UpdateSettingsLaborTemplateRequest**: {labor_template*:object{default_hours}}
 - **UpdateTagsRequest**: {customer_tags:array of object, vehicle_tags:array of object}
 - **CreateShopDiscountRequest**: {shop_discount_config*:object{name,discount_type,percentage,active}}
 - **UpdateShopDiscountRequest**: {shop_discount_config*:object{active}}
+- **CreateShopDiscountsDuplicateRequest**: {}
 - **CreateShopFeeRequest**: {shop_fee_config*:object{name,fee_type,amount,active}}
 - **UpdateShopFeeRequest**: {shop_fee_config*:object{active}}
+- **CreateShopFeesDuplicateRequest**: {}
 - **CreateStoreCreditsVoidRequest**: {}
 - **CreateSubStatuseRequest**: {sub_status_type*:object{name,color,status_scope}}
 - **UpdateSubStatuseRequest**: {sub_status_type*:object{active}}
 - **CreateSubletPackageRequest**: {sublet_package*:object{name,description,active}}
 - **UpdateSubletPackageRequest**: {sublet_package*:object{name}}
-- **CreateTeamPermissionGroupRequest**: {permission_group*:object{name,can_perform_work}}
-- **UpdateTeamPermissionGroupRequest**: {permission_group*:object{name}}
+- **CreateTimeEntrieRequest**: {type*:string, work_order_service_id*:integer}
+- **UpdateTimeEntrieRequest**: {status*:string}
 - **CreateTireStorageSlotRequest**: {tire_storage_slot*:object{vehicle_id,customer_id,slot_label,season,stored_at}}
 - **CreateTireStorageSlotsCheckOutRequest**: {}
 - **CreateTireRequest**: {tire*:object{vehicle_id,position,status,size_raw,brand}}
 - **UpdateTireRequest**: {tire*:object{brand}}
 - **CreateUserRequest**: {user*:object{full_name,email,role,home_location_id,location_ids,can_perform_work}}
+- **CreatePermissionGroupRequest**: {permission_group*:object{name,can_perform_work}}
+- **UpdatePermissionGroupRequest**: {permission_group*:object{name}}
 - **UpdateUserRequest**: {user*:object{full_name}}
 - **CreateUsersDisableRequest**: {}
 - **CreateUsersEnableRequest**: {}
@@ -588,6 +643,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CloseWorkOrderRequest**: {closure_type*:string, closure_reason*:string}
 - **CloseWorkOrderAsPaidRequest**: {}
 - **CloseWorkOrderZeroRequest**: {}
+- **UpdateWorkOrdersCourtesyCarAssignmentRequest**: {action_type*:string}
 - **CreateWorkOrdersCourtesyCarAssignmentRequest**: {vehicle_id*:integer}
 - **DeclineAllWorkOrderServicesRequest**: {decline_reason*:string}
 - **UpdateWorkOrdersPostToAccountRequest**: {}
@@ -600,10 +656,14 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UpdateWorkOrdersToggleWaitingForCustomerRequest**: {}
 - **CreateWorkOrderAuthorizationRequest**: {authorization_method*:string, service_ids*:array of integer, service_decisions*:object{1047559673}}
 - **UpdateWorkOrderAuthorizationDecisionsRequest**: {service_decision_reasons*:object{1047559673}}
+- **CreateWorkOrdersFeeExclusionRequest**: {work_order_fee_exclusion*:object{shop_fee_config_id}}
 - **CreateWorkOrdersLabelRequest**: {label_id*:integer}
+- **CreateWorkOrderPaymentRequest**: {payment*:object{method,amount_cents}}
 - **SendWorkOrderPaymentToArRequest**: {}
+- **CreateWorkOrdersRefundRequest**: {refund*:object{payment_id,amount,reason}}
 - **CreateWorkOrdersServiceRequest**: {work_order_service*:object{name,service_type}, package_id:integer}
-- **UpdateWorkOrdersServiceRequest**: {work_order_service*:object{pricing_mode,name}}
+- **UpdateWorkOrdersServicesReorderRequest**: {service_ids*:array of integer}
+- **UpdateWorkOrdersServiceRequest**: {work_order_service*:object{pricing_mode,name,position}}
 - **UpdateWorkOrdersServicesAcknowledgePartsRequest**: {}
 - **CreateWorkOrdersServicesAddLineItemRequest**: {item_type*:string, name*:string, amount_cents*:integer}
 - **CreateWorkOrdersServicesAddPackageRequest**: {package_id*:integer}
@@ -631,4 +691,5 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UndoPullWorkOrderServiceLineItemRequest**: {}
 - **UndoReturnWorkOrderServiceLineItemRequest**: {}
 - **UpdateWorkOrderServiceLineItemPartStatusRequest**: {part_status*:string}
+- **CreateWorkOrdersVoidRequest**: {payment_id*:integer}
 

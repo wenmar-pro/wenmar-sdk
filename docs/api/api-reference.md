@@ -57,6 +57,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/customers` | `create_customer` | Create a customer. |
 | GET | `/customers/1043910089/merge` | `list_customers_merge` | List all customers merge, paginated via the Link header. |
 | GET | `/customers/check_duplicate` | `check_customer_duplicate` | Check duplicate |
+| POST | `/customers/export` | `create_customers_export` | Create a customers export. |
+| GET | `/customers/export/{id}/download` | `list_customers_export_download` | List all customers export download, paginated via the Link header. |
 | GET | `/customers/lookup` | `lookup_customer` | Lookup |
 | GET | `/customers/{customer_id}/drivers` | `list_customers_drivers` | List all customers drivers, paginated via the Link header. |
 | POST | `/customers/{customer_id}/drivers` | `create_driver` | Create a driver. |
@@ -108,12 +110,16 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/labels/{id}` | `update_label` | Update a label by ID. |
 | GET | `/labor_matrices` | `list_labor_matrices` | List all labor matrices, paginated via the Link header. |
 | POST | `/labor_matrices` | `create_labor_matrice` | Create a labor matrice. |
+| DELETE | `/labor_matrices/{id}` | `delete_labor_matrice` | Delete a labor matrice by ID. |
 | PATCH | `/labor_matrices/{id}` | `update_labor_matrice` | Update a labor matrice by ID. |
 | GET | `/labor_rates` | `list_labor_rates` | List all labor rates, paginated via the Link header. |
 | POST | `/labor_rates` | `create_labor_rate` | Create a labor rate. |
+| DELETE | `/labor_rates/{id}` | `delete_labor_rate` | Delete a labor rate by ID. |
 | PATCH | `/labor_rates/{id}` | `update_labor_rate` | Update a labor rate by ID. |
 | GET | `/lead_sources` | `list_lead_sources` | List all lead sources, paginated via the Link header. |
 | POST | `/lead_sources` | `create_lead_source` | Create a lead source. |
+| POST | `/lead_sources/seed_defaults` | `create_lead_sources_seed_default` | Create a lead sources seed default. |
+| DELETE | `/lead_sources/{id}` | `delete_lead_source` | Delete a lead source by ID. |
 | PATCH | `/lead_sources/{id}` | `update_lead_source` | Update a lead source by ID. |
 | GET | `/locations/{id}` | `show_location` | Show a location by ID. |
 | GET | `/notifications` | `list_notifications` | List all notifications, paginated via the Link header. |
@@ -140,6 +146,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/packages/{id}/duplicate` | `create_packages_duplicate` | Create a packages duplicate. |
 | GET | `/parts_matrices` | `list_parts_matrices` | List all parts matrices, paginated via the Link header. |
 | POST | `/parts_matrices` | `create_parts_matrice` | Create a parts matrice. |
+| DELETE | `/parts_matrices/{id}` | `delete_parts_matrice` | Delete a parts matrice by ID. |
 | PATCH | `/parts_matrices/{id}` | `update_parts_matrice` | Update a parts matrice by ID. |
 | GET | `/payments` | `list_payments` | List all payments, paginated via the Link header. |
 | GET | `/payments/pending` | `list_payments_pending` | List all payments pending, paginated via the Link header. |
@@ -168,6 +175,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/reports/store_credit` | `list_reports_store_credit` | List all reports store credit, paginated via the Link header. |
 | GET | `/reports/technician_productivity` | `list_reports_technician_productivity` | List all reports technician productivity, paginated via the Link header. |
 | GET | `/reports/work_order_profitability` | `list_reports_work_order_profitability` | List all reports work order profitability, paginated via the Link header. |
+| POST | `/scan/lookups` | `create_scan_lookup` | Create a scan lookup. |
+| POST | `/scan/started_work_orders` | `create_scan_started_work_order` | Create a scan started work order. |
+| POST | `/scan/vehicles` | `create_scan_vehicle` | Create a scan vehicle. |
 | GET | `/search` | `list_search` | List all search, paginated via the Link header. |
 | GET | `/service_categories` | `list_service_categories` | List all service categories, paginated via the Link header. |
 | POST | `/service_categories` | `create_service_category` | Create a service category. |
@@ -183,6 +193,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/settings/driveon` | `list_settings_driveon` | List all settings driveon, paginated via the Link header. |
 | GET | `/settings/expenses` | `list_settings_expenses` | List all settings expenses, paginated via the Link header. |
 | GET | `/settings/labor_templates` | `list_settings_labor_templates` | List all settings labor templates, paginated via the Link header. |
+| DELETE | `/settings/labor_templates/{id}` | `delete_settings_labor_template` | Delete a settings labor template by ID. |
+| PATCH | `/settings/labor_templates/{id}` | `update_settings_labor_template` | Update a settings labor template by ID. |
 | GET | `/settings/lead_source_requirements` | `list_settings_lead_source_requirements` | List all settings lead source requirements, paginated via the Link header. |
 | GET | `/settings/learning_preferences` | `list_settings_learning_preferences` | List all settings learning preferences, paginated via the Link header. |
 | GET | `/settings/notifications/edit` | `list_settings_notifications_edit` | List all settings notifications edit, paginated via the Link header. |
@@ -196,10 +208,14 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/settings/trust_levels` | `list_settings_trust_levels` | List all settings trust levels, paginated via the Link header. |
 | GET | `/shop_discounts` | `list_shop_discounts` | List all shop discounts, paginated via the Link header. |
 | POST | `/shop_discounts` | `create_shop_discount` | Create a shop discount. |
+| DELETE | `/shop_discounts/{id}` | `delete_shop_discount` | Delete a shop discount by ID. |
 | PATCH | `/shop_discounts/{id}` | `update_shop_discount` | Update a shop discount by ID. |
+| POST | `/shop_discounts/{id}/duplicate` | `create_shop_discounts_duplicate` | Create a shop discounts duplicate. |
 | GET | `/shop_fees` | `list_shop_fees` | List all shop fees, paginated via the Link header. |
 | POST | `/shop_fees` | `create_shop_fee` | Create a shop fee. |
+| DELETE | `/shop_fees/{id}` | `delete_shop_fee` | Delete a shop fee by ID. |
 | PATCH | `/shop_fees/{id}` | `update_shop_fee` | Update a shop fee by ID. |
+| POST | `/shop_fees/{id}/duplicate` | `create_shop_fees_duplicate` | Create a shop fees duplicate. |
 | GET | `/statements/{id}` | `show_statement` | Show a statement by ID. |
 | GET | `/statements/{statement_id}/payments` | `list_statements_payments` | List all statements payments, paginated via the Link header. |
 | POST | `/store_credits/{store_credit_id}/voids` | `create_store_credits_void` | Create a store credits void. |
@@ -211,9 +227,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/sublet_packages/{id}` | `delete_sublet_package` | Delete a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}` | `update_sublet_package` | Update a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}/deactivate` | `update_sublet_packages_deactivate` | Update a sublet packages deactivate by ID. |
-| GET | `/team/permission_groups` | `list_team_permission_groups` | List all team permission groups, paginated via the Link header. |
-| POST | `/team/permission_groups` | `create_team_permission_group` | Create a team permission group. |
-| PATCH | `/team/permission_groups/{id}` | `update_team_permission_group` | Update a team permission group by ID. |
+| POST | `/time_entries` | `create_time_entrie` | Create a time entrie. |
+| PATCH | `/time_entries/{id}` | `update_time_entrie` | Update a time entrie by ID. |
 | GET | `/tire_storage_slots` | `list_tire_storage_slots` | List all tire storage slots, paginated via the Link header. |
 | POST | `/tire_storage_slots` | `create_tire_storage_slot` | Create a tire storage slot. |
 | GET | `/tire_storage_slots/{id}` | `show_tire_storage_slot` | Show a tire storage slot by ID. |
@@ -225,6 +240,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/tires/{id}` | `update_tire` | Update a tire by ID. |
 | GET | `/users` | `list_users` | List all users, paginated via the Link header. |
 | POST | `/users` | `create_user` | Create a user. |
+| GET | `/users/permission_groups` | `list_permission_groups` | List all permission groups, paginated via the Link header. |
+| POST | `/users/permission_groups` | `create_permission_group` | Create a permission group. |
+| PATCH | `/users/permission_groups/{id}` | `update_permission_group` | Update a permission group by ID. |
 | DELETE | `/users/{id}` | `delete_user` | Delete a user by ID. |
 | GET | `/users/{id}` | `show_user` | Show a user by ID. |
 | PATCH | `/users/{id}` | `update_user` | Update a user by ID. |
@@ -259,6 +277,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/vendors/{id}` | `show_vendor` | Show a vendor by ID. |
 | PATCH | `/vendors/{id}` | `update_vendor` | Update a vendor by ID. |
 | GET | `/vendors/{vendor_id}/purchase_orders` | `list_vendors_purchase_orders` | List all vendors purchase orders, paginated via the Link header. |
+| DELETE | `/voice_commands/{id}` | `delete_voice_command` | Delete a voice command by ID. |
 | GET | `/work_orders` | `list_work_orders` | List all work orders, paginated via the Link header. |
 | POST | `/work_orders` | `create_work_order` | Create a work order. |
 | DELETE | `/work_orders/{id}` | `delete_work_order` | Delete a work order by ID. |
@@ -267,6 +286,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/work_orders/{id}/close` | `close_work_order` | Close |
 | PATCH | `/work_orders/{id}/close_as_paid` | `close_work_order_as_paid` | Close as paid |
 | PATCH | `/work_orders/{id}/close_zero` | `close_work_order_zero` | Close zero |
+| DELETE | `/work_orders/{id}/courtesy_car_assignment` | `delete_work_orders_courtesy_car_assignment` | Delete a work orders courtesy car assignment by ID. |
+| PATCH | `/work_orders/{id}/courtesy_car_assignment` | `update_work_orders_courtesy_car_assignment` | Update a work orders courtesy car assignment by ID. |
 | POST | `/work_orders/{id}/courtesy_car_assignment` | `create_work_orders_courtesy_car_assignment` | Create a work orders courtesy car assignment. |
 | PATCH | `/work_orders/{id}/decline_all` | `decline_all_work_order_services` | Decline all |
 | GET | `/work_orders/{id}/declined_services` | `show_work_order_declined_services` | Show a work order declined services by ID. |
@@ -284,6 +305,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/work_orders/{work_order_id}/authorization/update_decisions` | `update_work_order_authorization_decisions` | Update a work order authorization decisions by ID. |
 | GET | `/work_orders/{work_order_id}/concerns` | `list_work_orders_concerns` | List all work orders concerns, paginated via the Link header. |
 | GET | `/work_orders/{work_order_id}/estimate` | `show_work_order_estimate` | Show a work order estimate by ID. |
+| POST | `/work_orders/{work_order_id}/fee_exclusions` | `create_work_orders_fee_exclusion` | Create a work orders fee exclusion. |
+| DELETE | `/work_orders/{work_order_id}/fee_exclusions/{id}` | `delete_work_orders_fee_exclusion` | Delete a work orders fee exclusion by ID. |
 | GET | `/work_orders/{work_order_id}/inspection` | `show_work_order_inspection` | Show a work order inspection by ID. |
 | POST | `/work_orders/{work_order_id}/labels` | `create_work_orders_label` | Create a work orders label. |
 | DELETE | `/work_orders/{work_order_id}/labels/{id}` | `delete_work_orders_label` | Delete a work orders label by ID. |
@@ -294,6 +317,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/work_orders/{work_order_id}/payments/send_to_ar` | `send_work_order_payment_to_ar` | Send to ar |
 | POST | `/work_orders/{work_order_id}/refunds` | `create_work_orders_refund` | Create a work orders refund. |
 | POST | `/work_orders/{work_order_id}/services` | `create_work_orders_service` | Create a work orders service. |
+| PATCH | `/work_orders/{work_order_id}/services/reorder` | `update_work_orders_services_reorder` | Update a work orders services reorder by ID. |
 | DELETE | `/work_orders/{work_order_id}/services/{id}` | `delete_work_orders_service` | Delete a work orders service by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}` | `update_work_orders_service` | Update a work orders service by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/acknowledge_parts` | `update_work_orders_services_acknowledge_parts` | Update a work orders services acknowledge parts by ID. |

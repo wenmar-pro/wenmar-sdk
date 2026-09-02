@@ -15,6 +15,7 @@ List all vehicles, paginated via the Link header.
 |---|---|---|
 | `customer_id` | integer | No |
 | `page` | integer | No |
+| `per_page` | integer | No |
 
 **Response 200** — array of [Vehicle](#vehicle-schema)
 

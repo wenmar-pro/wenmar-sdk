@@ -11,6 +11,10 @@ GET /work_orders
 
 List all work orders, paginated via the Link header.
 
+| Param | Type | Required |
+|---|---|---|
+| `per_page` | integer | No |
+
 **Response 200** — array of [WorkOrder](#workorder-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
@@ -976,6 +980,43 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
+## Delete work orders courtesy car assignment
+
+```
+DELETE /work_orders/{id}/courtesy_car_assignment
+```
+
+Delete a work orders courtesy car assignment by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200** — [WorkOrder](#workorder-schema)
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
+```
+
+## Update work orders courtesy car assignment
+
+```
+PATCH /work_orders/{id}/courtesy_car_assignment
+```
+
+Update a work orders courtesy car assignment by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200** — [WorkOrder](#workorder-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
+```
+
 ## Create work orders courtesy car assignment
 
 ```
@@ -989,6 +1030,8 @@ Create a work orders courtesy car assignment.
 | `id` | integer | Yes |
 
 **Response 200** — [WorkOrder](#workorder-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -1827,6 +1870,48 @@ Show a work order estimate by ID.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/estimate.json
 ```
 
+## Create work orders fee exclusion
+
+```
+POST /work_orders/{work_order_id}/fee_exclusions
+```
+
+Create a work orders fee exclusion.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 201** — [WorkOrder](#workorder-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/fee_exclusions.json
+```
+
+## Delete work orders fee exclusion
+
+```
+DELETE /work_orders/{work_order_id}/fee_exclusions/{id}
+```
+
+Delete a work orders fee exclusion by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `work_order_id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
+```
+
 ## Show work order inspection
 
 ```
@@ -1919,6 +2004,10 @@ Create a work orders label.
 | `work_order_id` | integer | Yes |
 
 **Response 200** — [WorkOrder](#workorder-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — no content.
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2056,7 +2145,7 @@ Show a work order payments by ID.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — [WorkOrder](#workorder-schema)
 
 **Example**
 
@@ -2156,11 +2245,11 @@ Create a work order payment.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
+**Response 201** — [WorkOrder](#workorder-schema)
+
 **Response 403** — [Error](#error-schema) error envelope
 
 **Response 422** — [Error](#error-schema) error envelope
-
-**Response 500** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2428,7 +2517,7 @@ Create a work orders refund.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 201** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -2456,6 +2545,25 @@ Create a work orders service.
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/services.json
+```
+
+## Update work orders services reorder
+
+```
+PATCH /work_orders/{work_order_id}/services/reorder
+```
+
+Update a work orders services reorder by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 200** — no content.
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/services/reorder.json
 ```
 
 ## Delete work orders service
@@ -3189,7 +3297,7 @@ Create a work orders void.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 201** — [WorkOrder](#workorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -3209,6 +3317,8 @@ Show a work order wip by ID.
 | `work_order_id` | integer | Yes |
 
 **Response 200** — [WorkOrder](#workorder-schema)
+
+**Response 404** — no content.
 
 **Example**
 
@@ -3467,6 +3577,14 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
+### UpdateWorkOrdersCourtesyCarAssignmentRequest schema {#updateworkorderscourtesycarassignmentrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `action_type` | string | Yes |
+
+---
+
 ### CreateWorkOrdersCourtesyCarAssignmentRequest schema {#createworkorderscourtesycarassignmentrequest-schema}
 
 | Field | Type | Required |
@@ -3511,11 +3629,53 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
+### CreateWorkOrdersFeeExclusionRequest schema {#createworkordersfeeexclusionrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `work_order_fee_exclusion` | object | Yes |
+
+`work_order_fee_exclusion` — object:
+| Field | Type | Required |
+|---|---|---|
+| `shop_fee_config_id` | integer | Yes |
+
+---
+
 ### CreateWorkOrdersLabelRequest schema {#createworkorderslabelrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
 | `label_id` | integer | Yes |
+
+---
+
+### CreateWorkOrderPaymentRequest schema {#createworkorderpaymentrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `payment` | object | Yes |
+
+`payment` — object:
+| Field | Type | Required |
+|---|---|---|
+| `method` | string | Yes |
+| `amount_cents` | string | Yes |
+
+---
+
+### CreateWorkOrdersRefundRequest schema {#createworkordersrefundrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `refund` | object | Yes |
+
+`refund` — object:
+| Field | Type | Required |
+|---|---|---|
+| `payment_id` | integer | Yes |
+| `amount` | string | Yes |
+| `reason` | string | Yes |
 
 ---
 
@@ -3534,6 +3694,14 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
+### UpdateWorkOrdersServicesReorderRequest schema {#updateworkordersservicesreorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `service_ids` | array of integer | Yes |
+
+---
+
 ### UpdateWorkOrdersServiceRequest schema {#updateworkordersservicerequest-schema}
 
 | Field | Type | Required |
@@ -3545,6 +3713,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `pricing_mode` | string | No |
 | `name` | string | No |
+| `position` | integer | No |
 
 ---
 
@@ -3668,4 +3837,12 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `part_status` | string | Yes |
+
+---
+
+### CreateWorkOrdersVoidRequest schema {#createworkordersvoidrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `payment_id` | integer | Yes |
 

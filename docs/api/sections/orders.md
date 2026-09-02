@@ -31,11 +31,11 @@ POST /orders/purchase_orders
 
 Create a orders purchase order.
 
+**Response 201** — [PurchaseOrder](#purchaseorder-schema)
+
 **Response 403** — [Error](#error-schema) error envelope
 
 **Response 404** — [Error](#error-schema) error envelope
-
-**Response 500** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -126,9 +126,9 @@ GET /orders/return_orders
 
 List all orders return orders, paginated via the Link header.
 
-**Response 403** — [Error](#error-schema) error envelope
+**Response 200** — array of [ReturnOrder](#returnorder-schema)
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/orders/return_orders.json
@@ -164,7 +164,7 @@ Show a orders return order by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — [ReturnOrder](#returnorder-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/orders/return_orders/<id>.json
@@ -182,7 +182,7 @@ Update a orders return order by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — [ReturnOrder](#returnorder-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -201,7 +201,7 @@ Create a orders return orders refund completion.
 |---|---|---|
 | `return_order_id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — [ReturnOrder](#returnorder-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -217,6 +217,8 @@ GET /orders/sublet_orders
 List all orders sublet orders, paginated via the Link header.
 
 **Response 200** — array of [SubletOrder](#subletorder-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/orders/sublet_orders.json
@@ -270,10 +272,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `order_method` | string | Yes |
 | `payment_method` | string | Yes |
 | `fulfillment_method` | string | Yes |
-| `tracking_number` | string | Yes |
-| `vendor_invoice_number` | string | Yes |
+| `tracking_number` | any | Yes |
+| `vendor_invoice_number` | any | Yes |
 | `vendor_invoice_received_at` | string \| null | Yes |
-| `notes` | string | Yes |
+| `notes` | string \| null | Yes |
 | `freight_cost_cents` | integer | Yes |
 | `freight_cost_currency` | string | Yes |
 | `subtotal_cents` | string | Yes |
@@ -288,7 +290,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `vendor` | object | Yes |
-| `work_order` | object | Yes |
+| `creator` | object | Yes |
 | `location` | object | Yes |
 | `line_items` | array of object | Yes |
 
@@ -299,11 +301,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `name` | string | Yes |
 | `url` | string | Yes |
 
-`work_order` — object:
+`creator` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `number` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 `location` — object:
@@ -312,6 +314,35 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+---
+
+### CreateOrdersPurchaseOrderRequest schema {#createorderspurchaseorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `purchase_order` | object | Yes |
+
+`purchase_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `vendor_id` | integer | Yes |
+| `payment_method` | string | Yes |
+| `fulfillment_method` | string | Yes |
+| `line_items` | object | Yes |
+
+`line_items` — object:
+| Field | Type | Required |
+|---|---|---|
+| `0` | object | Yes |
+
+`0` — object:
+| Field | Type | Required |
+|---|---|---|
+| `part_id` | integer | Yes |
+| `description` | string | Yes |
+| `quantity_ordered` | integer | Yes |
+| `unit_cost` | string | Yes |
 
 ---
 
@@ -337,6 +368,76 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `tracking_number` | string | Yes |
+
+---
+
+### ReturnOrder schema {#returnorder-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `return_number` | integer | Yes |
+| `status` | string | Yes |
+| `credit_method` | any | Yes |
+| `reason_code` | any | Yes |
+| `rma_number` | any | Yes |
+| `is_warranty_claim` | boolean | Yes |
+| `restocking_fee_cents` | integer | Yes |
+| `shipping_fee_cents` | integer | Yes |
+| `notes` | string \| null | Yes |
+| `line_items_count` | integer | Yes |
+| `refund_completed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `vendor` | object | Yes |
+| `work_order` | object | Yes |
+| `creator` | object | Yes |
+| `location` | object | Yes |
+| `line_items` | array of object | Yes |
+
+`vendor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `number` | integer | Yes |
+| `url` | string | Yes |
+
+`creator` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+---
+
+### UpdateOrdersReturnOrderRequest schema {#updateordersreturnorderrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `return_order` | object | Yes |
+
+`return_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `rma_number` | string | Yes |
 
 ---
 

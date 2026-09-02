@@ -246,6 +246,43 @@ Check duplicate
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/check_duplicate.json
 ```
 
+## Create customers export
+
+```
+POST /customers/export
+```
+
+Create a customers export.
+
+**Response 200** — [Customer](#customer-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/customers/export.json
+```
+
+## List customers export download
+
+```
+GET /customers/export/{id}/download
+```
+
+List all customers export download, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200** — no content.
+
+**Response 404** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/export/<id>.json
+```
+
 ## Lookup customer
 
 ```
@@ -1058,36 +1095,52 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `statement_number` | string | Yes |
-| `status` | string | Yes |
-| `statement_date` | string | Yes |
-| `start_date` | string | Yes |
-| `end_date` | string | Yes |
-| `due_date` | string | Yes |
-| `totals` | object | Yes |
-| `sent_at` | string \| null | Yes |
-| `viewed_at` | string \| null | Yes |
-| `customer` | object | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
 
-`totals` — object:
+`work_order` — object:
 | Field | Type | Required |
 |---|---|---|
-| `previous_balance_cents` | integer | Yes |
-| `new_charges_cents` | integer | Yes |
-| `payments_received_cents` | integer | Yes |
-| `credits_cents` | integer | Yes |
-| `balance_due_cents` | integer | Yes |
-| `currency` | string | Yes |
+| `id` | integer | Yes |
+| `url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 ---

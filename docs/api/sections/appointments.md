@@ -17,7 +17,61 @@ List all appointments, paginated via the Link header.
 | `q` | string | No |
 | `status` | string | No |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/appointments.json
@@ -31,11 +85,90 @@ POST /appointments
 
 Create a appointment.
 
+**Response 201**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | string | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string \| null | Yes |
+| `customer_email` | any | Yes |
+| `customer_phone` | any | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `phones_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
 **Response 403** — [Error](#error-schema) error envelope
 
 **Response 422** — [Error](#error-schema) error envelope
-
-**Response 500** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -100,7 +233,71 @@ Show a appointment by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+| `reconcile_vehicle_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 304** — no content.
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/appointments/<id>.json
@@ -118,7 +315,69 @@ Update a appointment by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | string | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+| `reconcile_vehicle_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -137,7 +396,69 @@ Create a appointments approval.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+| `reconcile_vehicle_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -156,7 +477,69 @@ Create a appointments cancellation.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+| `reconcile_vehicle_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -272,7 +655,69 @@ Create a appointments rejection.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+| `reconcile_vehicle_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -291,7 +736,86 @@ Create a appointments vehicle reconciliation.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | any | Yes |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | Yes |
+| `customer_name` | string | Yes |
+| `customer_email` | string | Yes |
+| `customer_phone` | string | Yes |
+| `customer_concern` | any | Yes |
+| `follow_up_reason` | string \| null | Yes |
+| `year` | any | Yes |
+| `make` | any | Yes |
+| `model` | string \| null | Yes |
+| `submodel` | string \| null | Yes |
+| `vin` | any | Yes |
+| `license_plate` | any | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer_confirmed` | boolean | Yes |
+| `confirmation_sent_at` | string \| null | Yes |
+| `reminder_sent_at` | string \| null | Yes |
+| `customer_arrived_at` | string \| null | Yes |
+| `customer_initiated` | boolean | Yes |
+| `rescheduled_from_id` | integer \| null | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
+| `messages_count` | integer | Yes |
+| `reschedules_count` | integer | Yes |
+| `approve_url` | string | Yes |
+| `reject_url` | string | Yes |
+| `cancel_url` | string | Yes |
+| `follow_up_url` | string | Yes |
+| `work_order_url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `phones_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -319,6 +843,22 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 
 ---
 
+### CreateAppointmentRequest schema {#createappointmentrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `appointment` | object | Yes |
+
+`appointment` — object:
+| Field | Type | Required |
+|---|---|---|
+| `starts_at` | string | Yes |
+| `customer_id` | integer | Yes |
+| `vehicle_id` | integer | Yes |
+| `intake_method` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -328,6 +868,19 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### UpdateAppointmentRequest schema {#updateappointmentrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `appointment` | object | Yes |
+
+`appointment` — object:
+| Field | Type | Required |
+|---|---|---|
+| `customer_concern` | string | Yes |
 
 ---
 
@@ -342,6 +895,15 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 |---|---|---|
 | `starts_at` | string | Yes |
 | `follow_up_reason` | string | Yes |
+
+---
+
+### CreateAppointmentsVehicleReconciliationRequest schema {#createappointmentsvehiclereconciliationrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `vehicle_action` | string | Yes |
+| `vehicle_id` | integer | Yes |
 
 ---
 

@@ -11,7 +11,42 @@ GET /expenses
 
 List all expenses, paginated via the Link header.
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `payee` | string | Yes |
+| `category` | string | Yes |
+| `description` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `amount_currency` | string | Yes |
+| `expense_date` | string | Yes |
+| `payment_method` | string | Yes |
+| `recurring` | boolean | Yes |
+| `recurrence_rule` | string \| null | Yes |
+| `creator` | object | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`creator` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/expenses.json
@@ -25,9 +60,42 @@ POST /expenses
 
 Create a expense.
 
-**Response 403** — [Error](#error-schema) error envelope
+**Response 201**
 
-**Response 500** — [Error](#error-schema) error envelope
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `payee` | string | Yes |
+| `category` | string | Yes |
+| `description` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `amount_currency` | string | Yes |
+| `expense_date` | string | Yes |
+| `payment_method` | string | Yes |
+| `recurring` | boolean | Yes |
+| `recurrence_rule` | string \| null | Yes |
+| `creator` | object | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`creator` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -64,7 +132,40 @@ Update a expense by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `payee` | string | Yes |
+| `category` | string | Yes |
+| `description` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `amount_currency` | string | Yes |
+| `expense_date` | string | Yes |
+| `payment_method` | string | Yes |
+| `recurring` | boolean | Yes |
+| `recurrence_rule` | string \| null | Yes |
+| `creator` | object | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`creator` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -82,4 +183,35 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### CreateExpenseRequest schema {#createexpenserequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `expense` | object | Yes |
+
+`expense` — object:
+| Field | Type | Required |
+|---|---|---|
+| `payee` | string | Yes |
+| `category` | string | Yes |
+| `description` | string | Yes |
+| `amount` | integer | Yes |
+| `expense_date` | string | Yes |
+| `payment_method` | string | Yes |
+
+---
+
+### UpdateExpenseRequest schema {#updateexpenserequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `expense` | object | Yes |
+
+`expense` — object:
+| Field | Type | Required |
+|---|---|---|
+| `description` | string | Yes |
 

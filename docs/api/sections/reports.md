@@ -52,6 +52,8 @@ List all reports accounting, paginated via the Link header.
 
 `collected_by_payment_method` — object:
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/accounting.json
 ```
@@ -84,6 +86,8 @@ List all reports ar aging, paginated via the Link header.
 | `days_91_120_cents` | integer | Yes |
 | `days_120_plus_cents` | integer | Yes |
 | `total_cents` | integer | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/ar_aging.json
@@ -124,6 +128,8 @@ List all reports declined work, paginated via the Link header.
 | `days_61_90` | integer | Yes |
 | `days_90_plus` | integer | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/declined_work.json
 ```
@@ -152,6 +158,8 @@ List all reports end of day, paginated via the Link header.
 | `app_url` | string | Yes |
 
 `total_sales_by_method` — object:
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/end_of_day.json
@@ -216,6 +224,8 @@ List all reports financial, paginated via the Link header.
 
 `collected_by_payment_method` — object:
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/financial.json
 ```
@@ -246,6 +256,8 @@ List all reports open work, paginated via the Link header.
 
 `status_summary` — object:
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/open_work.json
 ```
@@ -273,6 +285,8 @@ List all reports parts purchases, paginated via the Link header.
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/parts_purchases.json
 ```
@@ -298,6 +312,8 @@ List all reports parts usage, paginated via the Link header.
 | `total_gp_cents` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/parts_usage.json
@@ -405,6 +421,8 @@ List all reports profit and loss, paginated via the Link header.
 | `professional_services` | integer | Yes |
 | `other` | integer | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/profit_and_loss.json
 ```
@@ -495,6 +513,8 @@ List all reports sales summary, paginated via the Link header.
 | `average_daily_revenue_cents` | integer | Yes |
 | `active_days_count` | integer | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/sales_summary.json
 ```
@@ -516,6 +536,8 @@ List all reports service categories, paginated via the Link header.
 | `rows` | array of any | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/service_categories.json
@@ -539,6 +561,8 @@ List all reports store credit, paginated via the Link header.
 | `all_transactions` | array of any | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/store_credit.json
@@ -587,6 +611,8 @@ List all reports technician productivity, paginated via the Link header.
 | `efficiency` | integer | Yes |
 | `revenue` | integer | Yes |
 
+**Response 403** — [Error](#error-schema) error envelope
+
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/technician_productivity.json
 ```
@@ -622,6 +648,8 @@ List all reports work order profitability, paginated via the Link header.
 | `avg_gp_cents` | integer | Yes |
 | `billed_hours` | number | Yes |
 | `actual_hours` | number | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/work_order_profitability.json

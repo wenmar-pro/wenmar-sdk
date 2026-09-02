@@ -60,6 +60,52 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/lead_sources.json
 ```
 
+## Create lead sources seed default
+
+```
+POST /lead_sources/seed_defaults
+```
+
+Create a lead sources seed default.
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `category` | string | Yes |
+| `system_default` | boolean | Yes |
+| `active` | boolean | Yes |
+| `position` | integer | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/lead_sources/seed_defaults.json
+```
+
+## Delete lead source
+
+```
+DELETE /lead_sources/{id}
+```
+
+Delete a lead source by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/lead_sources/<id>.json
+```
+
 ## Update lead source
 
 ```

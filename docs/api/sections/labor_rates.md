@@ -60,6 +60,24 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates.json
 ```
 
+## Delete labor rate
+
+```
+DELETE /labor_rates/{id}
+```
+
+Delete a labor rate by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_rates/<id>.json
+```
+
 ## Update labor rate
 
 ```

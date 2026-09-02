@@ -15,9 +15,60 @@ List all payments, paginated via the Link header.
 |---|---|---|
 | `method` | string | No |
 
-**Response 403** — [Error](#error-schema) error envelope
+**Response 200** — array
 
-**Response 500** — [Error](#error-schema) error envelope
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/payments.json
@@ -31,7 +82,58 @@ GET /payments/pending
 
 List all payments pending, paginated via the Link header.
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/payments/pending.json
@@ -49,7 +151,58 @@ Show a payment by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/payments/<id>.json
@@ -67,7 +220,58 @@ Create a payments cancellation.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -86,7 +290,58 @@ Create a payments confirmation.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -105,7 +360,58 @@ Create a payments failure.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 500** — [Error](#error-schema) error envelope
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `amount_cents` | integer | Yes |
+| `currency` | string | Yes |
+| `method` | string | Yes |
+| `processor_status` | string | Yes |
+| `is_refund` | boolean | Yes |
+| `is_adjustment` | boolean | Yes |
+| `voided` | boolean | Yes |
+| `voided_at` | string \| null | Yes |
+| `processed_at` | string | Yes |
+| `reference` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `work_order_id` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `work_order` | object | Yes |
+| `customer` | object | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
