@@ -4,9 +4,25 @@
 
 module Wenmar
   class Client
+# Deletes delete_account.
+def delete_account()
+  delete("/account")
+end
 # Fetches list_account.
 def list_account()
   get("/account")
+end
+# Runs update_account (PATCH /account).
+def update_account(account:)
+  patch("/account", { account: account })
+end
+# Fetches list_account_station_link.
+def list_account_station_link()
+  get("/account/station_link")
+end
+# Runs create_account_station_link_regenerate (POST /account/station_link/regenerate).
+def create_account_station_link_regenerate()
+  post("/account/station_link/regenerate")
 end
 # Runs update_ai_suggestion (PATCH /ai_suggestions/{id}).
 def update_ai_suggestion(id, status:)
@@ -214,28 +230,13 @@ end
 def get_all_courtesy_cars()
   paginator_to_a(list_courtesy_cars(), 1000)
 end
-# Lists list_customer_tags resources (paginated).
-# @return [Wenmar::Paginator]
-def list_customer_tags()
-  get("/customer_tags")
+# Fetches list_current_location.
+def list_current_location()
+  get("/current_location")
 end
-
-# Fetches all customer_tags, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_customer_tags()
-  paginator_to_a(list_customer_tags(), 1000)
-end
-# Runs create_customer_tag (POST /customer_tags).
-def create_customer_tag(name:)
-  post("/customer_tags", { name: name })
-end
-# Deletes delete_customer_tag.
-def delete_customer_tag(id)
-  delete("/customer_tags/#{id}")
-end
-# Runs update_customer_tag (PATCH /customer_tags/{id}).
-def update_customer_tag(id, name:)
-  patch("/customer_tags/#{id}", { name: name })
+# Runs update_current_location (PATCH /current_location).
+def update_current_location(location:)
+  patch("/current_location", { location: location })
 end
 # Lists list_customers resources (paginated).
 # @return [Wenmar::Paginator]
@@ -541,6 +542,14 @@ end
 def create_label(label:)
   post("/labels", { label: label })
 end
+# Fetches list_labels_data_transfer.
+def list_labels_data_transfer()
+  get("/labels/data_transfer")
+end
+# Runs create_labels_export (POST /labels/export).
+def create_labels_export()
+  post("/labels/export")
+end
 # Runs update_label (PATCH /labels/{id}).
 def update_label(id, label:)
   patch("/labels/#{id}", { label: label })
@@ -591,6 +600,25 @@ end
 def update_labor_rate(id, labor_rate:)
   patch("/labor_rates/#{id}", { labor_rate: labor_rate })
 end
+# Lists list_labor_templates resources (paginated).
+# @return [Wenmar::Paginator]
+def list_labor_templates()
+  get("/labor_templates")
+end
+
+# Fetches all labor_templates, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_labor_templates()
+  paginator_to_a(list_labor_templates(), 1000)
+end
+# Deletes delete_labor_template.
+def delete_labor_template(id)
+  delete("/labor_templates/#{id}")
+end
+# Runs update_labor_template (PATCH /labor_templates/{id}).
+def update_labor_template(id, labor_template:)
+  patch("/labor_templates/#{id}", { labor_template: labor_template })
+end
 # Lists list_lead_sources resources (paginated).
 # @return [Wenmar::Paginator]
 def list_lead_sources()
@@ -621,6 +649,70 @@ end
 # Fetches show_location.
 def show_location(id)
   get("/locations/#{id}")
+end
+# Runs update_location (PATCH /locations/{id}).
+def update_location(id, location:)
+  patch("/locations/#{id}", { location: location })
+end
+# Fetches list_locations_business_profile.
+def list_locations_business_profile(id)
+  get("/locations/#{id}/business_profile")
+end
+# Runs update_locations_business_profile (PATCH /locations/{id}/business_profile).
+def update_locations_business_profile(id, location:)
+  patch("/locations/#{id}/business_profile", { location: location })
+end
+# Fetches list_locations_operations.
+def list_locations_operations(id)
+  get("/locations/#{id}/operations")
+end
+# Runs update_locations_operations (PATCH /locations/{id}/operations).
+def update_locations_operations(id, location:)
+  patch("/locations/#{id}/operations", { location: location })
+end
+# Fetches list_locations_schedule_config.
+def list_locations_schedule_config(location_id)
+  get("/locations/#{location_id}/schedule_config")
+end
+# Runs update_locations_schedule_config (PATCH /locations/{location_id}/schedule_config).
+def update_locations_schedule_config(location_id, schedule_config:)
+  patch("/locations/#{location_id}/schedule_config", { schedule_config: schedule_config })
+end
+# Fetches list_me_api_tokens.
+def list_me_api_tokens()
+  get("/me/api_tokens")
+end
+# Runs create_me_api_token (POST /me/api_tokens).
+def create_me_api_token(api_token:)
+  post("/me/api_tokens", { api_token: api_token })
+end
+# Deletes delete_me_api_token.
+def delete_me_api_token(id)
+  delete("/me/api_tokens/#{id}")
+end
+# Fetches list_me_notifications.
+def list_me_notifications()
+  get("/me/notifications")
+end
+# Runs update_me_notifications (PATCH /me/notifications).
+def update_me_notifications(user:)
+  patch("/me/notifications", { user: user })
+end
+# Fetches list_me_preferences.
+def list_me_preferences()
+  get("/me/preferences")
+end
+# Runs update_me_preferences (PATCH /me/preferences).
+def update_me_preferences(user:)
+  patch("/me/preferences", { user: user })
+end
+# Fetches list_me_profile.
+def list_me_profile()
+  get("/me/profile")
+end
+# Runs update_me_profile (PATCH /me/profile).
+def update_me_profile(user:)
+  patch("/me/profile", { user: user })
 end
 # Lists list_notifications resources (paginated).
 # @return [Wenmar::Paginator]
@@ -808,14 +900,6 @@ end
 def create_payments_failure(id)
   post("/payments/#{id}/failure")
 end
-# Fetches list_preferences.
-def list_preferences()
-  get("/preferences")
-end
-# Fetches list_profile.
-def list_profile()
-  get("/profile")
-end
 # Fetches list_recent_searches.
 def list_recent_searches()
   get("/recent_searches")
@@ -892,18 +976,6 @@ end
 def list_reports_work_order_profitability()
   get("/reports/work_order_profitability")
 end
-# Runs create_scan_lookup (POST /scan/lookups).
-def create_scan_lookup(code:, type:)
-  post("/scan/lookups", { code: code, type: type })
-end
-# Runs create_scan_started_work_order (POST /scan/started_work_orders).
-def create_scan_started_work_order(outcome:, vehicle_id:)
-  post("/scan/started_work_orders", { outcome: outcome, vehicle_id: vehicle_id })
-end
-# Runs create_scan_vehicle (POST /scan/vehicles).
-def create_scan_vehicle(customer:, vehicle:)
-  post("/scan/vehicles", { customer: customer, vehicle: vehicle })
-end
 # Fetches list_search.
 def list_search(q: nil)
   params = { q: q }
@@ -936,14 +1008,6 @@ end
 def update_service_category(id, service_category:)
   patch("/service_categories/#{id}", { service_category: service_category })
 end
-# Fetches list_settings_account.
-def list_settings_account()
-  get("/settings/account")
-end
-# Runs update_settings_account (PATCH /settings/account).
-def update_settings_account(account:)
-  patch("/settings/account", { account: account })
-end
 # Fetches list_settings_billing.
 def list_settings_billing()
   get("/settings/billing")
@@ -968,36 +1032,9 @@ end
 def list_settings_expenses()
   get("/settings/expenses")
 end
-# Lists list_settings_labor_templates resources (paginated).
-# @return [Wenmar::Paginator]
-def list_settings_labor_templates()
-  get("/settings/labor_templates")
-end
-
-# Fetches all settings_labor_templates, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_settings_labor_templates()
-  paginator_to_a(list_settings_labor_templates(), 1000)
-end
-# Deletes delete_settings_labor_template.
-def delete_settings_labor_template(id)
-  delete("/settings/labor_templates/#{id}")
-end
-# Runs update_settings_labor_template (PATCH /settings/labor_templates/{id}).
-def update_settings_labor_template(id, labor_template:)
-  patch("/settings/labor_templates/#{id}", { labor_template: labor_template })
-end
 # Fetches list_settings_lead_source_requirements.
 def list_settings_lead_source_requirements()
   get("/settings/lead_source_requirements")
-end
-# Fetches list_settings_learning_preferences.
-def list_settings_learning_preferences()
-  get("/settings/learning_preferences")
-end
-# Fetches list_settings_notifications_edit.
-def list_settings_notifications_edit()
-  get("/settings/notifications/edit")
 end
 # Fetches list_settings_payments.
 def list_settings_payments()
@@ -1015,21 +1052,9 @@ end
 def list_settings_reminders()
   get("/settings/reminders")
 end
-# Fetches list_tags.
-def list_tags()
-  get("/settings/tags")
-end
-# Runs update_tags (PATCH /settings/tags).
-def update_tags()
-  patch("/settings/tags")
-end
 # Fetches list_settings_tire_management.
 def list_settings_tire_management()
   get("/settings/tire_management")
-end
-# Fetches list_settings_trust_levels.
-def list_settings_trust_levels()
-  get("/settings/trust_levels")
 end
 # Lists list_shop_discounts resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1149,14 +1174,6 @@ end
 # Runs update_sublet_packages_deactivate (PATCH /sublet_packages/{id}/deactivate).
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
-end
-# Runs create_time_entrie (POST /time_entries).
-def create_time_entrie(type:, work_order_service_id:)
-  post("/time_entries", { type: type, work_order_service_id: work_order_service_id })
-end
-# Runs update_time_entrie (PATCH /time_entries/{id}).
-def update_time_entrie(id, status:)
-  patch("/time_entries/#{id}", { status: status })
 end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1282,29 +1299,6 @@ end
 # Runs create_users_unlock (POST /users/{id}/unlock).
 def create_users_unlock(id)
   post("/users/#{id}/unlock")
-end
-# Lists list_vehicle_tags resources (paginated).
-# @return [Wenmar::Paginator]
-def list_vehicle_tags()
-  get("/vehicle_tags")
-end
-
-# Fetches all vehicle_tags, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_vehicle_tags()
-  paginator_to_a(list_vehicle_tags(), 1000)
-end
-# Runs create_vehicle_tag (POST /vehicle_tags).
-def create_vehicle_tag(name:)
-  post("/vehicle_tags", { name: name })
-end
-# Deletes delete_vehicle_tag.
-def delete_vehicle_tag(id)
-  delete("/vehicle_tags/#{id}")
-end
-# Runs update_vehicle_tag (PATCH /vehicle_tags/{id}).
-def update_vehicle_tag(id, name:)
-  patch("/vehicle_tags/#{id}", { name: name })
 end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1438,10 +1432,6 @@ end
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
 end
-# Deletes delete_voice_command.
-def delete_voice_command(id)
-  delete("/voice_commands/#{id}")
-end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_orders(per_page: nil)
@@ -1470,17 +1460,21 @@ end
 def update_work_order(id, work_order:)
   patch("/work_orders/#{id}", { work_order: work_order })
 end
+# Runs create_work_orders_account_posting (POST /work_orders/{id}/account_postings).
+def create_work_orders_account_posting(id)
+  post("/work_orders/#{id}/account_postings")
+end
 # Runs close_work_order (PATCH /work_orders/{id}/close).
-def close_work_order(id, closure_type:, closure_reason:)
-  patch("/work_orders/#{id}/close", { closure_type: closure_type, closure_reason: closure_reason })
+def close_work_order(id)
+  patch("/work_orders/#{id}/close")
 end
-# Runs close_work_order_as_paid (PATCH /work_orders/{id}/close_as_paid).
-def close_work_order_as_paid(id)
-  patch("/work_orders/#{id}/close_as_paid")
+# Runs update_work_orders_close_as_declined (PATCH /work_orders/{id}/close_as_declined).
+def update_work_orders_close_as_declined(id, closure_reason:)
+  patch("/work_orders/#{id}/close_as_declined", { closure_reason: closure_reason })
 end
-# Runs close_work_order_zero (PATCH /work_orders/{id}/close_zero).
-def close_work_order_zero(id)
-  patch("/work_orders/#{id}/close_zero")
+# Runs update_work_orders_close_as_voided (PATCH /work_orders/{id}/close_as_voided).
+def update_work_orders_close_as_voided(id, closure_reason:)
+  patch("/work_orders/#{id}/close_as_voided", { closure_reason: closure_reason })
 end
 # Deletes delete_work_orders_courtesy_car_assignment.
 def delete_work_orders_courtesy_car_assignment(id)
@@ -1494,63 +1488,43 @@ end
 def create_work_orders_courtesy_car_assignment(id, vehicle_id:)
   post("/work_orders/#{id}/courtesy_car_assignment", { vehicle_id: vehicle_id })
 end
-# Runs decline_all_work_order_services (PATCH /work_orders/{id}/decline_all).
-def decline_all_work_order_services(id, decline_reason:)
-  patch("/work_orders/#{id}/decline_all", { decline_reason: decline_reason })
-end
 # Lists show_work_order_declined_services resources (paginated).
 # @return [Wenmar::Paginator]
 def show_work_order_declined_services(id)
   get("/work_orders/#{id}/declined_services")
 end
-# Deletes delete_work_orders_hard_delete.
-def delete_work_orders_hard_delete(id)
-  delete("/work_orders/#{id}/hard_delete")
+# Runs create_work_orders_estimate_deliverie (POST /work_orders/{id}/estimate_deliveries).
+def create_work_orders_estimate_deliverie(id)
+  post("/work_orders/#{id}/estimate_deliveries")
 end
-# Runs update_work_orders_post_to_account (PATCH /work_orders/{id}/post_to_account).
-def update_work_orders_post_to_account(id)
-  patch("/work_orders/#{id}/post_to_account")
+# Runs create_work_orders_invoice_summarie (POST /work_orders/{id}/invoice_summaries).
+def create_work_orders_invoice_summarie(id)
+  post("/work_orders/#{id}/invoice_summaries")
+end
+# Runs create_work_orders_reminder (POST /work_orders/{id}/reminders).
+def create_work_orders_reminder(id)
+  post("/work_orders/#{id}/reminders")
 end
 # Runs reopen_work_order (PATCH /work_orders/{id}/reopen).
 def reopen_work_order(id)
   patch("/work_orders/#{id}/reopen")
 end
-# Runs return_work_order_to_board (PATCH /work_orders/{id}/return_to_board).
-def return_work_order_to_board(id)
-  patch("/work_orders/#{id}/return_to_board")
-end
-# Runs save_work_order_for_later (PATCH /work_orders/{id}/save_for_later).
-def save_work_order_for_later(id)
-  patch("/work_orders/#{id}/save_for_later")
-end
-# Runs update_work_orders_send_estimate (PATCH /work_orders/{id}/send_estimate).
-def update_work_orders_send_estimate(id)
-  patch("/work_orders/#{id}/send_estimate")
-end
-# Runs update_work_orders_send_invoice_summary (PATCH /work_orders/{id}/send_invoice_summary).
-def update_work_orders_send_invoice_summary(id)
-  patch("/work_orders/#{id}/send_invoice_summary")
-end
-# Runs update_work_orders_send_reminder (PATCH /work_orders/{id}/send_reminder).
-def update_work_orders_send_reminder(id)
-  patch("/work_orders/#{id}/send_reminder")
+# Runs create_work_orders_service_decline (POST /work_orders/{id}/service_declines).
+def create_work_orders_service_decline(id, decline_reason:)
+  post("/work_orders/#{id}/service_declines", { decline_reason: decline_reason })
 end
 # Lists show_work_order_service_history resources (paginated).
 # @return [Wenmar::Paginator]
 def show_work_order_service_history(id)
   get("/work_orders/#{id}/service_history")
 end
-# Runs update_work_orders_toggle_waiting_for_customer (PATCH /work_orders/{id}/toggle_waiting_for_customer).
-def update_work_orders_toggle_waiting_for_customer(id)
-  patch("/work_orders/#{id}/toggle_waiting_for_customer")
+# Runs create_work_orders_authorization_decision (POST /work_orders/{work_order_id}/authorization_decisions).
+def create_work_orders_authorization_decision(work_order_id, service_decision_reasons:)
+  post("/work_orders/#{work_order_id}/authorization_decisions", { service_decision_reasons: service_decision_reasons })
 end
-# Runs create_work_order_authorization (POST /work_orders/{work_order_id}/authorization).
-def create_work_order_authorization(work_order_id, authorization_method:, service_ids:, service_decisions:)
-  post("/work_orders/#{work_order_id}/authorization", { authorization_method: authorization_method, service_ids: service_ids, service_decisions: service_decisions })
-end
-# Runs update_work_order_authorization_decisions (POST /work_orders/{work_order_id}/authorization/update_decisions).
-def update_work_order_authorization_decisions(work_order_id, service_decision_reasons:)
-  post("/work_orders/#{work_order_id}/authorization/update_decisions", { service_decision_reasons: service_decision_reasons })
+# Runs create_work_orders_authorization (POST /work_orders/{work_order_id}/authorizations).
+def create_work_orders_authorization(work_order_id, authorization_method:, service_ids:, service_decisions:)
+  post("/work_orders/#{work_order_id}/authorizations", { authorization_method: authorization_method, service_ids: service_ids, service_decisions: service_decisions })
 end
 # Lists list_work_orders_concerns resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1627,18 +1601,6 @@ end
 def update_work_orders_service(work_order_id, id, work_order_service:)
   patch("/work_orders/#{work_order_id}/services/#{id}", { work_order_service: work_order_service })
 end
-# Runs update_work_orders_services_acknowledge_parts (PATCH /work_orders/{work_order_id}/services/{id}/acknowledge_parts).
-def update_work_orders_services_acknowledge_parts(work_order_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{id}/acknowledge_parts")
-end
-# Runs create_work_orders_services_add_line_item (POST /work_orders/{work_order_id}/services/{id}/add_line_item).
-def create_work_orders_services_add_line_item(work_order_id, id, item_type:, name:, amount_cents:)
-  post("/work_orders/#{work_order_id}/services/#{id}/add_line_item", { item_type: item_type, name: name, amount_cents: amount_cents })
-end
-# Runs create_work_orders_services_add_package (POST /work_orders/{work_order_id}/services/{id}/add_package).
-def create_work_orders_services_add_package(work_order_id, id, package_id:)
-  post("/work_orders/#{work_order_id}/services/#{id}/add_package", { package_id: package_id })
-end
 # Fetches list_work_orders_services_adjust_time.
 def list_work_orders_services_adjust_time(work_order_id, id)
   get("/work_orders/#{work_order_id}/services/#{id}/adjust_time")
@@ -1647,17 +1609,25 @@ end
 def update_work_orders_services_adjust_time(work_order_id, id, hours:, minutes:)
   patch("/work_orders/#{work_order_id}/services/#{id}/adjust_time", { hours: hours, minutes: minutes })
 end
-# Runs update_work_orders_services_apply_discount (PATCH /work_orders/{work_order_id}/services/{id}/apply_discount).
-def update_work_orders_services_apply_discount(work_order_id, id, discount:)
-  patch("/work_orders/#{work_order_id}/services/#{id}/apply_discount", { discount: discount })
+# Deletes delete_work_orders_services_authorization.
+def delete_work_orders_services_authorization(work_order_id, id)
+  delete("/work_orders/#{work_order_id}/services/#{id}/authorization")
 end
-# Runs update_work_orders_services_complete_service (PATCH /work_orders/{work_order_id}/services/{id}/complete_service).
-def update_work_orders_services_complete_service(work_order_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{id}/complete_service")
+# Deletes delete_work_orders_services_completion.
+def delete_work_orders_services_completion(work_order_id, id)
+  delete("/work_orders/#{work_order_id}/services/#{id}/completion")
 end
-# Runs create_work_orders_services_duplicate (POST /work_orders/{work_order_id}/services/{id}/duplicate).
-def create_work_orders_services_duplicate(work_order_id, id)
-  post("/work_orders/#{work_order_id}/services/#{id}/duplicate")
+# Runs create_work_orders_services_completion (POST /work_orders/{work_order_id}/services/{id}/completion).
+def create_work_orders_services_completion(work_order_id, id)
+  post("/work_orders/#{work_order_id}/services/#{id}/completion")
+end
+# Runs create_work_orders_services_copie (POST /work_orders/{work_order_id}/services/{id}/copies).
+def create_work_orders_services_copie(work_order_id, id)
+  post("/work_orders/#{work_order_id}/services/#{id}/copies")
+end
+# Runs create_work_orders_services_package (POST /work_orders/{work_order_id}/services/{id}/packages).
+def create_work_orders_services_package(work_order_id, id, package_id:)
+  post("/work_orders/#{work_order_id}/services/#{id}/packages", { package_id: package_id })
 end
 # Runs update_work_orders_services_pause (PATCH /work_orders/{work_order_id}/services/{id}/pause).
 def update_work_orders_services_pause(work_order_id, id)
@@ -1667,41 +1637,21 @@ end
 def update_work_orders_services_publish(work_order_id, id)
   patch("/work_orders/#{work_order_id}/services/#{id}/publish")
 end
-# Runs update_work_orders_services_reset_completion (PATCH /work_orders/{work_order_id}/services/{id}/reset_completion).
-def update_work_orders_services_reset_completion(work_order_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{id}/reset_completion")
-end
 # Runs update_work_orders_services_revive (PATCH /work_orders/{work_order_id}/services/{id}/revive).
 def update_work_orders_services_revive(work_order_id, id)
   patch("/work_orders/#{work_order_id}/services/#{id}/revive")
 end
-# Runs update_work_orders_services_start (PATCH /work_orders/{work_order_id}/services/{id}/start).
-def update_work_orders_services_start(work_order_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{id}/start")
+# Runs create_work_orders_services_time_entrie (POST /work_orders/{work_order_id}/services/{id}/time_entries).
+def create_work_orders_services_time_entrie(work_order_id, id)
+  post("/work_orders/#{work_order_id}/services/#{id}/time_entries")
 end
 # Runs update_work_orders_services_toggle_labor_completion (PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_completion).
 def update_work_orders_services_toggle_labor_completion(work_order_id, id, line_item_id:)
   patch("/work_orders/#{work_order_id}/services/#{id}/toggle_labor_completion", { line_item_id: line_item_id })
 end
-# Runs update_work_orders_services_toggle_labor_tax (PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_tax).
-def update_work_orders_services_toggle_labor_tax(work_order_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{id}/toggle_labor_tax")
-end
-# Runs create_work_orders_services_unauthorize (POST /work_orders/{work_order_id}/services/{id}/unauthorize).
-def create_work_orders_services_unauthorize(work_order_id, id)
-  post("/work_orders/#{work_order_id}/services/#{id}/unauthorize")
-end
 # Runs update_work_orders_services_update_category (PATCH /work_orders/{work_order_id}/services/{id}/update_category).
 def update_work_orders_services_update_category(work_order_id, id, category_id:)
   patch("/work_orders/#{work_order_id}/services/#{id}/update_category", { category_id: category_id })
-end
-# Runs update_work_orders_services_update_pricing_mode (PATCH /work_orders/{work_order_id}/services/{id}/update_pricing_mode).
-def update_work_orders_services_update_pricing_mode(work_order_id, id, work_order_service:)
-  patch("/work_orders/#{work_order_id}/services/#{id}/update_pricing_mode", { work_order_service: work_order_service })
-end
-# Runs update_work_orders_services_update_service_technician (PATCH /work_orders/{work_order_id}/services/{id}/update_service_technician).
-def update_work_orders_services_update_service_technician(work_order_id, id, work_order_service:)
-  patch("/work_orders/#{work_order_id}/services/#{id}/update_service_technician", { work_order_service: work_order_service })
 end
 # Runs create_work_orders_services_line_item (POST /work_orders/{work_order_id}/services/{service_id}/line_items).
 def create_work_orders_services_line_item(work_order_id, service_id, work_order_line_item:)
@@ -1715,21 +1665,21 @@ end
 def update_work_orders_services_line_item(work_order_id, service_id, id, work_order_line_item:)
   patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}", { work_order_line_item: work_order_line_item })
 end
-# Runs add_work_order_service_line_item_to_inventory (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/add_to_inventory).
-def add_work_order_service_line_item_to_inventory(work_order_id, service_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/add_to_inventory")
+# Runs create_work_orders_services_line_items_copie (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
+def create_work_orders_services_line_items_copie(work_order_id, service_id, id)
+  post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/copies")
 end
-# Runs duplicate_work_order_service_line_item (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/duplicate).
-def duplicate_work_order_service_line_item(work_order_id, service_id, id)
-  post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/duplicate")
+# Runs create_work_orders_services_line_items_inventory_addition (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions).
+def create_work_orders_services_line_items_inventory_addition(work_order_id, service_id, id)
+  post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/inventory_additions")
+end
+# Runs create_work_orders_services_line_items_price_refreshe (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
+def create_work_orders_services_line_items_price_refreshe(work_order_id, service_id, id)
+  post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/price_refreshes")
 end
 # Runs pull_work_order_service_line_item (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull).
 def pull_work_order_service_line_item(work_order_id, service_id, id)
   patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/pull")
-end
-# Runs refresh_work_order_service_line_item_price (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/refresh_price).
-def refresh_work_order_service_line_item_price(work_order_id, service_id, id)
-  patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/refresh_price")
 end
 # Runs undo_pull_work_order_service_line_item (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull).
 def undo_pull_work_order_service_line_item(work_order_id, service_id, id)
@@ -1738,10 +1688,6 @@ end
 # Runs undo_return_work_order_service_line_item (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return).
 def undo_return_work_order_service_line_item(work_order_id, service_id, id)
   patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/undo_return")
-end
-# Runs update_work_order_service_line_item_part_status (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status).
-def update_work_order_service_line_item_part_status(work_order_id, service_id, id, part_status:)
-  patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/update_part_status", { part_status: part_status })
 end
 # Lists list_work_orders_summary_activity resources (paginated).
 # @return [Wenmar::Paginator]
