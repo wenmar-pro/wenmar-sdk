@@ -99,6 +99,10 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
       "path" => path,
       "tag" => normalize_tag(Array(operation["tags"]).first || "general"),
       "pathParams" => path.scan(/\{([^}]+)\}/).flatten,
+      "pathParamTypes" => (operation["parameters"] || []).each_with_object({}) do |p, h|
+        next unless p["in"] == "path"
+        h[p["name"]] = type_of(p)
+      end,
       "queryParams" => (operation["parameters"] || []).filter_map do |p|
         next unless p["in"] == "query"
 

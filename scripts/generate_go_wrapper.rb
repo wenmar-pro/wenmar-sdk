@@ -25,8 +25,11 @@ def go_param_name(name)
 end
 
 def path_param_types(op)
-  types = op["pathParams"].each_with_object({}) { |p, h| h[go_param_name(p)] = "int" }
-  types["id"] = "string" if op["id"] == "show_location"
+  types = {}
+  op["pathParams"].each do |p|
+    t = (op["pathParamTypes"] || {})[p] || "integer"
+    types[go_param_name(p)] = t == "integer" ? "int" : "string"
+  end
   types
 end
 

@@ -972,7 +972,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "update_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationRequest]("location", args["requestBody"].(map[string]interface{})))
+	resp, err := c.UpdateLocation(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationRequest]("location", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -980,7 +980,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_locations_business_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListLocationsBusinessProfile(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	resp, err := c.ListLocationsBusinessProfile(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -988,7 +988,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "update_locations_business_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsBusinessProfile(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsBusinessProfileRequest]("location", args["requestBody"].(map[string]interface{})))
+	resp, err := c.UpdateLocationsBusinessProfile(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsBusinessProfileRequest]("location", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -996,7 +996,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListLocationsOperations(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	resp, err := c.ListLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -1004,7 +1004,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "update_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsOperations(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsOperationsRequest]("location", args["requestBody"].(map[string]interface{})))
+	resp, err := c.UpdateLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsOperationsRequest]("location", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1012,7 +1012,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_locations_schedule_config": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListLocationsScheduleConfig(ctx, intArg(args["pathParams"].(map[string]interface{}), "location_id"))
+	resp, err := c.ListLocationsScheduleConfig(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -1020,7 +1020,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "update_locations_schedule_config": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsScheduleConfig(ctx, intArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsScheduleConfigRequest]("schedule_config", args["requestBody"].(map[string]interface{})))
+	resp, err := c.UpdateLocationsScheduleConfig(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsScheduleConfigRequest]("schedule_config", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}

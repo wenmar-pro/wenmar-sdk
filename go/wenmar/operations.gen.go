@@ -2046,7 +2046,7 @@ func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResp
 }
 
 // UpdateLocation runs the update_location operation (PATCH /locations/{id}).
-func (c *Client) UpdateLocation(ctx context.Context, id int, body UpdateLocationRequest) (*UpdateLocationResponse, error) {
+func (c *Client) UpdateLocation(ctx context.Context, id string, body UpdateLocationRequest) (*UpdateLocationResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocation"})
 	resp, err := c.gen.UpdateLocationWithResponse(ctx, id, body)
 	if err != nil {
@@ -2063,7 +2063,7 @@ func (c *Client) UpdateLocation(ctx context.Context, id int, body UpdateLocation
 }
 
 // ListLocationsBusinessProfile runs the list_locations_business_profile operation (GET /locations/{id}/business_profile).
-func (c *Client) ListLocationsBusinessProfile(ctx context.Context, id int) (*ListLocationsBusinessProfileResponse, error) {
+func (c *Client) ListLocationsBusinessProfile(ctx context.Context, id string) (*ListLocationsBusinessProfileResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsBusinessProfile"})
 	resp, err := c.gen.ListLocationsBusinessProfileWithResponse(ctx, id)
 	if err != nil {
@@ -2080,7 +2080,7 @@ func (c *Client) ListLocationsBusinessProfile(ctx context.Context, id int) (*Lis
 }
 
 // UpdateLocationsBusinessProfile runs the update_locations_business_profile operation (PATCH /locations/{id}/business_profile).
-func (c *Client) UpdateLocationsBusinessProfile(ctx context.Context, id int, body UpdateLocationsBusinessProfileRequest) (*UpdateLocationsBusinessProfileResponse, error) {
+func (c *Client) UpdateLocationsBusinessProfile(ctx context.Context, id string, body UpdateLocationsBusinessProfileRequest) (*UpdateLocationsBusinessProfileResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"})
 	resp, err := c.gen.UpdateLocationsBusinessProfileWithResponse(ctx, id, body)
 	if err != nil {
@@ -2097,7 +2097,7 @@ func (c *Client) UpdateLocationsBusinessProfile(ctx context.Context, id int, bod
 }
 
 // ListLocationsOperations runs the list_locations_operations operation (GET /locations/{id}/operations).
-func (c *Client) ListLocationsOperations(ctx context.Context, id int) (*ListLocationsOperationsResponse, error) {
+func (c *Client) ListLocationsOperations(ctx context.Context, id string) (*ListLocationsOperationsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsOperations"})
 	resp, err := c.gen.ListLocationsOperationsWithResponse(ctx, id)
 	if err != nil {
@@ -2114,7 +2114,7 @@ func (c *Client) ListLocationsOperations(ctx context.Context, id int) (*ListLoca
 }
 
 // UpdateLocationsOperations runs the update_locations_operations operation (PATCH /locations/{id}/operations).
-func (c *Client) UpdateLocationsOperations(ctx context.Context, id int, body UpdateLocationsOperationsRequest) (*UpdateLocationsOperationsResponse, error) {
+func (c *Client) UpdateLocationsOperations(ctx context.Context, id string, body UpdateLocationsOperationsRequest) (*UpdateLocationsOperationsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsOperations"})
 	resp, err := c.gen.UpdateLocationsOperationsWithResponse(ctx, id, body)
 	if err != nil {
@@ -2131,7 +2131,7 @@ func (c *Client) UpdateLocationsOperations(ctx context.Context, id int, body Upd
 }
 
 // ListLocationsScheduleConfig runs the list_locations_schedule_config operation (GET /locations/{location_id}/schedule_config).
-func (c *Client) ListLocationsScheduleConfig(ctx context.Context, locationId int) (*ListLocationsScheduleConfigResponse, error) {
+func (c *Client) ListLocationsScheduleConfig(ctx context.Context, locationId string) (*ListLocationsScheduleConfigResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsScheduleConfig"})
 	resp, err := c.gen.ListLocationsScheduleConfigWithResponse(ctx, locationId)
 	if err != nil {
@@ -2148,7 +2148,7 @@ func (c *Client) ListLocationsScheduleConfig(ctx context.Context, locationId int
 }
 
 // UpdateLocationsScheduleConfig runs the update_locations_schedule_config operation (PATCH /locations/{location_id}/schedule_config).
-func (c *Client) UpdateLocationsScheduleConfig(ctx context.Context, locationId int, body UpdateLocationsScheduleConfigRequest) (*UpdateLocationsScheduleConfigResponse, error) {
+func (c *Client) UpdateLocationsScheduleConfig(ctx context.Context, locationId string, body UpdateLocationsScheduleConfigRequest) (*UpdateLocationsScheduleConfigResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"})
 	resp, err := c.gen.UpdateLocationsScheduleConfigWithResponse(ctx, locationId, body)
 	if err != nil {

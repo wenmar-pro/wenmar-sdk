@@ -45,7 +45,8 @@ end
 
 # Go: expression to pull a path param from args.
 def go_path_param(pp, op)
-  if op["id"] == "show_location"
+  t = (op["pathParamTypes"] || {})[pp] || "integer"
+  if t == "string"
     "strArg(args[\"pathParams\"].(map[string]interface{}), \"#{pp}\")"
   else
     "intArg(args[\"pathParams\"].(map[string]interface{}), \"#{pp}\")"

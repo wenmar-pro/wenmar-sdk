@@ -196,6 +196,7 @@
       "path": "/account",
       "tag": "account",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -210,6 +211,7 @@
       "path": "/account",
       "tag": "account",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -224,6 +226,7 @@
       "path": "/account",
       "tag": "account",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateAccountRequest",
       "requestShape": {
@@ -240,6 +243,7 @@
       "path": "/account/station_link",
       "tag": "account",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -254,6 +258,7 @@
       "path": "/account/station_link/regenerate",
       "tag": "account",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateAccountStationLinkRegenerateRequest",
       "requestShape": {
@@ -272,6 +277,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateAiSuggestionRequest",
       "requestShape": {
@@ -288,6 +296,7 @@
       "path": "/appointments",
       "tag": "appointments",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "per_page",
@@ -321,6 +330,7 @@
       "path": "/appointments",
       "tag": "appointments",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateAppointmentRequest",
       "requestShape": {
@@ -337,6 +347,7 @@
       "path": "/appointments/available_slots",
       "tag": "appointments",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "date",
@@ -366,6 +377,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -382,6 +396,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -398,6 +415,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateAppointmentRequest",
       "requestShape": {
@@ -416,6 +436,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsApprovalRequest",
       "requestShape": {
@@ -434,6 +457,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsCancellationRequest",
       "requestShape": {
@@ -452,6 +478,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsFollowUpRequest",
       "requestShape": {
@@ -470,6 +499,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsRejectionRequest",
       "requestShape": {
@@ -488,6 +520,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsVehicleReconciliationRequest",
       "requestShape": {
@@ -509,6 +544,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateAppointmentsWorkOrderRequest",
       "requestShape": {
@@ -525,6 +563,7 @@
       "path": "/campaigns",
       "tag": "campaigns",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -539,6 +578,7 @@
       "path": "/campaigns",
       "tag": "campaigns",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateCampaignRequest",
       "requestShape": {
@@ -557,6 +597,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -573,6 +616,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "DuplicateCampaignRequest",
       "requestShape": {
@@ -591,6 +637,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "SendCampaignRequest",
       "requestShape": {
@@ -607,6 +656,7 @@
       "path": "/cash_drawer_banner",
       "tag": "cash_drawer_banner",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateCashDrawerBannerRequest",
       "requestShape": {
@@ -625,6 +675,9 @@
       "pathParams": [
         "catalog_cleanup_id"
       ],
+      "pathParamTypes": {
+        "catalog_cleanup_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateCatalogCleanupsApplicationRequest",
       "requestShape": {
@@ -641,6 +694,7 @@
       "path": "/conversations",
       "tag": "conversations",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -655,6 +709,7 @@
       "path": "/conversations/bulk_mark_read",
       "tag": "conversations",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateConversationsBulkMarkReadRequest",
       "requestShape": {
@@ -673,6 +728,9 @@
       "pathParams": [
         "conversation_id"
       ],
+      "pathParamTypes": {
+        "conversation_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateConversationsCustomerLinkRequest",
       "requestShape": {
@@ -691,6 +749,9 @@
       "pathParams": [
         "conversation_id"
       ],
+      "pathParamTypes": {
+        "conversation_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateConversationsIgnoreRequest",
       "requestShape": {
@@ -709,6 +770,9 @@
       "pathParams": [
         "conversation_id"
       ],
+      "pathParamTypes": {
+        "conversation_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -725,6 +789,9 @@
       "pathParams": [
         "conversation_id"
       ],
+      "pathParamTypes": {
+        "conversation_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateConversationsMessageRequest",
       "requestShape": {
@@ -744,6 +811,10 @@
         "conversation_id",
         "id"
       ],
+      "pathParamTypes": {
+        "conversation_id": "integer",
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateConversationsMessagesResendRequest",
       "requestShape": {
@@ -762,6 +833,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -778,6 +852,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateConversationRequest",
       "requestShape": {
@@ -794,6 +871,7 @@
       "path": "/core_tax_rules",
       "tag": "core_tax_rules",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -810,6 +888,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateCoreTaxRuleRequest",
       "requestShape": {
@@ -826,6 +907,7 @@
       "path": "/counter_sales",
       "tag": "counter_sales",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -840,6 +922,7 @@
       "path": "/counter_sales",
       "tag": "counter_sales",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateCounterSaleRequest",
       "requestShape": {
@@ -858,6 +941,9 @@
       "pathParams": [
         "counter_sale_id"
       ],
+      "pathParamTypes": {
+        "counter_sale_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -874,6 +960,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -890,6 +979,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateCounterSaleRequest",
       "requestShape": {
@@ -906,6 +998,7 @@
       "path": "/courtesy_cars",
       "tag": "courtesy_cars",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -920,6 +1013,7 @@
       "path": "/current_location",
       "tag": "current_location",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -934,6 +1028,7 @@
       "path": "/current_location",
       "tag": "current_location",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateCurrentLocationRequest",
       "requestShape": {
@@ -950,6 +1045,7 @@
       "path": "/customers",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "has_balance",
@@ -1019,6 +1115,7 @@
       "path": "/customers",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateCustomerRequest",
       "requestShape": {
@@ -1035,6 +1132,7 @@
       "path": "/customers/1043910089/merge",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1049,6 +1147,7 @@
       "path": "/customers/check_duplicate",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "email",
@@ -1088,6 +1187,7 @@
       "path": "/customers/export",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateCustomersExportRequest",
       "requestShape": {
@@ -1106,6 +1206,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1120,6 +1223,7 @@
       "path": "/customers/lookup",
       "tag": "customers",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "id",
@@ -1149,6 +1253,9 @@
       "pathParams": [
         "customer_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1165,6 +1272,9 @@
       "pathParams": [
         "customer_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateDriverRequest",
       "requestShape": {
@@ -1184,6 +1294,10 @@
         "customer_id",
         "id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer",
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1201,6 +1315,10 @@
         "customer_id",
         "id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer",
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1218,6 +1336,10 @@
         "customer_id",
         "id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer",
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateDriverRequest",
       "requestShape": {
@@ -1236,6 +1358,9 @@
       "pathParams": [
         "customer_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1252,6 +1377,9 @@
       "pathParams": [
         "customer_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1269,6 +1397,10 @@
         "customer_id",
         "vehicle_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer",
+        "vehicle_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1285,6 +1417,9 @@
       "pathParams": [
         "customer_id"
       ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1301,6 +1436,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1317,6 +1455,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateCustomerRequest",
       "requestShape": {
@@ -1335,6 +1476,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ArchiveCustomerRequest",
       "requestShape": {
@@ -1353,6 +1497,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "MergeCustomerRequest",
       "requestShape": {
@@ -1371,6 +1518,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "RestoreCustomerRequest",
       "requestShape": {
@@ -1389,6 +1539,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "TrashCustomerRequest",
       "requestShape": {
@@ -1405,6 +1558,7 @@
       "path": "/expenses",
       "tag": "expenses",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1419,6 +1573,7 @@
       "path": "/expenses",
       "tag": "expenses",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateExpenseRequest",
       "requestShape": {
@@ -1437,6 +1592,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1453,6 +1611,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateExpenseRequest",
       "requestShape": {
@@ -1469,6 +1630,7 @@
       "path": "/fleets",
       "tag": "fleets",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1483,6 +1645,7 @@
       "path": "/inspection_reports",
       "tag": "inspection_reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "inspection_id",
@@ -1514,6 +1677,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1530,6 +1696,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1546,6 +1715,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CompleteInspectionReportRequest",
       "requestShape": {
@@ -1564,6 +1736,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [
         {
           "name": "group_name",
@@ -1587,6 +1762,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "MarkAllInspectionReportRequest",
       "requestShape": {
@@ -1608,6 +1786,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "PublishInspectionReportRequest",
       "requestShape": {
@@ -1626,6 +1807,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ReassignInspectionReportRequest",
       "requestShape": {
@@ -1644,6 +1828,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ReopenInspectionReportRequest",
       "requestShape": {
@@ -1662,6 +1849,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ResetInspectionReportRequest",
       "requestShape": {
@@ -1680,6 +1870,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [
         {
           "name": "recording_id",
@@ -1705,6 +1898,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UnpublishInspectionReportRequest",
       "requestShape": {
@@ -1721,6 +1917,7 @@
       "path": "/inspections",
       "tag": "inspections",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "per_page",
@@ -1742,6 +1939,7 @@
       "path": "/inspections",
       "tag": "inspections",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateInspectionRequest",
       "requestShape": {
@@ -1760,6 +1958,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1776,6 +1977,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1792,6 +1996,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateInspectionRequest",
       "requestShape": {
@@ -1810,6 +2017,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "RemoveDefaultInspectionRequest",
       "requestShape": {
@@ -1828,6 +2038,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "SetDefaultInspectionRequest",
       "requestShape": {
@@ -1846,6 +2059,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ToggleInspectionRequest",
       "requestShape": {
@@ -1862,6 +2078,7 @@
       "path": "/inventory_levels",
       "tag": "inventory_levels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "brand",
@@ -1913,6 +2130,7 @@
       "path": "/inventory_levels",
       "tag": "inventory_levels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateInventoryLevelRequest",
       "requestShape": {
@@ -1929,6 +2147,7 @@
       "path": "/inventory_levels/barcode_lookup",
       "tag": "inventory_levels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "barcode",
@@ -1952,6 +2171,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1968,6 +2190,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -1984,6 +2209,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateInventoryLevelRequest",
       "requestShape": {
@@ -2002,6 +2230,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateInventoryLevelsStockRequest",
       "requestShape": {
@@ -2018,6 +2249,7 @@
       "path": "/labels",
       "tag": "labels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2032,6 +2264,7 @@
       "path": "/labels",
       "tag": "labels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLabelRequest",
       "requestShape": {
@@ -2048,6 +2281,7 @@
       "path": "/labels/data_transfer",
       "tag": "labels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2062,6 +2296,7 @@
       "path": "/labels/export",
       "tag": "labels",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLabelsExportRequest",
       "requestShape": {
@@ -2080,6 +2315,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLabelRequest",
       "requestShape": {
@@ -2096,6 +2334,7 @@
       "path": "/labor_matrices",
       "tag": "labor_matrices",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2110,6 +2349,7 @@
       "path": "/labor_matrices",
       "tag": "labor_matrices",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLaborMatriceRequest",
       "requestShape": {
@@ -2128,6 +2368,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2144,6 +2387,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLaborMatriceRequest",
       "requestShape": {
@@ -2160,6 +2406,7 @@
       "path": "/labor_rates",
       "tag": "labor_rates",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2174,6 +2421,7 @@
       "path": "/labor_rates",
       "tag": "labor_rates",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLaborRateRequest",
       "requestShape": {
@@ -2192,6 +2440,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2208,6 +2459,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLaborRateRequest",
       "requestShape": {
@@ -2224,6 +2478,7 @@
       "path": "/labor_templates",
       "tag": "labor_templates",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2240,6 +2495,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2256,6 +2514,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLaborTemplateRequest",
       "requestShape": {
@@ -2272,6 +2533,7 @@
       "path": "/lead_sources",
       "tag": "lead_sources",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2286,6 +2548,7 @@
       "path": "/lead_sources",
       "tag": "lead_sources",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLeadSourceRequest",
       "requestShape": {
@@ -2302,6 +2565,7 @@
       "path": "/lead_sources/seed_defaults",
       "tag": "lead_sources",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateLeadSourcesSeedDefaultRequest",
       "requestShape": {
@@ -2320,6 +2584,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2336,6 +2603,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLeadSourceRequest",
       "requestShape": {
@@ -2354,6 +2624,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2370,6 +2643,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLocationRequest",
       "requestShape": {
@@ -2388,6 +2664,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2404,6 +2683,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLocationsBusinessProfileRequest",
       "requestShape": {
@@ -2422,6 +2704,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2438,6 +2723,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "string"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLocationsOperationsRequest",
       "requestShape": {
@@ -2456,6 +2744,9 @@
       "pathParams": [
         "location_id"
       ],
+      "pathParamTypes": {
+        "location_id": "string"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2472,6 +2763,9 @@
       "pathParams": [
         "location_id"
       ],
+      "pathParamTypes": {
+        "location_id": "string"
+      },
       "queryParams": [],
       "requestSchema": "UpdateLocationsScheduleConfigRequest",
       "requestShape": {
@@ -2488,6 +2782,7 @@
       "path": "/me/api_tokens",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2502,6 +2797,7 @@
       "path": "/me/api_tokens",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateMeApiTokenRequest",
       "requestShape": {
@@ -2520,6 +2816,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2534,6 +2833,7 @@
       "path": "/me/notifications",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2548,6 +2848,7 @@
       "path": "/me/notifications",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateMeNotificationsRequest",
       "requestShape": {
@@ -2564,6 +2865,7 @@
       "path": "/me/preferences",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2578,6 +2880,7 @@
       "path": "/me/preferences",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateMePreferencesRequest",
       "requestShape": {
@@ -2594,6 +2897,7 @@
       "path": "/me/profile",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2608,6 +2912,7 @@
       "path": "/me/profile",
       "tag": "me",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateMeProfileRequest",
       "requestShape": {
@@ -2624,6 +2929,7 @@
       "path": "/notifications",
       "tag": "notifications",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2638,6 +2944,7 @@
       "path": "/notifications/bulk_mark_read",
       "tag": "notifications",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateNotificationsBulkMarkReadRequest",
       "requestShape": {
@@ -2656,6 +2963,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2672,6 +2982,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateNotificationRequest",
       "requestShape": {
@@ -2688,6 +3001,7 @@
       "path": "/orders/purchase_orders",
       "tag": "orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "page",
@@ -2721,6 +3035,7 @@
       "path": "/orders/purchase_orders",
       "tag": "orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateOrdersPurchaseOrderRequest",
       "requestShape": {
@@ -2739,6 +3054,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2755,6 +3073,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2771,6 +3092,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateOrdersPurchaseOrderRequest",
       "requestShape": {
@@ -2789,6 +3113,9 @@
       "pathParams": [
         "purchase_order_id"
       ],
+      "pathParamTypes": {
+        "purchase_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateOrdersPurchaseOrdersCancellationRequest",
       "requestShape": {
@@ -2805,6 +3132,7 @@
       "path": "/orders/return_orders",
       "tag": "orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2821,6 +3149,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2837,6 +3168,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2853,6 +3187,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateOrdersReturnOrderRequest",
       "requestShape": {
@@ -2871,6 +3208,9 @@
       "pathParams": [
         "return_order_id"
       ],
+      "pathParamTypes": {
+        "return_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateOrdersReturnOrdersRefundCompletionRequest",
       "requestShape": {
@@ -2887,6 +3227,7 @@
       "path": "/orders/sublet_orders",
       "tag": "orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2901,6 +3242,7 @@
       "path": "/orders/sublet_orders/mark_payment_complete",
       "tag": "orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
       "requestShape": {
@@ -2922,6 +3264,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2936,6 +3281,7 @@
       "path": "/packages",
       "tag": "packages",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -2950,6 +3296,7 @@
       "path": "/packages",
       "tag": "packages",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreatePackageRequest",
       "requestShape": {
@@ -2968,6 +3315,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdatePackageRequest",
       "requestShape": {
@@ -2986,6 +3336,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreatePackagesDuplicateRequest",
       "requestShape": {
@@ -3002,6 +3355,7 @@
       "path": "/parts_matrices",
       "tag": "parts_matrices",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3016,6 +3370,7 @@
       "path": "/parts_matrices",
       "tag": "parts_matrices",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreatePartsMatriceRequest",
       "requestShape": {
@@ -3034,6 +3389,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3050,6 +3408,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdatePartsMatriceRequest",
       "requestShape": {
@@ -3066,6 +3427,7 @@
       "path": "/payments",
       "tag": "payments",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "method",
@@ -3087,6 +3449,7 @@
       "path": "/payments/pending",
       "tag": "payments",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3103,6 +3466,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3119,6 +3485,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreatePaymentsCancellationRequest",
       "requestShape": {
@@ -3137,6 +3506,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreatePaymentsConfirmationRequest",
       "requestShape": {
@@ -3155,6 +3527,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreatePaymentsFailureRequest",
       "requestShape": {
@@ -3171,6 +3546,7 @@
       "path": "/recent_searches",
       "tag": "recent_searches",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3185,6 +3561,7 @@
       "path": "/recent_searches",
       "tag": "recent_searches",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateRecentSearcheRequest",
       "requestShape": {
@@ -3201,6 +3578,7 @@
       "path": "/recent_searches/clear",
       "tag": "recent_searches",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3217,6 +3595,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3231,6 +3612,7 @@
       "path": "/reports/accounting",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3245,6 +3627,7 @@
       "path": "/reports/ar_aging",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3259,6 +3642,7 @@
       "path": "/reports/declined_work",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3273,6 +3657,7 @@
       "path": "/reports/end_of_day",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3287,6 +3672,7 @@
       "path": "/reports/financial",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3301,6 +3687,7 @@
       "path": "/reports/open_work",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3315,6 +3702,7 @@
       "path": "/reports/parts_purchases",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3329,6 +3717,7 @@
       "path": "/reports/parts_usage",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3343,6 +3732,7 @@
       "path": "/reports/performance",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3357,6 +3747,7 @@
       "path": "/reports/profit_and_loss",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3371,6 +3762,7 @@
       "path": "/reports/sales_summary",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3385,6 +3777,7 @@
       "path": "/reports/service_categories",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3399,6 +3792,7 @@
       "path": "/reports/store_credit",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3413,6 +3807,7 @@
       "path": "/reports/technician_productivity",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3427,6 +3822,7 @@
       "path": "/reports/work_order_profitability",
       "tag": "reports",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3441,6 +3837,7 @@
       "path": "/search",
       "tag": "search",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "q",
@@ -3462,6 +3859,7 @@
       "path": "/service_categories",
       "tag": "service_categories",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3476,6 +3874,7 @@
       "path": "/service_categories",
       "tag": "service_categories",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateServiceCategoryRequest",
       "requestShape": {
@@ -3492,6 +3891,7 @@
       "path": "/service_categories/seed_defaults",
       "tag": "service_categories",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "SeedDefaultsServiceCategoriesRequest",
       "requestShape": {
@@ -3510,6 +3910,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3526,6 +3929,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateServiceCategoryRequest",
       "requestShape": {
@@ -3542,6 +3948,7 @@
       "path": "/settings/billing",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3556,6 +3963,7 @@
       "path": "/settings/cash_drawer",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3570,6 +3978,7 @@
       "path": "/settings/close_requirements",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3584,6 +3993,7 @@
       "path": "/settings/documents",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3598,6 +4008,7 @@
       "path": "/settings/driveon",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3612,6 +4023,7 @@
       "path": "/settings/expenses",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3626,6 +4038,7 @@
       "path": "/settings/lead_source_requirements",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3640,6 +4053,7 @@
       "path": "/settings/payments",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3654,6 +4068,7 @@
       "path": "/settings/phone_numbers",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3668,6 +4083,7 @@
       "path": "/settings/quickbooks",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3682,6 +4098,7 @@
       "path": "/settings/reminders",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3696,6 +4113,7 @@
       "path": "/settings/tire_management",
       "tag": "settings",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3710,6 +4128,7 @@
       "path": "/shop_discounts",
       "tag": "shop_discounts",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3724,6 +4143,7 @@
       "path": "/shop_discounts",
       "tag": "shop_discounts",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateShopDiscountRequest",
       "requestShape": {
@@ -3742,6 +4162,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3758,6 +4181,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateShopDiscountRequest",
       "requestShape": {
@@ -3776,6 +4202,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateShopDiscountsDuplicateRequest",
       "requestShape": {
@@ -3792,6 +4221,7 @@
       "path": "/shop_fees",
       "tag": "shop_fees",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3806,6 +4236,7 @@
       "path": "/shop_fees",
       "tag": "shop_fees",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateShopFeeRequest",
       "requestShape": {
@@ -3824,6 +4255,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3840,6 +4274,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateShopFeeRequest",
       "requestShape": {
@@ -3858,6 +4295,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateShopFeesDuplicateRequest",
       "requestShape": {
@@ -3876,6 +4316,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3892,6 +4335,9 @@
       "pathParams": [
         "statement_id"
       ],
+      "pathParamTypes": {
+        "statement_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3908,6 +4354,9 @@
       "pathParams": [
         "store_credit_id"
       ],
+      "pathParamTypes": {
+        "store_credit_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateStoreCreditsVoidRequest",
       "requestShape": {
@@ -3924,6 +4373,7 @@
       "path": "/sub_statuses",
       "tag": "sub_statuses",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3938,6 +4388,7 @@
       "path": "/sub_statuses",
       "tag": "sub_statuses",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateSubStatuseRequest",
       "requestShape": {
@@ -3956,6 +4407,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateSubStatuseRequest",
       "requestShape": {
@@ -3972,6 +4426,7 @@
       "path": "/sublet_packages",
       "tag": "sublet_packages",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -3986,6 +4441,7 @@
       "path": "/sublet_packages",
       "tag": "sublet_packages",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateSubletPackageRequest",
       "requestShape": {
@@ -4004,6 +4460,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4020,6 +4479,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateSubletPackageRequest",
       "requestShape": {
@@ -4038,6 +4500,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4052,6 +4517,7 @@
       "path": "/tire_storage_slots",
       "tag": "tire_storage_slots",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4066,6 +4532,7 @@
       "path": "/tire_storage_slots",
       "tag": "tire_storage_slots",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateTireStorageSlotRequest",
       "requestShape": {
@@ -4084,6 +4551,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4100,6 +4570,9 @@
       "pathParams": [
         "tire_storage_slot_id"
       ],
+      "pathParamTypes": {
+        "tire_storage_slot_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateTireStorageSlotsCheckOutRequest",
       "requestShape": {
@@ -4116,6 +4589,7 @@
       "path": "/tires",
       "tag": "tires",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4130,6 +4604,7 @@
       "path": "/tires",
       "tag": "tires",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateTireRequest",
       "requestShape": {
@@ -4148,6 +4623,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4164,6 +4642,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4180,6 +4661,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateTireRequest",
       "requestShape": {
@@ -4196,6 +4680,7 @@
       "path": "/users",
       "tag": "users",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "page",
@@ -4223,6 +4708,7 @@
       "path": "/users",
       "tag": "users",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateUserRequest",
       "requestShape": {
@@ -4239,6 +4725,7 @@
       "path": "/users/permission_groups",
       "tag": "users",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4253,6 +4740,7 @@
       "path": "/users/permission_groups",
       "tag": "users",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreatePermissionGroupRequest",
       "requestShape": {
@@ -4271,6 +4759,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdatePermissionGroupRequest",
       "requestShape": {
@@ -4289,6 +4780,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4305,6 +4799,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4321,6 +4818,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateUserRequest",
       "requestShape": {
@@ -4339,6 +4839,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersDisableRequest",
       "requestShape": {
@@ -4357,6 +4860,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersEnableRequest",
       "requestShape": {
@@ -4375,6 +4881,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4391,6 +4900,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersResetPinRequest",
       "requestShape": {
@@ -4409,6 +4921,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersSendConfirmationRequest",
       "requestShape": {
@@ -4427,6 +4942,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersSendPasswordResetRequest",
       "requestShape": {
@@ -4445,6 +4963,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateUsersUnlockRequest",
       "requestShape": {
@@ -4461,6 +4982,7 @@
       "path": "/vehicles",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "customer_id",
@@ -4500,6 +5022,7 @@
       "path": "/vehicles",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateVehicleRequest",
       "requestShape": {
@@ -4516,6 +5039,7 @@
       "path": "/vehicles/autocomplete",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "type",
@@ -4537,6 +5061,7 @@
       "path": "/vehicles/check_duplicate",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "vin",
@@ -4558,6 +5083,7 @@
       "path": "/vehicles/customer_vehicles",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "customer_id",
@@ -4579,6 +5105,7 @@
       "path": "/vehicles/lookup",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "query",
@@ -4600,6 +5127,7 @@
       "path": "/vehicles/prefill",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "make",
@@ -4639,6 +5167,7 @@
       "path": "/vehicles/vin_decode",
       "tag": "vehicles",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "vin",
@@ -4662,6 +5191,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4678,6 +5210,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateVehicleRequest",
       "requestShape": {
@@ -4696,6 +5231,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ArchiveVehicleRequest",
       "requestShape": {
@@ -4714,6 +5252,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "MergeVehicleRequest",
       "requestShape": {
@@ -4732,6 +5273,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "RestoreVehicleRequest",
       "requestShape": {
@@ -4750,6 +5294,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "TransferVehicleRequest",
       "requestShape": {
@@ -4771,6 +5318,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "TrashVehicleRequest",
       "requestShape": {
@@ -4789,6 +5339,9 @@
       "pathParams": [
         "vehicle_id"
       ],
+      "pathParamTypes": {
+        "vehicle_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4803,6 +5356,7 @@
       "path": "/vendors",
       "tag": "vendors",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4817,6 +5371,7 @@
       "path": "/vendors",
       "tag": "vendors",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateVendorRequest",
       "requestShape": {
@@ -4835,6 +5390,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4851,6 +5409,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateVendorRequest",
       "requestShape": {
@@ -4869,6 +5430,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ArchiveVendorRequest",
       "requestShape": {
@@ -4887,6 +5451,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "RestoreVendorRequest",
       "requestShape": {
@@ -4905,6 +5472,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "TrashVendorRequest",
       "requestShape": {
@@ -4923,6 +5493,9 @@
       "pathParams": [
         "vendor_id"
       ],
+      "pathParamTypes": {
+        "vendor_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4937,6 +5510,7 @@
       "path": "/work_orders",
       "tag": "work_orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [
         {
           "name": "per_page",
@@ -4958,6 +5532,7 @@
       "path": "/work_orders",
       "tag": "work_orders",
       "pathParams": [],
+      "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateWorkOrderRequest",
       "requestShape": {
@@ -4976,6 +5551,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -4992,6 +5570,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5008,6 +5589,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrderRequest",
       "requestShape": {
@@ -5026,6 +5610,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersAccountPostingRequest",
       "requestShape": {
@@ -5044,6 +5631,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CloseWorkOrderRequest",
       "requestShape": {
@@ -5062,6 +5652,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersCloseAsDeclinedRequest",
       "requestShape": {
@@ -5080,6 +5673,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersCloseAsVoidedRequest",
       "requestShape": {
@@ -5098,6 +5694,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5114,6 +5713,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersCourtesyCarAssignmentRequest",
       "requestShape": {
@@ -5132,6 +5734,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersCourtesyCarAssignmentRequest",
       "requestShape": {
@@ -5150,6 +5755,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5166,6 +5774,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersEstimateDeliverieRequest",
       "requestShape": {
@@ -5184,6 +5795,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersInvoiceSummarieRequest",
       "requestShape": {
@@ -5202,6 +5816,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersReminderRequest",
       "requestShape": {
@@ -5220,6 +5837,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "ReopenWorkOrderRequest",
       "requestShape": {
@@ -5238,6 +5858,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServiceDeclineRequest",
       "requestShape": {
@@ -5256,6 +5879,9 @@
       "pathParams": [
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5272,6 +5898,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersAuthorizationDecisionRequest",
       "requestShape": {
@@ -5290,6 +5919,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersAuthorizationRequest",
       "requestShape": {
@@ -5312,6 +5944,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5328,6 +5963,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5344,6 +5982,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersFeeExclusionRequest",
       "requestShape": {
@@ -5363,6 +6004,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5379,6 +6024,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5395,6 +6043,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersLabelRequest",
       "requestShape": {
@@ -5414,6 +6065,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5430,6 +6085,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5446,6 +6104,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5462,6 +6123,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrderPaymentRequest",
       "requestShape": {
@@ -5480,6 +6144,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5496,6 +6163,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "SendWorkOrderPaymentToArRequest",
       "requestShape": {
@@ -5514,6 +6184,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersRefundRequest",
       "requestShape": {
@@ -5532,6 +6205,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServiceRequest",
       "requestShape": {
@@ -5552,6 +6228,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesReorderRequest",
       "requestShape": {
@@ -5571,6 +6250,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5588,6 +6271,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServiceRequest",
       "requestShape": {
@@ -5607,6 +6294,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5624,6 +6315,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesAdjustTimeRequest",
       "requestShape": {
@@ -5646,6 +6341,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5663,6 +6362,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5680,6 +6383,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesCompletionRequest",
       "requestShape": {
@@ -5699,6 +6406,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesCopieRequest",
       "requestShape": {
@@ -5718,6 +6429,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesPackageRequest",
       "requestShape": {
@@ -5737,6 +6452,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesPauseRequest",
       "requestShape": {
@@ -5756,6 +6475,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesPublishRequest",
       "requestShape": {
@@ -5775,6 +6498,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesReviveRequest",
       "requestShape": {
@@ -5794,6 +6521,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesTimeEntrieRequest",
       "requestShape": {
@@ -5813,6 +6544,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesToggleLaborCompletionRequest",
       "requestShape": {
@@ -5832,6 +6567,10 @@
         "work_order_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesUpdateCategoryRequest",
       "requestShape": {
@@ -5851,6 +6590,10 @@
         "work_order_id",
         "service_id"
       ],
+      "pathParamTypes": {
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesLineItemRequest",
       "requestShape": {
@@ -5871,6 +6614,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -5889,6 +6637,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UpdateWorkOrdersServicesLineItemRequest",
       "requestShape": {
@@ -5909,6 +6662,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesLineItemsCopieRequest",
       "requestShape": {
@@ -5929,6 +6687,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesLineItemsInventoryAdditionRequest",
       "requestShape": {
@@ -5949,6 +6712,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersServicesLineItemsPriceRefresheRequest",
       "requestShape": {
@@ -5969,6 +6737,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "PullWorkOrderServiceLineItemRequest",
       "requestShape": {
@@ -5989,6 +6762,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UndoPullWorkOrderServiceLineItemRequest",
       "requestShape": {
@@ -6009,6 +6787,11 @@
         "service_id",
         "id"
       ],
+      "pathParamTypes": {
+        "id": "integer",
+        "service_id": "integer",
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "UndoReturnWorkOrderServiceLineItemRequest",
       "requestShape": {
@@ -6027,6 +6810,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [
         {
           "name": "category",
@@ -6050,6 +6836,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -6066,6 +6855,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -6082,6 +6874,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
@@ -6098,6 +6893,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": "CreateWorkOrdersVoidRequest",
       "requestShape": {
@@ -6116,6 +6914,9 @@
       "pathParams": [
         "work_order_id"
       ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
       "queryParams": [],
       "requestSchema": null,
       "requestShape": null,
