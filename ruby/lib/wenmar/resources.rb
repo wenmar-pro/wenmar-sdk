@@ -238,17 +238,53 @@ end
 def update_current_location(location:)
   patch("/current_location", { location: location })
 end
+# Lists list_customer_tags resources (paginated).
+# @return [Wenmar::Paginator]
+def list_customer_tags(status: nil)
+  params = { status: status }
+  get("/customer_tags", params.compact)
+end
+
+# Fetches all customer_tags, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_customer_tags(status: nil)
+  paginator_to_a(list_customer_tags(status: nil), 1000)
+end
+# Runs create_customer_tag (POST /customer_tags).
+def create_customer_tag(name:)
+  post("/customer_tags", { name: name })
+end
+# Fetches show_customer_tag.
+def show_customer_tag(id)
+  get("/customer_tags/#{id}")
+end
+# Runs update_customer_tag (PATCH /customer_tags/{id}).
+def update_customer_tag(id, name:)
+  patch("/customer_tags/#{id}", { name: name })
+end
+# Runs update_customer_tags_archive (PATCH /customer_tags/{id}/archive).
+def update_customer_tags_archive(id)
+  patch("/customer_tags/#{id}/archive")
+end
+# Runs update_customer_tags_restore (PATCH /customer_tags/{id}/restore).
+def update_customer_tags_restore(id)
+  patch("/customer_tags/#{id}/restore")
+end
+# Runs update_customer_tags_trash (PATCH /customer_tags/{id}/trash).
+def update_customer_tags_trash(id)
+  patch("/customer_tags/#{id}/trash")
+end
 # Lists list_customers resources (paginated).
 # @return [Wenmar::Paginator]
-def list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil)
-  params = { has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, status: status, tag_ids: tag_ids, type: type }
+def list_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
+  params = { customer_tag_id: customer_tag_id, has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, status: status, type: type }
   get("/customers", params.compact)
 end
 
 # Fetches all customers, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil)
-  paginator_to_a(list_customers(has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, tag_ids: nil, type: nil), 1000)
+def get_all_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
+  paginator_to_a(list_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil), 1000)
 end
 # Runs create_customer (POST /customers).
 def create_customer(customer:)
@@ -466,10 +502,6 @@ end
 def create_inspection(inspection:)
   post("/inspections", { inspection: inspection })
 end
-# Deletes delete_inspection.
-def delete_inspection(id)
-  delete("/inspections/#{id}")
-end
 # Fetches show_inspection.
 def show_inspection(id)
   get("/inspections/#{id}")
@@ -478,17 +510,25 @@ end
 def update_inspection(id, inspection:)
   patch("/inspections/#{id}", { inspection: inspection })
 end
+# Runs archive_inspection (PATCH /inspections/{id}/archive).
+def archive_inspection(id)
+  patch("/inspections/#{id}/archive")
+end
 # Runs remove_default_inspection (PATCH /inspections/{id}/remove_default).
 def remove_default_inspection(id)
   patch("/inspections/#{id}/remove_default")
+end
+# Runs restore_inspection (PATCH /inspections/{id}/restore).
+def restore_inspection(id)
+  patch("/inspections/#{id}/restore")
 end
 # Runs set_default_inspection (PATCH /inspections/{id}/set_default).
 def set_default_inspection(id)
   patch("/inspections/#{id}/set_default")
 end
-# Runs toggle_inspection (PATCH /inspections/{id}/toggle).
-def toggle_inspection(id)
-  patch("/inspections/#{id}/toggle")
+# Runs trash_inspection (PATCH /inspections/{id}/trash).
+def trash_inspection(id)
+  patch("/inspections/#{id}/trash")
 end
 # Lists list_inventory_levels resources (paginated).
 # @return [Wenmar::Paginator]
@@ -526,33 +566,6 @@ end
 # Runs update_inventory_levels_stock (PATCH /inventory_levels/{id}/stock).
 def update_inventory_levels_stock(id, inventory_level:)
   patch("/inventory_levels/#{id}/stock", { inventory_level: inventory_level })
-end
-# Lists list_labels resources (paginated).
-# @return [Wenmar::Paginator]
-def list_labels()
-  get("/labels")
-end
-
-# Fetches all labels, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_labels()
-  paginator_to_a(list_labels(), 1000)
-end
-# Runs create_label (POST /labels).
-def create_label(label:)
-  post("/labels", { label: label })
-end
-# Fetches list_labels_data_transfer.
-def list_labels_data_transfer()
-  get("/labels/data_transfer")
-end
-# Runs create_labels_export (POST /labels/export).
-def create_labels_export()
-  post("/labels/export")
-end
-# Runs update_label (PATCH /labels/{id}).
-def update_label(id, label:)
-  patch("/labels/#{id}", { label: label })
 end
 # Lists list_labor_matrices resources (paginated).
 # @return [Wenmar::Paginator]
@@ -592,13 +605,17 @@ end
 def create_labor_rate(labor_rate:)
   post("/labor_rates", { labor_rate: labor_rate })
 end
-# Deletes delete_labor_rate.
-def delete_labor_rate(id)
-  delete("/labor_rates/#{id}")
+# Runs archive_labor_rate (PATCH /labor_rates/{id}/archive).
+def archive_labor_rate(id)
+  patch("/labor_rates/#{id}/archive")
 end
-# Runs update_labor_rate (PATCH /labor_rates/{id}).
-def update_labor_rate(id, labor_rate:)
-  patch("/labor_rates/#{id}", { labor_rate: labor_rate })
+# Runs restore_labor_rate (PATCH /labor_rates/{id}/restore).
+def restore_labor_rate(id)
+  patch("/labor_rates/#{id}/restore")
+end
+# Runs trash_labor_rate (PATCH /labor_rates/{id}/trash).
+def trash_labor_rate(id)
+  patch("/labor_rates/#{id}/trash")
 end
 # Lists list_labor_templates resources (paginated).
 # @return [Wenmar::Paginator]
@@ -831,12 +848,24 @@ def create_package(package:)
   post("/packages", { package: package })
 end
 # Runs update_package (PATCH /packages/{id}).
-def update_package(id, package:)
-  patch("/packages/#{id}", { package: package })
+def update_package(id)
+  patch("/packages/#{id}")
+end
+# Runs archive_package (PATCH /packages/{id}/archive).
+def archive_package(id)
+  patch("/packages/#{id}/archive")
 end
 # Runs create_packages_duplicate (POST /packages/{id}/duplicate).
 def create_packages_duplicate(id)
   post("/packages/#{id}/duplicate")
+end
+# Runs restore_package (PATCH /packages/{id}/restore).
+def restore_package(id)
+  patch("/packages/#{id}/restore")
+end
+# Runs trash_package (PATCH /packages/{id}/trash).
+def trash_package(id)
+  patch("/packages/#{id}/trash")
 end
 # Lists list_parts_matrices resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1000,13 +1029,21 @@ end
 def seed_defaults_service_categories()
   post("/service_categories/seed_defaults")
 end
-# Deletes delete_service_category.
-def delete_service_category(id)
-  delete("/service_categories/#{id}")
-end
 # Runs update_service_category (PATCH /service_categories/{id}).
 def update_service_category(id, service_category:)
   patch("/service_categories/#{id}", { service_category: service_category })
+end
+# Runs archive_service_category (PATCH /service_categories/{id}/archive).
+def archive_service_category(id)
+  patch("/service_categories/#{id}/archive")
+end
+# Runs restore_service_category (PATCH /service_categories/{id}/restore).
+def restore_service_category(id)
+  patch("/service_categories/#{id}/restore")
+end
+# Runs trash_service_category (PATCH /service_categories/{id}/trash).
+def trash_service_category(id)
+  patch("/service_categories/#{id}/trash")
 end
 # Fetches list_settings_billing.
 def list_settings_billing()
@@ -1432,6 +1469,29 @@ end
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
 end
+# Lists list_work_order_tags resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_order_tags()
+  get("/work_order_tags")
+end
+
+# Fetches all work_order_tags, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_order_tags()
+  paginator_to_a(list_work_order_tags(), 1000)
+end
+# Runs create_work_order_tag (POST /work_order_tags).
+def create_work_order_tag(name:, color:)
+  post("/work_order_tags", { name: name, color: color })
+end
+# Runs update_work_order_tag (PATCH /work_order_tags/{id}).
+def update_work_order_tag(id, name:)
+  patch("/work_order_tags/#{id}", { name: name })
+end
+# Runs update_work_order_tags_archive (PATCH /work_order_tags/{id}/archive).
+def update_work_order_tags_archive(id)
+  patch("/work_order_tags/#{id}/archive")
+end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_orders(per_page: nil)
@@ -1552,14 +1612,6 @@ end
 # Fetches show_work_order_inspection.
 def show_work_order_inspection(work_order_id)
   get("/work_orders/#{work_order_id}/inspection")
-end
-# Runs create_work_orders_label (POST /work_orders/{work_order_id}/labels).
-def create_work_orders_label(work_order_id, label_id:)
-  post("/work_orders/#{work_order_id}/labels", { label_id: label_id })
-end
-# Deletes delete_work_orders_label.
-def delete_work_orders_label(work_order_id, id)
-  delete("/work_orders/#{work_order_id}/labels/#{id}")
 end
 # Fetches show_work_order_parts.
 def show_work_order_parts(work_order_id)

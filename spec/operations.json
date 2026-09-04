@@ -3,6 +3,10 @@
   "source": "spec/openapi.enriched.yaml",
   "schemas": [
     "ArchiveCustomerRequest",
+    "ArchiveInspectionRequest",
+    "ArchiveLaborRateRequest",
+    "ArchivePackageRequest",
+    "ArchiveServiceCategoryRequest",
     "ArchiveVehicleRequest",
     "ArchiveVendorRequest",
     "BroadcastCampaign",
@@ -25,14 +29,13 @@
     "CreateConversationsMessagesResendRequest",
     "CreateCounterSaleRequest",
     "CreateCustomerRequest",
+    "CreateCustomerTagRequest",
     "CreateCustomersExportRequest",
     "CreateDriverRequest",
     "CreateExpenseRequest",
     "CreateInspectionReportRequest",
     "CreateInspectionRequest",
     "CreateInventoryLevelRequest",
-    "CreateLabelRequest",
-    "CreateLabelsExportRequest",
     "CreateLaborMatriceRequest",
     "CreateLaborRateRequest",
     "CreateLeadSourceRequest",
@@ -72,6 +75,7 @@
     "CreateVendorRequest",
     "CreateWorkOrderPaymentRequest",
     "CreateWorkOrderRequest",
+    "CreateWorkOrderTagRequest",
     "CreateWorkOrdersAccountPostingRequest",
     "CreateWorkOrdersAuthorizationDecisionRequest",
     "CreateWorkOrdersAuthorizationRequest",
@@ -79,7 +83,6 @@
     "CreateWorkOrdersEstimateDeliverieRequest",
     "CreateWorkOrdersFeeExclusionRequest",
     "CreateWorkOrdersInvoiceSummarieRequest",
-    "CreateWorkOrdersLabelRequest",
     "CreateWorkOrdersRefundRequest",
     "CreateWorkOrdersReminderRequest",
     "CreateWorkOrdersServiceDeclineRequest",
@@ -99,9 +102,11 @@
     "Error",
     "Inspection",
     "InspectionReport",
+    "LaborRate",
     "MarkAllInspectionReportRequest",
     "MergeCustomerRequest",
     "MergeVehicleRequest",
+    "Package",
     "PublishInspectionReportRequest",
     "PullWorkOrderServiceLineItemRequest",
     "PurchaseOrder",
@@ -111,6 +116,10 @@
     "ReopenWorkOrderRequest",
     "ResetInspectionReportRequest",
     "RestoreCustomerRequest",
+    "RestoreInspectionRequest",
+    "RestoreLaborRateRequest",
+    "RestorePackageRequest",
+    "RestoreServiceCategoryRequest",
     "RestoreVehicleRequest",
     "RestoreVendorRequest",
     "RetryInspectionReportRecordingRequest",
@@ -122,9 +131,12 @@
     "SetDefaultInspectionRequest",
     "Statement",
     "SubletOrder",
-    "ToggleInspectionRequest",
     "TransferVehicleRequest",
     "TrashCustomerRequest",
+    "TrashInspectionRequest",
+    "TrashLaborRateRequest",
+    "TrashPackageRequest",
+    "TrashServiceCategoryRequest",
     "TrashVehicleRequest",
     "TrashVendorRequest",
     "UndoPullWorkOrderServiceLineItemRequest",
@@ -139,14 +151,16 @@
     "UpdateCounterSaleRequest",
     "UpdateCurrentLocationRequest",
     "UpdateCustomerRequest",
+    "UpdateCustomerTagRequest",
+    "UpdateCustomerTagsArchiveRequest",
+    "UpdateCustomerTagsRestoreRequest",
+    "UpdateCustomerTagsTrashRequest",
     "UpdateDriverRequest",
     "UpdateExpenseRequest",
     "UpdateInspectionRequest",
     "UpdateInventoryLevelRequest",
     "UpdateInventoryLevelsStockRequest",
-    "UpdateLabelRequest",
     "UpdateLaborMatriceRequest",
-    "UpdateLaborRateRequest",
     "UpdateLaborTemplateRequest",
     "UpdateLeadSourceRequest",
     "UpdateLocationRequest",
@@ -160,7 +174,6 @@
     "UpdateOrdersPurchaseOrderRequest",
     "UpdateOrdersReturnOrderRequest",
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
-    "UpdatePackageRequest",
     "UpdatePartsMatriceRequest",
     "UpdatePermissionGroupRequest",
     "UpdateServiceCategoryRequest",
@@ -173,6 +186,8 @@
     "UpdateVehicleRequest",
     "UpdateVendorRequest",
     "UpdateWorkOrderRequest",
+    "UpdateWorkOrderTagRequest",
+    "UpdateWorkOrderTagsArchiveRequest",
     "UpdateWorkOrdersCloseAsDeclinedRequest",
     "UpdateWorkOrdersCloseAsVoidedRequest",
     "UpdateWorkOrdersCourtesyCarAssignmentRequest",
@@ -1040,6 +1055,148 @@
       "summary": "update"
     },
     {
+      "id": "list_customer_tags",
+      "method": "get",
+      "path": "/customer_tags",
+      "tag": "customer_tags",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_customer_tag",
+      "method": "post",
+      "path": "/customer_tags",
+      "tag": "customer_tags",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateCustomerTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_customer_tag",
+      "method": "get",
+      "path": "/customer_tags/{id}",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_customer_tag",
+      "method": "patch",
+      "path": "/customer_tags/{id}",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "update_customer_tags_archive",
+      "method": "patch",
+      "path": "/customer_tags/{id}/archive",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerTagsArchiveRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
+      "id": "update_customer_tags_restore",
+      "method": "patch",
+      "path": "/customer_tags/{id}/restore",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerTagsRestoreRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "update_customer_tags_trash",
+      "method": "patch",
+      "path": "/customer_tags/{id}/trash",
+      "tag": "customer_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCustomerTagsTrashRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
+    },
+    {
       "id": "list_customers",
       "method": "get",
       "path": "/customers",
@@ -1047,6 +1204,12 @@
       "pathParams": [],
       "pathParamTypes": {},
       "queryParams": [
+        {
+          "name": "customer_tag_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
         {
           "name": "has_balance",
           "type": "boolean",
@@ -1086,12 +1249,6 @@
         {
           "name": "status",
           "type": "string",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "tag_ids",
-          "type": "array",
           "required": false,
           "description": null
         },
@@ -1951,25 +2108,6 @@
       "summary": "create"
     },
     {
-      "id": "delete_inspection",
-      "method": "delete",
-      "path": "/inspections/{id}",
-      "tag": "inspections",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
       "id": "show_inspection",
       "method": "get",
       "path": "/inspections/{id}",
@@ -2010,6 +2148,27 @@
       "summary": "update"
     },
     {
+      "id": "archive_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/archive",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "ArchiveInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
       "id": "remove_default_inspection",
       "method": "patch",
       "path": "/inspections/{id}/remove_default",
@@ -2029,6 +2188,27 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "remove_default"
+    },
+    {
+      "id": "restore_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/restore",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "RestoreInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
     },
     {
       "id": "set_default_inspection",
@@ -2052,9 +2232,9 @@
       "summary": "set_default"
     },
     {
-      "id": "toggle_inspection",
+      "id": "trash_inspection",
       "method": "patch",
-      "path": "/inspections/{id}/toggle",
+      "path": "/inspections/{id}/trash",
       "tag": "inspections",
       "pathParams": [
         "id"
@@ -2063,14 +2243,14 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "ToggleInspectionRequest",
+      "requestSchema": "TrashInspectionRequest",
       "requestShape": {
         "wrapper": null
       },
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "toggle"
+      "summary": "trash"
     },
     {
       "id": "list_inventory_levels",
@@ -2244,91 +2424,6 @@
       "summary": "update"
     },
     {
-      "id": "list_labels",
-      "method": "get",
-      "path": "/labels",
-      "tag": "labels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_label",
-      "method": "post",
-      "path": "/labels",
-      "tag": "labels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateLabelRequest",
-      "requestShape": {
-        "wrapper": "label"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "list_labels_data_transfer",
-      "method": "get",
-      "path": "/labels/data_transfer",
-      "tag": "labels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "show"
-    },
-    {
-      "id": "create_labels_export",
-      "method": "post",
-      "path": "/labels/export",
-      "tag": "labels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateLabelsExportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "update_label",
-      "method": "patch",
-      "path": "/labels/{id}",
-      "tag": "labels",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "UpdateLabelRequest",
-      "requestShape": {
-        "wrapper": "label"
-      },
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
-    },
-    {
       "id": "list_labor_matrices",
       "method": "get",
       "path": "/labor_matrices",
@@ -2411,7 +2506,7 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "LaborRate",
       "responseBody": true,
       "summary": "index"
     },
@@ -2428,33 +2523,14 @@
         "wrapper": "labor_rate"
       },
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LaborRate",
       "responseBody": true,
       "summary": "create"
     },
     {
-      "id": "delete_labor_rate",
-      "method": "delete",
-      "path": "/labor_rates/{id}",
-      "tag": "labor_rates",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
-      "id": "update_labor_rate",
+      "id": "archive_labor_rate",
       "method": "patch",
-      "path": "/labor_rates/{id}",
+      "path": "/labor_rates/{id}/archive",
       "tag": "labor_rates",
       "pathParams": [
         "id"
@@ -2463,14 +2539,56 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdateLaborRateRequest",
+      "requestSchema": "ArchiveLaborRateRequest",
       "requestShape": {
-        "wrapper": "labor_rate"
+        "wrapper": null
       },
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "update"
+      "summary": "archive"
+    },
+    {
+      "id": "restore_labor_rate",
+      "method": "patch",
+      "path": "/labor_rates/{id}/restore",
+      "tag": "labor_rates",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "RestoreLaborRateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "trash_labor_rate",
+      "method": "patch",
+      "path": "/labor_rates/{id}/trash",
+      "tag": "labor_rates",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "TrashLaborRateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_labor_templates",
@@ -3286,7 +3404,7 @@
       "requestSchema": null,
       "requestShape": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "Package",
       "responseBody": true,
       "summary": "index"
     },
@@ -3303,7 +3421,7 @@
         "wrapper": "package"
       },
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Package",
       "responseBody": true,
       "summary": "create"
     },
@@ -3319,14 +3437,33 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdatePackageRequest",
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "update"
+    },
+    {
+      "id": "archive_package",
+      "method": "patch",
+      "path": "/packages/{id}/archive",
+      "tag": "packages",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "ArchivePackageRequest",
       "requestShape": {
-        "wrapper": "package"
+        "wrapper": null
       },
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "update"
+      "summary": "archive"
     },
     {
       "id": "create_packages_duplicate",
@@ -3345,9 +3482,51 @@
         "wrapper": null
       },
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Package",
       "responseBody": true,
       "summary": "duplicate"
+    },
+    {
+      "id": "restore_package",
+      "method": "patch",
+      "path": "/packages/{id}/restore",
+      "tag": "packages",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "RestorePackageRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "trash_package",
+      "method": "patch",
+      "path": "/packages/{id}/trash",
+      "tag": "packages",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "TrashPackageRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_parts_matrices",
@@ -3903,25 +4082,6 @@
       "summary": "seed_defaults"
     },
     {
-      "id": "delete_service_category",
-      "method": "delete",
-      "path": "/service_categories/{id}",
-      "tag": "service_categories",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": "ServiceCategory",
-      "responseBody": true,
-      "summary": "destroy"
-    },
-    {
       "id": "update_service_category",
       "method": "patch",
       "path": "/service_categories/{id}",
@@ -3941,6 +4101,69 @@
       "responseSchema": "ServiceCategory",
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "archive_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/archive",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "ArchiveServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
+      "id": "restore_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/restore",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "RestoreServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "restore"
+    },
+    {
+      "id": "trash_service_category",
+      "method": "patch",
+      "path": "/service_categories/{id}/trash",
+      "tag": "service_categories",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "TrashServiceCategoryRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "trash"
     },
     {
       "id": "list_settings_billing",
@@ -5505,6 +5728,83 @@
       "summary": "index"
     },
     {
+      "id": "list_work_order_tags",
+      "method": "get",
+      "path": "/work_order_tags",
+      "tag": "work_order_tags",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_work_order_tag",
+      "method": "post",
+      "path": "/work_order_tags",
+      "tag": "work_order_tags",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrderTagRequest",
+      "requestShape": {
+        "flat": [
+          "name",
+          "color"
+        ]
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_work_order_tag",
+      "method": "patch",
+      "path": "/work_order_tags/{id}",
+      "tag": "work_order_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrderTagRequest",
+      "requestShape": {
+        "wrapper": "name"
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "update_work_order_tags_archive",
+      "method": "patch",
+      "path": "/work_order_tags/{id}/archive",
+      "tag": "work_order_tags",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrderTagsArchiveRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "archive"
+    },
+    {
       "id": "list_work_orders",
       "method": "get",
       "path": "/work_orders",
@@ -6034,48 +6334,6 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "show"
-    },
-    {
-      "id": "create_work_orders_label",
-      "method": "post",
-      "path": "/work_orders/{work_order_id}/labels",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "pathParamTypes": {
-        "work_order_id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "CreateWorkOrdersLabelRequest",
-      "requestShape": {
-        "wrapper": "label_id"
-      },
-      "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "delete_work_orders_label",
-      "method": "delete",
-      "path": "/work_orders/{work_order_id}/labels/{id}",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id",
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer",
-        "work_order_id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "paginated": false,
-      "responseSchema": "WorkOrder",
-      "responseBody": true,
-      "summary": "destroy"
     },
     {
       "id": "show_work_order_parts",

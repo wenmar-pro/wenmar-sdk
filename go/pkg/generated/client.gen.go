@@ -19,6 +19,18 @@ import (
 // ArchiveCustomerRequest defines model for ArchiveCustomerRequest.
 type ArchiveCustomerRequest = map[string]interface{}
 
+// ArchiveInspectionRequest defines model for ArchiveInspectionRequest.
+type ArchiveInspectionRequest = map[string]interface{}
+
+// ArchiveLaborRateRequest defines model for ArchiveLaborRateRequest.
+type ArchiveLaborRateRequest = map[string]interface{}
+
+// ArchivePackageRequest defines model for ArchivePackageRequest.
+type ArchivePackageRequest = map[string]interface{}
+
+// ArchiveServiceCategoryRequest defines model for ArchiveServiceCategoryRequest.
+type ArchiveServiceCategoryRequest = map[string]interface{}
+
 // ArchiveVehicleRequest defines model for ArchiveVehicleRequest.
 type ArchiveVehicleRequest = map[string]interface{}
 
@@ -148,10 +160,11 @@ type CreateCustomerRequest struct {
 			PostalCode string `json:"postal_code"`
 			State      string `json:"state"`
 		} `json:"addresses_attributes,omitempty"`
-		BillingTerms     *string `json:"billing_terms,omitempty"`
-		CompanyName      *string `json:"company_name,omitempty"`
-		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
-		DiscountPercent  *string `json:"discount_percent,omitempty"`
+		BillingTerms     *string     `json:"billing_terms,omitempty"`
+		CompanyName      *string     `json:"company_name,omitempty"`
+		CreditLimitCents *string     `json:"credit_limit_cents,omitempty"`
+		CustomerTagId    interface{} `json:"customer_tag_id,omitempty"`
+		DiscountPercent  *string     `json:"discount_percent,omitempty"`
 		EmailsAttributes *[]struct {
 			Email   string `json:"email"`
 			Label   string `json:"label"`
@@ -167,11 +180,15 @@ type CreateCustomerRequest struct {
 			Number  string `json:"number"`
 			Primary bool   `json:"primary"`
 		} `json:"phones_attributes,omitempty"`
-		PoRequired      *bool          `json:"po_required,omitempty"`
-		TagIds          *[]interface{} `json:"tag_ids,omitempty"`
-		TaxExempt       *bool          `json:"tax_exempt,omitempty"`
-		TaxExemptNumber *string        `json:"tax_exempt_number,omitempty"`
+		PoRequired      *bool   `json:"po_required,omitempty"`
+		TaxExempt       *bool   `json:"tax_exempt,omitempty"`
+		TaxExemptNumber *string `json:"tax_exempt_number,omitempty"`
 	} `json:"customer"`
+}
+
+// CreateCustomerTagRequest defines model for CreateCustomerTagRequest.
+type CreateCustomerTagRequest struct {
+	Name string `json:"name"`
 }
 
 // CreateCustomersExportRequest defines model for CreateCustomersExportRequest.
@@ -203,8 +220,7 @@ type CreateInspectionReportRequest = map[string]interface{}
 // CreateInspectionRequest defines model for CreateInspectionRequest.
 type CreateInspectionRequest struct {
 	Inspection struct {
-		Active bool   `json:"active"`
-		Name   string `json:"name"`
+		Name string `json:"name"`
 	} `json:"inspection"`
 }
 
@@ -222,17 +238,6 @@ type CreateInventoryLevelRequest struct {
 	} `json:"part"`
 }
 
-// CreateLabelRequest defines model for CreateLabelRequest.
-type CreateLabelRequest struct {
-	Label struct {
-		Color string `json:"color"`
-		Name  string `json:"name"`
-	} `json:"label"`
-}
-
-// CreateLabelsExportRequest defines model for CreateLabelsExportRequest.
-type CreateLabelsExportRequest = map[string]interface{}
-
 // CreateLaborMatriceRequest defines model for CreateLaborMatriceRequest.
 type CreateLaborMatriceRequest struct {
 	LaborMatrix struct {
@@ -245,7 +250,6 @@ type CreateLaborMatriceRequest struct {
 // CreateLaborRateRequest defines model for CreateLaborRateRequest.
 type CreateLaborRateRequest struct {
 	LaborRate struct {
-		Active    bool    `json:"active"`
 		IsDefault bool    `json:"is_default"`
 		Name      string  `json:"name"`
 		Rate      float32 `json:"rate"`
@@ -459,26 +463,25 @@ type CreateUsersUnlockRequest = map[string]interface{}
 // CreateVehicleRequest defines model for CreateVehicleRequest.
 type CreateVehicleRequest struct {
 	Vehicle struct {
-		BodyStyle         *string        `json:"body_style,omitempty"`
-		Color             *string        `json:"color,omitempty"`
-		CustomerId        int            `json:"customer_id"`
-		Drivetrain        *string        `json:"drivetrain,omitempty"`
-		Engine            *string        `json:"engine,omitempty"`
-		FleetIdentifier   *string        `json:"fleet_identifier,omitempty"`
-		LicensePlate      *string        `json:"license_plate,omitempty"`
-		LicensePlateState *string        `json:"license_plate_state,omitempty"`
-		Make              string         `json:"make"`
-		Model             string         `json:"model"`
-		Notes             *string        `json:"notes,omitempty"`
-		OdometerReading   *int           `json:"odometer_reading,omitempty"`
-		OdometerUnit      *string        `json:"odometer_unit,omitempty"`
-		ProductionDate    *string        `json:"production_date,omitempty"`
-		Submodel          *string        `json:"submodel,omitempty"`
-		Transmission      *string        `json:"transmission,omitempty"`
-		UnitNumber        *string        `json:"unit_number,omitempty"`
-		VehicleTagIds     *[]interface{} `json:"vehicle_tag_ids,omitempty"`
-		Vin               *string        `json:"vin,omitempty"`
-		Year              int            `json:"year"`
+		BodyStyle         *string `json:"body_style,omitempty"`
+		Color             *string `json:"color,omitempty"`
+		CustomerId        int     `json:"customer_id"`
+		Drivetrain        *string `json:"drivetrain,omitempty"`
+		Engine            *string `json:"engine,omitempty"`
+		FleetIdentifier   *string `json:"fleet_identifier,omitempty"`
+		LicensePlate      *string `json:"license_plate,omitempty"`
+		LicensePlateState *string `json:"license_plate_state,omitempty"`
+		Make              string  `json:"make"`
+		Model             string  `json:"model"`
+		Notes             *string `json:"notes,omitempty"`
+		OdometerReading   *int    `json:"odometer_reading,omitempty"`
+		OdometerUnit      *string `json:"odometer_unit,omitempty"`
+		ProductionDate    *string `json:"production_date,omitempty"`
+		Submodel          *string `json:"submodel,omitempty"`
+		Transmission      *string `json:"transmission,omitempty"`
+		UnitNumber        *string `json:"unit_number,omitempty"`
+		Vin               *string `json:"vin,omitempty"`
+		Year              int     `json:"year"`
 	} `json:"vehicle"`
 }
 
@@ -505,6 +508,12 @@ type CreateWorkOrderRequest struct {
 		CustomerId int `json:"customer_id"`
 		VehicleId  int `json:"vehicle_id"`
 	} `json:"work_order"`
+}
+
+// CreateWorkOrderTagRequest defines model for CreateWorkOrderTagRequest.
+type CreateWorkOrderTagRequest struct {
+	Color string `json:"color"`
+	Name  string `json:"name"`
 }
 
 // CreateWorkOrdersAccountPostingRequest defines model for CreateWorkOrdersAccountPostingRequest.
@@ -543,11 +552,6 @@ type CreateWorkOrdersFeeExclusionRequest struct {
 
 // CreateWorkOrdersInvoiceSummarieRequest defines model for CreateWorkOrdersInvoiceSummarieRequest.
 type CreateWorkOrdersInvoiceSummarieRequest = map[string]interface{}
-
-// CreateWorkOrdersLabelRequest defines model for CreateWorkOrdersLabelRequest.
-type CreateWorkOrdersLabelRequest struct {
-	LabelId int `json:"label_id"`
-}
 
 // CreateWorkOrdersRefundRequest defines model for CreateWorkOrdersRefundRequest.
 type CreateWorkOrdersRefundRequest struct {
@@ -714,7 +718,6 @@ type Error struct {
 
 // Inspection defines model for Inspection.
 type Inspection struct {
-	Active      bool    `json:"active"`
 	AppUrl      string  `json:"app_url"`
 	CreatedAt   string  `json:"created_at"`
 	Description *string `json:"description"`
@@ -737,10 +740,12 @@ type Inspection struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
+	Name      string  `json:"name"`
+	Status    string  `json:"status"`
+	TrashedAt *string `json:"trashed_at"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
 }
 
 // InspectionReport defines model for InspectionReport.
@@ -767,6 +772,21 @@ type InspectionReport struct {
 	WorkOrderId  int    `json:"work_order_id"`
 }
 
+// LaborRate defines model for LaborRate.
+type LaborRate struct {
+	AppUrl           string  `json:"app_url"`
+	CostPerHourCents int     `json:"cost_per_hour_cents"`
+	CreatedAt        string  `json:"created_at"`
+	Id               int     `json:"id"`
+	IsDefault        bool    `json:"is_default"`
+	Name             string  `json:"name"`
+	RateCents        int     `json:"rate_cents"`
+	Status           string  `json:"status"`
+	TrashedAt        *string `json:"trashed_at"`
+	UpdatedAt        string  `json:"updated_at"`
+	Url              string  `json:"url"`
+}
+
 // MarkAllInspectionReportRequest defines model for MarkAllInspectionReportRequest.
 type MarkAllInspectionReportRequest struct {
 	GroupName string `json:"group_name"`
@@ -781,6 +801,30 @@ type MergeCustomerRequest struct {
 // MergeVehicleRequest defines model for MergeVehicleRequest.
 type MergeVehicleRequest struct {
 	SourceVehicleId int `json:"source_vehicle_id"`
+}
+
+// Package defines model for Package.
+type Package struct {
+	AppUrl         string  `json:"app_url"`
+	CategoryId     *int    `json:"category_id"`
+	CategoryName   *string `json:"category_name"`
+	CustomerNotes  *string `json:"customer_notes"`
+	Description    string  `json:"description"`
+	EstimatedHours string  `json:"estimated_hours"`
+	Id             int     `json:"id"`
+	Location       struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Name                string  `json:"name"`
+	PriceCents          *int    `json:"price_cents"`
+	ServiceType         string  `json:"service_type"`
+	ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+	Status              string  `json:"status"`
+	TrashedAt           *string `json:"trashed_at"`
+	TriggersTireStorage bool    `json:"triggers_tire_storage"`
+	Url                 string  `json:"url"`
 }
 
 // PublishInspectionReportRequest defines model for PublishInspectionReportRequest.
@@ -866,6 +910,18 @@ type ResetInspectionReportRequest = map[string]interface{}
 // RestoreCustomerRequest defines model for RestoreCustomerRequest.
 type RestoreCustomerRequest = map[string]interface{}
 
+// RestoreInspectionRequest defines model for RestoreInspectionRequest.
+type RestoreInspectionRequest = map[string]interface{}
+
+// RestoreLaborRateRequest defines model for RestoreLaborRateRequest.
+type RestoreLaborRateRequest = map[string]interface{}
+
+// RestorePackageRequest defines model for RestorePackageRequest.
+type RestorePackageRequest = map[string]interface{}
+
+// RestoreServiceCategoryRequest defines model for RestoreServiceCategoryRequest.
+type RestoreServiceCategoryRequest = map[string]interface{}
+
 // RestoreVehicleRequest defines model for RestoreVehicleRequest.
 type RestoreVehicleRequest = map[string]interface{}
 
@@ -942,7 +998,6 @@ type SendWorkOrderPaymentToArRequest = map[string]interface{}
 
 // ServiceCategory defines model for ServiceCategory.
 type ServiceCategory struct {
-	Active       bool    `json:"active"`
 	AppUrl       string  `json:"app_url"`
 	Canonical    bool    `json:"canonical"`
 	CanonicalKey *string `json:"canonical_key"`
@@ -954,6 +1009,8 @@ type ServiceCategory struct {
 	Name         string  `json:"name"`
 	Position     int     `json:"position"`
 	ServiceType  string  `json:"service_type"`
+	Status       string  `json:"status"`
+	TrashedAt    *string `json:"trashed_at"`
 	Url          string  `json:"url"`
 }
 
@@ -1039,9 +1096,6 @@ type SubletOrder struct {
 	} `json:"work_order_service"`
 }
 
-// ToggleInspectionRequest defines model for ToggleInspectionRequest.
-type ToggleInspectionRequest = map[string]interface{}
-
 // TransferVehicleRequest defines model for TransferVehicleRequest.
 type TransferVehicleRequest struct {
 	CustomerId int    `json:"customer_id"`
@@ -1050,6 +1104,18 @@ type TransferVehicleRequest struct {
 
 // TrashCustomerRequest defines model for TrashCustomerRequest.
 type TrashCustomerRequest = map[string]interface{}
+
+// TrashInspectionRequest defines model for TrashInspectionRequest.
+type TrashInspectionRequest = map[string]interface{}
+
+// TrashLaborRateRequest defines model for TrashLaborRateRequest.
+type TrashLaborRateRequest = map[string]interface{}
+
+// TrashPackageRequest defines model for TrashPackageRequest.
+type TrashPackageRequest = map[string]interface{}
+
+// TrashServiceCategoryRequest defines model for TrashServiceCategoryRequest.
+type TrashServiceCategoryRequest = map[string]interface{}
 
 // TrashVehicleRequest defines model for TrashVehicleRequest.
 type TrashVehicleRequest = map[string]interface{}
@@ -1127,10 +1193,11 @@ type UpdateCustomerRequest struct {
 			PostalCode string `json:"postal_code"`
 			State      string `json:"state"`
 		} `json:"addresses_attributes,omitempty"`
-		BillingTerms     *string `json:"billing_terms,omitempty"`
-		CompanyName      *string `json:"company_name,omitempty"`
-		CreditLimitCents *string `json:"credit_limit_cents,omitempty"`
-		DiscountPercent  *string `json:"discount_percent,omitempty"`
+		BillingTerms     *string     `json:"billing_terms,omitempty"`
+		CompanyName      *string     `json:"company_name,omitempty"`
+		CreditLimitCents *string     `json:"credit_limit_cents,omitempty"`
+		CustomerTagId    interface{} `json:"customer_tag_id,omitempty"`
+		DiscountPercent  *string     `json:"discount_percent,omitempty"`
 		EmailsAttributes *[]struct {
 			Email string  `json:"email"`
 			Id    *int    `json:"id,omitempty"`
@@ -1153,6 +1220,20 @@ type UpdateCustomerRequest struct {
 		TaxExempt  *bool   `json:"tax_exempt,omitempty"`
 	} `json:"customer"`
 }
+
+// UpdateCustomerTagRequest defines model for UpdateCustomerTagRequest.
+type UpdateCustomerTagRequest struct {
+	Name string `json:"name"`
+}
+
+// UpdateCustomerTagsArchiveRequest defines model for UpdateCustomerTagsArchiveRequest.
+type UpdateCustomerTagsArchiveRequest = map[string]interface{}
+
+// UpdateCustomerTagsRestoreRequest defines model for UpdateCustomerTagsRestoreRequest.
+type UpdateCustomerTagsRestoreRequest = map[string]interface{}
+
+// UpdateCustomerTagsTrashRequest defines model for UpdateCustomerTagsTrashRequest.
+type UpdateCustomerTagsTrashRequest = map[string]interface{}
 
 // UpdateDriverRequest defines model for UpdateDriverRequest.
 type UpdateDriverRequest struct {
@@ -1190,25 +1271,11 @@ type UpdateInventoryLevelsStockRequest struct {
 	} `json:"inventory_level"`
 }
 
-// UpdateLabelRequest defines model for UpdateLabelRequest.
-type UpdateLabelRequest struct {
-	Label struct {
-		Active bool `json:"active"`
-	} `json:"label"`
-}
-
 // UpdateLaborMatriceRequest defines model for UpdateLaborMatriceRequest.
 type UpdateLaborMatriceRequest struct {
 	LaborMatrix struct {
 		Name string `json:"name"`
 	} `json:"labor_matrix"`
-}
-
-// UpdateLaborRateRequest defines model for UpdateLaborRateRequest.
-type UpdateLaborRateRequest struct {
-	LaborRate struct {
-		Active bool `json:"active"`
-	} `json:"labor_rate"`
 }
 
 // UpdateLaborTemplateRequest defines model for UpdateLaborTemplateRequest.
@@ -1302,13 +1369,6 @@ type UpdateOrdersSubletOrdersMarkPaymentCompleteRequest struct {
 	SubletOrderIds []int  `json:"sublet_order_ids"`
 }
 
-// UpdatePackageRequest defines model for UpdatePackageRequest.
-type UpdatePackageRequest struct {
-	Package struct {
-		Active bool `json:"active"`
-	} `json:"package"`
-}
-
 // UpdatePartsMatriceRequest defines model for UpdatePartsMatriceRequest.
 type UpdatePartsMatriceRequest struct {
 	PartsMatrix struct {
@@ -1326,7 +1386,6 @@ type UpdatePermissionGroupRequest struct {
 // UpdateServiceCategoryRequest defines model for UpdateServiceCategoryRequest.
 type UpdateServiceCategoryRequest struct {
 	ServiceCategory struct {
-		Active   *bool   `json:"active,omitempty"`
 		Name     *string `json:"name,omitempty"`
 		Position *int    `json:"position,omitempty"`
 	} `json:"service_category"`
@@ -1411,8 +1470,17 @@ type UpdateWorkOrderRequest struct {
 		SubStatusTypeId    *int    `json:"sub_status_type_id,omitempty"`
 		VehicleArrivedAt   *string `json:"vehicle_arrived_at,omitempty"`
 		WaitingForCustomer *bool   `json:"waiting_for_customer,omitempty"`
+		WorkOrderTagId     *int    `json:"work_order_tag_id,omitempty"`
 	} `json:"work_order"`
 }
+
+// UpdateWorkOrderTagRequest defines model for UpdateWorkOrderTagRequest.
+type UpdateWorkOrderTagRequest struct {
+	Name string `json:"name"`
+}
+
+// UpdateWorkOrderTagsArchiveRequest defines model for UpdateWorkOrderTagsArchiveRequest.
+type UpdateWorkOrderTagsArchiveRequest = map[string]interface{}
 
 // UpdateWorkOrdersCloseAsDeclinedRequest defines model for UpdateWorkOrdersCloseAsDeclinedRequest.
 type UpdateWorkOrdersCloseAsDeclinedRequest struct {
@@ -1627,18 +1695,23 @@ type WorkOrder struct {
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
 	} `json:"payer_customer,omitempty"`
-	PayerCustomerId     *int          `json:"payer_customer_id"`
-	PaymentsUrl         string        `json:"payments_url"`
-	PurchaseOrderNumber *string       `json:"purchase_order_number"`
-	ReadyForPickupAt    *string       `json:"ready_for_pickup_at"`
-	RecentActivities    []interface{} `json:"recent_activities"`
-	ReturnMethod        string        `json:"return_method"`
-	ReturnMethodNotes   *string       `json:"return_method_notes"`
-	SavedForLater       bool          `json:"saved_for_later"`
-	ScheduledFor        *string       `json:"scheduled_for"`
-	ServiceAdvisorId    *int          `json:"service_advisor_id"`
-	ServiceHistoryUrl   string        `json:"service_history_url"`
-	ServicesUrl         string        `json:"services_url"`
+	PayerCustomerId     *int    `json:"payer_customer_id"`
+	PaymentsUrl         string  `json:"payments_url"`
+	PurchaseOrderNumber *string `json:"purchase_order_number"`
+	ReadyForPickupAt    *string `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod      string  `json:"return_method"`
+	ReturnMethodNotes *string `json:"return_method_notes"`
+	SavedForLater     bool    `json:"saved_for_later"`
+	ScheduledFor      *string `json:"scheduled_for"`
+	ServiceAdvisorId  *int    `json:"service_advisor_id"`
+	ServiceHistoryUrl string  `json:"service_history_url"`
+	ServicesUrl       string  `json:"services_url"`
 
 	// Status Example: in_progress
 	Status            string `json:"status"`
@@ -1691,17 +1764,22 @@ type ListAppointmentsAvailableSlotsParams struct {
 	DurationMinutes *int    `form:"duration_minutes,omitempty" json:"duration_minutes,omitempty"`
 }
 
+// ListCustomerTagsParams defines parameters for ListCustomerTags.
+type ListCustomerTagsParams struct {
+	Status *string `form:"status,omitempty" json:"status,omitempty"`
+}
+
 // ListCustomersParams defines parameters for ListCustomers.
 type ListCustomersParams struct {
-	HasBalance      *bool     `form:"has_balance,omitempty" json:"has_balance,omitempty"`
-	HasVehicle      *bool     `form:"has_vehicle,omitempty" json:"has_vehicle,omitempty"`
-	LastVisitMonths *int      `form:"last_visit_months,omitempty" json:"last_visit_months,omitempty"`
-	Page            *int      `form:"page,omitempty" json:"page,omitempty"`
-	PerPage         *int      `form:"per_page,omitempty" json:"per_page,omitempty"`
-	Q               *string   `form:"q,omitempty" json:"q,omitempty"`
-	Status          *string   `form:"status,omitempty" json:"status,omitempty"`
-	TagIds          *[]string `form:"tag_ids,omitempty" json:"tag_ids,omitempty"`
-	Type            *string   `form:"type,omitempty" json:"type,omitempty"`
+	CustomerTagId   *int    `form:"customer_tag_id,omitempty" json:"customer_tag_id,omitempty"`
+	HasBalance      *bool   `form:"has_balance,omitempty" json:"has_balance,omitempty"`
+	HasVehicle      *bool   `form:"has_vehicle,omitempty" json:"has_vehicle,omitempty"`
+	LastVisitMonths *int    `form:"last_visit_months,omitempty" json:"last_visit_months,omitempty"`
+	Page            *int    `form:"page,omitempty" json:"page,omitempty"`
+	PerPage         *int    `form:"per_page,omitempty" json:"per_page,omitempty"`
+	Q               *string `form:"q,omitempty" json:"q,omitempty"`
+	Status          *string `form:"status,omitempty" json:"status,omitempty"`
+	Type            *string `form:"type,omitempty" json:"type,omitempty"`
 }
 
 // CheckCustomerDuplicateParams defines parameters for CheckCustomerDuplicate.
@@ -1910,6 +1988,21 @@ type UpdateCounterSaleJSONRequestBody = UpdateCounterSaleRequest
 // UpdateCurrentLocationJSONRequestBody defines body for UpdateCurrentLocation for application/json ContentType.
 type UpdateCurrentLocationJSONRequestBody = UpdateCurrentLocationRequest
 
+// CreateCustomerTagJSONRequestBody defines body for CreateCustomerTag for application/json ContentType.
+type CreateCustomerTagJSONRequestBody = CreateCustomerTagRequest
+
+// UpdateCustomerTagJSONRequestBody defines body for UpdateCustomerTag for application/json ContentType.
+type UpdateCustomerTagJSONRequestBody = UpdateCustomerTagRequest
+
+// UpdateCustomerTagsArchiveJSONRequestBody defines body for UpdateCustomerTagsArchive for application/json ContentType.
+type UpdateCustomerTagsArchiveJSONRequestBody = UpdateCustomerTagsArchiveRequest
+
+// UpdateCustomerTagsRestoreJSONRequestBody defines body for UpdateCustomerTagsRestore for application/json ContentType.
+type UpdateCustomerTagsRestoreJSONRequestBody = UpdateCustomerTagsRestoreRequest
+
+// UpdateCustomerTagsTrashJSONRequestBody defines body for UpdateCustomerTagsTrash for application/json ContentType.
+type UpdateCustomerTagsTrashJSONRequestBody = UpdateCustomerTagsTrashRequest
+
 // CreateCustomerJSONRequestBody defines body for CreateCustomer for application/json ContentType.
 type CreateCustomerJSONRequestBody = CreateCustomerRequest
 
@@ -1979,14 +2072,20 @@ type CreateInspectionJSONRequestBody = CreateInspectionRequest
 // UpdateInspectionJSONRequestBody defines body for UpdateInspection for application/json ContentType.
 type UpdateInspectionJSONRequestBody = UpdateInspectionRequest
 
+// ArchiveInspectionJSONRequestBody defines body for ArchiveInspection for application/json ContentType.
+type ArchiveInspectionJSONRequestBody = ArchiveInspectionRequest
+
 // RemoveDefaultInspectionJSONRequestBody defines body for RemoveDefaultInspection for application/json ContentType.
 type RemoveDefaultInspectionJSONRequestBody = RemoveDefaultInspectionRequest
+
+// RestoreInspectionJSONRequestBody defines body for RestoreInspection for application/json ContentType.
+type RestoreInspectionJSONRequestBody = RestoreInspectionRequest
 
 // SetDefaultInspectionJSONRequestBody defines body for SetDefaultInspection for application/json ContentType.
 type SetDefaultInspectionJSONRequestBody = SetDefaultInspectionRequest
 
-// ToggleInspectionJSONRequestBody defines body for ToggleInspection for application/json ContentType.
-type ToggleInspectionJSONRequestBody = ToggleInspectionRequest
+// TrashInspectionJSONRequestBody defines body for TrashInspection for application/json ContentType.
+type TrashInspectionJSONRequestBody = TrashInspectionRequest
 
 // CreateInventoryLevelJSONRequestBody defines body for CreateInventoryLevel for application/json ContentType.
 type CreateInventoryLevelJSONRequestBody = CreateInventoryLevelRequest
@@ -1997,15 +2096,6 @@ type UpdateInventoryLevelJSONRequestBody = UpdateInventoryLevelRequest
 // UpdateInventoryLevelsStockJSONRequestBody defines body for UpdateInventoryLevelsStock for application/json ContentType.
 type UpdateInventoryLevelsStockJSONRequestBody = UpdateInventoryLevelsStockRequest
 
-// CreateLabelJSONRequestBody defines body for CreateLabel for application/json ContentType.
-type CreateLabelJSONRequestBody = CreateLabelRequest
-
-// CreateLabelsExportJSONRequestBody defines body for CreateLabelsExport for application/json ContentType.
-type CreateLabelsExportJSONRequestBody = CreateLabelsExportRequest
-
-// UpdateLabelJSONRequestBody defines body for UpdateLabel for application/json ContentType.
-type UpdateLabelJSONRequestBody = UpdateLabelRequest
-
 // CreateLaborMatriceJSONRequestBody defines body for CreateLaborMatrice for application/json ContentType.
 type CreateLaborMatriceJSONRequestBody = CreateLaborMatriceRequest
 
@@ -2015,8 +2105,14 @@ type UpdateLaborMatriceJSONRequestBody = UpdateLaborMatriceRequest
 // CreateLaborRateJSONRequestBody defines body for CreateLaborRate for application/json ContentType.
 type CreateLaborRateJSONRequestBody = CreateLaborRateRequest
 
-// UpdateLaborRateJSONRequestBody defines body for UpdateLaborRate for application/json ContentType.
-type UpdateLaborRateJSONRequestBody = UpdateLaborRateRequest
+// ArchiveLaborRateJSONRequestBody defines body for ArchiveLaborRate for application/json ContentType.
+type ArchiveLaborRateJSONRequestBody = ArchiveLaborRateRequest
+
+// RestoreLaborRateJSONRequestBody defines body for RestoreLaborRate for application/json ContentType.
+type RestoreLaborRateJSONRequestBody = RestoreLaborRateRequest
+
+// TrashLaborRateJSONRequestBody defines body for TrashLaborRate for application/json ContentType.
+type TrashLaborRateJSONRequestBody = TrashLaborRateRequest
 
 // UpdateLaborTemplateJSONRequestBody defines body for UpdateLaborTemplate for application/json ContentType.
 type UpdateLaborTemplateJSONRequestBody = UpdateLaborTemplateRequest
@@ -2081,11 +2177,17 @@ type UpdateOrdersSubletOrdersMarkPaymentCompleteJSONRequestBody = UpdateOrdersSu
 // CreatePackageJSONRequestBody defines body for CreatePackage for application/json ContentType.
 type CreatePackageJSONRequestBody = CreatePackageRequest
 
-// UpdatePackageJSONRequestBody defines body for UpdatePackage for application/json ContentType.
-type UpdatePackageJSONRequestBody = UpdatePackageRequest
+// ArchivePackageJSONRequestBody defines body for ArchivePackage for application/json ContentType.
+type ArchivePackageJSONRequestBody = ArchivePackageRequest
 
 // CreatePackagesDuplicateJSONRequestBody defines body for CreatePackagesDuplicate for application/json ContentType.
 type CreatePackagesDuplicateJSONRequestBody = CreatePackagesDuplicateRequest
+
+// RestorePackageJSONRequestBody defines body for RestorePackage for application/json ContentType.
+type RestorePackageJSONRequestBody = RestorePackageRequest
+
+// TrashPackageJSONRequestBody defines body for TrashPackage for application/json ContentType.
+type TrashPackageJSONRequestBody = TrashPackageRequest
 
 // CreatePartsMatriceJSONRequestBody defines body for CreatePartsMatrice for application/json ContentType.
 type CreatePartsMatriceJSONRequestBody = CreatePartsMatriceRequest
@@ -2113,6 +2215,15 @@ type SeedDefaultsServiceCategoriesJSONRequestBody = SeedDefaultsServiceCategorie
 
 // UpdateServiceCategoryJSONRequestBody defines body for UpdateServiceCategory for application/json ContentType.
 type UpdateServiceCategoryJSONRequestBody = UpdateServiceCategoryRequest
+
+// ArchiveServiceCategoryJSONRequestBody defines body for ArchiveServiceCategory for application/json ContentType.
+type ArchiveServiceCategoryJSONRequestBody = ArchiveServiceCategoryRequest
+
+// RestoreServiceCategoryJSONRequestBody defines body for RestoreServiceCategory for application/json ContentType.
+type RestoreServiceCategoryJSONRequestBody = RestoreServiceCategoryRequest
+
+// TrashServiceCategoryJSONRequestBody defines body for TrashServiceCategory for application/json ContentType.
+type TrashServiceCategoryJSONRequestBody = TrashServiceCategoryRequest
 
 // CreateShopDiscountJSONRequestBody defines body for CreateShopDiscount for application/json ContentType.
 type CreateShopDiscountJSONRequestBody = CreateShopDiscountRequest
@@ -2225,6 +2336,15 @@ type RestoreVendorJSONRequestBody = RestoreVendorRequest
 // TrashVendorJSONRequestBody defines body for TrashVendor for application/json ContentType.
 type TrashVendorJSONRequestBody = TrashVendorRequest
 
+// CreateWorkOrderTagJSONRequestBody defines body for CreateWorkOrderTag for application/json ContentType.
+type CreateWorkOrderTagJSONRequestBody = CreateWorkOrderTagRequest
+
+// UpdateWorkOrderTagJSONRequestBody defines body for UpdateWorkOrderTag for application/json ContentType.
+type UpdateWorkOrderTagJSONRequestBody = UpdateWorkOrderTagRequest
+
+// UpdateWorkOrderTagsArchiveJSONRequestBody defines body for UpdateWorkOrderTagsArchive for application/json ContentType.
+type UpdateWorkOrderTagsArchiveJSONRequestBody = UpdateWorkOrderTagsArchiveRequest
+
 // CreateWorkOrderJSONRequestBody defines body for CreateWorkOrder for application/json ContentType.
 type CreateWorkOrderJSONRequestBody = CreateWorkOrderRequest
 
@@ -2272,9 +2392,6 @@ type CreateWorkOrdersAuthorizationJSONRequestBody = CreateWorkOrdersAuthorizatio
 
 // CreateWorkOrdersFeeExclusionJSONRequestBody defines body for CreateWorkOrdersFeeExclusion for application/json ContentType.
 type CreateWorkOrdersFeeExclusionJSONRequestBody = CreateWorkOrdersFeeExclusionRequest
-
-// CreateWorkOrdersLabelJSONRequestBody defines body for CreateWorkOrdersLabel for application/json ContentType.
-type CreateWorkOrdersLabelJSONRequestBody = CreateWorkOrdersLabelRequest
 
 // CreateWorkOrderPaymentJSONRequestBody defines body for CreateWorkOrderPayment for application/json ContentType.
 type CreateWorkOrderPaymentJSONRequestBody = CreateWorkOrderPaymentRequest
@@ -3011,6 +3128,110 @@ type ClientInterface interface {
 	// Corresponds with PATCH /current_location (the `UpdateCurrentLocation` operationId).
 	UpdateCurrentLocation(ctx context.Context, body UpdateCurrentLocationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListCustomerTags index
+	//
+	// List all customer tags, paginated via the Link header.
+	//
+	// Corresponds with GET /customer_tags (the `ListCustomerTags` operationId).
+	ListCustomerTags(ctx context.Context, params *ListCustomerTagsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomerTagWithBody create
+	//
+	// Create a customer tag.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+	CreateCustomerTagWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomerTag create
+	//
+	// Create a customer tag.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+	CreateCustomerTag(ctx context.Context, body CreateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ShowCustomerTag show
+	//
+	// Show a customer tag by ID.
+	//
+	// Corresponds with GET /customer_tags/{id} (the `ShowCustomerTag` operationId).
+	ShowCustomerTag(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagWithBody update
+	//
+	// Update a customer tag by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+	UpdateCustomerTagWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTag update
+	//
+	// Update a customer tag by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+	UpdateCustomerTag(ctx context.Context, id int, body UpdateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsArchiveWithBody archive
+	//
+	// Update a customer tags archive by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+	UpdateCustomerTagsArchiveWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsArchive archive
+	//
+	// Update a customer tags archive by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+	UpdateCustomerTagsArchive(ctx context.Context, id int, body UpdateCustomerTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsRestoreWithBody restore
+	//
+	// Update a customer tags restore by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+	UpdateCustomerTagsRestoreWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsRestore restore
+	//
+	// Update a customer tags restore by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+	UpdateCustomerTagsRestore(ctx context.Context, id int, body UpdateCustomerTagsRestoreJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsTrashWithBody trash
+	//
+	// Update a customer tags trash by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+	UpdateCustomerTagsTrashWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateCustomerTagsTrash trash
+	//
+	// Update a customer tags trash by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+	UpdateCustomerTagsTrash(ctx context.Context, id int, body UpdateCustomerTagsTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListCustomers index
 	//
 	// List all customers, paginated via the Link header.
@@ -3484,13 +3705,6 @@ type ClientInterface interface {
 	// Corresponds with POST /inspections (the `CreateInspection` operationId).
 	CreateInspection(ctx context.Context, body CreateInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteInspection destroy
-	//
-	// Delete a inspection by ID.
-	//
-	// Corresponds with DELETE /inspections/{id} (the `DeleteInspection` operationId).
-	DeleteInspection(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ShowInspection show
 	//
 	// Show a inspection by ID.
@@ -3516,6 +3730,20 @@ type ClientInterface interface {
 	// Corresponds with PATCH /inspections/{id} (the `UpdateInspection` operationId).
 	UpdateInspection(ctx context.Context, id int, body UpdateInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ArchiveInspectionWithBody archive
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+	ArchiveInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchiveInspection archive
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+	ArchiveInspection(ctx context.Context, id int, body ArchiveInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// RemoveDefaultInspectionWithBody remove_default
 	//
 	// Takes any type of body and a specified content type.
@@ -3529,6 +3757,20 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /inspections/{id}/remove_default (the `RemoveDefaultInspection` operationId).
 	RemoveDefaultInspection(ctx context.Context, id int, body RemoveDefaultInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreInspectionWithBody restore
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+	RestoreInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreInspection restore
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+	RestoreInspection(ctx context.Context, id int, body RestoreInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SetDefaultInspectionWithBody set_default
 	//
@@ -3544,19 +3786,19 @@ type ClientInterface interface {
 	// Corresponds with PATCH /inspections/{id}/set_default (the `SetDefaultInspection` operationId).
 	SetDefaultInspection(ctx context.Context, id int, body SetDefaultInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ToggleInspectionWithBody toggle
+	// TrashInspectionWithBody trash
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-	ToggleInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+	TrashInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ToggleInspection toggle
+	// TrashInspection trash
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-	ToggleInspection(ctx context.Context, id int, body ToggleInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+	TrashInspection(ctx context.Context, id int, body TrashInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListInventoryLevels index
 	//
@@ -3640,74 +3882,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /inventory_levels/{id}/stock (the `UpdateInventoryLevelsStock` operationId).
 	UpdateInventoryLevelsStock(ctx context.Context, id int, body UpdateInventoryLevelsStockJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListLabels index
-	//
-	// List all labels, paginated via the Link header.
-	//
-	// Corresponds with GET /labels (the `ListLabels` operationId).
-	ListLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateLabelWithBody create
-	//
-	// Create a label.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /labels (the `CreateLabel` operationId).
-	CreateLabelWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateLabel create
-	//
-	// Create a label.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /labels (the `CreateLabel` operationId).
-	CreateLabel(ctx context.Context, body CreateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListLabelsDataTransfer show
-	//
-	// List all labels data transfer, paginated via the Link header.
-	//
-	// Corresponds with GET /labels/data_transfer (the `ListLabelsDataTransfer` operationId).
-	ListLabelsDataTransfer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateLabelsExportWithBody create
-	//
-	// Create a labels export.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-	CreateLabelsExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateLabelsExport create
-	//
-	// Create a labels export.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-	CreateLabelsExport(ctx context.Context, body CreateLabelsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateLabelWithBody update
-	//
-	// Update a label by ID.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-	UpdateLabelWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateLabel update
-	//
-	// Update a label by ID.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-	UpdateLabel(ctx context.Context, id int, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// ListLaborMatrices index
 	//
 	// List all labor matrices, paginated via the Link header.
@@ -3783,30 +3957,47 @@ type ClientInterface interface {
 	// Corresponds with POST /labor_rates (the `CreateLaborRate` operationId).
 	CreateLaborRate(ctx context.Context, body CreateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteLaborRate destroy
-	//
-	// Delete a labor rate by ID.
-	//
-	// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
-	DeleteLaborRate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateLaborRateWithBody update
-	//
-	// Update a labor rate by ID.
+	// ArchiveLaborRateWithBody archive
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-	UpdateLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+	ArchiveLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateLaborRate update
-	//
-	// Update a labor rate by ID.
+	// ArchiveLaborRate archive
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-	UpdateLaborRate(ctx context.Context, id int, body UpdateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+	ArchiveLaborRate(ctx context.Context, id int, body ArchiveLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreLaborRateWithBody restore
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+	RestoreLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreLaborRate restore
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+	RestoreLaborRate(ctx context.Context, id int, body RestoreLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashLaborRateWithBody trash
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+	TrashLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashLaborRate trash
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+	TrashLaborRate(ctx context.Context, id int, body TrashLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListLaborTemplates index
 	//
@@ -4354,23 +4545,26 @@ type ClientInterface interface {
 	// Corresponds with POST /packages (the `CreatePackage` operationId).
 	CreatePackage(ctx context.Context, body CreatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdatePackageWithBody update
-	//
-	// Update a package by ID.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-	UpdatePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdatePackage update
 	//
 	// Update a package by ID.
 	//
+	// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
+	UpdatePackage(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchivePackageWithBody archive
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+	ArchivePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchivePackage archive
+	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-	UpdatePackage(ctx context.Context, id int, body UpdatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+	ArchivePackage(ctx context.Context, id int, body ArchivePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePackagesDuplicateWithBody duplicate
 	//
@@ -4389,6 +4583,34 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /packages/{id}/duplicate (the `CreatePackagesDuplicate` operationId).
 	CreatePackagesDuplicate(ctx context.Context, id int, body CreatePackagesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestorePackageWithBody restore
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+	RestorePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestorePackage restore
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+	RestorePackage(ctx context.Context, id int, body RestorePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashPackageWithBody trash
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+	TrashPackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashPackage trash
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+	TrashPackage(ctx context.Context, id int, body TrashPackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPartsMatrices index
 	//
@@ -4705,13 +4927,6 @@ type ClientInterface interface {
 	// Corresponds with POST /service_categories/seed_defaults (the `SeedDefaultsServiceCategories` operationId).
 	SeedDefaultsServiceCategories(ctx context.Context, body SeedDefaultsServiceCategoriesJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteServiceCategory destroy
-	//
-	// Delete a service category by ID.
-	//
-	// Corresponds with DELETE /service_categories/{id} (the `DeleteServiceCategory` operationId).
-	DeleteServiceCategory(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateServiceCategoryWithBody update
 	//
 	// Update a service category by ID.
@@ -4729,6 +4944,48 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /service_categories/{id} (the `UpdateServiceCategory` operationId).
 	UpdateServiceCategory(ctx context.Context, id int, body UpdateServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchiveServiceCategoryWithBody archive
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+	ArchiveServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchiveServiceCategory archive
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+	ArchiveServiceCategory(ctx context.Context, id int, body ArchiveServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreServiceCategoryWithBody restore
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+	RestoreServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreServiceCategory restore
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+	RestoreServiceCategory(ctx context.Context, id int, body RestoreServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashServiceCategoryWithBody trash
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+	TrashServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// TrashServiceCategory trash
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+	TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSettingsBilling show
 	//
@@ -5664,6 +5921,67 @@ type ClientInterface interface {
 	// Corresponds with GET /vendors/{vendor_id}/purchase_orders (the `ListVendorsPurchaseOrders` operationId).
 	ListVendorsPurchaseOrders(ctx context.Context, vendorId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListWorkOrderTags index
+	//
+	// List all work order tags, paginated via the Link header.
+	//
+	// Corresponds with GET /work_order_tags (the `ListWorkOrderTags` operationId).
+	ListWorkOrderTags(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderTagWithBody create
+	//
+	// Create a work order tag.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+	CreateWorkOrderTagWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderTag create
+	//
+	// Create a work order tag.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+	CreateWorkOrderTag(ctx context.Context, body CreateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderTagWithBody update
+	//
+	// Update a work order tag by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+	UpdateWorkOrderTagWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderTag update
+	//
+	// Update a work order tag by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+	UpdateWorkOrderTag(ctx context.Context, id int, body UpdateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderTagsArchiveWithBody archive
+	//
+	// Update a work order tags archive by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+	UpdateWorkOrderTagsArchiveWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateWorkOrderTagsArchive archive
+	//
+	// Update a work order tags archive by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+	UpdateWorkOrderTagsArchive(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListWorkOrders index
 	//
 	// List all work orders, paginated via the Link header.
@@ -6013,31 +6331,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 	ShowWorkOrderInspection(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateWorkOrdersLabelWithBody create
-	//
-	// Create a work orders label.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-	CreateWorkOrdersLabelWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateWorkOrdersLabel create
-	//
-	// Create a work orders label.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-	CreateWorkOrdersLabel(ctx context.Context, workOrderId int, body CreateWorkOrdersLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteWorkOrdersLabel destroy
-	//
-	// Delete a work orders label by ID.
-	//
-	// Corresponds with DELETE /work_orders/{work_order_id}/labels/{id} (the `DeleteWorkOrdersLabel` operationId).
-	DeleteWorkOrdersLabel(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowWorkOrderParts show
 	//
@@ -7849,6 +8142,230 @@ func (c *Client) UpdateCurrentLocation(ctx context.Context, body UpdateCurrentLo
 	return c.Client.Do(req)
 }
 
+// ListCustomerTags index
+//
+// List all customer tags, paginated via the Link header.
+//
+// Corresponds with GET /customer_tags (the `ListCustomerTags` operationId).
+func (c *Client) ListCustomerTags(ctx context.Context, params *ListCustomerTagsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomerTagsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateCustomerTagWithBody create
+//
+// Create a customer tag.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+func (c *Client) CreateCustomerTagWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomerTagRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateCustomerTag create
+//
+// Create a customer tag.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomerTagRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ShowCustomerTag show
+//
+// Show a customer tag by ID.
+//
+// Corresponds with GET /customer_tags/{id} (the `ShowCustomerTag` operationId).
+func (c *Client) ShowCustomerTag(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowCustomerTagRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagWithBody update
+//
+// Update a customer tag by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+func (c *Client) UpdateCustomerTagWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTag update
+//
+// Update a customer tag by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+func (c *Client) UpdateCustomerTag(ctx context.Context, id int, body UpdateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsArchiveWithBody archive
+//
+// Update a customer tags archive by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+func (c *Client) UpdateCustomerTagsArchiveWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsArchiveRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsArchive archive
+//
+// Update a customer tags archive by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+func (c *Client) UpdateCustomerTagsArchive(ctx context.Context, id int, body UpdateCustomerTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsArchiveRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsRestoreWithBody restore
+//
+// Update a customer tags restore by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+func (c *Client) UpdateCustomerTagsRestoreWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsRestoreRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsRestore restore
+//
+// Update a customer tags restore by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+func (c *Client) UpdateCustomerTagsRestore(ctx context.Context, id int, body UpdateCustomerTagsRestoreJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsRestoreRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsTrashWithBody trash
+//
+// Update a customer tags trash by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+func (c *Client) UpdateCustomerTagsTrashWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsTrashRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateCustomerTagsTrash trash
+//
+// Update a customer tags trash by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+func (c *Client) UpdateCustomerTagsTrash(ctx context.Context, id int, body UpdateCustomerTagsTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCustomerTagsTrashRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListCustomers index
 //
 // List all customers, paginated via the Link header.
@@ -8952,23 +9469,6 @@ func (c *Client) CreateInspection(ctx context.Context, body CreateInspectionJSON
 	return c.Client.Do(req)
 }
 
-// DeleteInspection destroy
-//
-// Delete a inspection by ID.
-//
-// Corresponds with DELETE /inspections/{id} (the `DeleteInspection` operationId).
-func (c *Client) DeleteInspection(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteInspectionRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // ShowInspection show
 //
 // Show a inspection by ID.
@@ -9024,6 +9524,40 @@ func (c *Client) UpdateInspection(ctx context.Context, id int, body UpdateInspec
 	return c.Client.Do(req)
 }
 
+// ArchiveInspectionWithBody archive
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+func (c *Client) ArchiveInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveInspectionRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ArchiveInspection archive
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+func (c *Client) ArchiveInspection(ctx context.Context, id int, body ArchiveInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveInspectionRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // RemoveDefaultInspectionWithBody remove_default
 //
 // Takes any type of body and a specified content type.
@@ -9048,6 +9582,40 @@ func (c *Client) RemoveDefaultInspectionWithBody(ctx context.Context, id int, co
 // Corresponds with PATCH /inspections/{id}/remove_default (the `RemoveDefaultInspection` operationId).
 func (c *Client) RemoveDefaultInspection(ctx context.Context, id int, body RemoveDefaultInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRemoveDefaultInspectionRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreInspectionWithBody restore
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+func (c *Client) RestoreInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreInspectionRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreInspection restore
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+func (c *Client) RestoreInspection(ctx context.Context, id int, body RestoreInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreInspectionRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9092,13 +9660,13 @@ func (c *Client) SetDefaultInspection(ctx context.Context, id int, body SetDefau
 	return c.Client.Do(req)
 }
 
-// ToggleInspectionWithBody toggle
+// TrashInspectionWithBody trash
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-func (c *Client) ToggleInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewToggleInspectionRequestWithBody(c.Server, id, contentType, body)
+// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+func (c *Client) TrashInspectionWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashInspectionRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9109,13 +9677,13 @@ func (c *Client) ToggleInspectionWithBody(ctx context.Context, id int, contentTy
 	return c.Client.Do(req)
 }
 
-// ToggleInspection toggle
+// TrashInspection trash
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-func (c *Client) ToggleInspection(ctx context.Context, id int, body ToggleInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewToggleInspectionRequest(c.Server, id, body)
+// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+func (c *Client) TrashInspection(ctx context.Context, id int, body TrashInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashInspectionRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9308,154 +9876,6 @@ func (c *Client) UpdateInventoryLevelsStock(ctx context.Context, id int, body Up
 	return c.Client.Do(req)
 }
 
-// ListLabels index
-//
-// List all labels, paginated via the Link header.
-//
-// Corresponds with GET /labels (the `ListLabels` operationId).
-func (c *Client) ListLabels(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListLabelsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateLabelWithBody create
-//
-// Create a label.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /labels (the `CreateLabel` operationId).
-func (c *Client) CreateLabelWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLabelRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateLabel create
-//
-// Create a label.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /labels (the `CreateLabel` operationId).
-func (c *Client) CreateLabel(ctx context.Context, body CreateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLabelRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListLabelsDataTransfer show
-//
-// List all labels data transfer, paginated via the Link header.
-//
-// Corresponds with GET /labels/data_transfer (the `ListLabelsDataTransfer` operationId).
-func (c *Client) ListLabelsDataTransfer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListLabelsDataTransferRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateLabelsExportWithBody create
-//
-// Create a labels export.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-func (c *Client) CreateLabelsExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLabelsExportRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateLabelsExport create
-//
-// Create a labels export.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-func (c *Client) CreateLabelsExport(ctx context.Context, body CreateLabelsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLabelsExportRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateLabelWithBody update
-//
-// Update a label by ID.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-func (c *Client) UpdateLabelWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLabelRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateLabel update
-//
-// Update a label by ID.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-func (c *Client) UpdateLabel(ctx context.Context, id int, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLabelRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // ListLaborMatrices index
 //
 // List all labor matrices, paginated via the Link header.
@@ -9621,32 +10041,13 @@ func (c *Client) CreateLaborRate(ctx context.Context, body CreateLaborRateJSONRe
 	return c.Client.Do(req)
 }
 
-// DeleteLaborRate destroy
-//
-// Delete a labor rate by ID.
-//
-// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
-func (c *Client) DeleteLaborRate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteLaborRateRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateLaborRateWithBody update
-//
-// Update a labor rate by ID.
+// ArchiveLaborRateWithBody archive
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-func (c *Client) UpdateLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLaborRateRequestWithBody(c.Server, id, contentType, body)
+// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+func (c *Client) ArchiveLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveLaborRateRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9657,15 +10058,81 @@ func (c *Client) UpdateLaborRateWithBody(ctx context.Context, id int, contentTyp
 	return c.Client.Do(req)
 }
 
-// UpdateLaborRate update
-//
-// Update a labor rate by ID.
+// ArchiveLaborRate archive
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-func (c *Client) UpdateLaborRate(ctx context.Context, id int, body UpdateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLaborRateRequest(c.Server, id, body)
+// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+func (c *Client) ArchiveLaborRate(ctx context.Context, id int, body ArchiveLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveLaborRateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreLaborRateWithBody restore
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+func (c *Client) RestoreLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreLaborRateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreLaborRate restore
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+func (c *Client) RestoreLaborRate(ctx context.Context, id int, body RestoreLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreLaborRateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashLaborRateWithBody trash
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+func (c *Client) TrashLaborRateWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashLaborRateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashLaborRate trash
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+func (c *Client) TrashLaborRate(ctx context.Context, id int, body TrashLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashLaborRateRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -10882,15 +11349,13 @@ func (c *Client) CreatePackage(ctx context.Context, body CreatePackageJSONReques
 	return c.Client.Do(req)
 }
 
-// UpdatePackageWithBody update
+// UpdatePackage update
 //
 // Update a package by ID.
 //
-// Takes any type of body and a specified content type.
-//
 // Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-func (c *Client) UpdatePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePackageRequestWithBody(c.Server, id, contentType, body)
+func (c *Client) UpdatePackage(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdatePackageRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -10901,15 +11366,30 @@ func (c *Client) UpdatePackageWithBody(ctx context.Context, id int, contentType 
 	return c.Client.Do(req)
 }
 
-// UpdatePackage update
+// ArchivePackageWithBody archive
 //
-// Update a package by ID.
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+func (c *Client) ArchivePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchivePackageRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ArchivePackage archive
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-func (c *Client) UpdatePackage(ctx context.Context, id int, body UpdatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePackageRequest(c.Server, id, body)
+// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+func (c *Client) ArchivePackage(ctx context.Context, id int, body ArchivePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchivePackageRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -10948,6 +11428,74 @@ func (c *Client) CreatePackagesDuplicateWithBody(ctx context.Context, id int, co
 // Corresponds with POST /packages/{id}/duplicate (the `CreatePackagesDuplicate` operationId).
 func (c *Client) CreatePackagesDuplicate(ctx context.Context, id int, body CreatePackagesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreatePackagesDuplicateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestorePackageWithBody restore
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+func (c *Client) RestorePackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestorePackageRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestorePackage restore
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+func (c *Client) RestorePackage(ctx context.Context, id int, body RestorePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestorePackageRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashPackageWithBody trash
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+func (c *Client) TrashPackageWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashPackageRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashPackage trash
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+func (c *Client) TrashPackage(ctx context.Context, id int, body TrashPackageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashPackageRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -11683,23 +12231,6 @@ func (c *Client) SeedDefaultsServiceCategories(ctx context.Context, body SeedDef
 	return c.Client.Do(req)
 }
 
-// DeleteServiceCategory destroy
-//
-// Delete a service category by ID.
-//
-// Corresponds with DELETE /service_categories/{id} (the `DeleteServiceCategory` operationId).
-func (c *Client) DeleteServiceCategory(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteServiceCategoryRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateServiceCategoryWithBody update
 //
 // Update a service category by ID.
@@ -11728,6 +12259,108 @@ func (c *Client) UpdateServiceCategoryWithBody(ctx context.Context, id int, cont
 // Corresponds with PATCH /service_categories/{id} (the `UpdateServiceCategory` operationId).
 func (c *Client) UpdateServiceCategory(ctx context.Context, id int, body UpdateServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateServiceCategoryRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ArchiveServiceCategoryWithBody archive
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+func (c *Client) ArchiveServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveServiceCategoryRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ArchiveServiceCategory archive
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+func (c *Client) ArchiveServiceCategory(ctx context.Context, id int, body ArchiveServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveServiceCategoryRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreServiceCategoryWithBody restore
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+func (c *Client) RestoreServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreServiceCategoryRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreServiceCategory restore
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+func (c *Client) RestoreServiceCategory(ctx context.Context, id int, body RestoreServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreServiceCategoryRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashServiceCategoryWithBody trash
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+func (c *Client) TrashServiceCategoryWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashServiceCategoryRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// TrashServiceCategory trash
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+func (c *Client) TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewTrashServiceCategoryRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -13852,6 +14485,137 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int, re
 	return c.Client.Do(req)
 }
 
+// ListWorkOrderTags index
+//
+// List all work order tags, paginated via the Link header.
+//
+// Corresponds with GET /work_order_tags (the `ListWorkOrderTags` operationId).
+func (c *Client) ListWorkOrderTags(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListWorkOrderTagsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderTagWithBody create
+//
+// Create a work order tag.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+func (c *Client) CreateWorkOrderTagWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderTagRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderTag create
+//
+// Create a work order tag.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+func (c *Client) CreateWorkOrderTag(ctx context.Context, body CreateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderTagRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderTagWithBody update
+//
+// Update a work order tag by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+func (c *Client) UpdateWorkOrderTagWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderTagRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderTag update
+//
+// Update a work order tag by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+func (c *Client) UpdateWorkOrderTag(ctx context.Context, id int, body UpdateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderTagRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderTagsArchiveWithBody archive
+//
+// Update a work order tags archive by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+func (c *Client) UpdateWorkOrderTagsArchiveWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderTagsArchiveRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateWorkOrderTagsArchive archive
+//
+// Update a work order tags archive by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+func (c *Client) UpdateWorkOrderTagsArchive(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateWorkOrderTagsArchiveRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListWorkOrders index
 //
 // List all work orders, paginated via the Link header.
@@ -14612,61 +15376,6 @@ func (c *Client) DeleteWorkOrdersFeeExclusion(ctx context.Context, workOrderId i
 // Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 func (c *Client) ShowWorkOrderInspection(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewShowWorkOrderInspectionRequest(c.Server, workOrderId)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateWorkOrdersLabelWithBody create
-//
-// Create a work orders label.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-func (c *Client) CreateWorkOrdersLabelWithBody(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersLabelRequestWithBody(c.Server, workOrderId, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateWorkOrdersLabel create
-//
-// Create a work orders label.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-func (c *Client) CreateWorkOrdersLabel(ctx context.Context, workOrderId int, body CreateWorkOrdersLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersLabelRequest(c.Server, workOrderId, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeleteWorkOrdersLabel destroy
-//
-// Delete a work orders label by ID.
-//
-// Corresponds with DELETE /work_orders/{work_order_id}/labels/{id} (the `DeleteWorkOrdersLabel` operationId).
-func (c *Client) DeleteWorkOrdersLabel(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteWorkOrdersLabelRequest(c.Server, workOrderId, id)
 	if err != nil {
 		return nil, err
 	}
@@ -17628,6 +18337,322 @@ func NewUpdateCurrentLocationRequestWithBody(server string, contentType string, 
 	return req, nil
 }
 
+// NewListCustomerTagsRequest constructs an http.Request for the ListCustomerTags method
+func NewListCustomerTagsRequest(server string, params *ListCustomerTagsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Status != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "status", *params.Status, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateCustomerTagRequest calls the generic CreateCustomerTag builder with application/json body
+func NewCreateCustomerTagRequest(server string, body CreateCustomerTagJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateCustomerTagRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateCustomerTagRequestWithBody constructs an http.Request for the CreateCustomerTag method, with any body, and a specified content type
+func NewCreateCustomerTagRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewShowCustomerTagRequest constructs an http.Request for the ShowCustomerTag method
+func NewShowCustomerTagRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateCustomerTagRequest calls the generic UpdateCustomerTag builder with application/json body
+func NewUpdateCustomerTagRequest(server string, id int, body UpdateCustomerTagJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateCustomerTagRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateCustomerTagRequestWithBody constructs an http.Request for the UpdateCustomerTag method, with any body, and a specified content type
+func NewUpdateCustomerTagRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateCustomerTagsArchiveRequest calls the generic UpdateCustomerTagsArchive builder with application/json body
+func NewUpdateCustomerTagsArchiveRequest(server string, id int, body UpdateCustomerTagsArchiveJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateCustomerTagsArchiveRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateCustomerTagsArchiveRequestWithBody constructs an http.Request for the UpdateCustomerTagsArchive method, with any body, and a specified content type
+func NewUpdateCustomerTagsArchiveRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateCustomerTagsRestoreRequest calls the generic UpdateCustomerTagsRestore builder with application/json body
+func NewUpdateCustomerTagsRestoreRequest(server string, id int, body UpdateCustomerTagsRestoreJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateCustomerTagsRestoreRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateCustomerTagsRestoreRequestWithBody constructs an http.Request for the UpdateCustomerTagsRestore method, with any body, and a specified content type
+func NewUpdateCustomerTagsRestoreRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags/%s/restore", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateCustomerTagsTrashRequest calls the generic UpdateCustomerTagsTrash builder with application/json body
+func NewUpdateCustomerTagsTrashRequest(server string, id int, body UpdateCustomerTagsTrashJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateCustomerTagsTrashRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateCustomerTagsTrashRequestWithBody constructs an http.Request for the UpdateCustomerTagsTrash method, with any body, and a specified content type
+func NewUpdateCustomerTagsTrashRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customer_tags/%s/trash", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListCustomersRequest constructs an http.Request for the ListCustomers method
 func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.Request, error) {
 	var err error
@@ -17655,6 +18680,18 @@ func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.
 		// styled parameters, preserving literal commas as delimiters
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
+
+		if params.CustomerTagId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "customer_tag_id", *params.CustomerTagId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
 
 		if params.HasBalance != nil {
 
@@ -17731,18 +18768,6 @@ func NewListCustomersRequest(server string, params *ListCustomersParams) (*http.
 		if params.Status != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "status", *params.Status, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.TagIds != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "tag_ids", *params.TagIds, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -19595,40 +20620,6 @@ func NewCreateInspectionRequestWithBody(server string, contentType string, body 
 	return req, nil
 }
 
-// NewDeleteInspectionRequest constructs an http.Request for the DeleteInspection method
-func NewDeleteInspectionRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/inspections/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewShowInspectionRequest constructs an http.Request for the ShowInspection method
 func NewShowInspectionRequest(server string, id int) (*http.Request, error) {
 	var err error
@@ -19710,6 +20701,53 @@ func NewUpdateInspectionRequestWithBody(server string, id int, contentType strin
 	return req, nil
 }
 
+// NewArchiveInspectionRequest calls the generic ArchiveInspection builder with application/json body
+func NewArchiveInspectionRequest(server string, id int, body ArchiveInspectionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewArchiveInspectionRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewArchiveInspectionRequestWithBody constructs an http.Request for the ArchiveInspection method, with any body, and a specified content type
+func NewArchiveInspectionRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/inspections/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewRemoveDefaultInspectionRequest calls the generic RemoveDefaultInspection builder with application/json body
 func NewRemoveDefaultInspectionRequest(server string, id int, body RemoveDefaultInspectionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -19738,6 +20776,53 @@ func NewRemoveDefaultInspectionRequestWithBody(server string, id int, contentTyp
 	}
 
 	operationPath := fmt.Sprintf("/inspections/%s/remove_default", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRestoreInspectionRequest calls the generic RestoreInspection builder with application/json body
+func NewRestoreInspectionRequest(server string, id int, body RestoreInspectionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestoreInspectionRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewRestoreInspectionRequestWithBody constructs an http.Request for the RestoreInspection method, with any body, and a specified content type
+func NewRestoreInspectionRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/inspections/%s/restore", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -19804,19 +20889,19 @@ func NewSetDefaultInspectionRequestWithBody(server string, id int, contentType s
 	return req, nil
 }
 
-// NewToggleInspectionRequest calls the generic ToggleInspection builder with application/json body
-func NewToggleInspectionRequest(server string, id int, body ToggleInspectionJSONRequestBody) (*http.Request, error) {
+// NewTrashInspectionRequest calls the generic TrashInspection builder with application/json body
+func NewTrashInspectionRequest(server string, id int, body TrashInspectionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewToggleInspectionRequestWithBody(server, id, "application/json", bodyReader)
+	return NewTrashInspectionRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewToggleInspectionRequestWithBody constructs an http.Request for the ToggleInspection method, with any body, and a specified content type
-func NewToggleInspectionRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewTrashInspectionRequestWithBody constructs an http.Request for the TrashInspection method, with any body, and a specified content type
+func NewTrashInspectionRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -19831,7 +20916,7 @@ func NewToggleInspectionRequestWithBody(server string, id int, contentType strin
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/inspections/%s/toggle", pathParam0)
+	operationPath := fmt.Sprintf("/inspections/%s/trash", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -20221,187 +21306,6 @@ func NewUpdateInventoryLevelsStockRequestWithBody(server string, id int, content
 	return req, nil
 }
 
-// NewListLabelsRequest constructs an http.Request for the ListLabels method
-func NewListLabelsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/labels")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateLabelRequest calls the generic CreateLabel builder with application/json body
-func NewCreateLabelRequest(server string, body CreateLabelJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateLabelRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateLabelRequestWithBody constructs an http.Request for the CreateLabel method, with any body, and a specified content type
-func NewCreateLabelRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/labels")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewListLabelsDataTransferRequest constructs an http.Request for the ListLabelsDataTransfer method
-func NewListLabelsDataTransferRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/labels/data_transfer")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateLabelsExportRequest calls the generic CreateLabelsExport builder with application/json body
-func NewCreateLabelsExportRequest(server string, body CreateLabelsExportJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateLabelsExportRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateLabelsExportRequestWithBody constructs an http.Request for the CreateLabelsExport method, with any body, and a specified content type
-func NewCreateLabelsExportRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/labels/export")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewUpdateLabelRequest calls the generic UpdateLabel builder with application/json body
-func NewUpdateLabelRequest(server string, id int, body UpdateLabelJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateLabelRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewUpdateLabelRequestWithBody constructs an http.Request for the UpdateLabel method, with any body, and a specified content type
-func NewUpdateLabelRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/labels/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListLaborMatricesRequest constructs an http.Request for the ListLaborMatrices method
 func NewListLaborMatricesRequest(server string) (*http.Request, error) {
 	var err error
@@ -20617,8 +21521,19 @@ func NewCreateLaborRateRequestWithBody(server string, contentType string, body i
 	return req, nil
 }
 
-// NewDeleteLaborRateRequest constructs an http.Request for the DeleteLaborRate method
-func NewDeleteLaborRateRequest(server string, id int) (*http.Request, error) {
+// NewArchiveLaborRateRequest calls the generic ArchiveLaborRate builder with application/json body
+func NewArchiveLaborRateRequest(server string, id int, body ArchiveLaborRateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewArchiveLaborRateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewArchiveLaborRateRequestWithBody constructs an http.Request for the ArchiveLaborRate method, with any body, and a specified content type
+func NewArchiveLaborRateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -20633,7 +21548,7 @@ func NewDeleteLaborRateRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/labor_rates/%s", pathParam0)
+	operationPath := fmt.Sprintf("/labor_rates/%s/archive", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -20643,27 +21558,29 @@ func NewDeleteLaborRateRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", contentType)
+
 	return req, nil
 }
 
-// NewUpdateLaborRateRequest calls the generic UpdateLaborRate builder with application/json body
-func NewUpdateLaborRateRequest(server string, id int, body UpdateLaborRateJSONRequestBody) (*http.Request, error) {
+// NewRestoreLaborRateRequest calls the generic RestoreLaborRate builder with application/json body
+func NewRestoreLaborRateRequest(server string, id int, body RestoreLaborRateJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateLaborRateRequestWithBody(server, id, "application/json", bodyReader)
+	return NewRestoreLaborRateRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewUpdateLaborRateRequestWithBody constructs an http.Request for the UpdateLaborRate method, with any body, and a specified content type
-func NewUpdateLaborRateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewRestoreLaborRateRequestWithBody constructs an http.Request for the RestoreLaborRate method, with any body, and a specified content type
+func NewRestoreLaborRateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -20678,7 +21595,54 @@ func NewUpdateLaborRateRequestWithBody(server string, id int, contentType string
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/labor_rates/%s", pathParam0)
+	operationPath := fmt.Sprintf("/labor_rates/%s/restore", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewTrashLaborRateRequest calls the generic TrashLaborRate builder with application/json body
+func NewTrashLaborRateRequest(server string, id int, body TrashLaborRateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewTrashLaborRateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewTrashLaborRateRequestWithBody constructs an http.Request for the TrashLaborRate method, with any body, and a specified content type
+func NewTrashLaborRateRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/labor_rates/%s/trash", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -22405,19 +23369,8 @@ func NewCreatePackageRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
-// NewUpdatePackageRequest calls the generic UpdatePackage builder with application/json body
-func NewUpdatePackageRequest(server string, id int, body UpdatePackageJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdatePackageRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewUpdatePackageRequestWithBody constructs an http.Request for the UpdatePackage method, with any body, and a specified content type
-func NewUpdatePackageRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewUpdatePackageRequest constructs an http.Request for the UpdatePackage method
+func NewUpdatePackageRequest(server string, id int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -22433,6 +23386,51 @@ func NewUpdatePackageRequestWithBody(server string, id int, contentType string, 
 	}
 
 	operationPath := fmt.Sprintf("/packages/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewArchivePackageRequest calls the generic ArchivePackage builder with application/json body
+func NewArchivePackageRequest(server string, id int, body ArchivePackageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewArchivePackageRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewArchivePackageRequestWithBody constructs an http.Request for the ArchivePackage method, with any body, and a specified content type
+func NewArchivePackageRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/packages/%s/archive", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -22490,6 +23488,100 @@ func NewCreatePackagesDuplicateRequestWithBody(server string, id int, contentTyp
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRestorePackageRequest calls the generic RestorePackage builder with application/json body
+func NewRestorePackageRequest(server string, id int, body RestorePackageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestorePackageRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewRestorePackageRequestWithBody constructs an http.Request for the RestorePackage method, with any body, and a specified content type
+func NewRestorePackageRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/packages/%s/restore", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewTrashPackageRequest calls the generic TrashPackage builder with application/json body
+func NewTrashPackageRequest(server string, id int, body TrashPackageJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewTrashPackageRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewTrashPackageRequestWithBody constructs an http.Request for the TrashPackage method, with any body, and a specified content type
+func NewTrashPackageRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/packages/%s/trash", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -23597,40 +24689,6 @@ func NewSeedDefaultsServiceCategoriesRequestWithBody(server string, contentType 
 	return req, nil
 }
 
-// NewDeleteServiceCategoryRequest constructs an http.Request for the DeleteServiceCategory method
-func NewDeleteServiceCategoryRequest(server string, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service_categories/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewUpdateServiceCategoryRequest calls the generic UpdateServiceCategory builder with application/json body
 func NewUpdateServiceCategoryRequest(server string, id int, body UpdateServiceCategoryJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -23659,6 +24717,147 @@ func NewUpdateServiceCategoryRequestWithBody(server string, id int, contentType 
 	}
 
 	operationPath := fmt.Sprintf("/service_categories/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewArchiveServiceCategoryRequest calls the generic ArchiveServiceCategory builder with application/json body
+func NewArchiveServiceCategoryRequest(server string, id int, body ArchiveServiceCategoryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewArchiveServiceCategoryRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewArchiveServiceCategoryRequestWithBody constructs an http.Request for the ArchiveServiceCategory method, with any body, and a specified content type
+func NewArchiveServiceCategoryRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/service_categories/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewRestoreServiceCategoryRequest calls the generic RestoreServiceCategory builder with application/json body
+func NewRestoreServiceCategoryRequest(server string, id int, body RestoreServiceCategoryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestoreServiceCategoryRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewRestoreServiceCategoryRequestWithBody constructs an http.Request for the RestoreServiceCategory method, with any body, and a specified content type
+func NewRestoreServiceCategoryRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/service_categories/%s/restore", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewTrashServiceCategoryRequest calls the generic TrashServiceCategory builder with application/json body
+func NewTrashServiceCategoryRequest(server string, id int, body TrashServiceCategoryJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewTrashServiceCategoryRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewTrashServiceCategoryRequestWithBody constructs an http.Request for the TrashServiceCategory method, with any body, and a specified content type
+func NewTrashServiceCategoryRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/service_categories/%s/trash", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -26947,6 +28146,167 @@ func NewListVendorsPurchaseOrdersRequest(server string, vendorId int) (*http.Req
 	return req, nil
 }
 
+// NewListWorkOrderTagsRequest constructs an http.Request for the ListWorkOrderTags method
+func NewListWorkOrderTagsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_order_tags")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateWorkOrderTagRequest calls the generic CreateWorkOrderTag builder with application/json body
+func NewCreateWorkOrderTagRequest(server string, body CreateWorkOrderTagJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrderTagRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrderTagRequestWithBody constructs an http.Request for the CreateWorkOrderTag method, with any body, and a specified content type
+func NewCreateWorkOrderTagRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_order_tags")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateWorkOrderTagRequest calls the generic UpdateWorkOrderTag builder with application/json body
+func NewUpdateWorkOrderTagRequest(server string, id int, body UpdateWorkOrderTagJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrderTagRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrderTagRequestWithBody constructs an http.Request for the UpdateWorkOrderTag method, with any body, and a specified content type
+func NewUpdateWorkOrderTagRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_order_tags/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateWorkOrderTagsArchiveRequest calls the generic UpdateWorkOrderTagsArchive builder with application/json body
+func NewUpdateWorkOrderTagsArchiveRequest(server string, id int, body UpdateWorkOrderTagsArchiveJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateWorkOrderTagsArchiveRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateWorkOrderTagsArchiveRequestWithBody constructs an http.Request for the UpdateWorkOrderTagsArchive method, with any body, and a specified content type
+func NewUpdateWorkOrderTagsArchiveRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_order_tags/%s/archive", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewListWorkOrdersRequest constructs an http.Request for the ListWorkOrders method
 func NewListWorkOrdersRequest(server string, params *ListWorkOrdersParams) (*http.Request, error) {
 	var err error
@@ -28052,94 +29412,6 @@ func NewShowWorkOrderInspectionRequest(server string, workOrderId int) (*http.Re
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateWorkOrdersLabelRequest calls the generic CreateWorkOrdersLabel builder with application/json body
-func NewCreateWorkOrdersLabelRequest(server string, workOrderId int, body CreateWorkOrdersLabelJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersLabelRequestWithBody(server, workOrderId, "application/json", bodyReader)
-}
-
-// NewCreateWorkOrdersLabelRequestWithBody constructs an http.Request for the CreateWorkOrdersLabel method, with any body, and a specified content type
-func NewCreateWorkOrdersLabelRequestWithBody(server string, workOrderId int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/work_orders/%s/labels", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteWorkOrdersLabelRequest constructs an http.Request for the DeleteWorkOrdersLabel method
-func NewDeleteWorkOrdersLabelRequest(server string, workOrderId int, id int) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/work_orders/%s/labels/%s", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -30681,6 +31953,114 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /current_location (the `UpdateCurrentLocation` operationId).
 	UpdateCurrentLocationWithResponse(ctx context.Context, body UpdateCurrentLocationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCurrentLocationResponse, error)
 
+	// ListCustomerTagsWithResponse index
+	//
+	// List all customer tags, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customer_tags (the `ListCustomerTags` operationId).
+	ListCustomerTagsWithResponse(ctx context.Context, params *ListCustomerTagsParams, reqEditors ...RequestEditorFn) (*ListCustomerTagsResponse, error)
+
+	// CreateCustomerTagWithBodyWithResponse create
+	//
+	// Create a customer tag.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+	CreateCustomerTagWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerTagResponse, error)
+
+	// CreateCustomerTagWithResponse create
+	//
+	// Create a customer tag.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+	CreateCustomerTagWithResponse(ctx context.Context, body CreateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerTagResponse, error)
+
+	// ShowCustomerTagWithResponse show
+	//
+	// Show a customer tag by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customer_tags/{id} (the `ShowCustomerTag` operationId).
+	ShowCustomerTagWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCustomerTagResponse, error)
+
+	// UpdateCustomerTagWithBodyWithResponse update
+	//
+	// Update a customer tag by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+	UpdateCustomerTagWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagResponse, error)
+
+	// UpdateCustomerTagWithResponse update
+	//
+	// Update a customer tag by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+	UpdateCustomerTagWithResponse(ctx context.Context, id int, body UpdateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagResponse, error)
+
+	// UpdateCustomerTagsArchiveWithBodyWithResponse archive
+	//
+	// Update a customer tags archive by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+	UpdateCustomerTagsArchiveWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsArchiveResponse, error)
+
+	// UpdateCustomerTagsArchiveWithResponse archive
+	//
+	// Update a customer tags archive by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+	UpdateCustomerTagsArchiveWithResponse(ctx context.Context, id int, body UpdateCustomerTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsArchiveResponse, error)
+
+	// UpdateCustomerTagsRestoreWithBodyWithResponse restore
+	//
+	// Update a customer tags restore by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+	UpdateCustomerTagsRestoreWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsRestoreResponse, error)
+
+	// UpdateCustomerTagsRestoreWithResponse restore
+	//
+	// Update a customer tags restore by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+	UpdateCustomerTagsRestoreWithResponse(ctx context.Context, id int, body UpdateCustomerTagsRestoreJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsRestoreResponse, error)
+
+	// UpdateCustomerTagsTrashWithBodyWithResponse trash
+	//
+	// Update a customer tags trash by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+	UpdateCustomerTagsTrashWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsTrashResponse, error)
+
+	// UpdateCustomerTagsTrashWithResponse trash
+	//
+	// Update a customer tags trash by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+	UpdateCustomerTagsTrashWithResponse(ctx context.Context, id int, body UpdateCustomerTagsTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsTrashResponse, error)
+
 	// ListCustomersWithResponse index
 	//
 	// List all customers, paginated via the Link header.
@@ -31194,15 +32574,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /inspections (the `CreateInspection` operationId).
 	CreateInspectionWithResponse(ctx context.Context, body CreateInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInspectionResponse, error)
 
-	// DeleteInspectionWithResponse destroy
-	//
-	// Delete a inspection by ID.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /inspections/{id} (the `DeleteInspection` operationId).
-	DeleteInspectionWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteInspectionResponse, error)
-
 	// ShowInspectionWithResponse show
 	//
 	// Show a inspection by ID.
@@ -31230,6 +32601,20 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /inspections/{id} (the `UpdateInspection` operationId).
 	UpdateInspectionWithResponse(ctx context.Context, id int, body UpdateInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateInspectionResponse, error)
 
+	// ArchiveInspectionWithBodyWithResponse archive
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+	ArchiveInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveInspectionResponse, error)
+
+	// ArchiveInspectionWithResponse archive
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+	ArchiveInspectionWithResponse(ctx context.Context, id int, body ArchiveInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveInspectionResponse, error)
+
 	// RemoveDefaultInspectionWithBodyWithResponse remove_default
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -31243,6 +32628,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /inspections/{id}/remove_default (the `RemoveDefaultInspection` operationId).
 	RemoveDefaultInspectionWithResponse(ctx context.Context, id int, body RemoveDefaultInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*RemoveDefaultInspectionResponse, error)
+
+	// RestoreInspectionWithBodyWithResponse restore
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+	RestoreInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreInspectionResponse, error)
+
+	// RestoreInspectionWithResponse restore
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+	RestoreInspectionWithResponse(ctx context.Context, id int, body RestoreInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreInspectionResponse, error)
 
 	// SetDefaultInspectionWithBodyWithResponse set_default
 	//
@@ -31258,19 +32657,19 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /inspections/{id}/set_default (the `SetDefaultInspection` operationId).
 	SetDefaultInspectionWithResponse(ctx context.Context, id int, body SetDefaultInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*SetDefaultInspectionResponse, error)
 
-	// ToggleInspectionWithBodyWithResponse toggle
+	// TrashInspectionWithBodyWithResponse trash
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-	ToggleInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ToggleInspectionResponse, error)
+	// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+	TrashInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashInspectionResponse, error)
 
-	// ToggleInspectionWithResponse toggle
+	// TrashInspectionWithResponse trash
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-	ToggleInspectionWithResponse(ctx context.Context, id int, body ToggleInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ToggleInspectionResponse, error)
+	// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+	TrashInspectionWithResponse(ctx context.Context, id int, body TrashInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashInspectionResponse, error)
 
 	// ListInventoryLevelsWithResponse index
 	//
@@ -31362,78 +32761,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /inventory_levels/{id}/stock (the `UpdateInventoryLevelsStock` operationId).
 	UpdateInventoryLevelsStockWithResponse(ctx context.Context, id int, body UpdateInventoryLevelsStockJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateInventoryLevelsStockResponse, error)
 
-	// ListLabelsWithResponse index
-	//
-	// List all labels, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /labels (the `ListLabels` operationId).
-	ListLabelsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListLabelsResponse, error)
-
-	// CreateLabelWithBodyWithResponse create
-	//
-	// Create a label.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /labels (the `CreateLabel` operationId).
-	CreateLabelWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLabelResponse, error)
-
-	// CreateLabelWithResponse create
-	//
-	// Create a label.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /labels (the `CreateLabel` operationId).
-	CreateLabelWithResponse(ctx context.Context, body CreateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLabelResponse, error)
-
-	// ListLabelsDataTransferWithResponse show
-	//
-	// List all labels data transfer, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /labels/data_transfer (the `ListLabelsDataTransfer` operationId).
-	ListLabelsDataTransferWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListLabelsDataTransferResponse, error)
-
-	// CreateLabelsExportWithBodyWithResponse create
-	//
-	// Create a labels export.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-	CreateLabelsExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLabelsExportResponse, error)
-
-	// CreateLabelsExportWithResponse create
-	//
-	// Create a labels export.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-	CreateLabelsExportWithResponse(ctx context.Context, body CreateLabelsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLabelsExportResponse, error)
-
-	// UpdateLabelWithBodyWithResponse update
-	//
-	// Update a label by ID.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-	UpdateLabelWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLabelResponse, error)
-
-	// UpdateLabelWithResponse update
-	//
-	// Update a label by ID.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-	UpdateLabelWithResponse(ctx context.Context, id int, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLabelResponse, error)
-
 	// ListLaborMatricesWithResponse index
 	//
 	// List all labor matrices, paginated via the Link header.
@@ -31515,32 +32842,47 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /labor_rates (the `CreateLaborRate` operationId).
 	CreateLaborRateWithResponse(ctx context.Context, body CreateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborRateResponse, error)
 
-	// DeleteLaborRateWithResponse destroy
-	//
-	// Delete a labor rate by ID.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
-	DeleteLaborRateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborRateResponse, error)
-
-	// UpdateLaborRateWithBodyWithResponse update
-	//
-	// Update a labor rate by ID.
+	// ArchiveLaborRateWithBodyWithResponse archive
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-	UpdateLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborRateResponse, error)
+	// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+	ArchiveLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveLaborRateResponse, error)
 
-	// UpdateLaborRateWithResponse update
-	//
-	// Update a labor rate by ID.
+	// ArchiveLaborRateWithResponse archive
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-	UpdateLaborRateWithResponse(ctx context.Context, id int, body UpdateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborRateResponse, error)
+	// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+	ArchiveLaborRateWithResponse(ctx context.Context, id int, body ArchiveLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveLaborRateResponse, error)
+
+	// RestoreLaborRateWithBodyWithResponse restore
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+	RestoreLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreLaborRateResponse, error)
+
+	// RestoreLaborRateWithResponse restore
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+	RestoreLaborRateWithResponse(ctx context.Context, id int, body RestoreLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreLaborRateResponse, error)
+
+	// TrashLaborRateWithBodyWithResponse trash
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+	TrashLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashLaborRateResponse, error)
+
+	// TrashLaborRateWithResponse trash
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+	TrashLaborRateWithResponse(ctx context.Context, id int, body TrashLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashLaborRateResponse, error)
 
 	// ListLaborTemplatesWithResponse index
 	//
@@ -32136,23 +33478,28 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /packages (the `CreatePackage` operationId).
 	CreatePackageWithResponse(ctx context.Context, body CreatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePackageResponse, error)
 
-	// UpdatePackageWithBodyWithResponse update
-	//
-	// Update a package by ID.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-	UpdatePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error)
-
 	// UpdatePackageWithResponse update
 	//
 	// Update a package by ID.
 	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-	UpdatePackageWithResponse(ctx context.Context, id int, body UpdatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error)
+	UpdatePackageWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error)
+
+	// ArchivePackageWithBodyWithResponse archive
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+	ArchivePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchivePackageResponse, error)
+
+	// ArchivePackageWithResponse archive
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+	ArchivePackageWithResponse(ctx context.Context, id int, body ArchivePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchivePackageResponse, error)
 
 	// CreatePackagesDuplicateWithBodyWithResponse duplicate
 	//
@@ -32171,6 +33518,34 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /packages/{id}/duplicate (the `CreatePackagesDuplicate` operationId).
 	CreatePackagesDuplicateWithResponse(ctx context.Context, id int, body CreatePackagesDuplicateJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePackagesDuplicateResponse, error)
+
+	// RestorePackageWithBodyWithResponse restore
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+	RestorePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestorePackageResponse, error)
+
+	// RestorePackageWithResponse restore
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+	RestorePackageWithResponse(ctx context.Context, id int, body RestorePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*RestorePackageResponse, error)
+
+	// TrashPackageWithBodyWithResponse trash
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+	TrashPackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashPackageResponse, error)
+
+	// TrashPackageWithResponse trash
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+	TrashPackageWithResponse(ctx context.Context, id int, body TrashPackageJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashPackageResponse, error)
 
 	// ListPartsMatricesWithResponse index
 	//
@@ -32537,15 +33912,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /service_categories/seed_defaults (the `SeedDefaultsServiceCategories` operationId).
 	SeedDefaultsServiceCategoriesWithResponse(ctx context.Context, body SeedDefaultsServiceCategoriesJSONRequestBody, reqEditors ...RequestEditorFn) (*SeedDefaultsServiceCategoriesResponse, error)
 
-	// DeleteServiceCategoryWithResponse destroy
-	//
-	// Delete a service category by ID.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /service_categories/{id} (the `DeleteServiceCategory` operationId).
-	DeleteServiceCategoryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteServiceCategoryResponse, error)
-
 	// UpdateServiceCategoryWithBodyWithResponse update
 	//
 	// Update a service category by ID.
@@ -32563,6 +33929,48 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /service_categories/{id} (the `UpdateServiceCategory` operationId).
 	UpdateServiceCategoryWithResponse(ctx context.Context, id int, body UpdateServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceCategoryResponse, error)
+
+	// ArchiveServiceCategoryWithBodyWithResponse archive
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+	ArchiveServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveServiceCategoryResponse, error)
+
+	// ArchiveServiceCategoryWithResponse archive
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+	ArchiveServiceCategoryWithResponse(ctx context.Context, id int, body ArchiveServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveServiceCategoryResponse, error)
+
+	// RestoreServiceCategoryWithBodyWithResponse restore
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+	RestoreServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreServiceCategoryResponse, error)
+
+	// RestoreServiceCategoryWithResponse restore
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+	RestoreServiceCategoryWithResponse(ctx context.Context, id int, body RestoreServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreServiceCategoryResponse, error)
+
+	// TrashServiceCategoryWithBodyWithResponse trash
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+	TrashServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashServiceCategoryResponse, error)
+
+	// TrashServiceCategoryWithResponse trash
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+	TrashServiceCategoryWithResponse(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashServiceCategoryResponse, error)
 
 	// ListSettingsBillingWithResponse show
 	//
@@ -33586,6 +34994,69 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /vendors/{vendor_id}/purchase_orders (the `ListVendorsPurchaseOrders` operationId).
 	ListVendorsPurchaseOrdersWithResponse(ctx context.Context, vendorId int, reqEditors ...RequestEditorFn) (*ListVendorsPurchaseOrdersResponse, error)
 
+	// ListWorkOrderTagsWithResponse index
+	//
+	// List all work order tags, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /work_order_tags (the `ListWorkOrderTags` operationId).
+	ListWorkOrderTagsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrderTagsResponse, error)
+
+	// CreateWorkOrderTagWithBodyWithResponse create
+	//
+	// Create a work order tag.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+	CreateWorkOrderTagWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderTagResponse, error)
+
+	// CreateWorkOrderTagWithResponse create
+	//
+	// Create a work order tag.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+	CreateWorkOrderTagWithResponse(ctx context.Context, body CreateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderTagResponse, error)
+
+	// UpdateWorkOrderTagWithBodyWithResponse update
+	//
+	// Update a work order tag by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+	UpdateWorkOrderTagWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagResponse, error)
+
+	// UpdateWorkOrderTagWithResponse update
+	//
+	// Update a work order tag by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+	UpdateWorkOrderTagWithResponse(ctx context.Context, id int, body UpdateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagResponse, error)
+
+	// UpdateWorkOrderTagsArchiveWithBodyWithResponse archive
+	//
+	// Update a work order tags archive by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+	UpdateWorkOrderTagsArchiveWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagsArchiveResponse, error)
+
+	// UpdateWorkOrderTagsArchiveWithResponse archive
+	//
+	// Update a work order tags archive by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+	UpdateWorkOrderTagsArchiveWithResponse(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagsArchiveResponse, error)
+
 	// ListWorkOrdersWithResponse index
 	//
 	// List all work orders, paginated via the Link header.
@@ -33955,33 +35426,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /work_orders/{work_order_id}/inspection (the `ShowWorkOrderInspection` operationId).
 	ShowWorkOrderInspectionWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ShowWorkOrderInspectionResponse, error)
-
-	// CreateWorkOrdersLabelWithBodyWithResponse create
-	//
-	// Create a work orders label.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-	CreateWorkOrdersLabelWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersLabelResponse, error)
-
-	// CreateWorkOrdersLabelWithResponse create
-	//
-	// Create a work orders label.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-	CreateWorkOrdersLabelWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersLabelResponse, error)
-
-	// DeleteWorkOrdersLabelWithResponse destroy
-	//
-	// Delete a work orders label by ID.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /work_orders/{work_order_id}/labels/{id} (the `DeleteWorkOrdersLabel` operationId).
-	DeleteWorkOrdersLabelWithResponse(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersLabelResponse, error)
 
 	// ShowWorkOrderPartsWithResponse show
 	//
@@ -38496,6 +39940,439 @@ func (r UpdateCurrentLocationResponse) ContentType() string {
 	return ""
 }
 
+// ListCustomerTagsResponse200Headers the declared response headers of an HTTP 200 response for ListCustomerTags
+type ListCustomerTagsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListCustomerTagsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListCustomerTagsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListCustomerTagsResponse) GetJSON200() *[]struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListCustomerTagsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListCustomerTagsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListCustomerTagsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListCustomerTagsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateCustomerTagResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateCustomerTagResponse) GetJSON201() *struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateCustomerTagResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateCustomerTagResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateCustomerTagResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateCustomerTagResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateCustomerTagResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowCustomerTagResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowCustomerTagResponse) GetJSON200() *struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ShowCustomerTagResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ShowCustomerTagResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ShowCustomerTagResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ShowCustomerTagResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateCustomerTagResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateCustomerTagResponse) GetJSON200() *struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateCustomerTagResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateCustomerTagResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateCustomerTagResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateCustomerTagResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateCustomerTagsArchiveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateCustomerTagsArchiveResponse) GetJSON200() *struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateCustomerTagsArchiveResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateCustomerTagsArchiveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateCustomerTagsArchiveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateCustomerTagsArchiveResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateCustomerTagsRestoreResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateCustomerTagsRestoreResponse) GetJSON200() *struct {
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateCustomerTagsRestoreResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateCustomerTagsRestoreResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateCustomerTagsRestoreResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateCustomerTagsRestoreResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateCustomerTagsTrashResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		BubbleClasses string `json:"bubble_classes"`
+		Color         string `json:"color"`
+		ColorClass    string `json:"color_class"`
+		ColorHex      string `json:"color_hex"`
+		Id            int    `json:"id"`
+		Name          string `json:"name"`
+		Status        string `json:"status"`
+		TrashedAt     string `json:"trashed_at"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateCustomerTagsTrashResponse) GetJSON200() *struct {
+	BubbleClasses string `json:"bubble_classes"`
+	Color         string `json:"color"`
+	ColorClass    string `json:"color_class"`
+	ColorHex      string `json:"color_hex"`
+	Id            int    `json:"id"`
+	Name          string `json:"name"`
+	Status        string `json:"status"`
+	TrashedAt     string `json:"trashed_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateCustomerTagsTrashResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateCustomerTagsTrashResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateCustomerTagsTrashResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateCustomerTagsTrashResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // ListCustomersResponse200Headers the declared response headers of an HTTP 200 response for ListCustomers
 type ListCustomersResponse200Headers struct {
 	Link        *string
@@ -41311,40 +43188,6 @@ func (r CreateInspectionResponse) ContentType() string {
 	return ""
 }
 
-type DeleteInspectionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-}
-
-// GetBody returns the raw response body bytes
-func (r DeleteInspectionResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteInspectionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteInspectionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteInspectionResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type ShowInspectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -41427,12 +43270,11 @@ func (r UpdateInspectionResponse) ContentType() string {
 	return ""
 }
 
-type RemoveDefaultInspectionResponse struct {
+type ArchiveInspectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Active      bool          `json:"active"`
 		AppUrl      string        `json:"app_url"`
 		CreatedAt   string        `json:"created_at"`
 		Description *string       `json:"description"`
@@ -41444,16 +43286,21 @@ type RemoveDefaultInspectionResponse struct {
 			Name string `json:"name"`
 			Url  string `json:"url"`
 		} `json:"location"`
-		Name      string `json:"name"`
-		Type      string `json:"type"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
+		Name      string  `json:"name"`
+		Status    string  `json:"status"`
+		TrashedAt *string `json:"trashed_at"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r RemoveDefaultInspectionResponse) GetJSON200() *struct {
-	Active      bool          `json:"active"`
+func (r ArchiveInspectionResponse) GetJSON200() *struct {
 	AppUrl      string        `json:"app_url"`
 	CreatedAt   string        `json:"created_at"`
 	Description *string       `json:"description"`
@@ -41465,10 +43312,96 @@ func (r RemoveDefaultInspectionResponse) GetJSON200() *struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
+	Name      string  `json:"name"`
+	Status    string  `json:"status"`
+	TrashedAt *string `json:"trashed_at"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r ArchiveInspectionResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r ArchiveInspectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ArchiveInspectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ArchiveInspectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ArchiveInspectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RemoveDefaultInspectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl      string        `json:"app_url"`
+		CreatedAt   string        `json:"created_at"`
+		Description *string       `json:"description"`
+		Groups      []interface{} `json:"groups"`
+		Id          int           `json:"id"`
+		IsDefault   bool          `json:"is_default"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Name      string  `json:"name"`
+		Status    string  `json:"status"`
+		TrashedAt *string `json:"trashed_at"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RemoveDefaultInspectionResponse) GetJSON200() *struct {
+	AppUrl      string        `json:"app_url"`
+	CreatedAt   string        `json:"created_at"`
+	Description *string       `json:"description"`
+	Groups      []interface{} `json:"groups"`
+	Id          int           `json:"id"`
+	IsDefault   bool          `json:"is_default"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Name      string  `json:"name"`
+	Status    string  `json:"status"`
+	TrashedAt *string `json:"trashed_at"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
 } {
 	return r.JSON200
 }
@@ -41502,12 +43435,11 @@ func (r RemoveDefaultInspectionResponse) ContentType() string {
 	return ""
 }
 
-type SetDefaultInspectionResponse struct {
+type RestoreInspectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Active      bool          `json:"active"`
 		AppUrl      string        `json:"app_url"`
 		CreatedAt   string        `json:"created_at"`
 		Description *string       `json:"description"`
@@ -41519,16 +43451,17 @@ type SetDefaultInspectionResponse struct {
 			Name string `json:"name"`
 			Url  string `json:"url"`
 		} `json:"location"`
-		Name      string `json:"name"`
-		Type      string `json:"type"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
+		Name      string  `json:"name"`
+		Status    string  `json:"status"`
+		TrashedAt *string `json:"trashed_at"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r SetDefaultInspectionResponse) GetJSON200() *struct {
-	Active      bool          `json:"active"`
+func (r RestoreInspectionResponse) GetJSON200() *struct {
 	AppUrl      string        `json:"app_url"`
 	CreatedAt   string        `json:"created_at"`
 	Description *string       `json:"description"`
@@ -41540,10 +43473,89 @@ func (r SetDefaultInspectionResponse) GetJSON200() *struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Name      string `json:"name"`
-	Type      string `json:"type"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
+	Name      string  `json:"name"`
+	Status    string  `json:"status"`
+	TrashedAt *string `json:"trashed_at"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r RestoreInspectionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreInspectionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreInspectionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestoreInspectionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SetDefaultInspectionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl      string        `json:"app_url"`
+		CreatedAt   string        `json:"created_at"`
+		Description *string       `json:"description"`
+		Groups      []interface{} `json:"groups"`
+		Id          int           `json:"id"`
+		IsDefault   bool          `json:"is_default"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Name      string  `json:"name"`
+		Status    string  `json:"status"`
+		TrashedAt *string `json:"trashed_at"`
+		Type      string  `json:"type"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SetDefaultInspectionResponse) GetJSON200() *struct {
+	AppUrl      string        `json:"app_url"`
+	CreatedAt   string        `json:"created_at"`
+	Description *string       `json:"description"`
+	Groups      []interface{} `json:"groups"`
+	Id          int           `json:"id"`
+	IsDefault   bool          `json:"is_default"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Name      string  `json:"name"`
+	Status    string  `json:"status"`
+	TrashedAt *string `json:"trashed_at"`
+	Type      string  `json:"type"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
 } {
 	return r.JSON200
 }
@@ -41577,12 +43589,11 @@ func (r SetDefaultInspectionResponse) ContentType() string {
 	return ""
 }
 
-type ToggleInspectionResponse struct {
+type TrashInspectionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Active      bool          `json:"active"`
 		AppUrl      string        `json:"app_url"`
 		CreatedAt   string        `json:"created_at"`
 		Description *string       `json:"description"`
@@ -41595,6 +43606,8 @@ type ToggleInspectionResponse struct {
 			Url  string `json:"url"`
 		} `json:"location"`
 		Name      string `json:"name"`
+		Status    string `json:"status"`
+		TrashedAt string `json:"trashed_at"`
 		Type      string `json:"type"`
 		UpdatedAt string `json:"updated_at"`
 		Url       string `json:"url"`
@@ -41602,8 +43615,7 @@ type ToggleInspectionResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ToggleInspectionResponse) GetJSON200() *struct {
-	Active      bool          `json:"active"`
+func (r TrashInspectionResponse) GetJSON200() *struct {
 	AppUrl      string        `json:"app_url"`
 	CreatedAt   string        `json:"created_at"`
 	Description *string       `json:"description"`
@@ -41616,6 +43628,8 @@ func (r ToggleInspectionResponse) GetJSON200() *struct {
 		Url  string `json:"url"`
 	} `json:"location"`
 	Name      string `json:"name"`
+	Status    string `json:"status"`
+	TrashedAt string `json:"trashed_at"`
 	Type      string `json:"type"`
 	UpdatedAt string `json:"updated_at"`
 	Url       string `json:"url"`
@@ -41624,12 +43638,12 @@ func (r ToggleInspectionResponse) GetJSON200() *struct {
 }
 
 // GetBody returns the raw response body bytes
-func (r ToggleInspectionResponse) GetBody() []byte {
+func (r TrashInspectionResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r ToggleInspectionResponse) Status() string {
+func (r TrashInspectionResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -41637,7 +43651,7 @@ func (r ToggleInspectionResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ToggleInspectionResponse) StatusCode() int {
+func (r TrashInspectionResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -41645,7 +43659,7 @@ func (r ToggleInspectionResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ToggleInspectionResponse) ContentType() string {
+func (r TrashInspectionResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -42213,284 +44227,6 @@ func (r UpdateInventoryLevelsStockResponse) ContentType() string {
 	return ""
 }
 
-// ListLabelsResponse200Headers the declared response headers of an HTTP 200 response for ListLabels
-type ListLabelsResponse200Headers struct {
-	Link        *string
-	XPerPage    *int
-	XTotalCount *int
-}
-
-type ListLabelsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]struct {
-		Active    bool   `json:"active"`
-		AppUrl    string `json:"app_url"`
-		Color     string `json:"color"`
-		CreatedAt string `json:"created_at"`
-		Id        int    `json:"id"`
-		Name      string `json:"name"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
-	}
-	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *ListLabelsResponse200Headers
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListLabelsResponse) GetJSON200() *[]struct {
-	Active    bool   `json:"active"`
-	AppUrl    string `json:"app_url"`
-	Color     string `json:"color"`
-	CreatedAt string `json:"created_at"`
-	Id        int    `json:"id"`
-	Name      string `json:"name"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListLabelsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListLabelsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListLabelsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListLabelsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateLabelResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		Active    bool   `json:"active"`
-		AppUrl    string `json:"app_url"`
-		Color     string `json:"color"`
-		CreatedAt string `json:"created_at"`
-		Id        int    `json:"id"`
-		Name      string `json:"name"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateLabelResponse) GetJSON201() *struct {
-	Active    bool   `json:"active"`
-	AppUrl    string `json:"app_url"`
-	Color     string `json:"color"`
-	CreatedAt string `json:"created_at"`
-	Id        int    `json:"id"`
-	Name      string `json:"name"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
-} {
-	return r.JSON201
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateLabelResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateLabelResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateLabelResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateLabelResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateLabelResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListLabelsDataTransferResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-}
-
-// GetBody returns the raw response body bytes
-func (r ListLabelsDataTransferResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListLabelsDataTransferResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListLabelsDataTransferResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListLabelsDataTransferResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateLabelsExportResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		ExportLogId int    `json:"export_log_id"`
-		Status      string `json:"status"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateLabelsExportResponse) GetJSON200() *struct {
-	ExportLogId int    `json:"export_log_id"`
-	Status      string `json:"status"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateLabelsExportResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateLabelsExportResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateLabelsExportResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateLabelsExportResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type UpdateLabelResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Active    bool   `json:"active"`
-		AppUrl    string `json:"app_url"`
-		Color     string `json:"color"`
-		CreatedAt string `json:"created_at"`
-		Id        int    `json:"id"`
-		Name      string `json:"name"`
-		UpdatedAt string `json:"updated_at"`
-		Url       string `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateLabelResponse) GetJSON200() *struct {
-	Active    bool   `json:"active"`
-	AppUrl    string `json:"app_url"`
-	Color     string `json:"color"`
-	CreatedAt string `json:"created_at"`
-	Id        int    `json:"id"`
-	Name      string `json:"name"`
-	UpdatedAt string `json:"updated_at"`
-	Url       string `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r UpdateLabelResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdateLabelResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateLabelResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateLabelResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 // ListLaborMatricesResponse200Headers the declared response headers of an HTTP 200 response for ListLaborMatrices
 type ListLaborMatricesResponse200Headers struct {
 	Link        *string
@@ -42755,35 +44491,13 @@ type ListLaborRatesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]struct {
-		Active           bool   `json:"active"`
-		AppUrl           string `json:"app_url"`
-		CostPerHourCents int    `json:"cost_per_hour_cents"`
-		CreatedAt        string `json:"created_at"`
-		Id               int    `json:"id"`
-		IsDefault        bool   `json:"is_default"`
-		Name             string `json:"name"`
-		RateCents        int    `json:"rate_cents"`
-		UpdatedAt        string `json:"updated_at"`
-		Url              string `json:"url"`
-	}
+	JSON200 *[]LaborRate
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListLaborRatesResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListLaborRatesResponse) GetJSON200() *[]struct {
-	Active           bool   `json:"active"`
-	AppUrl           string `json:"app_url"`
-	CostPerHourCents int    `json:"cost_per_hour_cents"`
-	CreatedAt        string `json:"created_at"`
-	Id               int    `json:"id"`
-	IsDefault        bool   `json:"is_default"`
-	Name             string `json:"name"`
-	RateCents        int    `json:"rate_cents"`
-	UpdatedAt        string `json:"updated_at"`
-	Url              string `json:"url"`
-} {
+func (r ListLaborRatesResponse) GetJSON200() *[]LaborRate {
 	return r.JSON200
 }
 
@@ -42820,18 +44534,7 @@ type CreateLaborRateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		Active           bool   `json:"active"`
-		AppUrl           string `json:"app_url"`
-		CostPerHourCents int    `json:"cost_per_hour_cents"`
-		CreatedAt        string `json:"created_at"`
-		Id               int    `json:"id"`
-		IsDefault        bool   `json:"is_default"`
-		Name             string `json:"name"`
-		RateCents        int    `json:"rate_cents"`
-		UpdatedAt        string `json:"updated_at"`
-		Url              string `json:"url"`
-	}
+	JSON201 *LaborRate
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -42839,18 +44542,7 @@ type CreateLaborRateResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateLaborRateResponse) GetJSON201() *struct {
-	Active           bool   `json:"active"`
-	AppUrl           string `json:"app_url"`
-	CostPerHourCents int    `json:"cost_per_hour_cents"`
-	CreatedAt        string `json:"created_at"`
-	Id               int    `json:"id"`
-	IsDefault        bool   `json:"is_default"`
-	Name             string `json:"name"`
-	RateCents        int    `json:"rate_cents"`
-	UpdatedAt        string `json:"updated_at"`
-	Url              string `json:"url"`
-} {
+func (r CreateLaborRateResponse) GetJSON201() *LaborRate {
 	return r.JSON201
 }
 
@@ -42890,18 +44582,49 @@ func (r CreateLaborRateResponse) ContentType() string {
 	return ""
 }
 
-type DeleteLaborRateResponse struct {
+type ArchiveLaborRateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl           string  `json:"app_url"`
+		CostPerHourCents int     `json:"cost_per_hour_cents"`
+		CreatedAt        string  `json:"created_at"`
+		Id               int     `json:"id"`
+		IsDefault        bool    `json:"is_default"`
+		Name             string  `json:"name"`
+		RateCents        int     `json:"rate_cents"`
+		Status           string  `json:"status"`
+		TrashedAt        *string `json:"trashed_at"`
+		UpdatedAt        string  `json:"updated_at"`
+		Url              string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ArchiveLaborRateResponse) GetJSON200() *struct {
+	AppUrl           string  `json:"app_url"`
+	CostPerHourCents int     `json:"cost_per_hour_cents"`
+	CreatedAt        string  `json:"created_at"`
+	Id               int     `json:"id"`
+	IsDefault        bool    `json:"is_default"`
+	Name             string  `json:"name"`
+	RateCents        int     `json:"rate_cents"`
+	Status           string  `json:"status"`
+	TrashedAt        *string `json:"trashed_at"`
+	UpdatedAt        string  `json:"updated_at"`
+	Url              string  `json:"url"`
+} {
+	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r DeleteLaborRateResponse) GetBody() []byte {
+func (r ArchiveLaborRateResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteLaborRateResponse) Status() string {
+func (r ArchiveLaborRateResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -42909,7 +44632,7 @@ func (r DeleteLaborRateResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteLaborRateResponse) StatusCode() int {
+func (r ArchiveLaborRateResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -42917,19 +44640,83 @@ func (r DeleteLaborRateResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteLaborRateResponse) ContentType() string {
+func (r ArchiveLaborRateResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type UpdateLaborRateResponse struct {
+type RestoreLaborRateResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Active           bool   `json:"active"`
+		AppUrl           string  `json:"app_url"`
+		CostPerHourCents int     `json:"cost_per_hour_cents"`
+		CreatedAt        string  `json:"created_at"`
+		Id               int     `json:"id"`
+		IsDefault        bool    `json:"is_default"`
+		Name             string  `json:"name"`
+		RateCents        int     `json:"rate_cents"`
+		Status           string  `json:"status"`
+		TrashedAt        *string `json:"trashed_at"`
+		UpdatedAt        string  `json:"updated_at"`
+		Url              string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestoreLaborRateResponse) GetJSON200() *struct {
+	AppUrl           string  `json:"app_url"`
+	CostPerHourCents int     `json:"cost_per_hour_cents"`
+	CreatedAt        string  `json:"created_at"`
+	Id               int     `json:"id"`
+	IsDefault        bool    `json:"is_default"`
+	Name             string  `json:"name"`
+	RateCents        int     `json:"rate_cents"`
+	Status           string  `json:"status"`
+	TrashedAt        *string `json:"trashed_at"`
+	UpdatedAt        string  `json:"updated_at"`
+	Url              string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r RestoreLaborRateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreLaborRateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreLaborRateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestoreLaborRateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type TrashLaborRateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
 		AppUrl           string `json:"app_url"`
 		CostPerHourCents int    `json:"cost_per_hour_cents"`
 		CreatedAt        string `json:"created_at"`
@@ -42937,14 +44724,15 @@ type UpdateLaborRateResponse struct {
 		IsDefault        bool   `json:"is_default"`
 		Name             string `json:"name"`
 		RateCents        int    `json:"rate_cents"`
+		Status           string `json:"status"`
+		TrashedAt        string `json:"trashed_at"`
 		UpdatedAt        string `json:"updated_at"`
 		Url              string `json:"url"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateLaborRateResponse) GetJSON200() *struct {
-	Active           bool   `json:"active"`
+func (r TrashLaborRateResponse) GetJSON200() *struct {
 	AppUrl           string `json:"app_url"`
 	CostPerHourCents int    `json:"cost_per_hour_cents"`
 	CreatedAt        string `json:"created_at"`
@@ -42952,6 +44740,8 @@ func (r UpdateLaborRateResponse) GetJSON200() *struct {
 	IsDefault        bool   `json:"is_default"`
 	Name             string `json:"name"`
 	RateCents        int    `json:"rate_cents"`
+	Status           string `json:"status"`
+	TrashedAt        string `json:"trashed_at"`
 	UpdatedAt        string `json:"updated_at"`
 	Url              string `json:"url"`
 } {
@@ -42959,12 +44749,12 @@ func (r UpdateLaborRateResponse) GetJSON200() *struct {
 }
 
 // GetBody returns the raw response body bytes
-func (r UpdateLaborRateResponse) GetBody() []byte {
+func (r TrashLaborRateResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateLaborRateResponse) Status() string {
+func (r TrashLaborRateResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -42972,7 +44762,7 @@ func (r UpdateLaborRateResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateLaborRateResponse) StatusCode() int {
+func (r TrashLaborRateResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -42980,7 +44770,7 @@ func (r UpdateLaborRateResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateLaborRateResponse) ContentType() string {
+func (r TrashLaborRateResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -45706,53 +47496,13 @@ type ListPackagesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]struct {
-		Active         bool    `json:"active"`
-		AppUrl         string  `json:"app_url"`
-		CategoryId     *int    `json:"category_id"`
-		CategoryName   *string `json:"category_name"`
-		CustomerNotes  *string `json:"customer_notes"`
-		Description    string  `json:"description"`
-		EstimatedHours string  `json:"estimated_hours"`
-		Id             int     `json:"id"`
-		Location       struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Url  string `json:"url"`
-		} `json:"location"`
-		Name                string `json:"name"`
-		PriceCents          *int   `json:"price_cents"`
-		ServiceType         string `json:"service_type"`
-		ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-		TriggersTireStorage bool   `json:"triggers_tire_storage"`
-		Url                 string `json:"url"`
-	}
+	JSON200 *[]Package
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListPackagesResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListPackagesResponse) GetJSON200() *[]struct {
-	Active         bool    `json:"active"`
-	AppUrl         string  `json:"app_url"`
-	CategoryId     *int    `json:"category_id"`
-	CategoryName   *string `json:"category_name"`
-	CustomerNotes  *string `json:"customer_notes"`
-	Description    string  `json:"description"`
-	EstimatedHours string  `json:"estimated_hours"`
-	Id             int     `json:"id"`
-	Location       struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
-	} `json:"location"`
-	Name                string `json:"name"`
-	PriceCents          *int   `json:"price_cents"`
-	ServiceType         string `json:"service_type"`
-	ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-	TriggersTireStorage bool   `json:"triggers_tire_storage"`
-	Url                 string `json:"url"`
-} {
+func (r ListPackagesResponse) GetJSON200() *[]Package {
 	return r.JSON200
 }
 
@@ -45789,27 +47539,7 @@ type CreatePackageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		Active         bool     `json:"active"`
-		AppUrl         string   `json:"app_url"`
-		CategoryId     *int     `json:"category_id"`
-		CategoryName   *string  `json:"category_name"`
-		CustomerNotes  *string  `json:"customer_notes"`
-		Description    string   `json:"description"`
-		EstimatedHours *float32 `json:"estimated_hours"`
-		Id             int      `json:"id"`
-		Location       struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Url  string `json:"url"`
-		} `json:"location"`
-		Name                string `json:"name"`
-		PriceCents          *int   `json:"price_cents"`
-		ServiceType         string `json:"service_type"`
-		ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-		TriggersTireStorage bool   `json:"triggers_tire_storage"`
-		Url                 string `json:"url"`
-	}
+	JSON201 *Package
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -45817,27 +47547,7 @@ type CreatePackageResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreatePackageResponse) GetJSON201() *struct {
-	Active         bool     `json:"active"`
-	AppUrl         string   `json:"app_url"`
-	CategoryId     *int     `json:"category_id"`
-	CategoryName   *string  `json:"category_name"`
-	CustomerNotes  *string  `json:"customer_notes"`
-	Description    string   `json:"description"`
-	EstimatedHours *float32 `json:"estimated_hours"`
-	Id             int      `json:"id"`
-	Location       struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
-	} `json:"location"`
-	Name                string `json:"name"`
-	PriceCents          *int   `json:"price_cents"`
-	ServiceType         string `json:"service_type"`
-	ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-	TriggersTireStorage bool   `json:"triggers_tire_storage"`
-	Url                 string `json:"url"`
-} {
+func (r CreatePackageResponse) GetJSON201() *Package {
 	return r.JSON201
 }
 
@@ -45880,57 +47590,10 @@ func (r CreatePackageResponse) ContentType() string {
 type UpdatePackageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Active         bool    `json:"active"`
-		AppUrl         string  `json:"app_url"`
-		CategoryId     *int    `json:"category_id"`
-		CategoryName   *string `json:"category_name"`
-		CustomerNotes  *string `json:"customer_notes"`
-		Description    string  `json:"description"`
-		EstimatedHours string  `json:"estimated_hours"`
-		Id             int     `json:"id"`
-		Location       struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Url  string `json:"url"`
-		} `json:"location"`
-		Name                string `json:"name"`
-		PriceCents          *int   `json:"price_cents"`
-		ServiceType         string `json:"service_type"`
-		ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-		TriggersTireStorage bool   `json:"triggers_tire_storage"`
-		Url                 string `json:"url"`
-	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
 	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdatePackageResponse) GetJSON200() *struct {
-	Active         bool    `json:"active"`
-	AppUrl         string  `json:"app_url"`
-	CategoryId     *int    `json:"category_id"`
-	CategoryName   *string `json:"category_name"`
-	CustomerNotes  *string `json:"customer_notes"`
-	Description    string  `json:"description"`
-	EstimatedHours string  `json:"estimated_hours"`
-	Id             int     `json:"id"`
-	Location       struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
-	} `json:"location"`
-	Name                string `json:"name"`
-	PriceCents          *int   `json:"price_cents"`
-	ServiceType         string `json:"service_type"`
-	ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-	TriggersTireStorage bool   `json:"triggers_tire_storage"`
-	Url                 string `json:"url"`
-} {
-	return r.JSON200
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
@@ -45969,12 +47632,11 @@ func (r UpdatePackageResponse) ContentType() string {
 	return ""
 }
 
-type CreatePackagesDuplicateResponse struct {
+type ArchivePackageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *struct {
-		Active         bool    `json:"active"`
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
 		AppUrl         string  `json:"app_url"`
 		CategoryId     *int    `json:"category_id"`
 		CategoryName   *string `json:"category_name"`
@@ -45987,22 +47649,19 @@ type CreatePackagesDuplicateResponse struct {
 			Name string `json:"name"`
 			Url  string `json:"url"`
 		} `json:"location"`
-		Name                string `json:"name"`
-		PriceCents          *int   `json:"price_cents"`
-		ServiceType         string `json:"service_type"`
-		ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-		TriggersTireStorage bool   `json:"triggers_tire_storage"`
-		Url                 string `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
+		Name                string  `json:"name"`
+		PriceCents          *int    `json:"price_cents"`
+		ServiceType         string  `json:"service_type"`
+		ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+		Status              string  `json:"status"`
+		TrashedAt           *string `json:"trashed_at"`
+		TriggersTireStorage bool    `json:"triggers_tire_storage"`
+		Url                 string  `json:"url"`
 	}
 }
 
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreatePackagesDuplicateResponse) GetJSON201() *struct {
-	Active         bool    `json:"active"`
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ArchivePackageResponse) GetJSON200() *struct {
 	AppUrl         string  `json:"app_url"`
 	CategoryId     *int    `json:"category_id"`
 	CategoryName   *string `json:"category_name"`
@@ -46015,13 +47674,60 @@ func (r CreatePackagesDuplicateResponse) GetJSON201() *struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Name                string `json:"name"`
-	PriceCents          *int   `json:"price_cents"`
-	ServiceType         string `json:"service_type"`
-	ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-	TriggersTireStorage bool   `json:"triggers_tire_storage"`
-	Url                 string `json:"url"`
+	Name                string  `json:"name"`
+	PriceCents          *int    `json:"price_cents"`
+	ServiceType         string  `json:"service_type"`
+	ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+	Status              string  `json:"status"`
+	TrashedAt           *string `json:"trashed_at"`
+	TriggersTireStorage bool    `json:"triggers_tire_storage"`
+	Url                 string  `json:"url"`
 } {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ArchivePackageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ArchivePackageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ArchivePackageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ArchivePackageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreatePackagesDuplicateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Package
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreatePackagesDuplicateResponse) GetJSON201() *Package {
 	return r.JSON201
 }
 
@@ -46055,6 +47761,172 @@ func (r CreatePackagesDuplicateResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreatePackagesDuplicateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RestorePackageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl         string  `json:"app_url"`
+		CategoryId     *int    `json:"category_id"`
+		CategoryName   *string `json:"category_name"`
+		CustomerNotes  *string `json:"customer_notes"`
+		Description    string  `json:"description"`
+		EstimatedHours string  `json:"estimated_hours"`
+		Id             int     `json:"id"`
+		Location       struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Name                string  `json:"name"`
+		PriceCents          *int    `json:"price_cents"`
+		ServiceType         string  `json:"service_type"`
+		ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+		Status              string  `json:"status"`
+		TrashedAt           *string `json:"trashed_at"`
+		TriggersTireStorage bool    `json:"triggers_tire_storage"`
+		Url                 string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestorePackageResponse) GetJSON200() *struct {
+	AppUrl         string  `json:"app_url"`
+	CategoryId     *int    `json:"category_id"`
+	CategoryName   *string `json:"category_name"`
+	CustomerNotes  *string `json:"customer_notes"`
+	Description    string  `json:"description"`
+	EstimatedHours string  `json:"estimated_hours"`
+	Id             int     `json:"id"`
+	Location       struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Name                string  `json:"name"`
+	PriceCents          *int    `json:"price_cents"`
+	ServiceType         string  `json:"service_type"`
+	ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+	Status              string  `json:"status"`
+	TrashedAt           *string `json:"trashed_at"`
+	TriggersTireStorage bool    `json:"triggers_tire_storage"`
+	Url                 string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r RestorePackageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestorePackageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestorePackageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestorePackageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type TrashPackageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl         string  `json:"app_url"`
+		CategoryId     *int    `json:"category_id"`
+		CategoryName   *string `json:"category_name"`
+		CustomerNotes  *string `json:"customer_notes"`
+		Description    string  `json:"description"`
+		EstimatedHours string  `json:"estimated_hours"`
+		Id             int     `json:"id"`
+		Location       struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Name                string `json:"name"`
+		PriceCents          *int   `json:"price_cents"`
+		ServiceType         string `json:"service_type"`
+		ShowTechWithCert    bool   `json:"show_tech_with_cert"`
+		Status              string `json:"status"`
+		TrashedAt           string `json:"trashed_at"`
+		TriggersTireStorage bool   `json:"triggers_tire_storage"`
+		Url                 string `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r TrashPackageResponse) GetJSON200() *struct {
+	AppUrl         string  `json:"app_url"`
+	CategoryId     *int    `json:"category_id"`
+	CategoryName   *string `json:"category_name"`
+	CustomerNotes  *string `json:"customer_notes"`
+	Description    string  `json:"description"`
+	EstimatedHours string  `json:"estimated_hours"`
+	Id             int     `json:"id"`
+	Location       struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Name                string `json:"name"`
+	PriceCents          *int   `json:"price_cents"`
+	ServiceType         string `json:"service_type"`
+	ShowTechWithCert    bool   `json:"show_tech_with_cert"`
+	Status              string `json:"status"`
+	TrashedAt           string `json:"trashed_at"`
+	TriggersTireStorage bool   `json:"triggers_tire_storage"`
+	Url                 string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r TrashPackageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r TrashPackageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r TrashPackageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r TrashPackageResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -48889,58 +50761,6 @@ func (r SeedDefaultsServiceCategoriesResponse) ContentType() string {
 	return ""
 }
 
-type DeleteServiceCategoryResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ServiceCategory
-	// JSON422 the response for an HTTP 422 `application/json` response
-	JSON422 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r DeleteServiceCategoryResponse) GetJSON200() *ServiceCategory {
-	return r.JSON200
-}
-
-// GetJSON422 returns the response for an HTTP 422 `application/json` response
-func (r DeleteServiceCategoryResponse) GetJSON422() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON422
-}
-
-// GetBody returns the raw response body bytes
-func (r DeleteServiceCategoryResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteServiceCategoryResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServiceCategoryResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteServiceCategoryResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type UpdateServiceCategoryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -48976,6 +50796,219 @@ func (r UpdateServiceCategoryResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateServiceCategoryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ArchiveServiceCategoryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string  `json:"app_url"`
+		Canonical    bool    `json:"canonical"`
+		CanonicalKey *string `json:"canonical_key"`
+		Color        *string `json:"color"`
+		Description  *string `json:"description"`
+		Icon         *string `json:"icon"`
+		Id           int     `json:"id"`
+		JobCount     int     `json:"job_count"`
+		Name         string  `json:"name"`
+		Position     int     `json:"position"`
+		ServiceType  string  `json:"service_type"`
+		Status       string  `json:"status"`
+		TrashedAt    *string `json:"trashed_at"`
+		Url          string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ArchiveServiceCategoryResponse) GetJSON200() *struct {
+	AppUrl       string  `json:"app_url"`
+	Canonical    bool    `json:"canonical"`
+	CanonicalKey *string `json:"canonical_key"`
+	Color        *string `json:"color"`
+	Description  *string `json:"description"`
+	Icon         *string `json:"icon"`
+	Id           int     `json:"id"`
+	JobCount     int     `json:"job_count"`
+	Name         string  `json:"name"`
+	Position     int     `json:"position"`
+	ServiceType  string  `json:"service_type"`
+	Status       string  `json:"status"`
+	TrashedAt    *string `json:"trashed_at"`
+	Url          string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ArchiveServiceCategoryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ArchiveServiceCategoryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ArchiveServiceCategoryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ArchiveServiceCategoryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RestoreServiceCategoryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string  `json:"app_url"`
+		Canonical    bool    `json:"canonical"`
+		CanonicalKey *string `json:"canonical_key"`
+		Color        *string `json:"color"`
+		Description  *string `json:"description"`
+		Icon         *string `json:"icon"`
+		Id           int     `json:"id"`
+		JobCount     int     `json:"job_count"`
+		Name         string  `json:"name"`
+		Position     int     `json:"position"`
+		ServiceType  string  `json:"service_type"`
+		Status       string  `json:"status"`
+		TrashedAt    *string `json:"trashed_at"`
+		Url          string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestoreServiceCategoryResponse) GetJSON200() *struct {
+	AppUrl       string  `json:"app_url"`
+	Canonical    bool    `json:"canonical"`
+	CanonicalKey *string `json:"canonical_key"`
+	Color        *string `json:"color"`
+	Description  *string `json:"description"`
+	Icon         *string `json:"icon"`
+	Id           int     `json:"id"`
+	JobCount     int     `json:"job_count"`
+	Name         string  `json:"name"`
+	Position     int     `json:"position"`
+	ServiceType  string  `json:"service_type"`
+	Status       string  `json:"status"`
+	TrashedAt    *string `json:"trashed_at"`
+	Url          string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r RestoreServiceCategoryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreServiceCategoryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreServiceCategoryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestoreServiceCategoryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type TrashServiceCategoryResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string  `json:"app_url"`
+		Canonical    bool    `json:"canonical"`
+		CanonicalKey *string `json:"canonical_key"`
+		Color        *string `json:"color"`
+		Description  *string `json:"description"`
+		Icon         *string `json:"icon"`
+		Id           int     `json:"id"`
+		JobCount     int     `json:"job_count"`
+		Name         string  `json:"name"`
+		Position     int     `json:"position"`
+		ServiceType  string  `json:"service_type"`
+		Status       string  `json:"status"`
+		TrashedAt    string  `json:"trashed_at"`
+		Url          string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r TrashServiceCategoryResponse) GetJSON200() *struct {
+	AppUrl       string  `json:"app_url"`
+	Canonical    bool    `json:"canonical"`
+	CanonicalKey *string `json:"canonical_key"`
+	Color        *string `json:"color"`
+	Description  *string `json:"description"`
+	Icon         *string `json:"icon"`
+	Id           int     `json:"id"`
+	JobCount     int     `json:"job_count"`
+	Name         string  `json:"name"`
+	Position     int     `json:"position"`
+	ServiceType  string  `json:"service_type"`
+	Status       string  `json:"status"`
+	TrashedAt    string  `json:"trashed_at"`
+	Url          string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r TrashServiceCategoryResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r TrashServiceCategoryResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r TrashServiceCategoryResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r TrashServiceCategoryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -55799,6 +57832,283 @@ func (r ListVendorsPurchaseOrdersResponse) ContentType() string {
 	return ""
 }
 
+// ListWorkOrderTagsResponse200Headers the declared response headers of an HTTP 200 response for ListWorkOrderTags
+type ListWorkOrderTagsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListWorkOrderTagsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl        string  `json:"app_url"`
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		CreatedAt     string  `json:"created_at"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+		UpdatedAt     string  `json:"updated_at"`
+		Url           string  `json:"url"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListWorkOrderTagsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListWorkOrderTagsResponse) GetJSON200() *[]struct {
+	AppUrl        string  `json:"app_url"`
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	CreatedAt     string  `json:"created_at"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+	UpdatedAt     string  `json:"updated_at"`
+	Url           string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListWorkOrderTagsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListWorkOrderTagsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListWorkOrderTagsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListWorkOrderTagsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateWorkOrderTagResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AppUrl        string  `json:"app_url"`
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		CreatedAt     string  `json:"created_at"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+		UpdatedAt     string  `json:"updated_at"`
+		Url           string  `json:"url"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkOrderTagResponse) GetJSON201() *struct {
+	AppUrl        string  `json:"app_url"`
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	CreatedAt     string  `json:"created_at"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+	UpdatedAt     string  `json:"updated_at"`
+	Url           string  `json:"url"`
+} {
+	return r.JSON201
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkOrderTagResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkOrderTagResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkOrderTagResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkOrderTagResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateWorkOrderTagResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl        string  `json:"app_url"`
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		CreatedAt     string  `json:"created_at"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+		UpdatedAt     string  `json:"updated_at"`
+		Url           string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateWorkOrderTagResponse) GetJSON200() *struct {
+	AppUrl        string  `json:"app_url"`
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	CreatedAt     string  `json:"created_at"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+	UpdatedAt     string  `json:"updated_at"`
+	Url           string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrderTagResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrderTagResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrderTagResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrderTagResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateWorkOrderTagsArchiveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl        string  `json:"app_url"`
+		BubbleClasses string  `json:"bubble_classes"`
+		Color         string  `json:"color"`
+		ColorClass    string  `json:"color_class"`
+		ColorHex      string  `json:"color_hex"`
+		CreatedAt     string  `json:"created_at"`
+		Id            int     `json:"id"`
+		Name          string  `json:"name"`
+		Status        string  `json:"status"`
+		TrashedAt     *string `json:"trashed_at"`
+		UpdatedAt     string  `json:"updated_at"`
+		Url           string  `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateWorkOrderTagsArchiveResponse) GetJSON200() *struct {
+	AppUrl        string  `json:"app_url"`
+	BubbleClasses string  `json:"bubble_classes"`
+	Color         string  `json:"color"`
+	ColorClass    string  `json:"color_class"`
+	ColorHex      string  `json:"color_hex"`
+	CreatedAt     string  `json:"created_at"`
+	Id            int     `json:"id"`
+	Name          string  `json:"name"`
+	Status        string  `json:"status"`
+	TrashedAt     *string `json:"trashed_at"`
+	UpdatedAt     string  `json:"updated_at"`
+	Url           string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateWorkOrderTagsArchiveResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateWorkOrderTagsArchiveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateWorkOrderTagsArchiveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateWorkOrderTagsArchiveResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // ListWorkOrdersResponse200Headers the declared response headers of an HTTP 200 response for ListWorkOrders
 type ListWorkOrdersResponse200Headers struct {
 	Link        *string
@@ -57405,99 +59715,6 @@ func (r ShowWorkOrderInspectionResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ShowWorkOrderInspectionResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateWorkOrdersLabelResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *WorkOrder
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateWorkOrdersLabelResponse) GetJSON200() *WorkOrder {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateWorkOrdersLabelResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateWorkOrdersLabelResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateWorkOrdersLabelResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersLabelResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersLabelResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type DeleteWorkOrdersLabelResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *WorkOrder
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r DeleteWorkOrdersLabelResponse) GetJSON200() *WorkOrder {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r DeleteWorkOrdersLabelResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteWorkOrdersLabelResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteWorkOrdersLabelResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteWorkOrdersLabelResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -60621,6 +62838,186 @@ func (c *ClientWithResponses) UpdateCurrentLocationWithResponse(ctx context.Cont
 	return ParseUpdateCurrentLocationResponse(rsp)
 }
 
+// ListCustomerTagsWithResponse index
+//
+// List all customer tags, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customer_tags (the `ListCustomerTags` operationId).
+func (c *ClientWithResponses) ListCustomerTagsWithResponse(ctx context.Context, params *ListCustomerTagsParams, reqEditors ...RequestEditorFn) (*ListCustomerTagsResponse, error) {
+	rsp, err := c.ListCustomerTags(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListCustomerTagsResponse(rsp)
+}
+
+// CreateCustomerTagWithBodyWithResponse create
+//
+// Create a customer tag.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+func (c *ClientWithResponses) CreateCustomerTagWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomerTagResponse, error) {
+	rsp, err := c.CreateCustomerTagWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomerTagResponse(rsp)
+}
+
+// CreateCustomerTagWithResponse create
+//
+// Create a customer tag.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customer_tags (the `CreateCustomerTag` operationId).
+func (c *ClientWithResponses) CreateCustomerTagWithResponse(ctx context.Context, body CreateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomerTagResponse, error) {
+	rsp, err := c.CreateCustomerTag(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomerTagResponse(rsp)
+}
+
+// ShowCustomerTagWithResponse show
+//
+// Show a customer tag by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customer_tags/{id} (the `ShowCustomerTag` operationId).
+func (c *ClientWithResponses) ShowCustomerTagWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCustomerTagResponse, error) {
+	rsp, err := c.ShowCustomerTag(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseShowCustomerTagResponse(rsp)
+}
+
+// UpdateCustomerTagWithBodyWithResponse update
+//
+// Update a customer tag by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagResponse, error) {
+	rsp, err := c.UpdateCustomerTagWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagResponse(rsp)
+}
+
+// UpdateCustomerTagWithResponse update
+//
+// Update a customer tag by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id} (the `UpdateCustomerTag` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagWithResponse(ctx context.Context, id int, body UpdateCustomerTagJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagResponse, error) {
+	rsp, err := c.UpdateCustomerTag(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagResponse(rsp)
+}
+
+// UpdateCustomerTagsArchiveWithBodyWithResponse archive
+//
+// Update a customer tags archive by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsArchiveWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsArchiveResponse, error) {
+	rsp, err := c.UpdateCustomerTagsArchiveWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsArchiveResponse(rsp)
+}
+
+// UpdateCustomerTagsArchiveWithResponse archive
+//
+// Update a customer tags archive by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/archive (the `UpdateCustomerTagsArchive` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsArchiveWithResponse(ctx context.Context, id int, body UpdateCustomerTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsArchiveResponse, error) {
+	rsp, err := c.UpdateCustomerTagsArchive(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsArchiveResponse(rsp)
+}
+
+// UpdateCustomerTagsRestoreWithBodyWithResponse restore
+//
+// Update a customer tags restore by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsRestoreWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsRestoreResponse, error) {
+	rsp, err := c.UpdateCustomerTagsRestoreWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsRestoreResponse(rsp)
+}
+
+// UpdateCustomerTagsRestoreWithResponse restore
+//
+// Update a customer tags restore by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/restore (the `UpdateCustomerTagsRestore` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsRestoreWithResponse(ctx context.Context, id int, body UpdateCustomerTagsRestoreJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsRestoreResponse, error) {
+	rsp, err := c.UpdateCustomerTagsRestore(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsRestoreResponse(rsp)
+}
+
+// UpdateCustomerTagsTrashWithBodyWithResponse trash
+//
+// Update a customer tags trash by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsTrashWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsTrashResponse, error) {
+	rsp, err := c.UpdateCustomerTagsTrashWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsTrashResponse(rsp)
+}
+
+// UpdateCustomerTagsTrashWithResponse trash
+//
+// Update a customer tags trash by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /customer_tags/{id}/trash (the `UpdateCustomerTagsTrash` operationId).
+func (c *ClientWithResponses) UpdateCustomerTagsTrashWithResponse(ctx context.Context, id int, body UpdateCustomerTagsTrashJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCustomerTagsTrashResponse, error) {
+	rsp, err := c.UpdateCustomerTagsTrash(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateCustomerTagsTrashResponse(rsp)
+}
+
 // ListCustomersWithResponse index
 //
 // List all customers, paginated via the Link header.
@@ -61512,21 +63909,6 @@ func (c *ClientWithResponses) CreateInspectionWithResponse(ctx context.Context, 
 	return ParseCreateInspectionResponse(rsp)
 }
 
-// DeleteInspectionWithResponse destroy
-//
-// Delete a inspection by ID.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /inspections/{id} (the `DeleteInspection` operationId).
-func (c *ClientWithResponses) DeleteInspectionWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteInspectionResponse, error) {
-	rsp, err := c.DeleteInspection(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteInspectionResponse(rsp)
-}
-
 // ShowInspectionWithResponse show
 //
 // Show a inspection by ID.
@@ -61572,6 +63954,32 @@ func (c *ClientWithResponses) UpdateInspectionWithResponse(ctx context.Context, 
 	return ParseUpdateInspectionResponse(rsp)
 }
 
+// ArchiveInspectionWithBodyWithResponse archive
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+func (c *ClientWithResponses) ArchiveInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveInspectionResponse, error) {
+	rsp, err := c.ArchiveInspectionWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveInspectionResponse(rsp)
+}
+
+// ArchiveInspectionWithResponse archive
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /inspections/{id}/archive (the `ArchiveInspection` operationId).
+func (c *ClientWithResponses) ArchiveInspectionWithResponse(ctx context.Context, id int, body ArchiveInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveInspectionResponse, error) {
+	rsp, err := c.ArchiveInspection(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveInspectionResponse(rsp)
+}
+
 // RemoveDefaultInspectionWithBodyWithResponse remove_default
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -61596,6 +64004,32 @@ func (c *ClientWithResponses) RemoveDefaultInspectionWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseRemoveDefaultInspectionResponse(rsp)
+}
+
+// RestoreInspectionWithBodyWithResponse restore
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+func (c *ClientWithResponses) RestoreInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreInspectionResponse, error) {
+	rsp, err := c.RestoreInspectionWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreInspectionResponse(rsp)
+}
+
+// RestoreInspectionWithResponse restore
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /inspections/{id}/restore (the `RestoreInspection` operationId).
+func (c *ClientWithResponses) RestoreInspectionWithResponse(ctx context.Context, id int, body RestoreInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreInspectionResponse, error) {
+	rsp, err := c.RestoreInspection(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreInspectionResponse(rsp)
 }
 
 // SetDefaultInspectionWithBodyWithResponse set_default
@@ -61624,30 +64058,30 @@ func (c *ClientWithResponses) SetDefaultInspectionWithResponse(ctx context.Conte
 	return ParseSetDefaultInspectionResponse(rsp)
 }
 
-// ToggleInspectionWithBodyWithResponse toggle
+// TrashInspectionWithBodyWithResponse trash
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-func (c *ClientWithResponses) ToggleInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ToggleInspectionResponse, error) {
-	rsp, err := c.ToggleInspectionWithBody(ctx, id, contentType, body, reqEditors...)
+// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+func (c *ClientWithResponses) TrashInspectionWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashInspectionResponse, error) {
+	rsp, err := c.TrashInspectionWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseToggleInspectionResponse(rsp)
+	return ParseTrashInspectionResponse(rsp)
 }
 
-// ToggleInspectionWithResponse toggle
+// TrashInspectionWithResponse trash
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /inspections/{id}/toggle (the `ToggleInspection` operationId).
-func (c *ClientWithResponses) ToggleInspectionWithResponse(ctx context.Context, id int, body ToggleInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*ToggleInspectionResponse, error) {
-	rsp, err := c.ToggleInspection(ctx, id, body, reqEditors...)
+// Corresponds with PATCH /inspections/{id}/trash (the `TrashInspection` operationId).
+func (c *ClientWithResponses) TrashInspectionWithResponse(ctx context.Context, id int, body TrashInspectionJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashInspectionResponse, error) {
+	rsp, err := c.TrashInspection(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseToggleInspectionResponse(rsp)
+	return ParseTrashInspectionResponse(rsp)
 }
 
 // ListInventoryLevelsWithResponse index
@@ -61800,126 +64234,6 @@ func (c *ClientWithResponses) UpdateInventoryLevelsStockWithResponse(ctx context
 	return ParseUpdateInventoryLevelsStockResponse(rsp)
 }
 
-// ListLabelsWithResponse index
-//
-// List all labels, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /labels (the `ListLabels` operationId).
-func (c *ClientWithResponses) ListLabelsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListLabelsResponse, error) {
-	rsp, err := c.ListLabels(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListLabelsResponse(rsp)
-}
-
-// CreateLabelWithBodyWithResponse create
-//
-// Create a label.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /labels (the `CreateLabel` operationId).
-func (c *ClientWithResponses) CreateLabelWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLabelResponse, error) {
-	rsp, err := c.CreateLabelWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateLabelResponse(rsp)
-}
-
-// CreateLabelWithResponse create
-//
-// Create a label.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /labels (the `CreateLabel` operationId).
-func (c *ClientWithResponses) CreateLabelWithResponse(ctx context.Context, body CreateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLabelResponse, error) {
-	rsp, err := c.CreateLabel(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateLabelResponse(rsp)
-}
-
-// ListLabelsDataTransferWithResponse show
-//
-// List all labels data transfer, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /labels/data_transfer (the `ListLabelsDataTransfer` operationId).
-func (c *ClientWithResponses) ListLabelsDataTransferWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListLabelsDataTransferResponse, error) {
-	rsp, err := c.ListLabelsDataTransfer(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListLabelsDataTransferResponse(rsp)
-}
-
-// CreateLabelsExportWithBodyWithResponse create
-//
-// Create a labels export.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-func (c *ClientWithResponses) CreateLabelsExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLabelsExportResponse, error) {
-	rsp, err := c.CreateLabelsExportWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateLabelsExportResponse(rsp)
-}
-
-// CreateLabelsExportWithResponse create
-//
-// Create a labels export.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /labels/export (the `CreateLabelsExport` operationId).
-func (c *ClientWithResponses) CreateLabelsExportWithResponse(ctx context.Context, body CreateLabelsExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLabelsExportResponse, error) {
-	rsp, err := c.CreateLabelsExport(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateLabelsExportResponse(rsp)
-}
-
-// UpdateLabelWithBodyWithResponse update
-//
-// Update a label by ID.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-func (c *ClientWithResponses) UpdateLabelWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLabelResponse, error) {
-	rsp, err := c.UpdateLabelWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateLabelResponse(rsp)
-}
-
-// UpdateLabelWithResponse update
-//
-// Update a label by ID.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /labels/{id} (the `UpdateLabel` operationId).
-func (c *ClientWithResponses) UpdateLabelWithResponse(ctx context.Context, id int, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLabelResponse, error) {
-	rsp, err := c.UpdateLabel(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateLabelResponse(rsp)
-}
-
 // ListLaborMatricesWithResponse index
 //
 // List all labor matrices, paginated via the Link header.
@@ -62055,49 +64369,82 @@ func (c *ClientWithResponses) CreateLaborRateWithResponse(ctx context.Context, b
 	return ParseCreateLaborRateResponse(rsp)
 }
 
-// DeleteLaborRateWithResponse destroy
-//
-// Delete a labor rate by ID.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /labor_rates/{id} (the `DeleteLaborRate` operationId).
-func (c *ClientWithResponses) DeleteLaborRateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborRateResponse, error) {
-	rsp, err := c.DeleteLaborRate(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteLaborRateResponse(rsp)
-}
-
-// UpdateLaborRateWithBodyWithResponse update
-//
-// Update a labor rate by ID.
+// ArchiveLaborRateWithBodyWithResponse archive
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-func (c *ClientWithResponses) UpdateLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborRateResponse, error) {
-	rsp, err := c.UpdateLaborRateWithBody(ctx, id, contentType, body, reqEditors...)
+// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+func (c *ClientWithResponses) ArchiveLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveLaborRateResponse, error) {
+	rsp, err := c.ArchiveLaborRateWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateLaborRateResponse(rsp)
+	return ParseArchiveLaborRateResponse(rsp)
 }
 
-// UpdateLaborRateWithResponse update
-//
-// Update a labor rate by ID.
+// ArchiveLaborRateWithResponse archive
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /labor_rates/{id} (the `UpdateLaborRate` operationId).
-func (c *ClientWithResponses) UpdateLaborRateWithResponse(ctx context.Context, id int, body UpdateLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborRateResponse, error) {
-	rsp, err := c.UpdateLaborRate(ctx, id, body, reqEditors...)
+// Corresponds with PATCH /labor_rates/{id}/archive (the `ArchiveLaborRate` operationId).
+func (c *ClientWithResponses) ArchiveLaborRateWithResponse(ctx context.Context, id int, body ArchiveLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveLaborRateResponse, error) {
+	rsp, err := c.ArchiveLaborRate(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateLaborRateResponse(rsp)
+	return ParseArchiveLaborRateResponse(rsp)
+}
+
+// RestoreLaborRateWithBodyWithResponse restore
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+func (c *ClientWithResponses) RestoreLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreLaborRateResponse, error) {
+	rsp, err := c.RestoreLaborRateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreLaborRateResponse(rsp)
+}
+
+// RestoreLaborRateWithResponse restore
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /labor_rates/{id}/restore (the `RestoreLaborRate` operationId).
+func (c *ClientWithResponses) RestoreLaborRateWithResponse(ctx context.Context, id int, body RestoreLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreLaborRateResponse, error) {
+	rsp, err := c.RestoreLaborRate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreLaborRateResponse(rsp)
+}
+
+// TrashLaborRateWithBodyWithResponse trash
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+func (c *ClientWithResponses) TrashLaborRateWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashLaborRateResponse, error) {
+	rsp, err := c.TrashLaborRateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashLaborRateResponse(rsp)
+}
+
+// TrashLaborRateWithResponse trash
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /labor_rates/{id}/trash (the `TrashLaborRate` operationId).
+func (c *ClientWithResponses) TrashLaborRateWithResponse(ctx context.Context, id int, body TrashLaborRateJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashLaborRateResponse, error) {
+	rsp, err := c.TrashLaborRate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashLaborRateResponse(rsp)
 }
 
 // ListLaborTemplatesWithResponse index
@@ -63090,34 +65437,45 @@ func (c *ClientWithResponses) CreatePackageWithResponse(ctx context.Context, bod
 	return ParseCreatePackageResponse(rsp)
 }
 
-// UpdatePackageWithBodyWithResponse update
+// UpdatePackageWithResponse update
 //
 // Update a package by ID.
 //
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+// Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-func (c *ClientWithResponses) UpdatePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error) {
-	rsp, err := c.UpdatePackageWithBody(ctx, id, contentType, body, reqEditors...)
+func (c *ClientWithResponses) UpdatePackageWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error) {
+	rsp, err := c.UpdatePackage(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdatePackageResponse(rsp)
 }
 
-// UpdatePackageWithResponse update
+// ArchivePackageWithBodyWithResponse archive
 //
-// Update a package by ID.
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /packages/{id} (the `UpdatePackage` operationId).
-func (c *ClientWithResponses) UpdatePackageWithResponse(ctx context.Context, id int, body UpdatePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePackageResponse, error) {
-	rsp, err := c.UpdatePackage(ctx, id, body, reqEditors...)
+// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+func (c *ClientWithResponses) ArchivePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchivePackageResponse, error) {
+	rsp, err := c.ArchivePackageWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdatePackageResponse(rsp)
+	return ParseArchivePackageResponse(rsp)
+}
+
+// ArchivePackageWithResponse archive
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /packages/{id}/archive (the `ArchivePackage` operationId).
+func (c *ClientWithResponses) ArchivePackageWithResponse(ctx context.Context, id int, body ArchivePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchivePackageResponse, error) {
+	rsp, err := c.ArchivePackage(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchivePackageResponse(rsp)
 }
 
 // CreatePackagesDuplicateWithBodyWithResponse duplicate
@@ -63148,6 +65506,58 @@ func (c *ClientWithResponses) CreatePackagesDuplicateWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseCreatePackagesDuplicateResponse(rsp)
+}
+
+// RestorePackageWithBodyWithResponse restore
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+func (c *ClientWithResponses) RestorePackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestorePackageResponse, error) {
+	rsp, err := c.RestorePackageWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestorePackageResponse(rsp)
+}
+
+// RestorePackageWithResponse restore
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /packages/{id}/restore (the `RestorePackage` operationId).
+func (c *ClientWithResponses) RestorePackageWithResponse(ctx context.Context, id int, body RestorePackageJSONRequestBody, reqEditors ...RequestEditorFn) (*RestorePackageResponse, error) {
+	rsp, err := c.RestorePackage(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestorePackageResponse(rsp)
+}
+
+// TrashPackageWithBodyWithResponse trash
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+func (c *ClientWithResponses) TrashPackageWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashPackageResponse, error) {
+	rsp, err := c.TrashPackageWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashPackageResponse(rsp)
+}
+
+// TrashPackageWithResponse trash
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /packages/{id}/trash (the `TrashPackage` operationId).
+func (c *ClientWithResponses) TrashPackageWithResponse(ctx context.Context, id int, body TrashPackageJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashPackageResponse, error) {
+	rsp, err := c.TrashPackage(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashPackageResponse(rsp)
 }
 
 // ListPartsMatricesWithResponse index
@@ -63761,21 +66171,6 @@ func (c *ClientWithResponses) SeedDefaultsServiceCategoriesWithResponse(ctx cont
 	return ParseSeedDefaultsServiceCategoriesResponse(rsp)
 }
 
-// DeleteServiceCategoryWithResponse destroy
-//
-// Delete a service category by ID.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /service_categories/{id} (the `DeleteServiceCategory` operationId).
-func (c *ClientWithResponses) DeleteServiceCategoryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteServiceCategoryResponse, error) {
-	rsp, err := c.DeleteServiceCategory(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteServiceCategoryResponse(rsp)
-}
-
 // UpdateServiceCategoryWithBodyWithResponse update
 //
 // Update a service category by ID.
@@ -63804,6 +66199,84 @@ func (c *ClientWithResponses) UpdateServiceCategoryWithResponse(ctx context.Cont
 		return nil, err
 	}
 	return ParseUpdateServiceCategoryResponse(rsp)
+}
+
+// ArchiveServiceCategoryWithBodyWithResponse archive
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+func (c *ClientWithResponses) ArchiveServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ArchiveServiceCategoryResponse, error) {
+	rsp, err := c.ArchiveServiceCategoryWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveServiceCategoryResponse(rsp)
+}
+
+// ArchiveServiceCategoryWithResponse archive
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/archive (the `ArchiveServiceCategory` operationId).
+func (c *ClientWithResponses) ArchiveServiceCategoryWithResponse(ctx context.Context, id int, body ArchiveServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*ArchiveServiceCategoryResponse, error) {
+	rsp, err := c.ArchiveServiceCategory(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveServiceCategoryResponse(rsp)
+}
+
+// RestoreServiceCategoryWithBodyWithResponse restore
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+func (c *ClientWithResponses) RestoreServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreServiceCategoryResponse, error) {
+	rsp, err := c.RestoreServiceCategoryWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreServiceCategoryResponse(rsp)
+}
+
+// RestoreServiceCategoryWithResponse restore
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/restore (the `RestoreServiceCategory` operationId).
+func (c *ClientWithResponses) RestoreServiceCategoryWithResponse(ctx context.Context, id int, body RestoreServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreServiceCategoryResponse, error) {
+	rsp, err := c.RestoreServiceCategory(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreServiceCategoryResponse(rsp)
+}
+
+// TrashServiceCategoryWithBodyWithResponse trash
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+func (c *ClientWithResponses) TrashServiceCategoryWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*TrashServiceCategoryResponse, error) {
+	rsp, err := c.TrashServiceCategoryWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashServiceCategoryResponse(rsp)
+}
+
+// TrashServiceCategoryWithResponse trash
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
+func (c *ClientWithResponses) TrashServiceCategoryWithResponse(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashServiceCategoryResponse, error) {
+	rsp, err := c.TrashServiceCategory(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseTrashServiceCategoryResponse(rsp)
 }
 
 // ListSettingsBillingWithResponse show
@@ -65536,6 +68009,111 @@ func (c *ClientWithResponses) ListVendorsPurchaseOrdersWithResponse(ctx context.
 	return ParseListVendorsPurchaseOrdersResponse(rsp)
 }
 
+// ListWorkOrderTagsWithResponse index
+//
+// List all work order tags, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /work_order_tags (the `ListWorkOrderTags` operationId).
+func (c *ClientWithResponses) ListWorkOrderTagsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListWorkOrderTagsResponse, error) {
+	rsp, err := c.ListWorkOrderTags(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListWorkOrderTagsResponse(rsp)
+}
+
+// CreateWorkOrderTagWithBodyWithResponse create
+//
+// Create a work order tag.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+func (c *ClientWithResponses) CreateWorkOrderTagWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderTagResponse, error) {
+	rsp, err := c.CreateWorkOrderTagWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderTagResponse(rsp)
+}
+
+// CreateWorkOrderTagWithResponse create
+//
+// Create a work order tag.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /work_order_tags (the `CreateWorkOrderTag` operationId).
+func (c *ClientWithResponses) CreateWorkOrderTagWithResponse(ctx context.Context, body CreateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderTagResponse, error) {
+	rsp, err := c.CreateWorkOrderTag(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderTagResponse(rsp)
+}
+
+// UpdateWorkOrderTagWithBodyWithResponse update
+//
+// Update a work order tag by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderTagWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagResponse, error) {
+	rsp, err := c.UpdateWorkOrderTagWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderTagResponse(rsp)
+}
+
+// UpdateWorkOrderTagWithResponse update
+//
+// Update a work order tag by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_order_tags/{id} (the `UpdateWorkOrderTag` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderTagWithResponse(ctx context.Context, id int, body UpdateWorkOrderTagJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagResponse, error) {
+	rsp, err := c.UpdateWorkOrderTag(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderTagResponse(rsp)
+}
+
+// UpdateWorkOrderTagsArchiveWithBodyWithResponse archive
+//
+// Update a work order tags archive by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderTagsArchiveWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagsArchiveResponse, error) {
+	rsp, err := c.UpdateWorkOrderTagsArchiveWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderTagsArchiveResponse(rsp)
+}
+
+// UpdateWorkOrderTagsArchiveWithResponse archive
+//
+// Update a work order tags archive by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /work_order_tags/{id}/archive (the `UpdateWorkOrderTagsArchive` operationId).
+func (c *ClientWithResponses) UpdateWorkOrderTagsArchiveWithResponse(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrderTagsArchiveResponse, error) {
+	rsp, err := c.UpdateWorkOrderTagsArchive(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateWorkOrderTagsArchiveResponse(rsp)
+}
+
 // ListWorkOrdersWithResponse index
 //
 // List all work orders, paginated via the Link header.
@@ -66156,51 +68734,6 @@ func (c *ClientWithResponses) ShowWorkOrderInspectionWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseShowWorkOrderInspectionResponse(rsp)
-}
-
-// CreateWorkOrdersLabelWithBodyWithResponse create
-//
-// Create a work orders label.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersLabelWithBodyWithResponse(ctx context.Context, workOrderId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersLabelResponse, error) {
-	rsp, err := c.CreateWorkOrdersLabelWithBody(ctx, workOrderId, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateWorkOrdersLabelResponse(rsp)
-}
-
-// CreateWorkOrdersLabelWithResponse create
-//
-// Create a work orders label.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /work_orders/{work_order_id}/labels (the `CreateWorkOrdersLabel` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersLabelWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersLabelResponse, error) {
-	rsp, err := c.CreateWorkOrdersLabel(ctx, workOrderId, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateWorkOrdersLabelResponse(rsp)
-}
-
-// DeleteWorkOrdersLabelWithResponse destroy
-//
-// Delete a work orders label by ID.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /work_orders/{work_order_id}/labels/{id} (the `DeleteWorkOrdersLabel` operationId).
-func (c *ClientWithResponses) DeleteWorkOrdersLabelWithResponse(ctx context.Context, workOrderId int, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersLabelResponse, error) {
-	rsp, err := c.DeleteWorkOrdersLabel(ctx, workOrderId, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteWorkOrdersLabelResponse(rsp)
 }
 
 // ShowWorkOrderPartsWithResponse show
@@ -69572,6 +72105,287 @@ func ParseUpdateCurrentLocationResponse(rsp *http.Response) (*UpdateCurrentLocat
 	return response, nil
 }
 
+// ParseListCustomerTagsResponse parses an HTTP response from a ListCustomerTagsWithResponse call
+func ParseListCustomerTagsResponse(rsp *http.Response) (*ListCustomerTagsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListCustomerTagsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListCustomerTagsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseCreateCustomerTagResponse parses an HTTP response from a CreateCustomerTagWithResponse call
+func ParseCreateCustomerTagResponse(rsp *http.Response) (*CreateCustomerTagResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateCustomerTagResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseShowCustomerTagResponse parses an HTTP response from a ShowCustomerTagWithResponse call
+func ParseShowCustomerTagResponse(rsp *http.Response) (*ShowCustomerTagResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ShowCustomerTagResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateCustomerTagResponse parses an HTTP response from a UpdateCustomerTagWithResponse call
+func ParseUpdateCustomerTagResponse(rsp *http.Response) (*UpdateCustomerTagResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateCustomerTagResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateCustomerTagsArchiveResponse parses an HTTP response from a UpdateCustomerTagsArchiveWithResponse call
+func ParseUpdateCustomerTagsArchiveResponse(rsp *http.Response) (*UpdateCustomerTagsArchiveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateCustomerTagsArchiveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateCustomerTagsRestoreResponse parses an HTTP response from a UpdateCustomerTagsRestoreWithResponse call
+func ParseUpdateCustomerTagsRestoreResponse(rsp *http.Response) (*UpdateCustomerTagsRestoreResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateCustomerTagsRestoreResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateCustomerTagsTrashResponse parses an HTTP response from a UpdateCustomerTagsTrashWithResponse call
+func ParseUpdateCustomerTagsTrashResponse(rsp *http.Response) (*UpdateCustomerTagsTrashResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateCustomerTagsTrashResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			BubbleClasses string `json:"bubble_classes"`
+			Color         string `json:"color"`
+			ColorClass    string `json:"color_class"`
+			ColorHex      string `json:"color_hex"`
+			Id            int    `json:"id"`
+			Name          string `json:"name"`
+			Status        string `json:"status"`
+			TrashedAt     string `json:"trashed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListCustomersResponse parses an HTTP response from a ListCustomersWithResponse call
 func ParseListCustomersResponse(rsp *http.Response) (*ListCustomersResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -71444,22 +74258,6 @@ func ParseCreateInspectionResponse(rsp *http.Response) (*CreateInspectionRespons
 	return response, nil
 }
 
-// ParseDeleteInspectionResponse parses an HTTP response from a DeleteInspectionWithResponse call
-func ParseDeleteInspectionResponse(rsp *http.Response) (*DeleteInspectionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteInspectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	return response, nil
-}
-
 // ParseShowInspectionResponse parses an HTTP response from a ShowInspectionWithResponse call
 func ParseShowInspectionResponse(rsp *http.Response) (*ShowInspectionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -71512,6 +74310,59 @@ func ParseUpdateInspectionResponse(rsp *http.Response) (*UpdateInspectionRespons
 	return response, nil
 }
 
+// ParseArchiveInspectionResponse parses an HTTP response from a ArchiveInspectionWithResponse call
+func ParseArchiveInspectionResponse(rsp *http.Response) (*ArchiveInspectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ArchiveInspectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl      string        `json:"app_url"`
+			CreatedAt   string        `json:"created_at"`
+			Description *string       `json:"description"`
+			Groups      []interface{} `json:"groups"`
+			Id          int           `json:"id"`
+			IsDefault   bool          `json:"is_default"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Name      string  `json:"name"`
+			Status    string  `json:"status"`
+			TrashedAt *string `json:"trashed_at"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseRemoveDefaultInspectionResponse parses an HTTP response from a RemoveDefaultInspectionWithResponse call
 func ParseRemoveDefaultInspectionResponse(rsp *http.Response) (*RemoveDefaultInspectionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -71528,7 +74379,6 @@ func ParseRemoveDefaultInspectionResponse(rsp *http.Response) (*RemoveDefaultIns
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Active      bool          `json:"active"`
 			AppUrl      string        `json:"app_url"`
 			CreatedAt   string        `json:"created_at"`
 			Description *string       `json:"description"`
@@ -71540,10 +74390,56 @@ func ParseRemoveDefaultInspectionResponse(rsp *http.Response) (*RemoveDefaultIns
 				Name string `json:"name"`
 				Url  string `json:"url"`
 			} `json:"location"`
-			Name      string `json:"name"`
-			Type      string `json:"type"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
+			Name      string  `json:"name"`
+			Status    string  `json:"status"`
+			TrashedAt *string `json:"trashed_at"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreInspectionResponse parses an HTTP response from a RestoreInspectionWithResponse call
+func ParseRestoreInspectionResponse(rsp *http.Response) (*RestoreInspectionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreInspectionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl      string        `json:"app_url"`
+			CreatedAt   string        `json:"created_at"`
+			Description *string       `json:"description"`
+			Groups      []interface{} `json:"groups"`
+			Id          int           `json:"id"`
+			IsDefault   bool          `json:"is_default"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Name      string  `json:"name"`
+			Status    string  `json:"status"`
+			TrashedAt *string `json:"trashed_at"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -71571,7 +74467,6 @@ func ParseSetDefaultInspectionResponse(rsp *http.Response) (*SetDefaultInspectio
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Active      bool          `json:"active"`
 			AppUrl      string        `json:"app_url"`
 			CreatedAt   string        `json:"created_at"`
 			Description *string       `json:"description"`
@@ -71583,10 +74478,12 @@ func ParseSetDefaultInspectionResponse(rsp *http.Response) (*SetDefaultInspectio
 				Name string `json:"name"`
 				Url  string `json:"url"`
 			} `json:"location"`
-			Name      string `json:"name"`
-			Type      string `json:"type"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
+			Name      string  `json:"name"`
+			Status    string  `json:"status"`
+			TrashedAt *string `json:"trashed_at"`
+			Type      string  `json:"type"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -71598,15 +74495,15 @@ func ParseSetDefaultInspectionResponse(rsp *http.Response) (*SetDefaultInspectio
 	return response, nil
 }
 
-// ParseToggleInspectionResponse parses an HTTP response from a ToggleInspectionWithResponse call
-func ParseToggleInspectionResponse(rsp *http.Response) (*ToggleInspectionResponse, error) {
+// ParseTrashInspectionResponse parses an HTTP response from a TrashInspectionWithResponse call
+func ParseTrashInspectionResponse(rsp *http.Response) (*TrashInspectionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ToggleInspectionResponse{
+	response := &TrashInspectionResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -71614,7 +74511,6 @@ func ParseToggleInspectionResponse(rsp *http.Response) (*ToggleInspectionRespons
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Active      bool          `json:"active"`
 			AppUrl      string        `json:"app_url"`
 			CreatedAt   string        `json:"created_at"`
 			Description *string       `json:"description"`
@@ -71627,6 +74523,8 @@ func ParseToggleInspectionResponse(rsp *http.Response) (*ToggleInspectionRespons
 				Url  string `json:"url"`
 			} `json:"location"`
 			Name      string `json:"name"`
+			Status    string `json:"status"`
+			TrashedAt string `json:"trashed_at"`
 			Type      string `json:"type"`
 			UpdatedAt string `json:"updated_at"`
 			Url       string `json:"url"`
@@ -71993,192 +74891,6 @@ func ParseUpdateInventoryLevelsStockResponse(rsp *http.Response) (*UpdateInvento
 	return response, nil
 }
 
-// ParseListLabelsResponse parses an HTTP response from a ListLabelsWithResponse call
-func ParseListLabelsResponse(rsp *http.Response) (*ListLabelsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListLabelsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []struct {
-			Active    bool   `json:"active"`
-			AppUrl    string `json:"app_url"`
-			Color     string `json:"color"`
-			CreatedAt string `json:"created_at"`
-			Id        int    `json:"id"`
-			Name      string `json:"name"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	switch {
-	case rsp.StatusCode == 200:
-		var headers ListLabelsResponse200Headers
-		if values := rsp.Header.Values("Link"); len(values) > 0 {
-			var value string
-			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.Link = &value
-		}
-		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
-			var value int
-			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.XPerPage = &value
-		}
-		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
-			var value int
-			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
-				return nil, err
-			}
-			headers.XTotalCount = &value
-		}
-		response.Headers200 = &headers
-	}
-
-	return response, nil
-}
-
-// ParseCreateLabelResponse parses an HTTP response from a CreateLabelWithResponse call
-func ParseCreateLabelResponse(rsp *http.Response) (*CreateLabelResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateLabelResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			Active    bool   `json:"active"`
-			AppUrl    string `json:"app_url"`
-			Color     string `json:"color"`
-			CreatedAt string `json:"created_at"`
-			Id        int    `json:"id"`
-			Name      string `json:"name"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListLabelsDataTransferResponse parses an HTTP response from a ListLabelsDataTransferWithResponse call
-func ParseListLabelsDataTransferResponse(rsp *http.Response) (*ListLabelsDataTransferResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListLabelsDataTransferResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	return response, nil
-}
-
-// ParseCreateLabelsExportResponse parses an HTTP response from a CreateLabelsExportWithResponse call
-func ParseCreateLabelsExportResponse(rsp *http.Response) (*CreateLabelsExportResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateLabelsExportResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			ExportLogId int    `json:"export_log_id"`
-			Status      string `json:"status"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateLabelResponse parses an HTTP response from a UpdateLabelWithResponse call
-func ParseUpdateLabelResponse(rsp *http.Response) (*UpdateLabelResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateLabelResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Active    bool   `json:"active"`
-			AppUrl    string `json:"app_url"`
-			Color     string `json:"color"`
-			CreatedAt string `json:"created_at"`
-			Id        int    `json:"id"`
-			Name      string `json:"name"`
-			UpdatedAt string `json:"updated_at"`
-			Url       string `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseListLaborMatricesResponse parses an HTTP response from a ListLaborMatricesWithResponse call
 func ParseListLaborMatricesResponse(rsp *http.Response) (*ListLaborMatricesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -72362,18 +75074,7 @@ func ParseListLaborRatesResponse(rsp *http.Response) (*ListLaborRatesResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []struct {
-			Active           bool   `json:"active"`
-			AppUrl           string `json:"app_url"`
-			CostPerHourCents int    `json:"cost_per_hour_cents"`
-			CreatedAt        string `json:"created_at"`
-			Id               int    `json:"id"`
-			IsDefault        bool   `json:"is_default"`
-			Name             string `json:"name"`
-			RateCents        int    `json:"rate_cents"`
-			UpdatedAt        string `json:"updated_at"`
-			Url              string `json:"url"`
-		}
+		var dest []LaborRate
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -72426,18 +75127,7 @@ func ParseCreateLaborRateResponse(rsp *http.Response) (*CreateLaborRateResponse,
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			Active           bool   `json:"active"`
-			AppUrl           string `json:"app_url"`
-			CostPerHourCents int    `json:"cost_per_hour_cents"`
-			CreatedAt        string `json:"created_at"`
-			Id               int    `json:"id"`
-			IsDefault        bool   `json:"is_default"`
-			Name             string `json:"name"`
-			RateCents        int    `json:"rate_cents"`
-			UpdatedAt        string `json:"updated_at"`
-			Url              string `json:"url"`
-		}
+		var dest LaborRate
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -72457,31 +75147,15 @@ func ParseCreateLaborRateResponse(rsp *http.Response) (*CreateLaborRateResponse,
 	return response, nil
 }
 
-// ParseDeleteLaborRateResponse parses an HTTP response from a DeleteLaborRateWithResponse call
-func ParseDeleteLaborRateResponse(rsp *http.Response) (*DeleteLaborRateResponse, error) {
+// ParseArchiveLaborRateResponse parses an HTTP response from a ArchiveLaborRateWithResponse call
+func ParseArchiveLaborRateResponse(rsp *http.Response) (*ArchiveLaborRateResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteLaborRateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	return response, nil
-}
-
-// ParseUpdateLaborRateResponse parses an HTTP response from a UpdateLaborRateWithResponse call
-func ParseUpdateLaborRateResponse(rsp *http.Response) (*UpdateLaborRateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateLaborRateResponse{
+	response := &ArchiveLaborRateResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -72489,7 +75163,82 @@ func ParseUpdateLaborRateResponse(rsp *http.Response) (*UpdateLaborRateResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Active           bool   `json:"active"`
+			AppUrl           string  `json:"app_url"`
+			CostPerHourCents int     `json:"cost_per_hour_cents"`
+			CreatedAt        string  `json:"created_at"`
+			Id               int     `json:"id"`
+			IsDefault        bool    `json:"is_default"`
+			Name             string  `json:"name"`
+			RateCents        int     `json:"rate_cents"`
+			Status           string  `json:"status"`
+			TrashedAt        *string `json:"trashed_at"`
+			UpdatedAt        string  `json:"updated_at"`
+			Url              string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreLaborRateResponse parses an HTTP response from a RestoreLaborRateWithResponse call
+func ParseRestoreLaborRateResponse(rsp *http.Response) (*RestoreLaborRateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreLaborRateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl           string  `json:"app_url"`
+			CostPerHourCents int     `json:"cost_per_hour_cents"`
+			CreatedAt        string  `json:"created_at"`
+			Id               int     `json:"id"`
+			IsDefault        bool    `json:"is_default"`
+			Name             string  `json:"name"`
+			RateCents        int     `json:"rate_cents"`
+			Status           string  `json:"status"`
+			TrashedAt        *string `json:"trashed_at"`
+			UpdatedAt        string  `json:"updated_at"`
+			Url              string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseTrashLaborRateResponse parses an HTTP response from a TrashLaborRateWithResponse call
+func ParseTrashLaborRateResponse(rsp *http.Response) (*TrashLaborRateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &TrashLaborRateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
 			AppUrl           string `json:"app_url"`
 			CostPerHourCents int    `json:"cost_per_hour_cents"`
 			CreatedAt        string `json:"created_at"`
@@ -72497,6 +75246,8 @@ func ParseUpdateLaborRateResponse(rsp *http.Response) (*UpdateLaborRateResponse,
 			IsDefault        bool   `json:"is_default"`
 			Name             string `json:"name"`
 			RateCents        int    `json:"rate_cents"`
+			Status           string `json:"status"`
+			TrashedAt        string `json:"trashed_at"`
 			UpdatedAt        string `json:"updated_at"`
 			Url              string `json:"url"`
 		}
@@ -74283,27 +77034,7 @@ func ParseListPackagesResponse(rsp *http.Response) (*ListPackagesResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []struct {
-			Active         bool    `json:"active"`
-			AppUrl         string  `json:"app_url"`
-			CategoryId     *int    `json:"category_id"`
-			CategoryName   *string `json:"category_name"`
-			CustomerNotes  *string `json:"customer_notes"`
-			Description    string  `json:"description"`
-			EstimatedHours string  `json:"estimated_hours"`
-			Id             int     `json:"id"`
-			Location       struct {
-				Id   int    `json:"id"`
-				Name string `json:"name"`
-				Url  string `json:"url"`
-			} `json:"location"`
-			Name                string `json:"name"`
-			PriceCents          *int   `json:"price_cents"`
-			ServiceType         string `json:"service_type"`
-			ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-			TriggersTireStorage bool   `json:"triggers_tire_storage"`
-			Url                 string `json:"url"`
-		}
+		var dest []Package
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -74356,27 +77087,7 @@ func ParseCreatePackageResponse(rsp *http.Response) (*CreatePackageResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest struct {
-			Active         bool     `json:"active"`
-			AppUrl         string   `json:"app_url"`
-			CategoryId     *int     `json:"category_id"`
-			CategoryName   *string  `json:"category_name"`
-			CustomerNotes  *string  `json:"customer_notes"`
-			Description    string   `json:"description"`
-			EstimatedHours *float32 `json:"estimated_hours"`
-			Id             int      `json:"id"`
-			Location       struct {
-				Id   int    `json:"id"`
-				Name string `json:"name"`
-				Url  string `json:"url"`
-			} `json:"location"`
-			Name                string `json:"name"`
-			PriceCents          *int   `json:"price_cents"`
-			ServiceType         string `json:"service_type"`
-			ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-			TriggersTireStorage bool   `json:"triggers_tire_storage"`
-			Url                 string `json:"url"`
-		}
+		var dest Package
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -74410,9 +77121,36 @@ func ParseUpdatePackageResponse(rsp *http.Response) (*UpdatePackageResponse, err
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseArchivePackageResponse parses an HTTP response from a ArchivePackageWithResponse call
+func ParseArchivePackageResponse(rsp *http.Response) (*ArchivePackageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ArchivePackageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Active         bool    `json:"active"`
 			AppUrl         string  `json:"app_url"`
 			CategoryId     *int    `json:"category_id"`
 			CategoryName   *string `json:"category_name"`
@@ -74425,26 +77163,19 @@ func ParseUpdatePackageResponse(rsp *http.Response) (*UpdatePackageResponse, err
 				Name string `json:"name"`
 				Url  string `json:"url"`
 			} `json:"location"`
-			Name                string `json:"name"`
-			PriceCents          *int   `json:"price_cents"`
-			ServiceType         string `json:"service_type"`
-			ShowTechWithCert    bool   `json:"show_tech_with_cert"`
-			TriggersTireStorage bool   `json:"triggers_tire_storage"`
-			Url                 string `json:"url"`
+			Name                string  `json:"name"`
+			PriceCents          *int    `json:"price_cents"`
+			ServiceType         string  `json:"service_type"`
+			ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+			Status              string  `json:"status"`
+			TrashedAt           *string `json:"trashed_at"`
+			TriggersTireStorage bool    `json:"triggers_tire_storage"`
+			Url                 string  `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
 		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
 
 	}
 
@@ -74466,8 +77197,89 @@ func ParseCreatePackagesDuplicateResponse(rsp *http.Response) (*CreatePackagesDu
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Package
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest struct {
-			Active         bool    `json:"active"`
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestorePackageResponse parses an HTTP response from a RestorePackageWithResponse call
+func ParseRestorePackageResponse(rsp *http.Response) (*RestorePackageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestorePackageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl         string  `json:"app_url"`
+			CategoryId     *int    `json:"category_id"`
+			CategoryName   *string `json:"category_name"`
+			CustomerNotes  *string `json:"customer_notes"`
+			Description    string  `json:"description"`
+			EstimatedHours string  `json:"estimated_hours"`
+			Id             int     `json:"id"`
+			Location       struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Name                string  `json:"name"`
+			PriceCents          *int    `json:"price_cents"`
+			ServiceType         string  `json:"service_type"`
+			ShowTechWithCert    bool    `json:"show_tech_with_cert"`
+			Status              string  `json:"status"`
+			TrashedAt           *string `json:"trashed_at"`
+			TriggersTireStorage bool    `json:"triggers_tire_storage"`
+			Url                 string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseTrashPackageResponse parses an HTTP response from a TrashPackageWithResponse call
+func ParseTrashPackageResponse(rsp *http.Response) (*TrashPackageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &TrashPackageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
 			AppUrl         string  `json:"app_url"`
 			CategoryId     *int    `json:"category_id"`
 			CategoryName   *string `json:"category_name"`
@@ -74484,22 +77296,15 @@ func ParseCreatePackagesDuplicateResponse(rsp *http.Response) (*CreatePackagesDu
 			PriceCents          *int   `json:"price_cents"`
 			ServiceType         string `json:"service_type"`
 			ShowTechWithCert    bool   `json:"show_tech_with_cert"`
+			Status              string `json:"status"`
+			TrashedAt           string `json:"trashed_at"`
 			TriggersTireStorage bool   `json:"triggers_tire_storage"`
 			Url                 string `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
+		response.JSON200 = &dest
 
 	}
 
@@ -76245,41 +79050,6 @@ func ParseSeedDefaultsServiceCategoriesResponse(rsp *http.Response) (*SeedDefaul
 	return response, nil
 }
 
-// ParseDeleteServiceCategoryResponse parses an HTTP response from a DeleteServiceCategoryWithResponse call
-func ParseDeleteServiceCategoryResponse(rsp *http.Response) (*DeleteServiceCategoryResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteServiceCategoryResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServiceCategory
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseUpdateServiceCategoryResponse parses an HTTP response from a UpdateServiceCategoryWithResponse call
 func ParseUpdateServiceCategoryResponse(rsp *http.Response) (*UpdateServiceCategoryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -76296,6 +79066,129 @@ func ParseUpdateServiceCategoryResponse(rsp *http.Response) (*UpdateServiceCateg
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest ServiceCategory
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseArchiveServiceCategoryResponse parses an HTTP response from a ArchiveServiceCategoryWithResponse call
+func ParseArchiveServiceCategoryResponse(rsp *http.Response) (*ArchiveServiceCategoryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ArchiveServiceCategoryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string  `json:"app_url"`
+			Canonical    bool    `json:"canonical"`
+			CanonicalKey *string `json:"canonical_key"`
+			Color        *string `json:"color"`
+			Description  *string `json:"description"`
+			Icon         *string `json:"icon"`
+			Id           int     `json:"id"`
+			JobCount     int     `json:"job_count"`
+			Name         string  `json:"name"`
+			Position     int     `json:"position"`
+			ServiceType  string  `json:"service_type"`
+			Status       string  `json:"status"`
+			TrashedAt    *string `json:"trashed_at"`
+			Url          string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreServiceCategoryResponse parses an HTTP response from a RestoreServiceCategoryWithResponse call
+func ParseRestoreServiceCategoryResponse(rsp *http.Response) (*RestoreServiceCategoryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreServiceCategoryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string  `json:"app_url"`
+			Canonical    bool    `json:"canonical"`
+			CanonicalKey *string `json:"canonical_key"`
+			Color        *string `json:"color"`
+			Description  *string `json:"description"`
+			Icon         *string `json:"icon"`
+			Id           int     `json:"id"`
+			JobCount     int     `json:"job_count"`
+			Name         string  `json:"name"`
+			Position     int     `json:"position"`
+			ServiceType  string  `json:"service_type"`
+			Status       string  `json:"status"`
+			TrashedAt    *string `json:"trashed_at"`
+			Url          string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseTrashServiceCategoryResponse parses an HTTP response from a TrashServiceCategoryWithResponse call
+func ParseTrashServiceCategoryResponse(rsp *http.Response) (*TrashServiceCategoryResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &TrashServiceCategoryResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string  `json:"app_url"`
+			Canonical    bool    `json:"canonical"`
+			CanonicalKey *string `json:"canonical_key"`
+			Color        *string `json:"color"`
+			Description  *string `json:"description"`
+			Icon         *string `json:"icon"`
+			Id           int     `json:"id"`
+			JobCount     int     `json:"job_count"`
+			Name         string  `json:"name"`
+			Position     int     `json:"position"`
+			ServiceType  string  `json:"service_type"`
+			Status       string  `json:"status"`
+			TrashedAt    string  `json:"trashed_at"`
+			Url          string  `json:"url"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -80578,6 +83471,189 @@ func ParseListVendorsPurchaseOrdersResponse(rsp *http.Response) (*ListVendorsPur
 	return response, nil
 }
 
+// ParseListWorkOrderTagsResponse parses an HTTP response from a ListWorkOrderTagsWithResponse call
+func ParseListWorkOrderTagsResponse(rsp *http.Response) (*ListWorkOrderTagsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListWorkOrderTagsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl        string  `json:"app_url"`
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			CreatedAt     string  `json:"created_at"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+			UpdatedAt     string  `json:"updated_at"`
+			Url           string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListWorkOrderTagsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseCreateWorkOrderTagResponse parses an HTTP response from a CreateWorkOrderTagWithResponse call
+func ParseCreateWorkOrderTagResponse(rsp *http.Response) (*CreateWorkOrderTagResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkOrderTagResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AppUrl        string  `json:"app_url"`
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			CreatedAt     string  `json:"created_at"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+			UpdatedAt     string  `json:"updated_at"`
+			Url           string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrderTagResponse parses an HTTP response from a UpdateWorkOrderTagWithResponse call
+func ParseUpdateWorkOrderTagResponse(rsp *http.Response) (*UpdateWorkOrderTagResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrderTagResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl        string  `json:"app_url"`
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			CreatedAt     string  `json:"created_at"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+			UpdatedAt     string  `json:"updated_at"`
+			Url           string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateWorkOrderTagsArchiveResponse parses an HTTP response from a UpdateWorkOrderTagsArchiveWithResponse call
+func ParseUpdateWorkOrderTagsArchiveResponse(rsp *http.Response) (*UpdateWorkOrderTagsArchiveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateWorkOrderTagsArchiveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl        string  `json:"app_url"`
+			BubbleClasses string  `json:"bubble_classes"`
+			Color         string  `json:"color"`
+			ColorClass    string  `json:"color_class"`
+			ColorHex      string  `json:"color_hex"`
+			CreatedAt     string  `json:"created_at"`
+			Id            int     `json:"id"`
+			Name          string  `json:"name"`
+			Status        string  `json:"status"`
+			TrashedAt     *string `json:"trashed_at"`
+			UpdatedAt     string  `json:"updated_at"`
+			Url           string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListWorkOrdersResponse parses an HTTP response from a ListWorkOrdersWithResponse call
 func ParseListWorkOrdersResponse(rsp *http.Response) (*ListWorkOrdersResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -81622,70 +84698,6 @@ func ParseShowWorkOrderInspectionResponse(rsp *http.Response) (*ShowWorkOrderIns
 	}
 
 	response := &ShowWorkOrderInspectionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest WorkOrder
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateWorkOrdersLabelResponse parses an HTTP response from a CreateWorkOrdersLabelWithResponse call
-func ParseCreateWorkOrdersLabelResponse(rsp *http.Response) (*CreateWorkOrdersLabelResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateWorkOrdersLabelResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest WorkOrder
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case rsp.StatusCode == 422:
-		break // No content-type
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteWorkOrdersLabelResponse parses an HTTP response from a DeleteWorkOrdersLabelWithResponse call
-func ParseDeleteWorkOrdersLabelResponse(rsp *http.Response) (*DeleteWorkOrdersLabelResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteWorkOrdersLabelResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

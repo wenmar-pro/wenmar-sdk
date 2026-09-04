@@ -477,6 +477,22 @@ paths:
       summary: index
       tags:
       - appointments
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: GET /appointments -> 200
@@ -629,22 +645,6 @@ paths:
               schema:
                 type: integer
               description: Records per page
-      parameters:
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: q
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: status
-        in: query
-        required: false
-        schema:
-          type: string
       description: List all appointments, paginated via the Link header.
       operationId: list_appointments
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -2598,11 +2598,6 @@ paths:
       summary: create
       tags:
       - campaigns
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCampaignRequest"
       responses:
         '201':
           description: POST /campaigns -> 201
@@ -2621,6 +2616,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCampaignRequest"
       description: Create a campaign.
       operationId: create_campaign
       x-curl-example: |-
@@ -2940,6 +2940,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCatalogCleanupsApplicationRequest"
       responses:
         '200':
           description: POST /catalog_cleanups/{catalog_cleanup_id}/applications ->
@@ -2968,11 +2973,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCatalogCleanupsApplicationRequest"
       description: Create a catalog cleanups application.
       operationId: create_catalog_cleanups_application
       x-curl-example: |-
@@ -4759,20 +4759,53 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/customers":
+  "/customer_tags":
     get:
       summary: index
       tags:
-      - customers
+      - customer_tags
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
       responses:
         '200':
-          description: GET /customers -> 200
+          description: GET /customer_tags -> 200
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Customer"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                    bubble_classes:
+                      type: string
+                    status:
+                      type: string
+                    trashed_at:
+                      type: string
+                      nullable: true
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+                  - bubble_classes
+                  - status
+                  - trashed_at
           headers:
             Link:
               schema:
@@ -4786,8 +4819,60 @@ paths:
               schema:
                 type: integer
               description: Records per page
-        '401':
-          description: GET /customers -> 401
+      description: List all customer tags, paginated via the Link header.
+      operationId: list_customer_tags
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - customer_tags
+      responses:
+        '201':
+          description: POST /customer_tags -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+        '403':
+          description: POST /customer_tags -> 403
           content:
             application/json:
               schema:
@@ -4797,7 +4882,359 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomerTagRequest"
+      description: Create a customer tag.
+      operationId: create_customer_tag
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags.json
+      x-wenmar-request-schema: CreateCustomerTagRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customer_tags/{id}":
+    get:
+      summary: show
+      tags:
+      - customer_tags
       parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+      description: Show a customer tag by ID.
+      operationId: show_customer_tag
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCustomerTagRequest"
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+      description: Update a customer tag by ID.
+      operationId: update_customer_tag
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
+      x-wenmar-request-schema: UpdateCustomerTagRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customer_tags/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCustomerTagsArchiveRequest"
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+      description: Update a customer tags archive by ID.
+      operationId: update_customer_tags_archive
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
+      x-wenmar-request-schema: UpdateCustomerTagsArchiveRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customer_tags/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCustomerTagsRestoreRequest"
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+      description: Update a customer tags restore by ID.
+      operationId: update_customer_tags_restore
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
+      x-wenmar-request-schema: UpdateCustomerTagsRestoreRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customer_tags/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - customer_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCustomerTagsTrashRequest"
+      responses:
+        '200':
+          description: PATCH /customer_tags/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+      description: Update a customer tags trash by ID.
+      operationId: update_customer_tags_trash
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
+      x-wenmar-request-schema: UpdateCustomerTagsTrashRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers":
+    get:
+      summary: index
+      tags:
+      - customers
+      parameters:
+      - name: customer_tag_id
+        in: query
+        required: false
+        schema:
+          type: integer
       - name: has_balance
         in: query
         required: false
@@ -4833,18 +5270,44 @@ paths:
         required: false
         schema:
           type: string
-      - name: tag_ids
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
       - name: type
         in: query
         required: false
         schema:
           type: string
+      responses:
+        '200':
+          description: GET /customers -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Customer"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /customers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: List all customers, paginated via the Link header.
       operationId: list_customers
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -4866,6 +5329,11 @@ paths:
       summary: create
       tags:
       - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomerRequest"
       responses:
         '201':
           description: POST /customers -> 201
@@ -4895,11 +5363,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCustomerRequest"
       description: Create a customer.
       operationId: create_customer
       x-curl-example: |-
@@ -6556,6 +7019,11 @@ paths:
       summary: create
       tags:
       - expenses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateExpenseRequest"
       responses:
         '201':
           description: POST /expenses -> 201
@@ -6647,11 +7115,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateExpenseRequest"
       description: Create a expense.
       operationId: create_expense
       x-curl-example: |-
@@ -7854,6 +8317,12 @@ paths:
       summary: index
       tags:
       - inspections
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /inspections -> 200
@@ -7876,12 +8345,6 @@ paths:
               schema:
                 type: integer
               description: Records per page
-      parameters:
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       description: List all inspections, paginated via the Link header.
       operationId: list_inspections
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -7900,6 +8363,11 @@ paths:
       summary: create
       tags:
       - inspections
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateInspectionRequest"
       responses:
         '201':
           description: POST /inspections -> 201
@@ -7918,11 +8386,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateInspectionRequest"
       description: Create a inspection.
       operationId: create_inspection
       x-curl-example: |-
@@ -7940,33 +8403,6 @@ paths:
         - 504
         method-gated: true
   "/inspections/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - inspections
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '204':
-          description: DELETE /inspections/{id} -> 204
-      description: Delete a inspection by ID.
-      operationId: delete_inspection
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inspections/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
     get:
       summary: show
       tags:
@@ -8036,6 +8472,111 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/inspections/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - inspections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: PATCH /inspections/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  type:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  is_default:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  groups:
+                    type: array
+                    items: {}
+                required:
+                - id
+                - type
+                - name
+                - description
+                - status
+                - trashed_at
+                - is_default
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - groups
+        '422':
+          description: PATCH /inspections/{id}/archive -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveInspectionRequest"
+      description:
+      operationId: archive_inspection
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+      x-wenmar-request-schema: ArchiveInspectionRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/inspections/{id}/remove_default":
     patch:
       summary: remove_default
@@ -8069,8 +8610,11 @@ paths:
                   description:
                     nullable: true
                     type: string
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                   is_default:
                     type: boolean
                   created_at:
@@ -8102,7 +8646,8 @@ paths:
                 - type
                 - name
                 - description
-                - active
+                - status
+                - trashed_at
                 - is_default
                 - created_at
                 - updated_at
@@ -8116,6 +8661,100 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
       x-wenmar-request-schema: RemoveDefaultInspectionRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/inspections/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - inspections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreInspectionRequest"
+      responses:
+        '200':
+          description: PATCH /inspections/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  type:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  is_default:
+                    type: boolean
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  groups:
+                    type: array
+                    items: {}
+                required:
+                - id
+                - type
+                - name
+                - description
+                - status
+                - trashed_at
+                - is_default
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+                - groups
+      description:
+      operationId: restore_inspection
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+      x-wenmar-request-schema: RestoreInspectionRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -8159,8 +8798,11 @@ paths:
                   description:
                     nullable: true
                     type: string
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                   is_default:
                     type: boolean
                   created_at:
@@ -8192,7 +8834,8 @@ paths:
                 - type
                 - name
                 - description
-                - active
+                - status
+                - trashed_at
                 - is_default
                 - created_at
                 - updated_at
@@ -8216,9 +8859,9 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/inspections/{id}/toggle":
+  "/inspections/{id}/trash":
     patch:
-      summary: toggle
+      summary: trash
       tags:
       - inspections
       parameters:
@@ -8231,10 +8874,10 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/ToggleInspectionRequest"
+              "$ref": "#/components/schemas/TrashInspectionRequest"
       responses:
         '200':
-          description: PATCH /inspections/{id}/toggle -> 200
+          description: PATCH /inspections/{id}/trash -> 200
           content:
             application/json:
               schema:
@@ -8249,8 +8892,10 @@ paths:
                   description:
                     nullable: true
                     type: string
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
                   is_default:
                     type: boolean
                   created_at:
@@ -8282,7 +8927,8 @@ paths:
                 - type
                 - name
                 - description
-                - active
+                - status
+                - trashed_at
                 - is_default
                 - created_at
                 - updated_at
@@ -8291,11 +8937,11 @@ paths:
                 - location
                 - groups
       description:
-      operationId: toggle_inspection
+      operationId: trash_inspection
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
-      x-wenmar-request-schema: ToggleInspectionRequest
+      x-wenmar-request-schema: TrashInspectionRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -8382,8 +9028,8 @@ paths:
                       nullable: true
                       type: string
                     bin_location:
-                      type: string
                       nullable: true
+                      type: string
                     created_at:
                       type: string
                     updated_at:
@@ -8442,11 +9088,6 @@ paths:
       summary: create
       tags:
       - inventory_levels
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateInventoryLevelRequest"
       responses:
         '201':
           description: POST /inventory_levels -> 201
@@ -8536,6 +9177,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateInventoryLevelRequest"
       description: Create a inventory level.
       operationId: create_inventory_level
       x-curl-example: |-
@@ -8980,274 +9626,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/labels":
-    get:
-      summary: index
-      tags:
-      - labels
-      responses:
-        '200':
-          description: GET /labels -> 200
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    color:
-                      type: string
-                    active:
-                      type: boolean
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    url:
-                      type: string
-                    app_url:
-                      type: string
-                  required:
-                  - id
-                  - name
-                  - color
-                  - active
-                  - created_at
-                  - updated_at
-                  - url
-                  - app_url
-          headers:
-            Link:
-              schema:
-                type: string
-              description: RFC 5988 pagination links
-            X-Total-Count:
-              schema:
-                type: integer
-              description: Total matching records
-            X-Per-Page:
-              schema:
-                type: integer
-              description: Records per page
-      description: List all labels, paginated via the Link header.
-      operationId: list_labels
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/labels.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-    post:
-      summary: create
-      tags:
-      - labels
-      responses:
-        '201':
-          description: POST /labels -> 201
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  color:
-                    type: string
-                  active:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - color
-                - active
-                - created_at
-                - updated_at
-                - url
-                - app_url
-        '403':
-          description: POST /labels -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateLabelRequest"
-      description: Create a label.
-      operationId: create_label
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/labels.json
-      x-wenmar-request-schema: CreateLabelRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/labels/data_transfer":
-    get:
-      summary: show
-      tags:
-      - labels
-      responses:
-        '200':
-          description: GET /labels/data_transfer -> 200
-          content:
-            text/html:
-              schema:
-                type: string
-      description: List all labels data transfer, paginated via the Link header.
-      operationId: list_labels_data_transfer
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/labels/data_transfer.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/labels/export":
-    post:
-      summary: create
-      tags:
-      - labels
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateLabelsExportRequest"
-      responses:
-        '200':
-          description: POST /labels/export -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  export_log_id:
-                    type: integer
-                  status:
-                    type: string
-                required:
-                - export_log_id
-                - status
-      description: Create a labels export.
-      operationId: create_labels_export
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/labels/export.json
-      x-wenmar-request-schema: CreateLabelsExportRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/labels/{id}":
-    patch:
-      summary: update
-      tags:
-      - labels
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLabelRequest"
-      responses:
-        '200':
-          description: PATCH /labels/{id} -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  color:
-                    type: string
-                  active:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - color
-                - active
-                - created_at
-                - updated_at
-                - url
-                - app_url
-      description: Update a label by ID.
-      operationId: update_label
-      x-curl-example: |-
-        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/labels/<id>.json
-      x-wenmar-request-schema: UpdateLabelRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/labor_matrices":
     get:
       summary: index
@@ -9527,39 +9905,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    rate_cents:
-                      type: integer
-                    cost_per_hour_cents:
-                      type: integer
-                    is_default:
-                      type: boolean
-                    active:
-                      type: boolean
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    url:
-                      type: string
-                    app_url:
-                      type: string
-                  required:
-                  - id
-                  - name
-                  - rate_cents
-                  - cost_per_hour_cents
-                  - is_default
-                  - active
-                  - created_at
-                  - updated_at
-                  - url
-                  - app_url
+                  "$ref": "#/components/schemas/LaborRate"
           headers:
             Link:
               schema:
@@ -9591,45 +9937,18 @@ paths:
       summary: create
       tags:
       - labor_rates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateLaborRateRequest"
       responses:
         '201':
           description: POST /labor_rates -> 201
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  rate_cents:
-                    type: integer
-                  cost_per_hour_cents:
-                    type: integer
-                  is_default:
-                    type: boolean
-                  active:
-                    type: boolean
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - rate_cents
-                - cost_per_hour_cents
-                - is_default
-                - active
-                - created_at
-                - updated_at
-                - url
-                - app_url
+                "$ref": "#/components/schemas/LaborRate"
         '403':
           description: POST /labor_rates -> 403
           content:
@@ -9641,11 +9960,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateLaborRateRequest"
       description: Create a labor rate.
       operationId: create_labor_rate
       x-curl-example: |-
@@ -9662,36 +9976,9 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/labor_rates/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - labor_rates
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '204':
-          description: DELETE /labor_rates/{id} -> 204
-      description: Delete a labor rate by ID.
-      operationId: delete_labor_rate
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_rates/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
+  "/labor_rates/{id}/archive":
     patch:
-      summary: update
+      summary: archive
       tags:
       - labor_rates
       parameters:
@@ -9704,10 +9991,10 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UpdateLaborRateRequest"
+              "$ref": "#/components/schemas/ArchiveLaborRateRequest"
       responses:
         '200':
-          description: PATCH /labor_rates/{id} -> 200
+          description: PATCH /labor_rates/{id}/archive -> 200
           content:
             application/json:
               schema:
@@ -9723,8 +10010,11 @@ paths:
                     type: integer
                   is_default:
                     type: boolean
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                   created_at:
                     type: string
                   updated_at:
@@ -9739,17 +10029,167 @@ paths:
                 - rate_cents
                 - cost_per_hour_cents
                 - is_default
-                - active
+                - status
+                - trashed_at
                 - created_at
                 - updated_at
                 - url
                 - app_url
-      description: Update a labor rate by ID.
-      operationId: update_labor_rate
+      description:
+      operationId: archive_labor_rate
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
-      x-wenmar-request-schema: UpdateLaborRateRequest
+      x-wenmar-request-schema: ArchiveLaborRateRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/labor_rates/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - labor_rates
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreLaborRateRequest"
+      responses:
+        '200':
+          description: PATCH /labor_rates/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  rate_cents:
+                    type: integer
+                  cost_per_hour_cents:
+                    type: integer
+                  is_default:
+                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - rate_cents
+                - cost_per_hour_cents
+                - is_default
+                - status
+                - trashed_at
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description:
+      operationId: restore_labor_rate
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
+      x-wenmar-request-schema: RestoreLaborRateRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/labor_rates/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - labor_rates
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashLaborRateRequest"
+      responses:
+        '200':
+          description: PATCH /labor_rates/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  rate_cents:
+                    type: integer
+                  cost_per_hour_cents:
+                    type: integer
+                  is_default:
+                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - rate_cents
+                - cost_per_hour_cents
+                - is_default
+                - status
+                - trashed_at
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description:
+      operationId: trash_labor_rate
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
+      x-wenmar-request-schema: TrashLaborRateRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -10363,6 +10803,11 @@ paths:
         required: true
         schema:
           type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationRequest"
       responses:
         '200':
           description: PATCH /locations/{id} -> 200
@@ -10442,11 +10887,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLocationRequest"
       description: Update a location by ID.
       operationId: update_location
       x-curl-example: |-
@@ -10627,11 +11067,6 @@ paths:
         required: true
         schema:
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLocationsBusinessProfileRequest"
       responses:
         '200':
           description: PATCH /locations/{id}/business_profile -> 200
@@ -10756,6 +11191,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsBusinessProfileRequest"
       description: Update a locations business profile by ID.
       operationId: update_locations_business_profile
       x-curl-example: |-
@@ -10853,11 +11293,6 @@ paths:
         required: true
         schema:
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLocationsOperationsRequest"
       responses:
         '200':
           description: PATCH /locations/{id}/operations -> 200
@@ -10915,6 +11350,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsOperationsRequest"
       description: Update a locations operations by ID.
       operationId: update_locations_operations
       x-curl-example: |-
@@ -11001,11 +11441,6 @@ paths:
         required: true
         schema:
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLocationsScheduleConfigRequest"
       responses:
         '200':
           description: PATCH /locations/{location_id}/schedule_config -> 200
@@ -11052,6 +11487,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsScheduleConfigRequest"
       description: Update a locations schedule config by ID.
       operationId: update_locations_schedule_config
       x-curl-example: |-
@@ -11556,8 +11996,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        type: string
                         nullable: true
+                        type: string
                       role:
                         type: string
                       confirmed:
@@ -11937,6 +12377,22 @@ paths:
       summary: index
       tags:
       - orders
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: vendor_id
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /orders/purchase_orders -> 200
@@ -11959,22 +12415,6 @@ paths:
               schema:
                 type: integer
               description: Records per page
-      parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: vendor_id
-        in: query
-        required: false
-        schema:
-          type: integer
       description: List all orders purchase orders, paginated via the Link header.
       operationId: list_orders_purchase_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -11993,6 +12433,11 @@ paths:
       summary: create
       tags:
       - orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateOrdersPurchaseOrderRequest"
       responses:
         '201':
           description: POST /orders/purchase_orders -> 201
@@ -12022,11 +12467,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateOrdersPurchaseOrderRequest"
       description: Create a orders purchase order.
       operationId: create_orders_purchase_order
       x-curl-example: |-
@@ -12512,69 +12952,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    service_type:
-                      type: string
-                    category_id:
-                      nullable: true
-                      type: integer
-                    category_name:
-                      nullable: true
-                      type: string
-                    estimated_hours:
-                      type: string
-                    customer_notes:
-                      nullable: true
-                      type: string
-                    show_tech_with_cert:
-                      type: boolean
-                    triggers_tire_storage:
-                      type: boolean
-                    price_cents:
-                      nullable: true
-                      type: integer
-                    active:
-                      type: boolean
-                    url:
-                      type: string
-                    app_url:
-                      type: string
-                    location:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        url:
-                          type: string
-                      required:
-                      - id
-                      - name
-                      - url
-                  required:
-                  - id
-                  - name
-                  - description
-                  - service_type
-                  - category_id
-                  - category_name
-                  - estimated_hours
-                  - customer_notes
-                  - show_tech_with_cert
-                  - triggers_tire_storage
-                  - price_cents
-                  - active
-                  - url
-                  - app_url
-                  - location
+                  "$ref": "#/components/schemas/Package"
           headers:
             Link:
               schema:
@@ -12612,70 +12990,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  service_type:
-                    type: string
-                  category_id:
-                    nullable: true
-                    type: integer
-                  category_name:
-                    nullable: true
-                    type: string
-                  estimated_hours:
-                    nullable: true
-                    type: number
-                  customer_notes:
-                    nullable: true
-                    type: string
-                  show_tech_with_cert:
-                    type: boolean
-                  triggers_tire_storage:
-                    type: boolean
-                  price_cents:
-                    nullable: true
-                    type: integer
-                  active:
-                    type: boolean
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                  location:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      url:
-                        type: string
-                    required:
-                    - id
-                    - name
-                    - url
-                required:
-                - id
-                - name
-                - description
-                - service_type
-                - category_id
-                - category_name
-                - estimated_hours
-                - customer_notes
-                - show_tech_with_cert
-                - triggers_tire_storage
-                - price_cents
-                - active
-                - url
-                - app_url
-                - location
+                "$ref": "#/components/schemas/Package"
         '403':
           description: POST /packages -> 403
           content:
@@ -12719,14 +13034,52 @@ paths:
         required: true
         schema:
           type: integer
+      responses:
+        '403':
+          description: PATCH /packages/{id} -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Update a package by ID.
+      operationId: update_package
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/packages/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - packages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UpdatePackageRequest"
+              "$ref": "#/components/schemas/ArchivePackageRequest"
       responses:
         '200':
-          description: PATCH /packages/{id} -> 200
+          description: PATCH /packages/{id}/archive -> 200
           content:
             application/json:
               schema:
@@ -12758,8 +13111,11 @@ paths:
                   price_cents:
                     nullable: true
                     type: integer
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -12789,27 +13145,17 @@ paths:
                 - show_tech_with_cert
                 - triggers_tire_storage
                 - price_cents
-                - active
+                - status
+                - trashed_at
                 - url
                 - app_url
                 - location
-        '403':
-          description: PATCH /packages/{id} -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: Update a package by ID.
-      operationId: update_package
+      description:
+      operationId: archive_package
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
-      x-wenmar-request-schema: UpdatePackageRequest
+      x-wenmar-request-schema: ArchivePackageRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -12831,14 +13177,64 @@ paths:
         required: true
         schema:
           type: integer
+      responses:
+        '201':
+          description: POST /packages/{id}/duplicate -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Package"
+        '403':
+          description: POST /packages/{id}/duplicate -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       requestBody:
         content:
           application/json:
             schema:
               "$ref": "#/components/schemas/CreatePackagesDuplicateRequest"
+      description: Create a packages duplicate.
+      operationId: create_packages_duplicate
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
+      x-wenmar-request-schema: CreatePackagesDuplicateRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/packages/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - packages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestorePackageRequest"
       responses:
-        '201':
-          description: POST /packages/{id}/duplicate -> 201
+        '200':
+          description: PATCH /packages/{id}/restore -> 200
           content:
             application/json:
               schema:
@@ -12870,8 +13266,11 @@ paths:
                   price_cents:
                     nullable: true
                     type: integer
-                  active:
-                    type: boolean
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -12901,27 +13300,121 @@ paths:
                 - show_tech_with_cert
                 - triggers_tire_storage
                 - price_cents
-                - active
+                - status
+                - trashed_at
                 - url
                 - app_url
                 - location
-        '403':
-          description: POST /packages/{id}/duplicate -> 403
+      description:
+      operationId: restore_package
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
+      x-wenmar-request-schema: RestorePackageRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/packages/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - packages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashPackageRequest"
+      responses:
+        '200':
+          description: PATCH /packages/{id}/trash -> 200
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  service_type:
+                    type: string
+                  category_id:
+                    nullable: true
+                    type: integer
+                  category_name:
+                    nullable: true
+                    type: string
+                  estimated_hours:
+                    type: string
+                  customer_notes:
+                    nullable: true
+                    type: string
+                  show_tech_with_cert:
+                    type: boolean
+                  triggers_tire_storage:
+                    type: boolean
+                  price_cents:
+                    nullable: true
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
                 required:
-                - error
-      description: Create a packages duplicate.
-      operationId: create_packages_duplicate
+                - id
+                - name
+                - description
+                - service_type
+                - category_id
+                - category_name
+                - estimated_hours
+                - customer_notes
+                - show_tech_with_cert
+                - triggers_tire_storage
+                - price_cents
+                - status
+                - trashed_at
+                - url
+                - app_url
+                - location
+      description:
+      operationId: trash_package
       x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/packages/<id>.json
-      x-wenmar-request-schema: CreatePackagesDuplicateRequest
+      x-wenmar-request-schema: TrashPackageRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -13365,14 +13858,14 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      description: List all payments, paginated via the Link header.
-      operationId: list_payments
       parameters:
       - name: method
         in: query
         required: false
         schema:
           type: string
+      description: List all payments, paginated via the Link header.
+      operationId: list_payments
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/payments.json'
       x-retry:
@@ -15938,11 +16431,6 @@ paths:
       summary: create
       tags:
       - service_categories
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateServiceCategoryRequest"
       responses:
         '201':
           description: POST /service_categories -> 201
@@ -15961,6 +16449,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateServiceCategoryRequest"
       description: Create a service category.
       operationId: create_service_category
       x-curl-example: |-
@@ -16019,48 +16512,6 @@ paths:
         - 504
         method-gated: true
   "/service_categories/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - service_categories
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: DELETE /service_categories/{id} -> 200
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ServiceCategory"
-        '422':
-          description: DELETE /service_categories/{id} -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: Delete a service category by ID.
-      operationId: delete_service_category
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/service_categories/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
     patch:
       summary: update
       tags:
@@ -16089,6 +16540,269 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
       x-wenmar-request-schema: UpdateServiceCategoryRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ArchiveServiceCategoryRequest"
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                    type: string
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - status
+                - trashed_at
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description:
+      operationId: archive_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: ArchiveServiceCategoryRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/restore":
+    patch:
+      summary: restore
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RestoreServiceCategoryRequest"
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/restore -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                    type: string
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - status
+                - trashed_at
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description:
+      operationId: restore_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: RestoreServiceCategoryRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/service_categories/{id}/trash":
+    patch:
+      summary: trash
+      tags:
+      - service_categories
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashServiceCategoryRequest"
+      responses:
+        '200':
+          description: PATCH /service_categories/{id}/trash -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    nullable: true
+                    type: string
+                  service_type:
+                    type: string
+                  icon:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    type: string
+                  position:
+                    type: integer
+                  canonical:
+                    type: boolean
+                  canonical_key:
+                    nullable: true
+                    type: string
+                  job_count:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - service_type
+                - icon
+                - color
+                - status
+                - trashed_at
+                - position
+                - canonical
+                - canonical_key
+                - job_count
+                - url
+                - app_url
+      description:
+      operationId: trash_service_category
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+      x-wenmar-request-schema: TrashServiceCategoryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -17001,11 +17715,6 @@ paths:
       summary: create
       tags:
       - shop_discounts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateShopDiscountRequest"
       responses:
         '201':
           description: POST /shop_discounts -> 201
@@ -17059,6 +17768,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateShopDiscountRequest"
       description: Create a shop discount.
       operationId: create_shop_discount
       x-curl-example: |-
@@ -17337,11 +18051,6 @@ paths:
       summary: create
       tags:
       - shop_fees
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateShopFeeRequest"
       responses:
         '201':
           description: POST /shop_fees -> 201
@@ -17399,6 +18108,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateShopFeeRequest"
       description: Create a shop fee.
       operationId: create_shop_fee
       x-curl-example: |-
@@ -18210,11 +18924,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateSubletPackageRequest"
       responses:
         '200':
           description: PATCH /sublet_packages/{id} -> 200
@@ -18286,6 +18995,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateSubletPackageRequest"
       description: Update a sublet package by ID.
       operationId: update_sublet_package
       x-curl-example: |-
@@ -18479,6 +19193,11 @@ paths:
       summary: create
       tags:
       - tire_storage_slots
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTireStorageSlotRequest"
       responses:
         '201':
           description: POST /tire_storage_slots -> 201
@@ -18591,11 +19310,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateTireStorageSlotRequest"
       description: Create a tire storage slot.
       operationId: create_tire_storage_slot
       x-curl-example: |-
@@ -19011,11 +19725,6 @@ paths:
       summary: create
       tags:
       - tires
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateTireRequest"
       responses:
         '201':
           description: POST /tires -> 201
@@ -19130,6 +19839,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTireRequest"
       description: Create a tire.
       operationId: create_tire
       x-curl-example: |-
@@ -19438,17 +20152,6 @@ paths:
       summary: index
       tags:
       - users
-      parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       responses:
         '200':
           description: GET /users -> 200
@@ -19624,6 +20327,17 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       description: List all users, paginated via the Link header.
       operationId: list_users
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -22556,11 +23270,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/MergeVehicleRequest"
       responses:
         '200':
           description: POST /vehicles/{id}/merges -> 200
@@ -22733,6 +23442,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MergeVehicleRequest"
       description:
       operationId: merge_vehicle
       x-curl-example: |-
@@ -23168,11 +23882,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/TrashVehicleRequest"
       responses:
         '200':
           description: PATCH /vehicles/{id}/trash -> 200
@@ -23344,6 +24053,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashVehicleRequest"
       description:
       operationId: trash_vehicle
       x-curl-example: |-
@@ -23966,6 +24680,313 @@ paths:
       operationId: list_vendors_purchase_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/{vendor_id}/purchase_orders.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/work_order_tags":
+    get:
+      summary: index
+      tags:
+      - work_order_tags
+      responses:
+        '200':
+          description: GET /work_order_tags -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    color:
+                      type: string
+                    color_hex:
+                      type: string
+                    color_class:
+                      type: string
+                    bubble_classes:
+                      type: string
+                    status:
+                      type: string
+                    trashed_at:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - color
+                  - color_hex
+                  - color_class
+                  - bubble_classes
+                  - status
+                  - trashed_at
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+      description: List all work order tags, paginated via the Link header.
+      operationId: list_work_order_tags
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/work_order_tags.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - work_order_tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrderTagRequest"
+      responses:
+        '201':
+          description: POST /work_order_tags -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Create a work order tag.
+      operationId: create_work_order_tag
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/work_order_tags.json
+      x-wenmar-request-schema: CreateWorkOrderTagRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/work_order_tags/{id}":
+    patch:
+      summary: update
+      tags:
+      - work_order_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrderTagRequest"
+      responses:
+        '200':
+          description: PATCH /work_order_tags/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Update a work order tag by ID.
+      operationId: update_work_order_tag
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/work_order_tags/<id>.json
+      x-wenmar-request-schema: UpdateWorkOrderTagRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/work_order_tags/{id}/archive":
+    patch:
+      summary: archive
+      tags:
+      - work_order_tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrderTagsArchiveRequest"
+      responses:
+        '200':
+          description: PATCH /work_order_tags/{id}/archive -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  color_hex:
+                    type: string
+                  color_class:
+                    type: string
+                  bubble_classes:
+                    type: string
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - color
+                - color_hex
+                - color_class
+                - bubble_classes
+                - status
+                - trashed_at
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Update a work order tags archive by ID.
+      operationId: update_work_order_tags_archive
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/work_order_tags/<id>.json
+      x-wenmar-request-schema: UpdateWorkOrderTagsArchiveRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -25729,95 +26750,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/work_orders/{work_order_id}/labels":
-    post:
-      summary: create
-      tags:
-      - work_orders
-      parameters:
-      - name: work_order_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: POST /work_orders/{work_order_id}/labels -> 200
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/WorkOrder"
-        '403':
-          description: POST /work_orders/{work_order_id}/labels -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /work_orders/{work_order_id}/labels -> 422
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersLabelRequest"
-      description: Create a work orders label.
-      operationId: create_work_orders_label
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/labels.json
-      x-wenmar-request-schema: CreateWorkOrdersLabelRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/work_orders/{work_order_id}/labels/{id}":
-    delete:
-      summary: destroy
-      tags:
-      - work_orders
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: work_order_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: DELETE /work_orders/{work_order_id}/labels/{id} -> 200
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/WorkOrder"
-      description: Delete a work orders label by ID.
-      operationId: delete_work_orders_label
-      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
-        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/work_orders/{work_order_id}/parts":
     get:
       summary: show
@@ -26802,6 +27734,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrdersServiceRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{id} -> 200
@@ -26826,11 +27763,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateWorkOrdersServiceRequest"
       description: Update a work orders service by ID.
       operationId: update_work_orders_service
       x-curl-example: |-
@@ -27130,11 +28062,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
@@ -27146,6 +28073,11 @@ paths:
         '404':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
             404
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       description: Create a work orders services package.
       operationId: create_work_orders_services_package
       x-curl-example: |-
@@ -27559,6 +28491,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrdersServicesLineItemRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
@@ -27579,11 +28516,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateWorkOrdersServicesLineItemRequest"
       description: Update a work orders services line item by ID.
       operationId: update_work_orders_services_line_item
       x-curl-example: |-
@@ -27721,6 +28653,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefresheRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
@@ -27741,11 +28678,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefresheRequest"
       description: Create a work orders services line items price refreshe.
       operationId: create_work_orders_services_line_items_price_refreshe
       x-curl-example: |-
@@ -28408,7 +29340,22 @@ components:
           type: integer
         recent_activities:
           type: array
-          items: {}
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              category:
+                type: string
+              description:
+                type: string
+              created_at:
+                type: string
+            required:
+            - id
+            - category
+            - description
+            - created_at
         services_url:
           type: string
         payments_url:
@@ -28607,16 +29554,16 @@ components:
           type: string
           example: Jane Doe
         company_name:
-          nullable: true
           type: string
+          nullable: true
           example: Acme Auto
         first_name:
           type: string
         last_name:
           type: string
         fleet_identifier:
-          nullable: true
           type: string
+          nullable: true
         marketing_opt_in:
           type: boolean
         tax_exempt:
@@ -28957,35 +29904,35 @@ components:
           type: integer
           example: 2020
         submodel:
-          nullable: true
           type: string
+          nullable: true
         body_style:
-          nullable: true
           type: string
+          nullable: true
         engine:
-          nullable: true
           type: string
+          nullable: true
         vin:
-          nullable: true
           type: string
+          nullable: true
           example: 1HGCN2345ABC
         license_plate:
-          nullable: true
           type: string
+          nullable: true
         license_plate_state:
-          nullable: true
           type: string
+          nullable: true
         license_plate_country:
           type: string
         drivetrain:
-          nullable: true
           type: string
+          nullable: true
         transmission:
-          nullable: true
           type: string
+          nullable: true
         color:
-          nullable: true
           type: string
+          nullable: true
         vehicle_type:
           type: string
         unit_number:
@@ -28995,20 +29942,20 @@ components:
           nullable: true
           type: string
         production_date:
-          nullable: true
           type: string
+          nullable: true
         annual_safety_expires_at:
           nullable: true
           type: string
         notes:
-          nullable: true
           type: string
+          nullable: true
         odometer:
           type: object
           properties:
             reading:
-              nullable: true
               type: integer
+              nullable: true
               example: 182340
             unit:
               type: string
@@ -29181,8 +30128,11 @@ components:
         description:
           nullable: true
           type: string
-        active:
-          type: boolean
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
         is_default:
           type: boolean
         created_at:
@@ -29194,6 +30144,7 @@ components:
         app_url:
           type: string
         location:
+          nullable: true
           type: object
           properties:
             id:
@@ -29206,7 +30157,6 @@ components:
           - id
           - name
           - url
-          nullable: true
         groups:
           type: array
           items:
@@ -29250,7 +30200,8 @@ components:
       - type
       - name
       - description
-      - active
+      - status
+      - trashed_at
       - is_default
       - created_at
       - updated_at
@@ -29258,6 +30209,44 @@ components:
       - app_url
       - location
       - groups
+    LaborRate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        rate_cents:
+          type: integer
+        cost_per_hour_cents:
+          type: integer
+        is_default:
+          type: boolean
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        url:
+          type: string
+        app_url:
+          type: string
+      required:
+      - id
+      - name
+      - rate_cents
+      - cost_per_hour_cents
+      - is_default
+      - status
+      - trashed_at
+      - created_at
+      - updated_at
+      - url
+      - app_url
     PurchaseOrder:
       type: object
       properties:
@@ -29692,6 +30681,74 @@ components:
       - work_order
       - work_order_service
       - location
+    Package:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        service_type:
+          type: string
+        category_id:
+          nullable: true
+          type: integer
+        category_name:
+          nullable: true
+          type: string
+        estimated_hours:
+          type: string
+        customer_notes:
+          nullable: true
+          type: string
+        show_tech_with_cert:
+          type: boolean
+        triggers_tire_storage:
+          type: boolean
+        price_cents:
+          nullable: true
+          type: integer
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
+        url:
+          type: string
+        app_url:
+          type: string
+        location:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+          required:
+          - id
+          - name
+          - url
+      required:
+      - id
+      - name
+      - description
+      - service_type
+      - category_id
+      - category_name
+      - estimated_hours
+      - customer_notes
+      - show_tech_with_cert
+      - triggers_tire_storage
+      - price_cents
+      - status
+      - trashed_at
+      - url
+      - app_url
+      - location
     ServiceCategory:
       type: object
       properties:
@@ -29710,8 +30767,11 @@ components:
         color:
           type: string
           nullable: true
-        active:
-          type: boolean
+        status:
+          type: string
+        trashed_at:
+          nullable: true
+          type: string
         position:
           type: integer
         canonical:
@@ -29732,7 +30792,8 @@ components:
       - service_type
       - icon
       - color
-      - active
+      - status
+      - trashed_at
       - position
       - canonical
       - canonical_key
@@ -30032,6 +31093,29 @@ components:
           - name
       required:
       - location
+    CreateCustomerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    UpdateCustomerTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    UpdateCustomerTagsArchiveRequest:
+      type: object
+      properties: {}
+    UpdateCustomerTagsRestoreRequest:
+      type: object
+      properties: {}
+    UpdateCustomerTagsTrashRequest:
+      type: object
+      properties: {}
     CreateCustomerRequest:
       type: object
       properties:
@@ -30062,9 +31146,8 @@ components:
               type: string
             po_required:
               type: boolean
-            tag_ids:
-              type: array
-              items: {}
+            customer_tag_id:
+              nullable: true
             emails_attributes:
               type: array
               items:
@@ -30160,6 +31243,26 @@ components:
         customer:
           type: object
           properties:
+            phones_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    nullable: true
+                  _destroy:
+                    type: boolean
+                    nullable: true
+                  number:
+                    type: string
+                    nullable: true
+                  label:
+                    type: string
+                    nullable: true
+                  primary:
+                    type: boolean
+                    nullable: true
             first_name:
               type: string
             last_name:
@@ -30182,6 +31285,8 @@ components:
               type: string
             po_required:
               type: boolean
+            customer_tag_id:
+              nullable: true
             emails_attributes:
               type: array
               items:
@@ -30197,26 +31302,6 @@ components:
                     nullable: true
                 required:
                 - email
-            phones_attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    nullable: true
-                  _destroy:
-                    type: boolean
-                    nullable: true
-                  number:
-                    type: string
-                    nullable: true
-                  label:
-                    type: string
-                    nullable: true
-                  primary:
-                    type: boolean
-                    nullable: true
             addresses_attributes:
               type: array
               items:
@@ -30346,11 +31431,8 @@ components:
           properties:
             name:
               type: string
-            active:
-              type: boolean
           required:
           - name
-          - active
       required:
       - inspection
     UpdateInspectionRequest:
@@ -30365,13 +31447,19 @@ components:
           - name
       required:
       - inspection
+    ArchiveInspectionRequest:
+      type: object
+      properties: {}
     RemoveDefaultInspectionRequest:
+      type: object
+      properties: {}
+    RestoreInspectionRequest:
       type: object
       properties: {}
     SetDefaultInspectionRequest:
       type: object
       properties: {}
-    ToggleInspectionRequest:
+    TrashInspectionRequest:
       type: object
       properties: {}
     CreateInventoryLevelRequest:
@@ -30434,36 +31522,6 @@ components:
           - reason
       required:
       - inventory_level
-    CreateLabelRequest:
-      type: object
-      properties:
-        label:
-          type: object
-          properties:
-            name:
-              type: string
-            color:
-              type: string
-          required:
-          - name
-          - color
-      required:
-      - label
-    CreateLabelsExportRequest:
-      type: object
-      properties: {}
-    UpdateLabelRequest:
-      type: object
-      properties:
-        label:
-          type: object
-          properties:
-            active:
-              type: boolean
-          required:
-          - active
-      required:
-      - label
     CreateLaborMatriceRequest:
       type: object
       properties:
@@ -30507,27 +31565,21 @@ components:
               format: float
             is_default:
               type: boolean
-            active:
-              type: boolean
           required:
           - name
           - rate
           - is_default
-          - active
       required:
       - labor_rate
-    UpdateLaborRateRequest:
+    ArchiveLaborRateRequest:
       type: object
-      properties:
-        labor_rate:
-          type: object
-          properties:
-            active:
-              type: boolean
-          required:
-          - active
-      required:
-      - labor_rate
+      properties: {}
+    RestoreLaborRateRequest:
+      type: object
+      properties: {}
+    TrashLaborRateRequest:
+      type: object
+      properties: {}
     UpdateLaborTemplateRequest:
       type: object
       properties:
@@ -30786,19 +31838,16 @@ components:
           - description
       required:
       - package
-    UpdatePackageRequest:
+    ArchivePackageRequest:
       type: object
-      properties:
-        package:
-          type: object
-          properties:
-            active:
-              type: boolean
-          required:
-          - active
-      required:
-      - package
+      properties: {}
     CreatePackagesDuplicateRequest:
+      type: object
+      properties: {}
+    RestorePackageRequest:
+      type: object
+      properties: {}
+    TrashPackageRequest:
       type: object
       properties: {}
     CreatePartsMatriceRequest:
@@ -30888,14 +31937,21 @@ components:
         service_category:
           type: object
           properties:
-            name:
-              type: string
             position:
               type: integer
-            active:
-              type: boolean
+            name:
+              type: string
       required:
       - service_category
+    ArchiveServiceCategoryRequest:
+      type: object
+      properties: {}
+    RestoreServiceCategoryRequest:
+      type: object
+      properties: {}
+    TrashServiceCategoryRequest:
+      type: object
+      properties: {}
     CreateShopDiscountRequest:
       type: object
       properties:
@@ -31187,15 +32243,15 @@ components:
         vehicle:
           type: object
           properties:
-            make:
-              type: string
-            model:
-              type: string
-            year:
-              type: integer
             customer_id:
               type: integer
             vin:
+              type: string
+            year:
+              type: integer
+            make:
+              type: string
+            model:
               type: string
             submodel:
               type: string
@@ -31225,14 +32281,11 @@ components:
               type: string
             production_date:
               type: string
-            vehicle_tag_ids:
-              type: array
-              items: {}
           required:
-          - customer_id
-          - year
           - make
           - model
+          - year
+          - customer_id
       required:
       - vehicle
     UpdateVehicleRequest:
@@ -31340,6 +32393,26 @@ components:
     TrashVendorRequest:
       type: object
       properties: {}
+    CreateWorkOrderTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+      required:
+      - name
+      - color
+    UpdateWorkOrderTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    UpdateWorkOrderTagsArchiveRequest:
+      type: object
+      properties: {}
     CreateWorkOrderRequest:
       type: object
       properties:
@@ -31373,6 +32446,8 @@ components:
               type: string
             waiting_for_customer:
               type: boolean
+            work_order_tag_id:
+              type: integer
       required:
       - work_order
     CreateWorkOrdersAccountPostingRequest:
@@ -31472,13 +32547,6 @@ components:
           - shop_fee_config_id
       required:
       - work_order_fee_exclusion
-    CreateWorkOrdersLabelRequest:
-      type: object
-      properties:
-        label_id:
-          type: integer
-      required:
-      - label_id
     CreateWorkOrderPaymentRequest:
       type: object
       properties:
@@ -31547,16 +32615,16 @@ components:
         work_order_service:
           type: object
           properties:
-            position:
-              type: integer
-            technician_id:
-              type: integer
             name:
               type: string
-            labor_tax_enabled:
-              type: boolean
+            technician_id:
+              type: integer
             pricing_mode:
               type: string
+            position:
+              type: integer
+            labor_tax_enabled:
+              type: boolean
       required:
       - work_order_service
     UpdateWorkOrdersServicesAdjustTimeRequest:
@@ -31618,17 +32686,17 @@ components:
               type: string
             description:
               type: string
-            hours:
-              type: number
-              format: float
-            labor_rate_id:
-              type: integer
             unit_price:
               type: string
             quantity:
               type: integer
             total:
               type: string
+            hours:
+              type: number
+              format: float
+            labor_rate_id:
+              type: integer
           required:
           - item_type
           - description
@@ -31640,9 +32708,9 @@ components:
         work_order_line_item:
           type: object
           properties:
-            part_status:
-              type: string
             description:
+              type: string
+            part_status:
               type: string
       required:
       - work_order_line_item
