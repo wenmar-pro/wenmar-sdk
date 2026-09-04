@@ -27,6 +27,8 @@ List all fleets, paginated via the Link header.
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
 | `created_at` | string | Yes |

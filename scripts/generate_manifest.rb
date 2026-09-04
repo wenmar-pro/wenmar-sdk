@@ -115,6 +115,7 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
       end,
       "requestSchema" => operation["x-wenmar-request-schema"],
       "requestShape" => request_shape(operation["x-wenmar-request-schema"]),
+      "requestContentType" => (operation.dig("requestBody", "content")&.key?("multipart/form-data") ? "multipart/form-data" : nil),
       "paginated" => paginated?(method, operation),
       "responseSchema" => response_schema(operation),
       "responseBody" => response_body?(operation),

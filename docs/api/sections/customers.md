@@ -13,13 +13,14 @@ List all customers, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
+| `customer_tag_id` | integer | No |
 | `has_balance` | boolean | No |
 | `has_vehicle` | boolean | No |
 | `last_visit_months` | integer | No |
 | `page` | integer | No |
 | `per_page` | integer | No |
 | `q` | string | No |
-| `tag_ids` | array of string | No |
+| `status` | string | No |
 | `type` | string | No |
 
 **Response 200** — array of [Customer](#customer-schema)
@@ -673,28 +674,6 @@ List all customers work orders, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/work_orders.json
 ```
 
-## Delete customer
-
-```
-DELETE /customers/{id}
-```
-
-Delete a customer by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 202** — [Customer](#customer-schema)
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Response 422** — [Error](#error-schema) error envelope
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json
-```
-
 ## Show customer
 
 ```
@@ -840,6 +819,65 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
 ```
 
+## Archive customer
+
+```
+PATCH /customers/{id}/archive
+```
+
+Archive
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `first_name` | string | Yes |
+| `last_name` | string | Yes |
+| `fleet_identifier` | string \| null | Yes |
+| `marketing_opt_in` | boolean | Yes |
+| `tax_exempt` | boolean | Yes |
+| `vehicles_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+| `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+| `emails` | array of object | Yes |
+| `phones` | array of object | Yes |
+| `addresses` | array of any | Yes |
+| `outstanding_balance_cents` | integer | Yes |
+| `total_revenue_cents` | integer | Yes |
+| `store_credit_cents` | integer | Yes |
+| `last_visit_at` | string \| null | Yes |
+| `statements_count` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+```
+
 ## Merge customer
 
 ```
@@ -868,6 +906,8 @@ Create
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
 | `created_at` | string | Yes |
@@ -954,6 +994,128 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
 ```
 
+## Restore customer
+
+```
+PATCH /customers/{id}/restore
+```
+
+Restore
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `first_name` | string | Yes |
+| `last_name` | string | Yes |
+| `fleet_identifier` | string \| null | Yes |
+| `marketing_opt_in` | boolean | Yes |
+| `tax_exempt` | boolean | Yes |
+| `vehicles_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+| `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+| `emails` | array of object | Yes |
+| `phones` | array of object | Yes |
+| `addresses` | array of any | Yes |
+| `outstanding_balance_cents` | integer | Yes |
+| `total_revenue_cents` | integer | Yes |
+| `store_credit_cents` | integer | Yes |
+| `last_visit_at` | string \| null | Yes |
+| `statements_count` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+```
+
+## Trash customer
+
+```
+PATCH /customers/{id}/trash
+```
+
+Trash
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `first_name` | string | Yes |
+| `last_name` | string | Yes |
+| `fleet_identifier` | string \| null | Yes |
+| `marketing_opt_in` | boolean | Yes |
+| `tax_exempt` | boolean | Yes |
+| `vehicles_count` | integer | Yes |
+| `emails_count` | integer | Yes |
+| `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+| `emails` | array of object | Yes |
+| `phones` | array of object | Yes |
+| `addresses` | array of any | Yes |
+| `outstanding_balance_cents` | integer | Yes |
+| `total_revenue_cents` | integer | Yes |
+| `store_credit_cents` | integer | Yes |
+| `last_visit_at` | string \| null | Yes |
+| `statements_count` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
+```
+
 ---
 
 ### Customer schema {#customer-schema}
@@ -972,6 +1134,8 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
 | `created_at` | string | Yes |
@@ -1031,7 +1195,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `marketing_opt_in` | boolean | No |
 | `discount_percent` | string | No |
 | `po_required` | boolean | No |
-| `tag_ids` | array of any | No |
+| `customer_tag_id` | any | No |
 | `emails_attributes` | array of object | No |
 | `phones_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
@@ -1172,6 +1336,8 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `notes` | string \| null | Yes |
 | `odometer` | object | Yes |
 | `work_orders_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `work_orders_url` | string | Yes |
 | `customer` | object | Yes |
 | `created_at` | string | Yes |
@@ -1266,7 +1432,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `customer_total_spend_cents` | integer | Yes |
 | `average_ticket_cents` | integer | Yes |
 | `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
+| `recent_activities` | array of object | Yes |
 | `services_url` | string | Yes |
 | `payments_url` | string | Yes |
 | `wip_url` | string | Yes |
@@ -1333,7 +1499,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `emails_attributes` | array of object | No |
+| `phones_attributes` | array of object | No |
 | `first_name` | string | No |
 | `last_name` | string | No |
 | `company_name` | string | No |
@@ -1345,8 +1511,10 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `marketing_opt_in` | boolean | No |
 | `discount_percent` | string | No |
 | `po_required` | boolean | No |
-| `phones_attributes` | array of object | No |
+| `customer_tag_id` | any | No |
+| `emails_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
+| `status` | string | No |
 
 ---
 

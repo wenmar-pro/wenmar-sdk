@@ -967,7 +967,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `customer_total_spend_cents` | integer | Yes |
 | `average_ticket_cents` | integer | Yes |
 | `activity_total` | integer | Yes |
-| `recent_activities` | array of any | Yes |
+| `recent_activities` | array of object | Yes |
 | `services_url` | string | Yes |
 | `payments_url` | string | Yes |
 | `wip_url` | string | Yes |

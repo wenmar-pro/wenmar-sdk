@@ -69,24 +69,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/vendors.json
 ```
 
-## Delete vendor
-
-```
-DELETE /vendors/{id}
-```
-
-Delete a vendor by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 204** — no content.
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vendors/<id>.json
-```
-
 ## Show vendor
 
 ```
@@ -155,6 +137,150 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
 ```
 
+## Archive vendor
+
+```
+PATCH /vendors/{id}/archive
+```
+
+Archive
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `vendor_type` | string | Yes |
+| `payment_terms` | string | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `phone` | string | Yes |
+| `email` | string | Yes |
+| `website` | string | Yes |
+| `account_number` | string | Yes |
+| `notes` | string | Yes |
+| `quick_order` | boolean | Yes |
+| `order_url_template` | string \| null | Yes |
+| `catalog_url_template` | string \| null | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+```
+
+## Restore vendor
+
+```
+PATCH /vendors/{id}/restore
+```
+
+Restore
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `vendor_type` | string | Yes |
+| `payment_terms` | string | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `phone` | string | Yes |
+| `email` | string | Yes |
+| `website` | string | Yes |
+| `account_number` | string | Yes |
+| `notes` | string | Yes |
+| `quick_order` | boolean | Yes |
+| `order_url_template` | string \| null | Yes |
+| `catalog_url_template` | string \| null | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+```
+
+## Trash vendor
+
+```
+PATCH /vendors/{id}/trash
+```
+
+Trash
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `vendor_type` | string | Yes |
+| `payment_terms` | string | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
+| `phone` | string | Yes |
+| `email` | string | Yes |
+| `website` | string | Yes |
+| `account_number` | string | Yes |
+| `notes` | string | Yes |
+| `quick_order` | boolean | Yes |
+| `order_url_template` | string \| null | Yes |
+| `catalog_url_template` | string \| null | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/vendors/<id>.json
+```
+
 ## List vendors purchase orders
 
 ```
@@ -183,7 +309,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `name` | string | Yes |
 | `vendor_type` | string | Yes |
 | `payment_terms` | string | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `phone` | string | Yes |
 | `email` | string | Yes |
 | `website` | string | Yes |

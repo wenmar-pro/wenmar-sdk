@@ -109,6 +109,11 @@ def build_go_entry(key, manifest_id, variant = :default)
   body_expr = go_body_expr(op)
   args << body_expr if op["requestSchema"]
 
+  # Multipart uploads take an io.Reader body via the WithBody variant.
+  if op["requestContentType"] && op["requestContentType"] != "application/json"
+    args << "bytes.NewReader([]byte(strArg(args[\"requestBody\"].(map[string]interface{}), \"file\")))"
+  end
+
   call = "c.#{m}(ctx#{args.empty? ? "" : ", " + args.join(", ")})"
 
   case variant
@@ -238,6 +243,7 @@ go_file = <<~GO
 	package conformance
 
 	import (
+		"bytes"
 		"context"
 		"testing"
 

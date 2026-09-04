@@ -127,7 +127,20 @@ def build_method(op)
     else
       "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
     end
-    if body_keys.empty?
+    if op["requestContentType"] && op["requestContentType"] != "application/json"
+      # Multipart upload (e.g. import validate): accept a file path/IO and
+      # send it as multipart/form-data.
+      sig = (pos + ["file:"] + query_kw).join(", ")
+      call_args = +"\"#{substituted}\", { multipart: { file: file } }"
+      call_args << ", params.compact" unless query.empty?
+      body_lines = [params_line, "#{verb}(#{call_args})"].reject(&:empty?)
+      <<~RUBY
+        # Runs #{m} (#{verb.upcase} #{path}) as a multipart upload.
+        def #{m}(#{sig.empty? ? "" : sig})
+          #{body_lines.join("\n  ")}
+        end
+      RUBY
+    elsif body_keys.empty?
       # no body or empty body
       sig = (pos + query_kw).join(", ")
       call_args = +"\"#{substituted}\""

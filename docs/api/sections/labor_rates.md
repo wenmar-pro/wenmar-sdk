@@ -11,20 +11,7 @@ GET /labor_rates
 
 List all labor rates, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `rate_cents` | integer | Yes |
-| `cost_per_hour_cents` | integer | Yes |
-| `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [LaborRate](#laborrate-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_rates.json
@@ -38,20 +25,7 @@ POST /labor_rates
 
 Create a labor rate.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `rate_cents` | integer | Yes |
-| `cost_per_hour_cents` | integer | Yes |
-| `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [LaborRate](#laborrate-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -60,31 +34,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates.json
 ```
 
-## Delete labor rate
+## Archive labor rate
 
 ```
-DELETE /labor_rates/{id}
+PATCH /labor_rates/{id}/archive
 ```
 
-Delete a labor rate by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 204** — no content.
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_rates/<id>.json
-```
-
-## Update labor rate
-
-```
-PATCH /labor_rates/{id}
-```
-
-Update a labor rate by ID.
+Archive
 
 | Param | Type | Required |
 |---|---|---|
@@ -99,7 +55,8 @@ Update a labor rate by ID.
 | `rate_cents` | integer | Yes |
 | `cost_per_hour_cents` | integer | Yes |
 | `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
@@ -109,6 +66,90 @@ Update a labor rate by ID.
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
 ```
+
+## Restore labor rate
+
+```
+PATCH /labor_rates/{id}/restore
+```
+
+Restore
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `rate_cents` | integer | Yes |
+| `cost_per_hour_cents` | integer | Yes |
+| `is_default` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
+```
+
+## Trash labor rate
+
+```
+PATCH /labor_rates/{id}/trash
+```
+
+Trash
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `rate_cents` | integer | Yes |
+| `cost_per_hour_cents` | integer | Yes |
+| `is_default` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/labor_rates/<id>.json
+```
+
+---
+
+### LaborRate schema {#laborrate-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `rate_cents` | integer | Yes |
+| `cost_per_hour_cents` | integer | Yes |
+| `is_default` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ---
 
@@ -124,7 +165,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `name` | string | Yes |
 | `rate` | number | Yes |
 | `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
 
 ---
 
@@ -137,17 +177,4 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
-
----
-
-### UpdateLaborRateRequest schema {#updatelaborraterequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `labor_rate` | object | Yes |
-
-`labor_rate` — object:
-| Field | Type | Required |
-|---|---|---|
-| `active` | boolean | Yes |
 

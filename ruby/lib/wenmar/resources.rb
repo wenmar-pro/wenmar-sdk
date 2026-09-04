@@ -16,6 +16,30 @@ end
 def update_account(account:)
   patch("/account", { account: account })
 end
+# Fetches list_account_billing.
+def list_account_billing()
+  get("/account/billing")
+end
+# Fetches list_account_capabilities.
+def list_account_capabilities()
+  get("/account/capabilities")
+end
+# Fetches list_account_driveon.
+def list_account_driveon()
+  get("/account/driveon")
+end
+# Fetches list_account_payments.
+def list_account_payments()
+  get("/account/payments")
+end
+# Fetches list_account_phone_numbers.
+def list_account_phone_numbers()
+  get("/account/phone_numbers")
+end
+# Fetches list_account_quickbooks.
+def list_account_quickbooks()
+  get("/account/quickbooks")
+end
 # Fetches list_account_station_link.
 def list_account_station_link()
   get("/account/station_link")
@@ -416,9 +440,37 @@ end
 def create_expense(expense:)
   post("/expenses", { expense: expense })
 end
+# Fetches list_expenses_data_transfer.
+def list_expenses_data_transfer()
+  get("/expenses/data_transfer")
+end
+# Runs create_expenses_export (POST /expenses/export).
+def create_expenses_export()
+  post("/expenses/export")
+end
+# Fetches list_expenses_export_download.
+def list_expenses_export_download(id)
+  get("/expenses/export/#{id}/download")
+end
+# Runs create_expenses_imports_commit (POST /expenses/imports/commit).
+def create_expenses_imports_commit()
+  post("/expenses/imports/commit")
+end
+# Fetches list_expenses_imports_template.
+def list_expenses_imports_template()
+  get("/expenses/imports/template")
+end
+# Runs create_expenses_imports_validate (POST /expenses/imports/validate) as a multipart upload.
+def create_expenses_imports_validate(file:)
+  post("/expenses/imports/validate", { multipart: { file: file } })
+end
 # Deletes delete_expense.
 def delete_expense(id)
   delete("/expenses/#{id}")
+end
+# Fetches show_expense.
+def show_expense(id)
+  get("/expenses/#{id}")
 end
 # Runs update_expense (PATCH /expenses/{id}).
 def update_expense(id, expense:)
@@ -686,6 +738,42 @@ end
 # Runs update_locations_operations (PATCH /locations/{id}/operations).
 def update_locations_operations(id, location:)
   patch("/locations/#{id}/operations", { location: location })
+end
+# Fetches list_locations_close_requirements.
+def list_locations_close_requirements(location_id)
+  get("/locations/#{location_id}/close_requirements")
+end
+# Runs update_locations_close_requirements (PATCH /locations/{location_id}/close_requirements).
+def update_locations_close_requirements(location_id, close_requirements:)
+  patch("/locations/#{location_id}/close_requirements", { close_requirements: close_requirements })
+end
+# Fetches list_locations_courtesy_cars.
+def list_locations_courtesy_cars(location_id)
+  get("/locations/#{location_id}/courtesy_cars")
+end
+# Fetches list_locations_documents.
+def list_locations_documents(location_id)
+  get("/locations/#{location_id}/documents")
+end
+# Runs update_locations_documents (PATCH /locations/{location_id}/documents).
+def update_locations_documents(location_id, location:)
+  patch("/locations/#{location_id}/documents", { location: location })
+end
+# Fetches list_locations_lead_source_requirements.
+def list_locations_lead_source_requirements(location_id)
+  get("/locations/#{location_id}/lead_source_requirements")
+end
+# Runs update_locations_lead_source_requirements (PATCH /locations/{location_id}/lead_source_requirements).
+def update_locations_lead_source_requirements(location_id, lead_source_requirements:)
+  patch("/locations/#{location_id}/lead_source_requirements", { lead_source_requirements: lead_source_requirements })
+end
+# Fetches list_locations_reminders.
+def list_locations_reminders(location_id)
+  get("/locations/#{location_id}/reminders")
+end
+# Runs update_locations_reminders (PATCH /locations/{location_id}/reminders).
+def update_locations_reminders(location_id, location:)
+  patch("/locations/#{location_id}/reminders", { location: location })
 end
 # Fetches list_locations_schedule_config.
 def list_locations_schedule_config(location_id)
@@ -1044,54 +1132,6 @@ end
 # Runs trash_service_category (PATCH /service_categories/{id}/trash).
 def trash_service_category(id)
   patch("/service_categories/#{id}/trash")
-end
-# Fetches list_settings_billing.
-def list_settings_billing()
-  get("/settings/billing")
-end
-# Fetches list_settings_cash_drawer.
-def list_settings_cash_drawer()
-  get("/settings/cash_drawer")
-end
-# Fetches list_settings_close_requirements.
-def list_settings_close_requirements()
-  get("/settings/close_requirements")
-end
-# Fetches list_settings_documents.
-def list_settings_documents()
-  get("/settings/documents")
-end
-# Fetches list_settings_driveon.
-def list_settings_driveon()
-  get("/settings/driveon")
-end
-# Fetches list_settings_expenses.
-def list_settings_expenses()
-  get("/settings/expenses")
-end
-# Fetches list_settings_lead_source_requirements.
-def list_settings_lead_source_requirements()
-  get("/settings/lead_source_requirements")
-end
-# Fetches list_settings_payments.
-def list_settings_payments()
-  get("/settings/payments")
-end
-# Fetches list_settings_phone_numbers.
-def list_settings_phone_numbers()
-  get("/settings/phone_numbers")
-end
-# Fetches list_settings_quickbooks.
-def list_settings_quickbooks()
-  get("/settings/quickbooks")
-end
-# Fetches list_settings_reminders.
-def list_settings_reminders()
-  get("/settings/reminders")
-end
-# Fetches list_settings_tire_management.
-def list_settings_tire_management()
-  get("/settings/tire_management")
 end
 # Lists list_shop_discounts resources (paginated).
 # @return [Wenmar::Paginator]

@@ -282,6 +282,391 @@ paths:
                 - error
       description: PATCH /account
       operationId: PATCH_account
+  "/account/billing":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::Billing
+      responses:
+        '200':
+          description: GET /account/billing -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billing_email:
+                    type: string
+                  subscription_status:
+                    type: string
+                  next_billing_date:
+                    type: string
+                  work_orders_this_month:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - billing_email
+                - subscription_status
+                - next_billing_date
+                - work_orders_this_month
+                - url
+                - app_url
+        '403':
+          description: GET /account/billing -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /account/billing
+      operationId: GET_account_billing
+  "/account/capabilities":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::Capability
+      responses:
+        '200':
+          description: GET /account/capabilities -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tier:
+                    nullable: true
+                    type: string
+                  tier_display:
+                    nullable: true
+                    type: string
+                  capabilities:
+                    type: object
+                    properties:
+                      appointments:
+                        type: boolean
+                      payments:
+                        type: boolean
+                      inventory:
+                        type: boolean
+                      purchase_orders:
+                        type: boolean
+                      counter_sales:
+                        type: boolean
+                      cash_drawer:
+                        type: boolean
+                      courtesy_cars:
+                        type: boolean
+                      dealer_plates:
+                        type: boolean
+                      tire_management:
+                        type: boolean
+                      expenses:
+                        type: boolean
+                      phone_numbers:
+                        type: boolean
+                      integrations:
+                        type: object
+                        properties:
+                          quickbooks:
+                            type: boolean
+                          driveon:
+                            type: boolean
+                        required:
+                        - quickbooks
+                        - driveon
+                    required:
+                    - appointments
+                    - payments
+                    - inventory
+                    - purchase_orders
+                    - counter_sales
+                    - cash_drawer
+                    - courtesy_cars
+                    - dealer_plates
+                    - tire_management
+                    - expenses
+                    - phone_numbers
+                    - integrations
+                  limits:
+                    type: object
+                    properties:
+                      max_locations:
+                        nullable: true
+                        type: integer
+                      max_users:
+                        nullable: true
+                        type: integer
+                      max_work_orders_per_month:
+                        nullable: true
+                    required:
+                    - max_locations
+                    - max_users
+                    - max_work_orders_per_month
+                required:
+                - tier
+                - tier_display
+                - capabilities
+                - limits
+      description: GET /account/capabilities
+      operationId: GET_account_capabilities
+  "/account/driveon":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::Integrations::Driveon
+      responses:
+        '200':
+          description: GET /account/driveon -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /account/driveon -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /account/driveon
+      operationId: GET_account_driveon
+  "/account/payments":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::Payment
+      responses:
+        '200':
+          description: GET /account/payments -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processor_application_status:
+                    nullable: true
+                    type: string
+                  processor_onboarded_at:
+                    nullable: true
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - processor_application_status
+                - processor_onboarded_at
+                - url
+                - app_url
+        '403':
+          description: GET /account/payments -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /account/payments
+      operationId: GET_account_payments
+  "/account/phone_numbers":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::PhoneNumber
+      responses:
+        '200':
+          description: GET /account/phone_numbers -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  texting_phone:
+                    nullable: true
+                    type: string
+                  phones:
+                    type: array
+                    items: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - texting_phone
+                - phones
+                - url
+                - app_url
+        '403':
+          description: GET /account/phone_numbers -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /account/phone_numbers
+      operationId: GET_account_phone_numbers
+  "/account/quickbooks":
+    get:
+      summary: show
+      tags:
+      - Shop::Account::Integrations::Quickbook
+      responses:
+        '200':
+          description: GET /account/quickbooks -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connected:
+                    type: boolean
+                  qbo_company_id:
+                    nullable: true
+                    type: string
+                  qbo_sync_mode:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - connected
+                - qbo_company_id
+                - qbo_sync_mode
+                - url
+                - app_url
+        '403':
+          description: GET /account/quickbooks -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /account/quickbooks
+      operationId: GET_account_quickbooks
   "/account/station_link":
     get:
       summary: station_link
@@ -3364,16 +3749,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                category:
-                  type: string
-              required:
-              - category
       responses:
         '200':
           description: POST /catalog_cleanups/{catalog_cleanup_id}/applications ->
@@ -3414,6 +3789,16 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+              required:
+              - category
       description: POST /catalog_cleanups/{catalog_cleanup_id}/applications
       operationId: POST_catalog_cleanups_catalog_cleanup_id_applications
   "/conversations":
@@ -8714,36 +9099,6 @@ paths:
       summary: create
       tags:
       - Shop::Expense
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                expense:
-                  type: object
-                  properties:
-                    payee:
-                      type: string
-                    category:
-                      type: string
-                    description:
-                      type: string
-                    amount:
-                      type: integer
-                    expense_date:
-                      type: string
-                    payment_method:
-                      type: string
-                  required:
-                  - payee
-                  - category
-                  - description
-                  - amount
-                  - expense_date
-                  - payment_method
-              required:
-              - expense
       responses:
         '201':
           description: POST /expenses -> 201
@@ -8847,8 +9202,325 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expense:
+                  type: object
+                  properties:
+                    payee:
+                      type: string
+                    category:
+                      type: string
+                    description:
+                      type: string
+                    amount:
+                      type: integer
+                    expense_date:
+                      type: string
+                    payment_method:
+                      type: string
+                  required:
+                  - payee
+                  - category
+                  - description
+                  - amount
+                  - expense_date
+                  - payment_method
+              required:
+              - expense
       description: POST /expenses
       operationId: POST_expenses
+  "/expenses/data_transfer":
+    get:
+      summary: show
+      tags:
+      - Shop::Expenses::DataTransfer
+      responses:
+        '200':
+          description: GET /expenses/data_transfer -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resource:
+                    type: string
+                  template_url:
+                    type: string
+                  export_url:
+                    type: string
+                  validate_url:
+                    type: string
+                required:
+                - resource
+                - template_url
+                - export_url
+                - validate_url
+        '403':
+          description: GET /expenses/data_transfer -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /expenses/data_transfer
+      operationId: GET_expenses_data_transfer
+  "/expenses/export":
+    post:
+      summary: create
+      tags:
+      - Shop::Expenses::Export
+      responses:
+        '200':
+          description: POST /expenses/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+        '403':
+          description: POST /expenses/export -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      description: POST /expenses/export
+      operationId: POST_expenses_export
+  "/expenses/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - Shop::Expenses::Export
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /expenses/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /expenses/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /expenses/export/{id}/download
+      operationId: GET_expenses_export_id_download
+  "/expenses/imports/commit":
+    post:
+      summary: commit
+      tags:
+      - Shop::Expenses::Import
+      responses:
+        '422':
+          description: POST /expenses/imports/commit -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: POST /expenses/imports/commit
+      operationId: POST_expenses_imports_commit
+  "/expenses/imports/template":
+    get:
+      summary: template
+      tags:
+      - Shop::Expenses::Import
+      responses:
+        '200':
+          description: GET /expenses/imports/template -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+      description: GET /expenses/imports/template
+      operationId: GET_expenses_imports_template
+  "/expenses/imports/validate":
+    post:
+      summary: validate
+      tags:
+      - Shop::Expenses::Import
+      responses:
+        '200':
+          description: POST /expenses/imports/validate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid_count:
+                    type: integer
+                  error_count:
+                    type: integer
+                  duplicate_count:
+                    type: integer
+                  total:
+                    type: integer
+                  errors:
+                    type: array
+                    items: {}
+                required:
+                - valid_count
+                - error_count
+                - duplicate_count
+                - total
+                - errors
+        '403':
+          description: POST /expenses/imports/validate -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '422':
+          description: POST /expenses/imports/validate -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties:
+                          header_errors:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - header_errors
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      description: POST /expenses/imports/validate
+      operationId: POST_expenses_imports_validate
   "/expenses/{id}":
     delete:
       summary: destroy
@@ -8865,6 +9537,121 @@ paths:
           description: DELETE /expenses/{id} -> 204
       description: DELETE /expenses/{id}
       operationId: DELETE_expenses_id_
+    get:
+      summary: show
+      tags:
+      - Shop::Expense
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /expenses/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  payee:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+                  amount_cents:
+                    type: integer
+                  amount_currency:
+                    type: string
+                  expense_date:
+                    type: string
+                  payment_method:
+                    type: string
+                  recurring:
+                    type: boolean
+                  recurrence_rule:
+                    nullable: true
+                    type: string
+                  creator:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - payee
+                - category
+                - description
+                - amount_cents
+                - amount_currency
+                - expense_date
+                - payment_method
+                - recurring
+                - recurrence_rule
+                - creator
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+        '403':
+          description: GET /expenses/{id} -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /expenses/{id}
+      operationId: GET_expenses_id_
     patch:
       summary: update
       tags:
@@ -8884,10 +9671,10 @@ paths:
                 expense:
                   type: object
                   properties:
+                    receipt_id:
+                      type: string
                     description:
                       type: string
-                  required:
-                  - description
               required:
               - expense
       responses:
@@ -13246,6 +14033,715 @@ paths:
               - location
       description: PATCH /locations/{id}/operations
       operationId: PATCH_locations_id_operations
+  "/locations/{location_id}/close_requirements":
+    get:
+      summary: show
+      tags:
+      - Shop::Locations::CloseRequirement
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/close_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/close_requirements -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /locations/{location_id}/close_requirements
+      operationId: GET_locations_location_id_close_requirements
+    patch:
+      summary: update
+      tags:
+      - Shop::Locations::CloseRequirement
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                close_requirements:
+                  type: object
+                  properties:
+                    odometer_in:
+                      type: string
+                    key_location:
+                      type: string
+                  required:
+                  - odometer_in
+                  - key_location
+              required:
+              - close_requirements
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/close_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties:
+                      odometer_in:
+                        type: string
+                      key_location:
+                        type: string
+                    required:
+                    - odometer_in
+                    - key_location
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: PATCH /locations/{location_id}/close_requirements
+      operationId: PATCH_locations_location_id_close_requirements
+  "/locations/{location_id}/courtesy_cars":
+    get:
+      summary: show
+      tags:
+      - Shop::Locations::CourtesyCar
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/courtesy_cars -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  courtesy_cars:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      courtesy_car_fee_enabled:
+                        type: boolean
+                      courtesy_car_fee_cents:
+                        type: integer
+                      courtesy_car_terms_text:
+                        nullable: true
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - courtesy_car_fee_enabled
+                    - courtesy_car_fee_cents
+                    - courtesy_car_terms_text
+                    - url
+                required:
+                - courtesy_cars
+        '403':
+          description: GET /locations/{location_id}/courtesy_cars -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /locations/{location_id}/courtesy_cars
+      operationId: GET_locations_location_id_courtesy_cars
+  "/locations/{location_id}/documents":
+    get:
+      summary: show
+      tags:
+      - Shop::Locations::Document
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/documents -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_settings:
+                    type: object
+                    properties: {}
+                  estimate_terms_text:
+                    nullable: true
+                    type: string
+                  terms_text:
+                    type: string
+                  payment_instructions:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - document_settings
+                - estimate_terms_text
+                - terms_text
+                - payment_instructions
+                - url
+                - app_url
+        '401':
+          description: GET /locations/{location_id}/documents -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '403':
+          description: GET /locations/{location_id}/documents -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /locations/{location_id}/documents
+      operationId: GET_locations_location_id_documents
+    patch:
+      summary: update
+      tags:
+      - Shop::Locations::Document
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    estimate_terms_text:
+                      type: string
+                  required:
+                  - estimate_terms_text
+              required:
+              - location
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/documents -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_settings:
+                    type: object
+                    properties: {}
+                  estimate_terms_text:
+                    type: string
+                  terms_text:
+                    nullable: true
+                  payment_instructions:
+                    nullable: true
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - document_settings
+                - estimate_terms_text
+                - terms_text
+                - payment_instructions
+                - url
+                - app_url
+      description: PATCH /locations/{location_id}/documents
+      operationId: PATCH_locations_location_id_documents
+  "/locations/{location_id}/lead_source_requirements":
+    get:
+      summary: show
+      tags:
+      - Shop::Locations::LeadSourceRequirement
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/lead_source_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/lead_source_requirements -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /locations/{location_id}/lead_source_requirements
+      operationId: GET_locations_location_id_lead_source_requirements
+    patch:
+      summary: update
+      tags:
+      - Shop::Locations::LeadSourceRequirement
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lead_source_requirements:
+                  type: object
+                  properties:
+                    customer_lead_source:
+                      type: string
+                    ro_marketing_source:
+                      type: string
+                  required:
+                  - customer_lead_source
+                  - ro_marketing_source
+              required:
+              - lead_source_requirements
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/lead_source_requirements ->
+            200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties:
+                      customer_lead_source:
+                        type: string
+                      ro_marketing_source:
+                        type: string
+                    required:
+                    - customer_lead_source
+                    - ro_marketing_source
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: PATCH /locations/{location_id}/lead_source_requirements
+      operationId: PATCH_locations_location_id_lead_source_requirements
+  "/locations/{location_id}/reminders":
+    get:
+      summary: show
+      tags:
+      - Shop::Locations::Reminder
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/reminders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/reminders -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /locations/{location_id}/reminders
+      operationId: GET_locations_location_id_reminders
+    patch:
+      summary: update
+      tags:
+      - Shop::Locations::Reminder
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    oil_change_reminders_enabled:
+                      type: boolean
+                    tire_swap_reminders_enabled:
+                      type: boolean
+                  required:
+                  - oil_change_reminders_enabled
+                  - tire_swap_reminders_enabled
+              required:
+              - location
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/reminders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: PATCH /locations/{location_id}/reminders
+      operationId: PATCH_locations_location_id_reminders
   "/locations/{location_id}/schedule_config":
     get:
       summary: show
@@ -20262,754 +21758,6 @@ paths:
                 - app_url
       description: PATCH /service_categories/{id}/trash
       operationId: PATCH_service_categories_id_trash
-  "/settings/billing":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Billing
-      responses:
-        '200':
-          description: GET /settings/billing -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  billing_email:
-                    type: string
-                  subscription_status:
-                    type: string
-                  next_billing_date:
-                    type: string
-                  work_orders_this_month:
-                    type: integer
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - billing_email
-                - subscription_status
-                - next_billing_date
-                - work_orders_this_month
-                - url
-                - app_url
-        '403':
-          description: GET /settings/billing -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/billing
-      operationId: GET_settings_billing
-  "/settings/cash_drawer":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::CashDrawer
-      responses:
-        '200':
-          description: GET /settings/cash_drawer -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-        '403':
-          description: GET /settings/cash_drawer -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/cash_drawer
-      operationId: GET_settings_cash_drawer
-  "/settings/close_requirements":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::CloseRequirement
-      responses:
-        '200':
-          description: GET /settings/close_requirements -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/close_requirements
-      operationId: GET_settings_close_requirements
-  "/settings/documents":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Document
-      responses:
-        '200':
-          description: GET /settings/documents -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  document_settings:
-                    type: object
-                    properties: {}
-                  estimate_terms_text:
-                    nullable: true
-                    type: string
-                  terms_text:
-                    type: string
-                  payment_instructions:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - document_settings
-                - estimate_terms_text
-                - terms_text
-                - payment_instructions
-                - url
-                - app_url
-        '401':
-          description: GET /settings/documents -> 401
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/documents
-      operationId: GET_settings_documents
-  "/settings/driveon":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Driveon
-      responses:
-        '200':
-          description: GET /settings/driveon -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/driveon
-      operationId: GET_settings_driveon
-  "/settings/expenses":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Expense
-      responses:
-        '200':
-          description: GET /settings/expenses -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/expenses
-      operationId: GET_settings_expenses
-  "/settings/lead_source_requirements":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::LeadSourceRequirement
-      responses:
-        '200':
-          description: GET /settings/lead_source_requirements -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/lead_source_requirements
-      operationId: GET_settings_lead_source_requirements
-  "/settings/payments":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Payment
-      responses:
-        '200':
-          description: GET /settings/payments -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  processor_application_status:
-                    nullable: true
-                    type: string
-                  processor_onboarded_at:
-                    nullable: true
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - processor_application_status
-                - processor_onboarded_at
-                - url
-                - app_url
-        '403':
-          description: GET /settings/payments -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/payments
-      operationId: GET_settings_payments
-  "/settings/phone_numbers":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::PhoneNumber
-      responses:
-        '200':
-          description: GET /settings/phone_numbers -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  texting_phone:
-                    nullable: true
-                    type: string
-                  phones:
-                    type: array
-                    items: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - texting_phone
-                - phones
-                - url
-                - app_url
-        '403':
-          description: GET /settings/phone_numbers -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/phone_numbers
-      operationId: GET_settings_phone_numbers
-  "/settings/quickbooks":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Quickbook
-      responses:
-        '200':
-          description: GET /settings/quickbooks -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  connected:
-                    type: boolean
-                  qbo_company_id:
-                    nullable: true
-                    type: string
-                  qbo_sync_mode:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - connected
-                - qbo_company_id
-                - qbo_sync_mode
-                - url
-                - app_url
-        '403':
-          description: GET /settings/quickbooks -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                      message:
-                        type: string
-                      field_errors:
-                        type: object
-                        properties: {}
-                    required:
-                    - code
-                    - message
-                    - field_errors
-                required:
-                - error
-      description: GET /settings/quickbooks
-      operationId: GET_settings_quickbooks
-  "/settings/reminders":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::Reminder
-      responses:
-        '200':
-          description: GET /settings/reminders -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/reminders
-      operationId: GET_settings_reminders
-  "/settings/tire_management":
-    get:
-      summary: show
-      tags:
-      - Shop::Settings::TireManagement
-      responses:
-        '200':
-          description: GET /settings/tire_management -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: GET /settings/tire_management
-      operationId: GET_settings_tire_management
   "/shop_discounts":
     get:
       summary: index
@@ -39309,6 +40057,16 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                package_id:
+                  type: integer
+              required:
+              - package_id
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
@@ -39402,16 +40160,6 @@ paths:
         '404':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
             404
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                package_id:
-                  type: integer
-              required:
-              - package_id
       description: POST /work_orders/{work_order_id}/services/{id}/packages
       operationId: POST_work_orders_work_order_id_services_id_packages
   "/work_orders/{work_order_id}/services/{id}/pause":

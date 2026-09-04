@@ -1,122 +1,96 @@
 [
   {
-    "name": "list_settings_billing_success",
-    "operation": "list_settings_billing",
+    "name": "list_account_billing_success",
+    "operation": "list_account_billing",
     "method": "GET",
-    "path": "/settings/billing",
+    "path": "/account/billing",
     "mockResponses": [
-      { "status": 200, "body": { "billing_email": "billing@example.com", "subscription_status": "active", "work_orders_this_month": 12, "next_billing_date": "2026-10-01", "url": "https://api.example.com/settings/billing", "app_url": "https://app.example.com/settings/billing" } }
+      { "status": 200, "body": { "billing_email": "billing@example.com", "subscription_status": "active", "work_orders_this_month": 12, "next_billing_date": "2026-10-01", "url": "https://api.example.com/account/billing", "app_url": "https://app.example.com/account/billing" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "subscription_status", "equals": "active" } }
   },
   {
-    "name": "list_settings_cash_drawer_success",
-    "operation": "list_settings_cash_drawer",
+    "name": "list_account_driveon_success",
+    "operation": "list_account_driveon",
     "method": "GET",
-    "path": "/settings/cash_drawer",
+    "path": "/account/driveon",
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "cash_drawer_enabled": true, "default_starting_float_cents": 20000, "url": "https://api.example.com/settings/cash_drawer", "app_url": "https://app.example.com/settings/cash_drawer" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "cash_drawer_enabled", "equals": true } }
-  },
-  {
-    "name": "list_settings_close_requirements_success",
-    "operation": "list_settings_close_requirements",
-    "method": "GET",
-    "path": "/settings/close_requirements",
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "close_requirements": { "payment": true }, "url": "https://api.example.com/settings/close_requirements", "app_url": "https://app.example.com/settings/close_requirements" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
-  },
-  {
-    "name": "list_settings_documents_success",
-    "operation": "list_settings_documents",
-    "method": "GET",
-    "path": "/settings/documents",
-    "mockResponses": [
-      { "status": 200, "body": { "terms_text": "Standard terms", "payment_instructions": "Pay on pickup", "document_settings": { "show_vin": true }, "url": "https://api.example.com/settings/documents", "app_url": "https://app.example.com/settings/documents" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "terms_text", "equals": "Standard terms" } }
-  },
-  {
-    "name": "list_settings_driveon_success",
-    "operation": "list_settings_driveon",
-    "method": "GET",
-    "path": "/settings/driveon",
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "driveon_station_number": "1", "url": "https://api.example.com/settings/driveon", "app_url": "https://app.example.com/settings/driveon" } }
+      { "status": 200, "body": { "id": 1, "name": "Main Shop", "default_starting_float_cents": 20000, "driveon_station_number": "1", "oil_change_reminders_enabled": true, "tire_swap_reminders_enabled": true, "brake_inspection_reminders_enabled": true, "battery_check_reminders_enabled": true, "close_requirements": {}, "lead_source_requirements": {}, "url": "https://api.example.com/account/driveon", "app_url": "https://app.example.com/account/driveon" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "driveon_station_number", "equals": "1" } }
   },
   {
-    "name": "list_settings_expenses_success",
-    "operation": "list_settings_expenses",
+    "name": "list_account_payments_success",
+    "operation": "list_account_payments",
     "method": "GET",
-    "path": "/settings/expenses",
+    "path": "/account/payments",
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "expenses_enabled": true, "url": "https://api.example.com/settings/expenses", "app_url": "https://app.example.com/settings/expenses" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "expenses_enabled", "equals": true } }
-  },
-  {
-    "name": "list_settings_lead_source_requirements_success",
-    "operation": "list_settings_lead_source_requirements",
-    "method": "GET",
-    "path": "/settings/lead_source_requirements",
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "lead_source_requirements": { "required": true }, "url": "https://api.example.com/settings/lead_source_requirements", "app_url": "https://app.example.com/settings/lead_source_requirements" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
-  },
-  {
-    "name": "list_settings_payments_success",
-    "operation": "list_settings_payments",
-    "method": "GET",
-    "path": "/settings/payments",
-    "mockResponses": [
-      { "status": 200, "body": { "processor_application_status": "approved", "url": "https://api.example.com/settings/payments", "app_url": "https://app.example.com/settings/payments" } }
+      { "status": 200, "body": { "processor_application_status": "approved", "processor_onboarded_at": "2026-01-01", "url": "https://api.example.com/account/payments", "app_url": "https://app.example.com/account/payments" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "processor_application_status", "equals": "approved" } }
   },
   {
-    "name": "list_settings_phone_numbers_success",
-    "operation": "list_settings_phone_numbers",
+    "name": "list_account_phone_numbers_success",
+    "operation": "list_account_phone_numbers",
     "method": "GET",
-    "path": "/settings/phone_numbers",
+    "path": "/account/phone_numbers",
     "mockResponses": [
-      { "status": 200, "body": { "texting_phone": "+1 416 555 0132", "phones": [ { "number": "+1 416 555 0132", "label": "main" } ], "url": "https://api.example.com/settings/phone_numbers", "app_url": "https://app.example.com/settings/phone_numbers" } }
+      { "status": 200, "body": { "texting_phone": "+1 416 555 0132", "phones": [ { "number": "+1 416 555 0132", "label": "main" } ], "url": "https://api.example.com/account/phone_numbers", "app_url": "https://app.example.com/account/phone_numbers" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "texting_phone", "equals": "+1 416 555 0132" } }
   },
   {
-    "name": "list_settings_quickbooks_success",
-    "operation": "list_settings_quickbooks",
+    "name": "list_account_quickbooks_success",
+    "operation": "list_account_quickbooks",
     "method": "GET",
-    "path": "/settings/quickbooks",
+    "path": "/account/quickbooks",
     "mockResponses": [
-      { "status": 200, "body": { "connected": true, "qbo_sync_mode": "manual", "qbo_company_id": "123456", "url": "https://api.example.com/settings/quickbooks", "app_url": "https://app.example.com/settings/quickbooks" } }
+      { "status": 200, "body": { "connected": true, "qbo_company_id": "123456", "qbo_sync_mode": "manual", "url": "https://api.example.com/account/quickbooks", "app_url": "https://app.example.com/account/quickbooks" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "connected", "equals": true } }
   },
   {
-    "name": "list_settings_reminders_success",
-    "operation": "list_settings_reminders",
+    "name": "list_locations_close_requirements_success",
+    "operation": "list_locations_close_requirements",
     "method": "GET",
-    "path": "/settings/reminders",
+    "path": "/locations/1/close_requirements",
+    "pathParams": { "location_id": "1" },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "oil_change_reminders_enabled": true, "url": "https://api.example.com/settings/reminders", "app_url": "https://app.example.com/settings/reminders" } }
+      { "status": 200, "body": { "id": 1, "name": "Main Shop", "default_starting_float_cents": 20000, "driveon_station_number": "1", "oil_change_reminders_enabled": true, "tire_swap_reminders_enabled": true, "brake_inspection_reminders_enabled": true, "battery_check_reminders_enabled": true, "close_requirements": { "odometer_in": "required", "key_location": "required" }, "lead_source_requirements": {}, "url": "https://api.example.com/locations/1/close_requirements", "app_url": "https://app.example.com/locations/1/close_requirements" } }
     ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "oil_change_reminders_enabled", "equals": true } }
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "close_requirements.odometer_in", "equals": "required" } }
   },
   {
-    "name": "list_settings_tire_management_success",
-    "operation": "list_settings_tire_management",
+    "name": "list_locations_documents_success",
+    "operation": "list_locations_documents",
     "method": "GET",
-    "path": "/settings/tire_management",
+    "path": "/locations/1/documents",
+    "pathParams": { "location_id": "1" },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "tire_management_enabled": true, "url": "https://api.example.com/settings/tire_management", "app_url": "https://app.example.com/settings/tire_management" } }
+      { "status": 200, "body": { "document_settings": { "show_vin": true }, "estimate_terms_text": null, "terms_text": "Standard terms", "payment_instructions": "Pay on pickup", "url": "https://api.example.com/locations/1/documents", "app_url": "https://app.example.com/locations/1/documents" } }
     ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "tire_management_enabled", "equals": true } }
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "terms_text", "equals": "Standard terms" } }
+  },
+  {
+    "name": "list_locations_lead_source_requirements_success",
+    "operation": "list_locations_lead_source_requirements",
+    "method": "GET",
+    "path": "/locations/1/lead_source_requirements",
+    "pathParams": { "location_id": "1" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Main Shop", "default_starting_float_cents": 20000, "driveon_station_number": "1", "oil_change_reminders_enabled": true, "tire_swap_reminders_enabled": true, "brake_inspection_reminders_enabled": true, "battery_check_reminders_enabled": true, "close_requirements": {}, "lead_source_requirements": { "required": true }, "url": "https://api.example.com/locations/1/lead_source_requirements", "app_url": "https://app.example.com/locations/1/lead_source_requirements" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
+  },
+  {
+    "name": "list_locations_reminders_success",
+    "operation": "list_locations_reminders",
+    "method": "GET",
+    "path": "/locations/1/reminders",
+    "pathParams": { "location_id": "1" },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Main Shop", "default_starting_float_cents": 20000, "driveon_station_number": "1", "oil_change_reminders_enabled": true, "tire_swap_reminders_enabled": true, "brake_inspection_reminders_enabled": true, "battery_check_reminders_enabled": true, "close_requirements": {}, "lead_source_requirements": {}, "url": "https://api.example.com/locations/1/reminders", "app_url": "https://app.example.com/locations/1/reminders" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "oil_change_reminders_enabled", "equals": true } }
   }
 ]

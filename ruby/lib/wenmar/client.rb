@@ -96,7 +96,12 @@ module Wenmar
     def post(path, body = nil, params = {})
       response = @write_connection.post(path) do |req|
         req.params.merge!(params) unless params.empty?
-        req.body = body.to_json if body
+        if body.is_a?(Hash) && body[:multipart]
+          req.headers["Content-Type"] = "multipart/form-data"
+          req.body = body[:multipart]
+        elsif body
+          req.body = body.to_json
+        end
       end
       handle_response(response)
     end

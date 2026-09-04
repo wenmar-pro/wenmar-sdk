@@ -38,6 +38,8 @@ List all courtesy cars, paginated via the Link header.
 | `notes` | string \| null | Yes |
 | `odometer` | object | Yes |
 | `work_orders_count` | integer | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `work_orders_url` | string | Yes |
 | `customer` | object | Yes |
 | `created_at` | string | Yes |

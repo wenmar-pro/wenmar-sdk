@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/oapi-codegen/runtime"
+	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // ArchiveCustomerRequest defines model for ArchiveCustomerRequest.
@@ -213,6 +214,9 @@ type CreateExpenseRequest struct {
 		PaymentMethod string `json:"payment_method"`
 	} `json:"expense"`
 }
+
+// CreateExpensesExportRequest defines model for CreateExpensesExportRequest.
+type CreateExpensesExportRequest = map[string]interface{}
 
 // CreateInspectionReportRequest defines model for CreateInspectionReportRequest.
 type CreateInspectionReportRequest = map[string]interface{}
@@ -1245,7 +1249,8 @@ type UpdateDriverRequest struct {
 // UpdateExpenseRequest defines model for UpdateExpenseRequest.
 type UpdateExpenseRequest struct {
 	Expense struct {
-		Description string `json:"description"`
+		Description *string `json:"description,omitempty"`
+		ReceiptId   *string `json:"receipt_id,omitempty"`
 	} `json:"expense"`
 }
 
@@ -1306,10 +1311,41 @@ type UpdateLocationsBusinessProfileRequest struct {
 	} `json:"location"`
 }
 
+// UpdateLocationsCloseRequirementsRequest defines model for UpdateLocationsCloseRequirementsRequest.
+type UpdateLocationsCloseRequirementsRequest struct {
+	CloseRequirements struct {
+		KeyLocation string `json:"key_location"`
+		OdometerIn  string `json:"odometer_in"`
+	} `json:"close_requirements"`
+}
+
+// UpdateLocationsDocumentsRequest defines model for UpdateLocationsDocumentsRequest.
+type UpdateLocationsDocumentsRequest struct {
+	Location struct {
+		EstimateTermsText string `json:"estimate_terms_text"`
+	} `json:"location"`
+}
+
+// UpdateLocationsLeadSourceRequirementsRequest defines model for UpdateLocationsLeadSourceRequirementsRequest.
+type UpdateLocationsLeadSourceRequirementsRequest struct {
+	LeadSourceRequirements struct {
+		CustomerLeadSource string `json:"customer_lead_source"`
+		RoMarketingSource  string `json:"ro_marketing_source"`
+	} `json:"lead_source_requirements"`
+}
+
 // UpdateLocationsOperationsRequest defines model for UpdateLocationsOperationsRequest.
 type UpdateLocationsOperationsRequest struct {
 	Location struct {
 		TimeZone string `json:"time_zone"`
+	} `json:"location"`
+}
+
+// UpdateLocationsRemindersRequest defines model for UpdateLocationsRemindersRequest.
+type UpdateLocationsRemindersRequest struct {
+	Location struct {
+		OilChangeRemindersEnabled bool `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled  bool `json:"tire_swap_reminders_enabled"`
 	} `json:"location"`
 }
 
@@ -1800,6 +1836,11 @@ type LookupCustomerParams struct {
 type TrashCustomerFormdataBody = struct {
 }
 
+// CreateExpensesImportsValidateMultipartBody defines parameters for CreateExpensesImportsValidate.
+type CreateExpensesImportsValidateMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
 // CreateInspectionReportParams defines parameters for CreateInspectionReport.
 type CreateInspectionReportParams struct {
 	InspectionId *int `form:"inspection_id,omitempty" json:"inspection_id,omitempty"`
@@ -2036,6 +2077,12 @@ type TrashCustomerFormdataRequestBody = TrashCustomerFormdataBody
 // CreateExpenseJSONRequestBody defines body for CreateExpense for application/json ContentType.
 type CreateExpenseJSONRequestBody = CreateExpenseRequest
 
+// CreateExpensesExportJSONRequestBody defines body for CreateExpensesExport for application/json ContentType.
+type CreateExpensesExportJSONRequestBody = CreateExpensesExportRequest
+
+// CreateExpensesImportsValidateMultipartRequestBody defines body for CreateExpensesImportsValidate for multipart/form-data ContentType.
+type CreateExpensesImportsValidateMultipartRequestBody CreateExpensesImportsValidateMultipartBody
+
 // UpdateExpenseJSONRequestBody defines body for UpdateExpense for application/json ContentType.
 type UpdateExpenseJSONRequestBody = UpdateExpenseRequest
 
@@ -2134,6 +2181,18 @@ type UpdateLocationsBusinessProfileJSONRequestBody = UpdateLocationsBusinessProf
 
 // UpdateLocationsOperationsJSONRequestBody defines body for UpdateLocationsOperations for application/json ContentType.
 type UpdateLocationsOperationsJSONRequestBody = UpdateLocationsOperationsRequest
+
+// UpdateLocationsCloseRequirementsJSONRequestBody defines body for UpdateLocationsCloseRequirements for application/json ContentType.
+type UpdateLocationsCloseRequirementsJSONRequestBody = UpdateLocationsCloseRequirementsRequest
+
+// UpdateLocationsDocumentsJSONRequestBody defines body for UpdateLocationsDocuments for application/json ContentType.
+type UpdateLocationsDocumentsJSONRequestBody = UpdateLocationsDocumentsRequest
+
+// UpdateLocationsLeadSourceRequirementsJSONRequestBody defines body for UpdateLocationsLeadSourceRequirements for application/json ContentType.
+type UpdateLocationsLeadSourceRequirementsJSONRequestBody = UpdateLocationsLeadSourceRequirementsRequest
+
+// UpdateLocationsRemindersJSONRequestBody defines body for UpdateLocationsReminders for application/json ContentType.
+type UpdateLocationsRemindersJSONRequestBody = UpdateLocationsRemindersRequest
 
 // UpdateLocationsScheduleConfigJSONRequestBody defines body for UpdateLocationsScheduleConfig for application/json ContentType.
 type UpdateLocationsScheduleConfigJSONRequestBody = UpdateLocationsScheduleConfigRequest
@@ -2573,6 +2632,48 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /account (the `UpdateAccount` operationId).
 	UpdateAccount(ctx context.Context, body UpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountBilling show
+	//
+	// List all account billing, paginated via the Link header.
+	//
+	// Corresponds with GET /account/billing (the `ListAccountBilling` operationId).
+	ListAccountBilling(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountCapabilities show
+	//
+	// List all account capabilities, paginated via the Link header.
+	//
+	// Corresponds with GET /account/capabilities (the `ListAccountCapabilities` operationId).
+	ListAccountCapabilities(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountDriveon show
+	//
+	// List all account driveon, paginated via the Link header.
+	//
+	// Corresponds with GET /account/driveon (the `ListAccountDriveon` operationId).
+	ListAccountDriveon(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountPayments show
+	//
+	// List all account payments, paginated via the Link header.
+	//
+	// Corresponds with GET /account/payments (the `ListAccountPayments` operationId).
+	ListAccountPayments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountPhoneNumbers show
+	//
+	// List all account phone numbers, paginated via the Link header.
+	//
+	// Corresponds with GET /account/phone_numbers (the `ListAccountPhoneNumbers` operationId).
+	ListAccountPhoneNumbers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListAccountQuickbooks show
+	//
+	// List all account quickbooks, paginated via the Link header.
+	//
+	// Corresponds with GET /account/quickbooks (the `ListAccountQuickbooks` operationId).
+	ListAccountQuickbooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAccountStationLink station_link
 	//
@@ -3497,12 +3598,74 @@ type ClientInterface interface {
 	// Corresponds with POST /expenses (the `CreateExpense` operationId).
 	CreateExpense(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListExpensesDataTransfer show
+	//
+	// List all expenses data transfer, paginated via the Link header.
+	//
+	// Corresponds with GET /expenses/data_transfer (the `ListExpensesDataTransfer` operationId).
+	ListExpensesDataTransfer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateExpensesExportWithBody create
+	//
+	// Create a expenses export.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+	CreateExpensesExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateExpensesExport create
+	//
+	// Create a expenses export.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+	CreateExpensesExport(ctx context.Context, body CreateExpensesExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListExpensesExportDownload download
+	//
+	// List all expenses export download, paginated via the Link header.
+	//
+	// Corresponds with GET /expenses/export/{id}/download (the `ListExpensesExportDownload` operationId).
+	ListExpensesExportDownload(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateExpensesImportsCommit commit
+	//
+	// Create a expenses imports commit.
+	//
+	// Corresponds with POST /expenses/imports/commit (the `CreateExpensesImportsCommit` operationId).
+	CreateExpensesImportsCommit(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListExpensesImportsTemplate template
+	//
+	// List all expenses imports template, paginated via the Link header.
+	//
+	// Corresponds with GET /expenses/imports/template (the `ListExpensesImportsTemplate` operationId).
+	ListExpensesImportsTemplate(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateExpensesImportsValidateWithBody validate
+	//
+	// Create a expenses imports validate.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /expenses/imports/validate (the `CreateExpensesImportsValidate` operationId).
+	CreateExpensesImportsValidateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteExpense destroy
 	//
 	// Delete a expense by ID.
 	//
 	// Corresponds with DELETE /expenses/{id} (the `DeleteExpense` operationId).
 	DeleteExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ShowExpense show
+	//
+	// Show a expense by ID.
+	//
+	// Corresponds with GET /expenses/{id} (the `ShowExpense` operationId).
+	ShowExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateExpenseWithBody update
 	//
@@ -4173,6 +4336,113 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /locations/{id}/operations (the `UpdateLocationsOperations` operationId).
 	UpdateLocationsOperations(ctx context.Context, id string, body UpdateLocationsOperationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLocationsCloseRequirements show
+	//
+	// List all locations close requirements, paginated via the Link header.
+	//
+	// Corresponds with GET /locations/{location_id}/close_requirements (the `ListLocationsCloseRequirements` operationId).
+	ListLocationsCloseRequirements(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsCloseRequirementsWithBody update
+	//
+	// Update a locations close requirements by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+	UpdateLocationsCloseRequirementsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsCloseRequirements update
+	//
+	// Update a locations close requirements by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+	UpdateLocationsCloseRequirements(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLocationsCourtesyCars show
+	//
+	// List all locations courtesy cars, paginated via the Link header.
+	//
+	// Corresponds with GET /locations/{location_id}/courtesy_cars (the `ListLocationsCourtesyCars` operationId).
+	ListLocationsCourtesyCars(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLocationsDocuments show
+	//
+	// List all locations documents, paginated via the Link header.
+	//
+	// Corresponds with GET /locations/{location_id}/documents (the `ListLocationsDocuments` operationId).
+	ListLocationsDocuments(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsDocumentsWithBody update
+	//
+	// Update a locations documents by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+	UpdateLocationsDocumentsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsDocuments update
+	//
+	// Update a locations documents by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+	UpdateLocationsDocuments(ctx context.Context, locationId string, body UpdateLocationsDocumentsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLocationsLeadSourceRequirements show
+	//
+	// List all locations lead source requirements, paginated via the Link header.
+	//
+	// Corresponds with GET /locations/{location_id}/lead_source_requirements (the `ListLocationsLeadSourceRequirements` operationId).
+	ListLocationsLeadSourceRequirements(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsLeadSourceRequirementsWithBody update
+	//
+	// Update a locations lead source requirements by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+	UpdateLocationsLeadSourceRequirementsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsLeadSourceRequirements update
+	//
+	// Update a locations lead source requirements by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+	UpdateLocationsLeadSourceRequirements(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListLocationsReminders show
+	//
+	// List all locations reminders, paginated via the Link header.
+	//
+	// Corresponds with GET /locations/{location_id}/reminders (the `ListLocationsReminders` operationId).
+	ListLocationsReminders(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsRemindersWithBody update
+	//
+	// Update a locations reminders by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+	UpdateLocationsRemindersWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLocationsReminders update
+	//
+	// Update a locations reminders by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+	UpdateLocationsReminders(ctx context.Context, locationId string, body UpdateLocationsRemindersJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListLocationsScheduleConfig show
 	//
@@ -4986,90 +5256,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
 	TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsBilling show
-	//
-	// List all settings billing, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/billing (the `ListSettingsBilling` operationId).
-	ListSettingsBilling(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsCashDrawer show
-	//
-	// List all settings cash drawer, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/cash_drawer (the `ListSettingsCashDrawer` operationId).
-	ListSettingsCashDrawer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsCloseRequirements show
-	//
-	// List all settings close requirements, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/close_requirements (the `ListSettingsCloseRequirements` operationId).
-	ListSettingsCloseRequirements(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsDocuments show
-	//
-	// List all settings documents, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/documents (the `ListSettingsDocuments` operationId).
-	ListSettingsDocuments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsDriveon show
-	//
-	// List all settings driveon, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/driveon (the `ListSettingsDriveon` operationId).
-	ListSettingsDriveon(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsExpenses show
-	//
-	// List all settings expenses, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/expenses (the `ListSettingsExpenses` operationId).
-	ListSettingsExpenses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsLeadSourceRequirements show
-	//
-	// List all settings lead source requirements, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/lead_source_requirements (the `ListSettingsLeadSourceRequirements` operationId).
-	ListSettingsLeadSourceRequirements(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsPayments show
-	//
-	// List all settings payments, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/payments (the `ListSettingsPayments` operationId).
-	ListSettingsPayments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsPhoneNumbers show
-	//
-	// List all settings phone numbers, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/phone_numbers (the `ListSettingsPhoneNumbers` operationId).
-	ListSettingsPhoneNumbers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsQuickbooks show
-	//
-	// List all settings quickbooks, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/quickbooks (the `ListSettingsQuickbooks` operationId).
-	ListSettingsQuickbooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsReminders show
-	//
-	// List all settings reminders, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/reminders (the `ListSettingsReminders` operationId).
-	ListSettingsReminders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListSettingsTireManagement show
-	//
-	// List all settings tire management, paginated via the Link header.
-	//
-	// Corresponds with GET /settings/tire_management (the `ListSettingsTireManagement` operationId).
-	ListSettingsTireManagement(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListShopDiscounts index
 	//
@@ -6918,6 +7104,108 @@ func (c *Client) UpdateAccountWithBody(ctx context.Context, contentType string, 
 // Corresponds with PATCH /account (the `UpdateAccount` operationId).
 func (c *Client) UpdateAccount(ctx context.Context, body UpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateAccountRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountBilling show
+//
+// List all account billing, paginated via the Link header.
+//
+// Corresponds with GET /account/billing (the `ListAccountBilling` operationId).
+func (c *Client) ListAccountBilling(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountBillingRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountCapabilities show
+//
+// List all account capabilities, paginated via the Link header.
+//
+// Corresponds with GET /account/capabilities (the `ListAccountCapabilities` operationId).
+func (c *Client) ListAccountCapabilities(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountCapabilitiesRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountDriveon show
+//
+// List all account driveon, paginated via the Link header.
+//
+// Corresponds with GET /account/driveon (the `ListAccountDriveon` operationId).
+func (c *Client) ListAccountDriveon(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountDriveonRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountPayments show
+//
+// List all account payments, paginated via the Link header.
+//
+// Corresponds with GET /account/payments (the `ListAccountPayments` operationId).
+func (c *Client) ListAccountPayments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountPaymentsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountPhoneNumbers show
+//
+// List all account phone numbers, paginated via the Link header.
+//
+// Corresponds with GET /account/phone_numbers (the `ListAccountPhoneNumbers` operationId).
+func (c *Client) ListAccountPhoneNumbers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountPhoneNumbersRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListAccountQuickbooks show
+//
+// List all account quickbooks, paginated via the Link header.
+//
+// Corresponds with GET /account/quickbooks (the `ListAccountQuickbooks` operationId).
+func (c *Client) ListAccountQuickbooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAccountQuickbooksRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -8981,6 +9269,131 @@ func (c *Client) CreateExpense(ctx context.Context, body CreateExpenseJSONReques
 	return c.Client.Do(req)
 }
 
+// ListExpensesDataTransfer show
+//
+// List all expenses data transfer, paginated via the Link header.
+//
+// Corresponds with GET /expenses/data_transfer (the `ListExpensesDataTransfer` operationId).
+func (c *Client) ListExpensesDataTransfer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListExpensesDataTransferRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateExpensesExportWithBody create
+//
+// Create a expenses export.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+func (c *Client) CreateExpensesExportWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpensesExportRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateExpensesExport create
+//
+// Create a expenses export.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+func (c *Client) CreateExpensesExport(ctx context.Context, body CreateExpensesExportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpensesExportRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListExpensesExportDownload download
+//
+// List all expenses export download, paginated via the Link header.
+//
+// Corresponds with GET /expenses/export/{id}/download (the `ListExpensesExportDownload` operationId).
+func (c *Client) ListExpensesExportDownload(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListExpensesExportDownloadRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateExpensesImportsCommit commit
+//
+// Create a expenses imports commit.
+//
+// Corresponds with POST /expenses/imports/commit (the `CreateExpensesImportsCommit` operationId).
+func (c *Client) CreateExpensesImportsCommit(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpensesImportsCommitRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListExpensesImportsTemplate template
+//
+// List all expenses imports template, paginated via the Link header.
+//
+// Corresponds with GET /expenses/imports/template (the `ListExpensesImportsTemplate` operationId).
+func (c *Client) ListExpensesImportsTemplate(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListExpensesImportsTemplateRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateExpensesImportsValidateWithBody validate
+//
+// Create a expenses imports validate.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /expenses/imports/validate (the `CreateExpensesImportsValidate` operationId).
+func (c *Client) CreateExpensesImportsValidateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateExpensesImportsValidateRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteExpense destroy
 //
 // Delete a expense by ID.
@@ -8988,6 +9401,23 @@ func (c *Client) CreateExpense(ctx context.Context, body CreateExpenseJSONReques
 // Corresponds with DELETE /expenses/{id} (the `DeleteExpense` operationId).
 func (c *Client) DeleteExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteExpenseRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ShowExpense show
+//
+// Show a expense by ID.
+//
+// Corresponds with GET /expenses/{id} (the `ShowExpense` operationId).
+func (c *Client) ShowExpense(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowExpenseRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -10518,6 +10948,243 @@ func (c *Client) UpdateLocationsOperationsWithBody(ctx context.Context, id strin
 // Corresponds with PATCH /locations/{id}/operations (the `UpdateLocationsOperations` operationId).
 func (c *Client) UpdateLocationsOperations(ctx context.Context, id string, body UpdateLocationsOperationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateLocationsOperationsRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListLocationsCloseRequirements show
+//
+// List all locations close requirements, paginated via the Link header.
+//
+// Corresponds with GET /locations/{location_id}/close_requirements (the `ListLocationsCloseRequirements` operationId).
+func (c *Client) ListLocationsCloseRequirements(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLocationsCloseRequirementsRequest(c.Server, locationId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsCloseRequirementsWithBody update
+//
+// Update a locations close requirements by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+func (c *Client) UpdateLocationsCloseRequirementsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsCloseRequirementsRequestWithBody(c.Server, locationId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsCloseRequirements update
+//
+// Update a locations close requirements by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+func (c *Client) UpdateLocationsCloseRequirements(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsCloseRequirementsRequest(c.Server, locationId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListLocationsCourtesyCars show
+//
+// List all locations courtesy cars, paginated via the Link header.
+//
+// Corresponds with GET /locations/{location_id}/courtesy_cars (the `ListLocationsCourtesyCars` operationId).
+func (c *Client) ListLocationsCourtesyCars(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLocationsCourtesyCarsRequest(c.Server, locationId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListLocationsDocuments show
+//
+// List all locations documents, paginated via the Link header.
+//
+// Corresponds with GET /locations/{location_id}/documents (the `ListLocationsDocuments` operationId).
+func (c *Client) ListLocationsDocuments(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLocationsDocumentsRequest(c.Server, locationId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsDocumentsWithBody update
+//
+// Update a locations documents by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+func (c *Client) UpdateLocationsDocumentsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsDocumentsRequestWithBody(c.Server, locationId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsDocuments update
+//
+// Update a locations documents by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+func (c *Client) UpdateLocationsDocuments(ctx context.Context, locationId string, body UpdateLocationsDocumentsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsDocumentsRequest(c.Server, locationId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListLocationsLeadSourceRequirements show
+//
+// List all locations lead source requirements, paginated via the Link header.
+//
+// Corresponds with GET /locations/{location_id}/lead_source_requirements (the `ListLocationsLeadSourceRequirements` operationId).
+func (c *Client) ListLocationsLeadSourceRequirements(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLocationsLeadSourceRequirementsRequest(c.Server, locationId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsLeadSourceRequirementsWithBody update
+//
+// Update a locations lead source requirements by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+func (c *Client) UpdateLocationsLeadSourceRequirementsWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsLeadSourceRequirementsRequestWithBody(c.Server, locationId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsLeadSourceRequirements update
+//
+// Update a locations lead source requirements by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+func (c *Client) UpdateLocationsLeadSourceRequirements(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsLeadSourceRequirementsRequest(c.Server, locationId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListLocationsReminders show
+//
+// List all locations reminders, paginated via the Link header.
+//
+// Corresponds with GET /locations/{location_id}/reminders (the `ListLocationsReminders` operationId).
+func (c *Client) ListLocationsReminders(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListLocationsRemindersRequest(c.Server, locationId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsRemindersWithBody update
+//
+// Update a locations reminders by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+func (c *Client) UpdateLocationsRemindersWithBody(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsRemindersRequestWithBody(c.Server, locationId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLocationsReminders update
+//
+// Update a locations reminders by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+func (c *Client) UpdateLocationsReminders(ctx context.Context, locationId string, body UpdateLocationsRemindersJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLocationsRemindersRequest(c.Server, locationId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12361,210 +13028,6 @@ func (c *Client) TrashServiceCategoryWithBody(ctx context.Context, id int, conte
 // Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
 func (c *Client) TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewTrashServiceCategoryRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsBilling show
-//
-// List all settings billing, paginated via the Link header.
-//
-// Corresponds with GET /settings/billing (the `ListSettingsBilling` operationId).
-func (c *Client) ListSettingsBilling(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsBillingRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsCashDrawer show
-//
-// List all settings cash drawer, paginated via the Link header.
-//
-// Corresponds with GET /settings/cash_drawer (the `ListSettingsCashDrawer` operationId).
-func (c *Client) ListSettingsCashDrawer(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsCashDrawerRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsCloseRequirements show
-//
-// List all settings close requirements, paginated via the Link header.
-//
-// Corresponds with GET /settings/close_requirements (the `ListSettingsCloseRequirements` operationId).
-func (c *Client) ListSettingsCloseRequirements(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsCloseRequirementsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsDocuments show
-//
-// List all settings documents, paginated via the Link header.
-//
-// Corresponds with GET /settings/documents (the `ListSettingsDocuments` operationId).
-func (c *Client) ListSettingsDocuments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsDocumentsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsDriveon show
-//
-// List all settings driveon, paginated via the Link header.
-//
-// Corresponds with GET /settings/driveon (the `ListSettingsDriveon` operationId).
-func (c *Client) ListSettingsDriveon(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsDriveonRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsExpenses show
-//
-// List all settings expenses, paginated via the Link header.
-//
-// Corresponds with GET /settings/expenses (the `ListSettingsExpenses` operationId).
-func (c *Client) ListSettingsExpenses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsExpensesRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsLeadSourceRequirements show
-//
-// List all settings lead source requirements, paginated via the Link header.
-//
-// Corresponds with GET /settings/lead_source_requirements (the `ListSettingsLeadSourceRequirements` operationId).
-func (c *Client) ListSettingsLeadSourceRequirements(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsLeadSourceRequirementsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsPayments show
-//
-// List all settings payments, paginated via the Link header.
-//
-// Corresponds with GET /settings/payments (the `ListSettingsPayments` operationId).
-func (c *Client) ListSettingsPayments(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsPaymentsRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsPhoneNumbers show
-//
-// List all settings phone numbers, paginated via the Link header.
-//
-// Corresponds with GET /settings/phone_numbers (the `ListSettingsPhoneNumbers` operationId).
-func (c *Client) ListSettingsPhoneNumbers(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsPhoneNumbersRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsQuickbooks show
-//
-// List all settings quickbooks, paginated via the Link header.
-//
-// Corresponds with GET /settings/quickbooks (the `ListSettingsQuickbooks` operationId).
-func (c *Client) ListSettingsQuickbooks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsQuickbooksRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsReminders show
-//
-// List all settings reminders, paginated via the Link header.
-//
-// Corresponds with GET /settings/reminders (the `ListSettingsReminders` operationId).
-func (c *Client) ListSettingsReminders(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsRemindersRequest(c.Server)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListSettingsTireManagement show
-//
-// List all settings tire management, paginated via the Link header.
-//
-// Corresponds with GET /settings/tire_management (the `ListSettingsTireManagement` operationId).
-func (c *Client) ListSettingsTireManagement(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListSettingsTireManagementRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -16633,6 +17096,168 @@ func NewUpdateAccountRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
+// NewListAccountBillingRequest constructs an http.Request for the ListAccountBilling method
+func NewListAccountBillingRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/billing")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountCapabilitiesRequest constructs an http.Request for the ListAccountCapabilities method
+func NewListAccountCapabilitiesRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/capabilities")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountDriveonRequest constructs an http.Request for the ListAccountDriveon method
+func NewListAccountDriveonRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/driveon")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountPaymentsRequest constructs an http.Request for the ListAccountPayments method
+func NewListAccountPaymentsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/payments")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountPhoneNumbersRequest constructs an http.Request for the ListAccountPhoneNumbers method
+func NewListAccountPhoneNumbersRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/phone_numbers")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListAccountQuickbooksRequest constructs an http.Request for the ListAccountQuickbooks method
+func NewListAccountQuickbooksRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/account/quickbooks")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListAccountStationLinkRequest constructs an http.Request for the ListAccountStationLink method
 func NewListAccountStationLinkRequest(server string) (*http.Request, error) {
 	var err error
@@ -19807,6 +20432,190 @@ func NewCreateExpenseRequestWithBody(server string, contentType string, body io.
 	return req, nil
 }
 
+// NewListExpensesDataTransferRequest constructs an http.Request for the ListExpensesDataTransfer method
+func NewListExpensesDataTransferRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/data_transfer")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateExpensesExportRequest calls the generic CreateExpensesExport builder with application/json body
+func NewCreateExpensesExportRequest(server string, body CreateExpensesExportJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateExpensesExportRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateExpensesExportRequestWithBody constructs an http.Request for the CreateExpensesExport method, with any body, and a specified content type
+func NewCreateExpensesExportRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/export")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListExpensesExportDownloadRequest constructs an http.Request for the ListExpensesExportDownload method
+func NewListExpensesExportDownloadRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/export/%s/download", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateExpensesImportsCommitRequest constructs an http.Request for the CreateExpensesImportsCommit method
+func NewCreateExpensesImportsCommitRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/imports/commit")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListExpensesImportsTemplateRequest constructs an http.Request for the ListExpensesImportsTemplate method
+func NewListExpensesImportsTemplateRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/imports/template")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateExpensesImportsValidateRequestWithBody constructs an http.Request for the CreateExpensesImportsValidate method, with any body, and a specified content type
+func NewCreateExpensesImportsValidateRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/imports/validate")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewDeleteExpenseRequest constructs an http.Request for the DeleteExpense method
 func NewDeleteExpenseRequest(server string, id int) (*http.Request, error) {
 	var err error
@@ -19834,6 +20643,40 @@ func NewDeleteExpenseRequest(server string, id int) (*http.Request, error) {
 	}
 
 	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewShowExpenseRequest constructs an http.Request for the ShowExpense method
+func NewShowExpenseRequest(server string, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/expenses/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -22182,6 +23025,364 @@ func NewUpdateLocationsOperationsRequestWithBody(server string, id string, conte
 	}
 
 	operationPath := fmt.Sprintf("/locations/%s/operations", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListLocationsCloseRequirementsRequest constructs an http.Request for the ListLocationsCloseRequirements method
+func NewListLocationsCloseRequirementsRequest(server string, locationId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/close_requirements", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateLocationsCloseRequirementsRequest calls the generic UpdateLocationsCloseRequirements builder with application/json body
+func NewUpdateLocationsCloseRequirementsRequest(server string, locationId string, body UpdateLocationsCloseRequirementsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateLocationsCloseRequirementsRequestWithBody(server, locationId, "application/json", bodyReader)
+}
+
+// NewUpdateLocationsCloseRequirementsRequestWithBody constructs an http.Request for the UpdateLocationsCloseRequirements method, with any body, and a specified content type
+func NewUpdateLocationsCloseRequirementsRequestWithBody(server string, locationId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/close_requirements", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListLocationsCourtesyCarsRequest constructs an http.Request for the ListLocationsCourtesyCars method
+func NewListLocationsCourtesyCarsRequest(server string, locationId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/courtesy_cars", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListLocationsDocumentsRequest constructs an http.Request for the ListLocationsDocuments method
+func NewListLocationsDocumentsRequest(server string, locationId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/documents", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateLocationsDocumentsRequest calls the generic UpdateLocationsDocuments builder with application/json body
+func NewUpdateLocationsDocumentsRequest(server string, locationId string, body UpdateLocationsDocumentsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateLocationsDocumentsRequestWithBody(server, locationId, "application/json", bodyReader)
+}
+
+// NewUpdateLocationsDocumentsRequestWithBody constructs an http.Request for the UpdateLocationsDocuments method, with any body, and a specified content type
+func NewUpdateLocationsDocumentsRequestWithBody(server string, locationId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/documents", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListLocationsLeadSourceRequirementsRequest constructs an http.Request for the ListLocationsLeadSourceRequirements method
+func NewListLocationsLeadSourceRequirementsRequest(server string, locationId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/lead_source_requirements", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateLocationsLeadSourceRequirementsRequest calls the generic UpdateLocationsLeadSourceRequirements builder with application/json body
+func NewUpdateLocationsLeadSourceRequirementsRequest(server string, locationId string, body UpdateLocationsLeadSourceRequirementsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateLocationsLeadSourceRequirementsRequestWithBody(server, locationId, "application/json", bodyReader)
+}
+
+// NewUpdateLocationsLeadSourceRequirementsRequestWithBody constructs an http.Request for the UpdateLocationsLeadSourceRequirements method, with any body, and a specified content type
+func NewUpdateLocationsLeadSourceRequirementsRequestWithBody(server string, locationId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/lead_source_requirements", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListLocationsRemindersRequest constructs an http.Request for the ListLocationsReminders method
+func NewListLocationsRemindersRequest(server string, locationId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/reminders", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateLocationsRemindersRequest calls the generic UpdateLocationsReminders builder with application/json body
+func NewUpdateLocationsRemindersRequest(server string, locationId string, body UpdateLocationsRemindersJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateLocationsRemindersRequestWithBody(server, locationId, "application/json", bodyReader)
+}
+
+// NewUpdateLocationsRemindersRequestWithBody constructs an http.Request for the UpdateLocationsReminders method, with any body, and a specified content type
+func NewUpdateLocationsRemindersRequestWithBody(server string, locationId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "location_id", locationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/locations/%s/reminders", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -24873,330 +26074,6 @@ func NewTrashServiceCategoryRequestWithBody(server string, id int, contentType s
 	}
 
 	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewListSettingsBillingRequest constructs an http.Request for the ListSettingsBilling method
-func NewListSettingsBillingRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/billing")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsCashDrawerRequest constructs an http.Request for the ListSettingsCashDrawer method
-func NewListSettingsCashDrawerRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/cash_drawer")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsCloseRequirementsRequest constructs an http.Request for the ListSettingsCloseRequirements method
-func NewListSettingsCloseRequirementsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/close_requirements")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsDocumentsRequest constructs an http.Request for the ListSettingsDocuments method
-func NewListSettingsDocumentsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/documents")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsDriveonRequest constructs an http.Request for the ListSettingsDriveon method
-func NewListSettingsDriveonRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/driveon")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsExpensesRequest constructs an http.Request for the ListSettingsExpenses method
-func NewListSettingsExpensesRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/expenses")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsLeadSourceRequirementsRequest constructs an http.Request for the ListSettingsLeadSourceRequirements method
-func NewListSettingsLeadSourceRequirementsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/lead_source_requirements")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsPaymentsRequest constructs an http.Request for the ListSettingsPayments method
-func NewListSettingsPaymentsRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/payments")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsPhoneNumbersRequest constructs an http.Request for the ListSettingsPhoneNumbers method
-func NewListSettingsPhoneNumbersRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/phone_numbers")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsQuickbooksRequest constructs an http.Request for the ListSettingsQuickbooks method
-func NewListSettingsQuickbooksRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/quickbooks")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsRemindersRequest constructs an http.Request for the ListSettingsReminders method
-func NewListSettingsRemindersRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/reminders")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewListSettingsTireManagementRequest constructs an http.Request for the ListSettingsTireManagement method
-func NewListSettingsTireManagementRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/settings/tire_management")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
 
 	return req, nil
 }
@@ -31367,6 +32244,60 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /account (the `UpdateAccount` operationId).
 	UpdateAccountWithResponse(ctx context.Context, body UpdateAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAccountResponse, error)
 
+	// ListAccountBillingWithResponse show
+	//
+	// List all account billing, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/billing (the `ListAccountBilling` operationId).
+	ListAccountBillingWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountBillingResponse, error)
+
+	// ListAccountCapabilitiesWithResponse show
+	//
+	// List all account capabilities, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/capabilities (the `ListAccountCapabilities` operationId).
+	ListAccountCapabilitiesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountCapabilitiesResponse, error)
+
+	// ListAccountDriveonWithResponse show
+	//
+	// List all account driveon, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/driveon (the `ListAccountDriveon` operationId).
+	ListAccountDriveonWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountDriveonResponse, error)
+
+	// ListAccountPaymentsWithResponse show
+	//
+	// List all account payments, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/payments (the `ListAccountPayments` operationId).
+	ListAccountPaymentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountPaymentsResponse, error)
+
+	// ListAccountPhoneNumbersWithResponse show
+	//
+	// List all account phone numbers, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/phone_numbers (the `ListAccountPhoneNumbers` operationId).
+	ListAccountPhoneNumbersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountPhoneNumbersResponse, error)
+
+	// ListAccountQuickbooksWithResponse show
+	//
+	// List all account quickbooks, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /account/quickbooks (the `ListAccountQuickbooks` operationId).
+	ListAccountQuickbooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountQuickbooksResponse, error)
+
 	// ListAccountStationLinkWithResponse station_link
 	//
 	// List all account station link, paginated via the Link header.
@@ -32354,6 +33285,69 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /expenses (the `CreateExpense` operationId).
 	CreateExpenseWithResponse(ctx context.Context, body CreateExpenseJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExpenseResponse, error)
 
+	// ListExpensesDataTransferWithResponse show
+	//
+	// List all expenses data transfer, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /expenses/data_transfer (the `ListExpensesDataTransfer` operationId).
+	ListExpensesDataTransferWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListExpensesDataTransferResponse, error)
+
+	// CreateExpensesExportWithBodyWithResponse create
+	//
+	// Create a expenses export.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+	CreateExpensesExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpensesExportResponse, error)
+
+	// CreateExpensesExportWithResponse create
+	//
+	// Create a expenses export.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+	CreateExpensesExportWithResponse(ctx context.Context, body CreateExpensesExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExpensesExportResponse, error)
+
+	// ListExpensesExportDownloadWithResponse download
+	//
+	// List all expenses export download, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /expenses/export/{id}/download (the `ListExpensesExportDownload` operationId).
+	ListExpensesExportDownloadWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ListExpensesExportDownloadResponse, error)
+
+	// CreateExpensesImportsCommitWithResponse commit
+	//
+	// Create a expenses imports commit.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /expenses/imports/commit (the `CreateExpensesImportsCommit` operationId).
+	CreateExpensesImportsCommitWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateExpensesImportsCommitResponse, error)
+
+	// ListExpensesImportsTemplateWithResponse template
+	//
+	// List all expenses imports template, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /expenses/imports/template (the `ListExpensesImportsTemplate` operationId).
+	ListExpensesImportsTemplateWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListExpensesImportsTemplateResponse, error)
+
+	// CreateExpensesImportsValidateWithBodyWithResponse validate
+	//
+	// Create a expenses imports validate.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /expenses/imports/validate (the `CreateExpensesImportsValidate` operationId).
+	CreateExpensesImportsValidateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpensesImportsValidateResponse, error)
+
 	// DeleteExpenseWithResponse destroy
 	//
 	// Delete a expense by ID.
@@ -32362,6 +33356,15 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with DELETE /expenses/{id} (the `DeleteExpense` operationId).
 	DeleteExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteExpenseResponse, error)
+
+	// ShowExpenseWithResponse show
+	//
+	// Show a expense by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /expenses/{id} (the `ShowExpense` operationId).
+	ShowExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowExpenseResponse, error)
 
 	// UpdateExpenseWithBodyWithResponse update
 	//
@@ -33072,6 +34075,123 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /locations/{id}/operations (the `UpdateLocationsOperations` operationId).
 	UpdateLocationsOperationsWithResponse(ctx context.Context, id string, body UpdateLocationsOperationsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsOperationsResponse, error)
+
+	// ListLocationsCloseRequirementsWithResponse show
+	//
+	// List all locations close requirements, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{location_id}/close_requirements (the `ListLocationsCloseRequirements` operationId).
+	ListLocationsCloseRequirementsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsCloseRequirementsResponse, error)
+
+	// UpdateLocationsCloseRequirementsWithBodyWithResponse update
+	//
+	// Update a locations close requirements by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+	UpdateLocationsCloseRequirementsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsCloseRequirementsResponse, error)
+
+	// UpdateLocationsCloseRequirementsWithResponse update
+	//
+	// Update a locations close requirements by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+	UpdateLocationsCloseRequirementsWithResponse(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsCloseRequirementsResponse, error)
+
+	// ListLocationsCourtesyCarsWithResponse show
+	//
+	// List all locations courtesy cars, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{location_id}/courtesy_cars (the `ListLocationsCourtesyCars` operationId).
+	ListLocationsCourtesyCarsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsCourtesyCarsResponse, error)
+
+	// ListLocationsDocumentsWithResponse show
+	//
+	// List all locations documents, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{location_id}/documents (the `ListLocationsDocuments` operationId).
+	ListLocationsDocumentsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsDocumentsResponse, error)
+
+	// UpdateLocationsDocumentsWithBodyWithResponse update
+	//
+	// Update a locations documents by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+	UpdateLocationsDocumentsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsDocumentsResponse, error)
+
+	// UpdateLocationsDocumentsWithResponse update
+	//
+	// Update a locations documents by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+	UpdateLocationsDocumentsWithResponse(ctx context.Context, locationId string, body UpdateLocationsDocumentsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsDocumentsResponse, error)
+
+	// ListLocationsLeadSourceRequirementsWithResponse show
+	//
+	// List all locations lead source requirements, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{location_id}/lead_source_requirements (the `ListLocationsLeadSourceRequirements` operationId).
+	ListLocationsLeadSourceRequirementsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsLeadSourceRequirementsResponse, error)
+
+	// UpdateLocationsLeadSourceRequirementsWithBodyWithResponse update
+	//
+	// Update a locations lead source requirements by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+	UpdateLocationsLeadSourceRequirementsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsLeadSourceRequirementsResponse, error)
+
+	// UpdateLocationsLeadSourceRequirementsWithResponse update
+	//
+	// Update a locations lead source requirements by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+	UpdateLocationsLeadSourceRequirementsWithResponse(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsLeadSourceRequirementsResponse, error)
+
+	// ListLocationsRemindersWithResponse show
+	//
+	// List all locations reminders, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /locations/{location_id}/reminders (the `ListLocationsReminders` operationId).
+	ListLocationsRemindersWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsRemindersResponse, error)
+
+	// UpdateLocationsRemindersWithBodyWithResponse update
+	//
+	// Update a locations reminders by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+	UpdateLocationsRemindersWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsRemindersResponse, error)
+
+	// UpdateLocationsRemindersWithResponse update
+	//
+	// Update a locations reminders by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+	UpdateLocationsRemindersWithResponse(ctx context.Context, locationId string, body UpdateLocationsRemindersJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsRemindersResponse, error)
 
 	// ListLocationsScheduleConfigWithResponse show
 	//
@@ -33971,114 +35091,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /service_categories/{id}/trash (the `TrashServiceCategory` operationId).
 	TrashServiceCategoryWithResponse(ctx context.Context, id int, body TrashServiceCategoryJSONRequestBody, reqEditors ...RequestEditorFn) (*TrashServiceCategoryResponse, error)
-
-	// ListSettingsBillingWithResponse show
-	//
-	// List all settings billing, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/billing (the `ListSettingsBilling` operationId).
-	ListSettingsBillingWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsBillingResponse, error)
-
-	// ListSettingsCashDrawerWithResponse show
-	//
-	// List all settings cash drawer, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/cash_drawer (the `ListSettingsCashDrawer` operationId).
-	ListSettingsCashDrawerWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsCashDrawerResponse, error)
-
-	// ListSettingsCloseRequirementsWithResponse show
-	//
-	// List all settings close requirements, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/close_requirements (the `ListSettingsCloseRequirements` operationId).
-	ListSettingsCloseRequirementsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsCloseRequirementsResponse, error)
-
-	// ListSettingsDocumentsWithResponse show
-	//
-	// List all settings documents, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/documents (the `ListSettingsDocuments` operationId).
-	ListSettingsDocumentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsDocumentsResponse, error)
-
-	// ListSettingsDriveonWithResponse show
-	//
-	// List all settings driveon, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/driveon (the `ListSettingsDriveon` operationId).
-	ListSettingsDriveonWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsDriveonResponse, error)
-
-	// ListSettingsExpensesWithResponse show
-	//
-	// List all settings expenses, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/expenses (the `ListSettingsExpenses` operationId).
-	ListSettingsExpensesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsExpensesResponse, error)
-
-	// ListSettingsLeadSourceRequirementsWithResponse show
-	//
-	// List all settings lead source requirements, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/lead_source_requirements (the `ListSettingsLeadSourceRequirements` operationId).
-	ListSettingsLeadSourceRequirementsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsLeadSourceRequirementsResponse, error)
-
-	// ListSettingsPaymentsWithResponse show
-	//
-	// List all settings payments, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/payments (the `ListSettingsPayments` operationId).
-	ListSettingsPaymentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsPaymentsResponse, error)
-
-	// ListSettingsPhoneNumbersWithResponse show
-	//
-	// List all settings phone numbers, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/phone_numbers (the `ListSettingsPhoneNumbers` operationId).
-	ListSettingsPhoneNumbersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsPhoneNumbersResponse, error)
-
-	// ListSettingsQuickbooksWithResponse show
-	//
-	// List all settings quickbooks, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/quickbooks (the `ListSettingsQuickbooks` operationId).
-	ListSettingsQuickbooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsQuickbooksResponse, error)
-
-	// ListSettingsRemindersWithResponse show
-	//
-	// List all settings reminders, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/reminders (the `ListSettingsReminders` operationId).
-	ListSettingsRemindersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsRemindersResponse, error)
-
-	// ListSettingsTireManagementWithResponse show
-	//
-	// List all settings tire management, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /settings/tire_management (the `ListSettingsTireManagement` operationId).
-	ListSettingsTireManagementWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsTireManagementResponse, error)
 
 	// ListShopDiscountsWithResponse index
 	//
@@ -36215,6 +37227,429 @@ func (r UpdateAccountResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateAccountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountBillingResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl              string `json:"app_url"`
+		BillingEmail        string `json:"billing_email"`
+		NextBillingDate     string `json:"next_billing_date"`
+		SubscriptionStatus  string `json:"subscription_status"`
+		Url                 string `json:"url"`
+		WorkOrdersThisMonth int    `json:"work_orders_this_month"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountBillingResponse) GetJSON200() *struct {
+	AppUrl              string `json:"app_url"`
+	BillingEmail        string `json:"billing_email"`
+	NextBillingDate     string `json:"next_billing_date"`
+	SubscriptionStatus  string `json:"subscription_status"`
+	Url                 string `json:"url"`
+	WorkOrdersThisMonth int    `json:"work_orders_this_month"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountBillingResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountBillingResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountBillingResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountBillingResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountBillingResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountCapabilitiesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		Capabilities struct {
+			Appointments bool `json:"appointments"`
+			CashDrawer   bool `json:"cash_drawer"`
+			CounterSales bool `json:"counter_sales"`
+			CourtesyCars bool `json:"courtesy_cars"`
+			DealerPlates bool `json:"dealer_plates"`
+			Expenses     bool `json:"expenses"`
+			Integrations struct {
+				Driveon    bool `json:"driveon"`
+				Quickbooks bool `json:"quickbooks"`
+			} `json:"integrations"`
+			Inventory      bool `json:"inventory"`
+			Payments       bool `json:"payments"`
+			PhoneNumbers   bool `json:"phone_numbers"`
+			PurchaseOrders bool `json:"purchase_orders"`
+			TireManagement bool `json:"tire_management"`
+		} `json:"capabilities"`
+		Limits struct {
+			MaxLocations          *int        `json:"max_locations"`
+			MaxUsers              *int        `json:"max_users"`
+			MaxWorkOrdersPerMonth interface{} `json:"max_work_orders_per_month"`
+		} `json:"limits"`
+		Tier        *string `json:"tier"`
+		TierDisplay *string `json:"tier_display"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountCapabilitiesResponse) GetJSON200() *struct {
+	Capabilities struct {
+		Appointments bool `json:"appointments"`
+		CashDrawer   bool `json:"cash_drawer"`
+		CounterSales bool `json:"counter_sales"`
+		CourtesyCars bool `json:"courtesy_cars"`
+		DealerPlates bool `json:"dealer_plates"`
+		Expenses     bool `json:"expenses"`
+		Integrations struct {
+			Driveon    bool `json:"driveon"`
+			Quickbooks bool `json:"quickbooks"`
+		} `json:"integrations"`
+		Inventory      bool `json:"inventory"`
+		Payments       bool `json:"payments"`
+		PhoneNumbers   bool `json:"phone_numbers"`
+		PurchaseOrders bool `json:"purchase_orders"`
+		TireManagement bool `json:"tire_management"`
+	} `json:"capabilities"`
+	Limits struct {
+		MaxLocations          *int        `json:"max_locations"`
+		MaxUsers              *int        `json:"max_users"`
+		MaxWorkOrdersPerMonth interface{} `json:"max_work_orders_per_month"`
+	} `json:"limits"`
+	Tier        *string `json:"tier"`
+	TierDisplay *string `json:"tier_display"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountCapabilitiesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountCapabilitiesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountCapabilitiesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountCapabilitiesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountDriveonResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		Name                            string                 `json:"name"`
+		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		Url                             string                 `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountDriveonResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	Name                            string                 `json:"name"`
+	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	Url                             string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountDriveonResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountDriveonResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountDriveonResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountDriveonResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountDriveonResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountPaymentsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                     string  `json:"app_url"`
+		ProcessorApplicationStatus *string `json:"processor_application_status"`
+		ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
+		Url                        string  `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountPaymentsResponse) GetJSON200() *struct {
+	AppUrl                     string  `json:"app_url"`
+	ProcessorApplicationStatus *string `json:"processor_application_status"`
+	ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
+	Url                        string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountPaymentsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountPaymentsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountPaymentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountPaymentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountPaymentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountPhoneNumbersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string        `json:"app_url"`
+		Phones       []interface{} `json:"phones"`
+		TextingPhone *string       `json:"texting_phone"`
+		Url          string        `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountPhoneNumbersResponse) GetJSON200() *struct {
+	AppUrl       string        `json:"app_url"`
+	Phones       []interface{} `json:"phones"`
+	TextingPhone *string       `json:"texting_phone"`
+	Url          string        `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountPhoneNumbersResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountPhoneNumbersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountPhoneNumbersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountPhoneNumbersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountPhoneNumbersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListAccountQuickbooksResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl       string  `json:"app_url"`
+		Connected    bool    `json:"connected"`
+		QboCompanyId *string `json:"qbo_company_id"`
+		QboSyncMode  string  `json:"qbo_sync_mode"`
+		Url          string  `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAccountQuickbooksResponse) GetJSON200() *struct {
+	AppUrl       string  `json:"app_url"`
+	Connected    bool    `json:"connected"`
+	QboCompanyId *string `json:"qbo_company_id"`
+	QboSyncMode  string  `json:"qbo_sync_mode"`
+	Url          string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListAccountQuickbooksResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAccountQuickbooksResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAccountQuickbooksResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAccountQuickbooksResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAccountQuickbooksResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -42053,6 +43488,325 @@ func (r CreateExpenseResponse) ContentType() string {
 	return ""
 }
 
+type ListExpensesDataTransferResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ExportUrl   string `json:"export_url"`
+		Resource    string `json:"resource"`
+		TemplateUrl string `json:"template_url"`
+		ValidateUrl string `json:"validate_url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListExpensesDataTransferResponse) GetJSON200() *struct {
+	ExportUrl   string `json:"export_url"`
+	Resource    string `json:"resource"`
+	TemplateUrl string `json:"template_url"`
+	ValidateUrl string `json:"validate_url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListExpensesDataTransferResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListExpensesDataTransferResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListExpensesDataTransferResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListExpensesDataTransferResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListExpensesDataTransferResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateExpensesExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ExportLogId int    `json:"export_log_id"`
+		Status      string `json:"status"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateExpensesExportResponse) GetJSON200() *struct {
+	ExportLogId int    `json:"export_log_id"`
+	Status      string `json:"status"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateExpensesExportResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateExpensesExportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateExpensesExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateExpensesExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateExpensesExportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListExpensesExportDownloadResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListExpensesExportDownloadResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListExpensesExportDownloadResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListExpensesExportDownloadResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListExpensesExportDownloadResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListExpensesExportDownloadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateExpensesImportsCommitResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateExpensesImportsCommitResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateExpensesImportsCommitResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateExpensesImportsCommitResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateExpensesImportsCommitResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateExpensesImportsCommitResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListExpensesImportsTemplateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// GetBody returns the raw response body bytes
+func (r ListExpensesImportsTemplateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListExpensesImportsTemplateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListExpensesImportsTemplateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListExpensesImportsTemplateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateExpensesImportsValidateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		DuplicateCount int           `json:"duplicate_count"`
+		ErrorCount     int           `json:"error_count"`
+		Errors         []interface{} `json:"errors"`
+		Total          int           `json:"total"`
+		ValidCount     int           `json:"valid_count"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateExpensesImportsValidateResponse) GetJSON200() *struct {
+	DuplicateCount int           `json:"duplicate_count"`
+	ErrorCount     int           `json:"error_count"`
+	Errors         []interface{} `json:"errors"`
+	Total          int           `json:"total"`
+	ValidCount     int           `json:"valid_count"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateExpensesImportsValidateResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateExpensesImportsValidateResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateExpensesImportsValidateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateExpensesImportsValidateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateExpensesImportsValidateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateExpensesImportsValidateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteExpenseResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -42081,6 +43835,108 @@ func (r DeleteExpenseResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DeleteExpenseResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowExpenseResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AmountCents    int    `json:"amount_cents"`
+		AmountCurrency string `json:"amount_currency"`
+		AppUrl         string `json:"app_url"`
+		Category       string `json:"category"`
+		CreatedAt      string `json:"created_at"`
+		Creator        struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"creator"`
+		Description string `json:"description"`
+		ExpenseDate string `json:"expense_date"`
+		Id          int    `json:"id"`
+		Location    struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Payee          string  `json:"payee"`
+		PaymentMethod  string  `json:"payment_method"`
+		RecurrenceRule *string `json:"recurrence_rule"`
+		Recurring      bool    `json:"recurring"`
+		UpdatedAt      string  `json:"updated_at"`
+		Url            string  `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowExpenseResponse) GetJSON200() *struct {
+	AmountCents    int    `json:"amount_cents"`
+	AmountCurrency string `json:"amount_currency"`
+	AppUrl         string `json:"app_url"`
+	Category       string `json:"category"`
+	CreatedAt      string `json:"created_at"`
+	Creator        struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"creator"`
+	Description string `json:"description"`
+	ExpenseDate string `json:"expense_date"`
+	Id          int    `json:"id"`
+	Location    struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Payee          string  `json:"payee"`
+	PaymentMethod  string  `json:"payment_method"`
+	RecurrenceRule *string `json:"recurrence_rule"`
+	Recurring      bool    `json:"recurring"`
+	UpdatedAt      string  `json:"updated_at"`
+	Url            string  `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ShowExpenseResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ShowExpenseResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ShowExpenseResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ShowExpenseResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ShowExpenseResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -45837,6 +47693,653 @@ func (r UpdateLocationsOperationsResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateLocationsOperationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListLocationsCloseRequirementsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		Name                            string                 `json:"name"`
+		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		Url                             string                 `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListLocationsCloseRequirementsResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	Name                            string                 `json:"name"`
+	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	Url                             string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListLocationsCloseRequirementsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListLocationsCloseRequirementsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLocationsCloseRequirementsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLocationsCloseRequirementsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListLocationsCloseRequirementsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateLocationsCloseRequirementsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               struct {
+			KeyLocation string `json:"key_location"`
+			OdometerIn  string `json:"odometer_in"`
+		} `json:"close_requirements"`
+		DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber      *string                `json:"driveon_station_number"`
+		Id                        int                    `json:"id"`
+		LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+		Name                      string                 `json:"name"`
+		OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+		Url                       string                 `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateLocationsCloseRequirementsResponse) GetJSON200() *struct {
+	AppUrl                          string `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               struct {
+		KeyLocation string `json:"key_location"`
+		OdometerIn  string `json:"odometer_in"`
+	} `json:"close_requirements"`
+	DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber      *string                `json:"driveon_station_number"`
+	Id                        int                    `json:"id"`
+	LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+	Name                      string                 `json:"name"`
+	OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+	Url                       string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateLocationsCloseRequirementsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateLocationsCloseRequirementsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateLocationsCloseRequirementsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateLocationsCloseRequirementsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListLocationsCourtesyCarsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		CourtesyCars struct {
+			CourtesyCarFeeCents   int         `json:"courtesy_car_fee_cents"`
+			CourtesyCarFeeEnabled bool        `json:"courtesy_car_fee_enabled"`
+			CourtesyCarTermsText  interface{} `json:"courtesy_car_terms_text"`
+			Id                    int         `json:"id"`
+			Url                   string      `json:"url"`
+		} `json:"courtesy_cars"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListLocationsCourtesyCarsResponse) GetJSON200() *struct {
+	CourtesyCars struct {
+		CourtesyCarFeeCents   int         `json:"courtesy_car_fee_cents"`
+		CourtesyCarFeeEnabled bool        `json:"courtesy_car_fee_enabled"`
+		CourtesyCarTermsText  interface{} `json:"courtesy_car_terms_text"`
+		Id                    int         `json:"id"`
+		Url                   string      `json:"url"`
+	} `json:"courtesy_cars"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListLocationsCourtesyCarsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListLocationsCourtesyCarsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLocationsCourtesyCarsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLocationsCourtesyCarsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListLocationsCourtesyCarsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListLocationsDocumentsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl              string                 `json:"app_url"`
+		DocumentSettings    map[string]interface{} `json:"document_settings"`
+		EstimateTermsText   *string                `json:"estimate_terms_text"`
+		PaymentInstructions string                 `json:"payment_instructions"`
+		TermsText           string                 `json:"terms_text"`
+		Url                 string                 `json:"url"`
+	}
+	// JSON401 the response for an HTTP 401 `application/json` response
+	JSON401 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListLocationsDocumentsResponse) GetJSON200() *struct {
+	AppUrl              string                 `json:"app_url"`
+	DocumentSettings    map[string]interface{} `json:"document_settings"`
+	EstimateTermsText   *string                `json:"estimate_terms_text"`
+	PaymentInstructions string                 `json:"payment_instructions"`
+	TermsText           string                 `json:"terms_text"`
+	Url                 string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON401 returns the response for an HTTP 401 `application/json` response
+func (r ListLocationsDocumentsResponse) GetJSON401() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON401
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListLocationsDocumentsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListLocationsDocumentsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLocationsDocumentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLocationsDocumentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListLocationsDocumentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateLocationsDocumentsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl              string                 `json:"app_url"`
+		DocumentSettings    map[string]interface{} `json:"document_settings"`
+		EstimateTermsText   string                 `json:"estimate_terms_text"`
+		PaymentInstructions interface{}            `json:"payment_instructions"`
+		TermsText           interface{}            `json:"terms_text"`
+		Url                 string                 `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateLocationsDocumentsResponse) GetJSON200() *struct {
+	AppUrl              string                 `json:"app_url"`
+	DocumentSettings    map[string]interface{} `json:"document_settings"`
+	EstimateTermsText   string                 `json:"estimate_terms_text"`
+	PaymentInstructions interface{}            `json:"payment_instructions"`
+	TermsText           interface{}            `json:"terms_text"`
+	Url                 string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateLocationsDocumentsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateLocationsDocumentsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateLocationsDocumentsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateLocationsDocumentsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListLocationsLeadSourceRequirementsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		Name                            string                 `json:"name"`
+		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		Url                             string                 `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListLocationsLeadSourceRequirementsResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	Name                            string                 `json:"name"`
+	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	Url                             string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListLocationsLeadSourceRequirementsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListLocationsLeadSourceRequirementsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLocationsLeadSourceRequirementsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLocationsLeadSourceRequirementsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListLocationsLeadSourceRequirementsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateLocationsLeadSourceRequirementsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          struct {
+			CustomerLeadSource string `json:"customer_lead_source"`
+			RoMarketingSource  string `json:"ro_marketing_source"`
+		} `json:"lead_source_requirements"`
+		Name                      string `json:"name"`
+		OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+		Url                       string `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateLocationsLeadSourceRequirementsResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          struct {
+		CustomerLeadSource string `json:"customer_lead_source"`
+		RoMarketingSource  string `json:"ro_marketing_source"`
+	} `json:"lead_source_requirements"`
+	Name                      string `json:"name"`
+	OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+	Url                       string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateLocationsLeadSourceRequirementsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateLocationsLeadSourceRequirementsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateLocationsLeadSourceRequirementsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateLocationsLeadSourceRequirementsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListLocationsRemindersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		Name                            string                 `json:"name"`
+		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		Url                             string                 `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListLocationsRemindersResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	Name                            string                 `json:"name"`
+	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	Url                             string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListLocationsRemindersResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListLocationsRemindersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListLocationsRemindersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListLocationsRemindersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListLocationsRemindersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateLocationsRemindersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl                          string                 `json:"app_url"`
+		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+		DriveonStationNumber            *string                `json:"driveon_station_number"`
+		Id                              int                    `json:"id"`
+		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		Name                            string                 `json:"name"`
+		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		Url                             string                 `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateLocationsRemindersResponse) GetJSON200() *struct {
+	AppUrl                          string                 `json:"app_url"`
+	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+	DriveonStationNumber            *string                `json:"driveon_station_number"`
+	Id                              int                    `json:"id"`
+	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	Name                            string                 `json:"name"`
+	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	Url                             string                 `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateLocationsRemindersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateLocationsRemindersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateLocationsRemindersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateLocationsRemindersResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -51009,848 +53512,6 @@ func (r TrashServiceCategoryResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r TrashServiceCategoryResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsBillingResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl              string `json:"app_url"`
-		BillingEmail        string `json:"billing_email"`
-		NextBillingDate     string `json:"next_billing_date"`
-		SubscriptionStatus  string `json:"subscription_status"`
-		Url                 string `json:"url"`
-		WorkOrdersThisMonth int    `json:"work_orders_this_month"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsBillingResponse) GetJSON200() *struct {
-	AppUrl              string `json:"app_url"`
-	BillingEmail        string `json:"billing_email"`
-	NextBillingDate     string `json:"next_billing_date"`
-	SubscriptionStatus  string `json:"subscription_status"`
-	Url                 string `json:"url"`
-	WorkOrdersThisMonth int    `json:"work_orders_this_month"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListSettingsBillingResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsBillingResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsBillingResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsBillingResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsBillingResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsCashDrawerResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsCashDrawerResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListSettingsCashDrawerResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsCashDrawerResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsCashDrawerResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsCashDrawerResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsCashDrawerResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsCloseRequirementsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsCloseRequirementsResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsCloseRequirementsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsCloseRequirementsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsCloseRequirementsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsCloseRequirementsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsDocumentsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl              string                 `json:"app_url"`
-		DocumentSettings    map[string]interface{} `json:"document_settings"`
-		EstimateTermsText   *string                `json:"estimate_terms_text"`
-		PaymentInstructions string                 `json:"payment_instructions"`
-		TermsText           string                 `json:"terms_text"`
-		Url                 string                 `json:"url"`
-	}
-	// JSON401 the response for an HTTP 401 `application/json` response
-	JSON401 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsDocumentsResponse) GetJSON200() *struct {
-	AppUrl              string                 `json:"app_url"`
-	DocumentSettings    map[string]interface{} `json:"document_settings"`
-	EstimateTermsText   *string                `json:"estimate_terms_text"`
-	PaymentInstructions string                 `json:"payment_instructions"`
-	TermsText           string                 `json:"terms_text"`
-	Url                 string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON401 returns the response for an HTTP 401 `application/json` response
-func (r ListSettingsDocumentsResponse) GetJSON401() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON401
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsDocumentsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsDocumentsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsDocumentsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsDocumentsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsDriveonResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsDriveonResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsDriveonResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsDriveonResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsDriveonResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsDriveonResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsExpensesResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsExpensesResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsExpensesResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsExpensesResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsExpensesResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsExpensesResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsLeadSourceRequirementsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsLeadSourceRequirementsResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsLeadSourceRequirementsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsLeadSourceRequirementsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsLeadSourceRequirementsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsLeadSourceRequirementsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsPaymentsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                     string  `json:"app_url"`
-		ProcessorApplicationStatus *string `json:"processor_application_status"`
-		ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
-		Url                        string  `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsPaymentsResponse) GetJSON200() *struct {
-	AppUrl                     string  `json:"app_url"`
-	ProcessorApplicationStatus *string `json:"processor_application_status"`
-	ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
-	Url                        string  `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListSettingsPaymentsResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsPaymentsResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsPaymentsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsPaymentsResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsPaymentsResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsPhoneNumbersResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl       string        `json:"app_url"`
-		Phones       []interface{} `json:"phones"`
-		TextingPhone *string       `json:"texting_phone"`
-		Url          string        `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsPhoneNumbersResponse) GetJSON200() *struct {
-	AppUrl       string        `json:"app_url"`
-	Phones       []interface{} `json:"phones"`
-	TextingPhone *string       `json:"texting_phone"`
-	Url          string        `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListSettingsPhoneNumbersResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsPhoneNumbersResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsPhoneNumbersResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsPhoneNumbersResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsPhoneNumbersResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsQuickbooksResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl       string  `json:"app_url"`
-		Connected    bool    `json:"connected"`
-		QboCompanyId *string `json:"qbo_company_id"`
-		QboSyncMode  string  `json:"qbo_sync_mode"`
-		Url          string  `json:"url"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsQuickbooksResponse) GetJSON200() *struct {
-	AppUrl       string  `json:"app_url"`
-	Connected    bool    `json:"connected"`
-	QboCompanyId *string `json:"qbo_company_id"`
-	QboSyncMode  string  `json:"qbo_sync_mode"`
-	Url          string  `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r ListSettingsQuickbooksResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsQuickbooksResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsQuickbooksResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsQuickbooksResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsQuickbooksResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsRemindersResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsRemindersResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsRemindersResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsRemindersResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsRemindersResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsRemindersResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ListSettingsTireManagementResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl                          string                 `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-		CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-		CloseRequirements               map[string]interface{} `json:"close_requirements"`
-		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-		DriveonStationNumber            *string                `json:"driveon_station_number"`
-		ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-		Id                              int                    `json:"id"`
-		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-		Name                            string                 `json:"name"`
-		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-		TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-		Url                             string                 `json:"url"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListSettingsTireManagementResponse) GetJSON200() *struct {
-	AppUrl                          string                 `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-	CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-	CloseRequirements               map[string]interface{} `json:"close_requirements"`
-	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-	DriveonStationNumber            *string                `json:"driveon_station_number"`
-	ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-	Id                              int                    `json:"id"`
-	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-	Name                            string                 `json:"name"`
-	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-	TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-	Url                             string                 `json:"url"`
-} {
-	return r.JSON200
-}
-
-// GetBody returns the raw response body bytes
-func (r ListSettingsTireManagementResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListSettingsTireManagementResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListSettingsTireManagementResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListSettingsTireManagementResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -61856,6 +63517,96 @@ func (c *ClientWithResponses) UpdateAccountWithResponse(ctx context.Context, bod
 	return ParseUpdateAccountResponse(rsp)
 }
 
+// ListAccountBillingWithResponse show
+//
+// List all account billing, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/billing (the `ListAccountBilling` operationId).
+func (c *ClientWithResponses) ListAccountBillingWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountBillingResponse, error) {
+	rsp, err := c.ListAccountBilling(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountBillingResponse(rsp)
+}
+
+// ListAccountCapabilitiesWithResponse show
+//
+// List all account capabilities, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/capabilities (the `ListAccountCapabilities` operationId).
+func (c *ClientWithResponses) ListAccountCapabilitiesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountCapabilitiesResponse, error) {
+	rsp, err := c.ListAccountCapabilities(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountCapabilitiesResponse(rsp)
+}
+
+// ListAccountDriveonWithResponse show
+//
+// List all account driveon, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/driveon (the `ListAccountDriveon` operationId).
+func (c *ClientWithResponses) ListAccountDriveonWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountDriveonResponse, error) {
+	rsp, err := c.ListAccountDriveon(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountDriveonResponse(rsp)
+}
+
+// ListAccountPaymentsWithResponse show
+//
+// List all account payments, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/payments (the `ListAccountPayments` operationId).
+func (c *ClientWithResponses) ListAccountPaymentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountPaymentsResponse, error) {
+	rsp, err := c.ListAccountPayments(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountPaymentsResponse(rsp)
+}
+
+// ListAccountPhoneNumbersWithResponse show
+//
+// List all account phone numbers, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/phone_numbers (the `ListAccountPhoneNumbers` operationId).
+func (c *ClientWithResponses) ListAccountPhoneNumbersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountPhoneNumbersResponse, error) {
+	rsp, err := c.ListAccountPhoneNumbers(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountPhoneNumbersResponse(rsp)
+}
+
+// ListAccountQuickbooksWithResponse show
+//
+// List all account quickbooks, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /account/quickbooks (the `ListAccountQuickbooks` operationId).
+func (c *ClientWithResponses) ListAccountQuickbooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListAccountQuickbooksResponse, error) {
+	rsp, err := c.ListAccountQuickbooks(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAccountQuickbooksResponse(rsp)
+}
+
 // ListAccountStationLinkWithResponse station_link
 //
 // List all account station link, paginated via the Link header.
@@ -63521,6 +65272,111 @@ func (c *ClientWithResponses) CreateExpenseWithResponse(ctx context.Context, bod
 	return ParseCreateExpenseResponse(rsp)
 }
 
+// ListExpensesDataTransferWithResponse show
+//
+// List all expenses data transfer, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /expenses/data_transfer (the `ListExpensesDataTransfer` operationId).
+func (c *ClientWithResponses) ListExpensesDataTransferWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListExpensesDataTransferResponse, error) {
+	rsp, err := c.ListExpensesDataTransfer(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListExpensesDataTransferResponse(rsp)
+}
+
+// CreateExpensesExportWithBodyWithResponse create
+//
+// Create a expenses export.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+func (c *ClientWithResponses) CreateExpensesExportWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpensesExportResponse, error) {
+	rsp, err := c.CreateExpensesExportWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateExpensesExportResponse(rsp)
+}
+
+// CreateExpensesExportWithResponse create
+//
+// Create a expenses export.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /expenses/export (the `CreateExpensesExport` operationId).
+func (c *ClientWithResponses) CreateExpensesExportWithResponse(ctx context.Context, body CreateExpensesExportJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExpensesExportResponse, error) {
+	rsp, err := c.CreateExpensesExport(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateExpensesExportResponse(rsp)
+}
+
+// ListExpensesExportDownloadWithResponse download
+//
+// List all expenses export download, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /expenses/export/{id}/download (the `ListExpensesExportDownload` operationId).
+func (c *ClientWithResponses) ListExpensesExportDownloadWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ListExpensesExportDownloadResponse, error) {
+	rsp, err := c.ListExpensesExportDownload(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListExpensesExportDownloadResponse(rsp)
+}
+
+// CreateExpensesImportsCommitWithResponse commit
+//
+// Create a expenses imports commit.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /expenses/imports/commit (the `CreateExpensesImportsCommit` operationId).
+func (c *ClientWithResponses) CreateExpensesImportsCommitWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*CreateExpensesImportsCommitResponse, error) {
+	rsp, err := c.CreateExpensesImportsCommit(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateExpensesImportsCommitResponse(rsp)
+}
+
+// ListExpensesImportsTemplateWithResponse template
+//
+// List all expenses imports template, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /expenses/imports/template (the `ListExpensesImportsTemplate` operationId).
+func (c *ClientWithResponses) ListExpensesImportsTemplateWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListExpensesImportsTemplateResponse, error) {
+	rsp, err := c.ListExpensesImportsTemplate(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListExpensesImportsTemplateResponse(rsp)
+}
+
+// CreateExpensesImportsValidateWithBodyWithResponse validate
+//
+// Create a expenses imports validate.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /expenses/imports/validate (the `CreateExpensesImportsValidate` operationId).
+func (c *ClientWithResponses) CreateExpensesImportsValidateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExpensesImportsValidateResponse, error) {
+	rsp, err := c.CreateExpensesImportsValidateWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateExpensesImportsValidateResponse(rsp)
+}
+
 // DeleteExpenseWithResponse destroy
 //
 // Delete a expense by ID.
@@ -63534,6 +65390,21 @@ func (c *ClientWithResponses) DeleteExpenseWithResponse(ctx context.Context, id 
 		return nil, err
 	}
 	return ParseDeleteExpenseResponse(rsp)
+}
+
+// ShowExpenseWithResponse show
+//
+// Show a expense by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /expenses/{id} (the `ShowExpense` operationId).
+func (c *ClientWithResponses) ShowExpenseWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowExpenseResponse, error) {
+	rsp, err := c.ShowExpense(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseShowExpenseResponse(rsp)
 }
 
 // UpdateExpenseWithBodyWithResponse update
@@ -64760,6 +66631,201 @@ func (c *ClientWithResponses) UpdateLocationsOperationsWithResponse(ctx context.
 		return nil, err
 	}
 	return ParseUpdateLocationsOperationsResponse(rsp)
+}
+
+// ListLocationsCloseRequirementsWithResponse show
+//
+// List all locations close requirements, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{location_id}/close_requirements (the `ListLocationsCloseRequirements` operationId).
+func (c *ClientWithResponses) ListLocationsCloseRequirementsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsCloseRequirementsResponse, error) {
+	rsp, err := c.ListLocationsCloseRequirements(ctx, locationId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLocationsCloseRequirementsResponse(rsp)
+}
+
+// UpdateLocationsCloseRequirementsWithBodyWithResponse update
+//
+// Update a locations close requirements by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+func (c *ClientWithResponses) UpdateLocationsCloseRequirementsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsCloseRequirementsResponse, error) {
+	rsp, err := c.UpdateLocationsCloseRequirementsWithBody(ctx, locationId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsCloseRequirementsResponse(rsp)
+}
+
+// UpdateLocationsCloseRequirementsWithResponse update
+//
+// Update a locations close requirements by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/close_requirements (the `UpdateLocationsCloseRequirements` operationId).
+func (c *ClientWithResponses) UpdateLocationsCloseRequirementsWithResponse(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsCloseRequirementsResponse, error) {
+	rsp, err := c.UpdateLocationsCloseRequirements(ctx, locationId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsCloseRequirementsResponse(rsp)
+}
+
+// ListLocationsCourtesyCarsWithResponse show
+//
+// List all locations courtesy cars, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{location_id}/courtesy_cars (the `ListLocationsCourtesyCars` operationId).
+func (c *ClientWithResponses) ListLocationsCourtesyCarsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsCourtesyCarsResponse, error) {
+	rsp, err := c.ListLocationsCourtesyCars(ctx, locationId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLocationsCourtesyCarsResponse(rsp)
+}
+
+// ListLocationsDocumentsWithResponse show
+//
+// List all locations documents, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{location_id}/documents (the `ListLocationsDocuments` operationId).
+func (c *ClientWithResponses) ListLocationsDocumentsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsDocumentsResponse, error) {
+	rsp, err := c.ListLocationsDocuments(ctx, locationId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLocationsDocumentsResponse(rsp)
+}
+
+// UpdateLocationsDocumentsWithBodyWithResponse update
+//
+// Update a locations documents by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+func (c *ClientWithResponses) UpdateLocationsDocumentsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsDocumentsResponse, error) {
+	rsp, err := c.UpdateLocationsDocumentsWithBody(ctx, locationId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsDocumentsResponse(rsp)
+}
+
+// UpdateLocationsDocumentsWithResponse update
+//
+// Update a locations documents by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/documents (the `UpdateLocationsDocuments` operationId).
+func (c *ClientWithResponses) UpdateLocationsDocumentsWithResponse(ctx context.Context, locationId string, body UpdateLocationsDocumentsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsDocumentsResponse, error) {
+	rsp, err := c.UpdateLocationsDocuments(ctx, locationId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsDocumentsResponse(rsp)
+}
+
+// ListLocationsLeadSourceRequirementsWithResponse show
+//
+// List all locations lead source requirements, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{location_id}/lead_source_requirements (the `ListLocationsLeadSourceRequirements` operationId).
+func (c *ClientWithResponses) ListLocationsLeadSourceRequirementsWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsLeadSourceRequirementsResponse, error) {
+	rsp, err := c.ListLocationsLeadSourceRequirements(ctx, locationId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLocationsLeadSourceRequirementsResponse(rsp)
+}
+
+// UpdateLocationsLeadSourceRequirementsWithBodyWithResponse update
+//
+// Update a locations lead source requirements by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+func (c *ClientWithResponses) UpdateLocationsLeadSourceRequirementsWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsLeadSourceRequirementsResponse, error) {
+	rsp, err := c.UpdateLocationsLeadSourceRequirementsWithBody(ctx, locationId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsLeadSourceRequirementsResponse(rsp)
+}
+
+// UpdateLocationsLeadSourceRequirementsWithResponse update
+//
+// Update a locations lead source requirements by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/lead_source_requirements (the `UpdateLocationsLeadSourceRequirements` operationId).
+func (c *ClientWithResponses) UpdateLocationsLeadSourceRequirementsWithResponse(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsLeadSourceRequirementsResponse, error) {
+	rsp, err := c.UpdateLocationsLeadSourceRequirements(ctx, locationId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsLeadSourceRequirementsResponse(rsp)
+}
+
+// ListLocationsRemindersWithResponse show
+//
+// List all locations reminders, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /locations/{location_id}/reminders (the `ListLocationsReminders` operationId).
+func (c *ClientWithResponses) ListLocationsRemindersWithResponse(ctx context.Context, locationId string, reqEditors ...RequestEditorFn) (*ListLocationsRemindersResponse, error) {
+	rsp, err := c.ListLocationsReminders(ctx, locationId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListLocationsRemindersResponse(rsp)
+}
+
+// UpdateLocationsRemindersWithBodyWithResponse update
+//
+// Update a locations reminders by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+func (c *ClientWithResponses) UpdateLocationsRemindersWithBodyWithResponse(ctx context.Context, locationId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLocationsRemindersResponse, error) {
+	rsp, err := c.UpdateLocationsRemindersWithBody(ctx, locationId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsRemindersResponse(rsp)
+}
+
+// UpdateLocationsRemindersWithResponse update
+//
+// Update a locations reminders by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /locations/{location_id}/reminders (the `UpdateLocationsReminders` operationId).
+func (c *ClientWithResponses) UpdateLocationsRemindersWithResponse(ctx context.Context, locationId string, body UpdateLocationsRemindersJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLocationsRemindersResponse, error) {
+	rsp, err := c.UpdateLocationsReminders(ctx, locationId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateLocationsRemindersResponse(rsp)
 }
 
 // ListLocationsScheduleConfigWithResponse show
@@ -66277,186 +68343,6 @@ func (c *ClientWithResponses) TrashServiceCategoryWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseTrashServiceCategoryResponse(rsp)
-}
-
-// ListSettingsBillingWithResponse show
-//
-// List all settings billing, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/billing (the `ListSettingsBilling` operationId).
-func (c *ClientWithResponses) ListSettingsBillingWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsBillingResponse, error) {
-	rsp, err := c.ListSettingsBilling(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsBillingResponse(rsp)
-}
-
-// ListSettingsCashDrawerWithResponse show
-//
-// List all settings cash drawer, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/cash_drawer (the `ListSettingsCashDrawer` operationId).
-func (c *ClientWithResponses) ListSettingsCashDrawerWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsCashDrawerResponse, error) {
-	rsp, err := c.ListSettingsCashDrawer(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsCashDrawerResponse(rsp)
-}
-
-// ListSettingsCloseRequirementsWithResponse show
-//
-// List all settings close requirements, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/close_requirements (the `ListSettingsCloseRequirements` operationId).
-func (c *ClientWithResponses) ListSettingsCloseRequirementsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsCloseRequirementsResponse, error) {
-	rsp, err := c.ListSettingsCloseRequirements(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsCloseRequirementsResponse(rsp)
-}
-
-// ListSettingsDocumentsWithResponse show
-//
-// List all settings documents, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/documents (the `ListSettingsDocuments` operationId).
-func (c *ClientWithResponses) ListSettingsDocumentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsDocumentsResponse, error) {
-	rsp, err := c.ListSettingsDocuments(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsDocumentsResponse(rsp)
-}
-
-// ListSettingsDriveonWithResponse show
-//
-// List all settings driveon, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/driveon (the `ListSettingsDriveon` operationId).
-func (c *ClientWithResponses) ListSettingsDriveonWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsDriveonResponse, error) {
-	rsp, err := c.ListSettingsDriveon(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsDriveonResponse(rsp)
-}
-
-// ListSettingsExpensesWithResponse show
-//
-// List all settings expenses, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/expenses (the `ListSettingsExpenses` operationId).
-func (c *ClientWithResponses) ListSettingsExpensesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsExpensesResponse, error) {
-	rsp, err := c.ListSettingsExpenses(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsExpensesResponse(rsp)
-}
-
-// ListSettingsLeadSourceRequirementsWithResponse show
-//
-// List all settings lead source requirements, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/lead_source_requirements (the `ListSettingsLeadSourceRequirements` operationId).
-func (c *ClientWithResponses) ListSettingsLeadSourceRequirementsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsLeadSourceRequirementsResponse, error) {
-	rsp, err := c.ListSettingsLeadSourceRequirements(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsLeadSourceRequirementsResponse(rsp)
-}
-
-// ListSettingsPaymentsWithResponse show
-//
-// List all settings payments, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/payments (the `ListSettingsPayments` operationId).
-func (c *ClientWithResponses) ListSettingsPaymentsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsPaymentsResponse, error) {
-	rsp, err := c.ListSettingsPayments(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsPaymentsResponse(rsp)
-}
-
-// ListSettingsPhoneNumbersWithResponse show
-//
-// List all settings phone numbers, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/phone_numbers (the `ListSettingsPhoneNumbers` operationId).
-func (c *ClientWithResponses) ListSettingsPhoneNumbersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsPhoneNumbersResponse, error) {
-	rsp, err := c.ListSettingsPhoneNumbers(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsPhoneNumbersResponse(rsp)
-}
-
-// ListSettingsQuickbooksWithResponse show
-//
-// List all settings quickbooks, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/quickbooks (the `ListSettingsQuickbooks` operationId).
-func (c *ClientWithResponses) ListSettingsQuickbooksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsQuickbooksResponse, error) {
-	rsp, err := c.ListSettingsQuickbooks(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsQuickbooksResponse(rsp)
-}
-
-// ListSettingsRemindersWithResponse show
-//
-// List all settings reminders, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/reminders (the `ListSettingsReminders` operationId).
-func (c *ClientWithResponses) ListSettingsRemindersWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsRemindersResponse, error) {
-	rsp, err := c.ListSettingsReminders(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsRemindersResponse(rsp)
-}
-
-// ListSettingsTireManagementWithResponse show
-//
-// List all settings tire management, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /settings/tire_management (the `ListSettingsTireManagement` operationId).
-func (c *ClientWithResponses) ListSettingsTireManagementWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSettingsTireManagementResponse, error) {
-	rsp, err := c.ListSettingsTireManagement(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListSettingsTireManagementResponse(rsp)
 }
 
 // ListShopDiscountsWithResponse index
@@ -69795,6 +71681,268 @@ func ParseUpdateAccountResponse(rsp *http.Response) (*UpdateAccountResponse, err
 			UpdatedAt       string  `json:"updated_at"`
 			Url             string  `json:"url"`
 			Website         *string `json:"website"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountBillingResponse parses an HTTP response from a ListAccountBillingWithResponse call
+func ParseListAccountBillingResponse(rsp *http.Response) (*ListAccountBillingResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountBillingResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl              string `json:"app_url"`
+			BillingEmail        string `json:"billing_email"`
+			NextBillingDate     string `json:"next_billing_date"`
+			SubscriptionStatus  string `json:"subscription_status"`
+			Url                 string `json:"url"`
+			WorkOrdersThisMonth int    `json:"work_orders_this_month"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountCapabilitiesResponse parses an HTTP response from a ListAccountCapabilitiesWithResponse call
+func ParseListAccountCapabilitiesResponse(rsp *http.Response) (*ListAccountCapabilitiesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountCapabilitiesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			Capabilities struct {
+				Appointments bool `json:"appointments"`
+				CashDrawer   bool `json:"cash_drawer"`
+				CounterSales bool `json:"counter_sales"`
+				CourtesyCars bool `json:"courtesy_cars"`
+				DealerPlates bool `json:"dealer_plates"`
+				Expenses     bool `json:"expenses"`
+				Integrations struct {
+					Driveon    bool `json:"driveon"`
+					Quickbooks bool `json:"quickbooks"`
+				} `json:"integrations"`
+				Inventory      bool `json:"inventory"`
+				Payments       bool `json:"payments"`
+				PhoneNumbers   bool `json:"phone_numbers"`
+				PurchaseOrders bool `json:"purchase_orders"`
+				TireManagement bool `json:"tire_management"`
+			} `json:"capabilities"`
+			Limits struct {
+				MaxLocations          *int        `json:"max_locations"`
+				MaxUsers              *int        `json:"max_users"`
+				MaxWorkOrdersPerMonth interface{} `json:"max_work_orders_per_month"`
+			} `json:"limits"`
+			Tier        *string `json:"tier"`
+			TierDisplay *string `json:"tier_display"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountDriveonResponse parses an HTTP response from a ListAccountDriveonWithResponse call
+func ParseListAccountDriveonResponse(rsp *http.Response) (*ListAccountDriveonResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountDriveonResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			Name                            string                 `json:"name"`
+			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			Url                             string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountPaymentsResponse parses an HTTP response from a ListAccountPaymentsWithResponse call
+func ParseListAccountPaymentsResponse(rsp *http.Response) (*ListAccountPaymentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountPaymentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                     string  `json:"app_url"`
+			ProcessorApplicationStatus *string `json:"processor_application_status"`
+			ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
+			Url                        string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountPhoneNumbersResponse parses an HTTP response from a ListAccountPhoneNumbersWithResponse call
+func ParseListAccountPhoneNumbersResponse(rsp *http.Response) (*ListAccountPhoneNumbersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountPhoneNumbersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string        `json:"app_url"`
+			Phones       []interface{} `json:"phones"`
+			TextingPhone *string       `json:"texting_phone"`
+			Url          string        `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListAccountQuickbooksResponse parses an HTTP response from a ListAccountQuickbooksWithResponse call
+func ParseListAccountQuickbooksResponse(rsp *http.Response) (*ListAccountQuickbooksResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAccountQuickbooksResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl       string  `json:"app_url"`
+			Connected    bool    `json:"connected"`
+			QboCompanyId *string `json:"qbo_company_id"`
+			QboSyncMode  string  `json:"qbo_sync_mode"`
+			Url          string  `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -73558,6 +75706,206 @@ func ParseCreateExpenseResponse(rsp *http.Response) (*CreateExpenseResponse, err
 	return response, nil
 }
 
+// ParseListExpensesDataTransferResponse parses an HTTP response from a ListExpensesDataTransferWithResponse call
+func ParseListExpensesDataTransferResponse(rsp *http.Response) (*ListExpensesDataTransferResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListExpensesDataTransferResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ExportUrl   string `json:"export_url"`
+			Resource    string `json:"resource"`
+			TemplateUrl string `json:"template_url"`
+			ValidateUrl string `json:"validate_url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateExpensesExportResponse parses an HTTP response from a CreateExpensesExportWithResponse call
+func ParseCreateExpensesExportResponse(rsp *http.Response) (*CreateExpensesExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateExpensesExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ExportLogId int    `json:"export_log_id"`
+			Status      string `json:"status"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListExpensesExportDownloadResponse parses an HTTP response from a ListExpensesExportDownloadWithResponse call
+func ParseListExpensesExportDownloadResponse(rsp *http.Response) (*ListExpensesExportDownloadResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListExpensesExportDownloadResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateExpensesImportsCommitResponse parses an HTTP response from a CreateExpensesImportsCommitWithResponse call
+func ParseCreateExpensesImportsCommitResponse(rsp *http.Response) (*CreateExpensesImportsCommitResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateExpensesImportsCommitResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListExpensesImportsTemplateResponse parses an HTTP response from a ListExpensesImportsTemplateWithResponse call
+func ParseListExpensesImportsTemplateResponse(rsp *http.Response) (*ListExpensesImportsTemplateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListExpensesImportsTemplateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseCreateExpensesImportsValidateResponse parses an HTTP response from a CreateExpensesImportsValidateWithResponse call
+func ParseCreateExpensesImportsValidateResponse(rsp *http.Response) (*CreateExpensesImportsValidateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateExpensesImportsValidateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			DuplicateCount int           `json:"duplicate_count"`
+			ErrorCount     int           `json:"error_count"`
+			Errors         []interface{} `json:"errors"`
+			Total          int           `json:"total"`
+			ValidCount     int           `json:"valid_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteExpenseResponse parses an HTTP response from a DeleteExpenseWithResponse call
 func ParseDeleteExpenseResponse(rsp *http.Response) (*DeleteExpenseResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -73569,6 +75917,66 @@ func ParseDeleteExpenseResponse(rsp *http.Response) (*DeleteExpenseResponse, err
 	response := &DeleteExpenseResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseShowExpenseResponse parses an HTTP response from a ShowExpenseWithResponse call
+func ParseShowExpenseResponse(rsp *http.Response) (*ShowExpenseResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ShowExpenseResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AmountCents    int    `json:"amount_cents"`
+			AmountCurrency string `json:"amount_currency"`
+			AppUrl         string `json:"app_url"`
+			Category       string `json:"category"`
+			CreatedAt      string `json:"created_at"`
+			Creator        struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"creator"`
+			Description string `json:"description"`
+			ExpenseDate string `json:"expense_date"`
+			Id          int    `json:"id"`
+			Location    struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Payee          string  `json:"payee"`
+			PaymentMethod  string  `json:"payment_method"`
+			RecurrenceRule *string `json:"recurrence_rule"`
+			Recurring      bool    `json:"recurring"`
+			UpdatedAt      string  `json:"updated_at"`
+			Url            string  `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
 	}
 
 	return response, nil
@@ -75918,6 +78326,400 @@ func ParseUpdateLocationsOperationsResponse(rsp *http.Response) (*UpdateLocation
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLocationsCloseRequirementsResponse parses an HTTP response from a ListLocationsCloseRequirementsWithResponse call
+func ParseListLocationsCloseRequirementsResponse(rsp *http.Response) (*ListLocationsCloseRequirementsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLocationsCloseRequirementsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			Name                            string                 `json:"name"`
+			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			Url                             string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateLocationsCloseRequirementsResponse parses an HTTP response from a UpdateLocationsCloseRequirementsWithResponse call
+func ParseUpdateLocationsCloseRequirementsResponse(rsp *http.Response) (*UpdateLocationsCloseRequirementsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateLocationsCloseRequirementsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               struct {
+				KeyLocation string `json:"key_location"`
+				OdometerIn  string `json:"odometer_in"`
+			} `json:"close_requirements"`
+			DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber      *string                `json:"driveon_station_number"`
+			Id                        int                    `json:"id"`
+			LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+			Name                      string                 `json:"name"`
+			OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+			Url                       string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLocationsCourtesyCarsResponse parses an HTTP response from a ListLocationsCourtesyCarsWithResponse call
+func ParseListLocationsCourtesyCarsResponse(rsp *http.Response) (*ListLocationsCourtesyCarsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLocationsCourtesyCarsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			CourtesyCars struct {
+				CourtesyCarFeeCents   int         `json:"courtesy_car_fee_cents"`
+				CourtesyCarFeeEnabled bool        `json:"courtesy_car_fee_enabled"`
+				CourtesyCarTermsText  interface{} `json:"courtesy_car_terms_text"`
+				Id                    int         `json:"id"`
+				Url                   string      `json:"url"`
+			} `json:"courtesy_cars"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLocationsDocumentsResponse parses an HTTP response from a ListLocationsDocumentsWithResponse call
+func ParseListLocationsDocumentsResponse(rsp *http.Response) (*ListLocationsDocumentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLocationsDocumentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl              string                 `json:"app_url"`
+			DocumentSettings    map[string]interface{} `json:"document_settings"`
+			EstimateTermsText   *string                `json:"estimate_terms_text"`
+			PaymentInstructions string                 `json:"payment_instructions"`
+			TermsText           string                 `json:"terms_text"`
+			Url                 string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateLocationsDocumentsResponse parses an HTTP response from a UpdateLocationsDocumentsWithResponse call
+func ParseUpdateLocationsDocumentsResponse(rsp *http.Response) (*UpdateLocationsDocumentsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateLocationsDocumentsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl              string                 `json:"app_url"`
+			DocumentSettings    map[string]interface{} `json:"document_settings"`
+			EstimateTermsText   string                 `json:"estimate_terms_text"`
+			PaymentInstructions interface{}            `json:"payment_instructions"`
+			TermsText           interface{}            `json:"terms_text"`
+			Url                 string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLocationsLeadSourceRequirementsResponse parses an HTTP response from a ListLocationsLeadSourceRequirementsWithResponse call
+func ParseListLocationsLeadSourceRequirementsResponse(rsp *http.Response) (*ListLocationsLeadSourceRequirementsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLocationsLeadSourceRequirementsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			Name                            string                 `json:"name"`
+			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			Url                             string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateLocationsLeadSourceRequirementsResponse parses an HTTP response from a UpdateLocationsLeadSourceRequirementsWithResponse call
+func ParseUpdateLocationsLeadSourceRequirementsResponse(rsp *http.Response) (*UpdateLocationsLeadSourceRequirementsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateLocationsLeadSourceRequirementsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          struct {
+				CustomerLeadSource string `json:"customer_lead_source"`
+				RoMarketingSource  string `json:"ro_marketing_source"`
+			} `json:"lead_source_requirements"`
+			Name                      string `json:"name"`
+			OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+			Url                       string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListLocationsRemindersResponse parses an HTTP response from a ListLocationsRemindersWithResponse call
+func ParseListLocationsRemindersResponse(rsp *http.Response) (*ListLocationsRemindersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListLocationsRemindersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			Name                            string                 `json:"name"`
+			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			Url                             string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateLocationsRemindersResponse parses an HTTP response from a UpdateLocationsRemindersWithResponse call
+func ParseUpdateLocationsRemindersResponse(rsp *http.Response) (*UpdateLocationsRemindersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateLocationsRemindersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl                          string                 `json:"app_url"`
+			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
+			DriveonStationNumber            *string                `json:"driveon_station_number"`
+			Id                              int                    `json:"id"`
+			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			Name                            string                 `json:"name"`
+			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			Url                             string                 `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
@@ -79188,514 +81990,6 @@ func ParseTrashServiceCategoryResponse(rsp *http.Response) (*TrashServiceCategor
 			Status       string  `json:"status"`
 			TrashedAt    string  `json:"trashed_at"`
 			Url          string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsBillingResponse parses an HTTP response from a ListSettingsBillingWithResponse call
-func ParseListSettingsBillingResponse(rsp *http.Response) (*ListSettingsBillingResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsBillingResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl              string `json:"app_url"`
-			BillingEmail        string `json:"billing_email"`
-			NextBillingDate     string `json:"next_billing_date"`
-			SubscriptionStatus  string `json:"subscription_status"`
-			Url                 string `json:"url"`
-			WorkOrdersThisMonth int    `json:"work_orders_this_month"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsCashDrawerResponse parses an HTTP response from a ListSettingsCashDrawerWithResponse call
-func ParseListSettingsCashDrawerResponse(rsp *http.Response) (*ListSettingsCashDrawerResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsCashDrawerResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsCloseRequirementsResponse parses an HTTP response from a ListSettingsCloseRequirementsWithResponse call
-func ParseListSettingsCloseRequirementsResponse(rsp *http.Response) (*ListSettingsCloseRequirementsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsCloseRequirementsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsDocumentsResponse parses an HTTP response from a ListSettingsDocumentsWithResponse call
-func ParseListSettingsDocumentsResponse(rsp *http.Response) (*ListSettingsDocumentsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsDocumentsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl              string                 `json:"app_url"`
-			DocumentSettings    map[string]interface{} `json:"document_settings"`
-			EstimateTermsText   *string                `json:"estimate_terms_text"`
-			PaymentInstructions string                 `json:"payment_instructions"`
-			TermsText           string                 `json:"terms_text"`
-			Url                 string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsDriveonResponse parses an HTTP response from a ListSettingsDriveonWithResponse call
-func ParseListSettingsDriveonResponse(rsp *http.Response) (*ListSettingsDriveonResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsDriveonResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsExpensesResponse parses an HTTP response from a ListSettingsExpensesWithResponse call
-func ParseListSettingsExpensesResponse(rsp *http.Response) (*ListSettingsExpensesResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsExpensesResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsLeadSourceRequirementsResponse parses an HTTP response from a ListSettingsLeadSourceRequirementsWithResponse call
-func ParseListSettingsLeadSourceRequirementsResponse(rsp *http.Response) (*ListSettingsLeadSourceRequirementsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsLeadSourceRequirementsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsPaymentsResponse parses an HTTP response from a ListSettingsPaymentsWithResponse call
-func ParseListSettingsPaymentsResponse(rsp *http.Response) (*ListSettingsPaymentsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsPaymentsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                     string  `json:"app_url"`
-			ProcessorApplicationStatus *string `json:"processor_application_status"`
-			ProcessorOnboardedAt       *string `json:"processor_onboarded_at"`
-			Url                        string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsPhoneNumbersResponse parses an HTTP response from a ListSettingsPhoneNumbersWithResponse call
-func ParseListSettingsPhoneNumbersResponse(rsp *http.Response) (*ListSettingsPhoneNumbersResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsPhoneNumbersResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl       string        `json:"app_url"`
-			Phones       []interface{} `json:"phones"`
-			TextingPhone *string       `json:"texting_phone"`
-			Url          string        `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsQuickbooksResponse parses an HTTP response from a ListSettingsQuickbooksWithResponse call
-func ParseListSettingsQuickbooksResponse(rsp *http.Response) (*ListSettingsQuickbooksResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsQuickbooksResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl       string  `json:"app_url"`
-			Connected    bool    `json:"connected"`
-			QboCompanyId *string `json:"qbo_company_id"`
-			QboSyncMode  string  `json:"qbo_sync_mode"`
-			Url          string  `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsRemindersResponse parses an HTTP response from a ListSettingsRemindersWithResponse call
-func ParseListSettingsRemindersResponse(rsp *http.Response) (*ListSettingsRemindersResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsRemindersResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListSettingsTireManagementResponse parses an HTTP response from a ListSettingsTireManagementWithResponse call
-func ParseListSettingsTireManagementResponse(rsp *http.Response) (*ListSettingsTireManagementResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListSettingsTireManagementResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl                          string                 `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
-			CashDrawerEnabled               bool                   `json:"cash_drawer_enabled"`
-			CloseRequirements               map[string]interface{} `json:"close_requirements"`
-			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
-			DriveonStationNumber            *string                `json:"driveon_station_number"`
-			ExpensesEnabled                 bool                   `json:"expenses_enabled"`
-			Id                              int                    `json:"id"`
-			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
-			Name                            string                 `json:"name"`
-			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
-			TireManagementEnabled           bool                   `json:"tire_management_enabled"`
-			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
-			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err

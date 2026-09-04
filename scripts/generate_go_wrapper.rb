@@ -66,6 +66,17 @@ def build_operation(op)
   gen_args << "params" if has_query_params?(op)
   gen_args << "body" if body_type
 
+  # Multipart uploads (e.g. import validate) have no named request schema and
+  # oapi-codegen only emits a `WithBodyWithResponse(ctx, contentType, body
+  # io.Reader, ...)` variant — there is no no-arg `WithResponse`. Route these
+  # through the WithBody variant so the wrapper compiles.
+  if op["requestContentType"] && op["requestContentType"] != "application/json"
+    gen_fn = "#{m}WithBodyWithResponse"
+    gen_args << '"multipart/form-data"'
+    gen_args << "body"
+    params << "body io.Reader"
+  end
+
   call = "c.gen.#{gen_fn}(ctx#{gen_args.empty? ? "" : ", " + gen_args.join(", ")})"
 
   <<~GO
@@ -150,7 +161,10 @@ operations_header = <<~'GO'
 
 	package wenmar
 
-	import "context"
+	import (
+		"context"
+		"io"
+	)
 GO
 
 models_header = <<~'GO'

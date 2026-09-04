@@ -111,26 +111,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/seed_defaults.json
 ```
 
-## Delete service category
-
-```
-DELETE /service_categories/{id}
-```
-
-Delete a service category by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 200** — [ServiceCategory](#servicecategory-schema)
-
-**Response 422** — [Error](#error-schema) error envelope
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/service_categories/<id>.json
-```
-
 ## Update service category
 
 ```
@@ -150,6 +130,114 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
 ```
 
+## Archive service category
+
+```
+PATCH /service_categories/{id}/archive
+```
+
+Archive
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `description` | string \| null | Yes |
+| `service_type` | string | Yes |
+| `icon` | string \| null | Yes |
+| `color` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `position` | integer | Yes |
+| `canonical` | boolean | Yes |
+| `canonical_key` | string \| null | Yes |
+| `job_count` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+```
+
+## Restore service category
+
+```
+PATCH /service_categories/{id}/restore
+```
+
+Restore
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `description` | string \| null | Yes |
+| `service_type` | string | Yes |
+| `icon` | string \| null | Yes |
+| `color` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `position` | integer | Yes |
+| `canonical` | boolean | Yes |
+| `canonical_key` | string \| null | Yes |
+| `job_count` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+```
+
+## Trash service category
+
+```
+PATCH /service_categories/{id}/trash
+```
+
+Trash
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `description` | string \| null | Yes |
+| `service_type` | string | Yes |
+| `icon` | string \| null | Yes |
+| `color` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
+| `position` | integer | Yes |
+| `canonical` | boolean | Yes |
+| `canonical_key` | string \| null | Yes |
+| `job_count` | integer | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
+```
+
 ---
 
 ### ServiceCategory schema {#servicecategory-schema}
@@ -162,7 +250,8 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `service_type` | string | Yes |
 | `icon` | string \| null | Yes |
 | `color` | string \| null | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `position` | integer | Yes |
 | `canonical` | boolean | Yes |
 | `canonical_key` | string \| null | Yes |
@@ -208,7 +297,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `service_category` — object:
 | Field | Type | Required |
 |---|---|---|
-| `active` | boolean | No |
-| `name` | string | No |
 | `position` | integer | No |
+| `name` | string | No |
 

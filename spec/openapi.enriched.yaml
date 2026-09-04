@@ -263,6 +263,403 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/account/billing":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/billing -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  billing_email:
+                    type: string
+                  subscription_status:
+                    type: string
+                  next_billing_date:
+                    type: string
+                  work_orders_this_month:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - billing_email
+                - subscription_status
+                - next_billing_date
+                - work_orders_this_month
+                - url
+                - app_url
+        '403':
+          description: GET /account/billing -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all account billing, paginated via the Link header.
+      operationId: list_account_billing
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/billing.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/account/capabilities":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/capabilities -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tier:
+                    nullable: true
+                    type: string
+                  tier_display:
+                    nullable: true
+                    type: string
+                  capabilities:
+                    type: object
+                    properties:
+                      appointments:
+                        type: boolean
+                      payments:
+                        type: boolean
+                      inventory:
+                        type: boolean
+                      purchase_orders:
+                        type: boolean
+                      counter_sales:
+                        type: boolean
+                      cash_drawer:
+                        type: boolean
+                      courtesy_cars:
+                        type: boolean
+                      dealer_plates:
+                        type: boolean
+                      tire_management:
+                        type: boolean
+                      expenses:
+                        type: boolean
+                      phone_numbers:
+                        type: boolean
+                      integrations:
+                        type: object
+                        properties:
+                          quickbooks:
+                            type: boolean
+                          driveon:
+                            type: boolean
+                        required:
+                        - quickbooks
+                        - driveon
+                    required:
+                    - appointments
+                    - payments
+                    - inventory
+                    - purchase_orders
+                    - counter_sales
+                    - cash_drawer
+                    - courtesy_cars
+                    - dealer_plates
+                    - tire_management
+                    - expenses
+                    - phone_numbers
+                    - integrations
+                  limits:
+                    type: object
+                    properties:
+                      max_locations:
+                        nullable: true
+                        type: integer
+                      max_users:
+                        nullable: true
+                        type: integer
+                      max_work_orders_per_month:
+                        nullable: true
+                    required:
+                    - max_locations
+                    - max_users
+                    - max_work_orders_per_month
+                required:
+                - tier
+                - tier_display
+                - capabilities
+                - limits
+      description: List all account capabilities, paginated via the Link header.
+      operationId: list_account_capabilities
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/capabilities.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/account/driveon":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/driveon -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /account/driveon -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all account driveon, paginated via the Link header.
+      operationId: list_account_driveon
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/driveon.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/account/payments":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/payments -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processor_application_status:
+                    nullable: true
+                    type: string
+                  processor_onboarded_at:
+                    nullable: true
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - processor_application_status
+                - processor_onboarded_at
+                - url
+                - app_url
+        '403':
+          description: GET /account/payments -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all account payments, paginated via the Link header.
+      operationId: list_account_payments
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/payments.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/account/phone_numbers":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/phone_numbers -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  texting_phone:
+                    nullable: true
+                    type: string
+                  phones:
+                    type: array
+                    items: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - texting_phone
+                - phones
+                - url
+                - app_url
+        '403':
+          description: GET /account/phone_numbers -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all account phone numbers, paginated via the Link header.
+      operationId: list_account_phone_numbers
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/phone_numbers.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/account/quickbooks":
+    get:
+      summary: show
+      tags:
+      - account
+      responses:
+        '200':
+          description: GET /account/quickbooks -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connected:
+                    type: boolean
+                  qbo_company_id:
+                    nullable: true
+                    type: string
+                  qbo_sync_mode:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - connected
+                - qbo_company_id
+                - qbo_sync_mode
+                - url
+                - app_url
+        '403':
+          description: GET /account/quickbooks -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all account quickbooks, paginated via the Link header.
+      operationId: list_account_quickbooks
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/account/quickbooks.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/account/station_link":
     get:
       summary: station_link
@@ -2940,11 +3337,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCatalogCleanupsApplicationRequest"
       responses:
         '200':
           description: POST /catalog_cleanups/{catalog_cleanup_id}/applications ->
@@ -2973,6 +3365,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCatalogCleanupsApplicationRequest"
       description: Create a catalog cleanups application.
       operationId: create_catalog_cleanups_application
       x-curl-example: |-
@@ -7019,11 +7416,6 @@ paths:
       summary: create
       tags:
       - expenses
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateExpenseRequest"
       responses:
         '201':
           description: POST /expenses -> 201
@@ -7115,12 +7507,301 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateExpenseRequest"
       description: Create a expense.
       operationId: create_expense
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/expenses.json
       x-wenmar-request-schema: CreateExpenseRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/data_transfer":
+    get:
+      summary: show
+      tags:
+      - expenses
+      responses:
+        '200':
+          description: GET /expenses/data_transfer -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resource:
+                    type: string
+                  template_url:
+                    type: string
+                  export_url:
+                    type: string
+                  validate_url:
+                    type: string
+                required:
+                - resource
+                - template_url
+                - export_url
+                - validate_url
+        '403':
+          description: GET /expenses/data_transfer -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all expenses data transfer, paginated via the Link header.
+      operationId: list_expenses_data_transfer
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/expenses/data_transfer.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/export":
+    post:
+      summary: create
+      tags:
+      - expenses
+      responses:
+        '200':
+          description: POST /expenses/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+        '403':
+          description: POST /expenses/export -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateExpensesExportRequest"
+      description: Create a expenses export.
+      operationId: create_expenses_export
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/expenses/export.json
+      x-wenmar-request-schema: CreateExpensesExportRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - expenses
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /expenses/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /expenses/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all expenses export download, paginated via the Link header.
+      operationId: list_expenses_export_download
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/expenses/export/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/imports/commit":
+    post:
+      summary: commit
+      tags:
+      - expenses
+      responses:
+        '422':
+          description: POST /expenses/imports/commit -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a expenses imports commit.
+      operationId: create_expenses_imports_commit
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/expenses/imports/commit.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/imports/template":
+    get:
+      summary: template
+      tags:
+      - expenses
+      responses:
+        '200':
+          description: GET /expenses/imports/template -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+      description: List all expenses imports template, paginated via the Link header.
+      operationId: list_expenses_imports_template
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/expenses/imports/template.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/expenses/imports/validate":
+    post:
+      summary: validate
+      tags:
+      - expenses
+      responses:
+        '200':
+          description: POST /expenses/imports/validate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid_count:
+                    type: integer
+                  error_count:
+                    type: integer
+                  duplicate_count:
+                    type: integer
+                  total:
+                    type: integer
+                  errors:
+                    type: array
+                    items: {}
+                required:
+                - valid_count
+                - error_count
+                - duplicate_count
+                - total
+                - errors
+        '403':
+          description: POST /expenses/imports/validate -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /expenses/imports/validate -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      description: Create a expenses imports validate.
+      operationId: create_expenses_imports_validate
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/expenses/imports/validate.json
       x-retry:
         max: 3
         backoff: exponential
@@ -7149,6 +7830,121 @@ paths:
       operationId: delete_expense
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/expenses/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    get:
+      summary: show
+      tags:
+      - expenses
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /expenses/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  payee:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+                  amount_cents:
+                    type: integer
+                  amount_currency:
+                    type: string
+                  expense_date:
+                    type: string
+                  payment_method:
+                    type: string
+                  recurring:
+                    type: boolean
+                  recurrence_rule:
+                    nullable: true
+                    type: string
+                  creator:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - payee
+                - category
+                - description
+                - amount_cents
+                - amount_currency
+                - expense_date
+                - payment_method
+                - recurring
+                - recurrence_rule
+                - creator
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+        '403':
+          description: GET /expenses/{id} -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Show a expense by ID.
+      operationId: show_expense
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/expenses/<id>.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -11361,6 +12157,711 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/locations/<id>.json
       x-wenmar-request-schema: UpdateLocationsOperationsRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/locations/{location_id}/close_requirements":
+    get:
+      summary: show
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/close_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/close_requirements -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all locations close requirements, paginated via the Link header.
+      operationId: list_locations_close_requirements
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/locations/{location_id}/close_requirements.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsCloseRequirementsRequest"
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/close_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties:
+                      odometer_in:
+                        type: string
+                      key_location:
+                        type: string
+                    required:
+                    - odometer_in
+                    - key_location
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: Update a locations close requirements by ID.
+      operationId: update_locations_close_requirements
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/locations/{location_id}/close_requirements.json
+      x-wenmar-request-schema: UpdateLocationsCloseRequirementsRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/locations/{location_id}/courtesy_cars":
+    get:
+      summary: show
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/courtesy_cars -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  courtesy_cars:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      courtesy_car_fee_enabled:
+                        type: boolean
+                      courtesy_car_fee_cents:
+                        type: integer
+                      courtesy_car_terms_text:
+                        nullable: true
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - courtesy_car_fee_enabled
+                    - courtesy_car_fee_cents
+                    - courtesy_car_terms_text
+                    - url
+                required:
+                - courtesy_cars
+        '403':
+          description: GET /locations/{location_id}/courtesy_cars -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all locations courtesy cars, paginated via the Link header.
+      operationId: list_locations_courtesy_cars
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/locations/{location_id}/courtesy_cars.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/locations/{location_id}/documents":
+    get:
+      summary: show
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/documents -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_settings:
+                    type: object
+                    properties: {}
+                  estimate_terms_text:
+                    nullable: true
+                    type: string
+                  terms_text:
+                    type: string
+                  payment_instructions:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - document_settings
+                - estimate_terms_text
+                - terms_text
+                - payment_instructions
+                - url
+                - app_url
+        '401':
+          description: GET /locations/{location_id}/documents -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '403':
+          description: GET /locations/{location_id}/documents -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all locations documents, paginated via the Link header.
+      operationId: list_locations_documents
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/locations/{location_id}/documents.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsDocumentsRequest"
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/documents -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_settings:
+                    type: object
+                    properties: {}
+                  estimate_terms_text:
+                    type: string
+                  terms_text:
+                    nullable: true
+                  payment_instructions:
+                    nullable: true
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - document_settings
+                - estimate_terms_text
+                - terms_text
+                - payment_instructions
+                - url
+                - app_url
+      description: Update a locations documents by ID.
+      operationId: update_locations_documents
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/locations/{location_id}/documents.json
+      x-wenmar-request-schema: UpdateLocationsDocumentsRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/locations/{location_id}/lead_source_requirements":
+    get:
+      summary: show
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/lead_source_requirements -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/lead_source_requirements -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all locations lead source requirements, paginated via the
+        Link header.
+      operationId: list_locations_lead_source_requirements
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/locations/{location_id}/lead_source_requirements.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsLeadSourceRequirementsRequest"
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/lead_source_requirements ->
+            200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties:
+                      customer_lead_source:
+                        type: string
+                      ro_marketing_source:
+                        type: string
+                    required:
+                    - customer_lead_source
+                    - ro_marketing_source
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: Update a locations lead source requirements by ID.
+      operationId: update_locations_lead_source_requirements
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/locations/{location_id}/lead_source_requirements.json
+      x-wenmar-request-schema: UpdateLocationsLeadSourceRequirementsRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/locations/{location_id}/reminders":
+    get:
+      summary: show
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /locations/{location_id}/reminders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+        '403':
+          description: GET /locations/{location_id}/reminders -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all locations reminders, paginated via the Link header.
+      operationId: list_locations_reminders
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/locations/{location_id}/reminders.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - locations
+      parameters:
+      - name: location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsRemindersRequest"
+      responses:
+        '200':
+          description: PATCH /locations/{location_id}/reminders -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  default_starting_float_cents:
+                    type: integer
+                  driveon_station_number:
+                    nullable: true
+                    type: string
+                  oil_change_reminders_enabled:
+                    type: boolean
+                  tire_swap_reminders_enabled:
+                    type: boolean
+                  brake_inspection_reminders_enabled:
+                    type: boolean
+                  battery_check_reminders_enabled:
+                    type: boolean
+                  close_requirements:
+                    type: object
+                    properties: {}
+                  lead_source_requirements:
+                    type: object
+                    properties: {}
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - name
+                - default_starting_float_cents
+                - driveon_station_number
+                - oil_change_reminders_enabled
+                - tire_swap_reminders_enabled
+                - brake_inspection_reminders_enabled
+                - battery_check_reminders_enabled
+                - close_requirements
+                - lead_source_requirements
+                - url
+                - app_url
+      description: Update a locations reminders by ID.
+      operationId: update_locations_reminders
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/locations/{location_id}/reminders.json
+      x-wenmar-request-schema: UpdateLocationsRemindersRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -16803,827 +18304,6 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/service_categories/<id>.json
       x-wenmar-request-schema: TrashServiceCategoryRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/billing":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/billing -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  billing_email:
-                    type: string
-                  subscription_status:
-                    type: string
-                  next_billing_date:
-                    type: string
-                  work_orders_this_month:
-                    type: integer
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - billing_email
-                - subscription_status
-                - next_billing_date
-                - work_orders_this_month
-                - url
-                - app_url
-        '403':
-          description: GET /settings/billing -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings billing, paginated via the Link header.
-      operationId: list_settings_billing
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/billing.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/cash_drawer":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/cash_drawer -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-        '403':
-          description: GET /settings/cash_drawer -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings cash drawer, paginated via the Link header.
-      operationId: list_settings_cash_drawer
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/cash_drawer.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/close_requirements":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/close_requirements -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings close requirements, paginated via the Link header.
-      operationId: list_settings_close_requirements
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/close_requirements.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/documents":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/documents -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  document_settings:
-                    type: object
-                    properties: {}
-                  estimate_terms_text:
-                    nullable: true
-                    type: string
-                  terms_text:
-                    type: string
-                  payment_instructions:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - document_settings
-                - estimate_terms_text
-                - terms_text
-                - payment_instructions
-                - url
-                - app_url
-        '401':
-          description: GET /settings/documents -> 401
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings documents, paginated via the Link header.
-      operationId: list_settings_documents
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/documents.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/driveon":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/driveon -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings driveon, paginated via the Link header.
-      operationId: list_settings_driveon
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/driveon.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/expenses":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/expenses -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings expenses, paginated via the Link header.
-      operationId: list_settings_expenses
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/expenses.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/lead_source_requirements":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/lead_source_requirements -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings lead source requirements, paginated via the Link
-        header.
-      operationId: list_settings_lead_source_requirements
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/lead_source_requirements.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/payments":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/payments -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  processor_application_status:
-                    nullable: true
-                    type: string
-                  processor_onboarded_at:
-                    nullable: true
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - processor_application_status
-                - processor_onboarded_at
-                - url
-                - app_url
-        '403':
-          description: GET /settings/payments -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings payments, paginated via the Link header.
-      operationId: list_settings_payments
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/payments.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/phone_numbers":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/phone_numbers -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  texting_phone:
-                    nullable: true
-                    type: string
-                  phones:
-                    type: array
-                    items: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - texting_phone
-                - phones
-                - url
-                - app_url
-        '403':
-          description: GET /settings/phone_numbers -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings phone numbers, paginated via the Link header.
-      operationId: list_settings_phone_numbers
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/phone_numbers.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/quickbooks":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/quickbooks -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  connected:
-                    type: boolean
-                  qbo_company_id:
-                    nullable: true
-                    type: string
-                  qbo_sync_mode:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - connected
-                - qbo_company_id
-                - qbo_sync_mode
-                - url
-                - app_url
-        '403':
-          description: GET /settings/quickbooks -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all settings quickbooks, paginated via the Link header.
-      operationId: list_settings_quickbooks
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/quickbooks.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/reminders":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/reminders -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings reminders, paginated via the Link header.
-      operationId: list_settings_reminders
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/reminders.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/settings/tire_management":
-    get:
-      summary: show
-      tags:
-      - settings
-      responses:
-        '200':
-          description: GET /settings/tire_management -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  cash_drawer_enabled:
-                    type: boolean
-                  default_starting_float_cents:
-                    type: integer
-                  driveon_station_number:
-                    nullable: true
-                    type: string
-                  expenses_enabled:
-                    type: boolean
-                  tire_management_enabled:
-                    type: boolean
-                  oil_change_reminders_enabled:
-                    type: boolean
-                  tire_swap_reminders_enabled:
-                    type: boolean
-                  brake_inspection_reminders_enabled:
-                    type: boolean
-                  battery_check_reminders_enabled:
-                    type: boolean
-                  close_requirements:
-                    type: object
-                    properties: {}
-                  lead_source_requirements:
-                    type: object
-                    properties: {}
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - name
-                - cash_drawer_enabled
-                - default_starting_float_cents
-                - driveon_station_number
-                - expenses_enabled
-                - tire_management_enabled
-                - oil_change_reminders_enabled
-                - tire_swap_reminders_enabled
-                - brake_inspection_reminders_enabled
-                - battery_check_reminders_enabled
-                - close_requirements
-                - lead_source_requirements
-                - url
-                - app_url
-      description: List all settings tire management, paginated via the Link header.
-      operationId: list_settings_tire_management
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/settings/tire_management.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -28062,6 +28742,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
@@ -28073,11 +28758,6 @@ paths:
         '404':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
             404
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       description: Create a work orders services package.
       operationId: create_work_orders_services_package
       x-curl-example: |-
@@ -31373,16 +32053,19 @@ components:
           - payment_method
       required:
       - expense
+    CreateExpensesExportRequest:
+      type: object
+      properties: {}
     UpdateExpenseRequest:
       type: object
       properties:
         expense:
           type: object
           properties:
+            receipt_id:
+              type: string
             description:
               type: string
-          required:
-          - description
       required:
       - expense
     CreateInspectionReportRequest:
@@ -31657,6 +32340,63 @@ components:
               type: string
           required:
           - time_zone
+      required:
+      - location
+    UpdateLocationsCloseRequirementsRequest:
+      type: object
+      properties:
+        close_requirements:
+          type: object
+          properties:
+            odometer_in:
+              type: string
+            key_location:
+              type: string
+          required:
+          - odometer_in
+          - key_location
+      required:
+      - close_requirements
+    UpdateLocationsDocumentsRequest:
+      type: object
+      properties:
+        location:
+          type: object
+          properties:
+            estimate_terms_text:
+              type: string
+          required:
+          - estimate_terms_text
+      required:
+      - location
+    UpdateLocationsLeadSourceRequirementsRequest:
+      type: object
+      properties:
+        lead_source_requirements:
+          type: object
+          properties:
+            customer_lead_source:
+              type: string
+            ro_marketing_source:
+              type: string
+          required:
+          - customer_lead_source
+          - ro_marketing_source
+      required:
+      - lead_source_requirements
+    UpdateLocationsRemindersRequest:
+      type: object
+      properties:
+        location:
+          type: object
+          properties:
+            oil_change_reminders_enabled:
+              type: boolean
+            tire_swap_reminders_enabled:
+              type: boolean
+          required:
+          - oil_change_reminders_enabled
+          - tire_swap_reminders_enabled
       required:
       - location
     UpdateLocationsScheduleConfigRequest:

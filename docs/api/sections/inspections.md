@@ -38,24 +38,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/inspections.json
 ```
 
-## Delete inspection
-
-```
-DELETE /inspections/{id}
-```
-
-Delete a inspection by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 204** — no content.
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inspections/<id>.json
-```
-
 ## Show inspection
 
 ```
@@ -93,6 +75,50 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
 ```
 
+## Archive inspection
+
+```
+PATCH /inspections/{id}/archive
+```
+
+Archive
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `name` | string | Yes |
+| `description` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `is_default` | boolean | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+| `groups` | array of any | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+```
+
 ## Remove default inspection
 
 ```
@@ -113,7 +139,50 @@ Remove default
 | `type` | string | Yes |
 | `name` | string | Yes |
 | `description` | string \| null | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `is_default` | boolean | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+| `groups` | array of any | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Restore inspection
+
+```
+PATCH /inspections/{id}/restore
+```
+
+Restore
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `name` | string | Yes |
+| `description` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `is_default` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -154,7 +223,8 @@ Set default
 | `type` | string | Yes |
 | `name` | string | Yes |
 | `description` | string \| null | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `is_default` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -175,13 +245,13 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
 ```
 
-## Toggle inspection
+## Trash inspection
 
 ```
-PATCH /inspections/{id}/toggle
+PATCH /inspections/{id}/trash
 ```
 
-Toggle
+Trash
 
 | Param | Type | Required |
 |---|---|---|
@@ -195,7 +265,8 @@ Toggle
 | `type` | string | Yes |
 | `name` | string | Yes |
 | `description` | string \| null | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
 | `is_default` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -226,7 +297,8 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `type` | string | Yes |
 | `name` | string | Yes |
 | `description` | string \| null | Yes |
-| `active` | boolean | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 | `is_default` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
@@ -254,7 +326,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | Field | Type | Required |
 |---|---|---|
 | `name` | string | Yes |
-| `active` | boolean | Yes |
 
 ---
 
