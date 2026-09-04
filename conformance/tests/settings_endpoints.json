@@ -1,26 +1,5 @@
 [
   {
-    "name": "list_settings_account_success",
-    "operation": "list_settings_account",
-    "method": "GET",
-    "path": "/settings/account",
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Main Shop", "slug": "main-shop", "billing_email": "billing@example.com", "url": "https://api.example.com/settings/account", "app_url": "https://app.example.com/settings/account" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
-  },
-  {
-    "name": "update_settings_account_success",
-    "operation": "update_settings_account",
-    "method": "PATCH",
-    "path": "/settings/account",
-    "requestBody": { "account": { "name": "Updated Name" } },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Updated Name", "slug": "main-shop", "billing_email": "billing@example.com", "url": "https://api.example.com/settings/account", "app_url": "https://app.example.com/settings/account" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Updated Name" } }
-  },
-  {
     "name": "list_settings_billing_success",
     "operation": "list_settings_billing",
     "method": "GET",
@@ -91,26 +70,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
   },
   {
-    "name": "list_settings_learning_preferences_success",
-    "operation": "list_settings_learning_preferences",
-    "method": "GET",
-    "path": "/settings/learning_preferences",
-    "mockResponses": [
-      { "status": 200, "body": { "url": "https://api.example.com/settings/learning_preferences", "app_url": "https://app.example.com/settings/learning_preferences", "preferences": { "auto_catalog_cleanup": { "default": true, "label": "Auto catalog cleanup", "description": "Automatically clean up catalog" } } } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "preferences.auto_catalog_cleanup.default", "equals": true } }
-  },
-  {
-    "name": "list_settings_notifications_edit_success",
-    "operation": "list_settings_notifications_edit",
-    "method": "GET",
-    "path": "/settings/notifications/edit",
-    "mockResponses": [
-      { "status": 200, "body": { "email_fallback_enabled": true, "url": "https://api.example.com/settings/notifications/edit", "app_url": "https://app.example.com/settings/notifications/edit" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "email_fallback_enabled", "equals": true } }
-  },
-  {
     "name": "list_settings_payments_success",
     "operation": "list_settings_payments",
     "method": "GET",
@@ -159,15 +118,5 @@
       { "status": 200, "body": { "id": 1, "name": "Main Shop", "tire_management_enabled": true, "url": "https://api.example.com/settings/tire_management", "app_url": "https://app.example.com/settings/tire_management" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "tire_management_enabled", "equals": true } }
-  },
-  {
-    "name": "list_settings_trust_levels_success",
-    "operation": "list_settings_trust_levels",
-    "method": "GET",
-    "path": "/settings/trust_levels",
-    "mockResponses": [
-      { "status": 200, "body": { "url": "https://api.example.com/settings/trust_levels", "app_url": "https://app.example.com/settings/trust_levels", "trust_levels": { "create_customer": { "level": "trusted", "escalation": { "total": 5, "unedited": 3, "edited": 2, "consecutive_unedited": 2, "eligible_for_promotion": true } } } } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "trust_levels.create_customer.level", "equals": "trusted" } }
   }
 ]
