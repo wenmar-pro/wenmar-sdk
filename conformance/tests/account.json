@@ -1,0 +1,74 @@
+[
+  {
+    "name": "list_account_success",
+    "operation": "list_account",
+    "method": "GET",
+    "path": "/account",
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Main Shop", "slug": "main-shop" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
+  },
+  {
+    "name": "update_account_success",
+    "operation": "update_account",
+    "method": "PATCH",
+    "path": "/account",
+    "requestBody": { "account": { "name": "Updated Shop" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Updated Shop", "slug": "main-shop" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Updated Shop" } }
+  },
+  {
+    "name": "delete_account_success",
+    "operation": "delete_account",
+    "method": "DELETE",
+    "path": "/account",
+    "mockResponses": [
+      { "status": 204, "body": "" }
+    ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_account_station_link_success",
+    "operation": "list_account_station_link",
+    "method": "GET",
+    "path": "/account/station_link",
+    "mockResponses": [
+      { "status": 200, "body": { "station_number": "1", "linked": true } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "linked", "equals": true } }
+  },
+  {
+    "name": "create_account_station_link_regenerate_success",
+    "operation": "create_account_station_link_regenerate",
+    "method": "POST",
+    "path": "/account/station_link/regenerate",
+    "mockResponses": [
+      { "status": 201, "body": { "station_number": "1", "linked": true } }
+    ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_current_location_success",
+    "operation": "list_current_location",
+    "method": "GET",
+    "path": "/current_location",
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Main Shop" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
+  },
+  {
+    "name": "update_current_location_success",
+    "operation": "update_current_location",
+    "method": "PATCH",
+    "path": "/current_location",
+    "requestBody": { "current_location": { "name": "Updated Location" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Updated Location" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Updated Location" } }
+  }
+]
