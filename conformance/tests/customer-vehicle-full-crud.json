@@ -307,66 +307,6 @@
     }
   },
   {
-    "name": "list_tags",
-    "operation": "list_tags",
-    "method": "GET",
-    "path": "/settings/tags",
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "customer_tags": [
-            {
-              "id": 1,
-              "name": "VIP"
-            }
-          ],
-          "vehicle_tags": []
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "customer_tags.0.name",
-        "equals": "VIP"
-      }
-    }
-  },
-  {
-    "name": "update_tags",
-    "operation": "update_tags",
-    "method": "PATCH",
-    "path": "/settings/tags",
-    "requestBody": {
-      "customer_tags": [
-        {
-          "id": 1,
-          "name": "NEW"
-        }
-      ]
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "customer_tags": [
-            {
-              "id": 1,
-              "name": "NEW"
-            }
-          ],
-          "vehicle_tags": []
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
     "name": "create_customer_tag",
     "operation": "create_customer_tag",
     "method": "POST",
@@ -391,34 +331,6 @@
       "responseBody": {
         "path": "name",
         "equals": "PRIORITY"
-      }
-    }
-  },
-  {
-    "name": "create_vehicle_tag",
-    "operation": "create_vehicle_tag",
-    "method": "POST",
-    "path": "/vehicle_tags",
-    "requestBody": {
-      "name": "FLEET"
-    },
-    "mockResponses": [
-      {
-        "status": 201,
-        "body": {
-          "id": 1,
-          "name": "FLEET",
-          "color": "blue",
-          "color_hex": "#3b82f6"
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "name",
-        "equals": "FLEET"
       }
     }
   },
