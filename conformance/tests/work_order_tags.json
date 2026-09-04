@@ -1,0 +1,46 @@
+[
+  {
+    "name": "list_work_order_tags_success",
+    "operation": "list_work_order_tags",
+    "method": "GET",
+    "path": "/work_order_tags",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "PRIORITY" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "PRIORITY" } }
+  },
+  {
+    "name": "create_work_order_tag_success",
+    "operation": "create_work_order_tag",
+    "method": "POST",
+    "path": "/work_order_tags",
+    "requestBody": { "work_order_tag": { "name": "URGENT" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "URGENT" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "URGENT" } }
+  },
+  {
+    "name": "update_work_order_tag_success",
+    "operation": "update_work_order_tag",
+    "method": "PATCH",
+    "path": "/work_order_tags/2",
+    "pathParams": { "id": 2 },
+    "requestBody": { "work_order_tag": { "name": "URGENT UPDATED" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "URGENT UPDATED" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "URGENT UPDATED" } }
+  },
+  {
+    "name": "update_work_order_tags_archive_success",
+    "operation": "update_work_order_tags_archive",
+    "method": "PATCH",
+    "path": "/work_order_tags/2/archive",
+    "pathParams": { "id": 2 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 2, "name": "URGENT UPDATED", "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
+  }
+]
