@@ -29,7 +29,15 @@ See `conformance/schema.json` for the full JSON schema.
 
 1. Create a JSON file in `conformance/tests/`
 2. Define the scenario following the schema
-3. Add the operation to both runners if it doesn't exist:
-   - `conformance/go/conformance_test.go` — `executeOperation` switch
-   - `conformance/ruby/conformance_spec.rb` — `execute_operation` case
+3. Regenerate the dispatch tables so the new operation is callable by the
+   runners:
+
+   ```
+   ruby scripts/generate_conformance_dispatch.rb
+   ```
+
+   This reads `spec/operations.json` and emits both
+   `conformance/go/dispatch.gen.go` and `conformance/ruby/dispatch.gen.rb`
+   (both marked `DO NOT EDIT`). If the operation is already in the
+   manifest, no manual edit to the runners is needed.
 4. Run `./conformance/run.sh` to verify
