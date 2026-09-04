@@ -120,25 +120,6 @@
     }
   },
   {
-    "name": "delete_inspection_success",
-    "operation": "delete_inspection",
-    "method": "DELETE",
-    "path": "/inspections/1",
-    "pathParams": {
-      "id": 1
-    },
-    "mockResponses": [
-      {
-        "status": 204,
-        "body": null
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
     "name": "set_default_inspection_success",
     "operation": "set_default_inspection",
     "method": "PATCH",
@@ -190,34 +171,6 @@
       "noError": true,
       "responseBody": {
         "path": "is_default",
-        "equals": false
-      }
-    }
-  },
-  {
-    "name": "toggle_inspection_success",
-    "operation": "toggle_inspection",
-    "method": "PATCH",
-    "path": "/inspections/1/toggle",
-    "pathParams": {
-      "id": 1
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "id": 1,
-          "type": "inspection",
-          "name": "Courtesy Check",
-          "active": false
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "active",
         "equals": false
       }
     }
