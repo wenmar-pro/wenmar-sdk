@@ -1,0 +1,97 @@
+[
+  {
+    "name": "list_me_api_tokens_success",
+    "operation": "list_me_api_tokens",
+    "method": "GET",
+    "path": "/me/api_tokens",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "CLI token" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "CLI token" } }
+  },
+  {
+    "name": "create_me_api_token_success",
+    "operation": "create_me_api_token",
+    "method": "POST",
+    "path": "/me/api_tokens",
+    "requestBody": { "api_token": { "name": "New token" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "name": "New token", "token": "abc123" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "New token" } }
+  },
+  {
+    "name": "delete_me_api_token_success",
+    "operation": "delete_me_api_token",
+    "method": "DELETE",
+    "path": "/me/api_tokens/2",
+    "pathParams": { "id": 2 },
+    "mockResponses": [
+      { "status": 204, "body": "" }
+    ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_me_notifications_success",
+    "operation": "list_me_notifications",
+    "method": "GET",
+    "path": "/me/notifications",
+    "mockResponses": [
+      { "status": 200, "body": { "email_fallback_enabled": true } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "email_fallback_enabled", "equals": true } }
+  },
+  {
+    "name": "update_me_notifications_success",
+    "operation": "update_me_notifications",
+    "method": "PATCH",
+    "path": "/me/notifications",
+    "requestBody": { "notifications": { "email_fallback_enabled": false } },
+    "mockResponses": [
+      { "status": 200, "body": { "email_fallback_enabled": false } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "email_fallback_enabled", "equals": false } }
+  },
+  {
+    "name": "list_me_preferences_success",
+    "operation": "list_me_preferences",
+    "method": "GET",
+    "path": "/me/preferences",
+    "mockResponses": [
+      { "status": 200, "body": { "preferences": { "theme": "dark" } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "preferences.theme", "equals": "dark" } }
+  },
+  {
+    "name": "update_me_preferences_success",
+    "operation": "update_me_preferences",
+    "method": "PATCH",
+    "path": "/me/preferences",
+    "requestBody": { "preferences": { "theme": "light" } },
+    "mockResponses": [
+      { "status": 200, "body": { "preferences": { "theme": "light" } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "preferences.theme", "equals": "light" } }
+  },
+  {
+    "name": "list_me_profile_success",
+    "operation": "list_me_profile",
+    "method": "GET",
+    "path": "/me/profile",
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Jane Doe", "email": "jane@example.com" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Jane Doe" } }
+  },
+  {
+    "name": "update_me_profile_success",
+    "operation": "update_me_profile",
+    "method": "PATCH",
+    "path": "/me/profile",
+    "requestBody": { "profile": { "name": "Jane Smith" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Jane Smith", "email": "jane@example.com" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Jane Smith" } }
+  }
+]
