@@ -5,9 +5,9 @@
     "method": "GET",
     "path": "/me/api_tokens",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "name": "CLI token" } ] }
+      { "status": 200, "body": { "api_tokens": [ { "id": 1, "name": "CLI token" } ] } }
     ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "CLI token" } }
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "api_tokens.0.name", "equals": "CLI token" } }
   },
   {
     "name": "create_me_api_token_success",
