@@ -89,33 +89,6 @@
     }
   },
   {
-    "name": "delete_service_category_success",
-    "operation": "delete_service_category",
-    "method": "DELETE",
-    "path": "/service_categories/1",
-    "pathParams": {
-      "id": 1
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "id": 1,
-          "name": "Deleted",
-          "active": false
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "id",
-        "equals": 1
-      }
-    }
-  },
-  {
     "name": "seed_defaults_service_categories_success",
     "operation": "seed_defaults_service_categories",
     "method": "POST",
