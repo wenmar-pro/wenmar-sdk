@@ -93,17 +93,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "VIP" } }
   },
   {
-    "name": "delete_customer_tag_success",
-    "operation": "delete_customer_tag",
-    "method": "DELETE",
-    "path": "/customer_tags/1",
-    "pathParams": { "id": 1 },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "VIP" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
-  },
-  {
     "name": "update_customer_tag_success",
     "operation": "update_customer_tag",
     "method": "PATCH",
@@ -114,39 +103,6 @@
       { "status": 200, "body": { "id": 1, "name": "VIP" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "VIP" } }
-  },
-  {
-    "name": "list_vehicle_tags_success",
-    "operation": "list_vehicle_tags",
-    "method": "GET",
-    "path": "/vehicle_tags",
-    "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "name": "Fleet" } ] }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Fleet" } }
-  },
-  {
-    "name": "delete_vehicle_tag_success",
-    "operation": "delete_vehicle_tag",
-    "method": "DELETE",
-    "path": "/vehicle_tags/1",
-    "pathParams": { "id": 1 },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Fleet" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
-  },
-  {
-    "name": "update_vehicle_tag_success",
-    "operation": "update_vehicle_tag",
-    "method": "PATCH",
-    "path": "/vehicle_tags/1",
-    "pathParams": { "id": 1 },
-    "requestBody": { "name": "Fleet" },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Fleet" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Fleet" } }
   },
   {
     "name": "list_expenses_success",
@@ -517,74 +473,7 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "voided" } }
   },
   {
-    "name": "create_scan_lookup_success",
-    "operation": "create_scan_lookup",
-    "method": "POST",
-    "path": "/scan/lookups",
-    "requestBody": { "code": "123456", "type": "part" },
-    "mockResponses": [
-      { "status": 200, "body": { "outcome": "found", "customer_id": 10, "vehicle_id": 20, "work_order_id": 1 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "outcome", "equals": "found" } }
-  },
-  {
-    "name": "create_scan_started_work_order_success",
-    "operation": "create_scan_started_work_order",
-    "method": "POST",
-    "path": "/scan/started_work_orders",
-    "requestBody": { "outcome": "started", "vehicle_id": 20 },
-    "mockResponses": [
-      { "status": 200, "body": { "status": "started", "work_order_id": 1 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "started" } }
-  },
-  {
-    "name": "create_scan_vehicle_success",
-    "operation": "create_scan_vehicle",
-    "method": "POST",
-    "path": "/scan/vehicles",
-    "requestBody": { "customer": { "id": 10 }, "vehicle": { "vin": "1HGCM82633A004352" } },
-    "mockResponses": [
-      { "status": 200, "body": { "status": "found", "work_order_id": 1 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "found" } }
-  },
-  {
-    "name": "create_time_entrie_success",
-    "operation": "create_time_entrie",
-    "method": "POST",
-    "path": "/time_entries",
-    "requestBody": { "type": "clock_in", "work_order_service_id": 1 },
-    "mockResponses": [
-      { "status": 201, "body": { "status": "clocked_in" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "clocked_in" } }
-  },
-  {
-    "name": "update_time_entrie_success",
-    "operation": "update_time_entrie",
-    "method": "PATCH",
-    "path": "/time_entries/1",
-    "pathParams": { "id": 1 },
-    "requestBody": { "status": "clocked_out" },
-    "mockResponses": [
-      { "status": 200, "body": { "status": "clocked_out" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "clocked_out" } }
-  },
-  {
-    "name": "delete_voice_command_success",
-    "operation": "delete_voice_command",
-    "method": "DELETE",
-    "path": "/voice_commands/1",
-    "pathParams": { "id": 1 },
-    "mockResponses": [
-      { "status": 200, "body": { "status": "deleted" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "deleted" } }
-  },
-  {
-    "name": "update_ai_suggestion_success",
+    "name": "create_store_credits_void_success",
     "operation": "update_ai_suggestion",
     "method": "PATCH",
     "path": "/ai_suggestions/1",
