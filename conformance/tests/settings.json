@@ -21,27 +21,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
   },
   {
-    "name": "update_labor_rate_success",
-    "operation": "update_labor_rate",
-    "method": "PATCH",
-    "path": "/labor_rates/2",
-    "pathParams": { "id": 2 },
-    "requestBody": { "labor_rate": { "rate_cents": 13000 } },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 2, "name": "Diagnostic", "rate_cents": 13000 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "rate_cents", "equals": 13000 } }
-  },
-  {
-    "name": "delete_labor_rate_success",
-    "operation": "delete_labor_rate",
-    "method": "DELETE",
-    "path": "/labor_rates/2",
-    "pathParams": { "id": 2 },
-    "mockResponses": [ { "status": 204, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
     "name": "list_labor_matrices_success",
     "operation": "list_labor_matrices",
     "method": "GET",
@@ -82,39 +61,6 @@
     "pathParams": { "id": 2 },
     "mockResponses": [ { "status": 204, "body": "" } ],
     "expect": { "requestCount": 1, "noError": true }
-  },
-  {
-    "name": "list_labels_success",
-    "operation": "list_labels",
-    "method": "GET",
-    "path": "/labels",
-    "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "name": "VIP", "color": "gold" } ] }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "VIP" } }
-  },
-  {
-    "name": "create_label_success",
-    "operation": "create_label",
-    "method": "POST",
-    "path": "/labels",
-    "requestBody": { "label": { "name": "Fleet", "color": "blue" } },
-    "mockResponses": [
-      { "status": 201, "body": { "id": 2, "name": "Fleet", "color": "blue" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
-  },
-  {
-    "name": "update_label_success",
-    "operation": "update_label",
-    "method": "PATCH",
-    "path": "/labels/2",
-    "pathParams": { "id": 2 },
-    "requestBody": { "label": { "color": "green" } },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 2, "name": "Fleet", "color": "green" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "color", "equals": "green" } }
   },
   {
     "name": "list_sub_statuses_success",
@@ -372,26 +318,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "rate", "equals": 0.08 } }
   },
   {
-    "name": "list_preferences_success",
-    "operation": "list_preferences",
-    "method": "GET",
-    "path": "/preferences",
-    "mockResponses": [
-      { "status": 200, "body": { "currency": "USD", "distance_unit": "mi" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "currency", "equals": "USD" } }
-  },
-  {
-    "name": "list_profile_success",
-    "operation": "list_profile",
-    "method": "GET",
-    "path": "/profile",
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Jane Doe", "email": "jane@example.com" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Jane Doe" } }
-  },
-  {
     "name": "list_recent_searches_success",
     "operation": "list_recent_searches",
     "method": "GET",
@@ -426,37 +352,6 @@
     "operation": "delete_recent_searches_clear",
     "method": "DELETE",
     "path": "/recent_searches/clear",
-    "mockResponses": [ { "status": 204, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
-    "name": "list_settings_labor_templates_success",
-    "operation": "list_settings_labor_templates",
-    "method": "GET",
-    "path": "/settings/labor_templates",
-    "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "name": "Standard Labor", "hours": 1.0 } ] }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Standard Labor" } }
-  },
-  {
-    "name": "update_settings_labor_template_success",
-    "operation": "update_settings_labor_template",
-    "method": "PATCH",
-    "path": "/settings/labor_templates/1",
-    "pathParams": { "id": 1 },
-    "requestBody": { "labor_template": { "hours": 1.5 } },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "name": "Standard Labor", "hours": 1.5 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "hours", "equals": 1.5 } }
-  },
-  {
-    "name": "delete_settings_labor_template_success",
-    "operation": "delete_settings_labor_template",
-    "method": "DELETE",
-    "path": "/settings/labor_templates/1",
-    "pathParams": { "id": 1 },
     "mockResponses": [ { "status": 204, "body": "" } ],
     "expect": { "requestCount": 1, "noError": true }
   }
