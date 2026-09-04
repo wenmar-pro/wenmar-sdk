@@ -1,0 +1,83 @@
+[
+  {
+    "name": "update_location_success",
+    "operation": "update_location",
+    "method": "PATCH",
+    "path": "/locations/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "location": { "name": "Updated Location" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Updated Location" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Updated Location" } }
+  },
+  {
+    "name": "list_locations_business_profile_success",
+    "operation": "list_locations_business_profile",
+    "method": "GET",
+    "path": "/locations/1/business_profile",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "name": "Main Shop", "description": "Auto repair" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Main Shop" } }
+  },
+  {
+    "name": "update_locations_business_profile_success",
+    "operation": "update_locations_business_profile",
+    "method": "PATCH",
+    "path": "/locations/1/business_profile",
+    "pathParams": { "id": 1 },
+    "requestBody": { "business_profile": { "description": "Full service auto repair" } },
+    "mockResponses": [
+      { "status": 200, "body": { "name": "Main Shop", "description": "Full service auto repair" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "description", "equals": "Full service auto repair" } }
+  },
+  {
+    "name": "list_locations_operations_success",
+    "operation": "list_locations_operations",
+    "method": "GET",
+    "path": "/locations/1/operations",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "hours": { "monday": { "open": "08:00", "close": "17:00" } } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "hours.monday.open", "equals": "08:00" } }
+  },
+  {
+    "name": "update_locations_operations_success",
+    "operation": "update_locations_operations",
+    "method": "PATCH",
+    "path": "/locations/1/operations",
+    "pathParams": { "id": 1 },
+    "requestBody": { "operations": { "hours": { "monday": { "open": "09:00", "close": "17:00" } } } },
+    "mockResponses": [
+      { "status": 200, "body": { "hours": { "monday": { "open": "09:00", "close": "17:00" } } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "hours.monday.open", "equals": "09:00" } }
+  },
+  {
+    "name": "list_locations_schedule_config_success",
+    "operation": "list_locations_schedule_config",
+    "method": "GET",
+    "path": "/locations/1/schedule_config",
+    "pathParams": { "location_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "enabled": true, "interval_minutes": 30 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "enabled", "equals": true } }
+  },
+  {
+    "name": "update_locations_schedule_config_success",
+    "operation": "update_locations_schedule_config",
+    "method": "PATCH",
+    "path": "/locations/1/schedule_config",
+    "pathParams": { "location_id": 1 },
+    "requestBody": { "schedule_config": { "interval_minutes": 15 } },
+    "mockResponses": [
+      { "status": 200, "body": { "enabled": true, "interval_minutes": 15 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "interval_minutes", "equals": 15 } }
+  }
+]
