@@ -1,0 +1,35 @@
+[
+  {
+    "name": "list_labor_templates_success",
+    "operation": "list_labor_templates",
+    "method": "GET",
+    "path": "/labor_templates",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "name": "Standard Oil Change" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Standard Oil Change" } }
+  },
+  {
+    "name": "update_labor_template_success",
+    "operation": "update_labor_template",
+    "method": "PATCH",
+    "path": "/labor_templates/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "labor_template": { "name": "Updated Template" } },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "Updated Template" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Updated Template" } }
+  },
+  {
+    "name": "delete_labor_template_success",
+    "operation": "delete_labor_template",
+    "method": "DELETE",
+    "path": "/labor_templates/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204, "body": "" }
+    ],
+    "expect": { "requestCount": 1, "noError": true }
+  }
+]
