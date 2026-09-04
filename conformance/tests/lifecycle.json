@@ -1,0 +1,200 @@
+[
+  {
+    "name": "show_customer_tag_success",
+    "operation": "show_customer_tag",
+    "method": "GET",
+    "path": "/customer_tags/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "VIP" } }
+  },
+  {
+    "name": "update_customer_tags_archive_success",
+    "operation": "update_customer_tags_archive",
+    "method": "PATCH",
+    "path": "/customer_tags/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP", "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_customer_tags_restore_success",
+    "operation": "update_customer_tags_restore",
+    "method": "PATCH",
+    "path": "/customer_tags/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP", "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "update_customer_tags_trash_success",
+    "operation": "update_customer_tags_trash",
+    "method": "PATCH",
+    "path": "/customer_tags/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "name": "VIP", "trashed_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "archive_inspection_success",
+    "operation": "archive_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "restore_inspection_success",
+    "operation": "restore_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "trash_inspection_success",
+    "operation": "trash_inspection",
+    "method": "PATCH",
+    "path": "/inspections/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "trashed_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "archive_service_category_success",
+    "operation": "archive_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "restore_service_category_success",
+    "operation": "restore_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "trash_service_category_success",
+    "operation": "trash_service_category",
+    "method": "PATCH",
+    "path": "/service_categories/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "trashed_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "archive_labor_rate_success",
+    "operation": "archive_labor_rate",
+    "method": "PATCH",
+    "path": "/labor_rates/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "restore_labor_rate_success",
+    "operation": "restore_labor_rate",
+    "method": "PATCH",
+    "path": "/labor_rates/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "trash_labor_rate_success",
+    "operation": "trash_labor_rate",
+    "method": "PATCH",
+    "path": "/labor_rates/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "trashed_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "archive_package_success",
+    "operation": "archive_package",
+    "method": "PATCH",
+    "path": "/packages/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "restore_package_success",
+    "operation": "restore_package",
+    "method": "PATCH",
+    "path": "/packages/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "trash_package_success",
+    "operation": "trash_package",
+    "method": "PATCH",
+    "path": "/packages/1/trash",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "trashed_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "archive_vendor_success",
+    "operation": "archive_vendor",
+    "method": "PATCH",
+    "path": "/vendors/1/archive",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": "2026-09-03T00:00:00Z" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  },
+  {
+    "name": "restore_vendor_success",
+    "operation": "restore_vendor",
+    "method": "PATCH",
+    "path": "/vendors/1/restore",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "archived_at": null } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
+  }
+]
