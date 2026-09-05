@@ -146,6 +146,50 @@ def build_typed_list_bodies
   OPS.map { |op| build_typed_list(op) }.join("\n")
 end
 
+# Operations that return binary content (no JSON200 field in the response).
+# These get a Download* method that returns *DownloadResult with a
+# streaming body instead of buffering into []byte.
+BINARY_DOWNLOAD_OPS = [
+  "list_customers_export_download",
+  "list_expenses_export_download",
+  "list_tire_storage_slots_export_download",
+  "list_tires_export_download",
+]
+
+def build_download(op)
+  return "" unless BINARY_DOWNLOAD_OPS.include?(op["id"])
+
+  m = pascal(op["id"])
+  download_name = m.sub(/\AList/, "Download").sub(/Download\z/, "")
+  params = ["ctx context.Context"]
+  params << path_param_signature(op) unless op["pathParams"].empty?
+  params << "params *#{param_struct(op)}" if has_query_params?(op)
+
+  path_params = op["pathParams"].map { |p| go_param_name(p) }
+
+  if path_params.empty?
+    <<~GO
+      // #{download_name} downloads #{op["id"]} as a streaming body.
+      // The caller must close result.Body when done.
+      func (c *Client) #{download_name}(#{params.join(", ")}) (*DownloadResult, error) {
+      	return c.downloadPath(ctx, "#{op["path"]}")
+      }
+    GO
+  else
+    <<~GO
+      // #{download_name} downloads #{op["id"]} as a streaming body.
+      // The caller must close result.Body when done.
+      func (c *Client) #{download_name}(#{params.join(", ")}) (*DownloadResult, error) {
+      	return c.downloadPathWithParams(ctx, "#{op["path"]}", #{path_params.join(", ")})
+      }
+    GO
+  end
+end
+
+def build_download_bodies
+  OPS.map { |op| build_download(op) }.join("\n")
+end
+
 # Build GetAll helpers for paginated list operations. They collect items from
 # the first page plus every Link-header page, capped via GetAllOptions
 # (default 1000 items).
@@ -236,6 +280,6 @@ models_header = <<~'GO'
 	import gen "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 GO
 
-File.write("go/wenmar/operations.gen.go", operations_header + "\n" + build_operation_bodies + "\n" + build_typed_list_bodies + "\n" + build_get_all_bodies)
+File.write("go/wenmar/operations.gen.go", operations_header + "\n" + build_operation_bodies + "\n" + build_typed_list_bodies + "\n" + build_get_all_bodies + "\n" + build_download_bodies)
 File.write("go/wenmar/models.gen.go", models_header + "\n" + build_models + "\n")
 puts "Wrote go/wenmar/operations.gen.go and go/wenmar/models.gen.go (#{OPS.size} operations)"
