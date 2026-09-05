@@ -69,7 +69,7 @@ def build_method(op)
           # Lists #{m} resources (paginated).
           # @return [Wenmar::Paginator]
           def #{m}(#{sig.empty? ? "" : sig})
-            get("#{substituted}"#{query.empty? && kw.empty? ? "" : ", " + body_args(op)})
+            get("#{substituted}")
           end
         RUBY
         if base
@@ -192,11 +192,6 @@ def build_method(op)
       end
     RUBY
   end
-end
-
-def body_args(op, force_path: false)
-  return "" if op["queryParams"].empty? && op["requestShape"].nil?
-  ""
 end
 
 content = +<<~'RUBY'

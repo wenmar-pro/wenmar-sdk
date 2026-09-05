@@ -39,7 +39,7 @@ func (p *StaticTokenProvider) Token(context.Context) (string, error) {
 	return p.token, nil
 }
 
-// Client is the hand-written SDK entry point. All 76 operations are generated
+// Client is the hand-written SDK entry point. Operations are generated
 // into operations.gen.go and share the core request pipeline defined here.
 type Client struct {
 	BaseURL  string
