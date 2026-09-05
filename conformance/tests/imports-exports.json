@@ -1,0 +1,234 @@
+[
+  {
+    "name": "create_expenses_export",
+    "operation": "create_expenses_export",
+    "method": "POST",
+    "path": "/expenses/export",
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "status": "pending" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_expenses_export_download",
+    "operation": "list_expenses_export_download",
+    "method": "GET",
+    "path": "/expenses/export/1/download",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "text/csv" }, "body": "id,amount\n1,100\n" }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_expenses_imports_template",
+    "operation": "list_expenses_imports_template",
+    "method": "GET",
+    "path": "/expenses/imports/template",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "text/csv" }, "body": "amount,category\n" }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_expenses_imports_commit",
+    "operation": "create_expenses_imports_commit",
+    "method": "POST",
+    "path": "/expenses/imports/commit",
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_expenses_imports_validate",
+    "operation": "create_expenses_imports_validate",
+    "method": "POST",
+    "path": "/expenses/imports/validate",
+    "requestBody": { "file": "amount,category\n100,parts\n" },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "valid": true } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_expenses_data_transfer",
+    "operation": "list_expenses_data_transfer",
+    "method": "GET",
+    "path": "/expenses/data_transfer",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "resource": "expenses", "export_url": "/expenses/export", "template_url": "/expenses/imports/template", "validate_url": "/expenses/imports/validate" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "show_expense",
+    "operation": "show_expense",
+    "method": "GET",
+    "path": "/expenses/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "amount": "100.00" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_tires_export",
+    "operation": "create_tires_export",
+    "method": "POST",
+    "path": "/tires/export",
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "status": "pending" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_tires_export_download",
+    "operation": "list_tires_export_download",
+    "method": "GET",
+    "path": "/tires/export/1/download",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "text/csv" }, "body": "id,brand\n1,Michelin\n" }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_tires_imports_template",
+    "operation": "list_tires_imports_template",
+    "method": "GET",
+    "path": "/tires/imports/template",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "text/csv" }, "body": "brand,size\n" }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_tires_imports_commit",
+    "operation": "create_tires_imports_commit",
+    "method": "POST",
+    "path": "/tires/imports/commit",
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_tires_imports_validate",
+    "operation": "create_tires_imports_validate",
+    "method": "POST",
+    "path": "/tires/imports/validate",
+    "requestBody": { "file": "brand,size\nMichelin,205/55R16\n" },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "valid": true } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_tire_event",
+    "operation": "create_tire_event",
+    "method": "POST",
+    "path": "/tire_events",
+    "requestBody": { "tire_event": { "tire_id": 1 } },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_tire_events",
+    "operation": "list_tire_events",
+    "method": "GET",
+    "path": "/tire_events",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1 } ] }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "show_tire_event",
+    "operation": "show_tire_event",
+    "method": "GET",
+    "path": "/tire_events/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_tire_storage_slots_export",
+    "operation": "create_tire_storage_slots_export",
+    "method": "POST",
+    "path": "/tire_storage_slots/export",
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_tire_storage_slots_export_download",
+    "operation": "list_tire_storage_slots_export_download",
+    "method": "GET",
+    "path": "/tire_storage_slots/export/1/download",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "text/csv" }, "body": "id,slot\n1,A1\n" }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "delete_tire_storage_slot",
+    "operation": "delete_tire_storage_slot",
+    "method": "DELETE",
+    "path": "/tire_storage_slots/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204 }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_tire_storage_slot",
+    "operation": "update_tire_storage_slot",
+    "method": "PATCH",
+    "path": "/tire_storage_slots/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "tire_storage_slot": { "status": "occupied" } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_counter_sales_reopen",
+    "operation": "update_counter_sales_reopen",
+    "method": "PATCH",
+    "path": "/counter_sales/1/reopen",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_account_capabilities",
+    "operation": "list_account_capabilities",
+    "method": "GET",
+    "path": "/account/capabilities",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "capabilities": { "appointments": true, "expenses": true }, "limits": { "max_locations": 1, "max_users": 5 }, "tier": "pro" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_drivers",
+    "operation": "list_drivers",
+    "method": "GET",
+    "path": "/drivers",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1, "name": "Jane" } ] }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "name": "sends_authorization_header",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": [ { "id": 1, "full_name": "Jane" } ]
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 1,
+      "requestHeaders": {
+        "Authorization": "Bearer test-token"
+      }
+    }
+  },
+  {
+    "name": "sends_accept_json_header",
+    "operation": "show_customer",
+    "method": "GET",
+    "path": "/customers/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": { "id": 1, "full_name": "Jane" }
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 1,
+      "requestHeaders": {
+        "Accept": "application/json"
+      }
+    }
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "update_locations_close_requirements",
+    "operation": "update_locations_close_requirements",
+    "method": "PATCH",
+    "path": "/locations/42/close_requirements",
+    "pathParams": { "location_id": "42" },
+    "requestBody": { "close_requirements": { "require_inspection": true } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 42 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_locations_documents",
+    "operation": "update_locations_documents",
+    "method": "PATCH",
+    "path": "/locations/42/documents",
+    "pathParams": { "location_id": "42" },
+    "requestBody": { "location": { "name": "form.pdf" } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 42 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_locations_lead_source_requirements",
+    "operation": "update_locations_lead_source_requirements",
+    "method": "PATCH",
+    "path": "/locations/42/lead_source_requirements",
+    "pathParams": { "location_id": "42" },
+    "requestBody": { "lead_source_requirements": { "required": true } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 42 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_locations_reminders",
+    "operation": "update_locations_reminders",
+    "method": "PATCH",
+    "path": "/locations/42/reminders",
+    "pathParams": { "location_id": "42" },
+    "requestBody": { "location": { "enabled": true } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 42 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  }
+]

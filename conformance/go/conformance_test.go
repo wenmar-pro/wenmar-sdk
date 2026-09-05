@@ -44,6 +44,7 @@ type Expectation struct {
 	FieldErrors             map[string][]string `json:"fieldErrors"`
 	AssertNoOutboundRequest bool           `json:"assertNoOutboundRequest"`
 	ResponseBody            *BodyAssertion `json:"responseBody"`
+	RequestHeaders          map[string]string `json:"requestHeaders"`
 }
 
 type BodyAssertion struct {
@@ -65,9 +66,11 @@ func runCase(t *testing.T, tc TestCase) {
 	requestCount := 0
 	responseIndex := 0
 	var serverURL string
+	var lastRequestHeaders http.Header
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		requestCount++
+		lastRequestHeaders = r.Header.Clone()
 		idx := responseIndex
 		responseIndex++
 
@@ -150,6 +153,14 @@ func runCase(t *testing.T, tc TestCase) {
 	if tc.Expect.AssertNoOutboundRequest {
 		if requestCount > len(tc.MockResponses) {
 			t.Errorf("expected no outbound request beyond mocks, got %d calls", requestCount)
+		}
+	}
+
+	if tc.Expect.RequestHeaders != nil {
+		for k, v := range tc.Expect.RequestHeaders {
+			if lastRequestHeaders.Get(k) != v {
+				t.Errorf("expected header %s=%q, got %q", k, v, lastRequestHeaders.Get(k))
+			}
 		}
 	}
 }

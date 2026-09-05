@@ -1,0 +1,73 @@
+[
+  {
+    "name": "retry_503_then_200",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      { "status": 503, "body": { "error": { "code": "service_unavailable", "message": "temporarily unavailable", "field_errors": {} } } },
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1 } ] }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 2
+    }
+  },
+  {
+    "name": "retry_502_then_200",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      { "status": 502, "body": "" },
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1 } ] }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 2
+    }
+  },
+  {
+    "name": "retry_504_then_200",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      { "status": 504, "body": "" },
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1 } ] }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 2
+    }
+  },
+  {
+    "name": "retry_429_honors_retry_after_header",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      { "status": 429, "headers": { "Retry-After": "0" }, "body": { "error": { "code": "rate_limited", "message": "slow down", "field_errors": {} } } },
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1 } ] }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 2
+    }
+  },
+  {
+    "name": "no_retry_post_on_503",
+    "operation": "create_customer",
+    "method": "POST",
+    "path": "/customers",
+    "requestBody": { "customer": { "first_name": "Jane" } },
+    "mockResponses": [
+      { "status": 503, "body": { "error": { "code": "service_unavailable", "message": "down", "field_errors": {} } } }
+    ],
+    "expect": {
+      "errorCode": "service_unavailable",
+      "errorStatus": 503,
+      "requestCount": 1
+    }
+  }
+]

@@ -192,7 +192,9 @@ def build_ruby_entry(key, manifest_id, variant = :default)
 
   # Request body keyword args.
   body_kw = []
-  if shape && shape["wrapper"]
+  if op["requestContentType"] && op["requestContentType"] != "application/json"
+    body_kw << "file: args[\"requestBody\"][\"file\"]"
+  elsif shape && shape["wrapper"]
     body_kw << "#{shape["wrapper"]}: args[\"requestBody\"][#{shape["wrapper"].inspect}]"
   elsif shape && shape["flat"]
     shape["flat"].each { |f| body_kw << "#{f}: args[\"requestBody\"][#{f.inspect}]" }

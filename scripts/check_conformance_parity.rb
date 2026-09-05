@@ -93,4 +93,20 @@ unless go_extra.empty? && ruby_extra.empty?
   fail!("dispatch files contain operations not in the manifest: go=[#{go_extra.join(', ')}] ruby=[#{ruby_extra.join(', ')}]")
 end
 
+# Coverage check: warn about manifest operations with no test scenario.
+# Resolve test operations to manifest operations (direct or alias) so the
+# comparison is apples-to-apples.
+resolved_test_ops = test_ops.uniq.map { |op| TEST_ALIASES[op] || op }
+untested = manifest.reject { |op| resolved_test_ops.include?(op) }
+if untested.any?
+  puts "WARNING: #{untested.size} operations have no conformance test scenario:"
+  untested.sort.each { |op| puts "  - #{op}" }
+  puts "To make this a hard failure, set WENMAR_STRICT_COVERAGE=1"
+  if ENV["WENMAR_STRICT_COVERAGE"] == "1"
+    exit 1
+  end
+else
+  puts "All #{manifest.size} operations have at least one test scenario."
+end
+
 puts "OK: manifest=#{manifest.size} test-cases=#{test_ops.size} go-dispatch=#{go_ops.size} ruby-dispatch=#{ruby_ops.size} parity holds"

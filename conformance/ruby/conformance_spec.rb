@@ -39,7 +39,8 @@ module Conformance
 
     def run_case(tc)
       WebMock.reset!
-      stub_responses(tc)
+      captured_headers = {}
+      stub_responses(tc, captured_headers)
       client = Wenmar::Client.new(token: "test-token", base_url: BASE_URL)
 
       fn = DISPATCH[tc["operation"]]
@@ -72,6 +73,7 @@ module Conformance
 
       assert_request_count(tc) if tc.dig("expect", "requestCount")
       assert_no_outbound_request(tc) if tc.dig("expect", "assertNoOutboundRequest")
+      assert_request_headers(tc, captured_headers) if tc.dig("expect", "requestHeaders")
     end
 
     # buildArgs is used by the generated dispatch lambdas to reconstruct the
@@ -86,7 +88,7 @@ module Conformance
       assert_equal expected, actual, "[#{tc["name"]}] expected no outbound request beyond mocks (got #{actual} calls)"
     end
 
-    def stub_responses(tc)
+    def stub_responses(tc, captured_headers = nil)
       responses = tc["mockResponses"].map do |resp|
         headers = { "Content-Type" => "application/json" }
         (resp["headers"] || {}).each do |k, v|
@@ -96,14 +98,25 @@ module Conformance
         { status: resp["status"], body: body, headers: headers }
       end
 
-      stub_request(tc["method"].downcase.to_sym, /#{Regexp.escape(BASE_URL)}#{Regexp.escape(tc["path"])}(\?.*)?\z/)
+      stub = stub_request(tc["method"].downcase.to_sym, /#{Regexp.escape(BASE_URL)}#{Regexp.escape(tc["path"])}(\?.*)?\z/)
         .to_return(responses)
+      if captured_headers
+        stub.with { |request| captured_headers.merge!(request.headers); true }
+      end
     end
 
     def assert_request_count(tc)
       expected = tc.dig("expect", "requestCount")
       actual = WebMock::RequestRegistry.instance.requested_signatures.hash.values.sum
       assert_equal expected, actual, "[#{tc["name"]}] expected #{expected} requests, got #{actual}"
+    end
+
+    def assert_request_headers(tc, captured_headers)
+      expected = tc.dig("expect", "requestHeaders")
+      expected.each do |k, v|
+        actual = captured_headers[k] || captured_headers[k.to_s]
+        assert_equal v, actual, "[#{tc["name"]}] expected header #{k}=#{v}, got #{actual}"
+      end
     end
 
     def assert_body_path(result, assertion, name)

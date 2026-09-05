@@ -1,0 +1,34 @@
+[
+  {
+    "name": "create_conversation",
+    "operation": "create_conversation",
+    "method": "POST",
+    "path": "/conversations",
+    "requestBody": { "conversation": { "customer_id": 1 } },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 1 } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_messages",
+    "operation": "list_messages",
+    "method": "GET",
+    "path": "/messages",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1, "body": "hello" } ] }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "show_message",
+    "operation": "show_message",
+    "method": "GET",
+    "path": "/messages/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "body": "hello" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  }
+]

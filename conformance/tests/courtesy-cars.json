@@ -1,0 +1,68 @@
+[
+  {
+    "name": "list_courtesy_cars",
+    "operation": "list_courtesy_cars",
+    "method": "GET",
+    "path": "/courtesy_cars",
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": [ { "id": 1, "make": "Toyota" } ] }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "show_courtesy_car",
+    "operation": "show_courtesy_car",
+    "method": "GET",
+    "path": "/courtesy_cars/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "make": "Toyota" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "create_courtesy_car",
+    "operation": "create_courtesy_car",
+    "method": "POST",
+    "path": "/courtesy_cars",
+    "requestBody": { "vehicle": { "make": "Honda" } },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 2, "make": "Honda" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "update_courtesy_car",
+    "operation": "update_courtesy_car",
+    "method": "PATCH",
+    "path": "/courtesy_cars/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "vehicle": { "make": "Subaru" } },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 1, "make": "Subaru" } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "delete_courtesy_car",
+    "operation": "delete_courtesy_car",
+    "method": "DELETE",
+    "path": "/courtesy_cars/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 204 }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "list_locations_courtesy_cars",
+    "operation": "list_locations_courtesy_cars",
+    "method": "GET",
+    "path": "/locations/42/courtesy_cars",
+    "pathParams": { "location_id": "42" },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "courtesy_cars": { "id": 1, "courtesy_car_fee_enabled": true } } }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  }
+]
