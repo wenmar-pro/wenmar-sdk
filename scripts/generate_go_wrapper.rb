@@ -108,8 +108,18 @@ end
 def build_get_all(op)
   return "" unless op["paginated"]
   return "" unless op["responseSchema"]
+  return "" unless op["id"].start_with?("list_")
 
   item = op["responseSchema"] # wenmar-alias of the item type
+  # Guard: if the operation path is a sub-resource (deeper than the
+  # tag's root resource), the responseSchema may not match the parent
+  # resource type. Warn but don't block — the manifest should be fixed.
+  path_segments = op["path"].split("/").reject(&:empty?)
+  tag = op["tag"]
+  if path_segments.size > 2 && item == pascal(tag.sub(/s\z/, ""))
+    $stderr.puts "WARNING: #{op["id"]} has responseSchema=#{item} but path has #{path_segments.size} segments — verify this is correct"
+  end
+
   list_method = pascal(op["id"])
   base = list_method.sub(/\AList/, "")
   params = ["ctx context.Context"]

@@ -6588,15 +6588,6 @@ func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParam
 
 
 
-// GetAllLookupCustomer auto-paginates lookup_customer, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllLookupCustomer(ctx context.Context, params *LookupCustomerParams) ([]Customer, error) {
-	first, err := c.LookupCustomer(ctx, params)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
 // GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header up to
 // 1000 items by default.
@@ -6881,15 +6872,6 @@ func (c *Client) GetAllServiceCategories(ctx context.Context) ([]ServiceCategory
 
 
 
-// GetAllStatementsPayments auto-paginates list_statements_payments, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllStatementsPayments(ctx context.Context, statementId int) ([]Statement, error) {
-	first, err := c.ListStatementsPayments(ctx, statementId)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[Statement](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
 
 
@@ -6950,15 +6932,6 @@ func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams)
 
 
 
-// GetAllLookupVehicle auto-paginates lookup_vehicle, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllLookupVehicle(ctx context.Context, params *LookupVehicleParams) ([]Vehicle, error) {
-	first, err := c.LookupVehicle(ctx, params)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
 
 
@@ -7039,15 +7012,6 @@ func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersPar
 
 
 
-// GetAllWorkOrdersConcerns auto-paginates list_work_orders_concerns, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrdersConcerns(ctx context.Context, workOrderId int) ([]WorkOrder, error) {
-	first, err := c.ListWorkOrdersConcerns(ctx, workOrderId)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
 
 
@@ -7085,44 +7049,8 @@ func (c *Client) GetAllWorkOrdersConcerns(ctx context.Context, workOrderId int) 
 
 
 
-// GetAllWorkOrdersSummaryActivity auto-paginates list_work_orders_summary_activity, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrdersSummaryActivity(ctx context.Context, workOrderId int, params *ListWorkOrdersSummaryActivityParams) ([]WorkOrder, error) {
-	first, err := c.ListWorkOrdersSummaryActivity(ctx, workOrderId, params)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
-// GetAllWorkOrdersSummaryAppointments auto-paginates list_work_orders_summary_appointments, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrdersSummaryAppointments(ctx context.Context, workOrderId int) ([]WorkOrder, error) {
-	first, err := c.ListWorkOrdersSummaryAppointments(ctx, workOrderId)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
-// GetAllWorkOrdersSummaryAuthorizationLogs auto-paginates list_work_orders_summary_authorization_logs, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrdersSummaryAuthorizationLogs(ctx context.Context, workOrderId int) ([]WorkOrder, error) {
-	first, err := c.ListWorkOrdersSummaryAuthorizationLogs(ctx, workOrderId)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
-// GetAllWorkOrdersSummaryVehicleHistory auto-paginates list_work_orders_summary_vehicle_history, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrdersSummaryVehicleHistory(ctx context.Context, workOrderId int) ([]WorkOrder, error) {
-	first, err := c.ListWorkOrdersSummaryVehicleHistory(ctx, workOrderId)
-	if err != nil {
-		return nil, err
-	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
-}
 
 

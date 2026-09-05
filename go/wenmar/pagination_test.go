@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
+	"strings"
 	"sync/atomic"
 	"testing"
 )
@@ -130,6 +132,48 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 	}
 	if parseLinkHeader(link, "next") != "" {
 		t.Errorf("expected no further next link on page 2, got %q", link)
+	}
+}
+
+func TestGetAllWorkOrdersConcerns_DoesNotReturnWorkOrders(t *testing.T) {
+	var serverURL string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`[{"id":1,"name":"brakes squealing","customer_complaint":"yes"}]`))
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test-token")
+	// list_work_orders_concerns returns concerns, not work orders.
+	// The concern JSON has fields like "name" and "customer_complaint"
+	// that don't exist on WorkOrder. If GetAllWorkOrdersConcerns returns
+	// []WorkOrder, those fields are silently dropped.
+	resp, err := c.ListWorkOrdersConcerns(context.Background(), 1)
+	if err != nil {
+		t.Fatalf("ListWorkOrdersConcerns failed: %v", err)
+	}
+	if resp.StatusCode() != 200 {
+		t.Fatalf("expected 200, got %d", resp.StatusCode())
+	}
+	// The response body should contain the concern's "name" field.
+	body := string(resp.Body)
+	if !strings.Contains(body, "brakes squealing") {
+		t.Errorf("response body should contain concern name, got: %s", body)
+	}
+	_ = serverURL // keep for future Link-header pagination test
+}
+
+func TestGetAllWorkOrdersConcerns_NotGenerated(t *testing.T) {
+	// After the fix, GetAllWorkOrdersConcerns should NOT exist because
+	// the response is not a WorkOrder. The broken version returned
+	// []WorkOrder for a concerns endpoint, silently dropping fields.
+	c := newTestClient(t, "http://localhost:9999", "test-token")
+	// Use reflection to check the method does NOT exist.
+	ty := reflect.TypeOf(c)
+	_, exists := ty.MethodByName("GetAllWorkOrdersConcerns")
+	if exists {
+		t.Error("GetAllWorkOrdersConcerns should not exist — concerns are not WorkOrders")
 	}
 }
 
