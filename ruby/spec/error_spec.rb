@@ -54,6 +54,30 @@ module Wenmar
       refute error.retryable?
     end
 
+    def test_from_response_empty_body_common_statuses
+      [401, 403, 404, 429, 500, 502, 503, 504, 507].each do |status|
+        response = Faraday::Response.new(
+          status: status,
+          response_headers: {},
+          body: ""
+        )
+        err = Wenmar::Error.from_response(response)
+        expected_codes = {
+          401 => "unauthorized",
+          403 => "forbidden",
+          404 => "not_found",
+          429 => "rate_limited",
+          500 => "internal_error",
+          502 => "bad_gateway",
+          503 => "service_unavailable",
+          504 => "gateway_timeout",
+          507 => "limit_exceeded"
+        }
+        assert_equal expected_codes[status], err.code,
+          "expected code #{expected_codes[status]} for status #{status}, got #{err.code}"
+      end
+    end
+
     def test_from_response_507
       response = Faraday::Response.new(
         status: 507,

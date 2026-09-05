@@ -103,11 +103,24 @@ func TestParseError_MalformedBody(t *testing.T) {
 	r := &http.Response{StatusCode: http.StatusInternalServerError, Body: resp.Result().Body}
 
 	apiErr := ParseError(r)
-	if apiErr.Code != "unknown" {
-		t.Errorf("expected code 'unknown' for malformed body, got '%s'", apiErr.Code)
+	if apiErr.Code != "internal_error" {
+		t.Errorf("expected code 'internal_error' for malformed 500 body, got '%s'", apiErr.Code)
 	}
 	if apiErr.StatusCode != http.StatusInternalServerError {
 		t.Errorf("expected status 500, got %d", apiErr.StatusCode)
+	}
+}
+
+func TestParseError_MalformedBodyUnmappedStatus(t *testing.T) {
+	body := `not json`
+	resp := httptest.NewRecorder()
+	resp.WriteHeader(http.StatusInternalServerError)
+	resp.Body.WriteString(body)
+	r := &http.Response{StatusCode: http.StatusTeapot, Body: resp.Result().Body}
+
+	apiErr := ParseError(r)
+	if apiErr.Code != "unknown" {
+		t.Errorf("expected code 'unknown' for unmapped status malformed body, got '%s'", apiErr.Code)
 	}
 }
 
@@ -187,6 +200,31 @@ func TestParseError_507LimitExceeded(t *testing.T) {
 	}
 	if apiErr.Retryable() {
 		t.Error("limit_exceeded must not be retryable")
+	}
+}
+
+func TestStatusFallbackCode_CommonStatuses(t *testing.T) {
+	tests := []struct {
+		status int
+		code   string
+	}{
+		{401, "unauthorized"},
+		{403, "forbidden"},
+		{404, "not_found"},
+		{429, "rate_limited"},
+		{507, "limit_exceeded"},
+		{500, "internal_error"},
+		{502, "bad_gateway"},
+		{503, "service_unavailable"},
+		{504, "gateway_timeout"},
+		{422, "validation_failed"},
+		{409, "conflict"},
+	}
+	for _, tt := range tests {
+		got := statusFallbackCode(tt.status)
+		if got != tt.code {
+			t.Errorf("statusFallbackCode(%d) = %q, want %q", tt.status, got, tt.code)
+		}
 	}
 }
 

@@ -15,9 +15,19 @@ module Wenmar
 
     def self.from_response(response)
       body = response.body
+      headers = response.respond_to?(:headers) ? (response.headers || {}) : {}
+
+      # Empty bodies can't be parsed; fall back to the status code so callers
+      # still get a meaningful error when the server omits the error envelope.
+      if body.nil? || (body.is_a?(String) && body.strip.empty?)
+        if (fallback = fallback_code_for_status(response.status))
+          return new(code: fallback, message: "HTTP #{response.status}", status: response.status, request_id: headers["X-Request-Id"])
+        end
+        return new(code: "unknown", message: "HTTP #{response.status} with empty body", status: response.status)
+      end
+
       body = JSON.parse(body) if body.is_a?(String)
       body = {} unless body.is_a?(Hash)
-      headers = response.respond_to?(:headers) ? (response.headers || {}) : {}
 
       if body["error"].is_a?(Hash)
         err = body["error"]
@@ -28,8 +38,8 @@ module Wenmar
           status: response.status,
           request_id: headers["X-Request-Id"]
         )
-      elsif response.status == 507
-        new(code: "limit_exceeded", message: "storage limit exceeded", status: response.status)
+      elsif (fallback = fallback_code_for_status(response.status))
+        new(code: fallback, message: "HTTP #{response.status}", status: response.status, request_id: headers["X-Request-Id"])
       else
         new(code: "unknown", message: body.to_s, status: response.status)
       end
@@ -37,8 +47,23 @@ module Wenmar
       new(code: "unknown", message: "Malformed error response", status: response.status)
     end
 
-    def self.field_errors_map(list)
-      case list
+    def self.fallback_code_for_status(status)
+      {
+        401 => "unauthorized",
+        403 => "forbidden",
+        404 => "not_found",
+        409 => "conflict",
+        422 => "validation_failed",
+        429 => "rate_limited",
+        500 => "internal_error",
+        502 => "bad_gateway",
+        503 => "service_unavailable",
+        504 => "gateway_timeout",
+        507 => "limit_exceeded"
+      }[status]
+    end
+
+    def self.field_errors_map(list)      case list
       when Hash
         list
       when Array

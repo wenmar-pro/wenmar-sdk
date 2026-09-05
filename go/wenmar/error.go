@@ -99,6 +99,26 @@ func ParseErrorBodyWithRequestAndID(body []byte, statusCode int, method, path, r
 // the server returns no body.
 func statusFallbackCode(statusCode int) string {
 	switch statusCode {
+	case 401:
+		return "unauthorized"
+	case 403:
+		return "forbidden"
+	case 404:
+		return "not_found"
+	case 409:
+		return "conflict"
+	case 422:
+		return "validation_failed"
+	case 429:
+		return "rate_limited"
+	case 500:
+		return "internal_error"
+	case 502:
+		return "bad_gateway"
+	case 503:
+		return "service_unavailable"
+	case 504:
+		return "gateway_timeout"
 	case 507:
 		return "limit_exceeded"
 	default:
