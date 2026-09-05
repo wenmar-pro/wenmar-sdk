@@ -110,6 +110,43 @@ func extractPaginationMeta(resp *http.Response) (PaginationMeta, string) {
 	return meta, nextURL
 }
 
+// newListResultFromResponse builds a typed ListResult from a raw response
+// body and headers. It is the bridge between the oapi-codegen response
+// envelope and the typed pagination API.
+func newListResultFromResponse[T any](body []byte, headers http.Header, c *Client) *ListResult[T] {
+	items, err := parseListResponse[T](body)
+	if err != nil {
+		return &ListResult[T]{Items: nil, Meta: PaginationMeta{}}
+	}
+	meta, nextURL := extractPaginationMetaFromHeaders(headers)
+	result := &ListResult[T]{
+		Items: items,
+		Meta:  meta,
+	}
+	if nextURL != "" {
+		nextURLCopy := nextURL
+		result.Next = func(ctx context.Context) (*ListResult[T], error) {
+			return c.fetchNextPage[T](ctx, nextURLCopy)
+		}
+	}
+	return result
+}
+
+// extractPaginationMetaFromHeaders reads X-Total-Count, X-Per-Page, and the
+// Link header from a raw http.Header.
+func extractPaginationMetaFromHeaders(headers http.Header) (PaginationMeta, string) {
+	meta := PaginationMeta{}
+	if v := headers.Get("X-Total-Count"); v != "" {
+		meta.TotalCount, _ = strconv.Atoi(v)
+	}
+	if v := headers.Get("X-Per-Page"); v != "" {
+		meta.PerPage, _ = strconv.Atoi(v)
+	}
+	nextURL := parseLinkHeader(headers.Get("Link"), "next")
+	meta.HasMore = nextURL != ""
+	return meta, nextURL
+}
+
 // fetchNextPage fetches the next page (same-origin validated by fetchURL)
 // and decodes it into a typed ListResult.
 func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListResult[T], error) {

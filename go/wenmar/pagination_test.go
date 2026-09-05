@@ -35,6 +35,38 @@ func TestParseLinkHeader_Empty(t *testing.T) {
 	}
 }
 
+func TestNewListResultFromResponse_ExtractsItemsAndMeta(t *testing.T) {
+	headers := make(http.Header)
+	headers.Set("Link", "<http://api.example.com/customers?page=2>; rel=\"next\"")
+	headers.Set("X-Total-Count", "42")
+	headers.Set("X-Per-Page", "25")
+	headers.Set("Content-Type", "application/json")
+
+	body := []byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`)
+
+	client := newTestClient(t, "https://api.example.com", "test")
+	result := newListResultFromResponse[Customer](body, headers, client)
+
+	if len(result.Items) != 1 {
+		t.Fatalf("expected 1 item, got %d", len(result.Items))
+	}
+	if result.Items[0].Id != 1 {
+		t.Errorf("expected item id=1, got %d", result.Items[0].Id)
+	}
+	if !result.Meta.HasMore {
+		t.Error("expected HasMore=true")
+	}
+	if result.Meta.TotalCount != 42 {
+		t.Errorf("expected TotalCount=42, got %d", result.Meta.TotalCount)
+	}
+	if result.Meta.PerPage != 25 {
+		t.Errorf("expected PerPage=25, got %d", result.Meta.PerPage)
+	}
+	if !result.HasNext() {
+		t.Error("expected HasNext()=true")
+	}
+}
+
 func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	var serverURL string
 	var calls int32
