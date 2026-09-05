@@ -205,7 +205,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_campaigns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCampaigns(ctx)
+	resp, err := c.ListCampaignsRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +509,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +565,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersDrivers(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersDriversRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -605,7 +605,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_statements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersStatements(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersStatementsRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -613,7 +613,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersVehicles(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersVehiclesRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -629,7 +629,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersWorkOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersWorkOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -685,7 +685,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListDrivers(ctx, &wenmar.ListDriversParams{FiltersHasOpenWorkOrder: boolPtr(args["query"].(map[string]interface{}), "filters[has_open_work_order]"), FiltersQ: strPtr(args["query"].(map[string]interface{}), "filters[q]")})
+	resp, err := c.ListDriversRaw(ctx, &wenmar.ListDriversParams{FiltersHasOpenWorkOrder: boolPtr(args["query"].(map[string]interface{}), "filters[has_open_work_order]"), FiltersQ: strPtr(args["query"].(map[string]interface{}), "filters[q]")})
 	if err != nil {
 		return nil, err
 	}
@@ -885,7 +885,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_inspections": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListInspections(ctx, &wenmar.ListInspectionsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
+	resp, err := c.ListInspectionsRaw(ctx, &wenmar.ListInspectionsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
 	if err != nil {
 		return nil, err
 	}
@@ -1045,7 +1045,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_labor_rates": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListLaborRates(ctx)
+	resp, err := c.ListLaborRatesRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1413,7 +1413,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_orders_purchase_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListOrdersPurchaseOrders(ctx, &wenmar.ListOrdersPurchaseOrdersParams{Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), VendorId: intPtr(args["query"].(map[string]interface{}), "vendor_id")})
+	resp, err := c.ListOrdersPurchaseOrdersRaw(ctx, &wenmar.ListOrdersPurchaseOrdersParams{Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), VendorId: intPtr(args["query"].(map[string]interface{}), "vendor_id")})
 	if err != nil {
 		return nil, err
 	}
@@ -1461,7 +1461,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_orders_return_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListOrdersReturnOrders(ctx)
+	resp, err := c.ListOrdersReturnOrdersRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1501,7 +1501,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_orders_sublet_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListOrdersSubletOrders(ctx)
+	resp, err := c.ListOrdersSubletOrdersRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1525,7 +1525,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_packages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListPackages(ctx)
+	resp, err := c.ListPackagesRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1821,7 +1821,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_service_categories": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListServiceCategories(ctx)
+	resp, err := c.ListServiceCategoriesRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -2333,7 +2333,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVehicles(ctx, &wenmar.ListVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
+	resp, err := c.ListVehiclesRaw(ctx, &wenmar.ListVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
 	if err != nil {
 		return nil, err
 	}
@@ -2453,7 +2453,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vehicles_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVehiclesWorkOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "vehicle_id"))
+	resp, err := c.ListVehiclesWorkOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "vehicle_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2461,7 +2461,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vendors": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVendors(ctx)
+	resp, err := c.ListVendorsRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -2517,7 +2517,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vendors_purchase_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVendorsPurchaseOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "vendor_id"))
+	resp, err := c.ListVendorsPurchaseOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "vendor_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2557,7 +2557,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrders(ctx, &wenmar.ListWorkOrdersParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
+	resp, err := c.ListWorkOrdersRaw(ctx, &wenmar.ListWorkOrdersParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
 	if err != nil {
 		return nil, err
 	}
@@ -3069,7 +3069,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_paginated": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -3077,7 +3077,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_work_orders_paginated": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrders(ctx, &wenmar.ListWorkOrdersParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
+	resp, err := c.ListWorkOrdersRaw(ctx, &wenmar.ListWorkOrdersParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
 	if err != nil {
 		return nil, err
 	}
@@ -3085,7 +3085,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_with_params_paginated": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -3093,7 +3093,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customers_with_params": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomers(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -3101,7 +3101,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customer_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersVehicles(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersVehiclesRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -3109,7 +3109,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_customer_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersWorkOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	resp, err := c.ListCustomersWorkOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -3117,7 +3117,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_vehicle_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListVehiclesWorkOrders(ctx, intArg(args["pathParams"].(map[string]interface{}), "vehicle_id"))
+	resp, err := c.ListVehiclesWorkOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "vehicle_id"))
 	if err != nil {
 		return nil, err
 	}

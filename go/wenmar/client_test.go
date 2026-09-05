@@ -83,7 +83,7 @@ func TestClient_ListCustomers(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.ListCustomers(ctx, nil)
+	resp, err := c.ListCustomersRaw(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -239,7 +239,7 @@ func TestClient_ListVehicles(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	resp, err := c.ListVehicles(ctx, nil)
+	resp, err := c.ListVehiclesRaw(ctx, nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

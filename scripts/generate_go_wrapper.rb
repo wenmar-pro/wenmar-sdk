@@ -50,11 +50,20 @@ def param_struct(op)
   "#{pascal(op["id"])}Params"
 end
 
+# Whether an operation gets a typed ListResult wrapper (and thus its raw
+# method is renamed to ListXxxRaw). Only paginated list_* operations with a
+# known item schema qualify.
+def typed_list?(op)
+  op["paginated"] && op["responseSchema"] && op["id"].start_with?("list_")
+end
+
 # Build a single operation method. Each wrapper returns the generated raw
 # response struct (aliased into the wenmar package by models.gen.go) and
-# centralizes hook firing + error parsing.
+# centralizes hook firing + error parsing. For paginated list operations the
+# method is named ListXxxRaw; the typed ListXxx is emitted by build_typed_list.
 def build_operation(op)
   m = pascal(op["id"])
+  method_name = typed_list?(op) ? "#{m}Raw" : m
   body_type = op["requestSchema"] # wenmar-alias name
   params = []
   params << path_param_signature(op) unless op["pathParams"].empty?
@@ -80,8 +89,8 @@ def build_operation(op)
   call = "c.gen.#{gen_fn}(ctx#{gen_args.empty? ? "" : ", " + gen_args.join(", ")})"
 
   <<~GO
-    // #{m} runs the #{op["id"]} operation (#{op["method"].upcase} #{op["path"]}).
-    func (c *Client) #{m}(ctx context.Context#{params.empty? ? "" : ", " + params.join(", ")}) (*#{m}Response, error) {
+    // #{method_name} runs the #{op["id"]} operation (#{op["method"].upcase} #{op["path"]}).
+    func (c *Client) #{method_name}(ctx context.Context#{params.empty? ? "" : ", " + params.join(", ")}) (*#{m}Response, error) {
     	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "#{m}"})
     	resp, err := #{call}
     	if err != nil {
@@ -103,12 +112,45 @@ def build_operation_bodies
   OPS.map { |op| build_operation(op) }.join("\n")
 end
 
+# Build a typed ListXxx method that returns *ListResult[ItemType] for
+# paginated operations. The raw method is ListXxxRaw (from build_operation).
+def build_typed_list(op)
+  return "" unless typed_list?(op)
+
+  m = pascal(op["id"])
+  item = op["responseSchema"]
+  raw_method = "#{m}Raw"
+
+  params = ["ctx context.Context"]
+  params << path_param_signature(op) unless op["pathParams"].empty?
+  params << "params *#{param_struct(op)}" if has_query_params?(op)
+
+  call_args = ["ctx"]
+  call_args += op["pathParams"].map { |p| go_param_name(p) }
+  call_args << "params" if has_query_params?(op)
+
+  <<~GO
+    // #{m} fetches a page of #{op["id"]} results as a typed ListResult.
+    // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+    func (c *Client) #{m}(#{params.join(", ")}) (*ListResult[#{item}], error) {
+    	resp, err := c.#{raw_method}(#{call_args.join(", ")})
+    	if err != nil {
+    		return nil, err
+    	}
+    	return newListResultFromResponse[#{item}](resp.Body, resp.HTTPResponse.Header, c), nil
+    }
+  GO
+end
+
+def build_typed_list_bodies
+  OPS.map { |op| build_typed_list(op) }.join("\n")
+end
+
 # Build GetAll helpers for paginated list operations. They collect items from
-# the first page plus every Link-header page, capped at maxItems (default 1000).
+# the first page plus every Link-header page, capped via GetAllOptions
+# (default 1000 items).
 def build_get_all(op)
-  return "" unless op["paginated"]
-  return "" unless op["responseSchema"]
-  return "" unless op["id"].start_with?("list_")
+  return "" unless typed_list?(op)
 
   item = op["responseSchema"] # wenmar-alias of the item type
   # Guard: if the operation path is a sub-resource (deeper than the
@@ -125,20 +167,25 @@ def build_get_all(op)
   params = ["ctx context.Context"]
   params << path_param_signature(op) unless op["pathParams"].empty?
   params << "params *#{param_struct(op)}" if has_query_params?(op)
+  params << "opts *GetAllOptions"
 
   call_args = ["ctx"]
   call_args += op["pathParams"].map { |p| go_param_name(p) }
   call_args << "params" if has_query_params?(op)
 
   <<~GO
-    // GetAll#{base} auto-paginates #{op["id"]}, following the Link header up to
-    // 1000 items by default.
+    // GetAll#{base} auto-paginates #{op["id"]}, following the Link header.
+    // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
     func (c *Client) GetAll#{base}(#{params.join(", ")}) ([]#{item}, error) {
     	first, err := c.#{list_method}(#{call_args.join(", ")})
     	if err != nil {
     		return nil, err
     	}
-    	return collectAll[#{item}](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+    	items, _, err := getAll[#{item}](ctx, first, opts)
+    	if err != nil {
+    		return nil, err
+    	}
+    	return items, nil
     }
   GO
 end
@@ -189,6 +236,6 @@ models_header = <<~'GO'
 	import gen "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
 GO
 
-File.write("go/wenmar/operations.gen.go", operations_header + "\n" + build_operation_bodies + "\n" + build_get_all_bodies)
+File.write("go/wenmar/operations.gen.go", operations_header + "\n" + build_operation_bodies + "\n" + build_typed_list_bodies + "\n" + build_get_all_bodies)
 File.write("go/wenmar/models.gen.go", models_header + "\n" + build_models + "\n")
 puts "Wrote go/wenmar/operations.gen.go and go/wenmar/models.gen.go (#{OPS.size} operations)"

@@ -120,7 +120,7 @@ func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	serverURL = ts.URL
 
 	c := newTestClient(t, ts.URL, "test-token")
-	items, err := c.GetAllCustomers(ctx, nil)
+	items, err := c.GetAllCustomers(ctx, nil, nil)
 	if err != nil {
 		t.Fatalf("GetAllCustomers failed: %v", err)
 	}
@@ -175,7 +175,7 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 
 	client := newTestClient(t, server.URL, "test-token")
 
-	resp, err := client.ListCustomers(context.Background(), nil)
+	resp, err := client.ListCustomersRaw(context.Background(), nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -289,5 +289,100 @@ func TestPagination_RejectsCrossOriginNextURL(t *testing.T) {
 	}
 	if attackerGotAuth {
 		t.Error("Authorization header leaked to cross-origin attacker server")
+	}
+}
+
+func TestListCustomers_ReturnsTypedListResult(t *testing.T) {
+	var serverURL string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+		w.Header().Set("X-Total-Count", "2")
+		w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	result, err := c.ListCustomers(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("ListCustomers failed: %v", err)
+	}
+	if len(result.Items) != 1 {
+		t.Fatalf("expected 1 item, got %d", len(result.Items))
+	}
+	if result.Items[0].Id != 1 {
+		t.Errorf("expected id=1, got %d", result.Items[0].Id)
+	}
+	if !result.HasNext() {
+		t.Error("expected HasNext()=true")
+	}
+	if result.Meta.TotalCount != 2 {
+		t.Errorf("expected TotalCount=2, got %d", result.Meta.TotalCount)
+	}
+}
+
+func TestListCustomers_NextPage(t *testing.T) {
+	var serverURL string
+	var call int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&call, 1)
+		w.Header().Set("Content-Type", "application/json")
+		if atomic.LoadInt32(&call) == 1 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		} else {
+			w.Write([]byte(`[{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		}
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	result, err := c.ListCustomers(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("ListCustomers failed: %v", err)
+	}
+	if !result.HasNext() {
+		t.Fatal("expected HasNext()=true")
+	}
+	page2, err := result.Next(context.Background())
+	if err != nil {
+		t.Fatalf("Next failed: %v", err)
+	}
+	if len(page2.Items) != 1 {
+		t.Fatalf("expected 1 item on page 2, got %d", len(page2.Items))
+	}
+	if page2.Items[0].Id != 2 {
+		t.Errorf("expected id=2, got %d", page2.Items[0].Id)
+	}
+	if page2.HasNext() {
+		t.Error("expected HasNext()=false on page 2")
+	}
+}
+
+func TestGetAllCustomers_WithMaxItemsOption(t *testing.T) {
+	var serverURL string
+	var call int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&call, 1)
+		w.Header().Set("Content-Type", "application/json")
+		if atomic.LoadInt32(&call) == 1 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		} else {
+			w.Write([]byte(`[{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		}
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	items, err := c.GetAllCustomers(context.Background(), nil, &GetAllOptions{MaxItems: 1})
+	if err != nil {
+		t.Fatalf("GetAllCustomers failed: %v", err)
+	}
+	if len(items) != 1 {
+		t.Errorf("expected 1 item (MaxItems=1), got %d", len(items))
 	}
 }

@@ -49,6 +49,12 @@ def op_by_id(id)
   OPS.find { |o| o["id"] == id }
 end
 
+# Whether an operation gets a typed ListResult wrapper (and thus its raw
+# method is renamed to ListXxxRaw). Mirrors generate_go_wrapper.rb.
+def typed_list?(op)
+  op["paginated"] && op["responseSchema"] && op["id"].start_with?("list_")
+end
+
 # Go: expression to pull a path param from args.
 def go_path_param(pp, op)
   t = (op["pathParamTypes"] || {})[pp] || "integer"
@@ -113,6 +119,10 @@ def build_go_entry(key, manifest_id, variant = :default)
   return nil unless op
 
   m = pascal(manifest_id)
+  # Paginated list operations now expose a typed ListResult via ListXxx and
+  # the raw envelope via ListXxxRaw. The dispatch needs the raw response
+  # (resp.Body / resp.HTTPResponse), so call the Raw variant.
+  method_name = typed_list?(op) ? "#{m}Raw" : m
   path_params = op["pathParams"]
 
   args = []
@@ -126,7 +136,7 @@ def build_go_entry(key, manifest_id, variant = :default)
     args << "bytes.NewReader([]byte(strArg(args[\"requestBody\"].(map[string]interface{}), \"file\")))"
   end
 
-  call = "c.#{m}(ctx#{args.empty? ? "" : ", " + args.join(", ")})"
+  call = "c.#{method_name}(ctx#{args.empty? ? "" : ", " + args.join(", ")})"
 
   case variant
   when :paginated

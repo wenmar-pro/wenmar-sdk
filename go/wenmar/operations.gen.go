@@ -416,8 +416,8 @@ func (c *Client) CreateAppointmentsWorkOrder(ctx context.Context, id int, body C
 	return resp, nil
 }
 
-// ListCampaigns runs the list_campaigns operation (GET /campaigns).
-func (c *Client) ListCampaigns(ctx context.Context) (*ListCampaignsResponse, error) {
+// ListCampaignsRaw runs the list_campaigns operation (GET /campaigns).
+func (c *Client) ListCampaignsRaw(ctx context.Context) (*ListCampaignsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCampaigns"})
 	resp, err := c.gen.ListCampaignsWithResponse(ctx)
 	if err != nil {
@@ -1062,8 +1062,8 @@ func (c *Client) UpdateCustomerTagsTrash(ctx context.Context, id int, body Updat
 	return resp, nil
 }
 
-// ListCustomers runs the list_customers operation (GET /customers).
-func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams) (*ListCustomersResponse, error) {
+// ListCustomersRaw runs the list_customers operation (GET /customers).
+func (c *Client) ListCustomersRaw(ctx context.Context, params *ListCustomersParams) (*ListCustomersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
 	resp, err := c.gen.ListCustomersWithResponse(ctx, params)
 	if err != nil {
@@ -1181,8 +1181,8 @@ func (c *Client) LookupCustomer(ctx context.Context, params *LookupCustomerParam
 	return resp, nil
 }
 
-// ListCustomersDrivers runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
-func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
+// ListCustomersDriversRaw runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
+func (c *Client) ListCustomersDriversRaw(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersDrivers"})
 	resp, err := c.gen.ListCustomersDriversWithResponse(ctx, customerId)
 	if err != nil {
@@ -1266,8 +1266,8 @@ func (c *Client) UpdateDriver(ctx context.Context, customerId int, id int, body 
 	return resp, nil
 }
 
-// ListCustomersStatements runs the list_customers_statements operation (GET /customers/{customer_id}/statements).
-func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*ListCustomersStatementsResponse, error) {
+// ListCustomersStatementsRaw runs the list_customers_statements operation (GET /customers/{customer_id}/statements).
+func (c *Client) ListCustomersStatementsRaw(ctx context.Context, customerId int) (*ListCustomersStatementsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersStatements"})
 	resp, err := c.gen.ListCustomersStatementsWithResponse(ctx, customerId)
 	if err != nil {
@@ -1283,8 +1283,8 @@ func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*
 	return resp, nil
 }
 
-// ListCustomersVehicles runs the list_customers_vehicles operation (GET /customers/{customer_id}/vehicles).
-func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*ListCustomersVehiclesResponse, error) {
+// ListCustomersVehiclesRaw runs the list_customers_vehicles operation (GET /customers/{customer_id}/vehicles).
+func (c *Client) ListCustomersVehiclesRaw(ctx context.Context, customerId int) (*ListCustomersVehiclesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersVehicles"})
 	resp, err := c.gen.ListCustomersVehiclesWithResponse(ctx, customerId)
 	if err != nil {
@@ -1317,8 +1317,8 @@ func (c *Client) ListCustomersVehiclesHistory(ctx context.Context, customerId in
 	return resp, nil
 }
 
-// ListCustomersWorkOrders runs the list_customers_work_orders operation (GET /customers/{customer_id}/work_orders).
-func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*ListCustomersWorkOrdersResponse, error) {
+// ListCustomersWorkOrdersRaw runs the list_customers_work_orders operation (GET /customers/{customer_id}/work_orders).
+func (c *Client) ListCustomersWorkOrdersRaw(ctx context.Context, customerId int) (*ListCustomersWorkOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersWorkOrders"})
 	resp, err := c.gen.ListCustomersWorkOrdersWithResponse(ctx, customerId)
 	if err != nil {
@@ -1436,8 +1436,8 @@ func (c *Client) TrashCustomer(ctx context.Context, id int, body TrashCustomerRe
 	return resp, nil
 }
 
-// ListDrivers runs the list_drivers operation (GET /drivers).
-func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*ListDriversResponse, error) {
+// ListDriversRaw runs the list_drivers operation (GET /drivers).
+func (c *Client) ListDriversRaw(ctx context.Context, params *ListDriversParams) (*ListDriversResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListDrivers"})
 	resp, err := c.gen.ListDriversWithResponse(ctx, params)
 	if err != nil {
@@ -1861,8 +1861,8 @@ func (c *Client) UnpublishInspectionReport(ctx context.Context, id int, body Unp
 	return resp, nil
 }
 
-// ListInspections runs the list_inspections operation (GET /inspections).
-func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsParams) (*ListInspectionsResponse, error) {
+// ListInspectionsRaw runs the list_inspections operation (GET /inspections).
+func (c *Client) ListInspectionsRaw(ctx context.Context, params *ListInspectionsParams) (*ListInspectionsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListInspections"})
 	resp, err := c.gen.ListInspectionsWithResponse(ctx, params)
 	if err != nil {
@@ -2201,8 +2201,8 @@ func (c *Client) UpdateLaborMatrice(ctx context.Context, id int, body UpdateLabo
 	return resp, nil
 }
 
-// ListLaborRates runs the list_labor_rates operation (GET /labor_rates).
-func (c *Client) ListLaborRates(ctx context.Context) (*ListLaborRatesResponse, error) {
+// ListLaborRatesRaw runs the list_labor_rates operation (GET /labor_rates).
+func (c *Client) ListLaborRatesRaw(ctx context.Context) (*ListLaborRatesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLaborRates"})
 	resp, err := c.gen.ListLaborRatesWithResponse(ctx)
 	if err != nil {
@@ -2983,8 +2983,8 @@ func (c *Client) UpdateNotification(ctx context.Context, id int, body UpdateNoti
 	return resp, nil
 }
 
-// ListOrdersPurchaseOrders runs the list_orders_purchase_orders operation (GET /orders/purchase_orders).
-func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams) (*ListOrdersPurchaseOrdersResponse, error) {
+// ListOrdersPurchaseOrdersRaw runs the list_orders_purchase_orders operation (GET /orders/purchase_orders).
+func (c *Client) ListOrdersPurchaseOrdersRaw(ctx context.Context, params *ListOrdersPurchaseOrdersParams) (*ListOrdersPurchaseOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListOrdersPurchaseOrders"})
 	resp, err := c.gen.ListOrdersPurchaseOrdersWithResponse(ctx, params)
 	if err != nil {
@@ -3085,8 +3085,8 @@ func (c *Client) CreateOrdersPurchaseOrdersCancellation(ctx context.Context, pur
 	return resp, nil
 }
 
-// ListOrdersReturnOrders runs the list_orders_return_orders operation (GET /orders/return_orders).
-func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListOrdersReturnOrdersResponse, error) {
+// ListOrdersReturnOrdersRaw runs the list_orders_return_orders operation (GET /orders/return_orders).
+func (c *Client) ListOrdersReturnOrdersRaw(ctx context.Context) (*ListOrdersReturnOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListOrdersReturnOrders"})
 	resp, err := c.gen.ListOrdersReturnOrdersWithResponse(ctx)
 	if err != nil {
@@ -3170,8 +3170,8 @@ func (c *Client) CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, r
 	return resp, nil
 }
 
-// ListOrdersSubletOrders runs the list_orders_sublet_orders operation (GET /orders/sublet_orders).
-func (c *Client) ListOrdersSubletOrders(ctx context.Context) (*ListOrdersSubletOrdersResponse, error) {
+// ListOrdersSubletOrdersRaw runs the list_orders_sublet_orders operation (GET /orders/sublet_orders).
+func (c *Client) ListOrdersSubletOrdersRaw(ctx context.Context) (*ListOrdersSubletOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListOrdersSubletOrders"})
 	resp, err := c.gen.ListOrdersSubletOrdersWithResponse(ctx)
 	if err != nil {
@@ -3221,8 +3221,8 @@ func (c *Client) ShowOrdersSubletOrder(ctx context.Context, id int) (*ShowOrders
 	return resp, nil
 }
 
-// ListPackages runs the list_packages operation (GET /packages).
-func (c *Client) ListPackages(ctx context.Context) (*ListPackagesResponse, error) {
+// ListPackagesRaw runs the list_packages operation (GET /packages).
+func (c *Client) ListPackagesRaw(ctx context.Context) (*ListPackagesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListPackages"})
 	resp, err := c.gen.ListPackagesWithResponse(ctx)
 	if err != nil {
@@ -3850,8 +3850,8 @@ func (c *Client) ListSearch(ctx context.Context, params *ListSearchParams) (*Lis
 	return resp, nil
 }
 
-// ListServiceCategories runs the list_service_categories operation (GET /service_categories).
-func (c *Client) ListServiceCategories(ctx context.Context) (*ListServiceCategoriesResponse, error) {
+// ListServiceCategoriesRaw runs the list_service_categories operation (GET /service_categories).
+func (c *Client) ListServiceCategoriesRaw(ctx context.Context) (*ListServiceCategoriesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListServiceCategories"})
 	resp, err := c.gen.ListServiceCategoriesWithResponse(ctx)
 	if err != nil {
@@ -4938,8 +4938,8 @@ func (c *Client) CreateUsersUnlock(ctx context.Context, id int, body CreateUsers
 	return resp, nil
 }
 
-// ListVehicles runs the list_vehicles operation (GET /vehicles).
-func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (*ListVehiclesResponse, error) {
+// ListVehiclesRaw runs the list_vehicles operation (GET /vehicles).
+func (c *Client) ListVehiclesRaw(ctx context.Context, params *ListVehiclesParams) (*ListVehiclesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVehicles"})
 	resp, err := c.gen.ListVehiclesWithResponse(ctx, params)
 	if err != nil {
@@ -5193,8 +5193,8 @@ func (c *Client) TrashVehicle(ctx context.Context, id int, body TrashVehicleRequ
 	return resp, nil
 }
 
-// ListVehiclesWorkOrders runs the list_vehicles_work_orders operation (GET /vehicles/{vehicle_id}/work_orders).
-func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*ListVehiclesWorkOrdersResponse, error) {
+// ListVehiclesWorkOrdersRaw runs the list_vehicles_work_orders operation (GET /vehicles/{vehicle_id}/work_orders).
+func (c *Client) ListVehiclesWorkOrdersRaw(ctx context.Context, vehicleId int) (*ListVehiclesWorkOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVehiclesWorkOrders"})
 	resp, err := c.gen.ListVehiclesWorkOrdersWithResponse(ctx, vehicleId)
 	if err != nil {
@@ -5210,8 +5210,8 @@ func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*Li
 	return resp, nil
 }
 
-// ListVendors runs the list_vendors operation (GET /vendors).
-func (c *Client) ListVendors(ctx context.Context) (*ListVendorsResponse, error) {
+// ListVendorsRaw runs the list_vendors operation (GET /vendors).
+func (c *Client) ListVendorsRaw(ctx context.Context) (*ListVendorsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVendors"})
 	resp, err := c.gen.ListVendorsWithResponse(ctx)
 	if err != nil {
@@ -5329,8 +5329,8 @@ func (c *Client) TrashVendor(ctx context.Context, id int, body TrashVendorReques
 	return resp, nil
 }
 
-// ListVendorsPurchaseOrders runs the list_vendors_purchase_orders operation (GET /vendors/{vendor_id}/purchase_orders).
-func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*ListVendorsPurchaseOrdersResponse, error) {
+// ListVendorsPurchaseOrdersRaw runs the list_vendors_purchase_orders operation (GET /vendors/{vendor_id}/purchase_orders).
+func (c *Client) ListVendorsPurchaseOrdersRaw(ctx context.Context, vendorId int) (*ListVendorsPurchaseOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVendorsPurchaseOrders"})
 	resp, err := c.gen.ListVendorsPurchaseOrdersWithResponse(ctx, vendorId)
 	if err != nil {
@@ -5414,8 +5414,8 @@ func (c *Client) UpdateWorkOrderTagsArchive(ctx context.Context, id int, body Up
 	return resp, nil
 }
 
-// ListWorkOrders runs the list_work_orders operation (GET /work_orders).
-func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams) (*ListWorkOrdersResponse, error) {
+// ListWorkOrdersRaw runs the list_work_orders operation (GET /work_orders).
+func (c *Client) ListWorkOrdersRaw(ctx context.Context, params *ListWorkOrdersParams) (*ListWorkOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrders"})
 	resp, err := c.gen.ListWorkOrdersWithResponse(ctx, params)
 	if err != nil {
@@ -6526,14 +6526,571 @@ func (c *Client) ShowWorkOrderWip(ctx context.Context, workOrderId int) (*ShowWo
 
 
 
-// GetAllCampaigns auto-paginates list_campaigns, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCampaigns(ctx context.Context) ([]BroadcastCampaign, error) {
+// ListCampaigns fetches a page of list_campaigns results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampaign], error) {
+	resp, err := c.ListCampaignsRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListCustomers fetches a page of list_customers results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams) (*ListResult[Customer], error) {
+	resp, err := c.ListCustomersRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+// ListCustomersDrivers fetches a page of list_customers_drivers results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*ListResult[Driver], error) {
+	resp, err := c.ListCustomersDriversRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+// ListCustomersStatements fetches a page of list_customers_statements results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*ListResult[Statement], error) {
+	resp, err := c.ListCustomersStatementsRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+// ListCustomersVehicles fetches a page of list_customers_vehicles results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*ListResult[Vehicle], error) {
+	resp, err := c.ListCustomersVehiclesRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+// ListCustomersWorkOrders fetches a page of list_customers_work_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*ListResult[WorkOrder], error) {
+	resp, err := c.ListCustomersWorkOrdersRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+// ListDrivers fetches a page of list_drivers results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*ListResult[Driver], error) {
+	resp, err := c.ListDriversRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListInspections fetches a page of list_inspections results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsParams) (*ListResult[Inspection], error) {
+	resp, err := c.ListInspectionsRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListLaborRates fetches a page of list_labor_rates results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListLaborRates(ctx context.Context) (*ListResult[LaborRate], error) {
+	resp, err := c.ListLaborRatesRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListOrdersPurchaseOrders fetches a page of list_orders_purchase_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams) (*ListResult[PurchaseOrder], error) {
+	resp, err := c.ListOrdersPurchaseOrdersRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+// ListOrdersReturnOrders fetches a page of list_orders_return_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListResult[ReturnOrder], error) {
+	resp, err := c.ListOrdersReturnOrdersRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+// ListOrdersSubletOrders fetches a page of list_orders_sublet_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListOrdersSubletOrders(ctx context.Context) (*ListResult[SubletOrder], error) {
+	resp, err := c.ListOrdersSubletOrdersRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+// ListPackages fetches a page of list_packages results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error) {
+	resp, err := c.ListPackagesRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListServiceCategories fetches a page of list_service_categories results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListServiceCategories(ctx context.Context) (*ListResult[ServiceCategory], error) {
+	resp, err := c.ListServiceCategoriesRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListVehicles fetches a page of list_vehicles results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (*ListResult[Vehicle], error) {
+	resp, err := c.ListVehiclesRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ListVehiclesWorkOrders fetches a page of list_vehicles_work_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*ListResult[WorkOrder], error) {
+	resp, err := c.ListVehiclesWorkOrdersRaw(ctx, vehicleId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+// ListVendors fetches a page of list_vendors results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListVendors(ctx context.Context) (*ListResult[Vendor], error) {
+	resp, err := c.ListVendorsRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+// ListVendorsPurchaseOrders fetches a page of list_vendors_purchase_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*ListResult[PurchaseOrder], error) {
+	resp, err := c.ListVendorsPurchaseOrdersRaw(ctx, vendorId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+// ListWorkOrders fetches a page of list_work_orders results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams) (*ListResult[WorkOrder], error) {
+	resp, err := c.ListWorkOrdersRaw(ctx, params)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// GetAllCampaigns auto-paginates list_campaigns, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCampaigns(ctx context.Context, opts *GetAllOptions) ([]BroadcastCampaign, error) {
 	first, err := c.ListCampaigns(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[BroadcastCampaign](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[BroadcastCampaign](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6573,14 +7130,18 @@ func (c *Client) GetAllCampaigns(ctx context.Context) ([]BroadcastCampaign, erro
 
 
 
-// GetAllCustomers auto-paginates list_customers, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParams) ([]Customer, error) {
+// GetAllCustomers auto-paginates list_customers, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParams, opts *GetAllOptions) ([]Customer, error) {
 	first, err := c.ListCustomers(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Customer](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Customer](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6589,49 +7150,65 @@ func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParam
 
 
 
-// GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int) ([]Driver, error) {
+// GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opts *GetAllOptions) ([]Driver, error) {
 	first, err := c.ListCustomersDrivers(ctx, customerId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Driver](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Driver](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
 
 
 
-// GetAllCustomersStatements auto-paginates list_customers_statements, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int) ([]Statement, error) {
+// GetAllCustomersStatements auto-paginates list_customers_statements, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int, opts *GetAllOptions) ([]Statement, error) {
 	first, err := c.ListCustomersStatements(ctx, customerId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Statement](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Statement](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
-// GetAllCustomersVehicles auto-paginates list_customers_vehicles, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int) ([]Vehicle, error) {
+// GetAllCustomersVehicles auto-paginates list_customers_vehicles, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int, opts *GetAllOptions) ([]Vehicle, error) {
 	first, err := c.ListCustomersVehicles(ctx, customerId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Vehicle](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
-// GetAllCustomersWorkOrders auto-paginates list_customers_work_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int) ([]WorkOrder, error) {
+// GetAllCustomersWorkOrders auto-paginates list_customers_work_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListCustomersWorkOrders(ctx, customerId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6640,14 +7217,18 @@ func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int) 
 
 
 
-// GetAllDrivers auto-paginates list_drivers, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams) ([]Driver, error) {
+// GetAllDrivers auto-paginates list_drivers, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, opts *GetAllOptions) ([]Driver, error) {
 	first, err := c.ListDrivers(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Driver](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Driver](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6674,14 +7255,18 @@ func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams) (
 
 
 
-// GetAllInspections auto-paginates list_inspections, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsParams) ([]Inspection, error) {
+// GetAllInspections auto-paginates list_inspections, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsParams, opts *GetAllOptions) ([]Inspection, error) {
 	first, err := c.ListInspections(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Inspection](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Inspection](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6703,14 +7288,18 @@ func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsP
 
 
 
-// GetAllLaborRates auto-paginates list_labor_rates, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllLaborRates(ctx context.Context) ([]LaborRate, error) {
+// GetAllLaborRates auto-paginates list_labor_rates, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllLaborRates(ctx context.Context, opts *GetAllOptions) ([]LaborRate, error) {
 	first, err := c.ListLaborRates(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[LaborRate](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[LaborRate](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6758,14 +7347,18 @@ func (c *Client) GetAllLaborRates(ctx context.Context) ([]LaborRate, error) {
 
 
 
-// GetAllOrdersPurchaseOrders auto-paginates list_orders_purchase_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams) ([]PurchaseOrder, error) {
+// GetAllOrdersPurchaseOrders auto-paginates list_orders_purchase_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams, opts *GetAllOptions) ([]PurchaseOrder, error) {
 	first, err := c.ListOrdersPurchaseOrders(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[PurchaseOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[PurchaseOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6773,40 +7366,52 @@ func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrd
 
 
 
-// GetAllOrdersReturnOrders auto-paginates list_orders_return_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllOrdersReturnOrders(ctx context.Context) ([]ReturnOrder, error) {
+// GetAllOrdersReturnOrders auto-paginates list_orders_return_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllOrdersReturnOrders(ctx context.Context, opts *GetAllOptions) ([]ReturnOrder, error) {
 	first, err := c.ListOrdersReturnOrders(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[ReturnOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[ReturnOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
 
 
 
-// GetAllOrdersSubletOrders auto-paginates list_orders_sublet_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllOrdersSubletOrders(ctx context.Context) ([]SubletOrder, error) {
+// GetAllOrdersSubletOrders auto-paginates list_orders_sublet_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllOrdersSubletOrders(ctx context.Context, opts *GetAllOptions) ([]SubletOrder, error) {
 	first, err := c.ListOrdersSubletOrders(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[SubletOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[SubletOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
 
-// GetAllPackages auto-paginates list_packages, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllPackages(ctx context.Context) ([]Package, error) {
+// GetAllPackages auto-paginates list_packages, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Package, error) {
 	first, err := c.ListPackages(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Package](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Package](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6845,14 +7450,18 @@ func (c *Client) GetAllPackages(ctx context.Context) ([]Package, error) {
 
 
 
-// GetAllServiceCategories auto-paginates list_service_categories, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllServiceCategories(ctx context.Context) ([]ServiceCategory, error) {
+// GetAllServiceCategories auto-paginates list_service_categories, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllServiceCategories(ctx context.Context, opts *GetAllOptions) ([]ServiceCategory, error) {
 	first, err := c.ListServiceCategories(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[ServiceCategory](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[ServiceCategory](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6918,14 +7527,18 @@ func (c *Client) GetAllServiceCategories(ctx context.Context) ([]ServiceCategory
 
 
 
-// GetAllVehicles auto-paginates list_vehicles, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams) ([]Vehicle, error) {
+// GetAllVehicles auto-paginates list_vehicles, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams, opts *GetAllOptions) ([]Vehicle, error) {
 	first, err := c.ListVehicles(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vehicle](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Vehicle](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6942,24 +7555,32 @@ func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams)
 
 
 
-// GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int) ([]WorkOrder, error) {
+// GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListVehiclesWorkOrders(ctx, vehicleId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
-// GetAllVendors auto-paginates list_vendors, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllVendors(ctx context.Context) ([]Vendor, error) {
+// GetAllVendors auto-paginates list_vendors, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllVendors(ctx context.Context, opts *GetAllOptions) ([]Vendor, error) {
 	first, err := c.ListVendors(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[Vendor](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[Vendor](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
@@ -6968,28 +7589,36 @@ func (c *Client) GetAllVendors(ctx context.Context) ([]Vendor, error) {
 
 
 
-// GetAllVendorsPurchaseOrders auto-paginates list_vendors_purchase_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int) ([]PurchaseOrder, error) {
+// GetAllVendorsPurchaseOrders auto-paginates list_vendors_purchase_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, opts *GetAllOptions) ([]PurchaseOrder, error) {
 	first, err := c.ListVendorsPurchaseOrders(ctx, vendorId)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[PurchaseOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[PurchaseOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
 
 
 
-// GetAllWorkOrders auto-paginates list_work_orders, following the Link header up to
-// 1000 items by default.
-func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersParams) ([]WorkOrder, error) {
+// GetAllWorkOrders auto-paginates list_work_orders, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersParams, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListWorkOrders(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	return collectAll[WorkOrder](ctx, c, first.Body, first.HTTPResponse.Header.Get("Link"), 1000)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 
