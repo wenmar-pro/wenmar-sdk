@@ -62,7 +62,7 @@ end
 # Fetches all appointments, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_appointments(per_page: nil, q: nil, status: nil)
-  paginator_to_a(list_appointments(per_page: nil, q: nil, status: nil), 1000)
+  paginator_to_a(list_appointments(per_page: per_page, q: q, status: status), 1000)
 end
 # Runs create_appointment (POST /appointments).
 def create_appointment(appointment:)
@@ -78,7 +78,7 @@ end
 # Fetches all appointments_available_slots, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_appointments_available_slots(date: nil, duration_minutes: nil)
-  paginator_to_a(list_appointments_available_slots(date: nil, duration_minutes: nil), 1000)
+  paginator_to_a(list_appointments_available_slots(date: date, duration_minutes: duration_minutes), 1000)
 end
 # Deletes delete_appointment.
 def delete_appointment(id)
@@ -292,7 +292,7 @@ end
 # Fetches all customer_tags, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_customer_tags(status: nil)
-  paginator_to_a(list_customer_tags(status: nil), 1000)
+  paginator_to_a(list_customer_tags(status: status), 1000)
 end
 # Runs create_customer_tag (POST /customer_tags).
 def create_customer_tag(name:)
@@ -328,7 +328,7 @@ end
 # Fetches all customers, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
-  paginator_to_a(list_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil), 1000)
+  paginator_to_a(list_customers(customer_tag_id: customer_tag_id, has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, status: status, type: type), 1000)
 end
 # Runs create_customer (POST /customers).
 def create_customer(customer:)
@@ -455,7 +455,7 @@ end
 # Fetches all drivers, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_drivers(filters_has_open_work_order: nil, filters_q: nil)
-  paginator_to_a(list_drivers(filters_has_open_work_order: nil, filters_q: nil), 1000)
+  paginator_to_a(list_drivers(filters_has_open_work_order: filters_has_open_work_order, filters_q: filters_q), 1000)
 end
 # Lists list_expenses resources (paginated).
 # @return [Wenmar::Paginator]
@@ -580,7 +580,7 @@ end
 # Fetches all inspections, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_inspections(per_page: nil)
-  paginator_to_a(list_inspections(per_page: nil), 1000)
+  paginator_to_a(list_inspections(per_page: per_page), 1000)
 end
 # Runs create_inspection (POST /inspections).
 def create_inspection(inspection:)
@@ -624,7 +624,7 @@ end
 # Fetches all inventory_levels, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
-  paginator_to_a(list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil), 1000)
+  paginator_to_a(list_inventory_levels(brand: brand, page: page, per_page: per_page, q: q, stock_status: stock_status, stocked: stocked), 1000)
 end
 # Runs create_inventory_level (POST /inventory_levels).
 def create_inventory_level(part:)
@@ -861,7 +861,7 @@ end
 # Fetches all messages, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_messages(conversation_id: nil)
-  paginator_to_a(list_messages(conversation_id: nil), 1000)
+  paginator_to_a(list_messages(conversation_id: conversation_id), 1000)
 end
 # Fetches show_message.
 def show_message(id)
@@ -881,7 +881,7 @@ end
 # Fetches all notifications, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_notifications(category: nil, limit: nil, location_id: nil, read: nil, since: nil, trigger_type: nil)
-  paginator_to_a(list_notifications(category: nil, limit: nil, location_id: nil, read: nil, since: nil, trigger_type: nil), 1000)
+  paginator_to_a(list_notifications(category: category, limit: limit, location_id: location_id, read: read, since: since, trigger_type: trigger_type), 1000)
 end
 # Runs create_notifications_bulk_mark_read (POST /notifications/bulk_mark_read).
 def create_notifications_bulk_mark_read()
@@ -905,7 +905,7 @@ end
 # Fetches all orders_purchase_orders, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil)
-  paginator_to_a(list_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil), 1000)
+  paginator_to_a(list_orders_purchase_orders(page: page, per_page: per_page, vendor_id: vendor_id), 1000)
 end
 # Runs create_orders_purchase_order (POST /orders/purchase_orders).
 def create_orders_purchase_order(purchase_order:)
@@ -1041,7 +1041,7 @@ end
 # Fetches all payments, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_payments(method: nil)
-  paginator_to_a(list_payments(method: nil), 1000)
+  paginator_to_a(list_payments(method: method), 1000)
 end
 # Lists list_payments_pending resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1420,7 +1420,7 @@ end
 # Fetches all users, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_users(page: nil, per_page: nil)
-  paginator_to_a(list_users(page: nil, per_page: nil), 1000)
+  paginator_to_a(list_users(page: page, per_page: per_page), 1000)
 end
 # Runs create_user (POST /users).
 def create_user(user:)
@@ -1495,7 +1495,7 @@ end
 # Fetches all vehicles, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
-  paginator_to_a(list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil), 1000)
+  paginator_to_a(list_vehicles(customer_id: customer_id, page: page, per_page: per_page, status: status), 1000)
 end
 # Runs create_vehicle (POST /vehicles).
 def create_vehicle(vehicle:)
@@ -1650,7 +1650,7 @@ end
 # Fetches all work_orders, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_work_orders(per_page: nil)
-  paginator_to_a(list_work_orders(per_page: nil), 1000)
+  paginator_to_a(list_work_orders(per_page: per_page), 1000)
 end
 # Runs create_work_order (POST /work_orders).
 def create_work_order(work_order:)
@@ -1899,7 +1899,7 @@ end
 # Fetches all work_orders_summary_activity, up to 1000 by default.
 # @return [Array<Hash>]
 def get_all_work_orders_summary_activity(work_order_id, category: nil)
-  paginator_to_a(list_work_orders_summary_activity(category: nil), 1000)
+  paginator_to_a(list_work_orders_summary_activity(work_order_id, category: category), 1000)
 end
 # Lists list_work_orders_summary_appointments resources (paginated).
 # @return [Wenmar::Paginator]

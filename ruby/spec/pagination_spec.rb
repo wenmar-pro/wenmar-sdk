@@ -96,6 +96,32 @@ module Wenmar
       assert_equal [1, 2], all.map { |c| c["id"] }
     end
 
+    def test_get_all_with_path_params_forwards_them
+      stub_request(:get, "#{@base_url}/work_orders/5/concerns")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 1, "name" => "brakes" }].to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+      client = Client.new(token: "test", base_url: @base_url)
+      result = client.get_all_work_orders_concerns(5)
+      assert_equal 1, result.first["id"]
+    end
+
+    def test_get_all_with_query_params_forwards_caller_values
+      stub_request(:get, "#{@base_url}/appointments?per_page=10&status=open")
+        .to_return(
+          status: 200,
+          body: [{ "id" => 1 }].to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+      client = Client.new(token: "test", base_url: @base_url)
+      result = client.get_all_appointments(per_page: 10, status: "open")
+      assert_equal 1, result.first["id"]
+    end
+
     private
 
     def stub_api(method, path, body, status: 200, link: nil)

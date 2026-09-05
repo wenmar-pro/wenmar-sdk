@@ -97,12 +97,14 @@ def build_method(op)
           end
         RUBY
         if base
+          query_kw_args = query.map { |q| "#{ruby_param_name(q["name"])}: #{ruby_param_name(q["name"])}" }
+          all_args = (path_args + query_kw_args).join(", ")
           out << <<~RUBY
 
             # Fetches all #{base}, up to 1000 by default.
             # @return [Array<Hash>]
             def get_all_#{base}(#{sig.empty? ? "" : sig})
-              paginator_to_a(#{m}(#{query_kw.join(", ")}), 1000)
+              paginator_to_a(#{m}(#{all_args.empty? ? "" : all_args}), 1000)
             end
           RUBY
         end
