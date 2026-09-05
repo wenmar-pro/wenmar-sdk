@@ -457,6 +457,19 @@ module EnrichSpec
           end
           next unless candidate
 
+          # Sub-collection/action paths (e.g. /work_orders/{id}/concerns,
+          # /statements/{id}/payments) whose last segment is NOT a registered
+          # resource return heterogeneous shapes that are not the parent
+          # resource. Hoisting their array items into the parent component
+          # (e.g. WorkOrder) would corrupt the generated SDK type and make
+          # GetAll* unmarshal into the wrong struct. Leave such array items
+          # inline so no component is created and no GetAll* variant is
+          # generated. Single-object sub-collections (estimate, wip, parts,
+          # payments) legitimately return the parent resource and still hoist.
+          if schema["type"] == "array" && segments.length > 2 && !RESOURCE_SCHEMAS.key?(segments[2])
+            next
+          end
+
           existing = spec["components"]["schemas"][schema_name]
           if existing.nil? || candidate["properties"].keys.length > existing["properties"].keys.length
             spec["components"]["schemas"][schema_name] = candidate

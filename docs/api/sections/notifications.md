@@ -11,6 +11,15 @@ GET /notifications
 
 List all notifications, paginated via the Link header.
 
+| Param | Type | Required |
+|---|---|---|
+| `category` | string | No |
+| `limit` | integer | No |
+| `location_id` | integer | No |
+| `read` | boolean | No |
+| `since` | string | No |
+| `trigger_type` | string | No |
+
 **Response 200** — array
 
 | Field | Type | Required |
@@ -25,6 +34,11 @@ List all notifications, paginated via the Link header.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `category` | string | No |
+| `location_id` | integer | No |
+| `work_order_id` | integer \| null | No |
+| `triggered_by_id` | integer \| null | No |
+| `action_path` | any | No |
 
 **Response 401** — [Error](#error-schema) error envelope
 
@@ -73,11 +87,22 @@ Show a notification by ID.
 | `title` | string | Yes |
 | `message_body` | string | Yes |
 | `read` | boolean | Yes |
-| `read_at` | string | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `category` | string | No |
+| `location_id` | integer | No |
+| `work_order_id` | integer \| null | No |
+| `triggered_by_id` | integer \| null | No |
+| `action_path` | any | No |
+| `metadata` | object | No |
+
+`metadata` — object:
+| Field | Type | Required |
+|---|---|---|
+| `inbound` | boolean | Yes |
 
 **Response 404** — [Error](#error-schema) error envelope
 
@@ -106,11 +131,16 @@ Update a notification by ID.
 | `title` | string | Yes |
 | `message_body` | string | Yes |
 | `read` | boolean | Yes |
-| `read_at` | string | Yes |
+| `read_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `category` | string | No |
+| `location_id` | integer | No |
+| `work_order_id` | integer \| null | No |
+| `triggered_by_id` | integer \| null | No |
+| `action_path` | any | No |
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \

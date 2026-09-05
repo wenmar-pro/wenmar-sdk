@@ -20634,7 +20634,115 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Statement"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    amount_cents:
+                      type: integer
+                    currency:
+                      type: string
+                    method:
+                      type: string
+                    processor_status:
+                      type: string
+                    is_refund:
+                      type: boolean
+                    is_adjustment:
+                      type: boolean
+                    voided:
+                      type: boolean
+                    voided_at:
+                      nullable: true
+                      type: string
+                    processed_at:
+                      type: string
+                    reference:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    work_order_id:
+                      type: integer
+                    customer_id:
+                      type: integer
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                    work_order:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - url
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    processed_by:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                  required:
+                  - id
+                  - amount_cents
+                  - currency
+                  - method
+                  - processor_status
+                  - is_refund
+                  - is_adjustment
+                  - voided
+                  - voided_at
+                  - processed_at
+                  - reference
+                  - created_at
+                  - updated_at
+                  - work_order_id
+                  - customer_id
+                  - url
+                  - app_url
+                  - work_order
+                  - customer
+                  - processed_by
+                  - location
           headers:
             Link:
               schema:
@@ -29538,7 +29646,62 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/WorkOrder"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    body:
+                      type: string
+                    source:
+                      type: string
+                    severity:
+                      nullable: true
+                      type: string
+                    finding_notes:
+                      type: string
+                    position:
+                      type: integer
+                    converted:
+                      type: boolean
+                    converted_service_id:
+                      nullable: true
+                      type: integer
+                    creator:
+                      type: object
+                      properties:
+                        id:
+                          nullable: true
+                          type: integer
+                        name:
+                          nullable: true
+                          type: string
+                        url:
+                          nullable: true
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    finding_added_by_name:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                  required:
+                  - id
+                  - type
+                  - body
+                  - source
+                  - severity
+                  - finding_notes
+                  - position
+                  - converted
+                  - converted_service_id
+                  - creator
+                  - finding_added_by_name
+                  - created_at
           headers:
             Link:
               schema:
@@ -31849,7 +32012,36 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/WorkOrder"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    action:
+                      type: string
+                    category:
+                      type: string
+                    body:
+                      type: string
+                    actor_name:
+                      type: string
+                    actor_type:
+                      type: string
+                    created_at:
+                      type: string
+                    work_order_id:
+                      type: integer
+                  required:
+                  - id
+                  - type
+                  - action
+                  - category
+                  - body
+                  - actor_name
+                  - actor_type
+                  - created_at
+                  - work_order_id
           headers:
             Link:
               schema:
@@ -31907,7 +32099,65 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/WorkOrder"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    status:
+                      type: string
+                    appointment_type:
+                      type: string
+                    starts_at:
+                      type: string
+                    ends_at:
+                      type: string
+                    all_day:
+                      type: boolean
+                    intake_method:
+                      type: string
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - url
+                    vehicle:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                      required:
+                      - id
+                    work_order_id:
+                      nullable: true
+                      type: integer
+                    service_advisor_id:
+                      type: integer
+                    created_at:
+                      type: string
+                    url:
+                      type: string
+                  required:
+                  - id
+                  - type
+                  - status
+                  - appointment_type
+                  - starts_at
+                  - ends_at
+                  - all_day
+                  - intake_method
+                  - customer
+                  - vehicle
+                  - work_order_id
+                  - service_advisor_id
+                  - created_at
+                  - url
           headers:
             Link:
               schema:
@@ -31956,7 +32206,281 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/WorkOrder"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    event_type:
+                      type: string
+                    method:
+                      type: string
+                    authorized_by_name:
+                      nullable: true
+                      type: string
+                    authorized_by_phone:
+                      nullable: true
+                      type: string
+                    notes:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    actor:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                      required:
+                      - id
+                      - type
+                    work_order_service_id:
+                      type: integer
+                    authorization_batch_id:
+                      nullable: true
+                      type: integer
+                    snapshot:
+                      type: object
+                      properties:
+                        snapshot_version:
+                          type: integer
+                        timestamp:
+                          type: string
+                        work_order:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            status:
+                              type: string
+                            total_cents:
+                              type: integer
+                            labor_cents:
+                              type: integer
+                            parts_cents:
+                              type: integer
+                            tires_cents:
+                              type: integer
+                            subcontracts_cents:
+                              type: integer
+                            fees_cents:
+                              type: integer
+                            discount_cents:
+                              type: integer
+                            subtotal_cents:
+                              type: integer
+                            tax_total_cents:
+                              type: integer
+                            core_charges_cents:
+                              type: integer
+                            labor_tax_cents:
+                              type: integer
+                            parts_tax_cents:
+                              type: integer
+                          required:
+                          - id
+                          - status
+                          - total_cents
+                          - labor_cents
+                          - parts_cents
+                          - tires_cents
+                          - subcontracts_cents
+                          - fees_cents
+                          - discount_cents
+                          - subtotal_cents
+                          - tax_total_cents
+                          - core_charges_cents
+                          - labor_tax_cents
+                          - parts_tax_cents
+                        services:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              customer_notes:
+                                nullable: true
+                                type: string
+                              authorization_status:
+                                type: string
+                              total_cents:
+                                type: integer
+                              labor_cents:
+                                type: integer
+                              parts_cents:
+                                type: integer
+                              tires_cents:
+                                type: integer
+                              fees_cents:
+                                type: integer
+                              sublet_cents:
+                                type: integer
+                              discount_cents:
+                                type: integer
+                              tax_total_cents:
+                                type: integer
+                              labor_tax_cents:
+                                type: integer
+                              parts_tax_cents:
+                                type: integer
+                              discount_type:
+                                type: string
+                              discount_scope:
+                                type: string
+                              discount_value_cents:
+                                type: integer
+                              show_tech_with_cert:
+                                type: boolean
+                              technician_display:
+                                nullable: true
+                                type: string
+                              line_items:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
+                                    item_type:
+                                      type: string
+                                    quantity:
+                                      type: number
+                                      format: float
+                                    unit_price_cents:
+                                      type: integer
+                                    unit_cost_cents:
+                                      type: integer
+                                    total_cents:
+                                      type: integer
+                                    hours:
+                                      type: number
+                                      format: float
+                                    part_status:
+                                      type: string
+                                    part_number:
+                                      nullable: true
+                                      type: string
+                                    is_taxable:
+                                      type: boolean
+                                    is_warranty:
+                                      type: boolean
+                                    is_fee:
+                                      type: boolean
+                                    is_discount:
+                                      type: boolean
+                                    percentage_value:
+                                      nullable: true
+                                      type: number
+                                    percentage:
+                                      type: boolean
+                                    rate_cents:
+                                      type: integer
+                                    core_charge_cents:
+                                      type: integer
+                                    has_core_charge:
+                                      type: boolean
+                                    core_status:
+                                      type: string
+                                    core_credited_cents:
+                                      type: integer
+                                    fee_on_labor:
+                                      type: boolean
+                                    fee_on_parts:
+                                      type: boolean
+                                    fee_on_sublets:
+                                      type: boolean
+                                    fee_on_fees:
+                                      nullable: true
+                                      type: boolean
+                                    discount_on_labor:
+                                      type: boolean
+                                    discount_on_parts:
+                                      type: boolean
+                                    discount_on_sublets:
+                                      type: boolean
+                                    discount_on_fees:
+                                      type: boolean
+                                  required:
+                                  - id
+                                  - name
+                                  - item_type
+                                  - quantity
+                                  - unit_price_cents
+                                  - unit_cost_cents
+                                  - total_cents
+                                  - hours
+                                  - part_status
+                                  - part_number
+                                  - is_taxable
+                                  - is_warranty
+                                  - is_fee
+                                  - is_discount
+                                  - percentage_value
+                                  - percentage
+                                  - rate_cents
+                                  - core_charge_cents
+                                  - has_core_charge
+                                  - core_status
+                                  - core_credited_cents
+                                  - fee_on_labor
+                                  - fee_on_parts
+                                  - fee_on_sublets
+                                  - fee_on_fees
+                                  - discount_on_labor
+                                  - discount_on_parts
+                                  - discount_on_sublets
+                                  - discount_on_fees
+                              sublet_orders:
+                                type: array
+                                items: {}
+                            required:
+                            - id
+                            - name
+                            - customer_notes
+                            - authorization_status
+                            - total_cents
+                            - labor_cents
+                            - parts_cents
+                            - tires_cents
+                            - fees_cents
+                            - sublet_cents
+                            - discount_cents
+                            - tax_total_cents
+                            - labor_tax_cents
+                            - parts_tax_cents
+                            - discount_type
+                            - discount_scope
+                            - discount_value_cents
+                            - show_tech_with_cert
+                            - technician_display
+                            - line_items
+                            - sublet_orders
+                      required:
+                      - snapshot_version
+                      - timestamp
+                      - work_order
+                      - services
+                  required:
+                  - id
+                  - type
+                  - event_type
+                  - method
+                  - authorized_by_name
+                  - authorized_by_phone
+                  - notes
+                  - created_at
+                  - actor
+                  - work_order_service_id
+                  - authorization_batch_id
+                  - snapshot
           headers:
             Link:
               schema:
@@ -32005,7 +32529,37 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/WorkOrder"
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    work_order_number:
+                      type: integer
+                    status:
+                      type: string
+                    created_at:
+                      type: string
+                    closed_at:
+                      nullable: true
+                      type: string
+                    services_summary:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - type
+                  - work_order_number
+                  - status
+                  - created_at
+                  - closed_at
+                  - services_summary
+                  - url
+                  - app_url
           headers:
             Link:
               schema:
@@ -32762,50 +33316,46 @@ components:
       properties:
         id:
           type: integer
-        amount_cents:
-          type: integer
-        currency:
+        statement_number:
           type: string
-        method:
+        status:
           type: string
-        processor_status:
+        statement_date:
           type: string
-        is_refund:
-          type: boolean
-        is_adjustment:
-          type: boolean
-        voided:
-          type: boolean
-        voided_at:
-          nullable: true
+        start_date:
           type: string
-        processed_at:
+        end_date:
           type: string
-        reference:
-          nullable: true
+        due_date:
           type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        work_order_id:
-          type: integer
-        customer_id:
-          type: integer
-        url:
-          type: string
-        app_url:
-          type: string
-        work_order:
+        totals:
           type: object
           properties:
-            id:
+            previous_balance_cents:
               type: integer
-            url:
+            new_charges_cents:
+              type: integer
+            payments_received_cents:
+              type: integer
+            credits_cents:
+              type: integer
+            balance_due_cents:
+              type: integer
+            currency:
               type: string
           required:
-          - id
-          - url
+          - previous_balance_cents
+          - new_charges_cents
+          - payments_received_cents
+          - credits_cents
+          - balance_due_cents
+          - currency
+        sent_at:
+          nullable: true
+          type: string
+        viewed_at:
+          nullable: true
+          type: string
         customer:
           type: object
           properties:
@@ -32819,54 +33369,30 @@ components:
           - id
           - full_name
           - url
-        processed_by:
-          type: object
-          properties:
-            id:
-              type: integer
-            full_name:
-              type: string
-            url:
-              type: string
-          required:
-          - id
-          - full_name
-          - url
-        location:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            url:
-              type: string
-          required:
-          - id
-          - name
-          - url
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        url:
+          type: string
+        app_url:
+          type: string
       required:
       - id
-      - amount_cents
-      - currency
-      - method
-      - processor_status
-      - is_refund
-      - is_adjustment
-      - voided
-      - voided_at
-      - processed_at
-      - reference
+      - statement_number
+      - status
+      - statement_date
+      - start_date
+      - end_date
+      - due_date
+      - totals
+      - sent_at
+      - viewed_at
+      - customer
       - created_at
       - updated_at
-      - work_order_id
-      - customer_id
       - url
       - app_url
-      - work_order
-      - customer
-      - processed_by
-      - location
     Vehicle:
       type: object
       properties:

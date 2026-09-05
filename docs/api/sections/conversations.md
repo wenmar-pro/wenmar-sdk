@@ -19,22 +19,22 @@ List all conversations, paginated via the Link header.
 | `status` | string | Yes |
 | `reply_state` | string | Yes |
 | `channel` | string | Yes |
-| `customer` | object | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `messages_url` | string | Yes |
+| `last_message_at` | string | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `from_number` | any | No |
-| `from_email` | any | No |
-| `last_message_preview` | any | No |
-| `messages_count` | integer | No |
-| `has_failed_message` | boolean | No |
-| `last_message_at` | string | No |
-| `customer_last_read_at` | string \| null | No |
-| `driver_last_read_at` | string \| null | No |
-| `oldest_unanswered_inbound_at` | string \| null | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -136,22 +136,22 @@ Create a conversations customer link.
 | `status` | string | Yes |
 | `reply_state` | string | Yes |
 | `channel` | string | Yes |
-| `customer` | object | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `messages_url` | string | Yes |
+| `last_message_at` | string | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `from_number` | any | No |
-| `from_email` | any | No |
-| `last_message_preview` | any | No |
-| `messages_count` | integer | No |
-| `has_failed_message` | boolean | No |
-| `last_message_at` | string | No |
-| `customer_last_read_at` | string \| null | No |
-| `driver_last_read_at` | string \| null | No |
-| `oldest_unanswered_inbound_at` | string \| null | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -185,22 +185,22 @@ Create a conversations ignore.
 | `status` | string | Yes |
 | `reply_state` | string | Yes |
 | `channel` | string | Yes |
-| `customer` | object | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `messages_url` | string | Yes |
+| `last_message_at` | string | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `from_number` | any | No |
-| `from_email` | any | No |
-| `last_message_preview` | any | No |
-| `messages_count` | integer | No |
-| `has_failed_message` | boolean | No |
-| `last_message_at` | string | No |
-| `customer_last_read_at` | string \| null | No |
-| `driver_last_read_at` | string \| null | No |
-| `oldest_unanswered_inbound_at` | string \| null | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -236,22 +236,22 @@ List all conversations messages, paginated via the Link header.
 | `channel` | string | Yes |
 | `status` | string | Yes |
 | `body` | string | Yes |
+| `recipient_phone` | any | Yes |
+| `recipient_email` | any | Yes |
 | `work_order_id` | integer \| null | Yes |
 | `statement_id` | integer \| null | Yes |
 | `appointment_id` | integer \| null | Yes |
+| `failure_reason` | string \| null | Yes |
+| `attachment_count` | integer | Yes |
+| `sent_at` | string \| null | Yes |
+| `delivered_at` | string \| null | Yes |
 | `read_at` | string \| null | Yes |
+| `failed_at` | string \| null | Yes |
 | `created_at` | string | Yes |
-| `recipient_phone` | any | No |
-| `recipient_email` | any | No |
-| `failure_reason` | string \| null | No |
-| `attachment_count` | integer | No |
-| `sent_at` | string \| null | No |
-| `delivered_at` | string \| null | No |
-| `failed_at` | string \| null | No |
-| `updated_at` | string | No |
-| `conversation_url` | string | No |
-| `url` | string | No |
-| `app_url` | string | No |
+| `updated_at` | string | Yes |
+| `conversation_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/conversations/{conversation_id}/messages.json
@@ -279,30 +279,30 @@ Create a conversations message.
 | `channel` | string | Yes |
 | `status` | string | Yes |
 | `body` | string | Yes |
-| `sender` | object | Yes |
+| `recipient_phone` | any | Yes |
+| `recipient_email` | any | Yes |
 | `work_order_id` | integer \| null | Yes |
 | `statement_id` | integer \| null | Yes |
 | `appointment_id` | integer \| null | Yes |
+| `failure_reason` | string \| null | Yes |
+| `attachment_count` | integer | Yes |
+| `sender` | object | Yes |
+| `sent_at` | string \| null | Yes |
+| `delivered_at` | string \| null | Yes |
 | `read_at` | string \| null | Yes |
+| `failed_at` | string \| null | Yes |
 | `created_at` | string | Yes |
-| `recipient_phone` | any | No |
-| `recipient_email` | any | No |
-| `failure_reason` | string \| null | No |
-| `attachment_count` | integer | No |
-| `sent_at` | string \| null | No |
-| `delivered_at` | string \| null | No |
-| `failed_at` | string \| null | No |
-| `updated_at` | string | No |
-| `conversation_url` | string | No |
-| `url` | string | No |
-| `app_url` | string | No |
+| `updated_at` | string | Yes |
+| `conversation_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `sender` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
+| `type` | string | Yes |
 | `name` | string | Yes |
-| `type` | string | No |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -329,22 +329,22 @@ Show a conversation by ID.
 | `status` | string | Yes |
 | `reply_state` | string | Yes |
 | `channel` | string | Yes |
-| `customer` | object | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `messages_url` | string | Yes |
+| `last_message_at` | string | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `from_number` | any | No |
-| `from_email` | any | No |
-| `last_message_preview` | any | No |
-| `messages_count` | integer | No |
-| `has_failed_message` | boolean | No |
-| `last_message_at` | string | No |
-| `customer_last_read_at` | string \| null | No |
-| `driver_last_read_at` | string \| null | No |
-| `oldest_unanswered_inbound_at` | string \| null | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -377,22 +377,22 @@ Update a conversation by ID.
 | `status` | string | Yes |
 | `reply_state` | string | Yes |
 | `channel` | string | Yes |
-| `customer` | object | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `messages_url` | string | Yes |
+| `last_message_at` | string | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `from_number` | any | No |
-| `from_email` | any | No |
-| `last_message_preview` | any | No |
-| `messages_count` | integer | No |
-| `has_failed_message` | boolean | No |
-| `last_message_at` | string | No |
-| `customer_last_read_at` | string \| null | No |
-| `driver_last_read_at` | string \| null | No |
-| `oldest_unanswered_inbound_at` | string \| null | No |
 
 `customer` — object:
 | Field | Type | Required |

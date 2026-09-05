@@ -1265,52 +1265,36 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `amount_cents` | integer | Yes |
-| `currency` | string | Yes |
-| `method` | string | Yes |
-| `processor_status` | string | Yes |
-| `is_refund` | boolean | Yes |
-| `is_adjustment` | boolean | Yes |
-| `voided` | boolean | Yes |
-| `voided_at` | string \| null | Yes |
-| `processed_at` | string | Yes |
-| `reference` | string \| null | Yes |
+| `statement_number` | string | Yes |
+| `status` | string | Yes |
+| `statement_date` | string | Yes |
+| `start_date` | string | Yes |
+| `end_date` | string | Yes |
+| `due_date` | string | Yes |
+| `totals` | object | Yes |
+| `sent_at` | string \| null | Yes |
+| `viewed_at` | string \| null | Yes |
+| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
-| `work_order_id` | integer | Yes |
-| `customer_id` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `work_order` | object | Yes |
-| `customer` | object | Yes |
-| `processed_by` | object | Yes |
-| `location` | object | Yes |
 
-`work_order` — object:
+`totals` — object:
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
-| `url` | string | Yes |
+| `previous_balance_cents` | integer | Yes |
+| `new_charges_cents` | integer | Yes |
+| `payments_received_cents` | integer | Yes |
+| `credits_cents` | integer | Yes |
+| `balance_due_cents` | integer | Yes |
+| `currency` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`processed_by` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
 | `url` | string | Yes |
 
 ---

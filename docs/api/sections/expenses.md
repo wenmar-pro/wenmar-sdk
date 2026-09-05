@@ -387,6 +387,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `expense` — object:
 | Field | Type | Required |
 |---|---|---|
-| `receipt_id` | string | No |
 | `description` | string | No |
+| `receipt_id` | string | No |
 

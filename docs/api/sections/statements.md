@@ -68,15 +68,7 @@ List all statements payments, paginated via the Link header.
 |---|---|---|
 | `statement_id` | integer | Yes |
 
-**Response 200** — array of [Statement](#statement-schema)
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/{statement_id}/payments.json
-```
-
----
-
-### Statement schema {#statement-schema}
+**Response 200** — array
 
 | Field | Type | Required |
 |---|---|---|
@@ -127,6 +119,49 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/{statement_id}/payments.json
+```
+
+---
+
+### Statement schema {#statement-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `statement_number` | string | Yes |
+| `status` | string | Yes |
+| `statement_date` | string | Yes |
+| `start_date` | string | Yes |
+| `end_date` | string | Yes |
+| `due_date` | string | Yes |
+| `totals` | object | Yes |
+| `sent_at` | string \| null | Yes |
+| `viewed_at` | string \| null | Yes |
+| `customer` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`totals` — object:
+| Field | Type | Required |
+|---|---|---|
+| `previous_balance_cents` | integer | Yes |
+| `new_charges_cents` | integer | Yes |
+| `payments_received_cents` | integer | Yes |
+| `credits_cents` | integer | Yes |
+| `balance_due_cents` | integer | Yes |
+| `currency` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
 | `url` | string | Yes |
 
 ---

@@ -128,7 +128,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/inspections/{id}/remove_default` | `remove_default_inspection` | Remove default |
 | PATCH | `/inspections/{id}/restore` | `restore_inspection` | Restore |
 | PATCH | `/inspections/{id}/set_default` | `set_default_inspection` | Set default |
-| PATCH | `/inspections/{id}/toggle` | `toggle_inspection` | Toggle |
 | PATCH | `/inspections/{id}/trash` | `trash_inspection` | Trash |
 | GET | `/inventory_levels` | `list_inventory_levels` | List all inventory levels, paginated via the Link header. |
 | POST | `/inventory_levels` | `create_inventory_level` | Create a inventory level. |
@@ -237,9 +236,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/reports/store_credit` | `list_reports_store_credit` | List all reports store credit, paginated via the Link header. |
 | GET | `/reports/technician_productivity` | `list_reports_technician_productivity` | List all reports technician productivity, paginated via the Link header. |
 | GET | `/reports/work_order_profitability` | `list_reports_work_order_profitability` | List all reports work order profitability, paginated via the Link header. |
-| POST | `/scan/lookups` | `create_scan_lookup` | Create a scan lookup. |
-| POST | `/scan/started_work_orders` | `create_scan_started_work_order` | Create a scan started work order. |
-| POST | `/scan/vehicles` | `create_scan_vehicle` | Create a scan vehicle. |
 | GET | `/search` | `list_search` | List all search, paginated via the Link header. |
 | GET | `/service_categories` | `list_service_categories` | List all service categories, paginated via the Link header. |
 | POST | `/service_categories` | `create_service_category` | Create a service category. |
@@ -269,8 +265,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/sublet_packages/{id}` | `delete_sublet_package` | Delete a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}` | `update_sublet_package` | Update a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}/deactivate` | `update_sublet_packages_deactivate` | Update a sublet packages deactivate by ID. |
-| POST | `/time_entries` | `create_time_entrie` | Create a time entrie. |
-| PATCH | `/time_entries/{id}` | `update_time_entrie` | Update a time entrie by ID. |
 | GET | `/tire_events` | `list_tire_events` | List all tire events, paginated via the Link header. |
 | POST | `/tire_events` | `create_tire_event` | Create a tire event. |
 | GET | `/tire_events/{id}` | `show_tire_event` | Show a tire event by ID. |
@@ -331,7 +325,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/vendors/{id}/restore` | `restore_vendor` | Restore |
 | PATCH | `/vendors/{id}/trash` | `trash_vendor` | Trash |
 | GET | `/vendors/{vendor_id}/purchase_orders` | `list_vendors_purchase_orders` | List all vendors purchase orders, paginated via the Link header. |
-| DELETE | `/voice_commands/{id}` | `delete_voice_command` | Delete a voice command by ID. |
 | GET | `/work_order_tags` | `list_work_order_tags` | List all work order tags, paginated via the Link header. |
 | POST | `/work_order_tags` | `create_work_order_tag` | Create a work order tag. |
 | PATCH | `/work_order_tags/{id}` | `update_work_order_tag` | Update a work order tag by ID. |

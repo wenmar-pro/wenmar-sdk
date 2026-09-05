@@ -1156,7 +1156,29 @@ List all work orders concerns, paginated via the Link header.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array of [WorkOrder](#workorder-schema)
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `body` | string | Yes |
+| `source` | string | Yes |
+| `severity` | string \| null | Yes |
+| `finding_notes` | string | Yes |
+| `position` | integer | Yes |
+| `converted` | boolean | Yes |
+| `converted_service_id` | integer \| null | Yes |
+| `creator` | object | Yes |
+| `finding_added_by_name` | string \| null | Yes |
+| `created_at` | string | Yes |
+
+`creator` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer \| null | Yes |
+| `name` | string \| null | Yes |
+| `url` | string \| null | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/concerns.json
@@ -1691,7 +1713,7 @@ Reverse ar
 | `vehicle_history_url` | string | Yes |
 | `appointments_url` | string | Yes |
 | `authorization_logs_url` | string | Yes |
-| `reopen_url` | string | No |
+| `reopen_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1816,7 +1838,7 @@ Send to ar
 | `vehicle_history_url` | string | Yes |
 | `appointments_url` | string | Yes |
 | `authorization_logs_url` | string | Yes |
-| `reopen_url` | string | No |
+| `reopen_url` | string | Yes |
 
 `customer` — object:
 | Field | Type | Required |
@@ -2432,7 +2454,19 @@ List all work orders summary activity, paginated via the Link header.
 | `category` | string | No |
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array of [WorkOrder](#workorder-schema)
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `action` | string | Yes |
+| `category` | string | Yes |
+| `body` | string | Yes |
+| `actor_name` | string | Yes |
+| `actor_type` | string | Yes |
+| `created_at` | string | Yes |
+| `work_order_id` | integer | Yes |
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -2452,7 +2486,35 @@ List all work orders summary appointments, paginated via the Link header.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array of [WorkOrder](#workorder-schema)
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `all_day` | boolean | Yes |
+| `intake_method` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `service_advisor_id` | integer | Yes |
+| `created_at` | string | Yes |
+| `url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `url` | string | Yes |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/appointments.json
@@ -2470,7 +2532,54 @@ List all work orders summary authorization logs, paginated via the Link header.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array of [WorkOrder](#workorder-schema)
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `event_type` | string | Yes |
+| `method` | string | Yes |
+| `authorized_by_name` | string \| null | Yes |
+| `authorized_by_phone` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `actor` | object | Yes |
+| `work_order_service_id` | integer | Yes |
+| `authorization_batch_id` | integer \| null | Yes |
+| `snapshot` | object | Yes |
+
+`actor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+
+`snapshot` — object:
+| Field | Type | Required |
+|---|---|---|
+| `snapshot_version` | integer | Yes |
+| `timestamp` | string | Yes |
+| `work_order` | object | Yes |
+| `services` | array of object | Yes |
+
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `status` | string | Yes |
+| `total_cents` | integer | Yes |
+| `labor_cents` | integer | Yes |
+| `parts_cents` | integer | Yes |
+| `tires_cents` | integer | Yes |
+| `subcontracts_cents` | integer | Yes |
+| `fees_cents` | integer | Yes |
+| `discount_cents` | integer | Yes |
+| `subtotal_cents` | integer | Yes |
+| `tax_total_cents` | integer | Yes |
+| `core_charges_cents` | integer | Yes |
+| `labor_tax_cents` | integer | Yes |
+| `parts_tax_cents` | integer | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/authorization_logs.json
@@ -2488,7 +2597,19 @@ List all work orders summary vehicle history, paginated via the Link header.
 |---|---|---|
 | `work_order_id` | integer | Yes |
 
-**Response 200** — array of [WorkOrder](#workorder-schema)
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `type` | string | Yes |
+| `work_order_number` | integer | Yes |
+| `status` | string | Yes |
+| `created_at` | string | Yes |
+| `closed_at` | string \| null | Yes |
+| `services_summary` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/summary/vehicle_history.json
@@ -2922,11 +3043,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order_service` — object:
 | Field | Type | Required |
 |---|---|---|
-| `name` | string | No |
 | `technician_id` | integer | No |
 | `pricing_mode` | string | No |
-| `position` | integer | No |
+| `name` | string | No |
 | `labor_tax_enabled` | boolean | No |
+| `position` | integer | No |
 
 ---
 
@@ -2991,8 +3112,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order_line_item` — object:
 | Field | Type | Required |
 |---|---|---|
-| `part_status` | string | No |
 | `description` | string | No |
+| `part_status` | string | No |
 
 ---
 

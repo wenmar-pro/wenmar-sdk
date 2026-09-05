@@ -1056,42 +1056,32 @@ type SetDefaultInspectionRequest = map[string]interface{}
 
 // Statement defines model for Statement.
 type Statement struct {
-	AmountCents int    `json:"amount_cents"`
-	AppUrl      string `json:"app_url"`
-	CreatedAt   string `json:"created_at"`
-	Currency    string `json:"currency"`
-	Customer    struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Customer  struct {
 		FullName string `json:"full_name"`
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
 	} `json:"customer"`
-	CustomerId   int  `json:"customer_id"`
-	Id           int  `json:"id"`
-	IsAdjustment bool `json:"is_adjustment"`
-	IsRefund     bool `json:"is_refund"`
-	Location     struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-		Url  string `json:"url"`
-	} `json:"location"`
-	Method      string `json:"method"`
-	ProcessedAt string `json:"processed_at"`
-	ProcessedBy struct {
-		FullName string `json:"full_name"`
-		Id       int    `json:"id"`
-		Url      string `json:"url"`
-	} `json:"processed_by"`
-	ProcessorStatus string  `json:"processor_status"`
-	Reference       *string `json:"reference"`
-	UpdatedAt       string  `json:"updated_at"`
-	Url             string  `json:"url"`
-	Voided          bool    `json:"voided"`
-	VoidedAt        *string `json:"voided_at"`
-	WorkOrder       struct {
-		Id  int    `json:"id"`
-		Url string `json:"url"`
-	} `json:"work_order"`
-	WorkOrderId int `json:"work_order_id"`
+	DueDate         string  `json:"due_date"`
+	EndDate         string  `json:"end_date"`
+	Id              int     `json:"id"`
+	SentAt          *string `json:"sent_at"`
+	StartDate       string  `json:"start_date"`
+	StatementDate   string  `json:"statement_date"`
+	StatementNumber string  `json:"statement_number"`
+	Status          string  `json:"status"`
+	Totals          struct {
+		BalanceDueCents       int    `json:"balance_due_cents"`
+		CreditsCents          int    `json:"credits_cents"`
+		Currency              string `json:"currency"`
+		NewChargesCents       int    `json:"new_charges_cents"`
+		PaymentsReceivedCents int    `json:"payments_received_cents"`
+		PreviousBalanceCents  int    `json:"previous_balance_cents"`
+	} `json:"totals"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+	ViewedAt  *string `json:"viewed_at"`
 }
 
 // SubletOrder defines model for SubletOrder.
@@ -57431,13 +57421,87 @@ type ListStatementsPaymentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]Statement
+	JSON200 *[]struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus string  `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+		WorkOrder       struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"work_order"`
+		WorkOrderId int `json:"work_order_id"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListStatementsPaymentsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListStatementsPaymentsResponse) GetJSON200() *[]Statement {
+func (r ListStatementsPaymentsResponse) GetJSON200() *[]struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus string  `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+	WorkOrder       struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"work_order"`
+	WorkOrderId int `json:"work_order_id"`
+} {
 	return r.JSON200
 }
 
@@ -65088,13 +65152,47 @@ type ListWorkOrdersConcernsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]WorkOrder
+	JSON200 *[]struct {
+		Body               string `json:"body"`
+		Converted          bool   `json:"converted"`
+		ConvertedServiceId *int   `json:"converted_service_id"`
+		CreatedAt          string `json:"created_at"`
+		Creator            struct {
+			Id   *int    `json:"id"`
+			Name *string `json:"name"`
+			Url  *string `json:"url"`
+		} `json:"creator"`
+		FindingAddedByName *string `json:"finding_added_by_name"`
+		FindingNotes       string  `json:"finding_notes"`
+		Id                 int     `json:"id"`
+		Position           int     `json:"position"`
+		Severity           *string `json:"severity"`
+		Source             string  `json:"source"`
+		Type               string  `json:"type"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListWorkOrdersConcernsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersConcernsResponse) GetJSON200() *[]WorkOrder {
+func (r ListWorkOrdersConcernsResponse) GetJSON200() *[]struct {
+	Body               string `json:"body"`
+	Converted          bool   `json:"converted"`
+	ConvertedServiceId *int   `json:"converted_service_id"`
+	CreatedAt          string `json:"created_at"`
+	Creator            struct {
+		Id   *int    `json:"id"`
+		Name *string `json:"name"`
+		Url  *string `json:"url"`
+	} `json:"creator"`
+	FindingAddedByName *string `json:"finding_added_by_name"`
+	FindingNotes       string  `json:"finding_notes"`
+	Id                 int     `json:"id"`
+	Position           int     `json:"position"`
+	Severity           *string `json:"severity"`
+	Source             string  `json:"source"`
+	Type               string  `json:"type"`
+} {
 	return r.JSON200
 }
 
@@ -67103,7 +67201,17 @@ type ListWorkOrdersSummaryActivityResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]WorkOrder
+	JSON200 *[]struct {
+		Action      string `json:"action"`
+		ActorName   string `json:"actor_name"`
+		ActorType   string `json:"actor_type"`
+		Body        string `json:"body"`
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Id          int    `json:"id"`
+		Type        string `json:"type"`
+		WorkOrderId int    `json:"work_order_id"`
+	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -67113,7 +67221,17 @@ type ListWorkOrdersSummaryActivityResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersSummaryActivityResponse) GetJSON200() *[]WorkOrder {
+func (r ListWorkOrdersSummaryActivityResponse) GetJSON200() *[]struct {
+	Action      string `json:"action"`
+	ActorName   string `json:"actor_name"`
+	ActorType   string `json:"actor_type"`
+	Body        string `json:"body"`
+	Category    string `json:"category"`
+	CreatedAt   string `json:"created_at"`
+	Id          int    `json:"id"`
+	Type        string `json:"type"`
+	WorkOrderId int    `json:"work_order_id"`
+} {
 	return r.JSON200
 }
 
@@ -67164,13 +67282,53 @@ type ListWorkOrdersSummaryAppointmentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]WorkOrder
+	JSON200 *[]struct {
+		AllDay          bool   `json:"all_day"`
+		AppointmentType string `json:"appointment_type"`
+		CreatedAt       string `json:"created_at"`
+		Customer        struct {
+			Id  int    `json:"id"`
+			Url string `json:"url"`
+		} `json:"customer"`
+		EndsAt           string `json:"ends_at"`
+		Id               int    `json:"id"`
+		IntakeMethod     string `json:"intake_method"`
+		ServiceAdvisorId int    `json:"service_advisor_id"`
+		StartsAt         string `json:"starts_at"`
+		Status           string `json:"status"`
+		Type             string `json:"type"`
+		Url              string `json:"url"`
+		Vehicle          struct {
+			Id int `json:"id"`
+		} `json:"vehicle"`
+		WorkOrderId *int `json:"work_order_id"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListWorkOrdersSummaryAppointmentsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersSummaryAppointmentsResponse) GetJSON200() *[]WorkOrder {
+func (r ListWorkOrdersSummaryAppointmentsResponse) GetJSON200() *[]struct {
+	AllDay          bool   `json:"all_day"`
+	AppointmentType string `json:"appointment_type"`
+	CreatedAt       string `json:"created_at"`
+	Customer        struct {
+		Id  int    `json:"id"`
+		Url string `json:"url"`
+	} `json:"customer"`
+	EndsAt           string `json:"ends_at"`
+	Id               int    `json:"id"`
+	IntakeMethod     string `json:"intake_method"`
+	ServiceAdvisorId int    `json:"service_advisor_id"`
+	StartsAt         string `json:"starts_at"`
+	Status           string `json:"status"`
+	Type             string `json:"type"`
+	Url              string `json:"url"`
+	Vehicle          struct {
+		Id int `json:"id"`
+	} `json:"vehicle"`
+	WorkOrderId *int `json:"work_order_id"`
+} {
 	return r.JSON200
 }
 
@@ -67214,13 +67372,189 @@ type ListWorkOrdersSummaryAuthorizationLogsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]WorkOrder
+	JSON200 *[]struct {
+		Actor struct {
+			Id   int    `json:"id"`
+			Type string `json:"type"`
+		} `json:"actor"`
+		AuthorizationBatchId *int    `json:"authorization_batch_id"`
+		AuthorizedByName     *string `json:"authorized_by_name"`
+		AuthorizedByPhone    *string `json:"authorized_by_phone"`
+		CreatedAt            string  `json:"created_at"`
+		EventType            string  `json:"event_type"`
+		Id                   int     `json:"id"`
+		Method               string  `json:"method"`
+		Notes                *string `json:"notes"`
+		Snapshot             struct {
+			Services []struct {
+				AuthorizationStatus string  `json:"authorization_status"`
+				CustomerNotes       *string `json:"customer_notes"`
+				DiscountCents       int     `json:"discount_cents"`
+				DiscountScope       string  `json:"discount_scope"`
+				DiscountType        string  `json:"discount_type"`
+				DiscountValueCents  int     `json:"discount_value_cents"`
+				FeesCents           int     `json:"fees_cents"`
+				Id                  int     `json:"id"`
+				LaborCents          int     `json:"labor_cents"`
+				LaborTaxCents       int     `json:"labor_tax_cents"`
+				LineItems           []struct {
+					CoreChargeCents   int      `json:"core_charge_cents"`
+					CoreCreditedCents int      `json:"core_credited_cents"`
+					CoreStatus        string   `json:"core_status"`
+					DiscountOnFees    bool     `json:"discount_on_fees"`
+					DiscountOnLabor   bool     `json:"discount_on_labor"`
+					DiscountOnParts   bool     `json:"discount_on_parts"`
+					DiscountOnSublets bool     `json:"discount_on_sublets"`
+					FeeOnFees         *bool    `json:"fee_on_fees"`
+					FeeOnLabor        bool     `json:"fee_on_labor"`
+					FeeOnParts        bool     `json:"fee_on_parts"`
+					FeeOnSublets      bool     `json:"fee_on_sublets"`
+					HasCoreCharge     bool     `json:"has_core_charge"`
+					Hours             float32  `json:"hours"`
+					Id                int      `json:"id"`
+					IsDiscount        bool     `json:"is_discount"`
+					IsFee             bool     `json:"is_fee"`
+					IsTaxable         bool     `json:"is_taxable"`
+					IsWarranty        bool     `json:"is_warranty"`
+					ItemType          string   `json:"item_type"`
+					Name              string   `json:"name"`
+					PartNumber        *string  `json:"part_number"`
+					PartStatus        string   `json:"part_status"`
+					Percentage        bool     `json:"percentage"`
+					PercentageValue   *float32 `json:"percentage_value"`
+					Quantity          float32  `json:"quantity"`
+					RateCents         int      `json:"rate_cents"`
+					TotalCents        int      `json:"total_cents"`
+					UnitCostCents     int      `json:"unit_cost_cents"`
+					UnitPriceCents    int      `json:"unit_price_cents"`
+				} `json:"line_items"`
+				Name              string        `json:"name"`
+				PartsCents        int           `json:"parts_cents"`
+				PartsTaxCents     int           `json:"parts_tax_cents"`
+				ShowTechWithCert  bool          `json:"show_tech_with_cert"`
+				SubletCents       int           `json:"sublet_cents"`
+				SubletOrders      []interface{} `json:"sublet_orders"`
+				TaxTotalCents     int           `json:"tax_total_cents"`
+				TechnicianDisplay *string       `json:"technician_display"`
+				TiresCents        int           `json:"tires_cents"`
+				TotalCents        int           `json:"total_cents"`
+			} `json:"services"`
+			SnapshotVersion int    `json:"snapshot_version"`
+			Timestamp       string `json:"timestamp"`
+			WorkOrder       struct {
+				CoreChargesCents  int    `json:"core_charges_cents"`
+				DiscountCents     int    `json:"discount_cents"`
+				FeesCents         int    `json:"fees_cents"`
+				Id                int    `json:"id"`
+				LaborCents        int    `json:"labor_cents"`
+				LaborTaxCents     int    `json:"labor_tax_cents"`
+				PartsCents        int    `json:"parts_cents"`
+				PartsTaxCents     int    `json:"parts_tax_cents"`
+				Status            string `json:"status"`
+				SubcontractsCents int    `json:"subcontracts_cents"`
+				SubtotalCents     int    `json:"subtotal_cents"`
+				TaxTotalCents     int    `json:"tax_total_cents"`
+				TiresCents        int    `json:"tires_cents"`
+				TotalCents        int    `json:"total_cents"`
+			} `json:"work_order"`
+		} `json:"snapshot"`
+		Type               string `json:"type"`
+		WorkOrderServiceId int    `json:"work_order_service_id"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListWorkOrdersSummaryAuthorizationLogsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersSummaryAuthorizationLogsResponse) GetJSON200() *[]WorkOrder {
+func (r ListWorkOrdersSummaryAuthorizationLogsResponse) GetJSON200() *[]struct {
+	Actor struct {
+		Id   int    `json:"id"`
+		Type string `json:"type"`
+	} `json:"actor"`
+	AuthorizationBatchId *int    `json:"authorization_batch_id"`
+	AuthorizedByName     *string `json:"authorized_by_name"`
+	AuthorizedByPhone    *string `json:"authorized_by_phone"`
+	CreatedAt            string  `json:"created_at"`
+	EventType            string  `json:"event_type"`
+	Id                   int     `json:"id"`
+	Method               string  `json:"method"`
+	Notes                *string `json:"notes"`
+	Snapshot             struct {
+		Services []struct {
+			AuthorizationStatus string  `json:"authorization_status"`
+			CustomerNotes       *string `json:"customer_notes"`
+			DiscountCents       int     `json:"discount_cents"`
+			DiscountScope       string  `json:"discount_scope"`
+			DiscountType        string  `json:"discount_type"`
+			DiscountValueCents  int     `json:"discount_value_cents"`
+			FeesCents           int     `json:"fees_cents"`
+			Id                  int     `json:"id"`
+			LaborCents          int     `json:"labor_cents"`
+			LaborTaxCents       int     `json:"labor_tax_cents"`
+			LineItems           []struct {
+				CoreChargeCents   int      `json:"core_charge_cents"`
+				CoreCreditedCents int      `json:"core_credited_cents"`
+				CoreStatus        string   `json:"core_status"`
+				DiscountOnFees    bool     `json:"discount_on_fees"`
+				DiscountOnLabor   bool     `json:"discount_on_labor"`
+				DiscountOnParts   bool     `json:"discount_on_parts"`
+				DiscountOnSublets bool     `json:"discount_on_sublets"`
+				FeeOnFees         *bool    `json:"fee_on_fees"`
+				FeeOnLabor        bool     `json:"fee_on_labor"`
+				FeeOnParts        bool     `json:"fee_on_parts"`
+				FeeOnSublets      bool     `json:"fee_on_sublets"`
+				HasCoreCharge     bool     `json:"has_core_charge"`
+				Hours             float32  `json:"hours"`
+				Id                int      `json:"id"`
+				IsDiscount        bool     `json:"is_discount"`
+				IsFee             bool     `json:"is_fee"`
+				IsTaxable         bool     `json:"is_taxable"`
+				IsWarranty        bool     `json:"is_warranty"`
+				ItemType          string   `json:"item_type"`
+				Name              string   `json:"name"`
+				PartNumber        *string  `json:"part_number"`
+				PartStatus        string   `json:"part_status"`
+				Percentage        bool     `json:"percentage"`
+				PercentageValue   *float32 `json:"percentage_value"`
+				Quantity          float32  `json:"quantity"`
+				RateCents         int      `json:"rate_cents"`
+				TotalCents        int      `json:"total_cents"`
+				UnitCostCents     int      `json:"unit_cost_cents"`
+				UnitPriceCents    int      `json:"unit_price_cents"`
+			} `json:"line_items"`
+			Name              string        `json:"name"`
+			PartsCents        int           `json:"parts_cents"`
+			PartsTaxCents     int           `json:"parts_tax_cents"`
+			ShowTechWithCert  bool          `json:"show_tech_with_cert"`
+			SubletCents       int           `json:"sublet_cents"`
+			SubletOrders      []interface{} `json:"sublet_orders"`
+			TaxTotalCents     int           `json:"tax_total_cents"`
+			TechnicianDisplay *string       `json:"technician_display"`
+			TiresCents        int           `json:"tires_cents"`
+			TotalCents        int           `json:"total_cents"`
+		} `json:"services"`
+		SnapshotVersion int    `json:"snapshot_version"`
+		Timestamp       string `json:"timestamp"`
+		WorkOrder       struct {
+			CoreChargesCents  int    `json:"core_charges_cents"`
+			DiscountCents     int    `json:"discount_cents"`
+			FeesCents         int    `json:"fees_cents"`
+			Id                int    `json:"id"`
+			LaborCents        int    `json:"labor_cents"`
+			LaborTaxCents     int    `json:"labor_tax_cents"`
+			PartsCents        int    `json:"parts_cents"`
+			PartsTaxCents     int    `json:"parts_tax_cents"`
+			Status            string `json:"status"`
+			SubcontractsCents int    `json:"subcontracts_cents"`
+			SubtotalCents     int    `json:"subtotal_cents"`
+			TaxTotalCents     int    `json:"tax_total_cents"`
+			TiresCents        int    `json:"tires_cents"`
+			TotalCents        int    `json:"total_cents"`
+		} `json:"work_order"`
+	} `json:"snapshot"`
+	Type               string `json:"type"`
+	WorkOrderServiceId int    `json:"work_order_service_id"`
+} {
 	return r.JSON200
 }
 
@@ -67264,13 +67598,33 @@ type ListWorkOrdersSummaryVehicleHistoryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]WorkOrder
+	JSON200 *[]struct {
+		AppUrl          string  `json:"app_url"`
+		ClosedAt        *string `json:"closed_at"`
+		CreatedAt       string  `json:"created_at"`
+		Id              int     `json:"id"`
+		ServicesSummary string  `json:"services_summary"`
+		Status          string  `json:"status"`
+		Type            string  `json:"type"`
+		Url             string  `json:"url"`
+		WorkOrderNumber int     `json:"work_order_number"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListWorkOrdersSummaryVehicleHistoryResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListWorkOrdersSummaryVehicleHistoryResponse) GetJSON200() *[]WorkOrder {
+func (r ListWorkOrdersSummaryVehicleHistoryResponse) GetJSON200() *[]struct {
+	AppUrl          string  `json:"app_url"`
+	ClosedAt        *string `json:"closed_at"`
+	CreatedAt       string  `json:"created_at"`
+	Id              int     `json:"id"`
+	ServicesSummary string  `json:"services_summary"`
+	Status          string  `json:"status"`
+	Type            string  `json:"type"`
+	Url             string  `json:"url"`
+	WorkOrderNumber int     `json:"work_order_number"`
+} {
 	return r.JSON200
 }
 
@@ -87560,7 +87914,44 @@ func ParseListStatementsPaymentsResponse(rsp *http.Response) (*ListStatementsPay
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Statement
+		var dest []struct {
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus string  `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+			WorkOrder       struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"work_order"`
+			WorkOrderId int `json:"work_order_id"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -92397,7 +92788,24 @@ func ParseListWorkOrdersConcernsResponse(rsp *http.Response) (*ListWorkOrdersCon
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []WorkOrder
+		var dest []struct {
+			Body               string `json:"body"`
+			Converted          bool   `json:"converted"`
+			ConvertedServiceId *int   `json:"converted_service_id"`
+			CreatedAt          string `json:"created_at"`
+			Creator            struct {
+				Id   *int    `json:"id"`
+				Name *string `json:"name"`
+				Url  *string `json:"url"`
+			} `json:"creator"`
+			FindingAddedByName *string `json:"finding_added_by_name"`
+			FindingNotes       string  `json:"finding_notes"`
+			Id                 int     `json:"id"`
+			Position           int     `json:"position"`
+			Severity           *string `json:"severity"`
+			Source             string  `json:"source"`
+			Type               string  `json:"type"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -93643,7 +94051,17 @@ func ParseListWorkOrdersSummaryActivityResponse(rsp *http.Response) (*ListWorkOr
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []WorkOrder
+		var dest []struct {
+			Action      string `json:"action"`
+			ActorName   string `json:"actor_name"`
+			ActorType   string `json:"actor_type"`
+			Body        string `json:"body"`
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Id          int    `json:"id"`
+			Type        string `json:"type"`
+			WorkOrderId int    `json:"work_order_id"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -93705,7 +94123,27 @@ func ParseListWorkOrdersSummaryAppointmentsResponse(rsp *http.Response) (*ListWo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []WorkOrder
+		var dest []struct {
+			AllDay          bool   `json:"all_day"`
+			AppointmentType string `json:"appointment_type"`
+			CreatedAt       string `json:"created_at"`
+			Customer        struct {
+				Id  int    `json:"id"`
+				Url string `json:"url"`
+			} `json:"customer"`
+			EndsAt           string `json:"ends_at"`
+			Id               int    `json:"id"`
+			IntakeMethod     string `json:"intake_method"`
+			ServiceAdvisorId int    `json:"service_advisor_id"`
+			StartsAt         string `json:"starts_at"`
+			Status           string `json:"status"`
+			Type             string `json:"type"`
+			Url              string `json:"url"`
+			Vehicle          struct {
+				Id int `json:"id"`
+			} `json:"vehicle"`
+			WorkOrderId *int `json:"work_order_id"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -93758,7 +94196,95 @@ func ParseListWorkOrdersSummaryAuthorizationLogsResponse(rsp *http.Response) (*L
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []WorkOrder
+		var dest []struct {
+			Actor struct {
+				Id   int    `json:"id"`
+				Type string `json:"type"`
+			} `json:"actor"`
+			AuthorizationBatchId *int    `json:"authorization_batch_id"`
+			AuthorizedByName     *string `json:"authorized_by_name"`
+			AuthorizedByPhone    *string `json:"authorized_by_phone"`
+			CreatedAt            string  `json:"created_at"`
+			EventType            string  `json:"event_type"`
+			Id                   int     `json:"id"`
+			Method               string  `json:"method"`
+			Notes                *string `json:"notes"`
+			Snapshot             struct {
+				Services []struct {
+					AuthorizationStatus string  `json:"authorization_status"`
+					CustomerNotes       *string `json:"customer_notes"`
+					DiscountCents       int     `json:"discount_cents"`
+					DiscountScope       string  `json:"discount_scope"`
+					DiscountType        string  `json:"discount_type"`
+					DiscountValueCents  int     `json:"discount_value_cents"`
+					FeesCents           int     `json:"fees_cents"`
+					Id                  int     `json:"id"`
+					LaborCents          int     `json:"labor_cents"`
+					LaborTaxCents       int     `json:"labor_tax_cents"`
+					LineItems           []struct {
+						CoreChargeCents   int      `json:"core_charge_cents"`
+						CoreCreditedCents int      `json:"core_credited_cents"`
+						CoreStatus        string   `json:"core_status"`
+						DiscountOnFees    bool     `json:"discount_on_fees"`
+						DiscountOnLabor   bool     `json:"discount_on_labor"`
+						DiscountOnParts   bool     `json:"discount_on_parts"`
+						DiscountOnSublets bool     `json:"discount_on_sublets"`
+						FeeOnFees         *bool    `json:"fee_on_fees"`
+						FeeOnLabor        bool     `json:"fee_on_labor"`
+						FeeOnParts        bool     `json:"fee_on_parts"`
+						FeeOnSublets      bool     `json:"fee_on_sublets"`
+						HasCoreCharge     bool     `json:"has_core_charge"`
+						Hours             float32  `json:"hours"`
+						Id                int      `json:"id"`
+						IsDiscount        bool     `json:"is_discount"`
+						IsFee             bool     `json:"is_fee"`
+						IsTaxable         bool     `json:"is_taxable"`
+						IsWarranty        bool     `json:"is_warranty"`
+						ItemType          string   `json:"item_type"`
+						Name              string   `json:"name"`
+						PartNumber        *string  `json:"part_number"`
+						PartStatus        string   `json:"part_status"`
+						Percentage        bool     `json:"percentage"`
+						PercentageValue   *float32 `json:"percentage_value"`
+						Quantity          float32  `json:"quantity"`
+						RateCents         int      `json:"rate_cents"`
+						TotalCents        int      `json:"total_cents"`
+						UnitCostCents     int      `json:"unit_cost_cents"`
+						UnitPriceCents    int      `json:"unit_price_cents"`
+					} `json:"line_items"`
+					Name              string        `json:"name"`
+					PartsCents        int           `json:"parts_cents"`
+					PartsTaxCents     int           `json:"parts_tax_cents"`
+					ShowTechWithCert  bool          `json:"show_tech_with_cert"`
+					SubletCents       int           `json:"sublet_cents"`
+					SubletOrders      []interface{} `json:"sublet_orders"`
+					TaxTotalCents     int           `json:"tax_total_cents"`
+					TechnicianDisplay *string       `json:"technician_display"`
+					TiresCents        int           `json:"tires_cents"`
+					TotalCents        int           `json:"total_cents"`
+				} `json:"services"`
+				SnapshotVersion int    `json:"snapshot_version"`
+				Timestamp       string `json:"timestamp"`
+				WorkOrder       struct {
+					CoreChargesCents  int    `json:"core_charges_cents"`
+					DiscountCents     int    `json:"discount_cents"`
+					FeesCents         int    `json:"fees_cents"`
+					Id                int    `json:"id"`
+					LaborCents        int    `json:"labor_cents"`
+					LaborTaxCents     int    `json:"labor_tax_cents"`
+					PartsCents        int    `json:"parts_cents"`
+					PartsTaxCents     int    `json:"parts_tax_cents"`
+					Status            string `json:"status"`
+					SubcontractsCents int    `json:"subcontracts_cents"`
+					SubtotalCents     int    `json:"subtotal_cents"`
+					TaxTotalCents     int    `json:"tax_total_cents"`
+					TiresCents        int    `json:"tires_cents"`
+					TotalCents        int    `json:"total_cents"`
+				} `json:"work_order"`
+			} `json:"snapshot"`
+			Type               string `json:"type"`
+			WorkOrderServiceId int    `json:"work_order_service_id"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -93811,7 +94337,17 @@ func ParseListWorkOrdersSummaryVehicleHistoryResponse(rsp *http.Response) (*List
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []WorkOrder
+		var dest []struct {
+			AppUrl          string  `json:"app_url"`
+			ClosedAt        *string `json:"closed_at"`
+			CreatedAt       string  `json:"created_at"`
+			Id              int     `json:"id"`
+			ServicesSummary string  `json:"services_summary"`
+			Status          string  `json:"status"`
+			Type            string  `json:"type"`
+			Url             string  `json:"url"`
+			WorkOrderNumber int     `json:"work_order_number"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
