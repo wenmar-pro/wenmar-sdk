@@ -3409,6 +3409,33 @@ paths:
                       type: string
                     channel:
                       type: string
+                    from_number:
+                      nullable: true
+                    from_email:
+                      nullable: true
+                    last_message_preview:
+                      nullable: true
+                    messages_count:
+                      type: integer
+                    has_failed_message:
+                      type: boolean
+                    unread_count:
+                      type: integer
+                    last_message_at:
+                      type: string
+                    customer_last_read_at:
+                      nullable: true
+                      type: string
+                    driver_last_read_at:
+                      nullable: true
+                      type: string
+                    oldest_unanswered_inbound_at:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
                     customer:
                       type: object
                       properties:
@@ -3422,13 +3449,7 @@ paths:
                       - id
                       - name
                       - url
-                    unread_count:
-                      type: integer
                     messages_url:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
                       type: string
                     url:
                       type: string
@@ -3439,11 +3460,20 @@ paths:
                   - status
                   - reply_state
                   - channel
-                  - customer
+                  - from_number
+                  - from_email
+                  - last_message_preview
+                  - messages_count
+                  - has_failed_message
                   - unread_count
-                  - messages_url
+                  - last_message_at
+                  - customer_last_read_at
+                  - driver_last_read_at
+                  - oldest_unanswered_inbound_at
                   - created_at
                   - updated_at
+                  - customer
+                  - messages_url
                   - url
                   - app_url
           headers:
@@ -3469,6 +3499,126 @@ paths:
       operationId: list_conversations
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/conversations.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - conversations
+      responses:
+        '201':
+          description: POST /conversations -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  status:
+                    type: string
+                  reply_state:
+                    type: string
+                  channel:
+                    type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    nullable: true
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  messages_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - status
+                - reply_state
+                - channel
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
+                - unread_count
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
+                - created_at
+                - updated_at
+                - customer
+                - messages_url
+                - url
+                - app_url
+        '422':
+          description: POST /conversations -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateConversationRequest"
+      description: Create a conversation.
+      operationId: create_conversation
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/conversations.json
+      x-wenmar-request-schema: CreateConversationRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3552,6 +3702,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -3565,13 +3742,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -3582,11 +3753,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: Create a conversations customer link.
@@ -3637,6 +3817,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -3650,13 +3857,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -3667,11 +3868,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: Create a conversations ignore.
@@ -3723,6 +3933,10 @@ paths:
                       type: string
                     body:
                       type: string
+                    recipient_phone:
+                      nullable: true
+                    recipient_email:
+                      nullable: true
                     work_order_id:
                       nullable: true
                       type: integer
@@ -3732,10 +3946,32 @@ paths:
                     appointment_id:
                       nullable: true
                       type: integer
+                    failure_reason:
+                      nullable: true
+                      type: string
+                    attachment_count:
+                      type: integer
+                    sent_at:
+                      nullable: true
+                      type: string
+                    delivered_at:
+                      nullable: true
+                      type: string
                     read_at:
                       nullable: true
                       type: string
+                    failed_at:
+                      nullable: true
+                      type: string
                     created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    conversation_url:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
                       type: string
                   required:
                   - id
@@ -3744,11 +3980,22 @@ paths:
                   - channel
                   - status
                   - body
+                  - recipient_phone
+                  - recipient_email
                   - work_order_id
                   - statement_id
                   - appointment_id
+                  - failure_reason
+                  - attachment_count
+                  - sent_at
+                  - delivered_at
                   - read_at
+                  - failed_at
                   - created_at
+                  - updated_at
+                  - conversation_url
+                  - url
+                  - app_url
           headers:
             Link:
               schema:
@@ -3788,6 +4035,28 @@ paths:
           type: integer
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    body:
+                      type: string
+                    channel:
+                      type: string
+                  required:
+                  - body
+                  - channel
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+              - message
+              - files
           application/json:
             schema:
               "$ref": "#/components/schemas/CreateConversationsMessageRequest"
@@ -3811,16 +4080,10 @@ paths:
                     type: string
                   body:
                     type: string
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - name
+                  recipient_phone:
+                    nullable: true
+                  recipient_email:
+                    nullable: true
                   work_order_id:
                     nullable: true
                     type: integer
@@ -3830,10 +4093,45 @@ paths:
                   appointment_id:
                     nullable: true
                     type: integer
+                  failure_reason:
+                    nullable: true
+                    type: string
+                  attachment_count:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
+                  sent_at:
+                    nullable: true
+                    type: string
+                  delivered_at:
+                    nullable: true
+                    type: string
                   read_at:
                     nullable: true
                     type: string
+                  failed_at:
+                    nullable: true
+                    type: string
                   created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
                     type: string
                 required:
                 - id
@@ -3842,102 +4140,29 @@ paths:
                 - channel
                 - status
                 - body
-                - sender
+                - recipient_phone
+                - recipient_email
                 - work_order_id
                 - statement_id
                 - appointment_id
+                - failure_reason
+                - attachment_count
+                - sender
+                - sent_at
+                - delivered_at
                 - read_at
+                - failed_at
                 - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
       description: Create a conversations message.
       operationId: create_conversations_message
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/conversations/{conversation_id}/messages.json
       x-wenmar-request-schema: CreateConversationsMessageRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
-  "/conversations/{conversation_id}/messages/{id}/resends":
-    post:
-      summary: create
-      tags:
-      - conversations
-      parameters:
-      - name: conversation_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateConversationsMessagesResendRequest"
-      responses:
-        '200':
-          description: POST /conversations/{conversation_id}/messages/{id}/resends
-            -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  conversation_id:
-                    type: integer
-                  direction:
-                    type: string
-                  channel:
-                    type: string
-                  status:
-                    type: string
-                  body:
-                    type: string
-                  work_order_id:
-                    nullable: true
-                    type: integer
-                  statement_id:
-                    nullable: true
-                    type: integer
-                  appointment_id:
-                    nullable: true
-                    type: integer
-                  read_at:
-                    nullable: true
-                    type: string
-                  created_at:
-                    type: string
-                required:
-                - id
-                - conversation_id
-                - direction
-                - channel
-                - status
-                - body
-                - work_order_id
-                - statement_id
-                - appointment_id
-                - read_at
-                - created_at
-      description: Create a conversations messages resend.
-      operationId: create_conversations_messages_resend
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/conversations/<id>.json
-      x-wenmar-request-schema: CreateConversationsMessagesResendRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3975,6 +4200,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -3988,13 +4240,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -4005,11 +4251,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: Show a conversation by ID.
@@ -4057,6 +4312,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -4070,13 +4352,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -4087,11 +4363,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: Update a conversation by ID.
@@ -4335,6 +4620,8 @@ paths:
                       type: string
                     app_url:
                       type: string
+                    reopen_url:
+                      type: string
                   required:
                   - id
                   - counter_sale_number
@@ -4452,6 +4739,8 @@ paths:
                   url:
                     type: string
                   app_url:
+                    type: string
+                  reopen_url:
                     type: string
                 required:
                 - id
@@ -4621,6 +4910,8 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - id
                 - counter_sale_number
@@ -4736,6 +5027,8 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - id
                 - counter_sale_number
@@ -4762,6 +5055,150 @@ paths:
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/counter_sales/<id>.json
       x-wenmar-request-schema: UpdateCounterSaleRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/counter_sales/{id}/reopen":
+    patch:
+      summary: reopen
+      tags:
+      - counter_sales
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCounterSalesReopenRequest"
+      responses:
+        '200':
+          description: PATCH /counter_sales/{id}/reopen -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  counter_sale_number:
+                    type: integer
+                  status:
+                    type: string
+                  walk_in_name:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  subtotal_cents:
+                    type: integer
+                  tax_total_cents:
+                    type: integer
+                  total_cents:
+                    type: integer
+                  paid_cents:
+                    type: integer
+                  remaining_cents:
+                    type: integer
+                  paid:
+                    type: boolean
+                  currency:
+                    type: string
+                  line_items_count:
+                    type: integer
+                  processed_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  reopen_url:
+                    type: string
+                required:
+                - id
+                - counter_sale_number
+                - status
+                - walk_in_name
+                - notes
+                - subtotal_cents
+                - tax_total_cents
+                - total_cents
+                - paid_cents
+                - remaining_cents
+                - paid
+                - currency
+                - line_items_count
+                - processed_by
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - reopen_url
+        '403':
+          description: PATCH /counter_sales/{id}/reopen -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: PATCH /counter_sales/{id}/reopen -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Update a counter sales reopen by ID.
+      operationId: update_counter_sales_reopen
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/counter_sales/<id>.json
+      x-wenmar-request-schema: UpdateCounterSalesReopenRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -4965,6 +5402,590 @@ paths:
         - 503
         - 504
         method-gated: true
+    post:
+      summary: create
+      tags:
+      - courtesy_cars
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCourtesyCarRequest"
+      responses:
+        '201':
+          description: POST /courtesy_cars -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    nullable: true
+                  license_plate_state:
+                    nullable: true
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+        '403':
+          description: POST /courtesy_cars -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /courtesy_cars -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a courtesy car.
+      operationId: create_courtesy_car
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/courtesy_cars.json
+      x-wenmar-request-schema: CreateCourtesyCarRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/courtesy_cars/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - courtesy_cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: DELETE /courtesy_cars/{id} -> 204
+        '422':
+          description: DELETE /courtesy_cars/{id} -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Delete a courtesy car by ID.
+      operationId: delete_courtesy_car
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/courtesy_cars/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    get:
+      summary: show
+      tags:
+      - courtesy_cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /courtesy_cars/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+      description: Show a courtesy car by ID.
+      operationId: show_courtesy_car
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/courtesy_cars/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - courtesy_cars
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCourtesyCarRequest"
+      responses:
+        '200':
+          description: PATCH /courtesy_cars/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+      description: Update a courtesy car by ID.
+      operationId: update_courtesy_car
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/courtesy_cars/<id>.json
+      x-wenmar-request-schema: UpdateCourtesyCarRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/current_location":
     get:
       summary: show
@@ -5056,11 +6077,6 @@ paths:
       summary: update
       tags:
       - current_location
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateCurrentLocationRequest"
       responses:
         '200':
           description: PATCH /current_location -> 200
@@ -5140,6 +6156,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateCurrentLocationRequest"
       description: Update a current location by ID.
       operationId: update_current_location
       x-curl-example: |-
@@ -5161,12 +6182,6 @@ paths:
       summary: index
       tags:
       - customer_tags
-      parameters:
-      - name: status
-        in: query
-        required: false
-        schema:
-          type: string
       responses:
         '200':
           description: GET /customer_tags -> 200
@@ -5192,8 +6207,8 @@ paths:
                     status:
                       type: string
                     trashed_at:
-                      type: string
                       nullable: true
+                      type: string
                   required:
                   - id
                   - name
@@ -5216,6 +6231,12 @@ paths:
               schema:
                 type: integer
               description: Records per page
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
       description: List all customer tags, paginated via the Link header.
       operationId: list_customer_tags
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -5234,6 +6255,11 @@ paths:
       summary: create
       tags:
       - customer_tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomerTagRequest"
       responses:
         '201':
           description: POST /customer_tags -> 201
@@ -5279,11 +6305,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCustomerTagRequest"
       description: Create a customer tag.
       operationId: create_customer_tag
       x-curl-example: |-
@@ -5895,6 +6916,11 @@ paths:
       summary: create
       tags:
       - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomersExportRequest"
       responses:
         '200':
           description: POST /customers/export -> 200
@@ -5913,11 +6939,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCustomersExportRequest"
       description: Create a customers export.
       operationId: create_customers_export
       x-curl-example: |-
@@ -6074,6 +7095,17 @@ paths:
               schema:
                 type: integer
               description: Records per page
+        '401':
+          description: GET /customers/{customer_id}/drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: List all customers drivers, paginated via the Link header.
       operationId: list_customers_drivers
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -6105,6 +7137,17 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Driver"
+        '401':
+          description: POST /customers/{customer_id}/drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
         '422':
           description: POST /customers/{customer_id}/drivers -> 422
           content:
@@ -6156,6 +7199,17 @@ paths:
       responses:
         '204':
           description: DELETE /customers/{customer_id}/drivers/{id} -> 204
+        '401':
+          description: DELETE /customers/{customer_id}/drivers/{id} -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: Delete a driver by ID.
       operationId: delete_driver
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
@@ -7091,15 +8145,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties: {}
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/TrashCustomerRequest"
       responses:
         '200':
           description: PATCH /customers/{id}/trash -> 200
@@ -7271,12 +8316,84 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TrashCustomerRequest"
       description:
       operationId: trash_customer
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/customers/<id>.json
       x-wenmar-request-schema: TrashCustomerRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/drivers":
+    get:
+      summary: index
+      tags:
+      - drivers
+      parameters:
+      - name: filters[has_open_work_order]
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filters[q]
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /drivers -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Driver"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all drivers, paginated via the Link header.
+      operationId: list_drivers
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/drivers.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -7739,6 +8856,17 @@ paths:
       summary: validate
       tags:
       - expenses
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
       responses:
         '200':
           description: POST /expenses/imports/validate -> 200
@@ -7786,17 +8914,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-              required:
-              - file
       description: Create a expenses imports validate.
       operationId: create_expenses_imports_validate
       x-curl-example: |-
@@ -9821,11 +10938,11 @@ paths:
                     on_hand:
                       type: integer
                     reorder_point:
-                      nullable: true
                       type: string
+                      nullable: true
                     bin_location:
-                      nullable: true
                       type: string
+                      nullable: true
                     created_at:
                       type: string
                     updated_at:
@@ -11238,11 +12355,6 @@ paths:
       summary: create
       tags:
       - lead_sources
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateLeadSourceRequest"
       responses:
         '201':
           description: POST /lead_sources -> 201
@@ -11293,6 +12405,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateLeadSourceRequest"
       description: Create a lead source.
       operationId: create_lead_source
       x-curl-example: |-
@@ -12089,6 +13206,11 @@ paths:
         required: true
         schema:
           type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateLocationsOperationsRequest"
       responses:
         '200':
           description: PATCH /locations/{id}/operations -> 200
@@ -12146,11 +13268,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateLocationsOperationsRequest"
       description: Update a locations operations by ID.
       operationId: update_locations_operations
       x-curl-example: |-
@@ -13497,8 +14614,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        nullable: true
                         type: string
+                        nullable: true
                       role:
                         type: string
                       confirmed:
@@ -13535,11 +14652,6 @@ paths:
       summary: update
       tags:
       - me
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateMeProfileRequest"
       responses:
         '200':
           description: PATCH /me/profile -> 200
@@ -13586,12 +14698,400 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateMeProfileRequest"
       description: Update a me profile by ID.
       operationId: update_me_profile
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/me/profile.json
       x-wenmar-request-schema: UpdateMeProfileRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/messages":
+    get:
+      summary: index
+      tags:
+      - messages
+      responses:
+        '200':
+          description: GET /messages -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    conversation_id:
+                      type: integer
+                    direction:
+                      type: string
+                    channel:
+                      type: string
+                    status:
+                      type: string
+                    body:
+                      type: string
+                    recipient_phone:
+                      type: string
+                    recipient_email:
+                      nullable: true
+                    work_order_id:
+                      nullable: true
+                      type: integer
+                    statement_id:
+                      nullable: true
+                      type: integer
+                    appointment_id:
+                      nullable: true
+                      type: integer
+                    failure_reason:
+                      type: string
+                    attachment_count:
+                      type: integer
+                    sender:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - id
+                      - type
+                      - name
+                    sent_at:
+                      nullable: true
+                      type: string
+                    delivered_at:
+                      nullable: true
+                      type: string
+                    read_at:
+                      nullable: true
+                      type: string
+                    failed_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    conversation_url:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - conversation_id
+                  - direction
+                  - channel
+                  - status
+                  - body
+                  - recipient_phone
+                  - recipient_email
+                  - work_order_id
+                  - statement_id
+                  - appointment_id
+                  - failure_reason
+                  - attachment_count
+                  - sender
+                  - sent_at
+                  - delivered_at
+                  - read_at
+                  - failed_at
+                  - created_at
+                  - updated_at
+                  - conversation_url
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+      parameters:
+      - name: conversation_id
+        in: query
+        required: false
+        schema:
+          type: integer
+      description: List all messages, paginated via the Link header.
+      operationId: list_messages
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/messages.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/messages/{id}":
+    get:
+      summary: show
+      tags:
+      - messages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /messages/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  conversation_id:
+                    type: integer
+                  direction:
+                    type: string
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  body:
+                    type: string
+                  recipient_phone:
+                    type: string
+                  recipient_email:
+                    nullable: true
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  statement_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                  failure_reason:
+                    type: string
+                  attachment_count:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
+                  sent_at:
+                    nullable: true
+                    type: string
+                  delivered_at:
+                    nullable: true
+                    type: string
+                  read_at:
+                    nullable: true
+                    type: string
+                  failed_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - conversation_id
+                - direction
+                - channel
+                - status
+                - body
+                - recipient_phone
+                - recipient_email
+                - work_order_id
+                - statement_id
+                - appointment_id
+                - failure_reason
+                - attachment_count
+                - sender
+                - sent_at
+                - delivered_at
+                - read_at
+                - failed_at
+                - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
+      description: Show a message by ID.
+      operationId: show_message
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/messages/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/messages/{message_id}/resends":
+    post:
+      summary: create
+      tags:
+      - messages
+      parameters:
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateMessagesResendRequest"
+      responses:
+        '201':
+          description: POST /messages/{message_id}/resends -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  conversation_id:
+                    type: integer
+                  direction:
+                    type: string
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  body:
+                    type: string
+                  recipient_phone:
+                    type: string
+                  recipient_email:
+                    nullable: true
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  statement_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                  failure_reason:
+                    nullable: true
+                    type: string
+                  attachment_count:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
+                  sent_at:
+                    nullable: true
+                    type: string
+                  delivered_at:
+                    nullable: true
+                    type: string
+                  read_at:
+                    nullable: true
+                    type: string
+                  failed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - conversation_id
+                - direction
+                - channel
+                - status
+                - body
+                - recipient_phone
+                - recipient_email
+                - work_order_id
+                - statement_id
+                - appointment_id
+                - failure_reason
+                - attachment_count
+                - sent_at
+                - delivered_at
+                - read_at
+                - failed_at
+                - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
+      description: Create a messages resend.
+      operationId: create_messages_resend
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/messages/{message_id}/resends.json
+      x-wenmar-request-schema: CreateMessagesResendRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -13638,6 +15138,18 @@ paths:
                       type: string
                     app_url:
                       type: string
+                    category:
+                      type: string
+                    location_id:
+                      type: integer
+                    work_order_id:
+                      nullable: true
+                      type: integer
+                    triggered_by_id:
+                      nullable: true
+                      type: integer
+                    action_path:
+                      nullable: true
                   required:
                   - id
                   - trigger_type
@@ -13662,6 +15174,10 @@ paths:
               schema:
                 type: integer
               description: Records per page
+            X-Unread-Count:
+              schema:
+                type: integer
+              description: Unread notifications in the user's feed
         '401':
           description: GET /notifications -> 401
           content:
@@ -13675,6 +15191,37 @@ paths:
                 - error
       description: List all notifications, paginated via the Link header.
       operationId: list_notifications
+      parameters:
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: read
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: since
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: trigger_type
+        in: query
+        required: false
+        schema:
+          type: string
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/notifications.json'
       x-retry:
@@ -13759,6 +15306,7 @@ paths:
                     type: boolean
                   read_at:
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -13767,6 +15315,25 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  category:
+                    type: string
+                  location_id:
+                    type: integer
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  triggered_by_id:
+                    nullable: true
+                    type: integer
+                  action_path:
+                    nullable: true
+                  metadata:
+                    type: object
+                    properties:
+                      inbound:
+                        type: boolean
+                    required:
+                    - inbound
                 required:
                 - id
                 - trigger_type
@@ -13838,6 +15405,7 @@ paths:
                     type: boolean
                   read_at:
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -13846,6 +15414,18 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  category:
+                    type: string
+                  location_id:
+                    type: integer
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  triggered_by_id:
+                    nullable: true
+                    type: integer
+                  action_path:
+                    nullable: true
                 required:
                 - id
                 - trigger_type
@@ -14678,6 +16258,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePackagesDuplicateRequest"
       responses:
         '201':
           description: POST /packages/{id}/duplicate -> 201
@@ -14696,11 +16281,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreatePackagesDuplicateRequest"
       description: Create a packages duplicate.
       operationId: create_packages_duplicate
       x-curl-example: |-
@@ -17761,8 +19341,6 @@ paths:
                           type: string
                         icon:
                           type: string
-                        model:
-                          type: string
                         results:
                           type: array
                           items:
@@ -17848,6 +19426,8 @@ paths:
                             - overflow_actions
                         has_more:
                           type: boolean
+                        model:
+                          type: string
                         total_count:
                           type: integer
                       required:
@@ -17932,6 +19512,11 @@ paths:
       summary: create
       tags:
       - service_categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateServiceCategoryRequest"
       responses:
         '201':
           description: POST /service_categories -> 201
@@ -17950,11 +19535,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateServiceCategoryRequest"
       description: Create a service category.
       operationId: create_service_category
       x-curl-example: |-
@@ -18395,6 +19975,11 @@ paths:
       summary: create
       tags:
       - shop_discounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateShopDiscountRequest"
       responses:
         '201':
           description: POST /shop_discounts -> 201
@@ -18448,11 +20033,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateShopDiscountRequest"
       description: Create a shop discount.
       operationId: create_shop_discount
       x-curl-example: |-
@@ -19474,6 +21054,11 @@ paths:
       summary: create
       tags:
       - sublet_packages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateSubletPackageRequest"
       responses:
         '201':
           description: POST /sublet_packages -> 201
@@ -19545,11 +21130,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateSubletPackageRequest"
       description: Create a sublet package.
       operationId: create_sublet_package
       x-curl-example: |-
@@ -19604,6 +21184,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateSubletPackageRequest"
       responses:
         '200':
           description: PATCH /sublet_packages/{id} -> 200
@@ -19675,11 +21260,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateSubletPackageRequest"
       description: Update a sublet package by ID.
       operationId: update_sublet_package
       x-curl-example: |-
@@ -19724,6 +21304,263 @@ paths:
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/sublet_packages/<id>.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tire_events":
+    get:
+      summary: index
+      tags:
+      - tire_events
+      responses:
+        '200':
+          description: GET /tire_events -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    event_type:
+                      type: string
+                    event_type_label:
+                      type: string
+                    occurred_at:
+                      type: string
+                    notes:
+                      nullable: true
+                      type: string
+                    vehicle:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - event_type
+                  - event_type_label
+                  - occurred_at
+                  - notes
+                  - vehicle
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /tire_events -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all tire events, paginated via the Link header.
+      operationId: list_tire_events
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/tire_events.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - tire_events
+      responses:
+        '201':
+          description: POST /tire_events -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  event_type:
+                    type: string
+                  event_type_label:
+                    type: string
+                  occurred_at:
+                    type: string
+                  notes:
+                    type: string
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - event_type
+                - event_type_label
+                - occurred_at
+                - notes
+                - vehicle
+                - created_at
+                - updated_at
+                - url
+                - app_url
+        '422':
+          description: POST /tire_events -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTireEventRequest"
+      description: Create a tire event.
+      operationId: create_tire_event
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tire_events.json
+      x-wenmar-request-schema: CreateTireEventRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tire_events/{id}":
+    get:
+      summary: show
+      tags:
+      - tire_events
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tire_events/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  event_type:
+                    type: string
+                  event_type_label:
+                    type: string
+                  occurred_at:
+                    type: string
+                  notes:
+                    type: string
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - event_type
+                - event_type_label
+                - occurred_at
+                - notes
+                - vehicle
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Show a tire event by ID.
+      operationId: show_tire_event
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/tire_events/<id>.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -19873,11 +21710,6 @@ paths:
       summary: create
       tags:
       - tire_storage_slots
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateTireStorageSlotRequest"
       responses:
         '201':
           description: POST /tire_storage_slots -> 201
@@ -19990,6 +21822,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTireStorageSlotRequest"
       description: Create a tire storage slot.
       operationId: create_tire_storage_slot
       x-curl-example: |-
@@ -20006,7 +21843,120 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/tire_storage_slots/export":
+    post:
+      summary: create
+      tags:
+      - tire_storage_slots
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTireStorageSlotsExportRequest"
+      responses:
+        '200':
+          description: POST /tire_storage_slots/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+      description: Create a tire storage slots export.
+      operationId: create_tire_storage_slots_export
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tire_storage_slots/export.json
+      x-wenmar-request-schema: CreateTireStorageSlotsExportRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tire_storage_slots/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - tire_storage_slots
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tire_storage_slots/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /tire_storage_slots/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all tire storage slots export download, paginated via the
+        Link header.
+      operationId: list_tire_storage_slots_export_download
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/tire_storage_slots/export/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/tire_storage_slots/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - tire_storage_slots
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: DELETE /tire_storage_slots/{id} -> 204
+      description: Delete a tire storage slot by ID.
+      operationId: delete_tire_storage_slot
+      x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
+        Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/tire_storage_slots/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
     get:
       summary: show
       tags:
@@ -20122,6 +22072,137 @@ paths:
       operationId: show_tire_storage_slot
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/tire_storage_slots/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    patch:
+      summary: update
+      tags:
+      - tire_storage_slots
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateTireStorageSlotRequest"
+      responses:
+        '200':
+          description: PATCH /tire_storage_slots/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  slot_label:
+                    type: string
+                  season:
+                    type: string
+                  season_label:
+                    type: string
+                  tire_set_description:
+                    type: string
+                  stored_at:
+                    type: string
+                  released_at:
+                    nullable: true
+                    type: string
+                  currently_stored:
+                    type: boolean
+                  storage_fee_cents:
+                    nullable: true
+                    type: integer
+                  fee_type:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - slot_label
+                - season
+                - season_label
+                - tire_set_description
+                - stored_at
+                - released_at
+                - currently_stored
+                - storage_fee_cents
+                - fee_type
+                - notes
+                - customer
+                - vehicle
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: Update a tire storage slot by ID.
+      operationId: update_tire_storage_slot
+      x-curl-example: |-
+        curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tire_storage_slots/<id>.json
+      x-wenmar-request-schema: UpdateTireStorageSlotRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -20540,6 +22621,218 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/tires/export":
+    post:
+      summary: create
+      tags:
+      - tires
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateTiresExportRequest"
+      responses:
+        '200':
+          description: POST /tires/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+      description: Create a tires export.
+      operationId: create_tires_export
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tires/export.json
+      x-wenmar-request-schema: CreateTiresExportRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tires/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - tires
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tires/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /tires/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all tires export download, paginated via the Link header.
+      operationId: list_tires_export_download
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/tires/export/<id>.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tires/imports/commit":
+    post:
+      summary: commit
+      tags:
+      - tires
+      responses:
+        '422':
+          description: POST /tires/imports/commit -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a tires imports commit.
+      operationId: create_tires_imports_commit
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tires/imports/commit.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tires/imports/template":
+    get:
+      summary: template
+      tags:
+      - tires
+      responses:
+        '200':
+          description: GET /tires/imports/template -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+      description: List all tires imports template, paginated via the Link header.
+      operationId: list_tires_imports_template
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/tires/imports/template.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/tires/imports/validate":
+    post:
+      summary: validate
+      tags:
+      - tires
+      responses:
+        '200':
+          description: POST /tires/imports/validate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid_count:
+                    type: integer
+                  error_count:
+                    type: integer
+                  duplicate_count:
+                    type: integer
+                  total:
+                    type: integer
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - valid_count
+                - error_count
+                - duplicate_count
+                - total
+                - errors
+        '422':
+          description: POST /tires/imports/validate -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      description: Create a tires imports validate.
+      operationId: create_tires_imports_validate
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/tires/imports/validate.json
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/tires/{id}":
     delete:
       summary: destroy
@@ -20832,6 +23125,17 @@ paths:
       summary: index
       tags:
       - users
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /users -> 200
@@ -21007,17 +23311,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       description: List all users, paginated via the Link header.
       operationId: list_users
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -23950,6 +26243,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/MergeVehicleRequest"
       responses:
         '200':
           description: POST /vehicles/{id}/merges -> 200
@@ -24122,11 +26420,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/MergeVehicleRequest"
       description:
       operationId: merge_vehicle
       x-curl-example: |-
@@ -24347,11 +26640,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/TransferVehicleRequest"
       responses:
         '201':
           description: POST /vehicles/{id}/transfers -> 201
@@ -24535,6 +26823,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TransferVehicleRequest"
       description:
       operationId: transfer_vehicle
       x-curl-example: |-
@@ -25682,6 +27975,12 @@ paths:
       summary: index
       tags:
       - work_orders
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /work_orders -> 200
@@ -25715,12 +28014,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      parameters:
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       description: List all work orders, paginated via the Link header.
       operationId: list_work_orders
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -25850,11 +28143,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateWorkOrderRequest"
       responses:
         '200':
           description: PATCH /work_orders/{id} -> 200
@@ -25884,6 +28172,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrderRequest"
       description: Update a work order by ID.
       operationId: update_work_order
       x-curl-example: |-
@@ -26197,6 +28490,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -26441,11 +28736,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersCourtesyCarAssignmentRequest"
       responses:
         '200':
           description: POST /work_orders/{id}/courtesy_car_assignment -> 200
@@ -26464,6 +28754,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersCourtesyCarAssignmentRequest"
       description: Create a work orders courtesy car assignment.
       operationId: create_work_orders_courtesy_car_assignment
       x-curl-example: |-
@@ -26672,11 +28967,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/ReopenWorkOrderRequest"
       responses:
         '200':
           description: PATCH /work_orders/{id}/reopen -> 200
@@ -27001,6 +29291,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ReopenWorkOrderRequest"
       description:
       operationId: reopen_work_order
       x-curl-example: |-
@@ -27808,6 +30103,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -27878,6 +30175,7 @@ paths:
                 - vehicle_history_url
                 - appointments_url
                 - authorization_logs_url
+                - reopen_url
       description:
       operationId: reverse_work_order_payment_ar
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
@@ -28150,6 +30448,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -28220,6 +30520,7 @@ paths:
                 - vehicle_history_url
                 - appointments_url
                 - authorization_logs_url
+                - reopen_url
       description:
       operationId: send_work_order_payment_to_ar
       x-curl-example: |-
@@ -28286,6 +30587,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServiceRequest"
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services -> 201
@@ -28310,11 +30616,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServiceRequest"
       description: Create a work orders service.
       operationId: create_work_orders_service
       x-curl-example: |-
@@ -28414,11 +30715,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateWorkOrdersServiceRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{id} -> 200
@@ -28443,6 +30739,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrdersServiceRequest"
       description: Update a work orders service by ID.
       operationId: update_work_orders_service
       x-curl-example: |-
@@ -28641,6 +30942,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesCompletionRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/completion
@@ -28661,11 +30967,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesCompletionRequest"
       description: Create a work orders services completion.
       operationId: create_work_orders_services_completion
       x-curl-example: |-
@@ -28742,11 +31043,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
@@ -28758,6 +31054,11 @@ paths:
         '404':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
             404
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesPackageRequest"
       description: Create a work orders services package.
       operationId: create_work_orders_services_package
       x-curl-example: |-
@@ -28924,6 +31225,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesTimeEntrieRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/time_entries
@@ -28944,11 +31250,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesTimeEntrieRequest"
       description: Create a work orders services time entrie.
       operationId: create_work_orders_services_time_entrie
       x-curl-example: |-
@@ -29071,11 +31372,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemRequest"
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items
@@ -29096,6 +31392,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemRequest"
       description: Create a work orders services line item.
       operationId: create_work_orders_services_line_item
       x-curl-example: |-
@@ -29333,11 +31634,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefresheRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
@@ -29358,6 +31654,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefresheRequest"
       description: Create a work orders services line items price refreshe.
       operationId: create_work_orders_services_line_items_price_refreshe
       x-curl-example: |-
@@ -30234,16 +32535,16 @@ components:
           type: string
           example: Jane Doe
         company_name:
-          type: string
           nullable: true
+          type: string
           example: Acme Auto
         first_name:
           type: string
         last_name:
           type: string
         fleet_identifier:
-          type: string
           nullable: true
+          type: string
         marketing_opt_in:
           type: boolean
         tax_exempt:
@@ -31696,6 +33997,18 @@ components:
           type: string
       required:
       - category
+    CreateConversationRequest:
+      type: object
+      properties:
+        conversation:
+          type: object
+          properties:
+            customer_id:
+              type: integer
+          required:
+          - customer_id
+      required:
+      - conversation
     CreateConversationsBulkMarkReadRequest:
       type: object
       properties: {}
@@ -31724,9 +34037,6 @@ components:
           - channel
       required:
       - message
-    CreateConversationsMessagesResendRequest:
-      type: object
-      properties: {}
     UpdateConversationRequest:
       type: object
       properties:
@@ -31761,6 +34071,42 @@ components:
           - notes
       required:
       - counter_sale
+    UpdateCounterSalesReopenRequest:
+      type: object
+      properties: {}
+    CreateCourtesyCarRequest:
+      type: object
+      properties:
+        vehicle:
+          type: object
+          properties:
+            year:
+              type: integer
+            make:
+              type: string
+            model:
+              type: string
+            vin:
+              type: string
+          required:
+          - year
+          - make
+          - model
+          - vin
+      required:
+      - vehicle
+    UpdateCourtesyCarRequest:
+      type: object
+      properties:
+        vehicle:
+          type: object
+          properties:
+            color:
+              type: string
+          required:
+          - color
+      required:
+      - vehicle
     UpdateCurrentLocationRequest:
       type: object
       properties:
@@ -31943,6 +34289,23 @@ components:
                   primary:
                     type: boolean
                     nullable: true
+            emails_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    nullable: true
+                  email:
+                    type: string
+                  label:
+                    type: string
+                    nullable: true
+                required:
+                - email
+            status:
+              type: string
             first_name:
               type: string
             last_name:
@@ -31967,21 +34330,6 @@ components:
               type: boolean
             customer_tag_id:
               nullable: true
-            emails_attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    nullable: true
-                  email:
-                    type: string
-                  label:
-                    type: string
-                    nullable: true
-                required:
-                - email
             addresses_attributes:
               type: array
               items:
@@ -32006,8 +34354,6 @@ components:
                 - postal_code
                 - country
                 - is_billing
-            status:
-              type: string
       required:
       - customer
     ArchiveCustomerRequest:
@@ -32062,9 +34408,9 @@ components:
         expense:
           type: object
           properties:
-            receipt_id:
-              type: string
             description:
+              type: string
+            receipt_id:
               type: string
       required:
       - expense
@@ -32467,6 +34813,9 @@ components:
           - email
       required:
       - user
+    CreateMessagesResendRequest:
+      type: object
+      properties: {}
     CreateNotificationsBulkMarkReadRequest:
       type: object
       properties:
@@ -32828,6 +35177,27 @@ components:
           - name
       required:
       - sublet_package
+    CreateTireEventRequest:
+      type: object
+      properties:
+        tire_event:
+          type: object
+          properties:
+            vehicle_id:
+              type: integer
+            event_type:
+              type: string
+            occurred_at:
+              type: string
+            notes:
+              type: string
+          required:
+          - vehicle_id
+          - event_type
+          - occurred_at
+          - notes
+      required:
+      - tire_event
     CreateTireStorageSlotRequest:
       type: object
       properties:
@@ -32850,6 +35220,21 @@ components:
           - slot_label
           - season
           - stored_at
+      required:
+      - tire_storage_slot
+    CreateTireStorageSlotsExportRequest:
+      type: object
+      properties: {}
+    UpdateTireStorageSlotRequest:
+      type: object
+      properties:
+        tire_storage_slot:
+          type: object
+          properties:
+            tire_set_description:
+              type: string
+          required:
+          - tire_set_description
       required:
       - tire_storage_slot
     CreateTireStorageSlotsCheckOutRequest:
@@ -32879,6 +35264,9 @@ components:
           - brand
       required:
       - tire
+    CreateTiresExportRequest:
+      type: object
+      properties: {}
     UpdateTireRequest:
       type: object
       properties:
@@ -33022,10 +35410,10 @@ components:
             production_date:
               type: string
           required:
+          - customer_id
+          - year
           - make
           - model
-          - year
-          - customer_id
       required:
       - vehicle
     UpdateVehicleRequest:
@@ -33174,20 +35562,20 @@ components:
         work_order:
           type: object
           properties:
-            saved_for_later:
-              type: boolean
             intake_method:
               type: string
-            payer_customer_id:
-              type: integer
+            work_order_tag_id:
+              type: string
             sub_status_type_id:
               type: integer
             vehicle_arrived_at:
               type: string
+            saved_for_later:
+              type: boolean
+            payer_customer_id:
+              type: integer
             waiting_for_customer:
               type: boolean
-            work_order_tag_id:
-              type: integer
       required:
       - work_order
     CreateWorkOrdersAccountPostingRequest:
@@ -33296,7 +35684,7 @@ components:
             method:
               type: string
             amount_cents:
-              type: string
+              type: number
               format: float
           required:
           - method
@@ -33355,16 +35743,16 @@ components:
         work_order_service:
           type: object
           properties:
-            name:
-              type: string
             technician_id:
               type: integer
             pricing_mode:
               type: string
-            position:
-              type: integer
+            name:
+              type: string
             labor_tax_enabled:
               type: boolean
+            position:
+              type: integer
       required:
       - work_order_service
     UpdateWorkOrdersServicesAdjustTimeRequest:
@@ -33426,17 +35814,17 @@ components:
               type: string
             description:
               type: string
+            hours:
+              type: number
+              format: float
+            labor_rate_id:
+              type: integer
             unit_price:
               type: string
             quantity:
               type: integer
             total:
               type: string
-            hours:
-              type: number
-              format: float
-            labor_rate_id:
-              type: integer
           required:
           - item_type
           - description

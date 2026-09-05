@@ -22,12 +22,13 @@
     "CreateAppointmentsWorkOrderRequest",
     "CreateCampaignRequest",
     "CreateCatalogCleanupsApplicationRequest",
+    "CreateConversationRequest",
     "CreateConversationsBulkMarkReadRequest",
     "CreateConversationsCustomerLinkRequest",
     "CreateConversationsIgnoreRequest",
     "CreateConversationsMessageRequest",
-    "CreateConversationsMessagesResendRequest",
     "CreateCounterSaleRequest",
+    "CreateCourtesyCarRequest",
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
     "CreateCustomersExportRequest",
@@ -42,6 +43,7 @@
     "CreateLeadSourceRequest",
     "CreateLeadSourcesSeedDefaultRequest",
     "CreateMeApiTokenRequest",
+    "CreateMessagesResendRequest",
     "CreateNotificationsBulkMarkReadRequest",
     "CreateOrdersPurchaseOrderRequest",
     "CreateOrdersPurchaseOrdersCancellationRequest",
@@ -62,9 +64,12 @@
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
+    "CreateTireEventRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
+    "CreateTireStorageSlotsExportRequest",
+    "CreateTiresExportRequest",
     "CreateUserRequest",
     "CreateUsersDisableRequest",
     "CreateUsersEnableRequest",
@@ -150,6 +155,8 @@
     "UpdateConversationRequest",
     "UpdateCoreTaxRuleRequest",
     "UpdateCounterSaleRequest",
+    "UpdateCounterSalesReopenRequest",
+    "UpdateCourtesyCarRequest",
     "UpdateCurrentLocationRequest",
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
@@ -187,6 +194,7 @@
     "UpdateSubStatuseRequest",
     "UpdateSubletPackageRequest",
     "UpdateTireRequest",
+    "UpdateTireStorageSlotRequest",
     "UpdateUserRequest",
     "UpdateVehicleRequest",
     "UpdateVendorRequest",
@@ -846,6 +854,24 @@
       "summary": "index"
     },
     {
+      "id": "create_conversation",
+      "method": "post",
+      "path": "/conversations",
+      "tag": "conversations",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateConversationRequest",
+      "requestShape": {
+        "wrapper": "conversation"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "create_conversations_bulk_mark_read",
       "method": "post",
       "path": "/conversations/bulk_mark_read",
@@ -942,30 +968,6 @@
       "requestSchema": "CreateConversationsMessageRequest",
       "requestShape": {
         "wrapper": "message"
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "create_conversations_messages_resend",
-      "method": "post",
-      "path": "/conversations/{conversation_id}/messages/{id}/resends",
-      "tag": "conversations",
-      "pathParams": [
-        "conversation_id",
-        "id"
-      ],
-      "pathParamTypes": {
-        "conversation_id": "integer",
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "CreateConversationsMessagesResendRequest",
-      "requestShape": {
-        "wrapper": null
       },
       "requestContentType": null,
       "paginated": false,
@@ -1150,6 +1152,28 @@
       "summary": "update"
     },
     {
+      "id": "update_counter_sales_reopen",
+      "method": "patch",
+      "path": "/counter_sales/{id}/reopen",
+      "tag": "counter_sales",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCounterSalesReopenRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "reopen"
+    },
+    {
       "id": "list_courtesy_cars",
       "method": "get",
       "path": "/courtesy_cars",
@@ -1164,6 +1188,86 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "index"
+    },
+    {
+      "id": "create_courtesy_car",
+      "method": "post",
+      "path": "/courtesy_cars",
+      "tag": "courtesy_cars",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateCourtesyCarRequest",
+      "requestShape": {
+        "wrapper": "vehicle"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_courtesy_car",
+      "method": "delete",
+      "path": "/courtesy_cars/{id}",
+      "tag": "courtesy_cars",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_courtesy_car",
+      "method": "get",
+      "path": "/courtesy_cars/{id}",
+      "tag": "courtesy_cars",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_courtesy_car",
+      "method": "patch",
+      "path": "/courtesy_cars/{id}",
+      "tag": "courtesy_cars",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCourtesyCarRequest",
+      "requestShape": {
+        "wrapper": "vehicle"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_current_location",
@@ -1882,6 +1986,35 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "trash"
+    },
+    {
+      "id": "list_drivers",
+      "method": "get",
+      "path": "/drivers",
+      "tag": "drivers",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "filters[has_open_work_order]",
+          "type": "boolean",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "filters[q]",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": "Driver",
+      "responseBody": true,
+      "summary": "index"
     },
     {
       "id": "list_expenses",
@@ -3593,13 +3726,115 @@
       "summary": "update"
     },
     {
+      "id": "list_messages",
+      "method": "get",
+      "path": "/messages",
+      "tag": "messages",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "conversation_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "show_message",
+      "method": "get",
+      "path": "/messages/{id}",
+      "tag": "messages",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "create_messages_resend",
+      "method": "post",
+      "path": "/messages/{message_id}/resends",
+      "tag": "messages",
+      "pathParams": [
+        "message_id"
+      ],
+      "pathParamTypes": {
+        "message_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateMessagesResendRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "list_notifications",
       "method": "get",
       "path": "/notifications",
       "tag": "notifications",
       "pathParams": [],
       "pathParamTypes": {},
-      "queryParams": [],
+      "queryParams": [
+        {
+          "name": "category",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "location_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "read",
+          "type": "boolean",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "since",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "trigger_type",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
       "requestSchema": null,
       "requestShape": null,
       "requestContentType": null,
@@ -5189,6 +5424,60 @@
       "summary": "deactivate"
     },
     {
+      "id": "list_tire_events",
+      "method": "get",
+      "path": "/tire_events",
+      "tag": "tire_events",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_tire_event",
+      "method": "post",
+      "path": "/tire_events",
+      "tag": "tire_events",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateTireEventRequest",
+      "requestShape": {
+        "wrapper": "tire_event"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "show_tire_event",
+      "method": "get",
+      "path": "/tire_events/{id}",
+      "tag": "tire_events",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
       "id": "list_tire_storage_slots",
       "method": "get",
       "path": "/tire_storage_slots",
@@ -5223,6 +5512,64 @@
       "summary": "create"
     },
     {
+      "id": "create_tire_storage_slots_export",
+      "method": "post",
+      "path": "/tire_storage_slots/export",
+      "tag": "tire_storage_slots",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateTireStorageSlotsExportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "list_tire_storage_slots_export_download",
+      "method": "get",
+      "path": "/tire_storage_slots/export/{id}/download",
+      "tag": "tire_storage_slots",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": null,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "download"
+    },
+    {
+      "id": "delete_tire_storage_slot",
+      "method": "delete",
+      "path": "/tire_storage_slots/{id}",
+      "tag": "tire_storage_slots",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
       "id": "show_tire_storage_slot",
       "method": "get",
       "path": "/tire_storage_slots/{id}",
@@ -5241,6 +5588,28 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "update_tire_storage_slot",
+      "method": "patch",
+      "path": "/tire_storage_slots/{id}",
+      "tag": "tire_storage_slots",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateTireStorageSlotRequest",
+      "requestShape": {
+        "wrapper": "tire_storage_slot"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "create_tire_storage_slots_check_out",
@@ -5297,6 +5666,92 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "create_tires_export",
+      "method": "post",
+      "path": "/tires/export",
+      "tag": "tires",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateTiresExportRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "list_tires_export_download",
+      "method": "get",
+      "path": "/tires/export/{id}/download",
+      "tag": "tires",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": null,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "download"
+    },
+    {
+      "id": "create_tires_imports_commit",
+      "method": "post",
+      "path": "/tires/imports/commit",
+      "tag": "tires",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "commit"
+    },
+    {
+      "id": "list_tires_imports_template",
+      "method": "get",
+      "path": "/tires/imports/template",
+      "tag": "tires",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": null,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "template"
+    },
+    {
+      "id": "create_tires_imports_validate",
+      "method": "post",
+      "path": "/tires/imports/validate",
+      "tag": "tires",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": "multipart/form-data",
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "validate"
     },
     {
       "id": "delete_tire",

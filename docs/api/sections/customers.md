@@ -374,6 +374,8 @@ List all customers drivers, paginated via the Link header.
 
 **Response 200** — array of [Driver](#driver-schema)
 
+**Response 401** — [Error](#error-schema) error envelope
+
 **Example**
 
 ```json
@@ -433,6 +435,8 @@ Create a driver.
 
 **Response 201** — [Driver](#driver-schema)
 
+**Response 401** — [Error](#error-schema) error envelope
+
 **Response 422** — [Error](#error-schema) error envelope
 
 **Example**
@@ -476,6 +480,8 @@ Delete a driver by ID.
 | `id` | integer | Yes |
 
 **Response 204** — no content.
+
+**Response 401** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json
@@ -1500,6 +1506,8 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | Field | Type | Required |
 |---|---|---|
 | `phones_attributes` | array of object | No |
+| `emails_attributes` | array of object | No |
+| `status` | string | No |
 | `first_name` | string | No |
 | `last_name` | string | No |
 | `company_name` | string | No |
@@ -1512,9 +1520,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `discount_percent` | string | No |
 | `po_required` | boolean | No |
 | `customer_tag_id` | any | No |
-| `emails_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
-| `status` | string | No |
 
 ---
 

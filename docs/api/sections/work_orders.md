@@ -709,6 +709,7 @@ Close
 | `vehicle_history_url` | string | Yes |
 | `appointments_url` | string | Yes |
 | `authorization_logs_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1690,6 +1691,7 @@ Reverse ar
 | `vehicle_history_url` | string | Yes |
 | `appointments_url` | string | Yes |
 | `authorization_logs_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -1814,6 +1816,7 @@ Send to ar
 | `vehicle_history_url` | string | Yes |
 | `appointments_url` | string | Yes |
 | `authorization_logs_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `customer` — object:
 | Field | Type | Required |
@@ -2767,13 +2770,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order` — object:
 | Field | Type | Required |
 |---|---|---|
-| `saved_for_later` | boolean | No |
 | `intake_method` | string | No |
-| `payer_customer_id` | integer | No |
+| `work_order_tag_id` | string | No |
 | `sub_status_type_id` | integer | No |
 | `vehicle_arrived_at` | string | No |
+| `saved_for_later` | boolean | No |
+| `payer_customer_id` | integer | No |
 | `waiting_for_customer` | boolean | No |
-| `work_order_tag_id` | integer | No |
 
 ---
 
@@ -2868,7 +2871,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `method` | string | Yes |
-| `amount_cents` | string | Yes |
+| `amount_cents` | number | Yes |
 
 ---
 
@@ -2971,11 +2974,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `item_type` | string | Yes |
 | `description` | string | Yes |
+| `hours` | number | No |
+| `labor_rate_id` | integer | No |
 | `unit_price` | string | No |
 | `quantity` | integer | No |
 | `total` | string | No |
-| `hours` | number | No |
-| `labor_rate_id` | integer | No |
 
 ---
 
@@ -2988,8 +2991,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order_line_item` — object:
 | Field | Type | Required |
 |---|---|---|
-| `description` | string | No |
 | `part_status` | string | No |
+| `description` | string | No |
 
 ---
 

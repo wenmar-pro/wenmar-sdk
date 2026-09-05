@@ -30,6 +30,12 @@ def path_params(op)
   op["pathParams"]
 end
 
+# Convert a query param name (e.g. "filters[has_open_work_order]") into a valid
+# Ruby keyword identifier (e.g. "filters_has_open_work_order").
+def ruby_param_name(name)
+  name.gsub(/[\[\]]/, "_").gsub(/_+/, "_").sub(/_+\z/, "")
+end
+
 def build_method(op)
   m = op["id"]
   path = op["path"]
@@ -79,9 +85,9 @@ def build_method(op)
         out
       else
         # list with query params -> pass a params hash
-        query_kw = query.map { |q| "#{q["name"]}: nil" }
+        query_kw = query.map { |q| "#{ruby_param_name(q["name"])}: nil" }
         sig = (pos + query_kw).join(", ")
-        params_body = "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
+        params_body = "params = { #{query.map { |q| "\"#{q["name"]}\" => #{ruby_param_name(q["name"])}" }.join(", ")} }"
         out = <<~RUBY
           # Lists #{m} resources (paginated).
           # @return [Wenmar::Paginator]
@@ -104,12 +110,12 @@ def build_method(op)
       end
     else
       # non-paginated GET
-      query_kw = query.map { |q| "#{q["name"]}: nil" }
+      query_kw = query.map { |q| "#{ruby_param_name(q["name"])}: nil" }
       sig = (pos + query_kw).join(", ")
       get_arg = if query.empty?
         "get(\"#{substituted}\")"
       else
-        params_body = "params = { #{query.map { |q| "#{q["name"]}: #{q["name"]}" }.join(", ")} }"
+        params_body = "params = { #{query.map { |q| "\"#{q["name"]}\" => #{ruby_param_name(q["name"])}" }.join(", ")} }"
         "#{params_body}\n      get(\"#{substituted}\", params.compact)"
       end
       <<~RUBY

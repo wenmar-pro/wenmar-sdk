@@ -3824,6 +3824,33 @@ paths:
                       type: string
                     channel:
                       type: string
+                    from_number:
+                      nullable: true
+                    from_email:
+                      nullable: true
+                    last_message_preview:
+                      nullable: true
+                    messages_count:
+                      type: integer
+                    has_failed_message:
+                      type: boolean
+                    unread_count:
+                      type: integer
+                    last_message_at:
+                      type: string
+                    customer_last_read_at:
+                      nullable: true
+                      type: string
+                    driver_last_read_at:
+                      nullable: true
+                      type: string
+                    oldest_unanswered_inbound_at:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
                     customer:
                       type: object
                       properties:
@@ -3837,13 +3864,7 @@ paths:
                       - id
                       - name
                       - url
-                    unread_count:
-                      type: integer
                     messages_url:
-                      type: string
-                    created_at:
-                      type: string
-                    updated_at:
                       type: string
                     url:
                       type: string
@@ -3854,11 +3875,20 @@ paths:
                   - status
                   - reply_state
                   - channel
-                  - customer
+                  - from_number
+                  - from_email
+                  - last_message_preview
+                  - messages_count
+                  - has_failed_message
                   - unread_count
-                  - messages_url
+                  - last_message_at
+                  - customer_last_read_at
+                  - driver_last_read_at
+                  - oldest_unanswered_inbound_at
                   - created_at
                   - updated_at
+                  - customer
+                  - messages_url
                   - url
                   - app_url
           headers:
@@ -3882,6 +3912,134 @@ paths:
                 type: string
       description: GET /conversations
       operationId: GET_conversations
+    post:
+      summary: create
+      tags:
+      - Shop::Conversation
+      responses:
+        '201':
+          description: POST /conversations -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  status:
+                    type: string
+                  reply_state:
+                    type: string
+                  channel:
+                    type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    nullable: true
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  messages_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - status
+                - reply_state
+                - channel
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
+                - unread_count
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
+                - created_at
+                - updated_at
+                - customer
+                - messages_url
+                - url
+                - app_url
+        '422':
+          description: POST /conversations -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conversation:
+                  type: object
+                  properties:
+                    customer_id:
+                      type: integer
+                  required:
+                  - customer_id
+              required:
+              - conversation
+      description: POST /conversations
+      operationId: POST_conversations
   "/conversations/bulk_mark_read":
     post:
       summary: bulk_mark_read
@@ -3947,6 +4105,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -3960,13 +4145,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -3977,11 +4156,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: POST /conversations/{conversation_id}/customer_links
@@ -4019,6 +4207,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -4032,13 +4247,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -4049,11 +4258,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: POST /conversations/{conversation_id}/ignores
@@ -4091,6 +4309,10 @@ paths:
                       type: string
                     body:
                       type: string
+                    recipient_phone:
+                      nullable: true
+                    recipient_email:
+                      nullable: true
                     work_order_id:
                       nullable: true
                       type: integer
@@ -4100,10 +4322,32 @@ paths:
                     appointment_id:
                       nullable: true
                       type: integer
+                    failure_reason:
+                      nullable: true
+                      type: string
+                    attachment_count:
+                      type: integer
+                    sent_at:
+                      nullable: true
+                      type: string
+                    delivered_at:
+                      nullable: true
+                      type: string
                     read_at:
                       nullable: true
                       type: string
+                    failed_at:
+                      nullable: true
+                      type: string
                     created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    conversation_url:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
                       type: string
                   required:
                   - id
@@ -4112,11 +4356,22 @@ paths:
                   - channel
                   - status
                   - body
+                  - recipient_phone
+                  - recipient_email
                   - work_order_id
                   - statement_id
                   - appointment_id
+                  - failure_reason
+                  - attachment_count
+                  - sent_at
+                  - delivered_at
                   - read_at
+                  - failed_at
                   - created_at
+                  - updated_at
+                  - conversation_url
+                  - url
+                  - app_url
           headers:
             Link:
               schema:
@@ -4144,6 +4399,28 @@ paths:
           type: integer
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    body:
+                      type: string
+                    channel:
+                      type: string
+                  required:
+                  - body
+                  - channel
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+              - message
+              - files
           application/json:
             schema:
               type: object
@@ -4180,29 +4457,58 @@ paths:
                     type: string
                   body:
                     type: string
+                  recipient_phone:
+                    nullable: true
+                  recipient_email:
+                    nullable: true
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  statement_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                  failure_reason:
+                    nullable: true
+                    type: string
+                  attachment_count:
+                    type: integer
                   sender:
                     type: object
                     properties:
                       id:
                         type: integer
+                      type:
+                        type: string
                       name:
                         type: string
                     required:
                     - id
+                    - type
                     - name
-                  work_order_id:
+                  sent_at:
                     nullable: true
-                    type: integer
-                  statement_id:
+                    type: string
+                  delivered_at:
                     nullable: true
-                    type: integer
-                  appointment_id:
-                    nullable: true
-                    type: integer
+                    type: string
                   read_at:
                     nullable: true
                     type: string
+                  failed_at:
+                    nullable: true
+                    type: string
                   created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
                     type: string
                 required:
                 - id
@@ -4211,85 +4517,25 @@ paths:
                 - channel
                 - status
                 - body
-                - sender
+                - recipient_phone
+                - recipient_email
                 - work_order_id
                 - statement_id
                 - appointment_id
+                - failure_reason
+                - attachment_count
+                - sender
+                - sent_at
+                - delivered_at
                 - read_at
+                - failed_at
                 - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
       description: POST /conversations/{conversation_id}/messages
       operationId: POST_conversations_conversation_id_messages
-  "/conversations/{conversation_id}/messages/{id}/resends":
-    post:
-      summary: create
-      tags:
-      - Shop::Conversations::MessageResend
-      parameters:
-      - name: conversation_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-      responses:
-        '200':
-          description: POST /conversations/{conversation_id}/messages/{id}/resends
-            -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  conversation_id:
-                    type: integer
-                  direction:
-                    type: string
-                  channel:
-                    type: string
-                  status:
-                    type: string
-                  body:
-                    type: string
-                  work_order_id:
-                    nullable: true
-                    type: integer
-                  statement_id:
-                    nullable: true
-                    type: integer
-                  appointment_id:
-                    nullable: true
-                    type: integer
-                  read_at:
-                    nullable: true
-                    type: string
-                  created_at:
-                    type: string
-                required:
-                - id
-                - conversation_id
-                - direction
-                - channel
-                - status
-                - body
-                - work_order_id
-                - statement_id
-                - appointment_id
-                - read_at
-                - created_at
-      description: POST /conversations/{conversation_id}/messages/{id}/resends
-      operationId: POST_conversations_conversation_id_messages_id_resends
   "/conversations/{id}":
     get:
       summary: show
@@ -4317,6 +4563,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -4330,13 +4603,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -4347,11 +4614,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: GET /conversations/{id}
@@ -4392,6 +4668,33 @@ paths:
                     type: string
                   channel:
                     type: string
+                  from_number:
+                    nullable: true
+                  from_email:
+                    nullable: true
+                  last_message_preview:
+                    nullable: true
+                  messages_count:
+                    type: integer
+                  has_failed_message:
+                    type: boolean
+                  unread_count:
+                    type: integer
+                  last_message_at:
+                    type: string
+                  customer_last_read_at:
+                    nullable: true
+                    type: string
+                  driver_last_read_at:
+                    nullable: true
+                    type: string
+                  oldest_unanswered_inbound_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   customer:
                     type: object
                     properties:
@@ -4405,13 +4708,7 @@ paths:
                     - id
                     - name
                     - url
-                  unread_count:
-                    type: integer
                   messages_url:
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
                     type: string
                   url:
                     type: string
@@ -4422,11 +4719,20 @@ paths:
                 - status
                 - reply_state
                 - channel
-                - customer
+                - from_number
+                - from_email
+                - last_message_preview
+                - messages_count
+                - has_failed_message
                 - unread_count
-                - messages_url
+                - last_message_at
+                - customer_last_read_at
+                - driver_last_read_at
+                - oldest_unanswered_inbound_at
                 - created_at
                 - updated_at
+                - customer
+                - messages_url
                 - url
                 - app_url
       description: PATCH /conversations/{id}
@@ -4652,6 +4958,8 @@ paths:
                       type: string
                     app_url:
                       type: string
+                    reopen_url:
+                      type: string
                   required:
                   - id
                   - counter_sale_number
@@ -4757,6 +5065,8 @@ paths:
                   url:
                     type: string
                   app_url:
+                    type: string
+                  reopen_url:
                     type: string
                 required:
                 - id
@@ -4924,6 +5234,8 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - id
                 - counter_sale_number
@@ -5037,6 +5349,8 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - id
                 - counter_sale_number
@@ -5059,6 +5373,161 @@ paths:
                 - app_url
       description: PATCH /counter_sales/{id}
       operationId: PATCH_counter_sales_id_
+  "/counter_sales/{id}/reopen":
+    patch:
+      summary: reopen
+      tags:
+      - Shop::CounterSales::Void
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: PATCH /counter_sales/{id}/reopen -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  counter_sale_number:
+                    type: integer
+                  status:
+                    type: string
+                  walk_in_name:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  subtotal_cents:
+                    type: integer
+                  tax_total_cents:
+                    type: integer
+                  total_cents:
+                    type: integer
+                  paid_cents:
+                    type: integer
+                  remaining_cents:
+                    type: integer
+                  paid:
+                    type: boolean
+                  currency:
+                    type: string
+                  line_items_count:
+                    type: integer
+                  processed_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  reopen_url:
+                    type: string
+                required:
+                - id
+                - counter_sale_number
+                - status
+                - walk_in_name
+                - notes
+                - subtotal_cents
+                - tax_total_cents
+                - total_cents
+                - paid_cents
+                - remaining_cents
+                - paid
+                - currency
+                - line_items_count
+                - processed_by
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - reopen_url
+        '403':
+          description: PATCH /counter_sales/{id}/reopen -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '422':
+          description: PATCH /counter_sales/{id}/reopen -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: PATCH /counter_sales/{id}/reopen
+      operationId: PATCH_counter_sales_id_reopen
   "/courtesy_cars":
     get:
       summary: index
@@ -5252,6 +5721,614 @@ paths:
                 - error
       description: GET /courtesy_cars
       operationId: GET_courtesy_cars
+    post:
+      summary: create
+      tags:
+      - Shop::CourtesyCar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle:
+                  type: object
+                  properties:
+                    year:
+                      type: integer
+                    make:
+                      type: string
+                    model:
+                      type: string
+                    vin:
+                      type: string
+                  required:
+                  - year
+                  - make
+                  - model
+                  - vin
+              required:
+              - vehicle
+      responses:
+        '201':
+          description: POST /courtesy_cars -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    nullable: true
+                  license_plate_state:
+                    nullable: true
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+        '403':
+          description: POST /courtesy_cars -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+        '422':
+          description: POST /courtesy_cars -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties:
+                          make:
+                            type: array
+                            items:
+                              type: string
+                          model:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - make
+                        - model
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: POST /courtesy_cars
+      operationId: POST_courtesy_cars
+  "/courtesy_cars/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::CourtesyCar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: DELETE /courtesy_cars/{id} -> 204
+        '422':
+          description: DELETE /courtesy_cars/{id} -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: DELETE /courtesy_cars/{id}
+      operationId: DELETE_courtesy_cars_id_
+    get:
+      summary: show
+      tags:
+      - Shop::CourtesyCar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /courtesy_cars/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    nullable: true
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+      description: GET /courtesy_cars/{id}
+      operationId: GET_courtesy_cars_id_
+    patch:
+      summary: update
+      tags:
+      - Shop::CourtesyCar
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle:
+                  type: object
+                  properties:
+                    color:
+                      type: string
+                  required:
+                  - color
+              required:
+              - vehicle
+      responses:
+        '200':
+          description: PATCH /courtesy_cars/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: integer
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: integer
+                  submodel:
+                    nullable: true
+                    type: string
+                  body_style:
+                    nullable: true
+                    type: string
+                  engine:
+                    nullable: true
+                    type: string
+                  vin:
+                    type: string
+                  license_plate:
+                    type: string
+                  license_plate_state:
+                    type: string
+                  license_plate_country:
+                    type: string
+                  drivetrain:
+                    nullable: true
+                    type: string
+                  transmission:
+                    nullable: true
+                    type: string
+                  color:
+                    type: string
+                  vehicle_type:
+                    type: string
+                  unit_number:
+                    nullable: true
+                    type: string
+                  fleet_identifier:
+                    nullable: true
+                    type: string
+                  production_date:
+                    nullable: true
+                    type: string
+                  annual_safety_expires_at:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  odometer:
+                    type: object
+                    properties:
+                      reading:
+                        nullable: true
+                        type: number
+                      unit:
+                        type: string
+                    required:
+                    - reading
+                    - unit
+                  work_orders_count:
+                    type: integer
+                  status:
+                    type: string
+                  trashed_at:
+                    nullable: true
+                    type: string
+                  work_orders_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - type
+                - id
+                - make
+                - model
+                - year
+                - submodel
+                - body_style
+                - engine
+                - vin
+                - license_plate
+                - license_plate_state
+                - license_plate_country
+                - drivetrain
+                - transmission
+                - color
+                - vehicle_type
+                - unit_number
+                - fleet_identifier
+                - production_date
+                - annual_safety_expires_at
+                - notes
+                - odometer
+                - work_orders_count
+                - status
+                - trashed_at
+                - work_orders_url
+                - customer
+                - created_at
+                - updated_at
+                - url
+                - app_url
+                - location
+      description: PATCH /courtesy_cars/{id}
+      operationId: PATCH_courtesy_cars_id_
   "/current_location":
     get:
       summary: show
@@ -5331,21 +6408,6 @@ paths:
       summary: update
       tags:
       - Shop::CurrentLocation
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                location:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                  required:
-                  - name
-              required:
-              - location
       responses:
         '200':
           description: PATCH /current_location -> 200
@@ -5437,6 +6499,21 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - location
       description: PATCH /current_location
       operationId: PATCH_current_location
   "/customer_tags":
@@ -5444,12 +6521,6 @@ paths:
       summary: index
       tags:
       - Shop::CustomerTag
-      parameters:
-      - name: status
-        in: query
-        required: false
-        schema:
-          type: string
       responses:
         '200':
           description: GET /customer_tags -> 200
@@ -5475,8 +6546,8 @@ paths:
                     status:
                       type: string
                     trashed_at:
-                      type: string
                       nullable: true
+                      type: string
                   required:
                   - id
                   - name
@@ -5499,12 +6570,28 @@ paths:
               schema:
                 type: integer
               description: Records per page
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
       description: GET /customer_tags
       operationId: GET_customer_tags
     post:
       summary: create
       tags:
       - Shop::CustomerTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
       responses:
         '201':
           description: POST /customer_tags -> 201
@@ -5562,16 +6649,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
       description: POST /customer_tags
       operationId: POST_customer_tags
   "/customer_tags/{id}":
@@ -6125,15 +7202,15 @@ paths:
                   full_name:
                     type: string
                   company_name:
-                    type: string
                     nullable: true
+                    type: string
                   first_name:
                     type: string
                   last_name:
                     type: string
                   fleet_identifier:
-                    type: string
                     nullable: true
+                    type: string
                   marketing_opt_in:
                     type: boolean
                   tax_exempt:
@@ -6454,6 +7531,12 @@ paths:
       summary: create
       tags:
       - Shop::Customers::Export
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '200':
           description: POST /customers/export -> 200
@@ -6492,12 +7575,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       description: POST /customers/export
       operationId: POST_customers_export
   "/customers/export/{id}/download":
@@ -6725,6 +7802,29 @@ paths:
               schema:
                 type: integer
               description: Records per page
+        '401':
+          description: GET /customers/{customer_id}/drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
       description: GET /customers/{customer_id}/drivers
       operationId: GET_customers_customer_id_drivers
     post:
@@ -6791,6 +7891,29 @@ paths:
                 - updated_at
                 - url
                 - app_url
+        '401':
+          description: POST /customers/{customer_id}/drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
         '422':
           description: POST /customers/{customer_id}/drivers -> 422
           content:
@@ -6859,6 +7982,29 @@ paths:
       responses:
         '204':
           description: DELETE /customers/{customer_id}/drivers/{id} -> 204
+        '401':
+          description: DELETE /customers/{customer_id}/drivers/{id} -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
       description: DELETE /customers/{customer_id}/drivers/{id}
       operationId: DELETE_customers_customer_id_drivers_id_
     get:
@@ -7954,6 +9100,23 @@ paths:
                           primary:
                             type: boolean
                             nullable: true
+                    emails_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            nullable: true
+                          email:
+                            type: string
+                          label:
+                            type: string
+                            nullable: true
+                        required:
+                        - email
+                    status:
+                      type: string
                     first_name:
                       type: string
                     last_name:
@@ -7978,21 +9141,6 @@ paths:
                       type: boolean
                     customer_tag_id:
                       nullable: true
-                    emails_attributes:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            nullable: true
-                          email:
-                            type: string
-                          label:
-                            type: string
-                            nullable: true
-                        required:
-                        - email
                     addresses_attributes:
                       type: array
                       items:
@@ -8017,8 +9165,6 @@ paths:
                         - postal_code
                         - country
                         - is_billing
-                    status:
-                      type: string
               required:
               - customer
       responses:
@@ -8763,16 +9909,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties: {}
-          application/json:
-            schema:
-              type: object
-              properties: {}
       responses:
         '200':
           description: PATCH /customers/{id}/trash -> 200
@@ -8968,8 +10104,129 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+          application/json:
+            schema:
+              type: object
+              properties: {}
       description: PATCH /customers/{id}/trash
       operationId: PATCH_customers_id_trash
+  "/drivers":
+    get:
+      summary: index
+      tags:
+      - Shop::Driver
+      parameters:
+      - name: filters[has_open_work_order]
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: filters[q]
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: GET /drivers -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    full_name:
+                      type: string
+                    phone:
+                      nullable: true
+                      type: string
+                    email:
+                      nullable: true
+                      type: string
+                    customer:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        full_name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - full_name
+                      - url
+                    work_orders_count:
+                      type: integer
+                    work_orders_url:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - full_name
+                  - phone
+                  - email
+                  - customer
+                  - work_orders_count
+                  - work_orders_url
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /drivers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /drivers
+      operationId: GET_drivers
   "/expenses":
     get:
       summary: index
@@ -9431,6 +10688,17 @@ paths:
       summary: validate
       tags:
       - Shop::Expenses::Import
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
       responses:
         '200':
           description: POST /expenses/imports/validate -> 200
@@ -9508,17 +10776,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-              required:
-              - file
       description: POST /expenses/imports/validate
       operationId: POST_expenses_imports_validate
   "/expenses/{id}":
@@ -9671,9 +10928,9 @@ paths:
                 expense:
                   type: object
                   properties:
-                    receipt_id:
-                      type: string
                     description:
+                      type: string
+                    receipt_id:
                       type: string
               required:
               - expense
@@ -11699,11 +12956,11 @@ paths:
                     on_hand:
                       type: integer
                     reorder_point:
-                      nullable: true
                       type: string
+                      nullable: true
                     bin_location:
-                      nullable: true
                       type: string
+                      nullable: true
                     created_at:
                       type: string
                     updated_at:
@@ -13110,24 +14367,6 @@ paths:
       summary: create
       tags:
       - Shop::LeadSource
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                lead_source:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    category:
-                      type: string
-                  required:
-                  - name
-                  - category
-              required:
-              - lead_source
       responses:
         '201':
           description: POST /lead_sources -> 201
@@ -13190,6 +14429,24 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lead_source:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    category:
+                      type: string
+                  required:
+                  - name
+                  - category
+              required:
+              - lead_source
       description: POST /lead_sources
       operationId: POST_lead_sources
   "/lead_sources/seed_defaults":
@@ -13947,6 +15204,21 @@ paths:
         required: true
         schema:
           type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  type: object
+                  properties:
+                    time_zone:
+                      type: string
+                  required:
+                  - time_zone
+              required:
+              - location
       responses:
         '200':
           description: PATCH /locations/{id}/operations -> 200
@@ -14016,21 +15288,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                location:
-                  type: object
-                  properties:
-                    time_zone:
-                      type: string
-                  required:
-                  - time_zone
-              required:
-              - location
       description: PATCH /locations/{id}/operations
       operationId: PATCH_locations_id_operations
   "/locations/{location_id}/close_requirements":
@@ -15320,8 +16577,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        nullable: true
                         type: string
+                        nullable: true
                       role:
                         type: string
                       confirmed:
@@ -15346,24 +16603,6 @@ paths:
       summary: update
       tags:
       - Shop::Me::Profile
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user:
-                  type: object
-                  properties:
-                    full_name:
-                      type: string
-                    email:
-                      type: string
-                  required:
-                  - full_name
-                  - email
-              required:
-              - user
       responses:
         '200':
           description: PATCH /me/profile -> 200
@@ -15428,8 +16667,372 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    full_name:
+                      type: string
+                    email:
+                      type: string
+                  required:
+                  - full_name
+                  - email
+              required:
+              - user
       description: PATCH /me/profile
       operationId: PATCH_me_profile
+  "/messages":
+    get:
+      summary: index
+      tags:
+      - Shop::Message
+      responses:
+        '200':
+          description: GET /messages -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    conversation_id:
+                      type: integer
+                    direction:
+                      type: string
+                    channel:
+                      type: string
+                    status:
+                      type: string
+                    body:
+                      type: string
+                    recipient_phone:
+                      type: string
+                    recipient_email:
+                      nullable: true
+                    work_order_id:
+                      nullable: true
+                      type: integer
+                    statement_id:
+                      nullable: true
+                      type: integer
+                    appointment_id:
+                      nullable: true
+                      type: integer
+                    failure_reason:
+                      type: string
+                    attachment_count:
+                      type: integer
+                    sender:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - id
+                      - type
+                      - name
+                    sent_at:
+                      nullable: true
+                      type: string
+                    delivered_at:
+                      nullable: true
+                      type: string
+                    read_at:
+                      nullable: true
+                      type: string
+                    failed_at:
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    conversation_url:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - conversation_id
+                  - direction
+                  - channel
+                  - status
+                  - body
+                  - recipient_phone
+                  - recipient_email
+                  - work_order_id
+                  - statement_id
+                  - appointment_id
+                  - failure_reason
+                  - attachment_count
+                  - sender
+                  - sent_at
+                  - delivered_at
+                  - read_at
+                  - failed_at
+                  - created_at
+                  - updated_at
+                  - conversation_url
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+      parameters:
+      - name: conversation_id
+        in: query
+        required: false
+        schema:
+          type: integer
+      description: GET /messages
+      operationId: GET_messages
+  "/messages/{id}":
+    get:
+      summary: show
+      tags:
+      - Shop::Message
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /messages/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  conversation_id:
+                    type: integer
+                  direction:
+                    type: string
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  body:
+                    type: string
+                  recipient_phone:
+                    type: string
+                  recipient_email:
+                    nullable: true
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  statement_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                  failure_reason:
+                    type: string
+                  attachment_count:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
+                  sent_at:
+                    nullable: true
+                    type: string
+                  delivered_at:
+                    nullable: true
+                    type: string
+                  read_at:
+                    nullable: true
+                    type: string
+                  failed_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - conversation_id
+                - direction
+                - channel
+                - status
+                - body
+                - recipient_phone
+                - recipient_email
+                - work_order_id
+                - statement_id
+                - appointment_id
+                - failure_reason
+                - attachment_count
+                - sender
+                - sent_at
+                - delivered_at
+                - read_at
+                - failed_at
+                - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
+      description: GET /messages/{id}
+      operationId: GET_messages_id_
+  "/messages/{message_id}/resends":
+    post:
+      summary: create
+      tags:
+      - Shop::Messages::Resend
+      parameters:
+      - name: message_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '201':
+          description: POST /messages/{message_id}/resends -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  conversation_id:
+                    type: integer
+                  direction:
+                    type: string
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  body:
+                    type: string
+                  recipient_phone:
+                    type: string
+                  recipient_email:
+                    nullable: true
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  statement_id:
+                    nullable: true
+                    type: integer
+                  appointment_id:
+                    nullable: true
+                    type: integer
+                  failure_reason:
+                    nullable: true
+                    type: string
+                  attachment_count:
+                    type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
+                  sent_at:
+                    nullable: true
+                    type: string
+                  delivered_at:
+                    nullable: true
+                    type: string
+                  read_at:
+                    nullable: true
+                    type: string
+                  failed_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  conversation_url:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - conversation_id
+                - direction
+                - channel
+                - status
+                - body
+                - recipient_phone
+                - recipient_email
+                - work_order_id
+                - statement_id
+                - appointment_id
+                - failure_reason
+                - attachment_count
+                - sent_at
+                - delivered_at
+                - read_at
+                - failed_at
+                - created_at
+                - updated_at
+                - conversation_url
+                - url
+                - app_url
+      description: POST /messages/{message_id}/resends
+      operationId: POST_messages_message_id_resends
   "/notifications":
     get:
       summary: index
@@ -15466,6 +17069,18 @@ paths:
                       type: string
                     app_url:
                       type: string
+                    category:
+                      type: string
+                    location_id:
+                      type: integer
+                    work_order_id:
+                      nullable: true
+                      type: integer
+                    triggered_by_id:
+                      nullable: true
+                      type: integer
+                    action_path:
+                      nullable: true
                   required:
                   - id
                   - trigger_type
@@ -15490,6 +17105,10 @@ paths:
               schema:
                 type: integer
               description: Records per page
+            X-Unread-Count:
+              schema:
+                type: integer
+              description: Unread notifications in the user's feed
         '401':
           description: GET /notifications -> 401
           content:
@@ -15515,6 +17134,37 @@ paths:
                 - error
       description: GET /notifications
       operationId: GET_notifications
+      parameters:
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: read
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: since
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: trigger_type
+        in: query
+        required: false
+        schema:
+          type: string
   "/notifications/bulk_mark_read":
     post:
       summary: bulk_mark_read
@@ -15578,6 +17228,7 @@ paths:
                     type: boolean
                   read_at:
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -15586,6 +17237,25 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  category:
+                    type: string
+                  location_id:
+                    type: integer
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  triggered_by_id:
+                    nullable: true
+                    type: integer
+                  action_path:
+                    nullable: true
+                  metadata:
+                    type: object
+                    properties:
+                      inbound:
+                        type: boolean
+                    required:
+                    - inbound
                 required:
                 - id
                 - trigger_type
@@ -15662,6 +17332,7 @@ paths:
                     type: boolean
                   read_at:
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -15670,6 +17341,18 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  category:
+                    type: string
+                  location_id:
+                    type: integer
+                  work_order_id:
+                    nullable: true
+                    type: integer
+                  triggered_by_id:
+                    nullable: true
+                    type: integer
+                  action_path:
+                    nullable: true
                 required:
                 - id
                 - trigger_type
@@ -18101,6 +19784,12 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '201':
           description: POST /packages/{id}/duplicate -> 201
@@ -18197,12 +19886,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       description: POST /packages/{id}/duplicate
       operationId: POST_packages_id_duplicate
   "/packages/{id}/restore":
@@ -21113,8 +22796,6 @@ paths:
                           type: string
                         icon:
                           type: string
-                        model:
-                          type: string
                         results:
                           type: array
                           items:
@@ -21200,6 +22881,8 @@ paths:
                             - overflow_actions
                         has_more:
                           type: boolean
+                        model:
+                          type: string
                         total_count:
                           type: integer
                       required:
@@ -21321,6 +23004,27 @@ paths:
       summary: create
       tags:
       - Shop::ServiceCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                service_category:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    service_type:
+                      type: string
+                    icon:
+                      type: string
+                  required:
+                  - name
+                  - service_type
+                  - icon
+              required:
+              - service_category
       responses:
         '201':
           description: POST /service_categories -> 201
@@ -21399,27 +23103,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                service_category:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    service_type:
-                      type: string
-                    icon:
-                      type: string
-                  required:
-                  - name
-                  - service_type
-                  - icon
-              required:
-              - service_category
       description: POST /service_categories
       operationId: POST_service_categories
   "/service_categories/seed_defaults":
@@ -21827,6 +23510,30 @@ paths:
       summary: create
       tags:
       - Shop::ShopDiscount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shop_discount_config:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    discount_type:
+                      type: string
+                    percentage:
+                      type: integer
+                    active:
+                      type: boolean
+                  required:
+                  - name
+                  - discount_type
+                  - percentage
+                  - active
+              required:
+              - shop_discount_config
       responses:
         '201':
           description: POST /shop_discounts -> 201
@@ -21892,30 +23599,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                shop_discount_config:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    discount_type:
-                      type: string
-                    percentage:
-                      type: integer
-                    active:
-                      type: boolean
-                  required:
-                  - name
-                  - discount_type
-                  - percentage
-                  - active
-              required:
-              - shop_discount_config
       description: POST /shop_discounts
       operationId: POST_shop_discounts
   "/shop_discounts/{id}":
@@ -23044,6 +24727,27 @@ paths:
       summary: create
       tags:
       - Shop::SubletPackage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sublet_package:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    active:
+                      type: boolean
+                  required:
+                  - name
+                  - description
+                  - active
+              required:
+              - sublet_package
       responses:
         '201':
           description: POST /sublet_packages -> 201
@@ -23127,27 +24831,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                sublet_package:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    active:
-                      type: boolean
-                  required:
-                  - name
-                  - description
-                  - active
-              required:
-              - sublet_package
       description: POST /sublet_packages
       operationId: POST_sublet_packages
   "/sublet_packages/{id}":
@@ -23176,6 +24859,21 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sublet_package:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - sublet_package
       responses:
         '200':
           description: PATCH /sublet_packages/{id} -> 200
@@ -23259,21 +24957,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                sublet_package:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                  required:
-                  - name
-              required:
-              - sublet_package
       description: PATCH /sublet_packages/{id}
       operationId: PATCH_sublet_packages_id_
   "/sublet_packages/{id}/deactivate":
@@ -23313,6 +24996,279 @@ paths:
                 - error
       description: PATCH /sublet_packages/{id}/deactivate
       operationId: PATCH_sublet_packages_id_deactivate
+  "/tire_events":
+    get:
+      summary: index
+      tags:
+      - Shop::TireEvent
+      responses:
+        '200':
+          description: GET /tire_events -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    event_type:
+                      type: string
+                    event_type_label:
+                      type: string
+                    occurred_at:
+                      type: string
+                    notes:
+                      nullable: true
+                      type: string
+                    vehicle:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                  required:
+                  - id
+                  - event_type
+                  - event_type_label
+                  - occurred_at
+                  - notes
+                  - vehicle
+                  - created_at
+                  - updated_at
+                  - url
+                  - app_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /tire_events -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /tire_events
+      operationId: GET_tire_events
+    post:
+      summary: create
+      tags:
+      - Shop::TireEvent
+      responses:
+        '201':
+          description: POST /tire_events -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  event_type:
+                    type: string
+                  event_type_label:
+                    type: string
+                  occurred_at:
+                    type: string
+                  notes:
+                    type: string
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - event_type
+                - event_type_label
+                - occurred_at
+                - notes
+                - vehicle
+                - created_at
+                - updated_at
+                - url
+                - app_url
+        '422':
+          description: POST /tire_events -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties:
+                          vehicle:
+                            type: array
+                            items:
+                              type: string
+                          occurred_at:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - vehicle
+                        - occurred_at
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tire_event:
+                  type: object
+                  properties:
+                    vehicle_id:
+                      type: integer
+                    event_type:
+                      type: string
+                    occurred_at:
+                      type: string
+                    notes:
+                      type: string
+                  required:
+                  - vehicle_id
+                  - event_type
+                  - occurred_at
+                  - notes
+              required:
+              - tire_event
+      description: POST /tire_events
+      operationId: POST_tire_events
+  "/tire_events/{id}":
+    get:
+      summary: show
+      tags:
+      - Shop::TireEvent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tire_events/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  event_type:
+                    type: string
+                  event_type_label:
+                    type: string
+                  occurred_at:
+                    type: string
+                  notes:
+                    type: string
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - event_type
+                - event_type_label
+                - occurred_at
+                - notes
+                - vehicle
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: GET /tire_events/{id}
+      operationId: GET_tire_events_id_
   "/tire_storage_slots":
     get:
       summary: index
@@ -23440,33 +25396,6 @@ paths:
       summary: create
       tags:
       - Shop::TireStorageSlot
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                tire_storage_slot:
-                  type: object
-                  properties:
-                    vehicle_id:
-                      type: integer
-                    customer_id:
-                      type: integer
-                    slot_label:
-                      type: string
-                    season:
-                      type: string
-                    stored_at:
-                      type: string
-                  required:
-                  - vehicle_id
-                  - customer_id
-                  - slot_label
-                  - season
-                  - stored_at
-              required:
-              - tire_storage_slot
       responses:
         '201':
           description: POST /tire_storage_slots -> 201
@@ -23591,9 +25520,123 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tire_storage_slot:
+                  type: object
+                  properties:
+                    vehicle_id:
+                      type: integer
+                    customer_id:
+                      type: integer
+                    slot_label:
+                      type: string
+                    season:
+                      type: string
+                    stored_at:
+                      type: string
+                  required:
+                  - vehicle_id
+                  - customer_id
+                  - slot_label
+                  - season
+                  - stored_at
+              required:
+              - tire_storage_slot
       description: POST /tire_storage_slots
       operationId: POST_tire_storage_slots
+  "/tire_storage_slots/export":
+    post:
+      summary: create
+      tags:
+      - Shop::TireStorageSlots::Export
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: POST /tire_storage_slots/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+      description: POST /tire_storage_slots/export
+      operationId: POST_tire_storage_slots_export
+  "/tire_storage_slots/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - Shop::TireStorageSlots::Export
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tire_storage_slots/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /tire_storage_slots/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /tire_storage_slots/export/{id}/download
+      operationId: GET_tire_storage_slots_export_id_download
   "/tire_storage_slots/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Shop::TireStorageSlot
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: DELETE /tire_storage_slots/{id} -> 204
+      description: DELETE /tire_storage_slots/{id}
+      operationId: DELETE_tire_storage_slots_id_
     get:
       summary: show
       tags:
@@ -23707,6 +25750,133 @@ paths:
                 - app_url
       description: GET /tire_storage_slots/{id}
       operationId: GET_tire_storage_slots_id_
+    patch:
+      summary: update
+      tags:
+      - Shop::TireStorageSlot
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tire_storage_slot:
+                  type: object
+                  properties:
+                    tire_set_description:
+                      type: string
+                  required:
+                  - tire_set_description
+              required:
+              - tire_storage_slot
+      responses:
+        '200':
+          description: PATCH /tire_storage_slots/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  slot_label:
+                    type: string
+                  season:
+                    type: string
+                  season_label:
+                    type: string
+                  tire_set_description:
+                    type: string
+                  stored_at:
+                    type: string
+                  released_at:
+                    nullable: true
+                    type: string
+                  currently_stored:
+                    type: boolean
+                  storage_fee_cents:
+                    nullable: true
+                    type: integer
+                  fee_type:
+                    nullable: true
+                    type: string
+                  notes:
+                    nullable: true
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  vehicle:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                required:
+                - id
+                - slot_label
+                - season
+                - season_label
+                - tire_set_description
+                - stored_at
+                - released_at
+                - currently_stored
+                - storage_fee_cents
+                - fee_type
+                - notes
+                - customer
+                - vehicle
+                - location
+                - created_at
+                - updated_at
+                - url
+                - app_url
+      description: PATCH /tire_storage_slots/{id}
+      operationId: PATCH_tire_storage_slots_id_
   "/tire_storage_slots/{tire_storage_slot_id}/check_outs":
     post:
       summary: create
@@ -24110,6 +26280,197 @@ paths:
               - tire
       description: POST /tires
       operationId: POST_tires
+  "/tires/export":
+    post:
+      summary: create
+      tags:
+      - Shop::Tires::Export
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: POST /tires/export -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  export_log_id:
+                    type: integer
+                  status:
+                    type: string
+                required:
+                - export_log_id
+                - status
+      description: POST /tires/export
+      operationId: POST_tires_export
+  "/tires/export/{id}/download":
+    get:
+      summary: download
+      tags:
+      - Shop::Tires::Export
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /tires/export/{id}/download -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: GET /tires/export/{id}/download -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: GET /tires/export/{id}/download
+      operationId: GET_tires_export_id_download
+  "/tires/imports/commit":
+    post:
+      summary: commit
+      tags:
+      - Shop::Tires::Import
+      responses:
+        '422':
+          description: POST /tires/imports/commit -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties: {}
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      description: POST /tires/imports/commit
+      operationId: POST_tires_imports_commit
+  "/tires/imports/template":
+    get:
+      summary: template
+      tags:
+      - Shop::Tires::Import
+      responses:
+        '200':
+          description: GET /tires/imports/template -> 200
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+      description: GET /tires/imports/template
+      operationId: GET_tires_imports_template
+  "/tires/imports/validate":
+    post:
+      summary: validate
+      tags:
+      - Shop::Tires::Import
+      responses:
+        '200':
+          description: POST /tires/imports/validate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid_count:
+                    type: integer
+                  error_count:
+                    type: integer
+                  duplicate_count:
+                    type: integer
+                  total:
+                    type: integer
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - valid_count
+                - error_count
+                - duplicate_count
+                - total
+                - errors
+        '422':
+          description: POST /tires/imports/validate -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      field_errors:
+                        type: object
+                        properties:
+                          header_errors:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - header_errors
+                    required:
+                    - code
+                    - message
+                    - field_errors
+                required:
+                - error
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      description: POST /tires/imports/validate
+      operationId: POST_tires_imports_validate
   "/tires/{id}":
     delete:
       summary: destroy
@@ -24374,6 +26735,17 @@ paths:
       summary: index
       tags:
       - Shop::User
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /users -> 200
@@ -24561,17 +26933,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      parameters:
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       description: GET /users
       operationId: GET_users
     post:
@@ -27139,10 +29500,10 @@ paths:
                     production_date:
                       type: string
                   required:
+                  - customer_id
+                  - year
                   - make
                   - model
-                  - year
-                  - customer_id
               required:
               - vehicle
       description: POST /vehicles
@@ -27844,14 +30205,14 @@ paths:
                   year:
                     type: integer
                   submodel:
-                    type: string
                     nullable: true
+                    type: string
                   body_style:
-                    type: string
                     nullable: true
+                    type: string
                   engine:
-                    type: string
                     nullable: true
+                    type: string
                   vin:
                     type: string
                   license_plate:
@@ -27861,14 +30222,14 @@ paths:
                   license_plate_country:
                     type: string
                   drivetrain:
-                    type: string
                     nullable: true
+                    type: string
                   transmission:
-                    type: string
                     nullable: true
+                    type: string
                   color:
-                    type: string
                     nullable: true
+                    type: string
                   vehicle_type:
                     type: string
                   unit_number:
@@ -27884,14 +30245,14 @@ paths:
                     nullable: true
                     type: string
                   notes:
-                    type: string
                     nullable: true
+                    type: string
                   odometer:
                     type: object
                     properties:
                       reading:
-                        type: integer
                         nullable: true
+                        type: integer
                       unit:
                         type: string
                     required:
@@ -28179,6 +30540,16 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_vehicle_id:
+                  type: integer
+              required:
+              - source_vehicle_id
       responses:
         '200':
           description: POST /vehicles/{id}/merges -> 200
@@ -28363,16 +30734,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                source_vehicle_id:
-                  type: integer
-              required:
-              - source_vehicle_id
       description: POST /vehicles/{id}/merges
       operationId: POST_vehicles_id_merges
   "/vehicles/{id}/restore":
@@ -28566,19 +30927,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer_id:
-                  type: integer
-                mode:
-                  type: string
-              required:
-              - customer_id
-              - mode
       responses:
         '201':
           description: POST /vehicles/{id}/transfers -> 201
@@ -28786,6 +31134,19 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                mode:
+                  type: string
+              required:
+              - customer_id
+              - mode
       description: POST /vehicles/{id}/transfers
       operationId: POST_vehicles_id_transfers
   "/vehicles/{id}/trash":
@@ -30399,6 +32760,12 @@ paths:
       summary: index
       tags:
       - Shop::WorkOrder
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
         '200':
           description: GET /work_orders -> 200
@@ -30590,12 +32957,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      parameters:
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
       description: GET /work_orders
       operationId: GET_work_orders
     post:
@@ -31292,31 +33653,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order:
-                  type: object
-                  properties:
-                    saved_for_later:
-                      type: boolean
-                    intake_method:
-                      type: string
-                    payer_customer_id:
-                      type: integer
-                    sub_status_type_id:
-                      type: integer
-                    vehicle_arrived_at:
-                      type: string
-                    waiting_for_customer:
-                      type: boolean
-                    work_order_tag_id:
-                      type: integer
-              required:
-              - work_order
       responses:
         '200':
           description: PATCH /work_orders/{id} -> 200
@@ -31697,6 +34033,31 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order:
+                  type: object
+                  properties:
+                    intake_method:
+                      type: string
+                    work_order_tag_id:
+                      type: string
+                    sub_status_type_id:
+                      type: integer
+                    vehicle_arrived_at:
+                      type: string
+                    saved_for_later:
+                      type: boolean
+                    payer_customer_id:
+                      type: integer
+                    waiting_for_customer:
+                      type: boolean
+              required:
+              - work_order
       description: PATCH /work_orders/{id}
       operationId: PATCH_work_orders_id_
   "/work_orders/{id}/account_postings":
@@ -31956,6 +34317,8 @@ paths:
                   appointments_url:
                     type: string
                   authorization_logs_url:
+                    type: string
+                  reopen_url:
                     type: string
                 required:
                 - type
@@ -32287,6 +34650,8 @@ paths:
                   appointments_url:
                     type: string
                   authorization_logs_url:
+                    type: string
+                  reopen_url:
                     type: string
                 required:
                 - type
@@ -32621,6 +34986,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -32954,6 +35321,8 @@ paths:
                   appointments_url:
                     type: string
                   authorization_logs_url:
+                    type: string
+                  reopen_url:
                     type: string
                 required:
                 - type
@@ -33698,16 +36067,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                vehicle_id:
-                  type: integer
-              required:
-              - vehicle_id
       responses:
         '200':
           description: POST /work_orders/{id}/courtesy_car_assignment -> 200
@@ -34044,6 +36403,16 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vehicle_id:
+                  type: integer
+              required:
+              - vehicle_id
       description: POST /work_orders/{id}/courtesy_car_assignment
       operationId: POST_work_orders_id_courtesy_car_assignment
   "/work_orders/{id}/declined_services":
@@ -34675,6 +37044,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -35075,12 +37446,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       responses:
         '200':
           description: PATCH /work_orders/{id}/reopen -> 200
@@ -35417,6 +37782,12 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       description: PATCH /work_orders/{id}/reopen
       operationId: PATCH_work_orders_id_reopen
   "/work_orders/{id}/service_declines":
@@ -37819,7 +40190,7 @@ paths:
                     method:
                       type: string
                     amount_cents:
-                      type: string
+                      type: number
                       format: float
                   required:
                   - method
@@ -38244,6 +40615,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -38314,6 +40687,7 @@ paths:
                 - vehicle_history_url
                 - appointments_url
                 - authorization_logs_url
+                - reopen_url
       description: DELETE /work_orders/{work_order_id}/payments/reverse_ar
       operationId: DELETE_work_orders_work_order_id_payments_reverse_ar
   "/work_orders/{work_order_id}/payments/send_to_ar":
@@ -38575,6 +40949,8 @@ paths:
                     type: string
                   authorization_logs_url:
                     type: string
+                  reopen_url:
+                    type: string
                 required:
                 - type
                 - id
@@ -38645,6 +41021,7 @@ paths:
                 - vehicle_history_url
                 - appointments_url
                 - authorization_logs_url
+                - reopen_url
       description: POST /work_orders/{work_order_id}/payments/send_to_ar
       operationId: POST_work_orders_work_order_id_payments_send_to_ar
   "/work_orders/{work_order_id}/refunds":
@@ -38808,6 +41185,25 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order_service:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    service_type:
+                      type: string
+                  required:
+                  - name
+                package_id:
+                  type: integer
+              required:
+              - work_order_service
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services -> 201
@@ -38991,25 +41387,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order_service:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    service_type:
-                      type: string
-                  required:
-                  - name
-                package_id:
-                  type: integer
-              required:
-              - work_order_service
       description: POST /work_orders/{work_order_id}/services
       operationId: POST_work_orders_work_order_id_services
   "/work_orders/{work_order_id}/services/reorder":
@@ -39076,27 +41453,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order_service:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    technician_id:
-                      type: integer
-                    pricing_mode:
-                      type: string
-                    position:
-                      type: integer
-                    labor_tax_enabled:
-                      type: boolean
-              required:
-              - work_order_service
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{id} -> 200
@@ -39116,8 +41472,18 @@ paths:
                   pricing_mode:
                     type: string
                   technician_id:
-                    nullable: true
                     type: integer
+                    nullable: true
+                  technician:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                    required:
+                    - id
+                    - full_name
                   category_id:
                     nullable: true
                     type: integer
@@ -39196,8 +41562,8 @@ paths:
                         rate_cents:
                           type: integer
                         technician_id:
-                          nullable: true
                           type: integer
+                          nullable: true
                         labor_rate_id:
                           nullable: true
                           type: integer
@@ -39220,16 +41586,6 @@ paths:
                       - rate_cents
                       - technician_id
                       - labor_rate_id
-                  technician:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      full_name:
-                        type: string
-                    required:
-                    - id
-                    - full_name
                 required:
                 - id
                 - name
@@ -39284,6 +41640,27 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order_service:
+                  type: object
+                  properties:
+                    technician_id:
+                      type: integer
+                    pricing_mode:
+                      type: string
+                    name:
+                      type: string
+                    labor_tax_enabled:
+                      type: boolean
+                    position:
+                      type: integer
+              required:
+              - work_order_service
       description: PATCH /work_orders/{work_order_id}/services/{id}
       operationId: PATCH_work_orders_work_order_id_services_id_
   "/work_orders/{work_order_id}/services/{id}/adjust_time":
@@ -39741,6 +42118,12 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/completion
@@ -39859,12 +42242,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       description: POST /work_orders/{work_order_id}/services/{id}/completion
       operationId: POST_work_orders_work_order_id_services_id_completion
   "/work_orders/{work_order_id}/services/{id}/copies":
@@ -40057,16 +42434,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                package_id:
-                  type: integer
-              required:
-              - package_id
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
@@ -40160,6 +42527,16 @@ paths:
         '404':
           description: POST /work_orders/{work_order_id}/services/{id}/packages ->
             404
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                package_id:
+                  type: integer
+              required:
+              - package_id
       description: POST /work_orders/{work_order_id}/services/{id}/packages
       operationId: POST_work_orders_work_order_id_services_id_packages
   "/work_orders/{work_order_id}/services/{id}/pause":
@@ -40577,6 +42954,12 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/time_entries
@@ -40690,12 +43073,6 @@ paths:
                     - field_errors
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       description: POST /work_orders/{work_order_id}/services/{id}/time_entries
       operationId: POST_work_orders_work_order_id_services_id_time_entries
   "/work_orders/{work_order_id}/services/{id}/toggle_labor_completion":
@@ -40987,35 +43364,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order_line_item:
-                  type: object
-                  properties:
-                    item_type:
-                      type: string
-                    description:
-                      type: string
-                    unit_price:
-                      type: string
-                    quantity:
-                      type: integer
-                    total:
-                      type: string
-                    hours:
-                      type: number
-                      format: float
-                    labor_rate_id:
-                      type: integer
-                  required:
-                  - item_type
-                  - description
-              required:
-              - work_order_line_item
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items
@@ -41054,6 +43402,15 @@ paths:
                     type: string
                   updated_at:
                     type: string
+                  hours:
+                    type: string
+                  rate_cents:
+                    type: integer
+                  technician_id:
+                    nullable: true
+                    type: integer
+                  labor_rate_id:
+                    type: integer
                   part_type:
                     type: string
                   part_status:
@@ -41084,15 +43441,6 @@ paths:
                     type: boolean
                   fee_on_sublets:
                     type: boolean
-                  hours:
-                    type: string
-                  rate_cents:
-                    type: integer
-                  technician_id:
-                    nullable: true
-                    type: integer
-                  labor_rate_id:
-                    type: integer
                 required:
                 - id
                 - item_type
@@ -41132,6 +43480,35 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order_line_item:
+                  type: object
+                  properties:
+                    item_type:
+                      type: string
+                    description:
+                      type: string
+                    hours:
+                      type: number
+                      format: float
+                    labor_rate_id:
+                      type: integer
+                    unit_price:
+                      type: string
+                    quantity:
+                      type: integer
+                    total:
+                      type: string
+                  required:
+                  - item_type
+                  - description
+              required:
+              - work_order_line_item
       description: POST /work_orders/{work_order_id}/services/{service_id}/line_items
       operationId: POST_work_orders_work_order_id_services_service_id_line_items
   "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}":
@@ -41547,12 +43924,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
@@ -41659,6 +44030,12 @@ paths:
                     - field_errors
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
       description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
       operationId: POST_work_orders_work_order_id_services_service_id_line_items_id_price_refreshes
   "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull":

@@ -104,6 +104,100 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/tires.json
 ```
 
+## Create tires export
+
+```
+POST /tires/export
+```
+
+Create a tires export.
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `export_log_id` | integer | Yes |
+| `status` | string | Yes |
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/tires/export.json
+```
+
+## List tires export download
+
+```
+GET /tires/export/{id}/download
+```
+
+List all tires export download, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200** — no content.
+
+**Response 404** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/tires/export/<id>.json
+```
+
+## Create tires imports commit
+
+```
+POST /tires/imports/commit
+```
+
+Create a tires imports commit.
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/tires/imports/commit.json
+```
+
+## List tires imports template
+
+```
+GET /tires/imports/template
+```
+
+List all tires imports template, paginated via the Link header.
+
+**Response 200** — no content.
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/tires/imports/template.json
+```
+
+## Create tires imports validate
+
+```
+POST /tires/imports/validate
+```
+
+Create a tires imports validate.
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `valid_count` | integer | Yes |
+| `error_count` | integer | Yes |
+| `duplicate_count` | integer | Yes |
+| `total` | integer | Yes |
+| `errors` | array of string | Yes |
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/tires/imports/validate.json
+```
+
 ## Delete tire
 
 ```

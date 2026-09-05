@@ -34,6 +34,12 @@ def pascal(identifier)
   identifier.split("_").reject(&:empty?).map { |p| p[0].upcase + p[1..] }.join
 end
 
+# Convert a query param name (e.g. "filters[has_open_work_order]") into a valid
+# Ruby keyword identifier (e.g. "filters_has_open_work_order").
+def ruby_param_name(name)
+  name.gsub(/[\[\]]/, "_").gsub(/_+/, "_").sub(/_+\z/, "")
+end
+
 def go_param_name(name)
   parts = name.split("_")
   (parts.shift || "id") + parts.map { |p| p[0].upcase + p[1..] }.join
@@ -55,7 +61,7 @@ end
 
 # Go: expression to pull a query param, typed to the param's Go type.
 def go_query_field(p)
-  name = pascal(p["name"])
+  name = go_query_field_name(p["name"])
   case p["type"]
   when "boolean"
     "#{name}: boolPtr(args[\"query\"].(map[string]interface{}), \"#{p["name"]}\")"
@@ -66,6 +72,12 @@ def go_query_field(p)
   else
     "#{name}: strPtr(args[\"query\"].(map[string]interface{}), \"#{p["name"]}\")"
   end
+end
+
+# oapi-codegen strips brackets from query param names when generating Go struct
+# fields (e.g. "filters[has_open_work_order]" -> "FiltersHasOpenWorkOrder").
+def go_query_field_name(name)
+  pascal(name.gsub(/[\[\]]/, "_").gsub(/_+/, "_").sub(/_+\z/, ""))
 end
 
 # Go: expression to pull a query param.
@@ -166,7 +178,7 @@ def build_ruby_entry(key, manifest_id, variant = :default)
   pos = path_params.map { |p| "args[\"pathParams\"][#{p.inspect}]" }
 
   # Query params as keyword args.
-  query_kw = query.map { |q| "#{q["name"]}: args[\"query\"][#{q["name"].inspect}]" }
+  query_kw = query.map { |q| "#{ruby_param_name(q["name"])}: args[\"query\"][#{q["name"].inspect}]" }
 
   # Request body keyword args.
   body_kw = []

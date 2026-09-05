@@ -43,12 +43,12 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/cash_drawer_banner` | `update_cash_drawer_banner` | Update a cash drawer banner by ID. |
 | POST | `/catalog_cleanups/{catalog_cleanup_id}/applications` | `create_catalog_cleanups_application` | Create a catalog cleanups application. |
 | GET | `/conversations` | `list_conversations` | List all conversations, paginated via the Link header. |
+| POST | `/conversations` | `create_conversation` | Create a conversation. |
 | POST | `/conversations/bulk_mark_read` | `create_conversations_bulk_mark_read` | Create a conversations bulk mark read. |
 | POST | `/conversations/{conversation_id}/customer_links` | `create_conversations_customer_link` | Create a conversations customer link. |
 | POST | `/conversations/{conversation_id}/ignores` | `create_conversations_ignore` | Create a conversations ignore. |
 | GET | `/conversations/{conversation_id}/messages` | `list_conversations_messages` | List all conversations messages, paginated via the Link header. |
 | POST | `/conversations/{conversation_id}/messages` | `create_conversations_message` | Create a conversations message. |
-| POST | `/conversations/{conversation_id}/messages/{id}/resends` | `create_conversations_messages_resend` | Create a conversations messages resend. |
 | GET | `/conversations/{id}` | `show_conversation` | Show a conversation by ID. |
 | PATCH | `/conversations/{id}` | `update_conversation` | Update a conversation by ID. |
 | GET | `/core_tax_rules` | `list_core_tax_rules` | List all core tax rules, paginated via the Link header. |
@@ -58,7 +58,12 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/counter_sales/{counter_sale_id}/line_items/brands` | `list_counter_sales_line_items_brands` | List all counter sales line items brands, paginated via the Link header. |
 | GET | `/counter_sales/{id}` | `show_counter_sale` | Show a counter sale by ID. |
 | PATCH | `/counter_sales/{id}` | `update_counter_sale` | Update a counter sale by ID. |
+| PATCH | `/counter_sales/{id}/reopen` | `update_counter_sales_reopen` | Update a counter sales reopen by ID. |
 | GET | `/courtesy_cars` | `list_courtesy_cars` | List all courtesy cars, paginated via the Link header. |
+| POST | `/courtesy_cars` | `create_courtesy_car` | Create a courtesy car. |
+| DELETE | `/courtesy_cars/{id}` | `delete_courtesy_car` | Delete a courtesy car by ID. |
+| GET | `/courtesy_cars/{id}` | `show_courtesy_car` | Show a courtesy car by ID. |
+| PATCH | `/courtesy_cars/{id}` | `update_courtesy_car` | Update a courtesy car by ID. |
 | GET | `/current_location` | `list_current_location` | List all current location, paginated via the Link header. |
 | PATCH | `/current_location` | `update_current_location` | Update a current location by ID. |
 | GET | `/customer_tags` | `list_customer_tags` | List all customer tags, paginated via the Link header. |
@@ -90,6 +95,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/customers/{id}/merges` | `merge_customer` | Create |
 | PATCH | `/customers/{id}/restore` | `restore_customer` | Restore |
 | PATCH | `/customers/{id}/trash` | `trash_customer` | Trash |
+| GET | `/drivers` | `list_drivers` | List all drivers, paginated via the Link header. |
 | GET | `/expenses` | `list_expenses` | List all expenses, paginated via the Link header. |
 | POST | `/expenses` | `create_expense` | Create a expense. |
 | GET | `/expenses/data_transfer` | `list_expenses_data_transfer` | List all expenses data transfer, paginated via the Link header. |
@@ -122,6 +128,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/inspections/{id}/remove_default` | `remove_default_inspection` | Remove default |
 | PATCH | `/inspections/{id}/restore` | `restore_inspection` | Restore |
 | PATCH | `/inspections/{id}/set_default` | `set_default_inspection` | Set default |
+| PATCH | `/inspections/{id}/toggle` | `toggle_inspection` | Toggle |
 | PATCH | `/inspections/{id}/trash` | `trash_inspection` | Trash |
 | GET | `/inventory_levels` | `list_inventory_levels` | List all inventory levels, paginated via the Link header. |
 | POST | `/inventory_levels` | `create_inventory_level` | Create a inventory level. |
@@ -173,6 +180,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/me/preferences` | `update_me_preferences` | Update a me preferences by ID. |
 | GET | `/me/profile` | `list_me_profile` | List all me profile, paginated via the Link header. |
 | PATCH | `/me/profile` | `update_me_profile` | Update a me profile by ID. |
+| GET | `/messages` | `list_messages` | List all messages, paginated via the Link header. |
+| GET | `/messages/{id}` | `show_message` | Show a message by ID. |
+| POST | `/messages/{message_id}/resends` | `create_messages_resend` | Create a messages resend. |
 | GET | `/notifications` | `list_notifications` | List all notifications, paginated via the Link header. |
 | POST | `/notifications/bulk_mark_read` | `create_notifications_bulk_mark_read` | Create a notifications bulk mark read. |
 | GET | `/notifications/{id}` | `show_notification` | Show a notification by ID. |
@@ -227,6 +237,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/reports/store_credit` | `list_reports_store_credit` | List all reports store credit, paginated via the Link header. |
 | GET | `/reports/technician_productivity` | `list_reports_technician_productivity` | List all reports technician productivity, paginated via the Link header. |
 | GET | `/reports/work_order_profitability` | `list_reports_work_order_profitability` | List all reports work order profitability, paginated via the Link header. |
+| POST | `/scan/lookups` | `create_scan_lookup` | Create a scan lookup. |
+| POST | `/scan/started_work_orders` | `create_scan_started_work_order` | Create a scan started work order. |
+| POST | `/scan/vehicles` | `create_scan_vehicle` | Create a scan vehicle. |
 | GET | `/search` | `list_search` | List all search, paginated via the Link header. |
 | GET | `/service_categories` | `list_service_categories` | List all service categories, paginated via the Link header. |
 | POST | `/service_categories` | `create_service_category` | Create a service category. |
@@ -256,12 +269,26 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/sublet_packages/{id}` | `delete_sublet_package` | Delete a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}` | `update_sublet_package` | Update a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}/deactivate` | `update_sublet_packages_deactivate` | Update a sublet packages deactivate by ID. |
+| POST | `/time_entries` | `create_time_entrie` | Create a time entrie. |
+| PATCH | `/time_entries/{id}` | `update_time_entrie` | Update a time entrie by ID. |
+| GET | `/tire_events` | `list_tire_events` | List all tire events, paginated via the Link header. |
+| POST | `/tire_events` | `create_tire_event` | Create a tire event. |
+| GET | `/tire_events/{id}` | `show_tire_event` | Show a tire event by ID. |
 | GET | `/tire_storage_slots` | `list_tire_storage_slots` | List all tire storage slots, paginated via the Link header. |
 | POST | `/tire_storage_slots` | `create_tire_storage_slot` | Create a tire storage slot. |
+| POST | `/tire_storage_slots/export` | `create_tire_storage_slots_export` | Create a tire storage slots export. |
+| GET | `/tire_storage_slots/export/{id}/download` | `list_tire_storage_slots_export_download` | List all tire storage slots export download, paginated via the Link header. |
+| DELETE | `/tire_storage_slots/{id}` | `delete_tire_storage_slot` | Delete a tire storage slot by ID. |
 | GET | `/tire_storage_slots/{id}` | `show_tire_storage_slot` | Show a tire storage slot by ID. |
+| PATCH | `/tire_storage_slots/{id}` | `update_tire_storage_slot` | Update a tire storage slot by ID. |
 | POST | `/tire_storage_slots/{tire_storage_slot_id}/check_outs` | `create_tire_storage_slots_check_out` | Create a tire storage slots check out. |
 | GET | `/tires` | `list_tires` | List all tires, paginated via the Link header. |
 | POST | `/tires` | `create_tire` | Create a tire. |
+| POST | `/tires/export` | `create_tires_export` | Create a tires export. |
+| GET | `/tires/export/{id}/download` | `list_tires_export_download` | List all tires export download, paginated via the Link header. |
+| POST | `/tires/imports/commit` | `create_tires_imports_commit` | Create a tires imports commit. |
+| GET | `/tires/imports/template` | `list_tires_imports_template` | List all tires imports template, paginated via the Link header. |
+| POST | `/tires/imports/validate` | `create_tires_imports_validate` | Create a tires imports validate. |
 | DELETE | `/tires/{id}` | `delete_tire` | Delete a tire by ID. |
 | GET | `/tires/{id}` | `show_tire` | Show a tire by ID. |
 | PATCH | `/tires/{id}` | `update_tire` | Update a tire by ID. |
@@ -304,6 +331,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/vendors/{id}/restore` | `restore_vendor` | Restore |
 | PATCH | `/vendors/{id}/trash` | `trash_vendor` | Trash |
 | GET | `/vendors/{vendor_id}/purchase_orders` | `list_vendors_purchase_orders` | List all vendors purchase orders, paginated via the Link header. |
+| DELETE | `/voice_commands/{id}` | `delete_voice_command` | Delete a voice command by ID. |
 | GET | `/work_order_tags` | `list_work_order_tags` | List all work order tags, paginated via the Link header. |
 | POST | `/work_order_tags` | `create_work_order_tag` | Create a work order tag. |
 | PATCH | `/work_order_tags/{id}` | `update_work_order_tag` | Update a work order tag by ID. |

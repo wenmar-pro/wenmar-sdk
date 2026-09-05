@@ -34,6 +34,7 @@ List all counter sales, paginated via the Link header.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `processed_by` — object:
 | Field | Type | Required |
@@ -83,6 +84,7 @@ Create a counter sale.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `processed_by` — object:
 | Field | Type | Required |
@@ -157,6 +159,7 @@ Show a counter sale by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `processed_by` — object:
 | Field | Type | Required |
@@ -210,6 +213,7 @@ Update a counter sale by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+| `reopen_url` | string | No |
 
 `processed_by` — object:
 | Field | Type | Required |
@@ -223,6 +227,65 @@ Update a counter sale by ID.
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/counter_sales/<id>.json
+```
+
+## Update counter sales reopen
+
+```
+PATCH /counter_sales/{id}/reopen
+```
+
+Update a counter sales reopen by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `counter_sale_number` | integer | Yes |
+| `status` | string | Yes |
+| `walk_in_name` | string \| null | Yes |
+| `notes` | string \| null | Yes |
+| `subtotal_cents` | integer | Yes |
+| `tax_total_cents` | integer | Yes |
+| `total_cents` | integer | Yes |
+| `paid_cents` | integer | Yes |
+| `remaining_cents` | integer | Yes |
+| `paid` | boolean | Yes |
+| `currency` | string | Yes |
+| `line_items_count` | integer | Yes |
+| `processed_by` | object | Yes |
+| `location` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `reopen_url` | string | Yes |
+
+`processed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \

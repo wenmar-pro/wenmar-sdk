@@ -89,11 +89,11 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
   },
   {
-    "name": "create_conversations_messages_resend_success",
-    "operation": "create_conversations_messages_resend",
+    "name": "create_messages_resend_success",
+    "operation": "create_messages_resend",
     "method": "POST",
-    "path": "/conversations/1/messages/5/resends",
-    "pathParams": { "conversation_id": 1, "id": 5 },
+    "path": "/messages/5/resends",
+    "pathParams": { "message_id": 5 },
     "mockResponses": [
       { "status": 200, "body": { "id": 5, "conversation_id": 1, "body": "Hello", "channel": "sms", "direction": "outbound", "status": "queued", "created_at": "2026-01-01T00:00:00Z" } }
     ],

@@ -268,6 +268,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"create_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateConversation(ctx, buildWrapper[wenmar.CreateConversationRequest]("conversation", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "create_conversations_bulk_mark_read": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateConversationsBulkMarkRead(ctx, wenmar.CreateConversationsBulkMarkReadRequest{})
 	if err != nil {
@@ -302,14 +310,6 @@ var dispatch = map[string]operationFunc{
 
 "create_conversations_message": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateConversationsMessage(ctx, intArg(args["pathParams"].(map[string]interface{}), "conversation_id"), buildWrapper[wenmar.CreateConversationsMessageRequest]("message", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_conversations_messages_resend": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateConversationsMessagesResend(ctx, intArg(args["pathParams"].(map[string]interface{}), "conversation_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateConversationsMessagesResendRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -388,8 +388,48 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"update_counter_sales_reopen": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCounterSalesReopen(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCounterSalesReopenRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_courtesy_cars": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListCourtesyCars(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_courtesy_car": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateCourtesyCar(ctx, buildWrapper[wenmar.CreateCourtesyCarRequest]("vehicle", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_courtesy_car": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteCourtesyCar(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_courtesy_car": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCourtesyCar(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_courtesy_car": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCourtesyCar(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCourtesyCarRequest]("vehicle", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -638,6 +678,14 @@ var dispatch = map[string]operationFunc{
 
 "trash_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.TrashCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashCustomerRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListDrivers(ctx, &wenmar.ListDriversParams{FiltersHasOpenWorkOrder: boolPtr(args["query"].(map[string]interface{}), "filters[has_open_work_order]"), FiltersQ: strPtr(args["query"].(map[string]interface{}), "filters[q]")})
 	if err != nil {
 		return nil, err
 	}
@@ -1308,8 +1356,32 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_messages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListMessages(ctx, &wenmar.ListMessagesParams{ConversationId: intPtr(args["query"].(map[string]interface{}), "conversation_id")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_message": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowMessage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_messages_resend": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateMessagesResend(ctx, intArg(args["pathParams"].(map[string]interface{}), "message_id"), wenmar.CreateMessagesResendRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_notifications": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListNotifications(ctx)
+	resp, err := c.ListNotifications(ctx, &wenmar.ListNotificationsParams{Category: strPtr(args["query"].(map[string]interface{}), "category"), Limit: intPtr(args["query"].(map[string]interface{}), "limit"), LocationId: intPtr(args["query"].(map[string]interface{}), "location_id"), Read: boolPtr(args["query"].(map[string]interface{}), "read"), Since: strPtr(args["query"].(map[string]interface{}), "since"), TriggerType: strPtr(args["query"].(map[string]interface{}), "trigger_type")})
 	if err != nil {
 		return nil, err
 	}
@@ -1972,6 +2044,30 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_tire_events": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListTireEvents(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTireEvent(ctx, buildWrapper[wenmar.CreateTireEventRequest]("tire_event", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowTireEvent(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_tire_storage_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListTireStorageSlots(ctx)
 	if err != nil {
@@ -1988,8 +2084,40 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"create_tire_storage_slots_export": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTireStorageSlotsExport(ctx, wenmar.CreateTireStorageSlotsExportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_tire_storage_slots_export_download": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListTireStorageSlotsExportDownload(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "show_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTireStorageSlotRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2014,6 +2142,46 @@ var dispatch = map[string]operationFunc{
 
 "create_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateTire(ctx, buildWrapper[wenmar.CreateTireRequest]("tire", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tires_export": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTiresExport(ctx, wenmar.CreateTiresExportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_tires_export_download": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListTiresExportDownload(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tires_imports_commit": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTiresImportsCommit(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_tires_imports_template": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListTiresImportsTemplate(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tires_imports_validate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTiresImportsValidate(ctx, bytes.NewReader([]byte(strArg(args["requestBody"].(map[string]interface{}), "file"))))
 	if err != nil {
 		return nil, err
 	}
@@ -3001,12 +3169,12 @@ var allOperations = []string{
 	"update_cash_drawer_banner",
 	"create_catalog_cleanups_application",
 	"list_conversations",
+	"create_conversation",
 	"create_conversations_bulk_mark_read",
 	"create_conversations_customer_link",
 	"create_conversations_ignore",
 	"list_conversations_messages",
 	"create_conversations_message",
-	"create_conversations_messages_resend",
 	"show_conversation",
 	"update_conversation",
 	"list_core_tax_rules",
@@ -3016,7 +3184,12 @@ var allOperations = []string{
 	"list_counter_sales_line_items_brands",
 	"show_counter_sale",
 	"update_counter_sale",
+	"update_counter_sales_reopen",
 	"list_courtesy_cars",
+	"create_courtesy_car",
+	"delete_courtesy_car",
+	"show_courtesy_car",
+	"update_courtesy_car",
 	"list_current_location",
 	"update_current_location",
 	"list_customer_tags",
@@ -3048,6 +3221,7 @@ var allOperations = []string{
 	"merge_customer",
 	"restore_customer",
 	"trash_customer",
+	"list_drivers",
 	"list_expenses",
 	"create_expense",
 	"list_expenses_data_transfer",
@@ -3131,6 +3305,9 @@ var allOperations = []string{
 	"update_me_preferences",
 	"list_me_profile",
 	"update_me_profile",
+	"list_messages",
+	"show_message",
+	"create_messages_resend",
 	"list_notifications",
 	"create_notifications_bulk_mark_read",
 	"show_notification",
@@ -3214,12 +3391,24 @@ var allOperations = []string{
 	"delete_sublet_package",
 	"update_sublet_package",
 	"update_sublet_packages_deactivate",
+	"list_tire_events",
+	"create_tire_event",
+	"show_tire_event",
 	"list_tire_storage_slots",
 	"create_tire_storage_slot",
+	"create_tire_storage_slots_export",
+	"list_tire_storage_slots_export_download",
+	"delete_tire_storage_slot",
 	"show_tire_storage_slot",
+	"update_tire_storage_slot",
 	"create_tire_storage_slots_check_out",
 	"list_tires",
 	"create_tire",
+	"create_tires_export",
+	"list_tires_export_download",
+	"create_tires_imports_commit",
+	"list_tires_imports_template",
+	"create_tires_imports_validate",
 	"delete_tire",
 	"show_tire",
 	"update_tire",

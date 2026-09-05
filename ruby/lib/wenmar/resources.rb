@@ -55,7 +55,7 @@ end
 # Lists list_appointments resources (paginated).
 # @return [Wenmar::Paginator]
 def list_appointments(per_page: nil, q: nil, status: nil)
-  params = { per_page: per_page, q: q, status: status }
+  params = { "per_page" => per_page, "q" => q, "status" => status }
   get("/appointments", params.compact)
 end
 
@@ -71,7 +71,7 @@ end
 # Lists list_appointments_available_slots resources (paginated).
 # @return [Wenmar::Paginator]
 def list_appointments_available_slots(date: nil, duration_minutes: nil)
-  params = { date: date, duration_minutes: duration_minutes }
+  params = { "date" => date, "duration_minutes" => duration_minutes }
   get("/appointments/available_slots", params.compact)
 end
 
@@ -162,6 +162,10 @@ end
 def get_all_conversations()
   paginator_to_a(list_conversations(), 1000)
 end
+# Runs create_conversation (POST /conversations).
+def create_conversation(conversation:)
+  post("/conversations", { conversation: conversation })
+end
 # Runs create_conversations_bulk_mark_read (POST /conversations/bulk_mark_read).
 def create_conversations_bulk_mark_read()
   post("/conversations/bulk_mark_read")
@@ -188,10 +192,6 @@ end
 # Runs create_conversations_message (POST /conversations/{conversation_id}/messages).
 def create_conversations_message(conversation_id, message:)
   post("/conversations/#{conversation_id}/messages", { message: message })
-end
-# Runs create_conversations_messages_resend (POST /conversations/{conversation_id}/messages/{id}/resends).
-def create_conversations_messages_resend(conversation_id, id)
-  post("/conversations/#{conversation_id}/messages/#{id}/resends")
 end
 # Fetches show_conversation.
 def show_conversation(id)
@@ -243,6 +243,10 @@ end
 def update_counter_sale(id, counter_sale:)
   patch("/counter_sales/#{id}", { counter_sale: counter_sale })
 end
+# Runs update_counter_sales_reopen (PATCH /counter_sales/{id}/reopen).
+def update_counter_sales_reopen(id)
+  patch("/counter_sales/#{id}/reopen")
+end
 # Lists list_courtesy_cars resources (paginated).
 # @return [Wenmar::Paginator]
 def list_courtesy_cars()
@@ -253,6 +257,22 @@ end
 # @return [Array<Hash>]
 def get_all_courtesy_cars()
   paginator_to_a(list_courtesy_cars(), 1000)
+end
+# Runs create_courtesy_car (POST /courtesy_cars).
+def create_courtesy_car(vehicle:)
+  post("/courtesy_cars", { vehicle: vehicle })
+end
+# Deletes delete_courtesy_car.
+def delete_courtesy_car(id)
+  delete("/courtesy_cars/#{id}")
+end
+# Fetches show_courtesy_car.
+def show_courtesy_car(id)
+  get("/courtesy_cars/#{id}")
+end
+# Runs update_courtesy_car (PATCH /courtesy_cars/{id}).
+def update_courtesy_car(id, vehicle:)
+  patch("/courtesy_cars/#{id}", { vehicle: vehicle })
 end
 # Fetches list_current_location.
 def list_current_location()
@@ -265,7 +285,7 @@ end
 # Lists list_customer_tags resources (paginated).
 # @return [Wenmar::Paginator]
 def list_customer_tags(status: nil)
-  params = { status: status }
+  params = { "status" => status }
   get("/customer_tags", params.compact)
 end
 
@@ -301,7 +321,7 @@ end
 # Lists list_customers resources (paginated).
 # @return [Wenmar::Paginator]
 def list_customers(customer_tag_id: nil, has_balance: nil, has_vehicle: nil, last_visit_months: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
-  params = { customer_tag_id: customer_tag_id, has_balance: has_balance, has_vehicle: has_vehicle, last_visit_months: last_visit_months, page: page, per_page: per_page, q: q, status: status, type: type }
+  params = { "customer_tag_id" => customer_tag_id, "has_balance" => has_balance, "has_vehicle" => has_vehicle, "last_visit_months" => last_visit_months, "page" => page, "per_page" => per_page, "q" => q, "status" => status, "type" => type }
   get("/customers", params.compact)
 end
 
@@ -320,7 +340,7 @@ def list_customers_merge()
 end
 # Fetches check_customer_duplicate.
 def check_customer_duplicate(email: nil, first_name: nil, last_name: nil, phone: nil)
-  params = { email: email, first_name: first_name, last_name: last_name, phone: phone }
+  params = { "email" => email, "first_name" => first_name, "last_name" => last_name, "phone" => phone }
       get("/customers/check_duplicate", params.compact)
 end
 # Runs create_customers_export (POST /customers/export).
@@ -334,7 +354,7 @@ end
 # Lists lookup_customer resources (paginated).
 # @return [Wenmar::Paginator]
 def lookup_customer(id: nil, query: nil)
-  params = { id: id, query: query }
+  params = { "id" => id, "query" => query }
   get("/customers/lookup", params.compact)
 end
 # Lists list_customers_drivers resources (paginated).
@@ -425,6 +445,18 @@ end
 def trash_customer(id)
   patch("/customers/#{id}/trash")
 end
+# Lists list_drivers resources (paginated).
+# @return [Wenmar::Paginator]
+def list_drivers(filters_has_open_work_order: nil, filters_q: nil)
+  params = { "filters[has_open_work_order]" => filters_has_open_work_order, "filters[q]" => filters_q }
+  get("/drivers", params.compact)
+end
+
+# Fetches all drivers, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_drivers(filters_has_open_work_order: nil, filters_q: nil)
+  paginator_to_a(list_drivers(filters_has_open_work_order: nil, filters_q: nil), 1000)
+end
 # Lists list_expenses resources (paginated).
 # @return [Wenmar::Paginator]
 def list_expenses()
@@ -506,7 +538,7 @@ def complete_inspection_report(id)
 end
 # Fetches show_inspection_report_group.
 def show_inspection_report_group(id, group_name: nil)
-  params = { group_name: group_name }
+  params = { "group_name" => group_name }
       get("/inspection_reports/#{id}/group", params.compact)
 end
 # Runs mark_all_inspection_report (POST /inspection_reports/{id}/mark_all).
@@ -541,7 +573,7 @@ end
 # Lists list_inspections resources (paginated).
 # @return [Wenmar::Paginator]
 def list_inspections(per_page: nil)
-  params = { per_page: per_page }
+  params = { "per_page" => per_page }
   get("/inspections", params.compact)
 end
 
@@ -585,7 +617,7 @@ end
 # Lists list_inventory_levels resources (paginated).
 # @return [Wenmar::Paginator]
 def list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
-  params = { brand: brand, page: page, per_page: per_page, q: q, stock_status: stock_status, stocked: stocked }
+  params = { "brand" => brand, "page" => page, "per_page" => per_page, "q" => q, "stock_status" => stock_status, "stocked" => stocked }
   get("/inventory_levels", params.compact)
 end
 
@@ -600,7 +632,7 @@ def create_inventory_level(part:)
 end
 # Fetches list_inventory_levels_barcode_lookup.
 def list_inventory_levels_barcode_lookup(barcode: nil)
-  params = { barcode: barcode }
+  params = { "barcode" => barcode }
       get("/inventory_levels/barcode_lookup", params.compact)
 end
 # Deletes delete_inventory_level.
@@ -819,16 +851,37 @@ end
 def update_me_profile(user:)
   patch("/me/profile", { user: user })
 end
+# Lists list_messages resources (paginated).
+# @return [Wenmar::Paginator]
+def list_messages(conversation_id: nil)
+  params = { "conversation_id" => conversation_id }
+  get("/messages", params.compact)
+end
+
+# Fetches all messages, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_messages(conversation_id: nil)
+  paginator_to_a(list_messages(conversation_id: nil), 1000)
+end
+# Fetches show_message.
+def show_message(id)
+  get("/messages/#{id}")
+end
+# Runs create_messages_resend (POST /messages/{message_id}/resends).
+def create_messages_resend(message_id)
+  post("/messages/#{message_id}/resends")
+end
 # Lists list_notifications resources (paginated).
 # @return [Wenmar::Paginator]
-def list_notifications()
-  get("/notifications")
+def list_notifications(category: nil, limit: nil, location_id: nil, read: nil, since: nil, trigger_type: nil)
+  params = { "category" => category, "limit" => limit, "location_id" => location_id, "read" => read, "since" => since, "trigger_type" => trigger_type }
+  get("/notifications", params.compact)
 end
 
 # Fetches all notifications, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_notifications()
-  paginator_to_a(list_notifications(), 1000)
+def get_all_notifications(category: nil, limit: nil, location_id: nil, read: nil, since: nil, trigger_type: nil)
+  paginator_to_a(list_notifications(category: nil, limit: nil, location_id: nil, read: nil, since: nil, trigger_type: nil), 1000)
 end
 # Runs create_notifications_bulk_mark_read (POST /notifications/bulk_mark_read).
 def create_notifications_bulk_mark_read()
@@ -845,7 +898,7 @@ end
 # Lists list_orders_purchase_orders resources (paginated).
 # @return [Wenmar::Paginator]
 def list_orders_purchase_orders(page: nil, per_page: nil, vendor_id: nil)
-  params = { page: page, per_page: per_page, vendor_id: vendor_id }
+  params = { "page" => page, "per_page" => per_page, "vendor_id" => vendor_id }
   get("/orders/purchase_orders", params.compact)
 end
 
@@ -981,7 +1034,7 @@ end
 # Lists list_payments resources (paginated).
 # @return [Wenmar::Paginator]
 def list_payments(method: nil)
-  params = { method: method }
+  params = { "method" => method }
   get("/payments", params.compact)
 end
 
@@ -1095,7 +1148,7 @@ def list_reports_work_order_profitability()
 end
 # Fetches list_search.
 def list_search(q: nil)
-  params = { q: q }
+  params = { "q" => q }
       get("/search", params.compact)
 end
 # Lists list_service_categories resources (paginated).
@@ -1252,6 +1305,25 @@ end
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
 end
+# Lists list_tire_events resources (paginated).
+# @return [Wenmar::Paginator]
+def list_tire_events()
+  get("/tire_events")
+end
+
+# Fetches all tire_events, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_tire_events()
+  paginator_to_a(list_tire_events(), 1000)
+end
+# Runs create_tire_event (POST /tire_events).
+def create_tire_event(tire_event:)
+  post("/tire_events", { tire_event: tire_event })
+end
+# Fetches show_tire_event.
+def show_tire_event(id)
+  get("/tire_events/#{id}")
+end
 # Lists list_tire_storage_slots resources (paginated).
 # @return [Wenmar::Paginator]
 def list_tire_storage_slots()
@@ -1267,9 +1339,25 @@ end
 def create_tire_storage_slot(tire_storage_slot:)
   post("/tire_storage_slots", { tire_storage_slot: tire_storage_slot })
 end
+# Runs create_tire_storage_slots_export (POST /tire_storage_slots/export).
+def create_tire_storage_slots_export()
+  post("/tire_storage_slots/export")
+end
+# Fetches list_tire_storage_slots_export_download.
+def list_tire_storage_slots_export_download(id)
+  get("/tire_storage_slots/export/#{id}/download")
+end
+# Deletes delete_tire_storage_slot.
+def delete_tire_storage_slot(id)
+  delete("/tire_storage_slots/#{id}")
+end
 # Fetches show_tire_storage_slot.
 def show_tire_storage_slot(id)
   get("/tire_storage_slots/#{id}")
+end
+# Runs update_tire_storage_slot (PATCH /tire_storage_slots/{id}).
+def update_tire_storage_slot(id, tire_storage_slot:)
+  patch("/tire_storage_slots/#{id}", { tire_storage_slot: tire_storage_slot })
 end
 # Runs create_tire_storage_slots_check_out (POST /tire_storage_slots/{tire_storage_slot_id}/check_outs).
 def create_tire_storage_slots_check_out(tire_storage_slot_id)
@@ -1290,6 +1378,26 @@ end
 def create_tire(tire:)
   post("/tires", { tire: tire })
 end
+# Runs create_tires_export (POST /tires/export).
+def create_tires_export()
+  post("/tires/export")
+end
+# Fetches list_tires_export_download.
+def list_tires_export_download(id)
+  get("/tires/export/#{id}/download")
+end
+# Runs create_tires_imports_commit (POST /tires/imports/commit).
+def create_tires_imports_commit()
+  post("/tires/imports/commit")
+end
+# Fetches list_tires_imports_template.
+def list_tires_imports_template()
+  get("/tires/imports/template")
+end
+# Runs create_tires_imports_validate (POST /tires/imports/validate) as a multipart upload.
+def create_tires_imports_validate(file:)
+  post("/tires/imports/validate", { multipart: { file: file } })
+end
 # Deletes delete_tire.
 def delete_tire(id)
   delete("/tires/#{id}")
@@ -1305,7 +1413,7 @@ end
 # Lists list_users resources (paginated).
 # @return [Wenmar::Paginator]
 def list_users(page: nil, per_page: nil)
-  params = { page: page, per_page: per_page }
+  params = { "page" => page, "per_page" => per_page }
   get("/users", params.compact)
 end
 
@@ -1380,7 +1488,7 @@ end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
 def list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
-  params = { customer_id: customer_id, page: page, per_page: per_page, status: status }
+  params = { "customer_id" => customer_id, "page" => page, "per_page" => per_page, "status" => status }
   get("/vehicles", params.compact)
 end
 
@@ -1395,33 +1503,33 @@ def create_vehicle(vehicle:)
 end
 # Fetches list_vehicles_autocomplete.
 def list_vehicles_autocomplete(type: nil)
-  params = { type: type }
+  params = { "type" => type }
       get("/vehicles/autocomplete", params.compact)
 end
 # Fetches check_vehicle_duplicate.
 def check_vehicle_duplicate(vin: nil)
-  params = { vin: vin }
+  params = { "vin" => vin }
       get("/vehicles/check_duplicate", params.compact)
 end
 # Fetches list_vehicles_customer_vehicles.
 def list_vehicles_customer_vehicles(customer_id: nil)
-  params = { customer_id: customer_id }
+  params = { "customer_id" => customer_id }
       get("/vehicles/customer_vehicles", params.compact)
 end
 # Lists lookup_vehicle resources (paginated).
 # @return [Wenmar::Paginator]
 def lookup_vehicle(query: nil)
-  params = { query: query }
+  params = { "query" => query }
   get("/vehicles/lookup", params.compact)
 end
 # Fetches prefill_vehicle.
 def prefill_vehicle(make: nil, model: nil, vin: nil, year: nil)
-  params = { make: make, model: model, vin: vin, year: year }
+  params = { "make" => make, "model" => model, "vin" => vin, "year" => year }
       get("/vehicles/prefill", params.compact)
 end
 # Fetches decode_vin.
 def decode_vin(vin: nil)
-  params = { vin: vin }
+  params = { "vin" => vin }
       get("/vehicles/vin_decode", params.compact)
 end
 # Fetches show_vehicle.
@@ -1535,7 +1643,7 @@ end
 # Lists list_work_orders resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_orders(per_page: nil)
-  params = { per_page: per_page }
+  params = { "per_page" => per_page }
   get("/work_orders", params.compact)
 end
 
@@ -1784,7 +1892,7 @@ end
 # Lists list_work_orders_summary_activity resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_orders_summary_activity(work_order_id, category: nil)
-  params = { category: category }
+  params = { "category" => category }
   get("/work_orders/#{work_order_id}/summary/activity", params.compact)
 end
 
