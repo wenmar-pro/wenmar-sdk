@@ -67,6 +67,44 @@ func TestNewListResultFromResponse_ExtractsItemsAndMeta(t *testing.T) {
 	}
 }
 
+func TestGetAllWithOptions_RespectsMaxItems(t *testing.T) {
+	var serverURL string
+	var call int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&call, 1)
+		w.Header().Set("Content-Type", "application/json")
+		if atomic.LoadInt32(&call) == 1 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/items?page=2>; rel="next"`, serverURL))
+			w.Write([]byte(`[{"id":1},{"id":2},{"id":3}]`))
+		} else {
+			w.Write([]byte(`[{"id":4},{"id":5}]`))
+		}
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	// Build a first ListResult manually
+	headers := make(http.Header)
+	headers.Set("Link", fmt.Sprintf(`<%s/items?page=2>; rel="next"`, serverURL))
+	headers.Set("Content-Type", "application/json")
+	first := newListResultFromResponse[map[string]any](
+		[]byte(`[{"id":1},{"id":2},{"id":3}]`),
+		headers,
+		c,
+	)
+	items, truncated, err := getAll[map[string]any](context.Background(), first, &GetAllOptions{MaxItems: 2})
+	if err != nil {
+		t.Fatalf("getAll failed: %v", err)
+	}
+	if len(items) != 2 {
+		t.Errorf("expected 2 items (MaxItems cap), got %d", len(items))
+	}
+	if !truncated {
+		t.Error("expected truncated=true")
+	}
+}
+
 func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	var serverURL string
 	var calls int32
