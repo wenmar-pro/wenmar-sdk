@@ -79,22 +79,40 @@ All 76 operations are generated into `operations.gen.go`. Key methods:
 | Delete work order | `DeleteWorkOrder(ctx, id)` |
 
 Every paginated list also has a `GetAll*` variant that auto-paginates with a
-1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil)`.
+1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil, nil)`.
+
+Every `List*` method also has a `ListXxxRaw` variant that returns the raw
+oapi-codegen response envelope for callers who need headers or status codes.
 
 ## Pagination
 
-List endpoints paginate via the RFC 5988 `Link` header. Use the typed
-`ListResult[T]` to walk pages:
+List endpoints paginate via the RFC 5988 `Link` header. All `List*` methods
+return a typed `*ListResult[T]`:
 
 ```go
 result, err := client.ListCustomers(ctx, nil)
+// result.Items is []Customer
+// result.Meta.TotalCount, result.Meta.PerPage, result.Meta.HasMore
 for result.HasNext() {
     result, err = result.Next(ctx)
     // result.Items holds the next page
 }
 ```
 
-Or collect everything with `GetAllCustomers(ctx, nil)`.
+Or collect everything with `GetAllCustomers`, configurable via `GetAllOptions`:
+
+```go
+items, err := client.GetAllCustomers(ctx, nil, nil) // nil opts = default 1000 cap
+items, err := client.GetAllCustomers(ctx, nil, &wenmar.GetAllOptions{MaxItems: 50})
+```
+
+For raw access to the full response envelope (headers, status code), use
+the `ListXxxRaw` variant:
+
+```go
+resp, err := client.ListCustomersRaw(ctx, nil)
+// resp.JSON200, resp.HTTPResponse, resp.StatusCode()
+```
 
 ## Errors
 
