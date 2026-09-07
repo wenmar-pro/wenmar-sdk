@@ -1,19 +1,19 @@
 [
   {
-    "name": "list_me_api_tokens_success",
-    "operation": "list_me_api_tokens",
+    "name": "list_account_api_tokens_success",
+    "operation": "list_account_api_tokens",
     "method": "GET",
-    "path": "/me/api_tokens",
+    "path": "/account/api_tokens",
     "mockResponses": [
       { "status": 200, "body": { "api_tokens": [ { "id": 1, "name": "CLI token" } ] } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "api_tokens.0.name", "equals": "CLI token" } }
   },
   {
-    "name": "create_me_api_token_success",
-    "operation": "create_me_api_token",
+    "name": "create_account_api_token_success",
+    "operation": "create_account_api_token",
     "method": "POST",
-    "path": "/me/api_tokens",
+    "path": "/account/api_tokens",
     "requestBody": { "api_token": { "name": "New token" } },
     "mockResponses": [
       { "status": 201, "body": { "id": 2, "name": "New token", "token": "abc123" } }
@@ -21,10 +21,10 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "New token" } }
   },
   {
-    "name": "delete_me_api_token_success",
-    "operation": "delete_me_api_token",
+    "name": "delete_account_api_token_success",
+    "operation": "delete_account_api_token",
     "method": "DELETE",
-    "path": "/me/api_tokens/2",
+    "path": "/account/api_tokens/2",
     "pathParams": { "id": 2 },
     "mockResponses": [
       { "status": 204, "body": "" }
