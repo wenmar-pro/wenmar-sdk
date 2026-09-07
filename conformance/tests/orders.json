@@ -5,7 +5,7 @@
     "method": "GET",
     "path": "/orders/purchase_orders",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "50000" } ] }
+      { "status": 200, "body": [ { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 50000 } ] }
     ],
     "expect": {
       "requestCount": 1,
@@ -20,7 +20,7 @@
     "path": "/orders/purchase_orders/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "50000" } }
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 50000 } }
     ],
     "expect": {
       "requestCount": 1,
@@ -35,7 +35,7 @@
     "path": "/orders/purchase_orders",
     "requestBody": { "purchase_order": { "vendor_id": 2 } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": "0" } }
+      { "status": 201, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 0 } }
     ],
     "expect": {
       "requestCount": 1,
