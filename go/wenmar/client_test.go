@@ -134,7 +134,7 @@ func TestClient_UpdateVehicle(t *testing.T) {
 
 	c := newTestClient(t, ts.URL, "test-token")
 	req := UpdateVehicleRequest{}
-	req.Vehicle.Make = "Toyota"
+	req.Vehicle.Make = strPtr("Toyota")
 
 	resp, err := c.UpdateVehicle(ctx, 1, req)
 	if err != nil {

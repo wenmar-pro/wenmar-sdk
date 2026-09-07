@@ -18,9 +18,9 @@ func TestDownloadResult_StreamsBody(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test")
-	result, err := c.DownloadCustomersExport(context.Background(), 1)
+	result, err := c.downloadPath(context.Background(), "/customers/export/1/download")
 	if err != nil {
-		t.Fatalf("DownloadCustomersExport failed: %v", err)
+		t.Fatalf("downloadPath failed: %v", err)
 	}
 	defer result.Body.Close()
 
@@ -49,7 +49,7 @@ func TestDownloadResult_ErrorClosesBody(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test")
-	_, err := c.DownloadCustomersExport(context.Background(), 999)
+	_, err := c.downloadPath(context.Background(), "/customers/export/999/download")
 	if err == nil {
 		t.Fatal("expected an error for 404 download")
 	}

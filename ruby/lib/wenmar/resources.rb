@@ -16,6 +16,18 @@ end
 def update_account(account:)
   patch("/account", { account: account })
 end
+# Fetches list_account_api_tokens.
+def list_account_api_tokens()
+  get("/account/api_tokens")
+end
+# Runs create_account_api_token (POST /account/api_tokens).
+def create_account_api_token(api_token:)
+  post("/account/api_tokens", { api_token: api_token })
+end
+# Deletes delete_account_api_token.
+def delete_account_api_token(id)
+  delete("/account/api_tokens/#{id}")
+end
 # Fetches list_account_billing.
 def list_account_billing()
   get("/account/billing")
@@ -116,6 +128,18 @@ end
 def create_appointments_work_order(id)
   post("/appointments/#{id}/work_orders")
 end
+# Runs create_calendar_blocked_time (POST /calendar/blocked_times).
+def create_calendar_blocked_time(blocked_time:)
+  post("/calendar/blocked_times", { blocked_time: blocked_time })
+end
+# Deletes delete_calendar_blocked_time.
+def delete_calendar_blocked_time(id)
+  delete("/calendar/blocked_times/#{id}")
+end
+# Runs update_calendar_blocked_time (PATCH /calendar/blocked_times/{id}).
+def update_calendar_blocked_time(id, blocked_time:)
+  patch("/calendar/blocked_times/#{id}", { blocked_time: blocked_time })
+end
 # Lists list_campaigns resources (paginated).
 # @return [Wenmar::Paginator]
 def list_campaigns()
@@ -146,6 +170,34 @@ end
 # Runs update_cash_drawer_banner (PATCH /cash_drawer_banner).
 def update_cash_drawer_banner(dismissed:)
   patch("/cash_drawer_banner", { dismissed: dismissed })
+end
+# Runs create_cash_drawer_session (POST /cash_drawer_session).
+def create_cash_drawer_session(cash_drawer_session:)
+  post("/cash_drawer_session", { cash_drawer_session: cash_drawer_session })
+end
+# Lists list_cash_entries resources (paginated).
+# @return [Wenmar::Paginator]
+def list_cash_entries(cash_drawer_session_id: nil)
+  params = { "cash_drawer_session_id" => cash_drawer_session_id }
+  get("/cash_entries", params.compact)
+end
+
+# Fetches all cash_entries, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_cash_entries(cash_drawer_session_id: nil)
+  paginator_to_a(list_cash_entries(cash_drawer_session_id: cash_drawer_session_id), 1000)
+end
+# Runs create_cash_entrie (POST /cash_entries).
+def create_cash_entrie(cash_entry:)
+  post("/cash_entries", { cash_entry: cash_entry })
+end
+# Deletes delete_cash_entrie.
+def delete_cash_entrie(id)
+  delete("/cash_entries/#{id}")
+end
+# Fetches show_cash_entrie.
+def show_cash_entrie(id)
+  get("/cash_entries/#{id}")
 end
 # Runs create_catalog_cleanups_application (POST /catalog_cleanups/{catalog_cleanup_id}/applications).
 def create_catalog_cleanups_application(catalog_cleanup_id, category:)
@@ -231,9 +283,25 @@ end
 def create_counter_sale()
   post("/counter_sales")
 end
+# Runs create_counter_sales_line_item (POST /counter_sales/{counter_sale_id}/line_items).
+def create_counter_sales_line_item(counter_sale_id)
+  post("/counter_sales/#{counter_sale_id}/line_items")
+end
 # Fetches list_counter_sales_line_items_brands.
 def list_counter_sales_line_items_brands(counter_sale_id)
   get("/counter_sales/#{counter_sale_id}/line_items/brands")
+end
+# Deletes delete_counter_sales_line_item.
+def delete_counter_sales_line_item(counter_sale_id, id)
+  delete("/counter_sales/#{counter_sale_id}/line_items/#{id}")
+end
+# Runs update_counter_sales_line_item (PATCH /counter_sales/{counter_sale_id}/line_items/{id}).
+def update_counter_sales_line_item(counter_sale_id, id, counter_sale_line_item:)
+  patch("/counter_sales/#{counter_sale_id}/line_items/#{id}", { counter_sale_line_item: counter_sale_line_item })
+end
+# Runs create_counter_sales_payment (POST /counter_sales/{counter_sale_id}/payments).
+def create_counter_sales_payment(counter_sale_id, payment:)
+  post("/counter_sales/#{counter_sale_id}/payments", { payment: payment })
 end
 # Fetches show_counter_sale.
 def show_counter_sale(id)
@@ -246,33 +314,6 @@ end
 # Runs update_counter_sales_reopen (PATCH /counter_sales/{id}/reopen).
 def update_counter_sales_reopen(id)
   patch("/counter_sales/#{id}/reopen")
-end
-# Lists list_courtesy_cars resources (paginated).
-# @return [Wenmar::Paginator]
-def list_courtesy_cars()
-  get("/courtesy_cars")
-end
-
-# Fetches all courtesy_cars, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_courtesy_cars()
-  paginator_to_a(list_courtesy_cars(), 1000)
-end
-# Runs create_courtesy_car (POST /courtesy_cars).
-def create_courtesy_car(vehicle:)
-  post("/courtesy_cars", { vehicle: vehicle })
-end
-# Deletes delete_courtesy_car.
-def delete_courtesy_car(id)
-  delete("/courtesy_cars/#{id}")
-end
-# Fetches show_courtesy_car.
-def show_courtesy_car(id)
-  get("/courtesy_cars/#{id}")
-end
-# Runs update_courtesy_car (PATCH /courtesy_cars/{id}).
-def update_courtesy_car(id, vehicle:)
-  patch("/courtesy_cars/#{id}", { vehicle: vehicle })
 end
 # Fetches list_current_location.
 def list_current_location()
@@ -342,14 +383,6 @@ end
 def check_customer_duplicate(email: nil, first_name: nil, last_name: nil, phone: nil)
   params = { "email" => email, "first_name" => first_name, "last_name" => last_name, "phone" => phone }
       get("/customers/check_duplicate", params.compact)
-end
-# Runs create_customers_export (POST /customers/export).
-def create_customers_export()
-  post("/customers/export")
-end
-# Fetches list_customers_export_download.
-def list_customers_export_download(id)
-  get("/customers/export/#{id}/download")
 end
 # Lists lookup_customer resources (paginated).
 # @return [Wenmar::Paginator]
@@ -472,30 +505,6 @@ end
 def create_expense(expense:)
   post("/expenses", { expense: expense })
 end
-# Fetches list_expenses_data_transfer.
-def list_expenses_data_transfer()
-  get("/expenses/data_transfer")
-end
-# Runs create_expenses_export (POST /expenses/export).
-def create_expenses_export()
-  post("/expenses/export")
-end
-# Fetches list_expenses_export_download.
-def list_expenses_export_download(id)
-  get("/expenses/export/#{id}/download")
-end
-# Runs create_expenses_imports_commit (POST /expenses/imports/commit).
-def create_expenses_imports_commit()
-  post("/expenses/imports/commit")
-end
-# Fetches list_expenses_imports_template.
-def list_expenses_imports_template()
-  get("/expenses/imports/template")
-end
-# Runs create_expenses_imports_validate (POST /expenses/imports/validate) as a multipart upload.
-def create_expenses_imports_validate(file:)
-  post("/expenses/imports/validate", { multipart: { file: file } })
-end
 # Deletes delete_expense.
 def delete_expense(id)
   delete("/expenses/#{id}")
@@ -545,10 +554,6 @@ end
 def mark_all_inspection_report(id, status:, group_name:)
   post("/inspection_reports/#{id}/mark_all", { status: status, group_name: group_name })
 end
-# Runs publish_inspection_report (PATCH /inspection_reports/{id}/publish).
-def publish_inspection_report(id)
-  patch("/inspection_reports/#{id}/publish")
-end
 # Runs reassign_inspection_report (PATCH /inspection_reports/{id}/reassign).
 def reassign_inspection_report(id, user_id:)
   patch("/inspection_reports/#{id}/reassign", { user_id: user_id })
@@ -565,10 +570,6 @@ end
 def retry_inspection_report_recording(id, recording_id: nil)
   params = { recording_id: recording_id }
   post("/inspection_reports/#{id}/retry_recording", params.compact)
-end
-# Runs unpublish_inspection_report (PATCH /inspection_reports/{id}/unpublish).
-def unpublish_inspection_report(id)
-  patch("/inspection_reports/#{id}/unpublish")
 end
 # Lists list_inspections resources (paginated).
 # @return [Wenmar::Paginator]
@@ -610,46 +611,67 @@ end
 def set_default_inspection(id)
   patch("/inspections/#{id}/set_default")
 end
+# Runs toggle_inspection (PATCH /inspections/{id}/toggle).
+def toggle_inspection(id)
+  patch("/inspections/#{id}/toggle")
+end
 # Runs trash_inspection (PATCH /inspections/{id}/trash).
 def trash_inspection(id)
   patch("/inspections/#{id}/trash")
 end
-# Lists list_inventory_levels resources (paginated).
-# @return [Wenmar::Paginator]
-def list_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
-  params = { "brand" => brand, "page" => page, "per_page" => per_page, "q" => q, "stock_status" => stock_status, "stocked" => stocked }
-  get("/inventory_levels", params.compact)
+# Runs create_inspections_group (POST /inspections/{inspection_id}/groups).
+def create_inspections_group(inspection_id, inspection_group:)
+  post("/inspections/#{inspection_id}/groups", { inspection_group: inspection_group })
 end
-
-# Fetches all inventory_levels, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_inventory_levels(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
-  paginator_to_a(list_inventory_levels(brand: brand, page: page, per_page: per_page, q: q, stock_status: stock_status, stocked: stocked), 1000)
+# Deletes delete_inspections_group.
+def delete_inspections_group(inspection_id, id)
+  delete("/inspections/#{inspection_id}/groups/#{id}")
 end
-# Runs create_inventory_level (POST /inventory_levels).
-def create_inventory_level(part:)
-  post("/inventory_levels", { part: part })
+# Runs update_inspections_group (PATCH /inspections/{inspection_id}/groups/{id}).
+def update_inspections_group(inspection_id, id, inspection_group:)
+  patch("/inspections/#{inspection_id}/groups/#{id}", { inspection_group: inspection_group })
+end
+# Runs create_inspections_item (POST /inspections/{inspection_id}/items).
+def create_inspections_item(inspection_id, inspection_item:, group_id:)
+  post("/inspections/#{inspection_id}/items", { inspection_item: inspection_item, group_id: group_id })
+end
+# Deletes delete_inspections_item.
+def delete_inspections_item(inspection_id, id)
+  delete("/inspections/#{inspection_id}/items/#{id}")
+end
+# Runs update_inspections_item (PATCH /inspections/{inspection_id}/items/{id}).
+def update_inspections_item(inspection_id, id, inspection_item:)
+  patch("/inspections/#{inspection_id}/items/#{id}", { inspection_item: inspection_item })
+end
+# Runs create_inspections_preset (POST /inspections/{inspection_id}/presets).
+def create_inspections_preset(inspection_id, inspection_preset:, item_id: nil)
+  params = { item_id: item_id }
+  post("/inspections/#{inspection_id}/presets", { inspection_preset: inspection_preset }, params.compact)
+end
+# Deletes delete_inspections_preset.
+def delete_inspections_preset(inspection_id, id)
+  delete("/inspections/#{inspection_id}/presets/#{id}")
+end
+# Runs update_inspections_preset (PATCH /inspections/{inspection_id}/presets/{id}).
+def update_inspections_preset(inspection_id, id, inspection_preset:)
+  patch("/inspections/#{inspection_id}/presets/#{id}", { inspection_preset: inspection_preset })
 end
 # Fetches list_inventory_levels_barcode_lookup.
 def list_inventory_levels_barcode_lookup(barcode: nil)
   params = { "barcode" => barcode }
       get("/inventory_levels/barcode_lookup", params.compact)
 end
-# Deletes delete_inventory_level.
-def delete_inventory_level(id)
-  delete("/inventory_levels/#{id}")
-end
 # Fetches show_inventory_level.
 def show_inventory_level(id)
   get("/inventory_levels/#{id}")
 end
 # Runs update_inventory_level (PATCH /inventory_levels/{id}).
-def update_inventory_level(id, part:)
-  patch("/inventory_levels/#{id}", { part: part })
+def update_inventory_level(id, inventory_level:)
+  patch("/inventory_levels/#{id}", { inventory_level: inventory_level })
 end
-# Runs update_inventory_levels_stock (PATCH /inventory_levels/{id}/stock).
-def update_inventory_levels_stock(id, inventory_level:)
-  patch("/inventory_levels/#{id}/stock", { inventory_level: inventory_level })
+# Runs create_inventory_levels_adjust (POST /inventory_levels/{id}/adjust).
+def create_inventory_levels_adjust(id, adjustment:)
+  post("/inventory_levels/#{id}/adjust", { adjustment: adjustment })
 end
 # Lists list_labor_matrices resources (paginated).
 # @return [Wenmar::Paginator]
@@ -814,18 +836,6 @@ end
 # Runs update_locations_schedule_config (PATCH /locations/{location_id}/schedule_config).
 def update_locations_schedule_config(location_id, schedule_config:)
   patch("/locations/#{location_id}/schedule_config", { schedule_config: schedule_config })
-end
-# Fetches list_me_api_tokens.
-def list_me_api_tokens()
-  get("/me/api_tokens")
-end
-# Runs create_me_api_token (POST /me/api_tokens).
-def create_me_api_token(api_token:)
-  post("/me/api_tokens", { api_token: api_token })
-end
-# Deletes delete_me_api_token.
-def delete_me_api_token(id)
-  delete("/me/api_tokens/#{id}")
 end
 # Fetches list_me_notifications.
 def list_me_notifications()
@@ -1008,6 +1018,34 @@ end
 def trash_package(id)
   patch("/packages/#{id}/trash")
 end
+# Lists list_parts resources (paginated).
+# @return [Wenmar::Paginator]
+def list_parts(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
+  params = { "brand" => brand, "page" => page, "per_page" => per_page, "q" => q, "stock_status" => stock_status, "stocked" => stocked }
+  get("/parts", params.compact)
+end
+
+# Fetches all parts, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_parts(brand: nil, page: nil, per_page: nil, q: nil, stock_status: nil, stocked: nil)
+  paginator_to_a(list_parts(brand: brand, page: page, per_page: per_page, q: q, stock_status: stock_status, stocked: stocked), 1000)
+end
+# Runs create_part (POST /parts).
+def create_part(part:)
+  post("/parts", { part: part })
+end
+# Deletes delete_part.
+def delete_part(id)
+  delete("/parts/#{id}")
+end
+# Fetches show_part.
+def show_part(id)
+  get("/parts/#{id}")
+end
+# Runs update_part (PATCH /parts/{id}).
+def update_part(id, part:)
+  patch("/parts/#{id}", { part: part })
+end
 # Lists list_parts_matrices resources (paginated).
 # @return [Wenmar::Paginator]
 def list_parts_matrices()
@@ -1094,6 +1132,29 @@ end
 def list_reports_ar_aging()
   get("/reports/ar_aging")
 end
+# Lists list_reports_cash_drawer_sessions resources (paginated).
+# @return [Wenmar::Paginator]
+def list_reports_cash_drawer_sessions()
+  get("/reports/cash_drawer_sessions")
+end
+
+# Fetches all reports_cash_drawer_sessions, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_reports_cash_drawer_sessions()
+  paginator_to_a(list_reports_cash_drawer_sessions(), 1000)
+end
+# Fetches show_reports_cash_drawer_session.
+def show_reports_cash_drawer_session(id)
+  get("/reports/cash_drawer_sessions/#{id}")
+end
+# Fetches list_reports_cash_drawer_sessions_close.
+def list_reports_cash_drawer_sessions_close(id)
+  get("/reports/cash_drawer_sessions/#{id}/close")
+end
+# Runs update_reports_cash_drawer_sessions_confirm_close (PATCH /reports/cash_drawer_sessions/{id}/confirm_close).
+def update_reports_cash_drawer_sessions_confirm_close(id, cash_drawer_session:)
+  patch("/reports/cash_drawer_sessions/#{id}/confirm_close", { cash_drawer_session: cash_drawer_session })
+end
 # Fetches list_reports_declined_work.
 def list_reports_declined_work()
   get("/reports/declined_work")
@@ -1145,6 +1206,18 @@ end
 # Fetches list_reports_work_order_profitability.
 def list_reports_work_order_profitability()
   get("/reports/work_order_profitability")
+end
+# Runs create_scan_lookup (POST /scan/lookups).
+def create_scan_lookup(code:, type:)
+  post("/scan/lookups", { code: code, type: type })
+end
+# Runs create_scan_started_work_order (POST /scan/started_work_orders).
+def create_scan_started_work_order(outcome:, vehicle_id:)
+  post("/scan/started_work_orders", { outcome: outcome, vehicle_id: vehicle_id })
+end
+# Runs create_scan_vehicle (POST /scan/vehicles).
+def create_scan_vehicle(customer:, vehicle:)
+  post("/scan/vehicles", { customer: customer, vehicle: vehicle })
 end
 # Fetches list_search.
 def list_search(q: nil)
@@ -1240,6 +1313,14 @@ end
 def create_shop_fees_duplicate(id)
   post("/shop_fees/#{id}/duplicate")
 end
+# Runs create_statements_bulk_send (POST /statements/bulk_send).
+def create_statements_bulk_send(statement_ids:, cc_emails:, include_invoice_pdfs:, body:)
+  post("/statements/bulk_send", { statement_ids: statement_ids, cc_emails: cc_emails, include_invoice_pdfs: include_invoice_pdfs, body: body })
+end
+# Runs create_statements_generate (POST /statements/generate).
+def create_statements_generate()
+  post("/statements/generate")
+end
 # Fetches show_statement.
 def show_statement(id)
   get("/statements/#{id}")
@@ -1305,6 +1386,14 @@ end
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
 end
+# Runs create_time_entrie (POST /time_entries).
+def create_time_entrie(type:, work_order_service_id:)
+  post("/time_entries", { type: type, work_order_service_id: work_order_service_id })
+end
+# Runs update_time_entrie (PATCH /time_entries/{id}).
+def update_time_entrie(id, status:)
+  patch("/time_entries/#{id}", { status: status })
+end
 # Lists list_tire_events resources (paginated).
 # @return [Wenmar::Paginator]
 def list_tire_events()
@@ -1339,14 +1428,6 @@ end
 def create_tire_storage_slot(tire_storage_slot:)
   post("/tire_storage_slots", { tire_storage_slot: tire_storage_slot })
 end
-# Runs create_tire_storage_slots_export (POST /tire_storage_slots/export).
-def create_tire_storage_slots_export()
-  post("/tire_storage_slots/export")
-end
-# Fetches list_tire_storage_slots_export_download.
-def list_tire_storage_slots_export_download(id)
-  get("/tire_storage_slots/export/#{id}/download")
-end
 # Deletes delete_tire_storage_slot.
 def delete_tire_storage_slot(id)
   delete("/tire_storage_slots/#{id}")
@@ -1377,26 +1458,6 @@ end
 # Runs create_tire (POST /tires).
 def create_tire(tire:)
   post("/tires", { tire: tire })
-end
-# Runs create_tires_export (POST /tires/export).
-def create_tires_export()
-  post("/tires/export")
-end
-# Fetches list_tires_export_download.
-def list_tires_export_download(id)
-  get("/tires/export/#{id}/download")
-end
-# Runs create_tires_imports_commit (POST /tires/imports/commit).
-def create_tires_imports_commit()
-  post("/tires/imports/commit")
-end
-# Fetches list_tires_imports_template.
-def list_tires_imports_template()
-  get("/tires/imports/template")
-end
-# Runs create_tires_imports_validate (POST /tires/imports/validate) as a multipart upload.
-def create_tires_imports_validate(file:)
-  post("/tires/imports/validate", { multipart: { file: file } })
 end
 # Deletes delete_tire.
 def delete_tire(id)
@@ -1445,6 +1506,15 @@ end
 def update_permission_group(id, permission_group:)
   patch("/users/permission_groups/#{id}", { permission_group: permission_group })
 end
+# Runs create_users_permission_groups_assign (POST /users/permission_groups/{id}/assign).
+def create_users_permission_groups_assign(id, user_id:)
+  post("/users/permission_groups/#{id}/assign", { user_id: user_id })
+end
+# Deletes delete_users_permission_groups_unassign.
+def delete_users_permission_groups_unassign(id, assignment_id: nil)
+  params = { assignment_id: assignment_id }
+  delete("/users/permission_groups/#{id}/unassign", params.compact)
+end
 # Deletes delete_user.
 def delete_user(id)
   delete("/users/#{id}")
@@ -1487,15 +1557,15 @@ def create_users_unlock(id)
 end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
-def list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
-  params = { "customer_id" => customer_id, "page" => page, "per_page" => per_page, "status" => status }
+def list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil, type: nil)
+  params = { "customer_id" => customer_id, "page" => page, "per_page" => per_page, "status" => status, "type" => type }
   get("/vehicles", params.compact)
 end
 
 # Fetches all vehicles, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil)
-  paginator_to_a(list_vehicles(customer_id: customer_id, page: page, per_page: per_page, status: status), 1000)
+def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil, type: nil)
+  paginator_to_a(list_vehicles(customer_id: customer_id, page: page, per_page: per_page, status: status, type: type), 1000)
 end
 # Runs create_vehicle (POST /vehicles).
 def create_vehicle(vehicle:)
@@ -1617,6 +1687,10 @@ end
 def get_all_vendors_purchase_orders(vendor_id)
   paginator_to_a(list_vendors_purchase_orders(vendor_id), 1000)
 end
+# Deletes delete_voice_command.
+def delete_voice_command(id)
+  delete("/voice_commands/#{id}")
+end
 # Lists list_work_order_tags resources (paginated).
 # @return [Wenmar::Paginator]
 def list_work_order_tags()
@@ -1672,6 +1746,40 @@ end
 def create_work_orders_account_posting(id)
   post("/work_orders/#{id}/account_postings")
 end
+# Lists list_work_orders_activity resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_orders_activity(id, category: nil)
+  params = { "category" => category }
+  get("/work_orders/#{id}/activity", params.compact)
+end
+
+# Fetches all work_orders_activity, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_orders_activity(id, category: nil)
+  paginator_to_a(list_work_orders_activity(id, category: category), 1000)
+end
+# Lists list_work_orders_appointments resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_orders_appointments(id)
+  get("/work_orders/#{id}/appointments")
+end
+
+# Fetches all work_orders_appointments, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_orders_appointments(id)
+  paginator_to_a(list_work_orders_appointments(id), 1000)
+end
+# Lists list_work_orders_authorization_logs resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_orders_authorization_logs(id)
+  get("/work_orders/#{id}/authorization_logs")
+end
+
+# Fetches all work_orders_authorization_logs, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_orders_authorization_logs(id)
+  paginator_to_a(list_work_orders_authorization_logs(id), 1000)
+end
 # Runs close_work_order (PATCH /work_orders/{id}/close).
 def close_work_order(id)
   patch("/work_orders/#{id}/close")
@@ -1725,6 +1833,21 @@ end
 # @return [Wenmar::Paginator]
 def show_work_order_service_history(id)
   get("/work_orders/#{id}/service_history")
+end
+# Lists list_work_orders_vehicle_history resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_orders_vehicle_history(id)
+  get("/work_orders/#{id}/vehicle_history")
+end
+
+# Fetches all work_orders_vehicle_history, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_orders_vehicle_history(id)
+  paginator_to_a(list_work_orders_vehicle_history(id), 1000)
+end
+# Runs create_work_orders_activity_log (POST /work_orders/{work_order_id}/activity_logs).
+def create_work_orders_activity_log(work_order_id, activity_log:)
+  post("/work_orders/#{work_order_id}/activity_logs", { activity_log: activity_log })
 end
 # Runs create_work_orders_authorization_decision (POST /work_orders/{work_order_id}/authorization_decisions).
 def create_work_orders_authorization_decision(work_order_id, service_decision_reasons:)
@@ -1780,6 +1903,26 @@ end
 # Runs send_work_order_payment_to_ar (POST /work_orders/{work_order_id}/payments/send_to_ar).
 def send_work_order_payment_to_ar(work_order_id)
   post("/work_orders/#{work_order_id}/payments/send_to_ar")
+end
+# Runs create_work_orders_purchase_order (POST /work_orders/{work_order_id}/purchase_orders).
+def create_work_orders_purchase_order(work_order_id, purchase_order:)
+  post("/work_orders/#{work_order_id}/purchase_orders", { purchase_order: purchase_order })
+end
+# Deletes delete_work_orders_purchase_order.
+def delete_work_orders_purchase_order(work_order_id, id)
+  delete("/work_orders/#{work_order_id}/purchase_orders/#{id}")
+end
+# Runs update_work_orders_purchase_order (PATCH /work_orders/{work_order_id}/purchase_orders/{id}).
+def update_work_orders_purchase_order(work_order_id, id, purchase_order:)
+  patch("/work_orders/#{work_order_id}/purchase_orders/#{id}", { purchase_order: purchase_order })
+end
+# Runs create_work_orders_purchase_orders_receive (POST /work_orders/{work_order_id}/purchase_orders/{id}/receive).
+def create_work_orders_purchase_orders_receive(work_order_id, id, lines:)
+  post("/work_orders/#{work_order_id}/purchase_orders/#{id}/receive", { lines: lines })
+end
+# Runs create_work_orders_purchase_orders_return (POST /work_orders/{work_order_id}/purchase_orders/{id}/return).
+def create_work_orders_purchase_orders_return(work_order_id, id, lines:, return_order:)
+  post("/work_orders/#{work_order_id}/purchase_orders/#{id}/return", { lines: lines, return_order: return_order })
 end
 # Runs create_work_orders_refund (POST /work_orders/{work_order_id}/refunds).
 def create_work_orders_refund(work_order_id, refund:)
@@ -1888,51 +2031,6 @@ end
 # Runs undo_return_work_order_service_line_item (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return).
 def undo_return_work_order_service_line_item(work_order_id, service_id, id)
   patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/undo_return")
-end
-# Lists list_work_orders_summary_activity resources (paginated).
-# @return [Wenmar::Paginator]
-def list_work_orders_summary_activity(work_order_id, category: nil)
-  params = { "category" => category }
-  get("/work_orders/#{work_order_id}/summary/activity", params.compact)
-end
-
-# Fetches all work_orders_summary_activity, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_work_orders_summary_activity(work_order_id, category: nil)
-  paginator_to_a(list_work_orders_summary_activity(work_order_id, category: category), 1000)
-end
-# Lists list_work_orders_summary_appointments resources (paginated).
-# @return [Wenmar::Paginator]
-def list_work_orders_summary_appointments(work_order_id)
-  get("/work_orders/#{work_order_id}/summary/appointments")
-end
-
-# Fetches all work_orders_summary_appointments, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_work_orders_summary_appointments(work_order_id)
-  paginator_to_a(list_work_orders_summary_appointments(work_order_id), 1000)
-end
-# Lists list_work_orders_summary_authorization_logs resources (paginated).
-# @return [Wenmar::Paginator]
-def list_work_orders_summary_authorization_logs(work_order_id)
-  get("/work_orders/#{work_order_id}/summary/authorization_logs")
-end
-
-# Fetches all work_orders_summary_authorization_logs, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_work_orders_summary_authorization_logs(work_order_id)
-  paginator_to_a(list_work_orders_summary_authorization_logs(work_order_id), 1000)
-end
-# Lists list_work_orders_summary_vehicle_history resources (paginated).
-# @return [Wenmar::Paginator]
-def list_work_orders_summary_vehicle_history(work_order_id)
-  get("/work_orders/#{work_order_id}/summary/vehicle_history")
-end
-
-# Fetches all work_orders_summary_vehicle_history, up to 1000 by default.
-# @return [Array<Hash>]
-def get_all_work_orders_summary_vehicle_history(work_order_id)
-  paginator_to_a(list_work_orders_summary_vehicle_history(work_order_id), 1000)
 end
 # Runs create_work_orders_void (POST /work_orders/{work_order_id}/voids).
 def create_work_orders_void(work_order_id, payment_id:)

@@ -2,6 +2,8 @@
   "version": "2026-08-30",
   "source": "spec/openapi.enriched.yaml",
   "schemas": [
+    "Account",
+    "Appointment",
     "ArchiveCustomerRequest",
     "ArchiveInspectionRequest",
     "ArchiveLaborRateRequest",
@@ -12,6 +14,10 @@
     "BroadcastCampaign",
     "CloseWorkOrderRequest",
     "CompleteInspectionReportRequest",
+    "Conversation",
+    "CoreTaxRule",
+    "CounterSale",
+    "CreateAccountApiTokenRequest",
     "CreateAccountStationLinkRegenerateRequest",
     "CreateAppointmentRequest",
     "CreateAppointmentsApprovalRequest",
@@ -20,7 +26,10 @@
     "CreateAppointmentsRejectionRequest",
     "CreateAppointmentsVehicleReconciliationRequest",
     "CreateAppointmentsWorkOrderRequest",
+    "CreateCalendarBlockedTimeRequest",
     "CreateCampaignRequest",
+    "CreateCashDrawerSessionRequest",
+    "CreateCashEntrieRequest",
     "CreateCatalogCleanupsApplicationRequest",
     "CreateConversationRequest",
     "CreateConversationsBulkMarkReadRequest",
@@ -28,21 +37,22 @@
     "CreateConversationsIgnoreRequest",
     "CreateConversationsMessageRequest",
     "CreateCounterSaleRequest",
-    "CreateCourtesyCarRequest",
+    "CreateCounterSalesLineItemRequest",
+    "CreateCounterSalesPaymentRequest",
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
-    "CreateCustomersExportRequest",
     "CreateDriverRequest",
     "CreateExpenseRequest",
-    "CreateExpensesExportRequest",
     "CreateInspectionReportRequest",
     "CreateInspectionRequest",
-    "CreateInventoryLevelRequest",
+    "CreateInspectionsGroupRequest",
+    "CreateInspectionsItemRequest",
+    "CreateInspectionsPresetRequest",
+    "CreateInventoryLevelsAdjustRequest",
     "CreateLaborMatriceRequest",
     "CreateLaborRateRequest",
     "CreateLeadSourceRequest",
     "CreateLeadSourcesSeedDefaultRequest",
-    "CreateMeApiTokenRequest",
     "CreateMessagesResendRequest",
     "CreateNotificationsBulkMarkReadRequest",
     "CreateOrdersPurchaseOrderRequest",
@@ -50,29 +60,35 @@
     "CreateOrdersReturnOrdersRefundCompletionRequest",
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
+    "CreatePartRequest",
     "CreatePartsMatriceRequest",
     "CreatePaymentsCancellationRequest",
     "CreatePaymentsConfirmationRequest",
     "CreatePaymentsFailureRequest",
     "CreatePermissionGroupRequest",
     "CreateRecentSearcheRequest",
+    "CreateScanLookupRequest",
+    "CreateScanStartedWorkOrderRequest",
+    "CreateScanVehicleRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
     "CreateShopDiscountsDuplicateRequest",
     "CreateShopFeeRequest",
     "CreateShopFeesDuplicateRequest",
+    "CreateStatementsBulkSendRequest",
+    "CreateStatementsGenerateRequest",
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatuseRequest",
     "CreateSubletPackageRequest",
+    "CreateTimeEntrieRequest",
     "CreateTireEventRequest",
     "CreateTireRequest",
     "CreateTireStorageSlotRequest",
     "CreateTireStorageSlotsCheckOutRequest",
-    "CreateTireStorageSlotsExportRequest",
-    "CreateTiresExportRequest",
     "CreateUserRequest",
     "CreateUsersDisableRequest",
     "CreateUsersEnableRequest",
+    "CreateUsersPermissionGroupsAssignRequest",
     "CreateUsersResetPinRequest",
     "CreateUsersSendConfirmationRequest",
     "CreateUsersSendPasswordResetRequest",
@@ -83,12 +99,16 @@
     "CreateWorkOrderRequest",
     "CreateWorkOrderTagRequest",
     "CreateWorkOrdersAccountPostingRequest",
+    "CreateWorkOrdersActivityLogRequest",
     "CreateWorkOrdersAuthorizationDecisionRequest",
     "CreateWorkOrdersAuthorizationRequest",
     "CreateWorkOrdersCourtesyCarAssignmentRequest",
     "CreateWorkOrdersEstimateDeliverieRequest",
     "CreateWorkOrdersFeeExclusionRequest",
     "CreateWorkOrdersInvoiceSummarieRequest",
+    "CreateWorkOrdersPurchaseOrderRequest",
+    "CreateWorkOrdersPurchaseOrdersReceiveRequest",
+    "CreateWorkOrdersPurchaseOrdersReturnRequest",
     "CreateWorkOrdersRefundRequest",
     "CreateWorkOrdersReminderRequest",
     "CreateWorkOrdersServiceDeclineRequest",
@@ -103,17 +123,23 @@
     "CreateWorkOrdersServicesTimeEntrieRequest",
     "CreateWorkOrdersVoidRequest",
     "Customer",
+    "CustomerTag",
     "Driver",
     "DuplicateCampaignRequest",
     "Error",
     "Inspection",
     "InspectionReport",
+    "LaborMatrix",
     "LaborRate",
+    "LaborTemplate",
+    "LeadSource",
+    "Location",
     "MarkAllInspectionReportRequest",
     "MergeCustomerRequest",
     "MergeVehicleRequest",
+    "Notification",
     "Package",
-    "PublishInspectionReportRequest",
+    "PartsMatrix",
     "PullWorkOrderServiceLineItemRequest",
     "PurchaseOrder",
     "ReassignInspectionReportRequest",
@@ -135,8 +161,12 @@
     "SendWorkOrderPaymentToArRequest",
     "ServiceCategory",
     "SetDefaultInspectionRequest",
+    "ShopDiscount",
+    "ShopFee",
     "Statement",
+    "SubStatusType",
     "SubletOrder",
+    "ToggleInspectionRequest",
     "TransferVehicleRequest",
     "TrashCustomerRequest",
     "TrashInspectionRequest",
@@ -147,16 +177,16 @@
     "TrashVendorRequest",
     "UndoPullWorkOrderServiceLineItemRequest",
     "UndoReturnWorkOrderServiceLineItemRequest",
-    "UnpublishInspectionReportRequest",
     "UpdateAccountRequest",
     "UpdateAiSuggestionRequest",
     "UpdateAppointmentRequest",
+    "UpdateCalendarBlockedTimeRequest",
     "UpdateCashDrawerBannerRequest",
     "UpdateConversationRequest",
     "UpdateCoreTaxRuleRequest",
     "UpdateCounterSaleRequest",
+    "UpdateCounterSalesLineItemRequest",
     "UpdateCounterSalesReopenRequest",
-    "UpdateCourtesyCarRequest",
     "UpdateCurrentLocationRequest",
     "UpdateCustomerRequest",
     "UpdateCustomerTagRequest",
@@ -166,8 +196,10 @@
     "UpdateDriverRequest",
     "UpdateExpenseRequest",
     "UpdateInspectionRequest",
+    "UpdateInspectionsGroupRequest",
+    "UpdateInspectionsItemRequest",
+    "UpdateInspectionsPresetRequest",
     "UpdateInventoryLevelRequest",
-    "UpdateInventoryLevelsStockRequest",
     "UpdateLaborMatriceRequest",
     "UpdateLaborTemplateRequest",
     "UpdateLeadSourceRequest",
@@ -186,13 +218,16 @@
     "UpdateOrdersPurchaseOrderRequest",
     "UpdateOrdersReturnOrderRequest",
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
+    "UpdatePartRequest",
     "UpdatePartsMatriceRequest",
     "UpdatePermissionGroupRequest",
+    "UpdateReportsCashDrawerSessionsConfirmCloseRequest",
     "UpdateServiceCategoryRequest",
     "UpdateShopDiscountRequest",
     "UpdateShopFeeRequest",
     "UpdateSubStatuseRequest",
     "UpdateSubletPackageRequest",
+    "UpdateTimeEntrieRequest",
     "UpdateTireRequest",
     "UpdateTireStorageSlotRequest",
     "UpdateUserRequest",
@@ -204,6 +239,7 @@
     "UpdateWorkOrdersCloseAsDeclinedRequest",
     "UpdateWorkOrdersCloseAsVoidedRequest",
     "UpdateWorkOrdersCourtesyCarAssignmentRequest",
+    "UpdateWorkOrdersPurchaseOrderRequest",
     "UpdateWorkOrdersServiceRequest",
     "UpdateWorkOrdersServicesAdjustTimeRequest",
     "UpdateWorkOrdersServicesLineItemRequest",
@@ -213,6 +249,7 @@
     "UpdateWorkOrdersServicesReviveRequest",
     "UpdateWorkOrdersServicesToggleLaborCompletionRequest",
     "UpdateWorkOrdersServicesUpdateCategoryRequest",
+    "User",
     "Vehicle",
     "Vendor",
     "WorkOrder"
@@ -246,7 +283,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Account",
       "responseBody": true,
       "summary": "show"
     },
@@ -264,9 +301,63 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Account",
       "responseBody": true,
       "summary": "update"
+    },
+    {
+      "id": "list_account_api_tokens",
+      "method": "get",
+      "path": "/account/api_tokens",
+      "tag": "account",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_account_api_token",
+      "method": "post",
+      "path": "/account/api_tokens",
+      "tag": "account",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateAccountApiTokenRequest",
+      "requestShape": {
+        "wrapper": "api_token"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_account_api_token",
+      "method": "delete",
+      "path": "/account/api_tokens/{id}",
+      "tag": "account",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
     },
     {
       "id": "list_account_billing",
@@ -451,7 +542,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "Appointment",
       "responseBody": true,
       "summary": "index"
     },
@@ -469,7 +560,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Appointment",
       "responseBody": true,
       "summary": "create"
     },
@@ -538,7 +629,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Appointment",
       "responseBody": true,
       "summary": "show"
     },
@@ -560,7 +651,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Appointment",
       "responseBody": true,
       "summary": "update"
     },
@@ -700,6 +791,66 @@
       "summary": "create"
     },
     {
+      "id": "create_calendar_blocked_time",
+      "method": "post",
+      "path": "/calendar/blocked_times",
+      "tag": "calendar",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateCalendarBlockedTimeRequest",
+      "requestShape": {
+        "wrapper": "blocked_time"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_calendar_blocked_time",
+      "method": "delete",
+      "path": "/calendar/blocked_times/{id}",
+      "tag": "calendar",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_calendar_blocked_time",
+      "method": "patch",
+      "path": "/calendar/blocked_times/{id}",
+      "tag": "calendar",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCalendarBlockedTimeRequest",
+      "requestShape": {
+        "wrapper": "blocked_time"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "list_campaigns",
       "method": "get",
       "path": "/campaigns",
@@ -816,6 +967,105 @@
       "summary": "update"
     },
     {
+      "id": "create_cash_drawer_session",
+      "method": "post",
+      "path": "/cash_drawer_session",
+      "tag": "cash_drawer_session",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateCashDrawerSessionRequest",
+      "requestShape": {
+        "wrapper": "cash_drawer_session"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "list_cash_entries",
+      "method": "get",
+      "path": "/cash_entries",
+      "tag": "cash_entries",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "cash_drawer_session_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_cash_entrie",
+      "method": "post",
+      "path": "/cash_entries",
+      "tag": "cash_entries",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateCashEntrieRequest",
+      "requestShape": {
+        "wrapper": "cash_entry"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_cash_entrie",
+      "method": "delete",
+      "path": "/cash_entries/{id}",
+      "tag": "cash_entries",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_cash_entrie",
+      "method": "get",
+      "path": "/cash_entries/{id}",
+      "tag": "cash_entries",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
       "id": "create_catalog_cleanups_application",
       "method": "post",
       "path": "/catalog_cleanups/{catalog_cleanup_id}/applications",
@@ -849,7 +1099,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "Conversation",
       "responseBody": true,
       "summary": "index"
     },
@@ -867,7 +1117,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Conversation",
       "responseBody": true,
       "summary": "create"
     },
@@ -991,7 +1241,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Conversation",
       "responseBody": true,
       "summary": "show"
     },
@@ -1013,7 +1263,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Conversation",
       "responseBody": true,
       "summary": "update"
     },
@@ -1029,7 +1279,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "CoreTaxRule",
       "responseBody": true,
       "summary": "index"
     },
@@ -1051,7 +1301,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CoreTaxRule",
       "responseBody": true,
       "summary": "update"
     },
@@ -1067,7 +1317,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "CounterSale",
       "responseBody": true,
       "summary": "index"
     },
@@ -1080,6 +1330,28 @@
       "pathParamTypes": {},
       "queryParams": [],
       "requestSchema": "CreateCounterSaleRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "CounterSale",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "create_counter_sales_line_item",
+      "method": "post",
+      "path": "/counter_sales/{counter_sale_id}/line_items",
+      "tag": "counter_sales",
+      "pathParams": [
+        "counter_sale_id"
+      ],
+      "pathParamTypes": {
+        "counter_sale_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateCounterSalesLineItemRequest",
       "requestShape": {
         "wrapper": null
       },
@@ -1110,6 +1382,74 @@
       "summary": "brands"
     },
     {
+      "id": "delete_counter_sales_line_item",
+      "method": "delete",
+      "path": "/counter_sales/{counter_sale_id}/line_items/{id}",
+      "tag": "counter_sales",
+      "pathParams": [
+        "counter_sale_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "counter_sale_id": "integer",
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_counter_sales_line_item",
+      "method": "patch",
+      "path": "/counter_sales/{counter_sale_id}/line_items/{id}",
+      "tag": "counter_sales",
+      "pathParams": [
+        "counter_sale_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "counter_sale_id": "integer",
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateCounterSalesLineItemRequest",
+      "requestShape": {
+        "wrapper": "counter_sale_line_item"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_counter_sales_payment",
+      "method": "post",
+      "path": "/counter_sales/{counter_sale_id}/payments",
+      "tag": "counter_sales",
+      "pathParams": [
+        "counter_sale_id"
+      ],
+      "pathParamTypes": {
+        "counter_sale_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateCounterSalesPaymentRequest",
+      "requestShape": {
+        "wrapper": "payment"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "show_counter_sale",
       "method": "get",
       "path": "/counter_sales/{id}",
@@ -1125,7 +1465,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CounterSale",
       "responseBody": true,
       "summary": "show"
     },
@@ -1147,7 +1487,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CounterSale",
       "responseBody": true,
       "summary": "update"
     },
@@ -1172,102 +1512,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "reopen"
-    },
-    {
-      "id": "list_courtesy_cars",
-      "method": "get",
-      "path": "/courtesy_cars",
-      "tag": "courtesy_cars",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_courtesy_car",
-      "method": "post",
-      "path": "/courtesy_cars",
-      "tag": "courtesy_cars",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateCourtesyCarRequest",
-      "requestShape": {
-        "wrapper": "vehicle"
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "delete_courtesy_car",
-      "method": "delete",
-      "path": "/courtesy_cars/{id}",
-      "tag": "courtesy_cars",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
-      "id": "show_courtesy_car",
-      "method": "get",
-      "path": "/courtesy_cars/{id}",
-      "tag": "courtesy_cars",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "show"
-    },
-    {
-      "id": "update_courtesy_car",
-      "method": "patch",
-      "path": "/courtesy_cars/{id}",
-      "tag": "courtesy_cars",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "UpdateCourtesyCarRequest",
-      "requestShape": {
-        "wrapper": "vehicle"
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "update"
     },
     {
       "id": "list_current_location",
@@ -1322,7 +1566,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "CustomerTag",
       "responseBody": true,
       "summary": "index"
     },
@@ -1340,7 +1584,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CustomerTag",
       "responseBody": true,
       "summary": "create"
     },
@@ -1360,7 +1604,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CustomerTag",
       "responseBody": true,
       "summary": "show"
     },
@@ -1382,7 +1626,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "CustomerTag",
       "responseBody": true,
       "summary": "update"
     },
@@ -1597,44 +1841,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "check_duplicate"
-    },
-    {
-      "id": "create_customers_export",
-      "method": "post",
-      "path": "/customers/export",
-      "tag": "customers",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateCustomersExportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": "Customer",
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "list_customers_export_download",
-      "method": "get",
-      "path": "/customers/export/{id}/download",
-      "tag": "customers",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "download"
     },
     {
       "id": "lookup_customer",
@@ -2051,108 +2257,6 @@
       "summary": "create"
     },
     {
-      "id": "list_expenses_data_transfer",
-      "method": "get",
-      "path": "/expenses/data_transfer",
-      "tag": "expenses",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "show"
-    },
-    {
-      "id": "create_expenses_export",
-      "method": "post",
-      "path": "/expenses/export",
-      "tag": "expenses",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateExpensesExportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "list_expenses_export_download",
-      "method": "get",
-      "path": "/expenses/export/{id}/download",
-      "tag": "expenses",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "download"
-    },
-    {
-      "id": "create_expenses_imports_commit",
-      "method": "post",
-      "path": "/expenses/imports/commit",
-      "tag": "expenses",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "commit"
-    },
-    {
-      "id": "list_expenses_imports_template",
-      "method": "get",
-      "path": "/expenses/imports/template",
-      "tag": "expenses",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "template"
-    },
-    {
-      "id": "create_expenses_imports_validate",
-      "method": "post",
-      "path": "/expenses/imports/validate",
-      "tag": "expenses",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": "multipart/form-data",
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "validate"
-    },
-    {
       "id": "delete_expense",
       "method": "delete",
       "path": "/expenses/{id}",
@@ -2376,28 +2480,6 @@
       "summary": "mark_all"
     },
     {
-      "id": "publish_inspection_report",
-      "method": "patch",
-      "path": "/inspection_reports/{id}/publish",
-      "tag": "inspection_reports",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "PublishInspectionReportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "publish"
-    },
-    {
       "id": "reassign_inspection_report",
       "method": "patch",
       "path": "/inspection_reports/{id}/reassign",
@@ -2491,28 +2573,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "retry_recording"
-    },
-    {
-      "id": "unpublish_inspection_report",
-      "method": "patch",
-      "path": "/inspection_reports/{id}/unpublish",
-      "tag": "inspection_reports",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": "UnpublishInspectionReportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "unpublish"
     },
     {
       "id": "list_inspections",
@@ -2686,6 +2746,28 @@
       "summary": "set_default"
     },
     {
+      "id": "toggle_inspection",
+      "method": "patch",
+      "path": "/inspections/{id}/toggle",
+      "tag": "inspections",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "ToggleInspectionRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "toggle"
+    },
+    {
       "id": "trash_inspection",
       "method": "patch",
       "path": "/inspections/{id}/trash",
@@ -2708,75 +2790,218 @@
       "summary": "trash"
     },
     {
-      "id": "list_inventory_levels",
-      "method": "get",
-      "path": "/inventory_levels",
-      "tag": "inventory_levels",
-      "pathParams": [],
-      "pathParamTypes": {},
+      "id": "create_inspections_group",
+      "method": "post",
+      "path": "/inspections/{inspection_id}/groups",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id"
+      ],
+      "pathParamTypes": {
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateInspectionsGroupRequest",
+      "requestShape": {
+        "wrapper": "inspection_group"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_inspections_group",
+      "method": "delete",
+      "path": "/inspections/{inspection_id}/groups/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_inspections_group",
+      "method": "patch",
+      "path": "/inspections/{inspection_id}/groups/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateInspectionsGroupRequest",
+      "requestShape": {
+        "wrapper": "inspection_group"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_inspections_item",
+      "method": "post",
+      "path": "/inspections/{inspection_id}/items",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id"
+      ],
+      "pathParamTypes": {
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateInspectionsItemRequest",
+      "requestShape": {
+        "flat": [
+          "inspection_item",
+          "group_id"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_inspections_item",
+      "method": "delete",
+      "path": "/inspections/{inspection_id}/items/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_inspections_item",
+      "method": "patch",
+      "path": "/inspections/{inspection_id}/items/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateInspectionsItemRequest",
+      "requestShape": {
+        "wrapper": "inspection_item"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_inspections_preset",
+      "method": "post",
+      "path": "/inspections/{inspection_id}/presets",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id"
+      ],
+      "pathParamTypes": {
+        "inspection_id": "integer"
+      },
       "queryParams": [
         {
-          "name": "brand",
-          "type": "string",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "page",
+          "name": "item_id",
           "type": "integer",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "per_page",
-          "type": "integer",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "q",
-          "type": "string",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "stock_status",
-          "type": "string",
-          "required": false,
-          "description": null
-        },
-        {
-          "name": "stocked",
-          "type": "boolean",
           "required": false,
           "description": null
         }
       ],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_inventory_level",
-      "method": "post",
-      "path": "/inventory_levels",
-      "tag": "inventory_levels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateInventoryLevelRequest",
+      "requestSchema": "CreateInspectionsPresetRequest",
       "requestShape": {
-        "wrapper": "part"
+        "wrapper": "inspection_preset"
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Inspection",
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "delete_inspections_preset",
+      "method": "delete",
+      "path": "/inspections/{inspection_id}/presets/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_inspections_preset",
+      "method": "patch",
+      "path": "/inspections/{inspection_id}/presets/{id}",
+      "tag": "inspections",
+      "pathParams": [
+        "inspection_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "inspection_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateInspectionsPresetRequest",
+      "requestShape": {
+        "wrapper": "inspection_preset"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Inspection",
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_inventory_levels_barcode_lookup",
@@ -2800,26 +3025,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "barcode_lookup"
-    },
-    {
-      "id": "delete_inventory_level",
-      "method": "delete",
-      "path": "/inventory_levels/{id}",
-      "tag": "inventory_levels",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
     },
     {
       "id": "show_inventory_level",
@@ -2855,7 +3060,7 @@
       "queryParams": [],
       "requestSchema": "UpdateInventoryLevelRequest",
       "requestShape": {
-        "wrapper": "part"
+        "wrapper": "inventory_level"
       },
       "requestContentType": null,
       "paginated": false,
@@ -2864,9 +3069,9 @@
       "summary": "update"
     },
     {
-      "id": "update_inventory_levels_stock",
-      "method": "patch",
-      "path": "/inventory_levels/{id}/stock",
+      "id": "create_inventory_levels_adjust",
+      "method": "post",
+      "path": "/inventory_levels/{id}/adjust",
       "tag": "inventory_levels",
       "pathParams": [
         "id"
@@ -2875,15 +3080,15 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdateInventoryLevelsStockRequest",
+      "requestSchema": "CreateInventoryLevelsAdjustRequest",
       "requestShape": {
-        "wrapper": "inventory_level"
+        "wrapper": "adjustment"
       },
       "requestContentType": null,
       "paginated": false,
       "responseSchema": null,
       "responseBody": true,
-      "summary": "update"
+      "summary": "create"
     },
     {
       "id": "list_labor_matrices",
@@ -2897,7 +3102,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "LaborMatrix",
       "responseBody": true,
       "summary": "index"
     },
@@ -2915,7 +3120,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LaborMatrix",
       "responseBody": true,
       "summary": "create"
     },
@@ -2957,7 +3162,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LaborMatrix",
       "responseBody": true,
       "summary": "update"
     },
@@ -3073,7 +3278,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "LaborTemplate",
       "responseBody": true,
       "summary": "index"
     },
@@ -3115,7 +3320,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LaborTemplate",
       "responseBody": true,
       "summary": "update"
     },
@@ -3131,7 +3336,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "LeadSource",
       "responseBody": true,
       "summary": "index"
     },
@@ -3149,7 +3354,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LeadSource",
       "responseBody": true,
       "summary": "create"
     },
@@ -3209,7 +3414,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "LeadSource",
       "responseBody": true,
       "summary": "update"
     },
@@ -3229,7 +3434,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Location",
       "responseBody": true,
       "summary": "show"
     },
@@ -3251,7 +3456,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Location",
       "responseBody": true,
       "summary": "update"
     },
@@ -3570,60 +3775,6 @@
       "summary": "update"
     },
     {
-      "id": "list_me_api_tokens",
-      "method": "get",
-      "path": "/me/api_tokens",
-      "tag": "me",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "index"
-    },
-    {
-      "id": "create_me_api_token",
-      "method": "post",
-      "path": "/me/api_tokens",
-      "tag": "me",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateMeApiTokenRequest",
-      "requestShape": {
-        "wrapper": "api_token"
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "delete_me_api_token",
-      "method": "delete",
-      "path": "/me/api_tokens/{id}",
-      "tag": "me",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "destroy"
-    },
-    {
       "id": "list_me_notifications",
       "method": "get",
       "path": "/me/notifications",
@@ -3839,7 +3990,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "Notification",
       "responseBody": true,
       "summary": "index"
     },
@@ -3877,7 +4028,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Notification",
       "responseBody": true,
       "summary": "show"
     },
@@ -3899,7 +4050,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "Notification",
       "responseBody": true,
       "summary": "update"
     },
@@ -4340,6 +4491,139 @@
       "summary": "trash"
     },
     {
+      "id": "list_parts",
+      "method": "get",
+      "path": "/parts",
+      "tag": "parts",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "brand",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "per_page",
+          "type": "integer",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "q",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "stock_status",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "stocked",
+          "type": "boolean",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_part",
+      "method": "post",
+      "path": "/parts",
+      "tag": "parts",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreatePartRequest",
+      "requestShape": {
+        "wrapper": "part"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_part",
+      "method": "delete",
+      "path": "/parts/{id}",
+      "tag": "parts",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "show_part",
+      "method": "get",
+      "path": "/parts/{id}",
+      "tag": "parts",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "update_part",
+      "method": "patch",
+      "path": "/parts/{id}",
+      "tag": "parts",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdatePartRequest",
+      "requestShape": {
+        "wrapper": "part"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "list_parts_matrices",
       "method": "get",
       "path": "/parts_matrices",
@@ -4351,7 +4635,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "PartsMatrix",
       "responseBody": true,
       "summary": "index"
     },
@@ -4369,7 +4653,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "PartsMatrix",
       "responseBody": true,
       "summary": "create"
     },
@@ -4411,7 +4695,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "PartsMatrix",
       "responseBody": true,
       "summary": "update"
     },
@@ -4643,6 +4927,84 @@
       "summary": "show"
     },
     {
+      "id": "list_reports_cash_drawer_sessions",
+      "method": "get",
+      "path": "/reports/cash_drawer_sessions",
+      "tag": "reports",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "show_reports_cash_drawer_session",
+      "method": "get",
+      "path": "/reports/cash_drawer_sessions/{id}",
+      "tag": "reports",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "list_reports_cash_drawer_sessions_close",
+      "method": "get",
+      "path": "/reports/cash_drawer_sessions/{id}/close",
+      "tag": "reports",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "close"
+    },
+    {
+      "id": "update_reports_cash_drawer_sessions_confirm_close",
+      "method": "patch",
+      "path": "/reports/cash_drawer_sessions/{id}/confirm_close",
+      "tag": "reports",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateReportsCashDrawerSessionsConfirmCloseRequest",
+      "requestShape": {
+        "wrapper": "cash_drawer_session"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "confirm_close"
+    },
+    {
       "id": "list_reports_declined_work",
       "method": "get",
       "path": "/reports/declined_work",
@@ -4851,6 +5213,69 @@
       "summary": "show"
     },
     {
+      "id": "create_scan_lookup",
+      "method": "post",
+      "path": "/scan/lookups",
+      "tag": "scan",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateScanLookupRequest",
+      "requestShape": {
+        "flat": [
+          "code",
+          "type"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "lookup"
+    },
+    {
+      "id": "create_scan_started_work_order",
+      "method": "post",
+      "path": "/scan/started_work_orders",
+      "tag": "scan",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateScanStartedWorkOrderRequest",
+      "requestShape": {
+        "flat": [
+          "outcome",
+          "vehicle_id"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "start_ro"
+    },
+    {
+      "id": "create_scan_vehicle",
+      "method": "post",
+      "path": "/scan/vehicles",
+      "tag": "scan",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateScanVehicleRequest",
+      "requestShape": {
+        "flat": [
+          "customer",
+          "vehicle"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create_vehicle_and_start_ro"
+    },
+    {
       "id": "list_search",
       "method": "get",
       "path": "/search",
@@ -5025,7 +5450,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "ShopDiscount",
       "responseBody": true,
       "summary": "index"
     },
@@ -5043,7 +5468,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "ShopDiscount",
       "responseBody": true,
       "summary": "create"
     },
@@ -5085,7 +5510,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "ShopDiscount",
       "responseBody": true,
       "summary": "update"
     },
@@ -5123,7 +5548,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "ShopFee",
       "responseBody": true,
       "summary": "index"
     },
@@ -5141,7 +5566,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "ShopFee",
       "responseBody": true,
       "summary": "create"
     },
@@ -5183,7 +5608,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "ShopFee",
       "responseBody": true,
       "summary": "update"
     },
@@ -5208,6 +5633,47 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "duplicate"
+    },
+    {
+      "id": "create_statements_bulk_send",
+      "method": "post",
+      "path": "/statements/bulk_send",
+      "tag": "statements",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateStatementsBulkSendRequest",
+      "requestShape": {
+        "flat": [
+          "statement_ids",
+          "cc_emails",
+          "include_invoice_pdfs",
+          "body"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Statement",
+      "responseBody": true,
+      "summary": "bulk_send"
+    },
+    {
+      "id": "create_statements_generate",
+      "method": "post",
+      "path": "/statements/generate",
+      "tag": "statements",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateStatementsGenerateRequest",
+      "requestShape": {
+        "wrapper": null
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "Statement",
+      "responseBody": true,
+      "summary": "generate"
     },
     {
       "id": "show_statement",
@@ -5283,7 +5749,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "SubStatusType",
       "responseBody": true,
       "summary": "index"
     },
@@ -5301,7 +5767,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "SubStatusType",
       "responseBody": true,
       "summary": "create"
     },
@@ -5323,7 +5789,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "SubStatusType",
       "responseBody": true,
       "summary": "update"
     },
@@ -5424,6 +5890,49 @@
       "summary": "deactivate"
     },
     {
+      "id": "create_time_entrie",
+      "method": "post",
+      "path": "/time_entries",
+      "tag": "time_entries",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateTimeEntrieRequest",
+      "requestShape": {
+        "flat": [
+          "type",
+          "work_order_service_id"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_time_entrie",
+      "method": "patch",
+      "path": "/time_entries/{id}",
+      "tag": "time_entries",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateTimeEntrieRequest",
+      "requestShape": {
+        "wrapper": "status"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
       "id": "list_tire_events",
       "method": "get",
       "path": "/tire_events",
@@ -5510,44 +6019,6 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "create"
-    },
-    {
-      "id": "create_tire_storage_slots_export",
-      "method": "post",
-      "path": "/tire_storage_slots/export",
-      "tag": "tire_storage_slots",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateTireStorageSlotsExportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "list_tire_storage_slots_export_download",
-      "method": "get",
-      "path": "/tire_storage_slots/export/{id}/download",
-      "tag": "tire_storage_slots",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "download"
     },
     {
       "id": "delete_tire_storage_slot",
@@ -5668,92 +6139,6 @@
       "summary": "create"
     },
     {
-      "id": "create_tires_export",
-      "method": "post",
-      "path": "/tires/export",
-      "tag": "tires",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": "CreateTiresExportRequest",
-      "requestShape": {
-        "wrapper": null
-      },
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "create"
-    },
-    {
-      "id": "list_tires_export_download",
-      "method": "get",
-      "path": "/tires/export/{id}/download",
-      "tag": "tires",
-      "pathParams": [
-        "id"
-      ],
-      "pathParamTypes": {
-        "id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "download"
-    },
-    {
-      "id": "create_tires_imports_commit",
-      "method": "post",
-      "path": "/tires/imports/commit",
-      "tag": "tires",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "commit"
-    },
-    {
-      "id": "list_tires_imports_template",
-      "method": "get",
-      "path": "/tires/imports/template",
-      "tag": "tires",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": null,
-      "responseSchema": null,
-      "responseBody": false,
-      "summary": "template"
-    },
-    {
-      "id": "create_tires_imports_validate",
-      "method": "post",
-      "path": "/tires/imports/validate",
-      "tag": "tires",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": "multipart/form-data",
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "validate"
-    },
-    {
       "id": "delete_tire",
       "method": "delete",
       "path": "/tires/{id}",
@@ -5840,7 +6225,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": true,
-      "responseSchema": null,
+      "responseSchema": "User",
       "responseBody": true,
       "summary": "index"
     },
@@ -5858,7 +6243,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "User",
       "responseBody": true,
       "summary": "create"
     },
@@ -5919,6 +6304,55 @@
       "summary": "update"
     },
     {
+      "id": "create_users_permission_groups_assign",
+      "method": "post",
+      "path": "/users/permission_groups/{id}/assign",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateUsersPermissionGroupsAssignRequest",
+      "requestShape": {
+        "wrapper": "user_id"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "assign"
+    },
+    {
+      "id": "delete_users_permission_groups_unassign",
+      "method": "delete",
+      "path": "/users/permission_groups/{id}/unassign",
+      "tag": "users",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [
+        {
+          "name": "assignment_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "unassign"
+    },
+    {
       "id": "delete_user",
       "method": "delete",
       "path": "/users/{id}",
@@ -5954,7 +6388,7 @@
       "requestShape": null,
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "User",
       "responseBody": true,
       "summary": "show"
     },
@@ -5976,7 +6410,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "User",
       "responseBody": true,
       "summary": "update"
     },
@@ -6160,6 +6594,12 @@
         },
         {
           "name": "status",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "type",
           "type": "string",
           "required": false,
           "description": null
@@ -6685,6 +7125,26 @@
       "summary": "index"
     },
     {
+      "id": "delete_voice_command",
+      "method": "delete",
+      "path": "/voice_commands/{id}",
+      "tag": "voice_commands",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "destroy"
+    },
+    {
       "id": "list_work_order_tags",
       "method": "get",
       "path": "/work_order_tags",
@@ -6889,6 +7349,73 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "post_to_account"
+    },
+    {
+      "id": "list_work_orders_activity",
+      "method": "get",
+      "path": "/work_orders/{id}/activity",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [
+        {
+          "name": "category",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "activity"
+    },
+    {
+      "id": "list_work_orders_appointments",
+      "method": "get",
+      "path": "/work_orders/{id}/appointments",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": "Appointment",
+      "responseBody": true,
+      "summary": "appointments"
+    },
+    {
+      "id": "list_work_orders_authorization_logs",
+      "method": "get",
+      "path": "/work_orders/{id}/authorization_logs",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "authorization_logs"
     },
     {
       "id": "close_work_order",
@@ -7171,6 +7698,48 @@
       "summary": "show"
     },
     {
+      "id": "list_work_orders_vehicle_history",
+      "method": "get",
+      "path": "/work_orders/{id}/vehicle_history",
+      "tag": "work_orders",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "vehicle_history"
+    },
+    {
+      "id": "create_work_orders_activity_log",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/activity_logs",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrdersActivityLogRequest",
+      "requestShape": {
+        "wrapper": "activity_log"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "WorkOrder",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "create_work_orders_authorization_decision",
       "method": "post",
       "path": "/work_orders/{work_order_id}/authorization_decisions",
@@ -7425,6 +7994,125 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "send_to_ar"
+    },
+    {
+      "id": "create_work_orders_purchase_order",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/purchase_orders",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrdersPurchaseOrderRequest",
+      "requestShape": {
+        "wrapper": "purchase_order"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "PurchaseOrder",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "delete_work_orders_purchase_order",
+      "method": "delete",
+      "path": "/work_orders/{work_order_id}/purchase_orders/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "destroy"
+    },
+    {
+      "id": "update_work_orders_purchase_order",
+      "method": "patch",
+      "path": "/work_orders/{work_order_id}/purchase_orders/{id}",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateWorkOrdersPurchaseOrderRequest",
+      "requestShape": {
+        "wrapper": "purchase_order"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "PurchaseOrder",
+      "responseBody": true,
+      "summary": "update"
+    },
+    {
+      "id": "create_work_orders_purchase_orders_receive",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/purchase_orders/{id}/receive",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrdersPurchaseOrdersReceiveRequest",
+      "requestShape": {
+        "wrapper": "lines"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "PurchaseOrder",
+      "responseBody": true,
+      "summary": "receive"
+    },
+    {
+      "id": "create_work_orders_purchase_orders_return",
+      "method": "post",
+      "path": "/work_orders/{work_order_id}/purchase_orders/{id}/return",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer",
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateWorkOrdersPurchaseOrdersReturnRequest",
+      "requestShape": {
+        "flat": [
+          "lines",
+          "return_order"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "PurchaseOrder",
+      "responseBody": true,
+      "summary": "create_return"
     },
     {
       "id": "create_work_orders_refund",
@@ -8078,93 +8766,6 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "undo_return"
-    },
-    {
-      "id": "list_work_orders_summary_activity",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/summary/activity",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "pathParamTypes": {
-        "work_order_id": "integer"
-      },
-      "queryParams": [
-        {
-          "name": "category",
-          "type": "string",
-          "required": false,
-          "description": null
-        }
-      ],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "activity"
-    },
-    {
-      "id": "list_work_orders_summary_appointments",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/summary/appointments",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "pathParamTypes": {
-        "work_order_id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "appointments"
-    },
-    {
-      "id": "list_work_orders_summary_authorization_logs",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/summary/authorization_logs",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "pathParamTypes": {
-        "work_order_id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "authorization_logs"
-    },
-    {
-      "id": "list_work_orders_summary_vehicle_history",
-      "method": "get",
-      "path": "/work_orders/{work_order_id}/summary/vehicle_history",
-      "tag": "work_orders",
-      "pathParams": [
-        "work_order_id"
-      ],
-      "pathParamTypes": {
-        "work_order_id": "integer"
-      },
-      "queryParams": [],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": true,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "vehicle_history"
     },
     {
       "id": "create_work_orders_void",
