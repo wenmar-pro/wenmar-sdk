@@ -2,7 +2,6 @@
 package conformance
 
 import (
-	"bytes"
 	"context"
 	"testing"
 
