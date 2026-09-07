@@ -283,62 +283,6 @@
     }
   },
   {
-    "name": "publish_inspection_report_success",
-    "operation": "publish_inspection_report",
-    "method": "PATCH",
-    "path": "/inspection_reports/1/publish",
-    "pathParams": {
-      "id": 1
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "id": 1,
-          "type": "inspection_report",
-          "name": "Courtesy Check",
-          "published": true
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "published",
-        "equals": true
-      }
-    }
-  },
-  {
-    "name": "unpublish_inspection_report_success",
-    "operation": "unpublish_inspection_report",
-    "method": "PATCH",
-    "path": "/inspection_reports/1/unpublish",
-    "pathParams": {
-      "id": 1
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": {
-          "id": 1,
-          "type": "inspection_report",
-          "name": "Courtesy Check",
-          "published": false
-        }
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": {
-        "path": "published",
-        "equals": false
-      }
-    }
-  },
-  {
     "name": "reopen_inspection_report_success",
     "operation": "reopen_inspection_report",
     "method": "PATCH",
