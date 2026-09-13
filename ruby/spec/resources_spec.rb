@@ -1,33 +1,14 @@
+require "json"
 require_relative "spec_helper"
 
 module Wenmar
   class ResourcesTest < TestCase
+    MANIFEST_PATH = File.expand_path("../../spec/operations.json", __dir__)
+    GENERATED_OPERATION_IDS = JSON.parse(File.read(MANIFEST_PATH)).fetch("operations").map { |op| op.fetch("id").to_sym }.freeze
+
     def test_all_generated_methods_exist
       client = Client.new(token: "test", base_url: @base_url)
-      expected = %i[
-        list_account list_customer_tags create_customer_tag delete_customer_tag update_customer_tag
-        list_customers create_customer check_customer_duplicate
-        list_customers_drivers create_driver delete_driver show_driver update_driver
-        list_customers_statements list_customers_vehicles list_customers_vehicles_history
-        list_customers_work_orders show_customer update_customer merge_customer trash_customer archive_customer restore_customer
-        show_location list_service_categories create_service_category seed_defaults_service_categories
-        delete_service_category update_service_category
-        list_tags update_tags show_statement list_users list_permission_groups list_vehicle_tags
-        create_vehicle_tag delete_vehicle_tag update_vehicle_tag
-        list_vehicles create_vehicle check_vehicle_duplicate prefill_vehicle decode_vin
-        show_vehicle update_vehicle merge_vehicle transfer_vehicle trash_vehicle archive_vehicle restore_vehicle
-        list_vehicles_work_orders list_vendors show_vendor trash_vendor archive_vendor restore_vendor
-        list_work_orders create_work_order show_work_order update_work_order
-        show_work_order_declined_services show_work_order_service_history
-        create_work_order_authorization update_work_order_authorization_decisions
-        show_work_order_estimate show_work_order_inspection
-        start_work_order complete_work_order close_work_order void_work_order
-        decline_work_order reopen_work_order
-        send_work_order_estimate send_work_order_reminder send_work_order_invoice_summary
-        post_work_order_to_account decline_all_work_order_concerns
-        show_work_order_parts show_work_order_payments create_work_order_payment show_work_order_wip
-      ]
-      expected.each do |m|
+      GENERATED_OPERATION_IDS.each do |m|
         assert_respond_to client, m, "expected generated method ##{m}"
       end
     end
