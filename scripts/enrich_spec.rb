@@ -1,10 +1,11 @@
 require "yaml"
 
 module EnrichSpec
-  # Irregular/ambiguous singular forms are the authoritative source of truth.
-  # The generic rules below only handle simple pluralizations; anything that
-  # would mangle (matrices, entries, statuses, copies, refreshes, etc.) must
-  # be listed here.
+  # The singularize rules are intentionally narrow. They handle the simple
+  # `s`-drop, the `-ies` -> `-y` rule, and sibilant `-es` (ss|sh|ch|x|z).
+  # EVERY other ambiguous plural must be an explicit IRREGULAR entry, and every
+  # already-singular noun that ends in `s` must be in PROTECTED so it is never
+  # mangled by the generic `s`-drop.
   IRREGULAR = {
     "work_orders" => "work_order",
     "service_categories" => "service_category",
@@ -14,11 +15,32 @@ module EnrichSpec
     "price_refreshes" => "price_refresh",
     "sub_statuses" => "sub_status",
     "statuses" => "status",
+    "expenses" => "expense",
     "labor_matrices" => "labor_matrix",
     "parts_matrices" => "parts_matrix",
     "parts_purchases" => "parts_purchase",
-    "check_outs" => "check_out"
+    "check_outs" => "check_out",
+    "blocked_times" => "blocked_time",
+    "core_tax_rules" => "core_tax_rule",
+    "counter_sales" => "counter_sale",
+    "ignores" => "ignore",
+    "labor_rates" => "labor_rate",
+    "labor_templates" => "labor_template",
+    "lead_sources" => "lead_source",
+    "messages" => "message",
+    "packages" => "package",
+    "services" => "service",
+    "shop_fees" => "shop_fee",
+    "signatures" => "signature",
+    "sublet_packages" => "sublet_package",
+    "tires" => "tire",
+    "vehicles" => "vehicle"
   }.freeze
+
+  # Already-singular nouns that end in `s` and must pass through unchanged.
+  PROTECTED = %w[
+    status address business news series loss glass quickbooks profit_and_loss
+  ].freeze
 
   RESOURCE_SCHEMAS = {
     "customers" => "Customer",
@@ -272,6 +294,7 @@ module EnrichSpec
   end
 
   def self.singularize(word)
+    return word if PROTECTED.include?(word)
     IRREGULAR[word] || begin
       return word unless word.end_with?("s")
       return word.sub(/ies\z/, "y") if word.end_with?("ies")

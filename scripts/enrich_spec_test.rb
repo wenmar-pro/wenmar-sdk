@@ -293,22 +293,56 @@ class EnrichSpecTest < Minitest::Test
     assert_equal "bulk_mark_read", EnrichSpec.singularize("bulk_mark_read")
   end
 
-  def test_singularize_never_emits_mangled_suffixes_for_spec_nouns
-    mangled = /\A[a-z0-9_]+(?:entrie|matrice|statuse|categorie|copie|refreshe|capabilitie|purchas)\z/
-    spec = YAML.load_file(File.expand_path("../spec/openapi.yaml", __dir__))
-    spec["paths"].each do |path, methods|
-      methods.each do |method, op|
-        next unless op.is_a?(Hash)
-        next unless op["operationId"]
-        nouns = path.split("/").reject { |s| s.empty? || s.start_with?("{") || s =~ /\A\d+\z/ }
-        next if nouns.empty?
-        final = nouns.last.tr("-", "_")
-        refute_match mangled, EnrichSpec.singularize(final), "mangled singularize for #{method.upcase} #{path}"
-      end
+  def test_singularize_passes_through_protected_singular_nouns
+    EnrichSpec::PROTECTED.each do |noun|
+      assert_equal noun, EnrichSpec.singularize(noun), "protected noun #{noun} was mangled"
+    end
+  end
+
+  def test_singularize_guard_requires_explicit_irregular_for_ambiguous_es
+    final_singularized_nouns.each do |noun|
+      next unless noun.end_with?("es")
+      next if noun.end_with?("ies")
+      next if noun =~ /(?:ss|sh|ch|x|z)es\z/
+      assert EnrichSpec::IRREGULAR.key?(noun),
+        "#{noun} ends in -es but is not in IRREGULAR; ambiguous -es must be explicit"
     end
   end
 
   private
+
+  # Reproduces the conditions under which derive_operation_id singularizes the
+  # final noun: list keeps it plural; create always singularizes; show/update/
+  # delete singularize only when the path ends in a parameter. Paths pinned by
+  # SUB_ACTION_IDS/NESTED_OPERATION_IDS never reach singularize, so skip them.
+  def final_singularized_nouns
+    spec = YAML.load_file(File.expand_path("../spec/openapi.yaml", __dir__))
+    spec["paths"].each_with_object([]) do |(path, methods), result|
+      methods.each do |method, op|
+        next unless op.is_a?(Hash)
+        next unless op["operationId"]
+        key = "#{method} #{path}"
+        next if EnrichSpec::SUB_ACTION_IDS.key?(key) || EnrichSpec::NESTED_OPERATION_IDS.key?(key)
+        segments = path.split("/").reject(&:empty?)
+        nouns = segments.reject { |s| s.start_with?("{") || s =~ /\A\d+\z/ }
+        next if nouns.empty?
+        last_is_param = segments.last.start_with?("{") || segments.last =~ /\A\d+\z/
+        verb = case method
+               when "get"           then last_is_param ? "show" : "list"
+               when "post"          then "create"
+               when "patch", "put"  then "update"
+               when "delete"        then "delete"
+               else method
+               end
+        singularize_last = case verb
+                           when "list"   then false
+                           when "create" then true
+                           else last_is_param
+                           end
+        result << nouns.last.tr("-", "_") if singularize_last
+      end
+    end
+  end
 
   def make_spec_with(paths)
     {
