@@ -269,6 +269,27 @@ module Wenmar
         .with { |req| req.headers["If-None-Match"].nil? }, times: 2
     end
 
+    def test_config_timeout_applied_to_connections
+      client = Client.new(Config.new(timeout: 5), token: "test", base_url: @base_url)
+      read = client.instance_variable_get(:@read_connection)
+      write = client.instance_variable_get(:@write_connection)
+      assert_equal 5, read.options.timeout
+      assert_equal 5, read.options.open_timeout
+      assert_equal 5, write.options.timeout
+    end
+
+    def test_retry_options_from_config_reach_middleware
+      config = Config.new(retry_options: { interval_randomness: 0.1, max_interval: 7 })
+      client = Client.new(config, token: "test", base_url: @base_url)
+      retry_app = client.instance_variable_get(:@read_connection).builder.app
+      # Walk the builder chain to find the Faraday::Retry::Middleware.
+      options = find_retry_options(retry_app)
+      refute_nil options, "expected a retry middleware in the connection builder"
+      assert_equal 0.1, options.interval_randomness
+      assert_equal 7.0, options.max_interval
+      assert_equal 3, options.max, "retry max should default to config.max_retries"
+    end
+
     def test_304_preserves_cached_link_header
       link = '<https://api.example.com/customers?page=2>; rel="next"'
       body = [{ id: 1 }].to_json
@@ -307,6 +328,19 @@ module Wenmar
     end
 
     private
+
+    # Walks a Faraday builder/app chain and returns the retry middleware's
+    # options, or nil if none is present.
+    def find_retry_options(app)
+      current = app
+      while current
+        if current.respond_to?(:options) && current.is_a?(Faraday::Retry::Middleware)
+          return current.options
+        end
+        current = current.respond_to?(:app) ? current.app : nil
+      end
+      nil
+    end
 
     def stub_api(method, path, body, status: 200)
       stub_request(method, "#{@base_url}#{path}")

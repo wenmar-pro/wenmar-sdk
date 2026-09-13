@@ -3,7 +3,7 @@
 module Wenmar
   class Config
     attr_accessor :base_url, :access_token, :token_provider, :location_id,
-                  :timeout, :max_retries, :cache_enabled, :cache_store, :retry_options
+                  :timeout, :max_retries, :cache_enabled, :retry_options
 
     def initialize(attrs = {})
       @base_url = attrs[:base_url] || "https://app.wenmarpro.com"
@@ -13,7 +13,6 @@ module Wenmar
       @timeout = attrs[:timeout] || 30
       @max_retries = attrs[:max_retries] || 3
       @cache_enabled = attrs.fetch(:cache_enabled, true)
-      @cache_store = attrs[:cache_store] || {}
       @retry_options = attrs[:retry_options] || {
         max: @max_retries,
         interval: 0.1,

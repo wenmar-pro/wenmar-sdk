@@ -63,7 +63,8 @@ module Wenmar
       }[status]
     end
 
-    def self.field_errors_map(list)      case list
+    def self.field_errors_map(list)
+      case list
       when Hash
         list
       when Array

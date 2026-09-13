@@ -9,6 +9,17 @@ class ConfigTest < Wenmar::TestCase
     assert config.cache_enabled
   end
 
+  def test_custom_timeout
+    config = Wenmar::Config.new(timeout: 5)
+    assert_equal 5, config.timeout
+  end
+
+  def test_custom_retry_options
+    config = Wenmar::Config.new(retry_options: { interval_randomness: 0.1, max_interval: 7 })
+    assert_equal 0.1, config.retry_options[:interval_randomness]
+    assert_equal 7, config.retry_options[:max_interval]
+  end
+
   def test_from_env
     ENV["WENMAR_BASE_URL"] = "https://staging.wenmarpro.com"
     ENV["WENMAR_TIMEOUT"] = "10"

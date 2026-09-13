@@ -132,7 +132,11 @@ module Wenmar
     end
 
     # paginator_to_a collects all pages from a paginated list result, up to
-    # max items (default 1000).
+    # max items (default 1000). The returned array includes the initial page
+    # (the response body) plus every subsequent page fetched via the Link
+    # header. We intentionally do NOT delegate to Paginator#to_a: that method
+    # starts from the paginator's own (empty) data and would drop the initial
+    # page.
     def paginator_to_a(result, max = 1000)
       return result unless result.respond_to?(:paginator)
 
@@ -157,12 +161,25 @@ module Wenmar
         conn.headers["Content-Type"] = "application/json"
         conn.headers["User-Agent"] = "wenmar-sdk-ruby/#{Wenmar::VERSION}"
         conn.headers["X-Wenmar-Location"] = location_id if location_id
+        conn.options.timeout = @config.timeout
+        conn.options.open_timeout = @config.timeout
         conn.request :authorization, "Bearer", -> { resolve_token }
-        conn.request :retry, max: @config.max_retries, interval: 0.1, backoff_factor: 2,
-                    retry_statuses: retry_statuses,
-                    methods: methods,
-                    exceptions: exceptions
+        conn.request :retry, retry_options.merge(
+          retry_statuses: retry_statuses,
+          methods: methods,
+          exceptions: exceptions
+        )
         conn.adapter Faraday.default_adapter
+      end
+    end
+
+    # Builds the Faraday retry middleware options from @config.retry_options,
+    # defaulting max to @config.max_retries when not present. These may be
+    # overridden per-connection (retry_statuses/methods/exceptions) by callers
+    # of build_connection, which always win.
+    def retry_options
+      @config.retry_options.dup.tap do |opts|
+        opts[:max] = @config.max_retries unless opts.key?(:max) && opts[:max]
       end
     end
 
