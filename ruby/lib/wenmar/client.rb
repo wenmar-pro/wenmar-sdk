@@ -15,6 +15,13 @@ module Wenmar
   class Client
     DEFAULT_BASE_URL = "https://app.wenmarpro.com"
 
+    # Faraday's retry middleware raises RetriableResponse internally when a
+    # response status matches retry_statuses. The write connection must match
+    # only that synthetic exception so 429s retry while transport errors
+    # (Faraday::ConnectionFailed, etc.) do not — mutations are not safe to
+    # replay on a lost connection.
+    WRITE_RETRY_EXCEPTIONS = [Faraday::RetriableResponse].freeze
+
     attr_reader :base_url, :location_id, :config
 
     def initialize(config = nil, token: nil, base_url: nil, token_provider: nil)
@@ -28,7 +35,7 @@ module Wenmar
       raise ArgumentError, "base_url must use https (http only allowed for localhost)" unless https_or_localhost?(@base_url)
 
       @read_connection = build_connection(retry_statuses: [429, 500, 502, 503, 504])
-      @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: [Faraday::RetriableResponse])
+      @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: WRITE_RETRY_EXCEPTIONS)
       @cache = {}
       @cache_mutex = Mutex.new
     end
@@ -53,7 +60,7 @@ module Wenmar
       scoped.instance_variable_set(:@cache, {})
       scoped.instance_variable_set(:@cache_mutex, Mutex.new)
       scoped.instance_variable_set(:@read_connection, build_connection(retry_statuses: [429, 500, 502, 503, 504], location_id: location_id))
-      scoped.instance_variable_set(:@write_connection, build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: [Faraday::RetriableResponse], location_id: location_id))
+      scoped.instance_variable_set(:@write_connection, build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: WRITE_RETRY_EXCEPTIONS, location_id: location_id))
       scoped
     end
 
