@@ -3784,13 +3784,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Create work orders services copie
+## Create work orders services copy
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/copies
 ```
 
-Create a work orders services copie.
+Create a work orders services copy.
 
 | Param | Type | Required |
 |---|---|---|
@@ -3886,13 +3886,13 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Create work orders services time entrie
+## Create work orders services time entry
 
 ```
 POST /work_orders/{work_order_id}/services/{id}/time_entries
 ```
 
-Create a work orders services time entrie.
+Create a work orders services time entry.
 
 | Param | Type | Required |
 |---|---|---|
@@ -4161,13 +4161,13 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Create work orders services line items copie
+## Create work orders services line items copy
 
 ```
 POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies
 ```
 
-Create a work orders services line items copie.
+Create a work orders services line items copy.
 
 | Param | Type | Required |
 |---|---|---|
@@ -4203,13 +4203,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Create work orders services line items price refreshe
+## Create work orders services line items price refresh
 
 ```
 POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
 ```
 
-Create a work orders services line items price refreshe.
+Create a work orders services line items price refresh.
 
 | Param | Type | Required |
 |---|---|---|

@@ -30,7 +30,7 @@
     "CreateCalendarBlockedTimeRequest",
     "CreateCampaignRequest",
     "CreateCashDrawerSessionRequest",
-    "CreateCashEntrieRequest",
+    "CreateCashEntryRequest",
     "CreateConversationRequest",
     "CreateConversationsBulkMarkReadRequest",
     "CreateConversationsCustomerLinkRequest",
@@ -50,7 +50,7 @@
     "CreateInspectionsPresetRequest",
     "CreateInventoryLevelExtractionRequest",
     "CreateInventoryLevelsAdjustRequest",
-    "CreateLaborMatriceRequest",
+    "CreateLaborMatrixRequest",
     "CreateLaborRateRequest",
     "CreateLeadSourceRequest",
     "CreateLeadSourcesSeedDefaultRequest",
@@ -62,7 +62,7 @@
     "CreatePackageRequest",
     "CreatePackagesDuplicateRequest",
     "CreatePartRequest",
-    "CreatePartsMatriceRequest",
+    "CreatePartsMatrixRequest",
     "CreatePaymentsCancellationRequest",
     "CreatePaymentsConfirmationRequest",
     "CreatePaymentsFailureRequest",
@@ -76,7 +76,7 @@
     "CreateStatementsBulkSendRequest",
     "CreateStatementsGenerateRequest",
     "CreateStoreCreditsVoidRequest",
-    "CreateSubStatuseRequest",
+    "CreateSubStatusRequest",
     "CreateSubletPackageRequest",
     "CreateTireEventRequest",
     "CreateTireRequest",
@@ -116,17 +116,17 @@
     "CreateWorkOrdersServicesBulkPullRequest",
     "CreateWorkOrdersServicesCommentRequest",
     "CreateWorkOrdersServicesCompletionRequest",
-    "CreateWorkOrdersServicesCopieRequest",
+    "CreateWorkOrdersServicesCopyRequest",
     "CreateWorkOrdersServicesExtractionRequest",
     "CreateWorkOrdersServicesLineItemRequest",
-    "CreateWorkOrdersServicesLineItemsCopieRequest",
+    "CreateWorkOrdersServicesLineItemsCopyRequest",
     "CreateWorkOrdersServicesLineItemsInventoryAdditionRequest",
-    "CreateWorkOrdersServicesLineItemsPriceRefresheRequest",
+    "CreateWorkOrdersServicesLineItemsPriceRefreshRequest",
     "CreateWorkOrdersServicesLineItemsReorderRequest",
     "CreateWorkOrdersServicesPackageRequest",
     "CreateWorkOrdersServicesSubletOrderRequest",
     "CreateWorkOrdersServicesSubletOrdersDuplicateRequest",
-    "CreateWorkOrdersServicesTimeEntrieRequest",
+    "CreateWorkOrdersServicesTimeEntryRequest",
     "CreateWorkOrdersTireStorageRequest",
     "CreateWorkOrdersVoidRequest",
     "Customer",
@@ -211,7 +211,7 @@
     "UpdateInspectionsItemRequest",
     "UpdateInspectionsPresetRequest",
     "UpdateInventoryLevelRequest",
-    "UpdateLaborMatriceRequest",
+    "UpdateLaborMatrixRequest",
     "UpdateLaborTemplateRequest",
     "UpdateLeadSourceRequest",
     "UpdateLocationRequest",
@@ -230,14 +230,14 @@
     "UpdateOrdersReturnOrderRequest",
     "UpdateOrdersSubletOrdersMarkPaymentCompleteRequest",
     "UpdatePartRequest",
-    "UpdatePartsMatriceRequest",
+    "UpdatePartsMatrixRequest",
     "UpdatePermissionGroupRequest",
     "UpdateReportsCashDrawerSessionsConfirmCloseRequest",
     "UpdateReportsTaxPeriodRequest",
     "UpdateServiceCategoryRequest",
     "UpdateShopDiscountRequest",
     "UpdateShopFeeRequest",
-    "UpdateSubStatuseRequest",
+    "UpdateSubStatusRequest",
     "UpdateSubletPackageRequest",
     "UpdateTireRequest",
     "UpdateTireStorageSlotRequest",
@@ -981,14 +981,14 @@
       "summary": "index"
     },
     {
-      "id": "create_cash_entrie",
+      "id": "create_cash_entry",
       "method": "post",
       "path": "/cash_entries",
       "tag": "cash_entries",
       "pathParams": [],
       "pathParamTypes": {},
       "queryParams": [],
-      "requestSchema": "CreateCashEntrieRequest",
+      "requestSchema": "CreateCashEntryRequest",
       "requestShape": {
         "wrapper": "cash_entry"
       },
@@ -999,7 +999,7 @@
       "summary": "create"
     },
     {
-      "id": "delete_cash_entrie",
+      "id": "delete_cash_entry",
       "method": "delete",
       "path": "/cash_entries/{id}",
       "tag": "cash_entries",
@@ -1019,7 +1019,7 @@
       "summary": "destroy"
     },
     {
-      "id": "show_cash_entrie",
+      "id": "show_cash_entry",
       "method": "get",
       "path": "/cash_entries/{id}",
       "tag": "cash_entries",
@@ -3012,14 +3012,14 @@
       "summary": "index"
     },
     {
-      "id": "create_labor_matrice",
+      "id": "create_labor_matrix",
       "method": "post",
       "path": "/labor_matrices",
       "tag": "labor_matrices",
       "pathParams": [],
       "pathParamTypes": {},
       "queryParams": [],
-      "requestSchema": "CreateLaborMatriceRequest",
+      "requestSchema": "CreateLaborMatrixRequest",
       "requestShape": {
         "wrapper": "labor_matrix"
       },
@@ -3030,7 +3030,7 @@
       "summary": "create"
     },
     {
-      "id": "delete_labor_matrice",
+      "id": "delete_labor_matrix",
       "method": "delete",
       "path": "/labor_matrices/{id}",
       "tag": "labor_matrices",
@@ -3050,7 +3050,7 @@
       "summary": "destroy"
     },
     {
-      "id": "update_labor_matrice",
+      "id": "update_labor_matrix",
       "method": "patch",
       "path": "/labor_matrices/{id}",
       "tag": "labor_matrices",
@@ -3061,7 +3061,7 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdateLaborMatriceRequest",
+      "requestSchema": "UpdateLaborMatrixRequest",
       "requestShape": {
         "wrapper": "labor_matrix"
       },
@@ -4545,14 +4545,14 @@
       "summary": "index"
     },
     {
-      "id": "create_parts_matrice",
+      "id": "create_parts_matrix",
       "method": "post",
       "path": "/parts_matrices",
       "tag": "parts_matrices",
       "pathParams": [],
       "pathParamTypes": {},
       "queryParams": [],
-      "requestSchema": "CreatePartsMatriceRequest",
+      "requestSchema": "CreatePartsMatrixRequest",
       "requestShape": {
         "wrapper": "parts_matrix"
       },
@@ -4563,7 +4563,7 @@
       "summary": "create"
     },
     {
-      "id": "delete_parts_matrice",
+      "id": "delete_parts_matrix",
       "method": "delete",
       "path": "/parts_matrices/{id}",
       "tag": "parts_matrices",
@@ -4583,7 +4583,7 @@
       "summary": "destroy"
     },
     {
-      "id": "update_parts_matrice",
+      "id": "update_parts_matrix",
       "method": "patch",
       "path": "/parts_matrices/{id}",
       "tag": "parts_matrices",
@@ -4594,7 +4594,7 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdatePartsMatriceRequest",
+      "requestSchema": "UpdatePartsMatrixRequest",
       "requestShape": {
         "wrapper": "parts_matrix"
       },
@@ -5582,14 +5582,14 @@
       "summary": "index"
     },
     {
-      "id": "create_sub_statuse",
+      "id": "create_sub_status",
       "method": "post",
       "path": "/sub_statuses",
       "tag": "sub_statuses",
       "pathParams": [],
       "pathParamTypes": {},
       "queryParams": [],
-      "requestSchema": "CreateSubStatuseRequest",
+      "requestSchema": "CreateSubStatusRequest",
       "requestShape": {
         "wrapper": "sub_status_type"
       },
@@ -5600,7 +5600,7 @@
       "summary": "create"
     },
     {
-      "id": "update_sub_statuse",
+      "id": "update_sub_status",
       "method": "patch",
       "path": "/sub_statuses/{id}",
       "tag": "sub_statuses",
@@ -5611,7 +5611,7 @@
         "id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "UpdateSubStatuseRequest",
+      "requestSchema": "UpdateSubStatusRequest",
       "requestShape": {
         "wrapper": "sub_status_type"
       },
@@ -8409,7 +8409,7 @@
       "summary": "complete_service"
     },
     {
-      "id": "create_work_orders_services_copie",
+      "id": "create_work_orders_services_copy",
       "method": "post",
       "path": "/work_orders/{work_order_id}/services/{id}/copies",
       "tag": "work_orders",
@@ -8422,7 +8422,7 @@
         "work_order_id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersServicesCopieRequest",
+      "requestSchema": "CreateWorkOrdersServicesCopyRequest",
       "requestShape": {
         "wrapper": null
       },
@@ -8529,7 +8529,7 @@
       "summary": "revive"
     },
     {
-      "id": "create_work_orders_services_time_entrie",
+      "id": "create_work_orders_services_time_entry",
       "method": "post",
       "path": "/work_orders/{work_order_id}/services/{id}/time_entries",
       "tag": "work_orders",
@@ -8542,7 +8542,7 @@
         "work_order_id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersServicesTimeEntrieRequest",
+      "requestSchema": "CreateWorkOrdersServicesTimeEntryRequest",
       "requestShape": {
         "wrapper": null
       },
@@ -8794,7 +8794,7 @@
       "summary": "update"
     },
     {
-      "id": "create_work_orders_services_line_items_copie",
+      "id": "create_work_orders_services_line_items_copy",
       "method": "post",
       "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies",
       "tag": "work_orders",
@@ -8809,7 +8809,7 @@
         "work_order_id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersServicesLineItemsCopieRequest",
+      "requestSchema": "CreateWorkOrdersServicesLineItemsCopyRequest",
       "requestShape": {
         "wrapper": null
       },
@@ -8846,7 +8846,7 @@
       "summary": "inventory_additions"
     },
     {
-      "id": "create_work_orders_services_line_items_price_refreshe",
+      "id": "create_work_orders_services_line_items_price_refresh",
       "method": "post",
       "path": "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes",
       "tag": "work_orders",
@@ -8861,7 +8861,7 @@
         "work_order_id": "integer"
       },
       "queryParams": [],
-      "requestSchema": "CreateWorkOrdersServicesLineItemsPriceRefresheRequest",
+      "requestSchema": "CreateWorkOrdersServicesLineItemsPriceRefreshRequest",
       "requestShape": {
         "wrapper": null
       },

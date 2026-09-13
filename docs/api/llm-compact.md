@@ -626,7 +626,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **DuplicateCampaignRequest**: {}
 - **SendCampaignRequest**: {}
 - **CreateCashDrawerSessionRequest**: {cash_drawer_session*:object{starting_float_cents}}
-- **CreateCashEntrieRequest**: {cash_entry*:object{reference,amount_cents,entry_type,description,recipient}}
+- **CreateCashEntryRequest**: {cash_entry*:object{reference,amount_cents,entry_type,description,recipient}}
 - **CreateConversationRequest**: {conversation*:object{customer_id}}
 - **CreateConversationsBulkMarkReadRequest**: {}
 - **CreateConversationsCustomerLinkRequest**: {customer_id*:integer}
@@ -679,8 +679,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateInventoryLevelExtractionRequest**: {text*:string, extraction_id*:string}
 - **UpdateInventoryLevelRequest**: {inventory_level*:object{bin_location,reorder_point,max_stock}}
 - **CreateInventoryLevelsAdjustRequest**: {adjustment*:object{quantity_delta,reason}}
-- **CreateLaborMatriceRequest**: {labor_matrix*:object{name,matrix_type,active}}
-- **UpdateLaborMatriceRequest**: {labor_matrix*:object{name}}
+- **CreateLaborMatrixRequest**: {labor_matrix*:object{name,matrix_type,active}}
+- **UpdateLaborMatrixRequest**: {labor_matrix*:object{name}}
 - **CreateLaborRateRequest**: {labor_rate*:object{name,rate,is_default}}
 - **ArchiveLaborRateRequest**: {}
 - **RestoreLaborRateRequest**: {}
@@ -716,8 +716,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **TrashPackageRequest**: {}
 - **CreatePartRequest**: {part*:object{part_number,description,brand,part_type,stocked,initial_quantity,cost,sell,taxable,vendor_id}}
 - **UpdatePartRequest**: {part*:object{description}}
-- **CreatePartsMatriceRequest**: {parts_matrix*:object{name,is_default,active}}
-- **UpdatePartsMatriceRequest**: {parts_matrix*:object{name}}
+- **CreatePartsMatrixRequest**: {parts_matrix*:object{name,is_default,active}}
+- **UpdatePartsMatrixRequest**: {parts_matrix*:object{name}}
 - **CreatePaymentsCancellationRequest**: {}
 - **CreatePaymentsConfirmationRequest**: {}
 - **CreatePaymentsFailureRequest**: {}
@@ -739,8 +739,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateStatementsBulkSendRequest**: {statement_ids*:array of integer, cc_emails*:string, include_invoice_pdfs*:string, body*:string}
 - **CreateStatementsGenerateRequest**: {}
 - **CreateStoreCreditsVoidRequest**: {}
-- **CreateSubStatuseRequest**: {sub_status_type*:object{name,color,status_scope}}
-- **UpdateSubStatuseRequest**: {sub_status_type*:object{active}}
+- **CreateSubStatusRequest**: {sub_status_type*:object{name,color,status_scope}}
+- **UpdateSubStatusRequest**: {sub_status_type*:object{active}}
 - **CreateSubletPackageRequest**: {sublet_package*:object{name,description,active}}
 - **UpdateSubletPackageRequest**: {sublet_package*:object{name}}
 - **CreateWorkOrderTechAssignmentRequest**: {technician_id*:integer}
@@ -816,21 +816,21 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UpdateWorkOrdersServicesAdjustTimeRequest**: {hours*:integer, minutes*:integer}
 - **CreateWorkOrdersServicesBulkPullRequest**: {}
 - **CreateWorkOrdersServicesCompletionRequest**: {}
-- **CreateWorkOrdersServicesCopieRequest**: {}
+- **CreateWorkOrdersServicesCopyRequest**: {}
 - **CreateWorkOrdersServicesPackageRequest**: {package_id*:integer}
 - **UpdateWorkOrdersServicesPauseRequest**: {}
 - **UpdateWorkOrdersServicesPublishRequest**: {}
 - **UpdateWorkOrdersServicesReviveRequest**: {}
-- **CreateWorkOrdersServicesTimeEntrieRequest**: {}
+- **CreateWorkOrdersServicesTimeEntryRequest**: {}
 - **UpdateWorkOrdersServicesToggleLaborCompletionRequest**: {line_item_id*:integer}
 - **UpdateWorkOrdersServicesUpdateCategoryRequest**: {category_id*:integer}
 - **CreateWorkOrdersServicesCommentRequest**: {service_comment*:object{body}}
 - **CreateWorkOrdersServicesExtractionRequest**: {text*:string, extraction_id*:string}
 - **CreateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{item_type,description,hours,labor_rate_id,total,unit_price,quantity}}
 - **UpdateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{part_status,description}}
-- **CreateWorkOrdersServicesLineItemsCopieRequest**: {}
+- **CreateWorkOrdersServicesLineItemsCopyRequest**: {}
 - **CreateWorkOrdersServicesLineItemsInventoryAdditionRequest**: {}
-- **CreateWorkOrdersServicesLineItemsPriceRefresheRequest**: {}
+- **CreateWorkOrdersServicesLineItemsPriceRefreshRequest**: {}
 - **PullWorkOrderServiceLineItemRequest**: {}
 - **CreateWorkOrdersServicesLineItemsReorderRequest**: {}
 - **UndoPullWorkOrderServiceLineItemRequest**: {}

@@ -1,9 +1,23 @@
 require "yaml"
 
 module EnrichSpec
-  SINGULAR_OVERRIDES = {
+  # Irregular/ambiguous singular forms are the authoritative source of truth.
+  # The generic rules below only handle simple pluralizations; anything that
+  # would mangle (matrices, entries, statuses, copies, refreshes, etc.) must
+  # be listed here.
+  IRREGULAR = {
     "work_orders" => "work_order",
-    "service_categories" => "service_category"
+    "service_categories" => "service_category",
+    "cash_entries" => "cash_entry",
+    "time_entries" => "time_entry",
+    "copies" => "copy",
+    "price_refreshes" => "price_refresh",
+    "sub_statuses" => "sub_status",
+    "statuses" => "status",
+    "labor_matrices" => "labor_matrix",
+    "parts_matrices" => "parts_matrix",
+    "parts_purchases" => "parts_purchase",
+    "check_outs" => "check_out"
   }.freeze
 
   RESOURCE_SCHEMAS = {
@@ -258,7 +272,12 @@ module EnrichSpec
   end
 
   def self.singularize(word)
-    SINGULAR_OVERRIDES[word] || word.chomp("s")
+    IRREGULAR[word] || begin
+      return word unless word.end_with?("s")
+      return word.sub(/ies\z/, "y") if word.end_with?("ies")
+      return word.sub(/es\z/, "") if word =~ /(?:ss|sh|ch|x|z)es\z/
+      word.sub(/s\z/, "")
+    end
   end
 
   def self.assert_unique_operation_ids!(spec)

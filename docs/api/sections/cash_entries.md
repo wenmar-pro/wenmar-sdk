@@ -47,13 +47,13 @@ List all cash entries, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/cash_entries.json
 ```
 
-## Create cash entrie
+## Create cash entry
 
 ```
 POST /cash_entries
 ```
 
-Create a cash entrie.
+Create a cash entry.
 
 **Response 200**
 
@@ -118,13 +118,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/cash_entries.json
 ```
 
-## Delete cash entrie
+## Delete cash entry
 
 ```
 DELETE /cash_entries/{id}
 ```
 
-Delete a cash entrie by ID.
+Delete a cash entry by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -168,13 +168,13 @@ Delete a cash entrie by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/cash_entries/<id>.json
 ```
 
-## Show cash entrie
+## Show cash entry
 
 ```
 GET /cash_entries/{id}
 ```
 
-Show a cash entrie by ID.
+Show a cash entry by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -214,7 +214,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 
 ---
 
-### CreateCashEntrieRequest schema {#createcashentrierequest-schema}
+### CreateCashEntryRequest schema {#createcashentryrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

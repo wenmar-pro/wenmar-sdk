@@ -17,13 +17,13 @@ List all parts matrices, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/parts_matrices.json
 ```
 
-## Create parts matrice
+## Create parts matrix
 
 ```
 POST /parts_matrices
 ```
 
-Create a parts matrice.
+Create a parts matrix.
 
 **Response 201** — [PartsMatrix](#partsmatrix-schema)
 
@@ -34,13 +34,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/parts_matrices.json
 ```
 
-## Delete parts matrice
+## Delete parts matrix
 
 ```
 DELETE /parts_matrices/{id}
 ```
 
-Delete a parts matrice by ID.
+Delete a parts matrix by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -52,13 +52,13 @@ Delete a parts matrice by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/parts_matrices/<id>.json
 ```
 
-## Update parts matrice
+## Update parts matrix
 
 ```
 PATCH /parts_matrices/{id}
 ```
 
-Update a parts matrice by ID.
+Update a parts matrix by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -91,7 +91,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### CreatePartsMatriceRequest schema {#createpartsmatricerequest-schema}
+### CreatePartsMatrixRequest schema {#createpartsmatrixrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -118,7 +118,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### UpdatePartsMatriceRequest schema {#updatepartsmatricerequest-schema}
+### UpdatePartsMatrixRequest schema {#updatepartsmatrixrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

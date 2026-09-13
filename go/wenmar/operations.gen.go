@@ -619,54 +619,54 @@ func (c *Client) ListCashEntries(ctx context.Context, params *ListCashEntriesPar
 	return resp, nil
 }
 
-// CreateCashEntrie runs the create_cash_entrie operation (POST /cash_entries).
-func (c *Client) CreateCashEntrie(ctx context.Context, body CreateCashEntrieRequest) (*CreateCashEntrieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCashEntrie"})
-	resp, err := c.gen.CreateCashEntrieWithResponse(ctx, body)
+// CreateCashEntry runs the create_cash_entry operation (POST /cash_entries).
+func (c *Client) CreateCashEntry(ctx context.Context, body CreateCashEntryRequest) (*CreateCashEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCashEntry"})
+	resp, err := c.gen.CreateCashEntryWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntrie"}, OperationResult{Operation: "CreateCashEntrie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntry"}, OperationResult{Operation: "CreateCashEntry", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntrie"}, OperationResult{Operation: "CreateCashEntrie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntry"}, OperationResult{Operation: "CreateCashEntry", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntrie"}, OperationResult{Operation: "CreateCashEntrie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntry"}, OperationResult{Operation: "CreateCashEntry"})
 	return resp, nil
 }
 
-// DeleteCashEntrie runs the delete_cash_entrie operation (DELETE /cash_entries/{id}).
-func (c *Client) DeleteCashEntrie(ctx context.Context, id int) (*DeleteCashEntrieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCashEntrie"})
-	resp, err := c.gen.DeleteCashEntrieWithResponse(ctx, id)
+// DeleteCashEntry runs the delete_cash_entry operation (DELETE /cash_entries/{id}).
+func (c *Client) DeleteCashEntry(ctx context.Context, id int) (*DeleteCashEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCashEntry"})
+	resp, err := c.gen.DeleteCashEntryWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntrie"}, OperationResult{Operation: "DeleteCashEntrie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntrie"}, OperationResult{Operation: "DeleteCashEntrie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntrie"}, OperationResult{Operation: "DeleteCashEntrie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry"})
 	return resp, nil
 }
 
-// ShowCashEntrie runs the show_cash_entrie operation (GET /cash_entries/{id}).
-func (c *Client) ShowCashEntrie(ctx context.Context, id int) (*ShowCashEntrieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCashEntrie"})
-	resp, err := c.gen.ShowCashEntrieWithResponse(ctx, id)
+// ShowCashEntry runs the show_cash_entry operation (GET /cash_entries/{id}).
+func (c *Client) ShowCashEntry(ctx context.Context, id int) (*ShowCashEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCashEntry"})
+	resp, err := c.gen.ShowCashEntryWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntrie"}, OperationResult{Operation: "ShowCashEntrie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntrie"}, OperationResult{Operation: "ShowCashEntrie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntrie"}, OperationResult{Operation: "ShowCashEntrie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry"})
 	return resp, nil
 }
 
@@ -2183,54 +2183,54 @@ func (c *Client) ListLaborMatricesRaw(ctx context.Context) (*ListLaborMatricesRe
 	return resp, nil
 }
 
-// CreateLaborMatrice runs the create_labor_matrice operation (POST /labor_matrices).
-func (c *Client) CreateLaborMatrice(ctx context.Context, body CreateLaborMatriceRequest) (*CreateLaborMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborMatrice"})
-	resp, err := c.gen.CreateLaborMatriceWithResponse(ctx, body)
+// CreateLaborMatrix runs the create_labor_matrix operation (POST /labor_matrices).
+func (c *Client) CreateLaborMatrix(ctx context.Context, body CreateLaborMatrixRequest) (*CreateLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborMatrix"})
+	resp, err := c.gen.CreateLaborMatrixWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrice"}, OperationResult{Operation: "CreateLaborMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrice"}, OperationResult{Operation: "CreateLaborMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrice"}, OperationResult{Operation: "CreateLaborMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix"})
 	return resp, nil
 }
 
-// DeleteLaborMatrice runs the delete_labor_matrice operation (DELETE /labor_matrices/{id}).
-func (c *Client) DeleteLaborMatrice(ctx context.Context, id int) (*DeleteLaborMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborMatrice"})
-	resp, err := c.gen.DeleteLaborMatriceWithResponse(ctx, id)
+// DeleteLaborMatrix runs the delete_labor_matrix operation (DELETE /labor_matrices/{id}).
+func (c *Client) DeleteLaborMatrix(ctx context.Context, id int) (*DeleteLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborMatrix"})
+	resp, err := c.gen.DeleteLaborMatrixWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrice"}, OperationResult{Operation: "DeleteLaborMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrice"}, OperationResult{Operation: "DeleteLaborMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrice"}, OperationResult{Operation: "DeleteLaborMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix"})
 	return resp, nil
 }
 
-// UpdateLaborMatrice runs the update_labor_matrice operation (PATCH /labor_matrices/{id}).
-func (c *Client) UpdateLaborMatrice(ctx context.Context, id int, body UpdateLaborMatriceRequest) (*UpdateLaborMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborMatrice"})
-	resp, err := c.gen.UpdateLaborMatriceWithResponse(ctx, id, body)
+// UpdateLaborMatrix runs the update_labor_matrix operation (PATCH /labor_matrices/{id}).
+func (c *Client) UpdateLaborMatrix(ctx context.Context, id int, body UpdateLaborMatrixRequest) (*UpdateLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborMatrix"})
+	resp, err := c.gen.UpdateLaborMatrixWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrice"}, OperationResult{Operation: "UpdateLaborMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrice"}, OperationResult{Operation: "UpdateLaborMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrice"}, OperationResult{Operation: "UpdateLaborMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix"})
 	return resp, nil
 }
 
@@ -3424,54 +3424,54 @@ func (c *Client) ListPartsMatricesRaw(ctx context.Context) (*ListPartsMatricesRe
 	return resp, nil
 }
 
-// CreatePartsMatrice runs the create_parts_matrice operation (POST /parts_matrices).
-func (c *Client) CreatePartsMatrice(ctx context.Context, body CreatePartsMatriceRequest) (*CreatePartsMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePartsMatrice"})
-	resp, err := c.gen.CreatePartsMatriceWithResponse(ctx, body)
+// CreatePartsMatrix runs the create_parts_matrix operation (POST /parts_matrices).
+func (c *Client) CreatePartsMatrix(ctx context.Context, body CreatePartsMatrixRequest) (*CreatePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePartsMatrix"})
+	resp, err := c.gen.CreatePartsMatrixWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrice"}, OperationResult{Operation: "CreatePartsMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrice"}, OperationResult{Operation: "CreatePartsMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrice"}, OperationResult{Operation: "CreatePartsMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix"})
 	return resp, nil
 }
 
-// DeletePartsMatrice runs the delete_parts_matrice operation (DELETE /parts_matrices/{id}).
-func (c *Client) DeletePartsMatrice(ctx context.Context, id int) (*DeletePartsMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePartsMatrice"})
-	resp, err := c.gen.DeletePartsMatriceWithResponse(ctx, id)
+// DeletePartsMatrix runs the delete_parts_matrix operation (DELETE /parts_matrices/{id}).
+func (c *Client) DeletePartsMatrix(ctx context.Context, id int) (*DeletePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePartsMatrix"})
+	resp, err := c.gen.DeletePartsMatrixWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrice"}, OperationResult{Operation: "DeletePartsMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrice"}, OperationResult{Operation: "DeletePartsMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrice"}, OperationResult{Operation: "DeletePartsMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix"})
 	return resp, nil
 }
 
-// UpdatePartsMatrice runs the update_parts_matrice operation (PATCH /parts_matrices/{id}).
-func (c *Client) UpdatePartsMatrice(ctx context.Context, id int, body UpdatePartsMatriceRequest) (*UpdatePartsMatriceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePartsMatrice"})
-	resp, err := c.gen.UpdatePartsMatriceWithResponse(ctx, id, body)
+// UpdatePartsMatrix runs the update_parts_matrix operation (PATCH /parts_matrices/{id}).
+func (c *Client) UpdatePartsMatrix(ctx context.Context, id int, body UpdatePartsMatrixRequest) (*UpdatePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePartsMatrix"})
+	resp, err := c.gen.UpdatePartsMatrixWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrice"}, OperationResult{Operation: "UpdatePartsMatrice", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrice"}, OperationResult{Operation: "UpdatePartsMatrice", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrice"}, OperationResult{Operation: "UpdatePartsMatrice"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix"})
 	return resp, nil
 }
 
@@ -4359,37 +4359,37 @@ func (c *Client) ListSubStatusesRaw(ctx context.Context) (*ListSubStatusesRespon
 	return resp, nil
 }
 
-// CreateSubStatuse runs the create_sub_statuse operation (POST /sub_statuses).
-func (c *Client) CreateSubStatuse(ctx context.Context, body CreateSubStatuseRequest) (*CreateSubStatuseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubStatuse"})
-	resp, err := c.gen.CreateSubStatuseWithResponse(ctx, body)
+// CreateSubStatus runs the create_sub_status operation (POST /sub_statuses).
+func (c *Client) CreateSubStatus(ctx context.Context, body CreateSubStatusRequest) (*CreateSubStatusResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubStatus"})
+	resp, err := c.gen.CreateSubStatusWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatuse"}, OperationResult{Operation: "CreateSubStatuse", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatuse"}, OperationResult{Operation: "CreateSubStatuse", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatuse"}, OperationResult{Operation: "CreateSubStatuse"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus"})
 	return resp, nil
 }
 
-// UpdateSubStatuse runs the update_sub_statuse operation (PATCH /sub_statuses/{id}).
-func (c *Client) UpdateSubStatuse(ctx context.Context, id int, body UpdateSubStatuseRequest) (*UpdateSubStatuseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubStatuse"})
-	resp, err := c.gen.UpdateSubStatuseWithResponse(ctx, id, body)
+// UpdateSubStatus runs the update_sub_status operation (PATCH /sub_statuses/{id}).
+func (c *Client) UpdateSubStatus(ctx context.Context, id int, body UpdateSubStatusRequest) (*UpdateSubStatusResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubStatus"})
+	resp, err := c.gen.UpdateSubStatusWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatuse"}, OperationResult{Operation: "UpdateSubStatuse", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatuse"}, OperationResult{Operation: "UpdateSubStatuse", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatuse"}, OperationResult{Operation: "UpdateSubStatuse"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus"})
 	return resp, nil
 }
 
@@ -6569,20 +6569,20 @@ func (c *Client) CreateWorkOrdersServicesCompletion(ctx context.Context, workOrd
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesCopie runs the create_work_orders_services_copie operation (POST /work_orders/{work_order_id}/services/{id}/copies).
-func (c *Client) CreateWorkOrdersServicesCopie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopieRequest) (*CreateWorkOrdersServicesCopieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopie"})
-	resp, err := c.gen.CreateWorkOrdersServicesCopieWithResponse(ctx, workOrderId, id, body)
+// CreateWorkOrdersServicesCopy runs the create_work_orders_services_copy operation (POST /work_orders/{work_order_id}/services/{id}/copies).
+func (c *Client) CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyRequest) (*CreateWorkOrdersServicesCopyResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"})
+	resp, err := c.gen.CreateWorkOrdersServicesCopyWithResponse(ctx, workOrderId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesCopie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesCopie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesCopie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy"})
 	return resp, nil
 }
 
@@ -6654,20 +6654,20 @@ func (c *Client) UpdateWorkOrdersServicesRevive(ctx context.Context, workOrderId
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesTimeEntrie runs the create_work_orders_services_time_entrie operation (POST /work_orders/{work_order_id}/services/{id}/time_entries).
-func (c *Client) CreateWorkOrdersServicesTimeEntrie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieRequest) (*CreateWorkOrdersServicesTimeEntrieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntrie"})
-	resp, err := c.gen.CreateWorkOrdersServicesTimeEntrieWithResponse(ctx, workOrderId, id, body)
+// CreateWorkOrdersServicesTimeEntry runs the create_work_orders_services_time_entry operation (POST /work_orders/{work_order_id}/services/{id}/time_entries).
+func (c *Client) CreateWorkOrdersServicesTimeEntry(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryRequest) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"})
+	resp, err := c.gen.CreateWorkOrdersServicesTimeEntryWithResponse(ctx, workOrderId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntrie"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntrie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntrie"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntrie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntrie"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntrie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry"})
 	return resp, nil
 }
 
@@ -6841,20 +6841,20 @@ func (c *Client) UpdateWorkOrdersServicesLineItem(ctx context.Context, workOrder
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesLineItemsCopie runs the create_work_orders_services_line_items_copie operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
-func (c *Client) CreateWorkOrdersServicesLineItemsCopie(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieRequest) (*CreateWorkOrdersServicesLineItemsCopieResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopie"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsCopieWithResponse(ctx, workOrderId, serviceId, id, body)
+// CreateWorkOrdersServicesLineItemsCopy runs the create_work_orders_services_line_items_copy operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
+func (c *Client) CreateWorkOrdersServicesLineItemsCopy(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyRequest) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsCopyWithResponse(ctx, workOrderId, serviceId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopie", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopie", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopie"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopie"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
 	return resp, nil
 }
 
@@ -6875,20 +6875,20 @@ func (c *Client) CreateWorkOrdersServicesLineItemsInventoryAddition(ctx context.
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesLineItemsPriceRefreshe runs the create_work_orders_services_line_items_price_refreshe operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
-func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefreshe(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheRequest) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse(ctx, workOrderId, serviceId, id, body)
+// CreateWorkOrdersServicesLineItemsPriceRefresh runs the create_work_orders_services_line_items_price_refresh operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
+func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresh(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshRequest) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse(ctx, workOrderId, serviceId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefreshe"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
 	return resp, nil
 }
 

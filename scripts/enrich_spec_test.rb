@@ -1,5 +1,6 @@
 require "minitest/autorun"
 require "yaml"
+require_relative "enrich_spec"
 
 class EnrichSpecTest < Minitest::Test
   def setup
@@ -261,6 +262,50 @@ class EnrichSpecTest < Minitest::Test
     props = customer["properties"]
     assert_equal 7, props["id"]["example"]
     assert_equal "Jane Doe", props["full_name"]["example"]
+  end
+
+  def test_singularize_handles_simple_plural_nouns
+    assert_equal "customer", EnrichSpec.singularize("customers")
+    assert_equal "vehicle", EnrichSpec.singularize("vehicles")
+  end
+
+  def test_singularize_handles_irregular_and_ambiguous_nouns
+    assert_equal "work_order", EnrichSpec.singularize("work_orders")
+    assert_equal "cash_entry", EnrichSpec.singularize("cash_entries")
+    assert_equal "time_entry", EnrichSpec.singularize("time_entries")
+    assert_equal "labor_matrix", EnrichSpec.singularize("labor_matrices")
+    assert_equal "parts_matrix", EnrichSpec.singularize("parts_matrices")
+    assert_equal "sub_status", EnrichSpec.singularize("sub_statuses")
+    assert_equal "status", EnrichSpec.singularize("statuses")
+    assert_equal "copy", EnrichSpec.singularize("copies")
+    assert_equal "service_category", EnrichSpec.singularize("service_categories")
+    assert_equal "price_refresh", EnrichSpec.singularize("price_refreshes")
+    assert_equal "capability", EnrichSpec.singularize("capabilities")
+    assert_equal "expense", EnrichSpec.singularize("expenses")
+    assert_equal "parts_purchase", EnrichSpec.singularize("parts_purchases")
+    assert_equal "check_out", EnrichSpec.singularize("check_outs")
+  end
+
+  def test_singularize_passes_through_non_plural_and_action_words
+    assert_equal "adjust", EnrichSpec.singularize("adjust")
+    assert_equal "close", EnrichSpec.singularize("close")
+    assert_equal "generate", EnrichSpec.singularize("generate")
+    assert_equal "bulk_mark_read", EnrichSpec.singularize("bulk_mark_read")
+  end
+
+  def test_singularize_never_emits_mangled_suffixes_for_spec_nouns
+    mangled = /\A[a-z0-9_]+(?:entrie|matrice|statuse|categorie|copie|refreshe|capabilitie|purchas)\z/
+    spec = YAML.load_file(File.expand_path("../spec/openapi.yaml", __dir__))
+    spec["paths"].each do |path, methods|
+      methods.each do |method, op|
+        next unless op.is_a?(Hash)
+        next unless op["operationId"]
+        nouns = path.split("/").reject { |s| s.empty? || s.start_with?("{") || s =~ /\A\d+\z/ }
+        next if nouns.empty?
+        final = nouns.last.tr("-", "_")
+        refute_match mangled, EnrichSpec.singularize(final), "mangled singularize for #{method.upcase} #{path}"
+      end
+    end
   end
 
   private

@@ -179,16 +179,16 @@ end
 def get_all_cash_entries(cash_drawer_session_id: nil)
   paginator_to_a(list_cash_entries(cash_drawer_session_id: cash_drawer_session_id), 1000)
 end
-# Runs create_cash_entrie (POST /cash_entries).
-def create_cash_entrie(cash_entry:)
+# Runs create_cash_entry (POST /cash_entries).
+def create_cash_entry(cash_entry:)
   post("/cash_entries", { cash_entry: cash_entry })
 end
-# Deletes delete_cash_entrie.
-def delete_cash_entrie(id)
+# Deletes delete_cash_entry.
+def delete_cash_entry(id)
   delete("/cash_entries/#{id}")
 end
-# Fetches show_cash_entrie.
-def show_cash_entrie(id)
+# Fetches show_cash_entry.
+def show_cash_entry(id)
   get("/cash_entries/#{id}")
 end
 # Lists list_conversations resources (paginated).
@@ -662,16 +662,16 @@ end
 def get_all_labor_matrices()
   paginator_to_a(list_labor_matrices(), 1000)
 end
-# Runs create_labor_matrice (POST /labor_matrices).
-def create_labor_matrice(labor_matrix:)
+# Runs create_labor_matrix (POST /labor_matrices).
+def create_labor_matrix(labor_matrix:)
   post("/labor_matrices", { labor_matrix: labor_matrix })
 end
-# Deletes delete_labor_matrice.
-def delete_labor_matrice(id)
+# Deletes delete_labor_matrix.
+def delete_labor_matrix(id)
   delete("/labor_matrices/#{id}")
 end
-# Runs update_labor_matrice (PATCH /labor_matrices/{id}).
-def update_labor_matrice(id, labor_matrix:)
+# Runs update_labor_matrix (PATCH /labor_matrices/{id}).
+def update_labor_matrix(id, labor_matrix:)
   patch("/labor_matrices/#{id}", { labor_matrix: labor_matrix })
 end
 # Lists list_labor_rates resources (paginated).
@@ -1035,16 +1035,16 @@ end
 def get_all_parts_matrices()
   paginator_to_a(list_parts_matrices(), 1000)
 end
-# Runs create_parts_matrice (POST /parts_matrices).
-def create_parts_matrice(parts_matrix:)
+# Runs create_parts_matrix (POST /parts_matrices).
+def create_parts_matrix(parts_matrix:)
   post("/parts_matrices", { parts_matrix: parts_matrix })
 end
-# Deletes delete_parts_matrice.
-def delete_parts_matrice(id)
+# Deletes delete_parts_matrix.
+def delete_parts_matrix(id)
   delete("/parts_matrices/#{id}")
 end
-# Runs update_parts_matrice (PATCH /parts_matrices/{id}).
-def update_parts_matrice(id, parts_matrix:)
+# Runs update_parts_matrix (PATCH /parts_matrices/{id}).
+def update_parts_matrix(id, parts_matrix:)
   patch("/parts_matrices/#{id}", { parts_matrix: parts_matrix })
 end
 # Lists list_payments resources (paginated).
@@ -1327,12 +1327,12 @@ end
 def get_all_sub_statuses()
   paginator_to_a(list_sub_statuses(), 1000)
 end
-# Runs create_sub_statuse (POST /sub_statuses).
-def create_sub_statuse(sub_status_type:)
+# Runs create_sub_status (POST /sub_statuses).
+def create_sub_status(sub_status_type:)
   post("/sub_statuses", { sub_status_type: sub_status_type })
 end
-# Runs update_sub_statuse (PATCH /sub_statuses/{id}).
-def update_sub_statuse(id, sub_status_type:)
+# Runs update_sub_status (PATCH /sub_statuses/{id}).
+def update_sub_status(id, sub_status_type:)
   patch("/sub_statuses/#{id}", { sub_status_type: sub_status_type })
 end
 # Lists list_sublet_packages resources (paginated).
@@ -1992,8 +1992,8 @@ end
 def create_work_orders_services_completion(work_order_id, id)
   post("/work_orders/#{work_order_id}/services/#{id}/completion")
 end
-# Runs create_work_orders_services_copie (POST /work_orders/{work_order_id}/services/{id}/copies).
-def create_work_orders_services_copie(work_order_id, id)
+# Runs create_work_orders_services_copy (POST /work_orders/{work_order_id}/services/{id}/copies).
+def create_work_orders_services_copy(work_order_id, id)
   post("/work_orders/#{work_order_id}/services/#{id}/copies")
 end
 # Runs create_work_orders_services_package (POST /work_orders/{work_order_id}/services/{id}/packages).
@@ -2012,8 +2012,8 @@ end
 def update_work_orders_services_revive(work_order_id, id)
   patch("/work_orders/#{work_order_id}/services/#{id}/revive")
 end
-# Runs create_work_orders_services_time_entrie (POST /work_orders/{work_order_id}/services/{id}/time_entries).
-def create_work_orders_services_time_entrie(work_order_id, id)
+# Runs create_work_orders_services_time_entry (POST /work_orders/{work_order_id}/services/{id}/time_entries).
+def create_work_orders_services_time_entry(work_order_id, id)
   post("/work_orders/#{work_order_id}/services/#{id}/time_entries")
 end
 # Runs update_work_orders_services_toggle_labor_completion (PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_completion).
@@ -2070,16 +2070,16 @@ end
 def update_work_orders_services_line_item(work_order_id, service_id, id, work_order_line_item:)
   patch("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}", { work_order_line_item: work_order_line_item })
 end
-# Runs create_work_orders_services_line_items_copie (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
-def create_work_orders_services_line_items_copie(work_order_id, service_id, id)
+# Runs create_work_orders_services_line_items_copy (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
+def create_work_orders_services_line_items_copy(work_order_id, service_id, id)
   post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/copies")
 end
 # Runs create_work_orders_services_line_items_inventory_addition (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions).
 def create_work_orders_services_line_items_inventory_addition(work_order_id, service_id, id)
   post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/inventory_additions")
 end
-# Runs create_work_orders_services_line_items_price_refreshe (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
-def create_work_orders_services_line_items_price_refreshe(work_order_id, service_id, id)
+# Runs create_work_orders_services_line_items_price_refresh (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
+def create_work_orders_services_line_items_price_refresh(work_order_id, service_id, id)
   post("/work_orders/#{work_order_id}/services/#{service_id}/line_items/#{id}/price_refreshes")
 end
 # Runs pull_work_order_service_line_item (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull).

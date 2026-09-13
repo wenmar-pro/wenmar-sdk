@@ -31,8 +31,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Brake Labor" } }
   },
   {
-    "name": "create_labor_matrice_success",
-    "operation": "create_labor_matrice",
+    "name": "create_labor_matrix_success",
+    "operation": "create_labor_matrix",
     "method": "POST",
     "path": "/labor_matrices",
     "requestBody": { "labor_matrix": { "name": "Suspension Labor" } },
@@ -42,8 +42,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
   },
   {
-    "name": "update_labor_matrice_success",
-    "operation": "update_labor_matrice",
+    "name": "update_labor_matrix_success",
+    "operation": "update_labor_matrix",
     "method": "PATCH",
     "path": "/labor_matrices/2",
     "pathParams": { "id": 2 },
@@ -54,8 +54,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Suspension Labor (Updated)" } }
   },
   {
-    "name": "delete_labor_matrice_success",
-    "operation": "delete_labor_matrice",
+    "name": "delete_labor_matrix_success",
+    "operation": "delete_labor_matrix",
     "method": "DELETE",
     "path": "/labor_matrices/2",
     "pathParams": { "id": 2 },
@@ -73,8 +73,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Waiting on Parts" } }
   },
   {
-    "name": "create_sub_statuse_success",
-    "operation": "create_sub_statuse",
+    "name": "create_sub_status_success",
+    "operation": "create_sub_status",
     "method": "POST",
     "path": "/sub_statuses",
     "requestBody": { "sub_status_type": { "name": "Awaiting Approval", "status_type": "in_progress" } },
@@ -84,8 +84,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
   },
   {
-    "name": "update_sub_statuse_success",
-    "operation": "update_sub_statuse",
+    "name": "update_sub_status_success",
+    "operation": "update_sub_status",
     "method": "PATCH",
     "path": "/sub_statuses/2",
     "pathParams": { "id": 2 },
@@ -264,8 +264,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Brake Pads" } }
   },
   {
-    "name": "create_parts_matrice_success",
-    "operation": "create_parts_matrice",
+    "name": "create_parts_matrix_success",
+    "operation": "create_parts_matrix",
     "method": "POST",
     "path": "/parts_matrices",
     "requestBody": { "parts_matrix": { "name": "Oil Filters" } },
@@ -275,8 +275,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
   },
   {
-    "name": "update_parts_matrice_success",
-    "operation": "update_parts_matrice",
+    "name": "update_parts_matrix_success",
+    "operation": "update_parts_matrix",
     "method": "PATCH",
     "path": "/parts_matrices/2",
     "pathParams": { "id": 2 },
@@ -287,8 +287,8 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "name", "equals": "Oil Filters (Updated)" } }
   },
   {
-    "name": "delete_parts_matrice_success",
-    "operation": "delete_parts_matrice",
+    "name": "delete_parts_matrix_success",
+    "operation": "delete_parts_matrix",
     "method": "DELETE",
     "path": "/parts_matrices/2",
     "pathParams": { "id": 2 },

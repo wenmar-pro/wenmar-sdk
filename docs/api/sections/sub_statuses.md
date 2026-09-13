@@ -17,13 +17,13 @@ List all sub statuses, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/sub_statuses.json
 ```
 
-## Create sub statuse
+## Create sub status
 
 ```
 POST /sub_statuses
 ```
 
-Create a sub statuse.
+Create a sub status.
 
 **Response 201** — [SubStatusType](#substatustype-schema)
 
@@ -34,13 +34,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/sub_statuses.json
 ```
 
-## Update sub statuse
+## Update sub status
 
 ```
 PATCH /sub_statuses/{id}
 ```
 
-Update a sub statuse by ID.
+Update a sub status by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -73,7 +73,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### CreateSubStatuseRequest schema {#createsubstatuserequest-schema}
+### CreateSubStatusRequest schema {#createsubstatusrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -100,7 +100,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### UpdateSubStatuseRequest schema {#updatesubstatuserequest-schema}
+### UpdateSubStatusRequest schema {#updatesubstatusrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
