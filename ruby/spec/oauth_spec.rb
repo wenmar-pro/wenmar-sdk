@@ -80,4 +80,13 @@ class OAuthTest < Wenmar::TestCase
     end
     assert_includes error.message, "access_token"
   end
+
+  def test_refresh_tolerates_string_expires_in
+    stub_request(:post, "https://api.example.com/oauth/token")
+      .to_return(status: 200, body: { access_token: "new-access", expires_in: "7200" }.to_json)
+
+    token = Wenmar::OAuth.refresh(base_url: "https://api.example.com", refresh_token: "rt")
+    assert token.expires_at > Time.now
+    assert token.expires_at < Time.now + 7201
+  end
 end

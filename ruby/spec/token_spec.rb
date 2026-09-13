@@ -81,4 +81,10 @@ class TokenTest < Wenmar::TestCase
   def test_from_h_nil_raises
     assert_raises(Wenmar::TokenError) { Wenmar::Token.from_h(nil) }
   end
+
+  def test_from_h_invalid_expires_at_raises_token_error
+    assert_raises(Wenmar::TokenError) do
+      Wenmar::Token.from_h("access_token" => "abc", "expires_at" => "not-a-time")
+    end
+  end
 end

@@ -24,6 +24,10 @@ test: ## Run Go, Ruby, and script unit tests
 	cd ruby && bundle exec ruby -Ilib spec/error_spec.rb
 	cd ruby && bundle exec ruby -Ilib spec/config_spec.rb
 	cd ruby && bundle exec ruby -Ilib spec/resources_spec.rb
+	cd ruby && bundle exec ruby -Ilib spec/token_spec.rb
+	cd ruby && bundle exec ruby -Ilib spec/oauth_spec.rb
+	cd ruby && bundle exec ruby -Ilib spec/credentials_spec.rb
+	cd ruby && bundle exec ruby -Ilib spec/auth_manager_spec.rb
 	ruby scripts/enrich_spec_test.rb
 	ruby scripts/generate_docs_test.rb
 

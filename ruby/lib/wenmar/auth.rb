@@ -55,7 +55,6 @@ module Wenmar
     def initialize(store:, provider: nil, oauth: nil)
       @store = store
       @provider = provider
-      @oauth = oauth
       @refresh_fn = oauth ? build_oauth_refresh(oauth) : nil
     end
 
@@ -92,7 +91,7 @@ module Wenmar
     def build_oauth_refresh(oauth)
       oauth = { base_url: oauth } if oauth.is_a?(String)
       base_url = oauth[:base_url]
-      client_id = oauth[:client_id]
+      client_id = oauth[:client_id] || OAuth::DEFAULT_CLIENT_ID
       return nil if base_url.nil? || base_url.empty?
 
       ->(refresh_token) { OAuth.refresh(base_url: base_url, refresh_token: refresh_token, client_id: client_id) }

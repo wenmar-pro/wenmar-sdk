@@ -35,7 +35,7 @@ module Wenmar
       raise TokenError, "token hash missing access_token" if access_token.nil? || access_token.empty?
 
       expires_at = hash["expires_at"]
-      expires_at = Time.parse(expires_at) if expires_at.is_a?(String)
+      expires_at = parse_time(expires_at) if expires_at.is_a?(String)
       new(
         access_token: access_token,
         refresh_token: hash["refresh_token"],
@@ -43,5 +43,12 @@ module Wenmar
         token_type: hash.fetch("token_type", "Bearer")
       )
     end
+
+    def self.parse_time(value)
+      Time.parse(value)
+    rescue ArgumentError
+      raise TokenError, "invalid expires_at: #{value.inspect}"
+    end
+    private_class_method :parse_time
   end
 end

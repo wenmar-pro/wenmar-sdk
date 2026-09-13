@@ -43,7 +43,7 @@ module Wenmar
       Token.new(
         access_token: data["access_token"],
         refresh_token: data["refresh_token"],
-        expires_at: data["expires_in"] ? Time.now + data["expires_in"] : nil,
+        expires_at: data["expires_in"] ? Time.now + data["expires_in"].to_i : nil,
         token_type: data["token_type"] || "Bearer"
       )
     rescue JSON::ParserError => e
