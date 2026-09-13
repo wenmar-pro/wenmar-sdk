@@ -231,6 +231,81 @@ module Wenmar
       assert_requested stub
     end
 
+    def test_post_not_retried_on_transport_error
+      stub_request(:post, "#{@base_url}/customers").to_raise(Faraday::ConnectionFailed.new("boom"))
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      assert_raises(Faraday::ConnectionFailed) { client.create_customer(customer: { first_name: "Test" }) }
+      assert_requested stub_request(:post, "#{@base_url}/customers"), times: 1
+    end
+
+    def test_for_location_clients_do_not_share_cached_bodies
+      stub_request(:get, "#{@base_url}/customers")
+        .with(headers: { "X-Wenmar-Location" => "1" })
+        .to_return(status: 200, body: [{ id: 1 }].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"loc1\"" })
+      stub_request(:get, "#{@base_url}/customers")
+        .with(headers: { "X-Wenmar-Location" => "2" })
+        .to_return(status: 200, body: [{ id: 2 }].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"loc2\"" })
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      one = client.for_location("1")
+      two = client.for_location("2")
+
+      assert_equal 1, one.list_customers.first["id"]
+      assert_equal 2, two.list_customers.first["id"]
+    end
+
+    def test_cache_disabled_sends_no_conditional_headers
+      first = stub_request(:get, "#{@base_url}/customers")
+              .with { |req| req.headers["If-None-Match"].nil? }
+              .to_return(status: 200, body: [].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"abc\"" })
+
+      client = Client.new({ cache_enabled: false }, token: "my-token", base_url: @base_url)
+      client.list_customers
+      client.list_customers
+
+      assert_requested first, times: 2
+      assert_requested stub_request(:get, "#{@base_url}/customers")
+        .with { |req| req.headers["If-None-Match"].nil? }, times: 2
+    end
+
+    def test_304_preserves_cached_link_header
+      link = '<https://api.example.com/customers?page=2>; rel="next"'
+      body = [{ id: 1 }].to_json
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: body, headers: { "Content-Type" => "application/json", "ETag" => "\"abc\"", "Link" => link })
+      stub_request(:get, "#{@base_url}/customers")
+        .with(headers: { "If-None-Match" => "\"abc\"" })
+        .to_return(status: 304, headers: { "Content-Type" => "application/json" })
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      first = client.list_customers
+      assert_equal 1, first.first["id"]
+      assert first.respond_to?(:paginator), "expected paginator preserved on cached 304 body"
+
+      second = client.list_customers
+      assert_equal 1, second.first["id"]
+      assert second.respond_to?(:paginator), "expected paginator preserved on cached 304 body"
+    end
+
+    def test_last_modified_only_response_is_cached
+      lm = "Wed, 21 Oct 2023 07:28:00 GMT"
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: [{ id: 1 }].to_json, headers: { "Content-Type" => "application/json", "Last-Modified" => lm })
+      stub_request(:get, "#{@base_url}/customers")
+        .with(headers: { "If-Modified-Since" => lm })
+        .to_return(status: 304, headers: { "Content-Type" => "application/json" })
+
+      client = Client.new(token: "my-token", base_url: @base_url)
+      first = client.list_customers
+      assert_equal 1, first.first["id"]
+
+      second = client.list_customers
+      assert_equal 1, second.first["id"]
+      assert_requested stub_request(:get, "#{@base_url}/customers")
+        .with(headers: { "If-Modified-Since" => lm })
+    end
+
     private
 
     def stub_api(method, path, body, status: 200)

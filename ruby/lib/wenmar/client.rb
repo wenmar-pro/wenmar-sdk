@@ -28,8 +28,9 @@ module Wenmar
       raise ArgumentError, "base_url must use https (http only allowed for localhost)" unless https_or_localhost?(@base_url)
 
       @read_connection = build_connection(retry_statuses: [429, 500, 502, 503, 504])
-      @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete])
+      @write_connection = build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: [Faraday::RetriableResponse])
       @cache = {}
+      @cache_mutex = Mutex.new
     end
 
     def https_or_localhost?(url)
@@ -49,14 +50,18 @@ module Wenmar
     def for_location(location_id)
       scoped = dup
       scoped.instance_variable_set(:@location_id, location_id)
+      scoped.instance_variable_set(:@cache, {})
+      scoped.instance_variable_set(:@cache_mutex, Mutex.new)
       scoped.instance_variable_set(:@read_connection, build_connection(retry_statuses: [429, 500, 502, 503, 504], location_id: location_id))
-      scoped.instance_variable_set(:@write_connection, build_connection(retry_statuses: [429], methods: %i[post patch delete], location_id: location_id))
+      scoped.instance_variable_set(:@write_connection, build_connection(retry_statuses: [429], methods: %i[post patch delete], exceptions: [Faraday::RetriableResponse], location_id: location_id))
       scoped
     end
 
     def get(path, params = {})
-      cache_key = path_with_query(path, params)
-      cached = @cache[cache_key]
+      cache_key = cache_key(path, params)
+      cached = if @config.cache_enabled
+                 @cache_mutex.synchronize { @cache[cache_key] }
+               end
 
       response = @read_connection.get(path, params) do |req|
         if cached
@@ -68,17 +73,20 @@ module Wenmar
       if response.status == 304 && cached
         response = Faraday::Response.new(
           status: 200,
-          response_headers: { "Content-Type" => "application/json" },
+          response_headers: cached[:headers],
           body: cached[:body]
         )
       end
 
-      if response.status == 200 && response.headers["ETag"]
-        @cache[cache_key] = {
-          etag: response.headers["ETag"],
-          last_modified: response.headers["Last-Modified"],
-          body: response.body
-        }
+      if @config.cache_enabled && response.status == 200 && (response.headers["ETag"] || response.headers["Last-Modified"])
+        @cache_mutex.synchronize do
+          @cache[cache_key] = {
+            etag: response.headers["ETag"],
+            last_modified: response.headers["Last-Modified"],
+            body: response.body,
+            headers: response.headers
+          }
+        end
       end
 
       handle_response(response)
@@ -141,7 +149,7 @@ module Wenmar
 
     private
 
-    def build_connection(retry_statuses:, methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS, location_id: @location_id)
+    def build_connection(retry_statuses:, methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS, exceptions: [Faraday::Error], location_id: @location_id)
       Faraday.new(url: @base_url) do |conn|
         conn.headers["Accept"] = "application/json"
         conn.headers["Content-Type"] = "application/json"
@@ -151,7 +159,7 @@ module Wenmar
         conn.request :retry, max: @config.max_retries, interval: 0.1, backoff_factor: 2,
                     retry_statuses: retry_statuses,
                     methods: methods,
-                    exceptions: [Faraday::Error, Faraday::ServerError]
+                    exceptions: exceptions
         conn.adapter Faraday.default_adapter
       end
     end
@@ -160,6 +168,10 @@ module Wenmar
       token_provider.token
     rescue TokenError => e
       raise Error.new(code: "auth_failed", message: e.message)
+    end
+
+    def cache_key(path, params)
+      "#{location_id}|#{path_with_query(path, params)}"
     end
 
     def path_with_query(path, params)
