@@ -11,9 +11,12 @@
 
 require "yaml"
 require "json"
+require_relative "generator_utils"
 
 ENRICHED_PATH = ARGV[0] || "spec/openapi.enriched.yaml"
 OUT_PATH = ARGV[1] || "spec/operations.json"
+
+include GeneratorUtils
 
 # Stable manifest version. This is a schema/format version, not a date, so
 # the generated file is byte-stable across runs and the drift check in
@@ -21,10 +24,6 @@ OUT_PATH = ARGV[1] || "spec/operations.json"
 MANIFEST_VERSION = "2026-08-30"
 
 SPEC = YAML.load_file(ENRICHED_PATH, aliases: true)
-
-def normalize_tag(tag)
-  tag.downcase.gsub(/[^a-z0-9]+/, "_").gsub(/_+/, "_").sub(/_+$/, "")
-end
 
 def type_of(param)
   t = param.dig("schema", "type") || param["type"]

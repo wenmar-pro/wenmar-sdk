@@ -8,21 +8,13 @@
 #   manifest defaults to spec/operations.json
 
 require "json"
+require_relative "generator_utils"
 
 MANIFEST_PATH = ARGV[0] || "spec/operations.json"
 MANIFEST = JSON.parse(File.read(MANIFEST_PATH))
 OPS = MANIFEST["operations"]
 
-# Map an operation id (snake_case) to a Go exported method/type name.
-def pascal(identifier)
-  identifier.split("_").reject(&:empty?).map { |p| p[0].upcase + p[1..] }.join
-end
-
-# Convert a snake_case path parameter name to a camelCase Go identifier.
-def go_param_name(name)
-  parts = name.split("_")
-  (parts.shift || "id") + parts.map { |p| p[0].upcase + p[1..] }.join
-end
+include GeneratorUtils
 
 def path_param_types(op)
   types = {}
@@ -48,13 +40,6 @@ end
 
 def param_struct(op)
   "#{pascal(op["id"])}Params"
-end
-
-# Whether an operation gets a typed ListResult wrapper (and thus its raw
-# method is renamed to ListXxxRaw). Only paginated list_* operations with a
-# known item schema qualify.
-def typed_list?(op)
-  op["paginated"] && op["responseSchema"] && op["id"].start_with?("list_")
 end
 
 # Build a single operation method. Each wrapper returns the generated raw

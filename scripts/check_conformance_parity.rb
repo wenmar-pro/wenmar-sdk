@@ -16,25 +16,14 @@
 # Usage: ruby scripts/check_conformance_parity.rb
 
 require "json"
+require_relative "generator_utils"
 
 ROOT = File.expand_path("..", __dir__)
 MANIFEST_PATH = File.join(ROOT, "spec", "operations.json")
 GO_DISPATCH = File.join(ROOT, "conformance", "go", "dispatch.gen.go")
 RUBY_DISPATCH = File.join(ROOT, "conformance", "ruby", "dispatch.gen.rb")
 
-# Test operations that map to a manifest operation under a different name.
-# These are intentional aliases the conformance runner uses; keep in sync with
-# generate_conformance_dispatch.rb.
-TEST_ALIASES = {
-  "list_customer_vehicles" => "list_customers_vehicles",
-  "list_customer_work_orders" => "list_customers_work_orders",
-  "list_vehicle_work_orders" => "list_vehicles_work_orders",
-  "list_customers_with_params" => "list_customers",
-  "list_customers_with_params_paginated" => "list_customers",
-  "list_customers_paginated" => "list_customers",
-  "list_work_orders_paginated" => "list_work_orders",
-  "check_duplicate" => "check_vehicle_duplicate"
-}.freeze
+TEST_ALIASES = GeneratorUtils::TEST_ALIASES
 
 def fail!(msg)
   warn "ERROR: #{msg}"

@@ -8,10 +8,13 @@
 #   manifest defaults to spec/operations.json
 
 require "json"
+require_relative "generator_utils"
 
 MANIFEST_PATH = ARGV[0] || "spec/operations.json"
 MANIFEST = JSON.parse(File.read(MANIFEST_PATH))
 OPS = MANIFEST["operations"]
+
+include GeneratorUtils
 
 def body_kwargs(op)
   shape = op["requestShape"]
@@ -28,12 +31,6 @@ end
 
 def path_params(op)
   op["pathParams"]
-end
-
-# Convert a query param name (e.g. "filters[has_open_work_order]") into a valid
-# Ruby keyword identifier (e.g. "filters_has_open_work_order").
-def ruby_param_name(name)
-  name.gsub(/[\[\]]/, "_").gsub(/_+/, "_").sub(/_+\z/, "")
 end
 
 def build_method(op)

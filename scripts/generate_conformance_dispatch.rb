@@ -12,47 +12,16 @@
 #   manifest defaults to spec/operations.json
 
 require "json"
+require_relative "generator_utils"
 
 MANIFEST_PATH = ARGV[0] || "spec/operations.json"
 MANIFEST = JSON.parse(File.read(MANIFEST_PATH))
 OPS = MANIFEST["operations"]
 
-# Test operations that aren't plain manifest IDs but reference a manifest
-# operation. Value is the manifest operation id they exercise.
-TEST_ALIASES = {
-  "list_customer_vehicles" => "list_customers_vehicles",
-  "list_customer_work_orders" => "list_customers_work_orders",
-  "list_vehicle_work_orders" => "list_vehicles_work_orders",
-  "list_customers_with_params" => "list_customers",
-  "list_customers_with_params_paginated" => "list_customers",
-  "list_customers_paginated" => "list_customers",
-  "list_work_orders_paginated" => "list_work_orders",
-  "check_duplicate" => "check_vehicle_duplicate"
-}.freeze
-
-def pascal(identifier)
-  identifier.split("_").reject(&:empty?).map { |p| p[0].upcase + p[1..] }.join
-end
-
-# Convert a query param name (e.g. "filters[has_open_work_order]") into a valid
-# Ruby keyword identifier (e.g. "filters_has_open_work_order").
-def ruby_param_name(name)
-  name.gsub(/[\[\]]/, "_").gsub(/_+/, "_").sub(/_+\z/, "")
-end
-
-def go_param_name(name)
-  parts = name.split("_")
-  (parts.shift || "id") + parts.map { |p| p[0].upcase + p[1..] }.join
-end
+include GeneratorUtils
 
 def op_by_id(id)
   OPS.find { |o| o["id"] == id }
-end
-
-# Whether an operation gets a typed ListResult wrapper (and thus its raw
-# method is renamed to ListXxxRaw). Mirrors generate_go_wrapper.rb.
-def typed_list?(op)
-  op["paginated"] && op["responseSchema"] && op["id"].start_with?("list_")
 end
 
 # Go: expression to pull a path param from args.
