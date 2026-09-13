@@ -162,6 +162,43 @@ func TestRetry_RetryAfterHTTPDate(t *testing.T) {
 	}
 }
 
+func TestRetry_DrainedBodyNotRetried(t *testing.T) {
+	// A request with a non-nil Body but nil GetBody cannot be safely replayed:
+	// a retry would send a drained/empty body. The retry transport must refuse
+	// to retry and call the inner transport exactly once.
+	var calls int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&calls, 1)
+		w.WriteHeader(http.StatusTooManyRequests)
+		w.Write([]byte(`{"error":{"code":"rate_limited","message":"slow"}}`))
+	}))
+	defer ts.Close()
+
+	inner := &callCountingTransport{next: http.DefaultTransport}
+	rt := newRetryTransportWithRetries(3, inner)
+	client := &http.Client{Transport: rt}
+
+	req, err := http.NewRequest(http.MethodPost, ts.URL, strings.NewReader("payload"))
+	if err != nil {
+		t.Fatalf("NewRequest failed: %v", err)
+	}
+	// Clear GetBody so the body is not replayable (a real caller that sets a
+	// plain strings.Reader body gets a nil GetBody in Go's http.NewRequest).
+	req.GetBody = nil
+
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusTooManyRequests {
+		t.Errorf("expected 429 returned without retry, got %d", resp.StatusCode)
+	}
+	if calls != 1 {
+		t.Errorf("expected exactly 1 call (drained body must not retry), got %d", calls)
+	}
+}
+
 func TestRetry_NoRetryOn4xx(t *testing.T) {
 	var calls int32
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -47,15 +47,29 @@ type Client struct {
 	hooks    Hooks
 }
 
-// NewClient creates a Wenmar API client from the given Config and
+// NewClient creates a Wenmar API client from the given Config and optional
 // TokenProvider. The Config is deep-copied so callers cannot mutate the
 // client's configuration after construction.
+//
+// The token provider is resolved in this order:
+//  1. the tp argument, if non-nil (it takes precedence over cfg fields)
+//  2. cfg.TokenProvider, if non-nil
+//  3. cfg.Token, via NewStaticTokenProvider, if non-empty
+//
+// If all are nil/empty, an error is returned.
 func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, error) {
+	cfgCopy := cfg
 	if tp == nil {
-		return nil, fmt.Errorf("token provider is required")
+		tp = cfgCopy.TokenProvider
+	}
+	if tp == nil {
+		if cfgCopy.Token != "" {
+			tp = NewStaticTokenProvider(cfgCopy.Token)
+		} else {
+			return nil, fmt.Errorf("token provider is required")
+		}
 	}
 
-	cfgCopy := cfg
 	if cfgCopy.BaseURL == "" {
 		cfgCopy.BaseURL = DefaultConfig().BaseURL
 	}

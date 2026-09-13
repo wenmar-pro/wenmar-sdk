@@ -69,6 +69,14 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			return resp, err
 		}
 
+		// If the request carries a body that cannot be replayed (GetBody is
+		// nil), a retry would send a drained/empty body. Refuse to retry and
+		// return the current response instead; the caller observes the
+		// retryable status/error.
+		if req.Body != nil && req.GetBody == nil {
+			return resp, err
+		}
+
 		if attempt < t.maxRetries {
 			// attempt is the 0-based retry count; the OnRetry hook expects a
 			// 1-based attempt number (attempt 1 = first retry). We pass a
@@ -80,6 +88,9 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			delay := t.backoff(attempt, resp)
 			select {
 			case <-req.Context().Done():
+				if resp != nil {
+					resp.Body.Close()
+				}
 				return resp, req.Context().Err()
 			case <-time.After(delay):
 			}
