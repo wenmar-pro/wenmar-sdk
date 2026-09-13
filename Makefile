@@ -17,12 +17,15 @@ scalar: ## Copy enriched spec into docs/scalar for local preview
 	cp spec/openapi.enriched.yaml docs/scalar/openapi.enriched.yaml
 	@echo "Open docs/scalar/index.html in a browser"
 
-test: ## Run Go and Ruby unit tests
+test: ## Run Go, Ruby, and script unit tests
 	cd go && go test ./...
 	cd ruby && bundle exec ruby -Ilib spec/client_spec.rb
 	cd ruby && bundle exec ruby -Ilib spec/pagination_spec.rb
 	cd ruby && bundle exec ruby -Ilib spec/error_spec.rb
 	cd ruby && bundle exec ruby -Ilib spec/config_spec.rb
+	cd ruby && bundle exec ruby -Ilib spec/resources_spec.rb
+	ruby scripts/enrich_spec_test.rb
+	ruby scripts/generate_docs_test.rb
 
 conformance: ## Run both conformance suites
 	cd conformance/go && go test ./...
