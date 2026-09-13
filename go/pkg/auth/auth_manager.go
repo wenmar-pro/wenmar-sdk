@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -31,6 +32,21 @@ func NewAuthManager(store CredentialStore, provider TokenProvider) *AuthManager 
 			return nil, ErrOAuthNotImplemented
 		},
 	}
+}
+
+// NewAuthManagerWithOAuth creates an AuthManager whose default refresh
+// function exchanges the stored refresh token at {baseURL}/oauth/token using
+// the given client ID (Doorkeeper-compatible). When baseURL or clientID is
+// empty, the OAuth-not-implemented stub is retained.
+func NewAuthManagerWithOAuth(store CredentialStore, provider TokenProvider, baseURL, clientID string) *AuthManager {
+	m := NewAuthManager(store, provider)
+	if baseURL != "" && clientID != "" {
+		endpoint := strings.TrimRight(baseURL, "/") + "/oauth/token"
+		m.SetRefreshFn(func(ctx context.Context, refreshToken string) (*Token, error) {
+			return RefreshToken(ctx, endpoint, clientID, refreshToken)
+		})
+	}
+	return m
 }
 
 // SetRefreshFn overrides the refresh function. Used when OAuth is implemented.
