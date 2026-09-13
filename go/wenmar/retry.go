@@ -10,20 +10,20 @@ import (
 
 // Retry policy:
 //
-//   429 Too Many Requests → retry all methods (idempotent throttle; honor Retry-After)
-//   500/502/503/504      → retry GET only (exponential backoff with jitter; max 3)
-//   507 Insufficient Storage → do NOT retry (account/plan limit; not transient)
-//   404 Not Found         → do NOT retry (deleted, inaccessible, or forbidden)
-//   304 Not Modified     → not an error; returned cached body by cachingTransport
+//	429 Too Many Requests → retry all methods (idempotent throttle; honor Retry-After)
+//	500/502/503/504      → retry GET only (exponential backoff with jitter; max 3)
+//	507 Insufficient Storage → do NOT retry (account/plan limit; not transient)
+//	404 Not Found         → do NOT retry (deleted, inaccessible, or forbidden)
+//	304 Not Modified     → not an error; returned cached body by cachingTransport
 //
 // Mutations (POST/PATCH/DELETE) are NOT retried on 5xx because the server
 // may have processed the request before the response was lost, and retrying
 // would duplicate the side effect. 429 is safe to retry because the
 // throttle response means the request was NOT processed.
 type retryTransport struct {
-	transport   http.RoundTripper
-	maxRetries  int
-	baseDelay   time.Duration
+	transport  http.RoundTripper
+	maxRetries int
+	baseDelay  time.Duration
 }
 
 func newRetryTransportWithRetries(maxRetries int, base http.RoundTripper) *retryTransport {
@@ -35,11 +35,6 @@ func newRetryTransportWithRetries(maxRetries int, base http.RoundTripper) *retry
 		maxRetries: maxRetries,
 		baseDelay:  500 * time.Millisecond,
 	}
-}
-
-// Keep the old constructor for backwards compatibility within the package.
-func newRetryTransport() *retryTransport {
-	return newRetryTransportWithRetries(3, http.DefaultTransport)
 }
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {

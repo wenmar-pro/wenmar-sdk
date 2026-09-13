@@ -143,12 +143,19 @@ func TestGetAllCustomers_CapsAtMax(t *testing.T) {
 	serverURL = ts.URL
 
 	c := newTestClient(t, ts.URL, "test-token")
-	items, err := collectAll[Customer](ctx, c, []byte(`[]`), fmt.Sprintf(`<%s/customers?page=1>; rel="next"`, serverURL), 2)
+	headers := make(http.Header)
+	headers.Set("Link", fmt.Sprintf(`<%s/customers?page=next>; rel="next"`, serverURL))
+	headers.Set("Content-Type", "application/json")
+	first := newListResultFromResponse[Customer]([]byte(`[]`), headers, c)
+	items, truncated, err := getAll[Customer](ctx, first, &GetAllOptions{MaxItems: 2})
 	if err != nil {
-		t.Fatalf("collectAll failed: %v", err)
+		t.Fatalf("getAll failed: %v", err)
 	}
 	if len(items) != 2 {
 		t.Errorf("expected 2 items capped, got %d", len(items))
+	}
+	if !truncated {
+		t.Error("expected truncated=true when MaxItems cap is hit")
 	}
 }
 

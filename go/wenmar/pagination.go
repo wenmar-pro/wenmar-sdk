@@ -103,20 +103,6 @@ func parseListResponse[T any](body []byte) ([]T, error) {
 	return items, nil
 }
 
-// extractPaginationMeta reads X-Total-Count, X-Per-Page, and the Link header.
-func extractPaginationMeta(resp *http.Response) (PaginationMeta, string) {
-	meta := PaginationMeta{}
-	if v := resp.Header.Get("X-Total-Count"); v != "" {
-		meta.TotalCount, _ = strconv.Atoi(v)
-	}
-	if v := resp.Header.Get("X-Per-Page"); v != "" {
-		meta.PerPage, _ = strconv.Atoi(v)
-	}
-	nextURL := parseLinkHeader(resp.Header.Get("Link"), "next")
-	meta.HasMore = nextURL != ""
-	return meta, nextURL
-}
-
 // newListResultFromResponse builds a typed ListResult from a raw response
 // body and headers. It is the bridge between the oapi-codegen response
 // envelope and the typed pagination API.

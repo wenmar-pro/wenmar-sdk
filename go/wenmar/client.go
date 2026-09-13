@@ -16,10 +16,6 @@ type TokenProvider interface {
 	Token(ctx context.Context) (string, error)
 }
 
-type staticToken string
-
-func (s staticToken) Token(context.Context) (string, error) { return string(s), nil }
-
 // StaticTokenProvider returns a fixed token. Suitable for simple scripts and
 // tests.
 type StaticTokenProvider struct {
@@ -203,35 +199,4 @@ func (c *Client) FetchPage(ctx context.Context, url string) ([]byte, http.Header
 // It lets callers follow Link-header pages manually from a raw list response.
 func (c *Client) PaginatorFromResponse(resp *http.Response) *Paginator {
 	return newPaginatorFromResponse(resp, c)
-}
-
-// collectAll follows the Link header from a first page body, appending items
-func collectAll[T any](ctx context.Context, c *Client, body []byte, link string, max int) ([]T, error) {
-	items, err := parseListResponse[T](body)
-	if err != nil {
-		return nil, err
-	}
-	if max > 0 && len(items) >= max {
-		return items[:max], nil
-	}
-	nextURL := parseLinkHeader(link, "next")
-	for nextURL != "" {
-		nextBody, nextHeaders, err := c.fetchURL(ctx, nextURL)
-		if err != nil {
-			return nil, err
-		}
-		nextItems, err := parseListResponse[T](nextBody)
-		if err != nil {
-			return nil, err
-		}
-		if max > 0 && len(items)+len(nextItems) > max {
-			nextItems = nextItems[:max-len(items)]
-		}
-		items = append(items, nextItems...)
-		if max > 0 && len(items) >= max {
-			return items, nil
-		}
-		nextURL = parseLinkHeader(nextHeaders.Get("Link"), "next")
-	}
-	return items, nil
 }
