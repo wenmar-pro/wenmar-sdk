@@ -3,73 +3,6 @@
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
-## List me API tokens
-
-```
-GET /me/api_tokens
-```
-
-List all me api tokens, paginated via the Link header.
-
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `api_tokens` | array of object | Yes |
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/me/api_tokens.json
-```
-
-## Create me API token
-
-```
-POST /me/api_tokens
-```
-
-Create a me api token.
-
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `api_token` | object | Yes |
-
-`api_token` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `created_at` | string | Yes |
-| `expires_at` | string \| null | Yes |
-| `token` | string | Yes |
-| `token_preview` | string | Yes |
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/me/api_tokens.json
-```
-
-## Delete me API token
-
-```
-DELETE /me/api_tokens/{id}
-```
-
-Delete a me api token by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 204** — no content.
-
-**Response 404** — [Error](#error-schema) error envelope
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/me/api_tokens/<id>.json
-```
-
 ## List me notifications
 
 ```
@@ -288,31 +221,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### CreateMeApiTokenRequest schema {#createmeapitokenrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `api_token` | object | Yes |
-
-`api_token` — object:
-| Field | Type | Required |
-|---|---|---|
-| `name` | string | Yes |
-
----
-
-### Error schema {#error-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `code` | string | Yes |
-| `message` | string | Yes |
-| `field_errors` | object | Yes |
-
-`field_errors` — object:
-
----
-
 ### UpdateMeNotificationsRequest schema {#updatemenotificationsrequest-schema}
 
 | Field | Type | Required |
@@ -355,4 +263,16 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `full_name` | string | Yes |
 | `email` | string | Yes |
+
+---
+
+### Error schema {#error-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `code` | string | Yes |
+| `message` | string | Yes |
+| `field_errors` | object | Yes |
+
+`field_errors` — object:
 

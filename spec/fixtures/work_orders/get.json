@@ -20,7 +20,8 @@
   "customer": {
     "id": 1,
     "full_name": "Jane Doe",
-    "url": "https://app.wenmarpro.com/customers/1.json"
+    "url": "https://app.wenmarpro.com/customers/1.json",
+    "display_name": "Jane Doe"
   },
   "vehicle": {
     "id": 1,
@@ -28,7 +29,9 @@
     "model": "Camry",
     "year": 2020,
     "vin": "ABC123",
-    "url": "https://app.wenmarpro.com/vehicles/1.json"
+    "url": "https://app.wenmarpro.com/vehicles/1.json",
+    "display_name": "2020 Toyota Camry",
+    "license_plate": "JANE1"
   },
   "totals": {
     "subtotal_cents": 5000,
@@ -40,7 +43,11 @@
   },
   "url": "https://app.wenmarpro.com/work_orders/1.json",
   "app_url": "https://app.wenmarpro.com/work_orders/1",
-  "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+  "location": {
+    "id": 1,
+    "name": "Main Shop",
+    "url": "https://app.wenmarpro.com/locations/1.json"
+  },
   "services_url": "https://app.wenmarpro.com/work_orders/1/estimate.json",
   "payments_url": "https://app.wenmarpro.com/work_orders/1/payments.json",
   "wip_url": "https://app.wenmarpro.com/work_orders/1/wip.json",
@@ -94,5 +101,7 @@
   "return_method": "customer_pickup",
   "return_method_notes": null,
   "vehicle_keys_location": "front_desk",
-  "vehicle_location": "bay_2"
+  "vehicle_location": "bay_2",
+  "services_visible_to_customer": true,
+  "inspections_visible_to_customer": true
 }

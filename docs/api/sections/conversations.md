@@ -11,37 +11,7 @@ GET /conversations
 
 List all conversations, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `status` | string | Yes |
-| `reply_state` | string | Yes |
-| `channel` | string | Yes |
-| `from_number` | any | Yes |
-| `from_email` | any | Yes |
-| `last_message_preview` | any | Yes |
-| `messages_count` | integer | Yes |
-| `has_failed_message` | boolean | Yes |
-| `unread_count` | integer | Yes |
-| `last_message_at` | string | Yes |
-| `customer_last_read_at` | string \| null | Yes |
-| `driver_last_read_at` | string \| null | Yes |
-| `oldest_unanswered_inbound_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer` | object | Yes |
-| `messages_url` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — array of [Conversation](#conversation-schema)
 
 **Response 302** — no content.
 
@@ -57,37 +27,7 @@ POST /conversations
 
 Create a conversation.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `status` | string | Yes |
-| `reply_state` | string | Yes |
-| `channel` | string | Yes |
-| `from_number` | any | Yes |
-| `from_email` | any | Yes |
-| `last_message_preview` | any | Yes |
-| `messages_count` | integer | Yes |
-| `has_failed_message` | boolean | Yes |
-| `unread_count` | integer | Yes |
-| `last_message_at` | string \| null | Yes |
-| `customer_last_read_at` | string \| null | Yes |
-| `driver_last_read_at` | string \| null | Yes |
-| `oldest_unanswered_inbound_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer` | object | Yes |
-| `messages_url` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 201** — [Conversation](#conversation-schema)
 
 **Response 422** — [Error](#error-schema) error envelope
 
@@ -321,37 +261,7 @@ Show a conversation by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `status` | string | Yes |
-| `reply_state` | string | Yes |
-| `channel` | string | Yes |
-| `from_number` | any | Yes |
-| `from_email` | any | Yes |
-| `last_message_preview` | any | Yes |
-| `messages_count` | integer | Yes |
-| `has_failed_message` | boolean | Yes |
-| `unread_count` | integer | Yes |
-| `last_message_at` | string | Yes |
-| `customer_last_read_at` | string \| null | Yes |
-| `driver_last_read_at` | string \| null | Yes |
-| `oldest_unanswered_inbound_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer` | object | Yes |
-| `messages_url` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [Conversation](#conversation-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/conversations/<id>.json
@@ -369,7 +279,16 @@ Update a conversation by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [Conversation](#conversation-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/conversations/<id>.json
+```
+
+---
+
+### Conversation schema {#conversation-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -383,7 +302,7 @@ Update a conversation by ID.
 | `messages_count` | integer | Yes |
 | `has_failed_message` | boolean | Yes |
 | `unread_count` | integer | Yes |
-| `last_message_at` | string | Yes |
+| `last_message_at` | string \| null | Yes |
 | `customer_last_read_at` | string \| null | Yes |
 | `driver_last_read_at` | string \| null | Yes |
 | `oldest_unanswered_inbound_at` | string \| null | Yes |
@@ -400,11 +319,6 @@ Update a conversation by ID.
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/conversations/<id>.json
-```
 
 ---
 

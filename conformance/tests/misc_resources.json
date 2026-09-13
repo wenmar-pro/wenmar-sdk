@@ -10,15 +10,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.make", "equals": "Honda" } }
   },
   {
-    "name": "list_vehicles_autocomplete_success",
-    "operation": "list_vehicles_autocomplete",
-    "method": "GET",
-    "path": "/vehicles/autocomplete",
-    "query": {},
-    "mockResponses": [ { "status": 200, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
     "name": "list_vehicles_customer_vehicles_success",
     "operation": "list_vehicles_customer_vehicles",
     "method": "GET",
@@ -63,14 +54,6 @@
     "path": "/customers/10/work_orders",
     "pathParams": { "customer_id": 10 },
     "mockResponses": [ { "status": 200, "body": [] } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
-    "name": "list_customers_merge_success",
-    "operation": "list_customers_merge",
-    "method": "GET",
-    "path": "/customers/1043910089/merge",
-    "mockResponses": [ { "status": 200, "body": "" } ],
     "expect": { "requestCount": 1, "noError": true }
   },
   {
@@ -432,17 +415,6 @@
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.company_name", "equals": "Acme Corp" } }
   },
   {
-    "name": "list_search_success",
-    "operation": "list_search",
-    "method": "GET",
-    "path": "/search",
-    "query": {},
-    "mockResponses": [
-      { "status": 200, "body": { "announcement": "", "groups": [] } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "announcement", "equals": "" } }
-  },
-  {
     "name": "list_statements_payments_success",
     "operation": "list_statements_payments",
     "method": "GET",
@@ -461,38 +433,5 @@
       { "status": 200, "body": { "status": "voided" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "voided" } }
-  },
-  {
-    "name": "create_store_credits_void_success",
-    "operation": "update_ai_suggestion",
-    "method": "PATCH",
-    "path": "/ai_suggestions/1",
-    "pathParams": { "id": 1 },
-    "requestBody": { "status": "accepted" },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "status": "accepted" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "accepted" } }
-  },
-  {
-    "name": "update_cash_drawer_banner_success",
-    "operation": "update_cash_drawer_banner",
-    "method": "PATCH",
-    "path": "/cash_drawer_banner",
-    "requestBody": { "dismissed": true },
-    "mockResponses": [ { "status": 200, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
-    "name": "create_catalog_cleanups_application_success",
-    "operation": "create_catalog_cleanups_application",
-    "method": "POST",
-    "path": "/catalog_cleanups/1/applications",
-    "pathParams": { "catalog_cleanup_id": 1 },
-    "requestBody": { "category": "brake_pads" },
-    "mockResponses": [
-      { "status": 200, "body": { "status": "applied", "applied_count": 3 } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "applied_count", "equals": 3 } }
   }
 ]

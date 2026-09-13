@@ -3,90 +3,6 @@
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
-## List inventory levels
-
-```
-GET /inventory_levels
-```
-
-List all inventory levels, paginated via the Link header.
-
-| Param | Type | Required |
-|---|---|---|
-| `brand` | string | No |
-| `page` | integer | No |
-| `per_page` | integer | No |
-| `q` | string | No |
-| `stock_status` | string | No |
-| `stocked` | boolean | No |
-
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string \| null | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | string \| null | Yes |
-| `bin_location` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels.json
-```
-
-## Create inventory level
-
-```
-POST /inventory_levels
-```
-
-Create a inventory level.
-
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string \| null | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | integer \| null | Yes |
-| `bin_location` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Response 422** — [Error](#error-schema) error envelope
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels.json
-```
-
 ## List inventory levels barcode lookup
 
 ```
@@ -128,24 +44,6 @@ List all inventory levels barcode lookup, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/barcode_lookup.json
 ```
 
-## Delete inventory level
-
-```
-DELETE /inventory_levels/{id}
-```
-
-Delete a inventory level by ID.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 204** — no content.
-
-```bash
-curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/<id>.json
-```
-
 ## Show inventory level
 
 ```
@@ -163,27 +61,27 @@ Show a inventory level by ID.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string \| null | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | string | Yes |
+| `part_id` | integer | Yes |
+| `location_id` | integer | Yes |
+| `on_hand` | number | Yes |
+| `available_quantity` | number | Yes |
+| `quantity_on_order` | integer | Yes |
 | `bin_location` | string | Yes |
+| `reorder_point` | integer \| null | Yes |
+| `max_stock` | any | Yes |
+| `stock_status` | string | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `part` | object | Yes |
+| `recent_movements` | array of object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
-**Response 304** — no content.
-
-**Response 404** — [Error](#error-schema) error envelope
+`part` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `display_name` | string | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/<id>.json
@@ -206,36 +104,40 @@ Update a inventory level by ID.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string \| null | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | integer \| null | Yes |
+| `part_id` | integer | Yes |
+| `location_id` | integer | Yes |
+| `on_hand` | number | Yes |
+| `available_quantity` | number | Yes |
+| `quantity_on_order` | integer | Yes |
 | `bin_location` | string | Yes |
+| `reorder_point` | string | Yes |
+| `max_stock` | string | Yes |
+| `stock_status` | string | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `part` | object | Yes |
+| `recent_movements` | array of any | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
+
+`part` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `display_name` | string | Yes |
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/<id>.json
 ```
 
-## Update inventory levels stock
+## Create inventory levels adjust
 
 ```
-PATCH /inventory_levels/{id}/stock
+POST /inventory_levels/{id}/adjust
 ```
 
-Update a inventory levels stock by ID.
+Create a inventory levels adjust.
 
 | Param | Type | Required |
 |---|---|---|
@@ -246,48 +148,34 @@ Update a inventory levels stock by ID.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string \| null | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | integer \| null | Yes |
+| `part_id` | integer | Yes |
+| `location_id` | integer | Yes |
+| `on_hand` | number | Yes |
+| `available_quantity` | number | Yes |
+| `quantity_on_order` | integer | Yes |
 | `bin_location` | string | Yes |
+| `reorder_point` | integer \| null | Yes |
+| `max_stock` | any | Yes |
+| `stock_status` | string | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `part` | object | Yes |
+| `recent_movements` | array of any | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/<id>.json
-```
-
----
-
-### CreateInventoryLevelRequest schema {#createinventorylevelrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `part` | object | Yes |
 
 `part` — object:
 | Field | Type | Required |
 |---|---|---|
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `stocked` | boolean | Yes |
-| `initial_quantity` | integer | Yes |
-| `cost` | string | Yes |
-| `sell` | string | Yes |
+| `id` | integer | Yes |
+| `display_name` | string | Yes |
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/<id>.json
+```
 
 ---
 
@@ -307,24 +195,26 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 | Field | Type | Required |
 |---|---|---|
-| `part` | object | Yes |
-
-`part` — object:
-| Field | Type | Required |
-|---|---|---|
-| `description` | string | Yes |
-
----
-
-### UpdateInventoryLevelsStockRequest schema {#updateinventorylevelsstockrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
 | `inventory_level` | object | Yes |
 
 `inventory_level` — object:
 | Field | Type | Required |
 |---|---|---|
-| `on_hand` | integer | Yes |
+| `bin_location` | string | Yes |
+| `reorder_point` | integer | Yes |
+| `max_stock` | integer | Yes |
+
+---
+
+### CreateInventoryLevelsAdjustRequest schema {#createinventorylevelsadjustrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `adjustment` | object | Yes |
+
+`adjustment` — object:
+| Field | Type | Required |
+|---|---|---|
+| `quantity_delta` | integer | Yes |
 | `reason` | string | Yes |
 

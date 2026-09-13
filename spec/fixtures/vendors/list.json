@@ -21,6 +21,8 @@
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/vendors/1.json",
-    "app_url": "https://app.wenmarpro.com/vendors/1"
+    "app_url": "https://app.wenmarpro.com/vendors/1",
+    "status": "active",
+    "trashed_at": null
   }
 ]

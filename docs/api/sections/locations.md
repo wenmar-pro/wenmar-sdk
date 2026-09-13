@@ -15,25 +15,7 @@ Show a location by ID.
 |---|---|---|
 | `id` | string | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `slug` | string | Yes |
-| `location_type` | string | Yes |
-| `currency` | string | Yes |
-| `time_zone` | string | Yes |
-| `country` | string | Yes |
-| `address` | string | Yes |
-| `city` | string | Yes |
-| `state` | string | Yes |
-| `postal_code` | string | Yes |
-| `contact_email` | any | Yes |
-| `dock` | array of object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — [Location](#location-schema)
 
 **Response 401** — [Error](#error-schema) error envelope
 
@@ -55,7 +37,15 @@ Show a location by ID.
     }
   ],
   "url": "https://app.wenmarpro.com/locations/1.json",
-  "app_url": "https://app.wenmarpro.com/locations/1"
+  "app_url": "https://app.wenmarpro.com/locations/1",
+  "slug": "main-shop",
+  "time_zone": "America/Toronto",
+  "country": "CA",
+  "address": "123 Main St, Toronto, ON M5V 1A1",
+  "city": "Toronto",
+  "state": "ON",
+  "postal_code": "M5V 1A1",
+  "contact_email": "shop@acme.example"
 }
 ```
 
@@ -75,25 +65,7 @@ Update a location by ID.
 |---|---|---|
 | `id` | string | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `slug` | string | Yes |
-| `location_type` | string | Yes |
-| `currency` | string | Yes |
-| `time_zone` | string | Yes |
-| `country` | string | Yes |
-| `address` | string | Yes |
-| `city` | string | Yes |
-| `state` | string | Yes |
-| `postal_code` | string | Yes |
-| `contact_email` | any | Yes |
-| `dock` | array of object | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — [Location](#location-schema)
 
 **Response 404** — [Error](#error-schema) error envelope
 
@@ -755,6 +727,28 @@ Update a locations schedule config by ID.
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/locations/{location_id}/schedule_config.json
 ```
+
+---
+
+### Location schema {#location-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `dock` | array of object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ---
 

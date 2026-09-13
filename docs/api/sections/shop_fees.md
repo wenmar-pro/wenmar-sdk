@@ -11,22 +11,7 @@ GET /shop_fees
 
 List all shop fees, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `fee_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | string \| null | Yes |
-| `active` | boolean | Yes |
-| `applies_to` | string \| null | Yes |
-| `is_taxable` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [ShopFee](#shopfee-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/shop_fees.json
@@ -40,22 +25,7 @@ POST /shop_fees
 
 Create a shop fee.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `fee_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | number \| null | Yes |
-| `active` | boolean | Yes |
-| `applies_to` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [ShopFee](#shopfee-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -94,22 +64,7 @@ Update a shop fee by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `fee_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | number \| null | Yes |
-| `active` | boolean | Yes |
-| `applies_to` | string | Yes |
-| `is_taxable` | boolean | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — [ShopFee](#shopfee-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -149,6 +104,25 @@ Create a shop fees duplicate.
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/shop_fees/<id>.json
 ```
+
+---
+
+### ShopFee schema {#shopfee-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `fee_type` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `percentage` | number \| null | Yes |
+| `active` | boolean | Yes |
+| `applies_to` | string | Yes |
+| `is_taxable` | boolean | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ---
 

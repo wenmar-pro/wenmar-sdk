@@ -316,43 +316,5 @@
       { "status": 200, "body": { "id": 1, "name": "State Sales Tax", "rate": 0.08 } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "rate", "equals": 0.08 } }
-  },
-  {
-    "name": "list_recent_searches_success",
-    "operation": "list_recent_searches",
-    "method": "GET",
-    "path": "/recent_searches",
-    "mockResponses": [
-      { "status": 200, "body": { "recents": [ { "id": 1, "query": "brake pads", "resource_type": "parts" } ] } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "recents.0.query", "equals": "brake pads" } }
-  },
-  {
-    "name": "create_recent_searche_success",
-    "operation": "create_recent_searche",
-    "method": "POST",
-    "path": "/recent_searches",
-    "requestBody": { "recent_search": { "query": "oil change", "resource_type": "services" } },
-    "mockResponses": [
-      { "status": 201, "body": { "id": 2, "query": "oil change", "resource_type": "services" } }
-    ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 2 } }
-  },
-  {
-    "name": "delete_recent_searche_success",
-    "operation": "delete_recent_searche",
-    "method": "DELETE",
-    "path": "/recent_searches/2",
-    "pathParams": { "id": 2 },
-    "mockResponses": [ { "status": 200, "body": { "id": 2 } } ],
-    "expect": { "requestCount": 1, "noError": true }
-  },
-  {
-    "name": "delete_recent_searches_clear_success",
-    "operation": "delete_recent_searches_clear",
-    "method": "DELETE",
-    "path": "/recent_searches/clear",
-    "mockResponses": [ { "status": 204, "body": "" } ],
-    "expect": { "requestCount": 1, "noError": true }
   }
 ]

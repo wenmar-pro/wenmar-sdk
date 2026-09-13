@@ -3,6 +3,40 @@
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
+## Create statements bulk send
+
+```
+POST /statements/bulk_send
+```
+
+Create a statements bulk send.
+
+**Response 200** — [Statement](#statement-schema)
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/statements/bulk_send.json
+```
+
+## Create statements generate
+
+```
+POST /statements/generate
+```
+
+Create a statements generate.
+
+**Response 200** — [Statement](#statement-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/statements/generate.json
+```
+
 ## Show statement
 
 ```
@@ -124,6 +158,17 @@ List all statements payments, paginated via the Link header.
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/statements/{statement_id}/payments.json
 ```
+
+---
+
+### CreateStatementsBulkSendRequest schema {#createstatementsbulksendrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `statement_ids` | array of integer | Yes |
+| `cc_emails` | string | Yes |
+| `include_invoice_pdfs` | string | Yes |
+| `body` | string | Yes |
 
 ---
 

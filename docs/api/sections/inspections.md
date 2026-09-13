@@ -287,6 +287,185 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
      -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
 ```
 
+## Create inspections group
+
+```
+POST /inspections/{inspection_id}/groups
+```
+
+Create a inspections group.
+
+| Param | Type | Required |
+|---|---|---|
+| `inspection_id` | integer | Yes |
+
+**Response 201** — [Inspection](#inspection-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/{inspection_id}/groups.json
+```
+
+## Delete inspections group
+
+```
+DELETE /inspections/{inspection_id}/groups/{id}
+```
+
+Delete a inspections group by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Update inspections group
+
+```
+PATCH /inspections/{inspection_id}/groups/{id}
+```
+
+Update a inspections group by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 200** — [Inspection](#inspection-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Create inspections item
+
+```
+POST /inspections/{inspection_id}/items
+```
+
+Create a inspections item.
+
+| Param | Type | Required |
+|---|---|---|
+| `inspection_id` | integer | Yes |
+
+**Response 201** — [Inspection](#inspection-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/{inspection_id}/items.json
+```
+
+## Delete inspections item
+
+```
+DELETE /inspections/{inspection_id}/items/{id}
+```
+
+Delete a inspections item by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Update inspections item
+
+```
+PATCH /inspections/{inspection_id}/items/{id}
+```
+
+Update a inspections item by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 200** — [Inspection](#inspection-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Create inspections preset
+
+```
+POST /inspections/{inspection_id}/presets
+```
+
+Create a inspections preset.
+
+| Param | Type | Required |
+|---|---|---|
+| `inspection_id` | integer | Yes |
+| `item_id` | integer | No |
+
+**Response 201** — [Inspection](#inspection-schema)
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/{inspection_id}/presets.json
+```
+
+## Delete inspections preset
+
+```
+DELETE /inspections/{inspection_id}/presets/{id}
+```
+
+Delete a inspections preset by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 204** — no content.
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inspections/<id>.json
+```
+
+## Update inspections preset
+
+```
+PATCH /inspections/{inspection_id}/presets/{id}
+```
+
+Update a inspections preset by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `inspection_id` | integer | Yes |
+
+**Response 200** — [Inspection](#inspection-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inspections/<id>.json
+```
+
 ---
 
 ### Inspection schema {#inspection-schema}
@@ -310,9 +489,9 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `location` — object:
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+| `id` | integer | No |
+| `name` | string | No |
+| `url` | string | No |
 
 ---
 
@@ -351,4 +530,86 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | Field | Type | Required |
 |---|---|---|
 | `name` | string | Yes |
+
+---
+
+### CreateInspectionsGroupRequest schema {#createinspectionsgrouprequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_group` | object | Yes |
+
+`inspection_group` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
+### UpdateInspectionsGroupRequest schema {#updateinspectionsgrouprequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_group` | object | Yes |
+
+`inspection_group` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
+### CreateInspectionsItemRequest schema {#createinspectionsitemrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_item` | object | Yes |
+| `group_id` | integer | Yes |
+
+`inspection_item` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+| `requires_measurement` | boolean | Yes |
+| `measurement_unit` | string | Yes |
+
+---
+
+### UpdateInspectionsItemRequest schema {#updateinspectionsitemrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_item` | object | Yes |
+
+`inspection_item` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
+### CreateInspectionsPresetRequest schema {#createinspectionspresetrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_preset` | object | Yes |
+
+`inspection_preset` — object:
+| Field | Type | Required |
+|---|---|---|
+| `title` | string | Yes |
+| `color_rating` | string | Yes |
+
+---
+
+### UpdateInspectionsPresetRequest schema {#updateinspectionspresetrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `inspection_preset` | object | Yes |
+
+`inspection_preset` — object:
+| Field | Type | Required |
+|---|---|---|
+| `title` | string | Yes |
 

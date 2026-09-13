@@ -11,19 +11,7 @@ GET /labor_templates
 
 List all labor templates, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `description` | string | Yes |
-| `default_hours` | string | Yes |
-| `usage_count` | integer | Yes |
-| `last_used_at` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [LaborTemplate](#labortemplate-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_templates.json
@@ -59,7 +47,16 @@ Update a labor template by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [LaborTemplate](#labortemplate-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/labor_templates/<id>.json
+```
+
+---
+
+### LaborTemplate schema {#labortemplate-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -72,11 +69,6 @@ Update a labor template by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/labor_templates/<id>.json
-```
 
 ---
 

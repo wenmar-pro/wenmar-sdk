@@ -17,6 +17,7 @@ List all vehicles, paginated via the Link header.
 | `page` | integer | No |
 | `per_page` | integer | No |
 | `status` | string | No |
+| `type` | string | No |
 
 **Response 200** — array of [Vehicle](#vehicle-schema)
 
@@ -71,7 +72,14 @@ List all vehicles, paginated via the Link header.
     "last_serviced_at": null,
     "lifetime_revenue_cents": 0,
     "open_work_orders_count": 0,
-    "appointments_count": 0
+    "appointments_count": 0,
+    "status": "active",
+    "customer_id": 1,
+    "odometer_reading": 50000,
+    "odometer_unit": "km",
+    "trashed_at": null,
+    "home_location_id": 1,
+    "display_name": "2020 Toyota Camry"
   },
   {
     "type": "Vehicle",
@@ -118,7 +126,14 @@ List all vehicles, paginated via the Link header.
     "last_serviced_at": null,
     "lifetime_revenue_cents": 0,
     "open_work_orders_count": 0,
-    "appointments_count": 0
+    "appointments_count": 0,
+    "status": "active",
+    "customer_id": 1,
+    "odometer_reading": 50000,
+    "odometer_unit": "km",
+    "trashed_at": null,
+    "home_location_id": 1,
+    "display_name": "2020 Toyota Camry"
   }
 ]
 ```
@@ -189,31 +204,20 @@ Create a vehicle.
   "last_serviced_at": null,
   "lifetime_revenue_cents": 50000,
   "open_work_orders_count": 0,
-  "appointments_count": 0
+  "appointments_count": 0,
+  "status": "active",
+  "customer_id": 1,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry"
 }
 ```
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/vehicles.json
-```
-
-## List vehicles autocomplete
-
-```
-GET /vehicles/autocomplete
-```
-
-List all vehicles autocomplete, paginated via the Link header.
-
-| Param | Type | Required |
-|---|---|---|
-| `type` | string | No |
-
-**Response 403** — [Error](#error-schema) error envelope
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/autocomplete.json
 ```
 
 ## Check vehicle duplicate
@@ -258,80 +262,6 @@ List all vehicles customer vehicles, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/customer_vehicles.json
 ```
 
-## Lookup vehicle
-
-```
-GET /vehicles/lookup
-```
-
-Lookup
-
-| Param | Type | Required |
-|---|---|---|
-| `query` | string | No |
-
-**Response 200** — array of [Vehicle](#vehicle-schema)
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Example**
-
-```json
-[
-  {
-    "type": "Vehicle",
-    "id": 1,
-    "make": "Toyota",
-    "model": "Camry",
-    "year": 2020,
-    "submodel": null,
-    "body_style": null,
-    "engine": null,
-    "vin": "ABC123",
-    "license_plate": "JANE1",
-    "license_plate_state": "ON",
-    "license_plate_country": "CA",
-    "drivetrain": null,
-    "transmission": null,
-    "color": null,
-    "vehicle_type": "customer",
-    "unit_number": null,
-    "fleet_identifier": null,
-    "production_date": null,
-    "annual_safety_expires_at": null,
-    "notes": null,
-    "odometer": {
-      "reading": 50000,
-      "unit": "km"
-    },
-    "work_orders_count": 1,
-    "work_orders_url": "https://app.wenmarpro.com/vehicles/1/work_orders.json",
-    "customer": {
-      "id": 1,
-      "full_name": "Jane Doe",
-      "url": "https://app.wenmarpro.com/customers/1.json"
-    },
-    "created_at": "2026-08-27T12:00:00.000-04:00",
-    "updated_at": "2026-08-27T12:00:00.000-04:00",
-    "url": "https://app.wenmarpro.com/vehicles/1.json",
-    "app_url": "https://app.wenmarpro.com/vehicles/1",
-    "location": {
-      "id": 1,
-      "name": "Main Shop",
-      "url": "https://app.wenmarpro.com/locations/1.json"
-    },
-    "last_serviced_at": null,
-    "lifetime_revenue_cents": 50000,
-    "open_work_orders_count": 0,
-    "appointments_count": 0
-  }
-]
-```
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/vehicles/lookup.json
-```
-
 ## Prefill vehicle
 
 ```
@@ -350,8 +280,6 @@ Prefill
 **Response 200** — [Vehicle](#vehicle-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
-
-**Response 404** — [Error](#error-schema) error envelope
 
 **Example**
 
@@ -401,7 +329,14 @@ Prefill
   "last_serviced_at": null,
   "lifetime_revenue_cents": 0,
   "open_work_orders_count": 0,
-  "appointments_count": 0
+  "appointments_count": 0,
+  "status": "active",
+  "customer_id": 1,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry"
 }
 ```
 
@@ -501,7 +436,14 @@ Show a vehicle by ID.
   "last_serviced_at": null,
   "lifetime_revenue_cents": 50000,
   "open_work_orders_count": 0,
-  "appointments_count": 0
+  "appointments_count": 0,
+  "status": "active",
+  "customer_id": 1,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry"
 }
 ```
 
@@ -522,6 +464,8 @@ Update a vehicle by ID.
 | `id` | integer | Yes |
 
 **Response 200** — [Vehicle](#vehicle-schema)
+
+**Response 422** — [Error](#error-schema) error envelope
 
 **Example**
 
@@ -571,7 +515,14 @@ Update a vehicle by ID.
   "last_serviced_at": null,
   "lifetime_revenue_cents": 50000,
   "open_work_orders_count": 0,
-  "appointments_count": 0
+  "appointments_count": 0,
+  "status": "active",
+  "customer_id": 1,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry"
 }
 ```
 
@@ -604,34 +555,39 @@ Archive
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | any | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
 | `last_serviced_at` | string \| null | Yes |
 | `lifetime_revenue_cents` | integer | Yes |
 | `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
 
 `odometer` — object:
 | Field | Type | Required |
@@ -682,34 +638,39 @@ Create
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | any | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
 | `last_serviced_at` | string \| null | Yes |
 | `lifetime_revenue_cents` | integer | Yes |
 | `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
 
 `odometer` — object:
 | Field | Type | Required |
@@ -781,7 +742,14 @@ Create
   "last_serviced_at": null,
   "lifetime_revenue_cents": 50000,
   "open_work_orders_count": 0,
-  "appointments_count": 0
+  "appointments_count": 0,
+  "status": "active",
+  "customer_id": 1,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry"
 }
 ```
 
@@ -814,34 +782,39 @@ Restore
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | any | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
 | `last_serviced_at` | string \| null | Yes |
 | `lifetime_revenue_cents` | integer | Yes |
 | `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
 
 `odometer` — object:
 | Field | Type | Required |
@@ -892,34 +865,39 @@ Create
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | any | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
 | `last_serviced_at` | string \| null | Yes |
 | `lifetime_revenue_cents` | integer | Yes |
 | `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
 
 `odometer` — object:
 | Field | Type | Required |
@@ -955,7 +933,57 @@ Create
   "from_customer_id": 1,
   "to_customer_id": 2,
   "status": "completed",
-  "mode": "vehicle_only"
+  "mode": "vehicle_only",
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2020,
+  "submodel": null,
+  "body_style": "sedan",
+  "engine": "2.5L",
+  "transmission": "automatic",
+  "drivetrain": "fwd",
+  "color": "Blue",
+  "vin": "ABC123",
+  "license_plate": "JANE1",
+  "license_plate_state": "ON",
+  "license_plate_country": "CA",
+  "unit_number": null,
+  "fleet_identifier": null,
+  "vehicle_type": "customer",
+  "notes": null,
+  "customer_id": 1,
+  "production_date": null,
+  "annual_safety_expires_at": null,
+  "odometer_reading": 50000,
+  "odometer_unit": "km",
+  "trashed_at": null,
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "home_location_id": 1,
+  "display_name": "2020 Toyota Camry",
+  "work_orders_count": 1,
+  "appointments_count": 0,
+  "odometer": {
+    "reading": 50000,
+    "unit": "km"
+  },
+  "work_orders_url": "https://app.wenmarpro.com/work_orders.json?vehicle_id=1",
+  "customer": {
+    "id": 1,
+    "full_name": "Jane Doe",
+    "display_name": "Jane Doe",
+    "url": "https://app.wenmarpro.com/customers/1.json"
+  },
+  "url": "https://app.wenmarpro.com/vehicles/1.json",
+  "app_url": "https://app.wenmarpro.com/vehicles/1",
+  "location": {
+    "id": 1,
+    "name": "Main Shop",
+    "url": "https://app.wenmarpro.com/locations/1.json"
+  },
+  "last_serviced_at": null,
+  "lifetime_revenue_cents": 50000,
+  "open_work_orders_count": 0
 }
 ```
 
@@ -988,34 +1016,39 @@ Trash
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
 | `license_plate_state` | string | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | any | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
 | `last_serviced_at` | string \| null | Yes |
 | `lifetime_revenue_cents` | integer | Yes |
 | `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
 
 `odometer` — object:
 | Field | Type | Required |
@@ -1076,39 +1109,44 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string \| null | Yes |
 | `license_plate` | string \| null | Yes |
 | `license_plate_state` | string \| null | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | integer \| null | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `last_serviced_at` | string \| null | Yes |
-| `lifetime_revenue_cents` | integer | Yes |
-| `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
+| `last_serviced_at` | string \| null | No |
+| `lifetime_revenue_cents` | integer | No |
+| `open_work_orders_count` | integer | No |
 
 `odometer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `reading` | integer \| null | Yes |
+| `reading` | number \| null | Yes |
 | `unit` | string | Yes |
 
 `customer` — object:
@@ -1148,7 +1186,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
-| `customer_id` | integer | Yes |
+| `customer_id` | integer | No |
 | `vin` | string | No |
 | `year` | integer | Yes |
 | `make` | string | Yes |
@@ -1167,6 +1205,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `fleet_identifier` | string | No |
 | `notes` | string | No |
 | `production_date` | string | No |
+| `vehicle_type` | string | No |
 
 ---
 
@@ -1175,11 +1214,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `vehicle` | object | Yes |
+| `confirm_unit_change` | string | No |
+| `convert_odometer` | string | No |
 
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
-| `make` | string | Yes |
+| `make` | string | No |
 | `model` | string | No |
 | `year` | integer | No |
 | `vin` | string | No |
@@ -1194,6 +1235,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `odometer_reading` | integer | No |
 | `odometer_unit` | string | No |
 | `notes` | string | No |
+| `vehicle_type` | string | No |
 
 ---
 
@@ -1237,56 +1279,58 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
+| `services_visible_to_customer` | boolean | Yes |
+| `inspections_visible_to_customer` | boolean | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
+| `location` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | integer \| null | Yes |
-| `odometer_out` | integer \| null | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | string \| null | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | string \| null | Yes |
-| `completed_at` | string \| null | Yes |
-| `declined_at` | string \| null | Yes |
-| `decline_reason` | string \| null | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | string \| null | Yes |
-| `closure_reason_notes` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `purchase_order_number` | string \| null | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | string \| null | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-| `activity_url` | string | Yes |
-| `vehicle_history_url` | string | Yes |
-| `appointments_url` | string | Yes |
-| `authorization_logs_url` | string | Yes |
+| `odometer_in` | integer \| null | No |
+| `odometer_out` | integer \| null | No |
+| `odometer_unit` | string | No |
+| `authorized_at` | string \| null | No |
+| `authorized_total_cents` | integer | No |
+| `customer_notified` | boolean | No |
+| `customer_notified_ready` | boolean | No |
+| `ready_for_pickup_at` | string \| null | No |
+| `completed_at` | string \| null | No |
+| `declined_at` | string \| null | No |
+| `decline_reason` | string \| null | No |
+| `discount_cents` | integer | No |
+| `fees_cents` | integer | No |
+| `parts_cents` | integer | No |
+| `labor_cents` | integer | No |
+| `tires_cents` | integer | No |
+| `subcontracts_cents` | integer | No |
+| `credit_balance_cents` | integer | No |
+| `saved_for_later` | boolean | No |
+| `closure_reason` | string \| null | No |
+| `closure_reason_notes` | string \| null | No |
+| `notes` | string \| null | No |
+| `purchase_order_number` | string \| null | No |
+| `return_method` | string | No |
+| `return_method_notes` | string \| null | No |
+| `vehicle_keys_location` | string | No |
+| `vehicle_location` | string | No |
+| `customer_visit_count` | integer | No |
+| `customer_total_spend_cents` | integer | No |
+| `average_ticket_cents` | integer | No |
+| `activity_total` | integer | No |
+| `recent_activities` | array of object | No |
+| `services_url` | string | No |
+| `payments_url` | string | No |
+| `wip_url` | string | No |
+| `inspection_url` | string | No |
+| `parts_url` | string | No |
+| `concerns_url` | string | No |
+| `service_history_url` | string | No |
+| `declined_services_url` | string | No |
+| `activity_url` | string | No |
+| `vehicle_history_url` | string | No |
+| `appointments_url` | string | No |
+| `authorization_logs_url` | string | No |
 | `payer_customer` | object | No |
 
 `customer` — object:
@@ -1294,16 +1338,26 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `url` | string | Yes |
 
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
+| `display_name` | string | Yes |
 | `make` | string | Yes |
 | `model` | string | Yes |
 | `year` | integer | Yes |
+| `license_plate` | string | Yes |
 | `vin` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 `totals` — object:
@@ -1315,13 +1369,6 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `paid_cents` | integer | Yes |
 | `remaining_cents` | integer | Yes |
 | `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
 
 `payer_customer` — object:
 | Field | Type | Required |

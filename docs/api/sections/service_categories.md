@@ -30,7 +30,9 @@ List all service categories, paginated via the Link header.
     "canonical_key": "maintenance",
     "job_count": 0,
     "url": "https://app.wenmarpro.com/service_categories/1.json",
-    "app_url": "https://app.wenmarpro.com/service_categories/1"
+    "app_url": "https://app.wenmarpro.com/service_categories/1",
+    "status": "active",
+    "trashed_at": null
   },
   {
     "id": 2,
@@ -45,7 +47,9 @@ List all service categories, paginated via the Link header.
     "canonical_key": "brakes",
     "job_count": 0,
     "url": "https://app.wenmarpro.com/service_categories/2.json",
-    "app_url": "https://app.wenmarpro.com/service_categories/2"
+    "app_url": "https://app.wenmarpro.com/service_categories/2",
+    "status": "active",
+    "trashed_at": null
   }
 ]
 ```
@@ -82,7 +86,9 @@ Create a service category.
   "canonical_key": "brakes",
   "job_count": 0,
   "url": "https://app.wenmarpro.com/service_categories/1.json",
-  "app_url": "https://app.wenmarpro.com/service_categories/1"
+  "app_url": "https://app.wenmarpro.com/service_categories/1",
+  "status": "active",
+  "trashed_at": null
 }
 ```
 
@@ -297,6 +303,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `service_category` — object:
 | Field | Type | Required |
 |---|---|---|
-| `position` | integer | No |
 | `name` | string | No |
+| `position` | integer | No |
 

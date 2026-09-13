@@ -12,7 +12,9 @@
     "canonical_key": "maintenance",
     "job_count": 0,
     "url": "https://app.wenmarpro.com/service_categories/1.json",
-    "app_url": "https://app.wenmarpro.com/service_categories/1"
+    "app_url": "https://app.wenmarpro.com/service_categories/1",
+    "status": "active",
+    "trashed_at": null
   },
   {
     "id": 2,
@@ -27,6 +29,8 @@
     "canonical_key": "brakes",
     "job_count": 0,
     "url": "https://app.wenmarpro.com/service_categories/2.json",
-    "app_url": "https://app.wenmarpro.com/service_categories/2"
+    "app_url": "https://app.wenmarpro.com/service_categories/2",
+    "status": "active",
+    "trashed_at": null
   }
 ]

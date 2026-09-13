@@ -93,6 +93,217 @@ List all reports ar aging, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/ar_aging.json
 ```
 
+## List reports cash drawer sessions
+
+```
+GET /reports/cash_drawer_sessions
+```
+
+List all reports cash drawer sessions, paginated via the Link header.
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `state` | string | Yes |
+| `opened_at` | string | Yes |
+| `closed_at` | string | Yes |
+| `location_id` | integer | Yes |
+| `starting_float_cents` | integer | Yes |
+| `expected_cash_cents` | integer | Yes |
+| `actual_cash_cents` | integer | Yes |
+| `expected_cheques_cents` | integer | Yes |
+| `actual_cheques_cents` | integer | Yes |
+| `variance_cents` | integer | Yes |
+| `bank_deposit_cents` | integer | Yes |
+| `leave_behind_cents` | integer | Yes |
+| `variance_explanation` | any | Yes |
+| `opened_by` | object | Yes |
+| `closed_by` | object | Yes |
+| `summary` | object | Yes |
+| `ledger_url` | string | Yes |
+| `close_url` | string | Yes |
+| `url` | string | Yes |
+
+`opened_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`closed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`summary` — object:
+| Field | Type | Required |
+|---|---|---|
+| `opening_balance_cents` | integer | Yes |
+| `payments_cash_cents` | integer | Yes |
+| `payments_cheque_cents` | integer | Yes |
+| `entries_paid_in_cents` | integer | Yes |
+| `entries_paid_out_cents` | integer | Yes |
+| `closing_balance_cents` | integer | Yes |
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/cash_drawer_sessions.json
+```
+
+## Show reports cash drawer session
+
+```
+GET /reports/cash_drawer_sessions/{id}
+```
+
+Show a reports cash drawer session by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `state` | string | Yes |
+| `opened_at` | string | Yes |
+| `closed_at` | string \| null | Yes |
+| `location_id` | integer | Yes |
+| `starting_float_cents` | integer | Yes |
+| `expected_cash_cents` | integer | Yes |
+| `actual_cash_cents` | integer | Yes |
+| `expected_cheques_cents` | integer | Yes |
+| `actual_cheques_cents` | integer | Yes |
+| `variance_cents` | integer | Yes |
+| `bank_deposit_cents` | integer | Yes |
+| `leave_behind_cents` | integer | Yes |
+| `variance_explanation` | any | Yes |
+| `opened_by` | object | Yes |
+| `closed_by` | any | Yes |
+| `summary` | object | Yes |
+| `ledger_url` | string | Yes |
+| `close_url` | string | Yes |
+| `url` | string | Yes |
+
+`opened_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`summary` — object:
+| Field | Type | Required |
+|---|---|---|
+| `opening_balance_cents` | integer | Yes |
+| `payments_cash_cents` | integer | Yes |
+| `payments_cheque_cents` | integer | Yes |
+| `entries_paid_in_cents` | integer | Yes |
+| `entries_paid_out_cents` | integer | Yes |
+| `closing_balance_cents` | integer | Yes |
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/cash_drawer_sessions/<id>.json
+```
+
+## List reports cash drawer sessions close
+
+```
+GET /reports/cash_drawer_sessions/{id}/close
+```
+
+List all reports cash drawer sessions close, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `state` | string | Yes |
+| `can_view_expected` | boolean | Yes |
+| `expected_cash_cents` | integer | Yes |
+| `expected_cheques_cents` | integer | Yes |
+| `requires_variance_explanation` | boolean | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/cash_drawer_sessions/<id>.json
+```
+
+## Update reports cash drawer sessions confirm close
+
+```
+PATCH /reports/cash_drawer_sessions/{id}/confirm_close
+```
+
+Update a reports cash drawer sessions confirm close by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `state` | string | Yes |
+| `opened_at` | string | Yes |
+| `closed_at` | string | Yes |
+| `location_id` | integer | Yes |
+| `starting_float_cents` | integer | Yes |
+| `expected_cash_cents` | integer | Yes |
+| `actual_cash_cents` | integer | Yes |
+| `expected_cheques_cents` | integer | Yes |
+| `actual_cheques_cents` | integer | Yes |
+| `variance_cents` | integer | Yes |
+| `bank_deposit_cents` | integer | Yes |
+| `leave_behind_cents` | integer | Yes |
+| `variance_explanation` | any | Yes |
+| `opened_by` | object | Yes |
+| `closed_by` | object | Yes |
+| `summary` | object | Yes |
+| `ledger_url` | string | Yes |
+| `close_url` | string | Yes |
+| `url` | string | Yes |
+
+`opened_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`closed_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+
+`summary` — object:
+| Field | Type | Required |
+|---|---|---|
+| `opening_balance_cents` | integer | Yes |
+| `payments_cash_cents` | integer | Yes |
+| `payments_cheque_cents` | integer | Yes |
+| `entries_paid_in_cents` | integer | Yes |
+| `entries_paid_out_cents` | integer | Yes |
+| `closing_balance_cents` | integer | Yes |
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/reports/cash_drawer_sessions/<id>.json
+```
+
 ## List reports declined work
 
 ```
@@ -666,4 +877,20 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### UpdateReportsCashDrawerSessionsConfirmCloseRequest schema {#updatereportscashdrawersessionsconfirmcloserequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `cash_drawer_session` | object | Yes |
+
+`cash_drawer_session` — object:
+| Field | Type | Required |
+|---|---|---|
+| `actual_cash_cents` | integer | No |
+| `actual_cheques_cents` | integer | No |
+| `leave_behind_cents` | integer | No |
+| `variance_explanation` | any | No |
 

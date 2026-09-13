@@ -11,19 +11,7 @@ GET /labor_matrices
 
 List all labor matrices, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `matrix_type` | string | Yes |
-| `active` | boolean | Yes |
-| `tiers` | array of object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [LaborMatrix](#labormatrix-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_matrices.json
@@ -37,19 +25,7 @@ POST /labor_matrices
 
 Create a labor matrice.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `matrix_type` | string | Yes |
-| `active` | boolean | Yes |
-| `tiers` | array of any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [LaborMatrix](#labormatrix-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -88,7 +64,16 @@ Update a labor matrice by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [LaborMatrix](#labormatrix-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/labor_matrices/<id>.json
+```
+
+---
+
+### LaborMatrix schema {#labormatrix-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -101,11 +86,6 @@ Update a labor matrice by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/labor_matrices/<id>.json
-```
 
 ---
 

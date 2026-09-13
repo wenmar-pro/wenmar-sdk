@@ -11,20 +11,7 @@ GET /lead_sources
 
 List all lead sources, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `category` | string | Yes |
-| `system_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `position` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [LeadSource](#leadsource-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/lead_sources.json
@@ -38,20 +25,7 @@ POST /lead_sources
 
 Create a lead source.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `category` | string | Yes |
-| `system_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `position` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [LeadSource](#leadsource-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -72,12 +46,13 @@ Create a lead sources seed default.
 
 | Field | Type | Required |
 |---|---|---|
+| `type` | string | Yes |
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `category` | string | Yes |
-| `system_default` | boolean | Yes |
 | `active` | boolean | Yes |
 | `position` | integer | Yes |
+| `system_default` | boolean | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
@@ -118,25 +93,30 @@ Update a lead source by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `category` | string | Yes |
-| `system_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `position` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — [LeadSource](#leadsource-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/lead_sources/<id>.json
 ```
+
+---
+
+### LeadSource schema {#leadsource-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `category` | string | Yes |
+| `active` | boolean | Yes |
+| `position` | integer | Yes |
+| `system_default` | boolean | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ---
 

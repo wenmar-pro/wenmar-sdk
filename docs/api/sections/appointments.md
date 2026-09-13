@@ -17,61 +17,7 @@ List all appointments, paginated via the Link header.
 | `q` | string | No |
 | `status` | string | No |
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `status` | string | Yes |
-| `appointment_type` | string | Yes |
-| `appointment_source` | any | Yes |
-| `intake_method` | string | Yes |
-| `all_day` | boolean | Yes |
-| `starts_at` | string | Yes |
-| `ends_at` | string | Yes |
-| `estimated_duration_minutes` | integer | Yes |
-| `customer_name` | string | Yes |
-| `customer_email` | string | Yes |
-| `customer_phone` | string | Yes |
-| `customer_concern` | any | Yes |
-| `follow_up_reason` | string \| null | Yes |
-| `year` | any | Yes |
-| `make` | any | Yes |
-| `model` | string \| null | Yes |
-| `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
-| `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-
-`service_advisor` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — array of [Appointment](#appointment-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/appointments.json
@@ -85,86 +31,7 @@ POST /appointments
 
 Create a appointment.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `status` | string | Yes |
-| `appointment_type` | string | Yes |
-| `appointment_source` | string | Yes |
-| `intake_method` | string | Yes |
-| `all_day` | boolean | Yes |
-| `starts_at` | string | Yes |
-| `ends_at` | string | Yes |
-| `estimated_duration_minutes` | integer | Yes |
-| `customer_name` | string \| null | Yes |
-| `customer_email` | any | Yes |
-| `customer_phone` | any | Yes |
-| `customer_concern` | any | Yes |
-| `follow_up_reason` | string \| null | Yes |
-| `year` | any | Yes |
-| `make` | any | Yes |
-| `model` | string \| null | Yes |
-| `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
-| `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer_confirmed` | boolean | Yes |
-| `confirmation_sent_at` | string \| null | Yes |
-| `reminder_sent_at` | string \| null | Yes |
-| `customer_arrived_at` | string \| null | Yes |
-| `customer_initiated` | boolean | Yes |
-| `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
-| `messages_count` | integer | Yes |
-| `reschedules_count` | integer | Yes |
-| `approve_url` | string | Yes |
-| `reject_url` | string | Yes |
-| `cancel_url` | string | Yes |
-| `follow_up_url` | string | Yes |
-| `work_order_url` | string | Yes |
-
-`customer` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `full_name` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `phones_count` | integer | Yes |
-| `emails_count` | integer | Yes |
-
-`vehicle` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `display_name` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-`service_advisor` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 201** — [Appointment](#appointment-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -189,15 +56,6 @@ List all appointments available slots, paginated via the Link header.
 | `duration_minutes` | integer | No |
 
 **Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `time` | string | Yes |
-| `booked` | integer | Yes |
-| `capacity` | integer | Yes |
-| `available` | boolean | Yes |
-| `blocked` | boolean | Yes |
-| `slots_needed` | integer | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/appointments/available_slots.json
@@ -233,69 +91,7 @@ Show a appointment by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `status` | string | Yes |
-| `appointment_type` | string | Yes |
-| `appointment_source` | any | Yes |
-| `intake_method` | string | Yes |
-| `all_day` | boolean | Yes |
-| `starts_at` | string | Yes |
-| `ends_at` | string | Yes |
-| `estimated_duration_minutes` | integer | Yes |
-| `customer_name` | string | Yes |
-| `customer_email` | string | Yes |
-| `customer_phone` | string | Yes |
-| `customer_concern` | any | Yes |
-| `follow_up_reason` | string \| null | Yes |
-| `year` | any | Yes |
-| `make` | any | Yes |
-| `model` | string \| null | Yes |
-| `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
-| `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer_confirmed` | boolean | Yes |
-| `confirmation_sent_at` | string \| null | Yes |
-| `reminder_sent_at` | string \| null | Yes |
-| `customer_arrived_at` | string \| null | Yes |
-| `customer_initiated` | boolean | Yes |
-| `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
-| `messages_count` | integer | Yes |
-| `reschedules_count` | integer | Yes |
-| `approve_url` | string | Yes |
-| `reject_url` | string | Yes |
-| `cancel_url` | string | Yes |
-| `follow_up_url` | string | Yes |
-| `work_order_url` | string | Yes |
-| `reconcile_vehicle_url` | string | Yes |
-
-`service_advisor` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [Appointment](#appointment-schema)
 
 **Response 304** — no content.
 
@@ -315,69 +111,7 @@ Update a appointment by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `status` | string | Yes |
-| `appointment_type` | string | Yes |
-| `appointment_source` | any | Yes |
-| `intake_method` | string | Yes |
-| `all_day` | boolean | Yes |
-| `starts_at` | string | Yes |
-| `ends_at` | string | Yes |
-| `estimated_duration_minutes` | integer | Yes |
-| `customer_name` | string | Yes |
-| `customer_email` | string | Yes |
-| `customer_phone` | string | Yes |
-| `customer_concern` | string | Yes |
-| `follow_up_reason` | string \| null | Yes |
-| `year` | any | Yes |
-| `make` | any | Yes |
-| `model` | string \| null | Yes |
-| `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
-| `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `customer_confirmed` | boolean | Yes |
-| `confirmation_sent_at` | string \| null | Yes |
-| `reminder_sent_at` | string \| null | Yes |
-| `customer_arrived_at` | string \| null | Yes |
-| `customer_initiated` | boolean | Yes |
-| `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
-| `messages_count` | integer | Yes |
-| `reschedules_count` | integer | Yes |
-| `approve_url` | string | Yes |
-| `reject_url` | string | Yes |
-| `cancel_url` | string | Yes |
-| `follow_up_url` | string | Yes |
-| `work_order_url` | string | Yes |
-| `reconcile_vehicle_url` | string | Yes |
-
-`service_advisor` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
+**Response 200** — [Appointment](#appointment-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -400,8 +134,8 @@ Create a appointments approval.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
@@ -410,6 +144,12 @@ Create a appointments approval.
 | `starts_at` | string | Yes |
 | `ends_at` | string | Yes |
 | `estimated_duration_minutes` | integer | Yes |
+| `customer_id` | integer \| null | Yes |
+| `vehicle_id` | integer \| null | Yes |
+| `service_advisor_id` | integer | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `driver_id` | integer \| null | Yes |
+| `marketing_source_id` | integer \| null | Yes |
 | `customer_name` | string | Yes |
 | `customer_email` | string | Yes |
 | `customer_phone` | string | Yes |
@@ -419,26 +159,27 @@ Create a appointments approval.
 | `make` | any | Yes |
 | `model` | string \| null | Yes |
 | `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
+| `vin` | string \| null | Yes |
 | `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `customer_confirmed` | boolean | Yes |
 | `confirmation_sent_at` | string \| null | Yes |
 | `reminder_sent_at` | string \| null | Yes |
 | `customer_arrived_at` | string \| null | Yes |
 | `customer_initiated` | boolean | Yes |
 | `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
 | `messages_count` | integer | Yes |
 | `reschedules_count` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
 | `approve_url` | string | Yes |
 | `reject_url` | string | Yes |
 | `cancel_url` | string | Yes |
@@ -450,8 +191,12 @@ Create a appointments approval.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `name` | string | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
 | `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -481,8 +226,8 @@ Create a appointments cancellation.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
@@ -491,6 +236,12 @@ Create a appointments cancellation.
 | `starts_at` | string | Yes |
 | `ends_at` | string | Yes |
 | `estimated_duration_minutes` | integer | Yes |
+| `customer_id` | integer \| null | Yes |
+| `vehicle_id` | integer \| null | Yes |
+| `service_advisor_id` | integer | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `driver_id` | integer \| null | Yes |
+| `marketing_source_id` | integer \| null | Yes |
 | `customer_name` | string | Yes |
 | `customer_email` | string | Yes |
 | `customer_phone` | string | Yes |
@@ -500,26 +251,27 @@ Create a appointments cancellation.
 | `make` | any | Yes |
 | `model` | string \| null | Yes |
 | `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
+| `vin` | string \| null | Yes |
 | `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `customer_confirmed` | boolean | Yes |
 | `confirmation_sent_at` | string \| null | Yes |
 | `reminder_sent_at` | string \| null | Yes |
 | `customer_arrived_at` | string \| null | Yes |
 | `customer_initiated` | boolean | Yes |
 | `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
 | `messages_count` | integer | Yes |
 | `reschedules_count` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
 | `approve_url` | string | Yes |
 | `reject_url` | string | Yes |
 | `cancel_url` | string | Yes |
@@ -531,8 +283,12 @@ Create a appointments cancellation.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `name` | string | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
 | `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -562,8 +318,8 @@ Create a appointments follow up.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | string | Yes |
@@ -572,6 +328,12 @@ Create a appointments follow up.
 | `starts_at` | string | Yes |
 | `ends_at` | string | Yes |
 | `estimated_duration_minutes` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `vehicle_id` | integer | Yes |
+| `service_advisor_id` | integer \| null | Yes |
+| `work_order_id` | integer | Yes |
+| `driver_id` | integer \| null | Yes |
+| `marketing_source_id` | integer \| null | Yes |
 | `customer_name` | string | Yes |
 | `customer_email` | string | Yes |
 | `customer_phone` | string | Yes |
@@ -583,24 +345,25 @@ Create a appointments follow up.
 | `submodel` | string \| null | Yes |
 | `vin` | string | Yes |
 | `license_plate` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | any | Yes |
-| `work_order` | object | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `customer_confirmed` | boolean | Yes |
 | `confirmation_sent_at` | string \| null | Yes |
 | `reminder_sent_at` | string \| null | Yes |
 | `customer_arrived_at` | string \| null | Yes |
 | `customer_initiated` | boolean | Yes |
 | `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
 | `messages_count` | integer | Yes |
 | `reschedules_count` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | any | Yes |
+| `work_order` | object | Yes |
+| `location` | object | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
 | `approve_url` | string | Yes |
 | `reject_url` | string | Yes |
 | `cancel_url` | string | Yes |
@@ -611,6 +374,7 @@ Create a appointments follow up.
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `phones_count` | integer | Yes |
@@ -621,6 +385,10 @@ Create a appointments follow up.
 |---|---|---|
 | `id` | integer | Yes |
 | `display_name` | string | Yes |
+| `make` | string | Yes |
+| `model` | string | Yes |
+| `year` | integer | Yes |
+| `license_plate` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
@@ -628,8 +396,10 @@ Create a appointments follow up.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
+| `display_name` | string | Yes |
 | `status` | string | Yes |
 | `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -659,8 +429,8 @@ Create a appointments rejection.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
@@ -669,6 +439,12 @@ Create a appointments rejection.
 | `starts_at` | string | Yes |
 | `ends_at` | string | Yes |
 | `estimated_duration_minutes` | integer | Yes |
+| `customer_id` | integer \| null | Yes |
+| `vehicle_id` | integer \| null | Yes |
+| `service_advisor_id` | integer | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `driver_id` | integer \| null | Yes |
+| `marketing_source_id` | integer \| null | Yes |
 | `customer_name` | string | Yes |
 | `customer_email` | string | Yes |
 | `customer_phone` | string | Yes |
@@ -678,26 +454,27 @@ Create a appointments rejection.
 | `make` | any | Yes |
 | `model` | string \| null | Yes |
 | `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
+| `vin` | string \| null | Yes |
 | `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `customer_confirmed` | boolean | Yes |
 | `confirmation_sent_at` | string \| null | Yes |
 | `reminder_sent_at` | string \| null | Yes |
 | `customer_arrived_at` | string \| null | Yes |
 | `customer_initiated` | boolean | Yes |
 | `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
 | `messages_count` | integer | Yes |
 | `reschedules_count` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
 | `approve_url` | string | Yes |
 | `reject_url` | string | Yes |
 | `cancel_url` | string | Yes |
@@ -709,8 +486,12 @@ Create a appointments rejection.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `name` | string | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
 | `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -740,8 +521,8 @@ Create a appointments vehicle reconciliation.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
@@ -750,6 +531,12 @@ Create a appointments vehicle reconciliation.
 | `starts_at` | string | Yes |
 | `ends_at` | string | Yes |
 | `estimated_duration_minutes` | integer | Yes |
+| `customer_id` | integer | Yes |
+| `vehicle_id` | integer | Yes |
+| `service_advisor_id` | integer | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `driver_id` | integer \| null | Yes |
+| `marketing_source_id` | integer \| null | Yes |
 | `customer_name` | string | Yes |
 | `customer_email` | string | Yes |
 | `customer_phone` | string | Yes |
@@ -759,26 +546,27 @@ Create a appointments vehicle reconciliation.
 | `make` | any | Yes |
 | `model` | string \| null | Yes |
 | `submodel` | string \| null | Yes |
-| `vin` | any | Yes |
+| `vin` | string \| null | Yes |
 | `license_plate` | any | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `customer` | object | Yes |
-| `vehicle` | object | Yes |
-| `service_advisor` | object | Yes |
-| `work_order` | any | Yes |
-| `location` | object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `customer_confirmed` | boolean | Yes |
 | `confirmation_sent_at` | string \| null | Yes |
 | `reminder_sent_at` | string \| null | Yes |
 | `customer_arrived_at` | string \| null | Yes |
 | `customer_initiated` | boolean | Yes |
 | `rescheduled_from_id` | integer \| null | Yes |
-| `latest_reschedule_id` | integer \| null | Yes |
 | `messages_count` | integer | Yes |
 | `reschedules_count` | integer | Yes |
+| `display_name` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | Yes |
+| `work_order` | any | Yes |
+| `location` | object | Yes |
+| `latest_reschedule_id` | integer \| null | Yes |
 | `approve_url` | string | Yes |
 | `reject_url` | string | Yes |
 | `cancel_url` | string | Yes |
@@ -790,6 +578,7 @@ Create a appointments vehicle reconciliation.
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `phones_count` | integer | Yes |
@@ -800,6 +589,10 @@ Create a appointments vehicle reconciliation.
 |---|---|---|
 | `id` | integer | Yes |
 | `display_name` | string | Yes |
+| `make` | string | Yes |
+| `model` | string | Yes |
+| `year` | integer | Yes |
+| `license_plate` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
@@ -807,8 +600,12 @@ Create a appointments vehicle reconciliation.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `name` | string | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
 | `url` | string | Yes |
+| `app_url` | string | Yes |
 
 `location` — object:
 | Field | Type | Required |
@@ -840,6 +637,106 @@ Create a appointments work order.
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/appointments/<id>.json
 ```
+
+---
+
+### Appointment schema {#appointment-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `status` | string | Yes |
+| `appointment_type` | string | Yes |
+| `appointment_source` | string \| null | No |
+| `intake_method` | string | Yes |
+| `all_day` | boolean | Yes |
+| `starts_at` | string | Yes |
+| `ends_at` | string | Yes |
+| `estimated_duration_minutes` | integer | No |
+| `customer_id` | integer \| null | No |
+| `vehicle_id` | integer \| null | No |
+| `service_advisor_id` | integer | Yes |
+| `work_order_id` | integer \| null | Yes |
+| `driver_id` | integer \| null | No |
+| `marketing_source_id` | integer \| null | No |
+| `customer_name` | string \| null | No |
+| `customer_email` | string \| null | No |
+| `customer_phone` | string \| null | No |
+| `customer_concern` | string \| null | No |
+| `follow_up_reason` | string \| null | No |
+| `year` | any | No |
+| `make` | any | No |
+| `model` | string \| null | No |
+| `submodel` | string \| null | No |
+| `vin` | string \| null | No |
+| `license_plate` | any | No |
+| `customer_confirmed` | boolean | No |
+| `confirmation_sent_at` | string \| null | No |
+| `reminder_sent_at` | string \| null | No |
+| `customer_arrived_at` | string \| null | No |
+| `customer_initiated` | boolean | No |
+| `rescheduled_from_id` | integer \| null | No |
+| `messages_count` | integer | No |
+| `reschedules_count` | integer | No |
+| `display_name` | string | No |
+| `url` | string | Yes |
+| `app_url` | string | No |
+| `created_at` | string | Yes |
+| `updated_at` | string | No |
+| `customer` | object | Yes |
+| `vehicle` | object | Yes |
+| `service_advisor` | object | No |
+| `work_order` | any | No |
+| `location` | object | No |
+| `latest_reschedule_id` | integer \| null | No |
+| `approve_url` | string | No |
+| `reject_url` | string | No |
+| `cancel_url` | string | No |
+| `follow_up_url` | string | No |
+| `work_order_url` | string | No |
+| `reconcile_vehicle_url` | string | No |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | No |
+| `full_name` | string | No |
+| `display_name` | string | No |
+| `url` | string | No |
+| `app_url` | string | No |
+| `phones_count` | integer | No |
+| `emails_count` | integer | No |
+
+`vehicle` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | No |
+| `display_name` | string | No |
+| `make` | string | No |
+| `model` | string | No |
+| `year` | integer | No |
+| `license_plate` | string | No |
+| `url` | string | No |
+| `app_url` | string | No |
+
+`service_advisor` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ---
 
@@ -930,56 +827,58 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
+| `services_visible_to_customer` | boolean | Yes |
+| `inspections_visible_to_customer` | boolean | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
+| `location` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | integer \| null | Yes |
-| `odometer_out` | integer \| null | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | string \| null | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | string \| null | Yes |
-| `completed_at` | string \| null | Yes |
-| `declined_at` | string \| null | Yes |
-| `decline_reason` | string \| null | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | string \| null | Yes |
-| `closure_reason_notes` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `purchase_order_number` | string \| null | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | string \| null | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-| `activity_url` | string | Yes |
-| `vehicle_history_url` | string | Yes |
-| `appointments_url` | string | Yes |
-| `authorization_logs_url` | string | Yes |
+| `odometer_in` | integer \| null | No |
+| `odometer_out` | integer \| null | No |
+| `odometer_unit` | string | No |
+| `authorized_at` | string \| null | No |
+| `authorized_total_cents` | integer | No |
+| `customer_notified` | boolean | No |
+| `customer_notified_ready` | boolean | No |
+| `ready_for_pickup_at` | string \| null | No |
+| `completed_at` | string \| null | No |
+| `declined_at` | string \| null | No |
+| `decline_reason` | string \| null | No |
+| `discount_cents` | integer | No |
+| `fees_cents` | integer | No |
+| `parts_cents` | integer | No |
+| `labor_cents` | integer | No |
+| `tires_cents` | integer | No |
+| `subcontracts_cents` | integer | No |
+| `credit_balance_cents` | integer | No |
+| `saved_for_later` | boolean | No |
+| `closure_reason` | string \| null | No |
+| `closure_reason_notes` | string \| null | No |
+| `notes` | string \| null | No |
+| `purchase_order_number` | string \| null | No |
+| `return_method` | string | No |
+| `return_method_notes` | string \| null | No |
+| `vehicle_keys_location` | string | No |
+| `vehicle_location` | string | No |
+| `customer_visit_count` | integer | No |
+| `customer_total_spend_cents` | integer | No |
+| `average_ticket_cents` | integer | No |
+| `activity_total` | integer | No |
+| `recent_activities` | array of object | No |
+| `services_url` | string | No |
+| `payments_url` | string | No |
+| `wip_url` | string | No |
+| `inspection_url` | string | No |
+| `parts_url` | string | No |
+| `concerns_url` | string | No |
+| `service_history_url` | string | No |
+| `declined_services_url` | string | No |
+| `activity_url` | string | No |
+| `vehicle_history_url` | string | No |
+| `appointments_url` | string | No |
+| `authorization_logs_url` | string | No |
 | `payer_customer` | object | No |
 
 `customer` — object:
@@ -987,16 +886,26 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `url` | string | Yes |
 
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
+| `display_name` | string | Yes |
 | `make` | string | Yes |
 | `model` | string | Yes |
 | `year` | integer | Yes |
+| `license_plate` | string | Yes |
 | `vin` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 `totals` — object:
@@ -1008,13 +917,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `paid_cents` | integer | Yes |
 | `remaining_cents` | integer | Yes |
 | `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
 
 `payer_customer` — object:
 | Field | Type | Required |

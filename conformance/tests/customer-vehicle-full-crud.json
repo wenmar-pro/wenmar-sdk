@@ -335,55 +335,6 @@
     }
   },
   {
-    "name": "lookup_customer",
-    "operation": "lookup_customer",
-    "method": "GET",
-    "path": "/customers/lookup",
-    "query": {
-      "query": "Jane"
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": [
-          {
-            "id": 1,
-            "name": "Jane Doe"
-          }
-        ]
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
-    "name": "lookup_vehicle",
-    "operation": "lookup_vehicle",
-    "method": "GET",
-    "path": "/vehicles/lookup",
-    "query": {
-      "query": "Honda"
-    },
-    "mockResponses": [
-      {
-        "status": 200,
-        "body": [
-          {
-            "id": 1,
-            "make": "Honda",
-            "model": "Civic"
-          }
-        ]
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
     "name": "prefill_vehicle",
     "operation": "prefill_vehicle",
     "method": "GET",

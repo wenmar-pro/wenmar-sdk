@@ -11,21 +11,7 @@ GET /shop_discounts
 
 List all shop discounts, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `discount_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | number \| null | Yes |
-| `active` | boolean | Yes |
-| `category` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [ShopDiscount](#shopdiscount-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/shop_discounts.json
@@ -39,21 +25,7 @@ POST /shop_discounts
 
 Create a shop discount.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `discount_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | string | Yes |
-| `active` | boolean | Yes |
-| `category` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [ShopDiscount](#shopdiscount-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -92,21 +64,7 @@ Update a shop discount by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `discount_type` | string | Yes |
-| `amount_cents` | integer | Yes |
-| `percentage` | number \| null | Yes |
-| `active` | boolean | Yes |
-| `category` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — [ShopDiscount](#shopdiscount-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -145,6 +103,24 @@ Create a shop discounts duplicate.
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/shop_discounts/<id>.json
 ```
+
+---
+
+### ShopDiscount schema {#shopdiscount-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `discount_type` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `percentage` | number \| null | Yes |
+| `active` | boolean | Yes |
+| `category` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
 
 ---
 

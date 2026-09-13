@@ -272,14 +272,14 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `order_method` | string | Yes |
 | `payment_method` | string | Yes |
 | `fulfillment_method` | string | Yes |
-| `tracking_number` | any | Yes |
-| `vendor_invoice_number` | any | Yes |
+| `tracking_number` | string \| null | Yes |
+| `vendor_invoice_number` | string \| null | Yes |
 | `vendor_invoice_received_at` | string \| null | Yes |
 | `notes` | string \| null | Yes |
 | `freight_cost_cents` | integer | Yes |
 | `freight_cost_currency` | string | Yes |
-| `subtotal_cents` | string | Yes |
-| `total_cents` | string | Yes |
+| `subtotal_cents` | integer | Yes |
+| `total_cents` | integer | Yes |
 | `core_charges_cents` | integer | Yes |
 | `line_items_count` | integer | Yes |
 | `ordered_at` | string | Yes |
@@ -290,9 +290,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `vendor` | object | Yes |
-| `creator` | object | Yes |
+| `work_order` | object | No |
 | `location` | object | Yes |
-| `line_items` | array of object | Yes |
+| `creator` | object | No |
+| `line_items` | array of object | No |
 
 `vendor` — object:
 | Field | Type | Required |
@@ -301,14 +302,21 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `name` | string | Yes |
 | `url` | string | Yes |
 
-`creator` — object:
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `number` | integer | Yes |
+| `url` | string | Yes |
+
+`location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
 
-`location` — object:
+`creator` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -381,7 +389,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `status` | string | Yes |
 | `credit_method` | any | Yes |
 | `reason_code` | any | Yes |
-| `rma_number` | any | Yes |
+| `rma_number` | string \| null | Yes |
 | `is_warranty_claim` | boolean | Yes |
 | `restocking_fee_cents` | integer | Yes |
 | `shipping_fee_cents` | integer | Yes |
@@ -396,7 +404,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `work_order` | object | Yes |
 | `creator` | object | Yes |
 | `location` | object | Yes |
-| `line_items` | array of object | Yes |
+| `line_items` | array of object | No |
 
 `vendor` — object:
 | Field | Type | Required |
@@ -450,7 +458,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `sublet_number` | integer | Yes |
 | `title` | string | Yes |
 | `payment_status` | string | Yes |
-| `payment_method` | any | Yes |
+| `payment_method` | string \| null | Yes |
 | `total_cents` | integer | Yes |
 | `total_cost_cents` | integer | Yes |
 | `margin_cents` | integer | Yes |
@@ -461,10 +469,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `vendor` | object | Yes |
-| `work_order` | object | Yes |
+| `vendor` | object | No |
+| `work_order` | object | No |
 | `work_order_service` | object | Yes |
 | `location` | object | Yes |
+| `fulfillment_status` | string | No |
+| `notes` | string \| null | No |
+| `vendor_invoice_number` | any | No |
 
 `vendor` — object:
 | Field | Type | Required |

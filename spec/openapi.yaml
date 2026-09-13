@@ -5208,6 +5208,39 @@ paths:
       summary: index
       tags:
       - Shop::Customer
+      responses:
+        '200':
+          description: GET /customers -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Customer"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /customers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       parameters:
       - name: customer_tag_id
         in: query
@@ -5254,39 +5287,6 @@ paths:
         required: false
         schema:
           type: string
-      responses:
-        '200':
-          description: GET /customers -> 200
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Customer"
-          headers:
-            Link:
-              schema:
-                type: string
-              description: RFC 5988 pagination links
-            X-Total-Count:
-              schema:
-                type: integer
-              description: Total matching records
-            X-Per-Page:
-              schema:
-                type: integer
-              description: Records per page
-        '401':
-          description: GET /customers -> 401
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       description: GET /customers
       operationId: GET_customers
     post:
@@ -5429,7 +5429,57 @@ paths:
         required: false
         schema:
           type: string
+      - name: first_name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: phone
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
+        '200':
+          description: GET /customers/check_duplicate -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        phone:
+                          type: string
+                        email:
+                          type: string
+                        url:
+                          type: string
+                        reasons:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - id
+                      - name
+                      - phone
+                      - email
+                      - url
+                      - reasons
+                required:
+                - matches
         '403':
           description: GET /customers/check_duplicate -> 403
           content:
@@ -21855,9 +21905,9 @@ paths:
                     vehicle_type:
                       type: string
                   required:
-                  - year
                   - make
                   - model
+                  - year
               required:
               - vehicle
       responses:
@@ -21976,12 +22026,49 @@ paths:
       tags:
       - Shop::Vehicle
       parameters:
+      - name: make
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: model
+        in: query
+        required: false
+        schema:
+          type: string
       - name: vin
         in: query
         required: false
         schema:
           type: string
+      - name: year
+        in: query
+        required: false
+        schema:
+          type: integer
       responses:
+        '200':
+          description: GET /vehicles/prefill -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle:
+                    type: object
+                    properties:
+                      year:
+                        type: string
+                      make:
+                        type: string
+                      model:
+                        type: string
+                    required:
+                    - year
+                    - make
+                    - model
+                required:
+                - vehicle
         '403':
           description: GET /vehicles/prefill -> 403
           content:
@@ -41669,15 +41756,15 @@ components:
         last_name:
           type: string
         company_name:
-          type: string
           nullable: true
+          type: string
         display_name:
           type: string
         initials:
           type: string
         fleet_identifier:
-          type: string
           nullable: true
+          type: string
         fleet_mode:
           type: string
         marketing_opt_in:

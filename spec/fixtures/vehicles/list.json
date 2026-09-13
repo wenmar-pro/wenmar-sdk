@@ -36,11 +36,22 @@
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/vehicles/1.json",
     "app_url": "https://app.wenmarpro.com/vehicles/1",
-    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+    "location": {
+      "id": 1,
+      "name": "Main Shop",
+      "url": "https://app.wenmarpro.com/locations/1.json"
+    },
     "last_serviced_at": null,
     "lifetime_revenue_cents": 0,
     "open_work_orders_count": 0,
-    "appointments_count": 0
+    "appointments_count": 0,
+    "status": "active",
+    "customer_id": 1,
+    "odometer_reading": 50000,
+    "odometer_unit": "km",
+    "trashed_at": null,
+    "home_location_id": 1,
+    "display_name": "2020 Toyota Camry"
   },
   {
     "type": "Vehicle",
@@ -79,10 +90,21 @@
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/vehicles/2.json",
     "app_url": "https://app.wenmarpro.com/vehicles/2",
-    "location": { "id": 1, "name": "Main Shop", "url": "https://app.wenmarpro.com/locations/1.json" },
+    "location": {
+      "id": 1,
+      "name": "Main Shop",
+      "url": "https://app.wenmarpro.com/locations/1.json"
+    },
     "last_serviced_at": null,
     "lifetime_revenue_cents": 0,
     "open_work_orders_count": 0,
-    "appointments_count": 0
+    "appointments_count": 0,
+    "status": "active",
+    "customer_id": 1,
+    "odometer_reading": 50000,
+    "odometer_unit": "km",
+    "trashed_at": null,
+    "home_location_id": 1,
+    "display_name": "2020 Toyota Camry"
   }
 ]

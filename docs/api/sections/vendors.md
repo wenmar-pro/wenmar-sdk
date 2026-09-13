@@ -43,7 +43,9 @@ List all vendors, paginated via the Link header.
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/vendors/1.json",
-    "app_url": "https://app.wenmarpro.com/vendors/1"
+    "app_url": "https://app.wenmarpro.com/vendors/1",
+    "status": "active",
+    "trashed_at": null
   }
 ]
 ```
@@ -110,7 +112,9 @@ Show a vendor by ID.
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/vendors/1.json",
-  "app_url": "https://app.wenmarpro.com/vendors/1"
+  "app_url": "https://app.wenmarpro.com/vendors/1",
+  "status": "active",
+  "trashed_at": null
 }
 ```
 
@@ -311,11 +315,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `payment_terms` | string | Yes |
 | `status` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `phone` | string | Yes |
-| `email` | string | Yes |
-| `website` | string | Yes |
-| `account_number` | string | Yes |
-| `notes` | string | Yes |
+| `phone` | string \| null | Yes |
+| `email` | string \| null | Yes |
+| `website` | string \| null | Yes |
+| `account_number` | string \| null | Yes |
+| `notes` | string \| null | Yes |
 | `quick_order` | boolean | Yes |
 | `order_url_template` | string \| null | Yes |
 | `catalog_url_template` | string \| null | Yes |
@@ -385,14 +389,14 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `order_method` | string | Yes |
 | `payment_method` | string | Yes |
 | `fulfillment_method` | string | Yes |
-| `tracking_number` | any | Yes |
-| `vendor_invoice_number` | any | Yes |
+| `tracking_number` | string \| null | Yes |
+| `vendor_invoice_number` | string \| null | Yes |
 | `vendor_invoice_received_at` | string \| null | Yes |
 | `notes` | string \| null | Yes |
 | `freight_cost_cents` | integer | Yes |
 | `freight_cost_currency` | string | Yes |
-| `subtotal_cents` | string | Yes |
-| `total_cents` | string | Yes |
+| `subtotal_cents` | integer | Yes |
+| `total_cents` | integer | Yes |
 | `core_charges_cents` | integer | Yes |
 | `line_items_count` | integer | Yes |
 | `ordered_at` | string | Yes |
@@ -403,9 +407,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `vendor` | object | Yes |
-| `creator` | object | Yes |
+| `work_order` | object | No |
 | `location` | object | Yes |
-| `line_items` | array of object | Yes |
+| `creator` | object | No |
+| `line_items` | array of object | No |
 
 `vendor` — object:
 | Field | Type | Required |
@@ -414,14 +419,21 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `name` | string | Yes |
 | `url` | string | Yes |
 
-`creator` — object:
+`work_order` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `number` | integer | Yes |
+| `url` | string | Yes |
+
+`location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
 | `url` | string | Yes |
 
-`location` — object:
+`creator` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |

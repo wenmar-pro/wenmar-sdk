@@ -221,7 +221,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `service_type` | string | Yes |
 | `category_id` | integer \| null | Yes |
 | `category_name` | string \| null | Yes |
-| `estimated_hours` | string | Yes |
+| `estimated_hours` | string \| null | Yes |
 | `customer_notes` | string \| null | Yes |
 | `show_tech_with_cert` | boolean | Yes |
 | `triggers_tire_storage` | boolean | Yes |

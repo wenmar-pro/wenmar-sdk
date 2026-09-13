@@ -21,7 +21,8 @@
     "customer": {
       "id": 1,
       "full_name": "Jane Doe",
-      "url": "https://app.wenmarpro.com/customers/1.json"
+      "url": "https://app.wenmarpro.com/customers/1.json",
+      "display_name": "Jane Doe"
     },
     "vehicle": {
       "id": 1,
@@ -29,7 +30,9 @@
       "model": "Camry",
       "year": 2020,
       "vin": "ABC123",
-      "url": "https://app.wenmarpro.com/vehicles/1.json"
+      "url": "https://app.wenmarpro.com/vehicles/1.json",
+      "display_name": "2020 Toyota Camry",
+      "license_plate": "JANE1"
     },
     "totals": {
       "subtotal_cents": 5000,
@@ -86,7 +89,9 @@
     "customer_total_spend_cents": 45200,
     "average_ticket_cents": 15067,
     "activity_total": 2,
-    "recent_activities": []
+    "recent_activities": [],
+    "services_visible_to_customer": true,
+    "inspections_visible_to_customer": true
   },
   {
     "type": "WorkOrder",
@@ -110,7 +115,8 @@
     "customer": {
       "id": 2,
       "full_name": "John Smith",
-      "url": "https://app.wenmarpro.com/customers/2.json"
+      "url": "https://app.wenmarpro.com/customers/2.json",
+      "display_name": "Jane Doe"
     },
     "vehicle": {
       "id": 2,
@@ -118,7 +124,9 @@
       "model": "Civic",
       "year": 2018,
       "vin": "XYZ789",
-      "url": "https://app.wenmarpro.com/vehicles/2.json"
+      "url": "https://app.wenmarpro.com/vehicles/2.json",
+      "display_name": "2018 Honda Civic",
+      "license_plate": "JANE1"
     },
     "totals": {
       "subtotal_cents": 0,
@@ -175,6 +183,8 @@
     "customer_total_spend_cents": 45200,
     "average_ticket_cents": 15067,
     "activity_total": 2,
-    "recent_activities": []
+    "recent_activities": [],
+    "services_visible_to_customer": true,
+    "inspections_visible_to_customer": true
   }
 ]

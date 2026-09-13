@@ -29,25 +29,7 @@ GET /account
 
 List all account, paginated via the Link header.
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `slug` | string | Yes |
-| `billing_email` | string | Yes |
-| `website` | string \| null | Yes |
-| `business_type` | string \| null | Yes |
-| `tax_id` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `formatted_join_code` | string | Yes |
-| `station_login_url` | string | Yes |
-| `deletion_scheduled_at` | string \| null | Yes |
-| `locations` | array of object | Yes |
+**Response 200** — [Account](#account-schema)
 
 **Response 401** — [Error](#error-schema) error envelope
 
@@ -67,7 +49,16 @@ List all account, paginated via the Link header.
     }
   ],
   "url": "https://app.wenmarpro.com/account.json",
-  "app_url": "https://app.wenmarpro.com/account"
+  "app_url": "https://app.wenmarpro.com/account",
+  "billing_email": "billing@acme.example",
+  "website": "https://acme.example",
+  "business_type": "auto_repair",
+  "tax_id": "123456789",
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "formatted_join_code": "ACME-1234",
+  "station_login_url": "https://acme.example/station",
+  "deletion_scheduled_at": null
 }
 ```
 
@@ -83,31 +74,93 @@ PATCH /account
 
 Update a account by ID.
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `slug` | string | Yes |
-| `billing_email` | string | Yes |
-| `website` | string \| null | Yes |
-| `business_type` | string \| null | Yes |
-| `tax_id` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `formatted_join_code` | string | Yes |
-| `station_login_url` | string | Yes |
-| `deletion_scheduled_at` | string \| null | Yes |
-| `locations` | array of object | Yes |
+**Response 200** — [Account](#account-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/account.json
+```
+
+## List account API tokens
+
+```
+GET /account/api_tokens
+```
+
+List all account api tokens, paginated via the Link header.
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `api_tokens` | array of object | Yes |
+
+**Response 400** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/account/api_tokens.json
+```
+
+## Create account API token
+
+```
+POST /account/api_tokens
+```
+
+Create a account api token.
+
+**Response 201**
+
+| Field | Type | Required |
+|---|---|---|
+| `api_token` | object | Yes |
+
+`api_token` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `created_at` | string | Yes |
+| `expires_at` | string \| null | Yes |
+| `location` | object | Yes |
+| `token` | string | Yes |
+| `token_preview` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/account/api_tokens.json
+```
+
+## Delete account API token
+
+```
+DELETE /account/api_tokens/{id}
+```
+
+Delete a account api token by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 204** — no content.
+
+**Response 404** — [Error](#error-schema) error envelope
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/account/api_tokens/<id>.json
 ```
 
 ## List account billing
@@ -358,6 +411,28 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 
 ---
 
+### Account schema {#account-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `slug` | string | Yes |
+| `billing_email` | string | Yes |
+| `website` | string \| null | Yes |
+| `business_type` | string \| null | Yes |
+| `tax_id` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `formatted_join_code` | string | Yes |
+| `station_login_url` | string | Yes |
+| `deletion_scheduled_at` | string \| null | Yes |
+| `locations` | array of object | Yes |
+
+---
+
 ### UpdateAccountRequest schema {#updateaccountrequest-schema}
 
 | Field | Type | Required |
@@ -365,6 +440,19 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `account` | object | Yes |
 
 `account` — object:
+| Field | Type | Required |
+|---|---|---|
+| `name` | string | Yes |
+
+---
+
+### CreateAccountApiTokenRequest schema {#createaccountapitokenrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `api_token` | object | Yes |
+
+`api_token` — object:
 | Field | Type | Required |
 |---|---|---|
 | `name` | string | Yes |

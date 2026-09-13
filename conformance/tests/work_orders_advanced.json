@@ -240,14 +240,10 @@
   {
     "name": "close_work_order_success",
     "operation": "close_work_order",
-    "method": "PATCH",
+    "method": "POST",
     "path": "/work_orders/1/close",
     "pathParams": {
       "id": 1
-    },
-    "requestBody": {
-      "closure_type": "paid",
-      "closure_reason": "customer_paid"
     },
     "mockResponses": [
       {
@@ -359,7 +355,7 @@
   {
     "name": "reopen_work_order_success",
     "operation": "reopen_work_order",
-    "method": "PATCH",
+    "method": "POST",
     "path": "/work_orders/1/reopen",
     "pathParams": {
       "id": 1
@@ -472,19 +468,22 @@
     }
   },
   {
-    "name": "create_work_orders_service_decline_success",
-    "operation": "create_work_orders_service_decline",
+    "name": "decline_all_work_order_concerns_success",
+    "operation": "decline_all_work_order_concerns",
     "method": "POST",
-    "path": "/work_orders/1/service_declines",
+    "path": "/work_orders/1/concerns/decline_all",
     "pathParams": {
-      "id": 1
+      "work_order_id": 1
+    },
+    "requestBody": {
+      "decline_reason": "Customer declined all"
     },
     "mockResponses": [
       {
-        "status": 201,
+        "status": 200,
         "body": {
           "id": 1,
-          "work_order_id": 1
+          "status": "estimate"
         }
       }
     ],
@@ -525,19 +524,19 @@
     }
   },
   {
-    "name": "create_work_orders_account_posting_success",
-    "operation": "create_work_orders_account_posting",
+    "name": "post_work_order_to_account_success",
+    "operation": "post_work_order_to_account",
     "method": "POST",
-    "path": "/work_orders/1/account_postings",
+    "path": "/work_orders/1/post_to_account",
     "pathParams": {
       "id": 1
     },
     "mockResponses": [
       {
-        "status": 201,
+        "status": 200,
         "body": {
           "id": 1,
-          "work_order_id": 1
+          "status": "completed"
         }
       }
     ],
@@ -547,19 +546,19 @@
     }
   },
   {
-    "name": "create_work_orders_estimate_deliverie_success",
-    "operation": "create_work_orders_estimate_deliverie",
+    "name": "send_work_order_estimate_success",
+    "operation": "send_work_order_estimate",
     "method": "POST",
-    "path": "/work_orders/1/estimate_deliveries",
+    "path": "/work_orders/1/send_estimate",
     "pathParams": {
       "id": 1
     },
     "mockResponses": [
       {
-        "status": 201,
+        "status": 200,
         "body": {
           "id": 1,
-          "work_order_id": 1
+          "status": "estimate"
         }
       }
     ],
@@ -569,19 +568,19 @@
     }
   },
   {
-    "name": "create_work_orders_invoice_summarie_success",
-    "operation": "create_work_orders_invoice_summarie",
+    "name": "send_work_order_invoice_summary_success",
+    "operation": "send_work_order_invoice_summary",
     "method": "POST",
-    "path": "/work_orders/1/invoice_summaries",
+    "path": "/work_orders/1/send_invoice_summary",
     "pathParams": {
       "id": 1
     },
     "mockResponses": [
       {
-        "status": 201,
+        "status": 200,
         "body": {
           "id": 1,
-          "work_order_id": 1
+          "status": "completed"
         }
       }
     ],
@@ -591,19 +590,19 @@
     }
   },
   {
-    "name": "create_work_orders_reminder_success",
-    "operation": "create_work_orders_reminder",
+    "name": "send_work_order_reminder_success",
+    "operation": "send_work_order_reminder",
     "method": "POST",
-    "path": "/work_orders/1/reminders",
+    "path": "/work_orders/1/send_reminder",
     "pathParams": {
       "id": 1
     },
     "mockResponses": [
       {
-        "status": 201,
+        "status": 200,
         "body": {
           "id": 1,
-          "work_order_id": 1
+          "status": "estimate"
         }
       }
     ],
@@ -645,31 +644,15 @@
     }
   },
   {
-    "name": "delete_work_order_success",
-    "operation": "delete_work_order",
-    "method": "DELETE",
-    "path": "/work_orders/1",
+    "name": "decline_work_order_success",
+    "operation": "decline_work_order",
+    "method": "POST",
+    "path": "/work_orders/1/decline",
     "pathParams": {
       "id": 1
     },
-    "mockResponses": [
-      {
-        "status": 204,
-        "body": ""
-      }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true
-    }
-  },
-  {
-    "name": "update_work_orders_close_as_declined_success",
-    "operation": "update_work_orders_close_as_declined",
-    "method": "PATCH",
-    "path": "/work_orders/1/close_as_declined",
-    "pathParams": {
-      "id": 1
+    "requestBody": {
+      "closure_reason": "customer_declined"
     },
     "mockResponses": [
       {
@@ -690,12 +673,15 @@
     }
   },
   {
-    "name": "update_work_orders_close_as_voided_success",
-    "operation": "update_work_orders_close_as_voided",
-    "method": "PATCH",
-    "path": "/work_orders/1/close_as_voided",
+    "name": "void_work_order_success",
+    "operation": "void_work_order",
+    "method": "POST",
+    "path": "/work_orders/1/void",
     "pathParams": {
       "id": 1
+    },
+    "requestBody": {
+      "closure_reason": "duplicate_wo"
     },
     "mockResponses": [
       {

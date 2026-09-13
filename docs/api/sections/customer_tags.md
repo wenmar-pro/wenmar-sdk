@@ -15,18 +15,7 @@ List all customer tags, paginated via the Link header.
 |---|---|---|
 | `status` | string | No |
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `color_hex` | string | Yes |
-| `color_class` | string | Yes |
-| `bubble_classes` | string | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
+**Response 200** — array of [CustomerTag](#customertag-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags.json
@@ -40,18 +29,7 @@ POST /customer_tags
 
 Create a customer tag.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `color_hex` | string | Yes |
-| `color_class` | string | Yes |
-| `bubble_classes` | string | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
+**Response 201** — [CustomerTag](#customertag-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -72,18 +50,7 @@ Show a customer tag by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `color_hex` | string | Yes |
-| `color_class` | string | Yes |
-| `bubble_classes` | string | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
+**Response 200** — [CustomerTag](#customertag-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customer_tags/<id>.json
@@ -101,18 +68,7 @@ Update a customer tag by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `color_hex` | string | Yes |
-| `color_class` | string | Yes |
-| `bubble_classes` | string | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
+**Response 200** — [CustomerTag](#customertag-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -208,6 +164,21 @@ Update a customer tags trash by ID.
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/customer_tags/<id>.json
 ```
+
+---
+
+### CustomerTag schema {#customertag-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `color` | string | Yes |
+| `color_hex` | string | Yes |
+| `color_class` | string | Yes |
+| `bubble_classes` | string | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
 
 ---
 

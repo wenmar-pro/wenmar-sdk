@@ -16,58 +16,7 @@ List all users, paginated via the Link header.
 | `page` | integer | No |
 | `per_page` | integer | No |
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `full_name` | string | Yes |
-| `email` | string \| null | Yes |
-| `initials` | string | Yes |
-| `role` | string | Yes |
-| `disabled` | boolean | Yes |
-| `disabled_at` | string \| null | Yes |
-| `locked` | boolean | Yes |
-| `confirmed` | boolean | Yes |
-| `hourly_cost_cents` | integer | Yes |
-| `hourly_cost_currency` | string | Yes |
-| `certification_number` | any | Yes |
-| `certification_label` | any | Yes |
-| `mfa_enabled` | boolean | Yes |
-| `mfa_required` | boolean | Yes |
-| `qr_token_generated_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`capabilities` — object:
-| Field | Type | Required |
-|---|---|---|
-| `can_perform_work` | boolean | Yes |
-| `can_dispatch_work` | boolean | Yes |
-| `can_message_customers` | boolean | Yes |
-| `can_manage_technicians` | boolean | Yes |
-| `can_override_inspections` | boolean | Yes |
-| `can_perform_inspections` | boolean | Yes |
-| `can_view_all_active_work_orders` | boolean | Yes |
-| `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
-| `can_view_job_board` | boolean | Yes |
-| `can_view_metrics` | boolean | Yes |
-| `can_view_activity_feed` | boolean | Yes |
-| `can_edit_permissions` | boolean | Yes |
+**Response 200** — array of [User](#user-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -83,58 +32,7 @@ POST /users
 
 Create a user.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `full_name` | string | Yes |
-| `email` | string | Yes |
-| `initials` | string | Yes |
-| `role` | string | Yes |
-| `disabled` | boolean | Yes |
-| `disabled_at` | string \| null | Yes |
-| `locked` | boolean | Yes |
-| `confirmed` | boolean | Yes |
-| `hourly_cost_cents` | integer | Yes |
-| `hourly_cost_currency` | string | Yes |
-| `certification_number` | any | Yes |
-| `certification_label` | any | Yes |
-| `mfa_enabled` | boolean | Yes |
-| `mfa_required` | boolean | Yes |
-| `qr_token_generated_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`capabilities` — object:
-| Field | Type | Required |
-|---|---|---|
-| `can_perform_work` | boolean | Yes |
-| `can_dispatch_work` | boolean | Yes |
-| `can_message_customers` | boolean | Yes |
-| `can_manage_technicians` | boolean | Yes |
-| `can_override_inspections` | boolean | Yes |
-| `can_perform_inspections` | boolean | Yes |
-| `can_view_all_active_work_orders` | boolean | Yes |
-| `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
-| `can_view_job_board` | boolean | Yes |
-| `can_view_metrics` | boolean | Yes |
-| `can_view_activity_feed` | boolean | Yes |
-| `can_edit_permissions` | boolean | Yes |
+**Response 201** — [User](#user-schema)
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -165,7 +63,6 @@ List all permission groups, paginated via the Link header.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
@@ -205,7 +102,6 @@ Create a permission group.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
@@ -248,7 +144,6 @@ Update a permission group by ID.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
@@ -261,6 +156,56 @@ Update a permission group by ID.
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/users/permission_groups/<id>.json
+```
+
+## Create users permission groups assign
+
+```
+POST /users/permission_groups/{id}/assign
+```
+
+Create a users permission groups assign.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `assigned_user_ids` | array of integer | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/users/permission_groups/<id>.json
+```
+
+## Delete users permission groups unassign
+
+```
+DELETE /users/permission_groups/{id}/unassign
+```
+
+Delete a users permission groups unassign by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `assignment_id` | integer | No |
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `assigned_user_ids` | array of any | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/users/permission_groups/<id>.json
 ```
 
 ## Delete user
@@ -295,58 +240,7 @@ Show a user by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `full_name` | string | Yes |
-| `email` | string \| null | Yes |
-| `initials` | string | Yes |
-| `role` | string | Yes |
-| `disabled` | boolean | Yes |
-| `disabled_at` | string \| null | Yes |
-| `locked` | boolean | Yes |
-| `confirmed` | boolean | Yes |
-| `hourly_cost_cents` | integer | Yes |
-| `hourly_cost_currency` | string | Yes |
-| `certification_number` | any | Yes |
-| `certification_label` | any | Yes |
-| `mfa_enabled` | boolean | Yes |
-| `mfa_required` | boolean | Yes |
-| `qr_token_generated_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`capabilities` — object:
-| Field | Type | Required |
-|---|---|---|
-| `can_perform_work` | boolean | Yes |
-| `can_dispatch_work` | boolean | Yes |
-| `can_message_customers` | boolean | Yes |
-| `can_manage_technicians` | boolean | Yes |
-| `can_override_inspections` | boolean | Yes |
-| `can_perform_inspections` | boolean | Yes |
-| `can_view_all_active_work_orders` | boolean | Yes |
-| `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
-| `can_view_job_board` | boolean | Yes |
-| `can_view_metrics` | boolean | Yes |
-| `can_view_activity_feed` | boolean | Yes |
-| `can_edit_permissions` | boolean | Yes |
+**Response 200** — [User](#user-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/users/<id>.json
@@ -364,58 +258,7 @@ Update a user by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `full_name` | string | Yes |
-| `email` | string \| null | Yes |
-| `initials` | string | Yes |
-| `role` | string | Yes |
-| `disabled` | boolean | Yes |
-| `disabled_at` | string \| null | Yes |
-| `locked` | boolean | Yes |
-| `confirmed` | boolean | Yes |
-| `hourly_cost_cents` | integer | Yes |
-| `hourly_cost_currency` | string | Yes |
-| `certification_number` | any | Yes |
-| `certification_label` | any | Yes |
-| `mfa_enabled` | boolean | Yes |
-| `mfa_required` | boolean | Yes |
-| `qr_token_generated_at` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-`capabilities` — object:
-| Field | Type | Required |
-|---|---|---|
-| `can_perform_work` | boolean | Yes |
-| `can_dispatch_work` | boolean | Yes |
-| `can_message_customers` | boolean | Yes |
-| `can_manage_technicians` | boolean | Yes |
-| `can_override_inspections` | boolean | Yes |
-| `can_perform_inspections` | boolean | Yes |
-| `can_view_all_active_work_orders` | boolean | Yes |
-| `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
-| `can_view_job_board` | boolean | Yes |
-| `can_view_metrics` | boolean | Yes |
-| `can_view_activity_feed` | boolean | Yes |
-| `can_edit_permissions` | boolean | Yes |
+**Response 200** — [User](#user-schema)
 
 ```bash
 curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -438,9 +281,10 @@ Create a users disable.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string \| null | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -455,15 +299,18 @@ Create a users disable.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -481,11 +328,17 @@ Create a users disable.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -508,9 +361,10 @@ Create a users enable.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string \| null | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -525,15 +379,18 @@ Create a users enable.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -551,11 +408,17 @@ Create a users enable.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -578,9 +441,10 @@ List all users qr code, paginated via the Link header.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string \| null | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -595,16 +459,19 @@ List all users qr code, paginated via the Link header.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 | `qr_card` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -622,11 +489,17 @@ List all users qr code, paginated via the Link header.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 `qr_card` — object:
 | Field | Type | Required |
@@ -658,9 +531,10 @@ Create a users reset pin.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string \| null | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -675,16 +549,19 @@ Create a users reset pin.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 | `new_pin` | string | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -702,11 +579,17 @@ Create a users reset pin.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -729,9 +612,10 @@ Create a users send confirmation.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -746,15 +630,18 @@ Create a users send confirmation.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -772,11 +659,17 @@ Create a users send confirmation.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -799,9 +692,10 @@ Create a users send password reset.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -816,15 +710,18 @@ Create a users send password reset.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -842,11 +739,17 @@ Create a users send password reset.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
@@ -869,9 +772,10 @@ Create a users unlock.
 
 | Field | Type | Required |
 |---|---|---|
-| `id` | integer | Yes |
 | `type` | string | Yes |
+| `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `email` | string \| null | Yes |
 | `initials` | string | Yes |
 | `role` | string | Yes |
@@ -886,15 +790,18 @@ Create a users unlock.
 | `mfa_enabled` | boolean | Yes |
 | `mfa_required` | boolean | Yes |
 | `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `locations` | array of object | Yes |
-| `capabilities` | object | Yes |
 
-`location` — object:
+`home_location` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
@@ -912,16 +819,87 @@ Create a users unlock.
 | `can_perform_inspections` | boolean | Yes |
 | `can_view_all_active_work_orders` | boolean | Yes |
 | `can_close_reopen_work_orders` | boolean | Yes |
-| `can_hard_delete_work_orders` | boolean | Yes |
 | `can_view_job_board` | boolean | Yes |
 | `can_view_metrics` | boolean | Yes |
 | `can_view_activity_feed` | boolean | Yes |
 | `can_edit_permissions` | boolean | Yes |
 
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/users/<id>.json
 ```
+
+---
+
+### User schema {#user-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `type` | string | Yes |
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `display_name` | string | Yes |
+| `email` | string \| null | Yes |
+| `initials` | string | Yes |
+| `role` | string | Yes |
+| `disabled` | boolean | Yes |
+| `disabled_at` | string \| null | Yes |
+| `locked` | boolean | Yes |
+| `confirmed` | boolean | Yes |
+| `hourly_cost_cents` | integer | Yes |
+| `hourly_cost_currency` | string | Yes |
+| `certification_number` | any | Yes |
+| `certification_label` | any | Yes |
+| `mfa_enabled` | boolean | Yes |
+| `mfa_required` | boolean | Yes |
+| `qr_token_generated_at` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
+| `location_ids` | array of integer | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `home_location` | object | Yes |
+| `locations` | array of object | Yes |
+| `capabilities` | object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
+
+`home_location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`capabilities` — object:
+| Field | Type | Required |
+|---|---|---|
+| `can_perform_work` | boolean | Yes |
+| `can_dispatch_work` | boolean | Yes |
+| `can_message_customers` | boolean | Yes |
+| `can_manage_technicians` | boolean | Yes |
+| `can_override_inspections` | boolean | Yes |
+| `can_perform_inspections` | boolean | Yes |
+| `can_view_all_active_work_orders` | boolean | Yes |
+| `can_close_reopen_work_orders` | boolean | Yes |
+| `can_view_job_board` | boolean | Yes |
+| `can_view_metrics` | boolean | Yes |
+| `can_view_activity_feed` | boolean | Yes |
+| `can_edit_permissions` | boolean | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ---
 
@@ -979,6 +957,14 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | Field | Type | Required |
 |---|---|---|
 | `name` | string | Yes |
+
+---
+
+### CreateUsersPermissionGroupsAssignRequest schema {#createuserspermissiongroupsassignrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `user_id` | integer | Yes |
 
 ---
 

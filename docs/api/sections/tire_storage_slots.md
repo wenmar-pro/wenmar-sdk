@@ -118,46 +118,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/tire_storage_slots.json
 ```
 
-## Create tire storage slots export
-
-```
-POST /tire_storage_slots/export
-```
-
-Create a tire storage slots export.
-
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `export_log_id` | integer | Yes |
-| `status` | string | Yes |
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/tire_storage_slots/export.json
-```
-
-## List tire storage slots export download
-
-```
-GET /tire_storage_slots/export/{id}/download
-```
-
-List all tire storage slots export download, paginated via the Link header.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 200** — no content.
-
-**Response 404** — [Error](#error-schema) error envelope
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/tire_storage_slots/export/<id>.json
-```
-
 ## Delete tire storage slot
 
 ```

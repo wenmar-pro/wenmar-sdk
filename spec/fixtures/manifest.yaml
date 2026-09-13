@@ -106,15 +106,6 @@ targets:
   - id: vehicle-merge
     operation: merge_vehicle
     fixture: vehicles/merge_response.json
-  - id: tags-list
-    operation: list_tags
-    fixture: tags/list.json
-  - id: customer-lookup
-    operation: lookup_customer
-    fixture: customers/lookup.json
-  - id: vehicle-lookup
-    operation: lookup_vehicle
-    fixture: vehicles/lookup.json
   - id: vehicle-prefill
     operation: prefill_vehicle
     fixture: vehicles/prefill.json

@@ -11,19 +11,7 @@ GET /core_tax_rules
 
 List all core tax rules, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `province_code` | string | Yes |
-| `tax_core_charge` | boolean | Yes |
-| `tax_core_credit` | boolean | Yes |
-| `notes` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [CoreTaxRule](#coretaxrule-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -43,7 +31,16 @@ Update a core tax rule by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [CoreTaxRule](#coretaxrule-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/core_tax_rules/<id>.json
+```
+
+---
+
+### CoreTaxRule schema {#coretaxrule-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -56,11 +53,6 @@ Update a core tax rule by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/core_tax_rules/<id>.json
-```
 
 ---
 

@@ -11,21 +11,7 @@ GET /sub_statuses
 
 List all sub statuses, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `status_scope` | string | Yes |
-| `active` | boolean | Yes |
-| `is_default` | boolean | Yes |
-| `position` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [SubStatusType](#substatustype-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/sub_statuses.json
@@ -39,21 +25,7 @@ POST /sub_statuses
 
 Create a sub statuse.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `color` | string | Yes |
-| `status_scope` | string | Yes |
-| `active` | boolean | Yes |
-| `is_default` | boolean | Yes |
-| `position` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [SubStatusType](#substatustype-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -74,7 +46,16 @@ Update a sub statuse by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [SubStatusType](#substatustype-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/sub_statuses/<id>.json
+```
+
+---
+
+### SubStatusType schema {#substatustype-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -89,11 +70,6 @@ Update a sub statuse by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/sub_statuses/<id>.json
-```
 
 ---
 

@@ -83,7 +83,6 @@ Complete
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -153,7 +152,6 @@ Mark all
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -172,50 +170,6 @@ Mark all
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/inspection_reports/<id>.json
-```
-
-## Publish inspection report
-
-```
-PATCH /inspection_reports/{id}/publish
-```
-
-Publish
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `name` | string | Yes |
-| `status` | string | Yes |
-| `work_order_id` | integer | Yes |
-| `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `items_count` | integer | Yes |
-| `checked_count` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/inspection_reports/<id>.json
 ```
 
@@ -241,7 +195,6 @@ Reassign
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -285,7 +238,6 @@ Reopen
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -329,7 +281,6 @@ Reset
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -377,50 +328,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/inspection_reports/<id>.json
 ```
 
-## Unpublish inspection report
-
-```
-PATCH /inspection_reports/{id}/unpublish
-```
-
-Unpublish
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `type` | string | Yes |
-| `name` | string | Yes |
-| `status` | string | Yes |
-| `work_order_id` | integer | Yes |
-| `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
-| `completed` | boolean | Yes |
-| `items_count` | integer | Yes |
-| `checked_count` | integer | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/inspection_reports/<id>.json
-```
-
 ---
 
 ### InspectionReport schema {#inspectionreport-schema}
@@ -433,7 +340,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `status` | string | Yes |
 | `work_order_id` | integer | Yes |
 | `quick_finding` | boolean | Yes |
-| `published` | boolean | Yes |
 | `completed` | boolean | Yes |
 | `items_count` | integer | Yes |
 | `checked_count` | integer | Yes |
@@ -442,7 +348,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `groups` | array of any | Yes |
+| `groups` | array of any | No |
 
 `location` — object:
 | Field | Type | Required |

@@ -4,8 +4,20 @@
   "location_type": "shop",
   "currency": "CAD",
   "dock": [
-    { "name": "work_orders", "enabled": true, "url": "https://app.wenmarpro.com/work_orders.json" }
+    {
+      "name": "work_orders",
+      "enabled": true,
+      "url": "https://app.wenmarpro.com/work_orders.json"
+    }
   ],
   "url": "https://app.wenmarpro.com/locations/1.json",
-  "app_url": "https://app.wenmarpro.com/locations/1"
+  "app_url": "https://app.wenmarpro.com/locations/1",
+  "slug": "main-shop",
+  "time_zone": "America/Toronto",
+  "country": "CA",
+  "address": "123 Main St, Toronto, ON M5V 1A1",
+  "city": "Toronto",
+  "state": "ON",
+  "postal_code": "M5V 1A1",
+  "contact_email": "shop@acme.example"
 }

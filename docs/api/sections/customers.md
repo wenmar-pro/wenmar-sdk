@@ -77,7 +77,18 @@ List all customers, paginated via the Link header.
     "store_credit_cents": 0,
     "last_visit_at": "2026-08-20T10:00:00.000-04:00",
     "statements_count": 2,
-    "currency": "CAD"
+    "currency": "CAD",
+    "name": "Jane Doe",
+    "display_name": "Jane Doe",
+    "initials": "JD",
+    "fleet_mode": "0",
+    "notes": null,
+    "status": "active",
+    "trashed_at": null,
+    "primary_phone": "+15551234567",
+    "primary_phone_formatted": "(555) 123-4567",
+    "primary_email": "jane@example.com",
+    "home_location_id": 1
   },
   {
     "type": "Customer",
@@ -125,7 +136,18 @@ List all customers, paginated via the Link header.
     "store_credit_cents": 0,
     "last_visit_at": null,
     "statements_count": 0,
-    "currency": "CAD"
+    "currency": "CAD",
+    "name": "Jane Doe",
+    "display_name": "Jane Doe",
+    "initials": "JD",
+    "fleet_mode": "0",
+    "notes": null,
+    "status": "active",
+    "trashed_at": null,
+    "primary_phone": "+15551234567",
+    "primary_phone_formatted": "(555) 123-4567",
+    "primary_email": "jane@example.com",
+    "home_location_id": 1
   }
 ]
 ```
@@ -197,27 +219,24 @@ Create a customer.
   "store_credit_cents": 0,
   "last_visit_at": "2026-08-20T10:00:00.000-04:00",
   "statements_count": 2,
-  "currency": "CAD"
+  "currency": "CAD",
+  "name": "Jane Doe",
+  "display_name": "Jane Doe",
+  "initials": "JD",
+  "fleet_mode": "0",
+  "notes": null,
+  "status": "active",
+  "trashed_at": null,
+  "primary_phone": "+15551234567",
+  "primary_phone_formatted": "(555) 123-4567",
+  "primary_email": "jane@example.com",
+  "home_location_id": 1
 }
 ```
 
 ```bash
 curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
      -d '{"...":"..."}' https://app.wenmarpro.com/customers.json
-```
-
-## List customers merge
-
-```
-GET /customers/1043910089/merge
-```
-
-List all customers merge, paginated via the Link header.
-
-**Response 404** — no content.
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/1043910089/merge.json
 ```
 
 ## Check customer duplicate
@@ -245,119 +264,6 @@ Check duplicate
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/check_duplicate.json
-```
-
-## Create customers export
-
-```
-POST /customers/export
-```
-
-Create a customers export.
-
-**Response 200** — [Customer](#customer-schema)
-
-**Response 403** — [Error](#error-schema) error envelope
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/customers/export.json
-```
-
-## List customers export download
-
-```
-GET /customers/export/{id}/download
-```
-
-List all customers export download, paginated via the Link header.
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-
-**Response 200** — no content.
-
-**Response 404** — [Error](#error-schema) error envelope
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/export/<id>.json
-```
-
-## Lookup customer
-
-```
-GET /customers/lookup
-```
-
-Lookup
-
-| Param | Type | Required |
-|---|---|---|
-| `id` | integer | No |
-| `query` | string | No |
-
-**Response 200** — array of [Customer](#customer-schema)
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Example**
-
-```json
-[
-  {
-    "type": "Customer",
-    "id": 1,
-    "full_name": "Jane Doe",
-    "company_name": null,
-    "first_name": "Jane",
-    "last_name": "Doe",
-    "fleet_identifier": null,
-    "marketing_opt_in": false,
-    "tax_exempt": false,
-    "vehicles_count": 2,
-    "emails_count": 1,
-    "phones_count": 1,
-    "emails": [
-      {
-        "id": 1,
-        "address": "jane@example.com",
-        "label": "personal",
-        "primary": true
-      }
-    ],
-    "phones": [
-      {
-        "id": 1,
-        "number": "+15551234567",
-        "label": "mobile",
-        "primary": true
-      }
-    ],
-    "addresses": [],
-    "vehicles_url": "https://app.wenmarpro.com/customers/1/vehicles.json",
-    "work_orders_url": "https://app.wenmarpro.com/customers/1/work_orders.json",
-    "created_at": "2026-08-27T12:00:00.000-04:00",
-    "updated_at": "2026-08-27T12:00:00.000-04:00",
-    "url": "https://app.wenmarpro.com/customers/1.json",
-    "app_url": "https://app.wenmarpro.com/customers/1",
-    "location": {
-      "id": 1,
-      "name": "Main Shop",
-      "url": "https://app.wenmarpro.com/locations/1.json"
-    },
-    "outstanding_balance_cents": 0,
-    "total_revenue_cents": 50000,
-    "store_credit_cents": 0,
-    "last_visit_at": "2026-08-20T10:00:00.000-04:00",
-    "statements_count": 2,
-    "currency": "CAD"
-  }
-]
-```
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/lookup.json
 ```
 
 ## List customers drivers
@@ -745,7 +651,18 @@ Show a customer by ID.
   "store_credit_cents": 0,
   "last_visit_at": "2026-08-20T10:00:00.000-04:00",
   "statements_count": 2,
-  "currency": "CAD"
+  "currency": "CAD",
+  "name": "Jane Doe",
+  "display_name": "Jane Doe",
+  "initials": "JD",
+  "fleet_mode": "0",
+  "notes": null,
+  "status": "active",
+  "trashed_at": null,
+  "primary_phone": "+15551234567",
+  "primary_phone_formatted": "(555) 123-4567",
+  "primary_email": "jane@example.com",
+  "home_location_id": 1
 }
 ```
 
@@ -816,7 +733,18 @@ Update a customer by ID.
   "store_credit_cents": 0,
   "last_visit_at": "2026-08-20T10:00:00.000-04:00",
   "statements_count": 2,
-  "currency": "CAD"
+  "currency": "CAD",
+  "name": "Jane Doe",
+  "display_name": "Jane Doe",
+  "initials": "JD",
+  "fleet_mode": "0",
+  "notes": null,
+  "status": "active",
+  "trashed_at": null,
+  "primary_phone": "+15551234567",
+  "primary_phone_formatted": "(555) 123-4567",
+  "primary_email": "jane@example.com",
+  "home_location_id": 1
 }
 ```
 
@@ -843,25 +771,29 @@ Archive
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
+| `name` | string | Yes |
 | `full_name` | string | Yes |
-| `company_name` | string \| null | Yes |
 | `first_name` | string | Yes |
 | `last_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `fleet_mode` | string | Yes |
 | `marketing_opt_in` | boolean | Yes |
 | `tax_exempt` | boolean | Yes |
+| `notes` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `primary_phone` | string | Yes |
+| `primary_phone_formatted` | string | Yes |
+| `primary_email` | string | Yes |
+| `home_location_id` | integer | Yes |
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
-| `vehicles_url` | string | Yes |
-| `work_orders_url` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
 | `emails` | array of object | Yes |
 | `phones` | array of object | Yes |
 | `addresses` | array of any | Yes |
@@ -869,6 +801,11 @@ Archive
 | `total_revenue_cents` | integer | Yes |
 | `store_credit_cents` | integer | Yes |
 | `last_visit_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
 | `statements_count` | integer | Yes |
 | `currency` | string | Yes |
 
@@ -902,25 +839,29 @@ Create
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
+| `name` | string | Yes |
 | `full_name` | string | Yes |
-| `company_name` | string \| null | Yes |
 | `first_name` | string | Yes |
 | `last_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `fleet_mode` | string | Yes |
 | `marketing_opt_in` | boolean | Yes |
 | `tax_exempt` | boolean | Yes |
+| `notes` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `primary_phone` | string | Yes |
+| `primary_phone_formatted` | string | Yes |
+| `primary_email` | string | Yes |
+| `home_location_id` | integer | Yes |
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
-| `vehicles_url` | string | Yes |
-| `work_orders_url` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
 | `emails` | array of object | Yes |
 | `phones` | array of object | Yes |
 | `addresses` | array of any | Yes |
@@ -928,6 +869,11 @@ Create
 | `total_revenue_cents` | integer | Yes |
 | `store_credit_cents` | integer | Yes |
 | `last_visit_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
 | `statements_count` | integer | Yes |
 | `currency` | string | Yes |
 
@@ -991,7 +937,18 @@ Create
   "store_credit_cents": 0,
   "last_visit_at": "2026-08-20T10:00:00.000-04:00",
   "statements_count": 2,
-  "currency": "CAD"
+  "currency": "CAD",
+  "name": "Jane Doe",
+  "display_name": "Jane Doe",
+  "initials": "JD",
+  "fleet_mode": "0",
+  "notes": null,
+  "status": "active",
+  "trashed_at": null,
+  "primary_phone": "+15551234567",
+  "primary_phone_formatted": "(555) 123-4567",
+  "primary_email": "jane@example.com",
+  "home_location_id": 1
 }
 ```
 
@@ -1018,25 +975,29 @@ Restore
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
+| `name` | string | Yes |
 | `full_name` | string | Yes |
-| `company_name` | string \| null | Yes |
 | `first_name` | string | Yes |
 | `last_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `fleet_mode` | string | Yes |
 | `marketing_opt_in` | boolean | Yes |
 | `tax_exempt` | boolean | Yes |
+| `notes` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `primary_phone` | string | Yes |
+| `primary_phone_formatted` | string | Yes |
+| `primary_email` | string | Yes |
+| `home_location_id` | integer | Yes |
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
-| `vehicles_url` | string | Yes |
-| `work_orders_url` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
 | `emails` | array of object | Yes |
 | `phones` | array of object | Yes |
 | `addresses` | array of any | Yes |
@@ -1044,6 +1005,11 @@ Restore
 | `total_revenue_cents` | integer | Yes |
 | `store_credit_cents` | integer | Yes |
 | `last_visit_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
 | `statements_count` | integer | Yes |
 | `currency` | string | Yes |
 
@@ -1077,25 +1043,29 @@ Trash
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
+| `name` | string | Yes |
 | `full_name` | string | Yes |
-| `company_name` | string \| null | Yes |
 | `first_name` | string | Yes |
 | `last_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `fleet_mode` | string | Yes |
 | `marketing_opt_in` | boolean | Yes |
 | `tax_exempt` | boolean | Yes |
+| `notes` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `primary_phone` | string | Yes |
+| `primary_phone_formatted` | string | Yes |
+| `primary_email` | string | Yes |
+| `home_location_id` | integer | Yes |
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string | Yes |
-| `vehicles_url` | string | Yes |
-| `work_orders_url` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-| `location` | object | Yes |
 | `emails` | array of object | Yes |
 | `phones` | array of object | Yes |
 | `addresses` | array of any | Yes |
@@ -1103,6 +1073,11 @@ Trash
 | `total_revenue_cents` | integer | Yes |
 | `store_credit_cents` | integer | Yes |
 | `last_visit_at` | string \| null | Yes |
+| `vehicles_url` | string | Yes |
+| `work_orders_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `location` | object | Yes |
 | `statements_count` | integer | Yes |
 | `currency` | string | Yes |
 
@@ -1130,34 +1105,43 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
+| `name` | string | Yes |
 | `full_name` | string | Yes |
-| `company_name` | string \| null | Yes |
 | `first_name` | string | Yes |
 | `last_name` | string | Yes |
+| `company_name` | string \| null | Yes |
+| `display_name` | string | Yes |
+| `initials` | string | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `fleet_mode` | string | Yes |
 | `marketing_opt_in` | boolean | Yes |
 | `tax_exempt` | boolean | Yes |
+| `notes` | string \| null | Yes |
+| `status` | string | Yes |
+| `trashed_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `primary_phone` | string \| null | Yes |
+| `primary_phone_formatted` | string \| null | Yes |
+| `primary_email` | string \| null | Yes |
+| `home_location_id` | integer | Yes |
 | `vehicles_count` | integer | Yes |
 | `emails_count` | integer | Yes |
 | `phones_count` | integer | Yes |
-| `status` | string | Yes |
-| `trashed_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `emails` | array of object | Yes |
-| `phones` | array of object | Yes |
-| `addresses` | array of object | Yes |
-| `outstanding_balance_cents` | integer | Yes |
-| `total_revenue_cents` | integer | Yes |
-| `store_credit_cents` | integer | Yes |
-| `last_visit_at` | string \| null | Yes |
-| `statements_count` | integer | Yes |
-| `currency` | string | Yes |
+| `emails` | array of object | No |
+| `phones` | array of object | No |
+| `addresses` | array of object | No |
+| `outstanding_balance_cents` | integer | No |
+| `total_revenue_cents` | integer | No |
+| `store_credit_cents` | integer | No |
+| `last_visit_at` | string \| null | No |
+| `statements_count` | integer | No |
+| `currency` | string | No |
 
 `location` — object:
 | Field | Type | Required |
@@ -1311,39 +1295,44 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `submodel` | string \| null | Yes |
 | `body_style` | string \| null | Yes |
 | `engine` | string \| null | Yes |
+| `transmission` | string \| null | Yes |
+| `drivetrain` | string \| null | Yes |
+| `color` | string \| null | Yes |
 | `vin` | string \| null | Yes |
 | `license_plate` | string \| null | Yes |
 | `license_plate_state` | string \| null | Yes |
 | `license_plate_country` | string | Yes |
-| `drivetrain` | string \| null | Yes |
-| `transmission` | string \| null | Yes |
-| `color` | string \| null | Yes |
-| `vehicle_type` | string | Yes |
 | `unit_number` | string \| null | Yes |
 | `fleet_identifier` | string \| null | Yes |
+| `vehicle_type` | string | Yes |
+| `status` | string | Yes |
+| `notes` | string \| null | Yes |
+| `customer_id` | integer | Yes |
 | `production_date` | string \| null | Yes |
 | `annual_safety_expires_at` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `odometer` | object | Yes |
-| `work_orders_count` | integer | Yes |
-| `status` | string | Yes |
+| `odometer_reading` | integer \| null | Yes |
+| `odometer_unit` | string | Yes |
 | `trashed_at` | string \| null | Yes |
-| `work_orders_url` | string | Yes |
-| `customer` | object | Yes |
 | `created_at` | string | Yes |
 | `updated_at` | string | Yes |
+| `home_location_id` | integer | Yes |
+| `display_name` | string | Yes |
+| `work_orders_count` | integer | Yes |
+| `appointments_count` | integer | Yes |
+| `odometer` | object | Yes |
+| `work_orders_url` | string | Yes |
+| `customer` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
-| `last_serviced_at` | string \| null | Yes |
-| `lifetime_revenue_cents` | integer | Yes |
-| `open_work_orders_count` | integer | Yes |
-| `appointments_count` | integer | Yes |
+| `last_serviced_at` | string \| null | No |
+| `lifetime_revenue_cents` | integer | No |
+| `open_work_orders_count` | integer | No |
 
 `odometer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `reading` | integer \| null | Yes |
+| `reading` | number \| null | Yes |
 | `unit` | string | Yes |
 
 `customer` — object:
@@ -1385,56 +1374,58 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `vehicle_arrived_at` | string \| null | Yes |
 | `work_order_services_count` | integer | Yes |
 | `inspection_reports_count` | integer | Yes |
+| `services_visible_to_customer` | boolean | Yes |
+| `inspections_visible_to_customer` | boolean | Yes |
 | `customer` | object | Yes |
 | `vehicle` | object | Yes |
+| `location` | object | Yes |
 | `totals` | object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `location` | object | Yes |
-| `odometer_in` | integer \| null | Yes |
-| `odometer_out` | integer \| null | Yes |
-| `odometer_unit` | string | Yes |
-| `authorized_at` | string \| null | Yes |
-| `authorized_total_cents` | integer | Yes |
-| `customer_notified` | boolean | Yes |
-| `customer_notified_ready` | boolean | Yes |
-| `ready_for_pickup_at` | string \| null | Yes |
-| `completed_at` | string \| null | Yes |
-| `declined_at` | string \| null | Yes |
-| `decline_reason` | string \| null | Yes |
-| `discount_cents` | integer | Yes |
-| `fees_cents` | integer | Yes |
-| `parts_cents` | integer | Yes |
-| `labor_cents` | integer | Yes |
-| `tires_cents` | integer | Yes |
-| `subcontracts_cents` | integer | Yes |
-| `credit_balance_cents` | integer | Yes |
-| `saved_for_later` | boolean | Yes |
-| `closure_reason` | string \| null | Yes |
-| `closure_reason_notes` | string \| null | Yes |
-| `notes` | string \| null | Yes |
-| `purchase_order_number` | string \| null | Yes |
-| `return_method` | string | Yes |
-| `return_method_notes` | string \| null | Yes |
-| `vehicle_keys_location` | string | Yes |
-| `vehicle_location` | string | Yes |
-| `customer_visit_count` | integer | Yes |
-| `customer_total_spend_cents` | integer | Yes |
-| `average_ticket_cents` | integer | Yes |
-| `activity_total` | integer | Yes |
-| `recent_activities` | array of object | Yes |
-| `services_url` | string | Yes |
-| `payments_url` | string | Yes |
-| `wip_url` | string | Yes |
-| `inspection_url` | string | Yes |
-| `parts_url` | string | Yes |
-| `concerns_url` | string | Yes |
-| `service_history_url` | string | Yes |
-| `declined_services_url` | string | Yes |
-| `activity_url` | string | Yes |
-| `vehicle_history_url` | string | Yes |
-| `appointments_url` | string | Yes |
-| `authorization_logs_url` | string | Yes |
+| `odometer_in` | integer \| null | No |
+| `odometer_out` | integer \| null | No |
+| `odometer_unit` | string | No |
+| `authorized_at` | string \| null | No |
+| `authorized_total_cents` | integer | No |
+| `customer_notified` | boolean | No |
+| `customer_notified_ready` | boolean | No |
+| `ready_for_pickup_at` | string \| null | No |
+| `completed_at` | string \| null | No |
+| `declined_at` | string \| null | No |
+| `decline_reason` | string \| null | No |
+| `discount_cents` | integer | No |
+| `fees_cents` | integer | No |
+| `parts_cents` | integer | No |
+| `labor_cents` | integer | No |
+| `tires_cents` | integer | No |
+| `subcontracts_cents` | integer | No |
+| `credit_balance_cents` | integer | No |
+| `saved_for_later` | boolean | No |
+| `closure_reason` | string \| null | No |
+| `closure_reason_notes` | string \| null | No |
+| `notes` | string \| null | No |
+| `purchase_order_number` | string \| null | No |
+| `return_method` | string | No |
+| `return_method_notes` | string \| null | No |
+| `vehicle_keys_location` | string | No |
+| `vehicle_location` | string | No |
+| `customer_visit_count` | integer | No |
+| `customer_total_spend_cents` | integer | No |
+| `average_ticket_cents` | integer | No |
+| `activity_total` | integer | No |
+| `recent_activities` | array of object | No |
+| `services_url` | string | No |
+| `payments_url` | string | No |
+| `wip_url` | string | No |
+| `inspection_url` | string | No |
+| `parts_url` | string | No |
+| `concerns_url` | string | No |
+| `service_history_url` | string | No |
+| `declined_services_url` | string | No |
+| `activity_url` | string | No |
+| `vehicle_history_url` | string | No |
+| `appointments_url` | string | No |
+| `authorization_logs_url` | string | No |
 | `payer_customer` | object | No |
 
 `customer` — object:
@@ -1442,16 +1433,26 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
+| `display_name` | string | Yes |
 | `url` | string | Yes |
 
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
+| `display_name` | string | Yes |
 | `make` | string | Yes |
 | `model` | string | Yes |
 | `year` | integer | Yes |
+| `license_plate` | string | Yes |
 | `vin` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
 | `url` | string | Yes |
 
 `totals` — object:
@@ -1463,13 +1464,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `paid_cents` | integer | Yes |
 | `remaining_cents` | integer | Yes |
 | `currency` | string | Yes |
-
-`location` — object:
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `url` | string | Yes |
 
 `payer_customer` — object:
 | Field | Type | Required |
@@ -1489,9 +1483,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 `customer` — object:
 | Field | Type | Required |
 |---|---|---|
-| `phones_attributes` | array of object | No |
-| `emails_attributes` | array of object | No |
-| `status` | string | No |
 | `first_name` | string | No |
 | `last_name` | string | No |
 | `company_name` | string | No |
@@ -1504,7 +1495,10 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `discount_percent` | string | No |
 | `po_required` | boolean | No |
 | `customer_tag_id` | any | No |
+| `emails_attributes` | array of object | No |
+| `phones_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
+| `status` | string | No |
 
 ---
 

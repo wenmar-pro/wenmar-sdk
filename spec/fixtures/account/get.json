@@ -3,8 +3,22 @@
   "name": "Main Shop",
   "slug": "main-shop",
   "locations": [
-    { "id": 1, "name": "Bay 1", "url": "https://app.wenmarpro.com/locations/1.json", "app_url": "https://app.wenmarpro.com/locations/1" }
+    {
+      "id": 1,
+      "name": "Bay 1",
+      "url": "https://app.wenmarpro.com/locations/1.json",
+      "app_url": "https://app.wenmarpro.com/locations/1"
+    }
   ],
   "url": "https://app.wenmarpro.com/account.json",
-  "app_url": "https://app.wenmarpro.com/account"
+  "app_url": "https://app.wenmarpro.com/account",
+  "billing_email": "billing@acme.example",
+  "website": "https://acme.example",
+  "business_type": "auto_repair",
+  "tax_id": "123456789",
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "formatted_join_code": "ACME-1234",
+  "station_login_url": "https://acme.example/station",
+  "deletion_scheduled_at": null
 }

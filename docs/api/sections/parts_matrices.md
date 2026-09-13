@@ -11,21 +11,7 @@ GET /parts_matrices
 
 List all parts matrices, paginated via the Link header.
 
-**Response 200** — array
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `default_multiplier` | string | Yes |
-| `max_markup_cents` | integer \| null | Yes |
-| `tiers` | array of object | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 200** — array of [PartsMatrix](#partsmatrix-schema)
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/parts_matrices.json
@@ -39,21 +25,7 @@ POST /parts_matrices
 
 Create a parts matrice.
 
-**Response 201**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `name` | string | Yes |
-| `is_default` | boolean | Yes |
-| `active` | boolean | Yes |
-| `default_multiplier` | string | Yes |
-| `max_markup_cents` | integer \| null | Yes |
-| `tiers` | array of any | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
+**Response 201** — [PartsMatrix](#partsmatrix-schema)
 
 **Response 403** — [Error](#error-schema) error envelope
 
@@ -92,7 +64,16 @@ Update a parts matrice by ID.
 |---|---|---|
 | `id` | integer | Yes |
 
-**Response 200**
+**Response 200** — [PartsMatrix](#partsmatrix-schema)
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/parts_matrices/<id>.json
+```
+
+---
+
+### PartsMatrix schema {#partsmatrix-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -107,11 +88,6 @@ Update a parts matrice by ID.
 | `updated_at` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-
-```bash
-curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/parts_matrices/<id>.json
-```
 
 ---
 
