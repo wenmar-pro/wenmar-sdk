@@ -2677,6 +2677,7 @@ type ListVehiclesParams struct {
 	CustomerId *int    `form:"customer_id,omitempty" json:"customer_id,omitempty"`
 	Page       *int    `form:"page,omitempty" json:"page,omitempty"`
 	PerPage    *int    `form:"per_page,omitempty" json:"per_page,omitempty"`
+	Q          *string `form:"q,omitempty" json:"q,omitempty"`
 	Status     *string `form:"status,omitempty" json:"status,omitempty"`
 	Type       *string `form:"type,omitempty" json:"type,omitempty"`
 }
@@ -32367,6 +32368,18 @@ func NewListVehiclesRequest(server string, params *ListVehiclesParams) (*http.Re
 		if params.PerPage != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "per_page", *params.PerPage, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {

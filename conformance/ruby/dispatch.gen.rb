@@ -292,7 +292,7 @@ module Conformance
     "create_users_send_confirmation" => ->(client, args) { client.create_users_send_confirmation(args["pathParams"]["id"]) },
     "create_users_send_password_reset" => ->(client, args) { client.create_users_send_password_reset(args["pathParams"]["id"]) },
     "create_users_unlock" => ->(client, args) { client.create_users_unlock(args["pathParams"]["id"]) },
-    "list_vehicles" => ->(client, args) { client.list_vehicles(customer_id: args["query"]["customer_id"], page: args["query"]["page"], per_page: args["query"]["per_page"], status: args["query"]["status"], type: args["query"]["type"]) },
+    "list_vehicles" => ->(client, args) { client.list_vehicles(customer_id: args["query"]["customer_id"], page: args["query"]["page"], per_page: args["query"]["per_page"], q: args["query"]["q"], status: args["query"]["status"], type: args["query"]["type"]) },
     "create_vehicle" => ->(client, args) { client.create_vehicle(vehicle: args["requestBody"]["vehicle"]) },
     "check_vehicle_duplicate" => ->(client, args) { client.check_vehicle_duplicate(vin: args["query"]["vin"]) },
     "list_vehicles_customer_vehicles" => ->(client, args) { client.list_vehicles_customer_vehicles(customer_id: args["query"]["customer_id"]) },

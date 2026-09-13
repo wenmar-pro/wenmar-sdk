@@ -1490,15 +1490,15 @@ def create_users_unlock(id)
 end
 # Lists list_vehicles resources (paginated).
 # @return [Wenmar::Paginator]
-def list_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil, type: nil)
-  params = { "customer_id" => customer_id, "page" => page, "per_page" => per_page, "status" => status, "type" => type }
+def list_vehicles(customer_id: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
+  params = { "customer_id" => customer_id, "page" => page, "per_page" => per_page, "q" => q, "status" => status, "type" => type }
   get("/vehicles", params.compact)
 end
 
 # Fetches all vehicles, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, status: nil, type: nil)
-  paginator_to_a(list_vehicles(customer_id: customer_id, page: page, per_page: per_page, status: status, type: type), 1000)
+def get_all_vehicles(customer_id: nil, page: nil, per_page: nil, q: nil, status: nil, type: nil)
+  paginator_to_a(list_vehicles(customer_id: customer_id, page: page, per_page: per_page, q: q, status: status, type: type), 1000)
 end
 # Runs create_vehicle (POST /vehicles).
 def create_vehicle(vehicle:)

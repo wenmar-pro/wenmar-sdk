@@ -3771,22 +3771,6 @@ paths:
           type: integer
       requestBody:
         content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: object
-                  properties:
-                    body:
-                      type: string
-                    channel:
-                      type: string
-                  required:
-                  - body
-                  - channel
-              required:
-              - message
           multipart/form-data:
             schema:
               type: object
@@ -3809,6 +3793,22 @@ paths:
               required:
               - message
               - files
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    body:
+                      type: string
+                    channel:
+                      type: string
+                  required:
+                  - body
+                  - channel
+              required:
+              - message
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -5293,6 +5293,35 @@ paths:
       summary: create
       tags:
       - Shop::Customer
+      responses:
+        '201':
+          description: POST /customers -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Customer"
+        '403':
+          description: POST /customers -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /customers -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       requestBody:
         content:
           application/json:
@@ -5387,35 +5416,6 @@ paths:
                   - last_name
               required:
               - customer
-      responses:
-        '201':
-          description: POST /customers -> 201
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Customer"
-        '403':
-          description: POST /customers -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /customers -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       description: POST /customers
       operationId: POST_customers
   "/customers/check_duplicate":
@@ -12426,6 +12426,19 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -12448,19 +12461,6 @@ paths:
                     type: string
                   app_url:
                     type: string
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                 required:
                 - id
                 - conversation_id
@@ -21806,6 +21806,11 @@ paths:
         required: false
         schema:
           type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
       - name: status
         in: query
         required: false
@@ -21855,6 +21860,35 @@ paths:
       summary: create
       tags:
       - Shop::Vehicle
+      responses:
+        '201':
+          description: POST /vehicles -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vehicle"
+        '403':
+          description: POST /vehicles -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /vehicles -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       requestBody:
         content:
           application/json:
@@ -21910,35 +21944,6 @@ paths:
                   - year
               required:
               - vehicle
-      responses:
-        '201':
-          description: POST /vehicles -> 201
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Vehicle"
-        '403':
-          description: POST /vehicles -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /vehicles -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       description: POST /vehicles
       operationId: POST_vehicles
   "/vehicles/check_duplicate":
@@ -24352,14 +24357,14 @@ paths:
                       type: string
                     waiting_for_customer:
                       type: boolean
+                    payer_customer_id:
+                      type: integer
                     work_order_tag_id:
                       type: integer
                     sub_status_type_id:
                       type: integer
                     services_visible_to_customer:
                       type: boolean
-                    payer_customer_id:
-                      type: integer
               required:
               - work_order
       responses:
@@ -30377,14 +30382,14 @@ paths:
                       type: object
                       properties:
                         id:
-                          nullable: true
                           type: integer
+                          nullable: true
                         name:
-                          nullable: true
                           type: string
+                          nullable: true
                         url:
-                          nullable: true
                           type: string
+                          nullable: true
                       required:
                       - id
                       - name
@@ -38258,21 +38263,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                work_order_line_item:
-                  type: object
-                  properties:
-                    description:
-                      type: string
-                    part_status:
-                      type: string
-              required:
-              - work_order_line_item
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
@@ -38367,6 +38357,21 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                work_order_line_item:
+                  type: object
+                  properties:
+                    part_status:
+                      type: string
+                    description:
+                      type: string
+              required:
+              - work_order_line_item
       description: PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
       operationId: PATCH_work_orders_work_order_id_services_service_id_line_items_id_
   "/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies":

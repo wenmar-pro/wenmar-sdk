@@ -4871,10 +4871,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `vehicle_arrived_at` | string | No |
 | `intake_method` | string | No |
 | `waiting_for_customer` | boolean | No |
+| `payer_customer_id` | integer | No |
 | `work_order_tag_id` | integer | No |
 | `sub_status_type_id` | integer | No |
 | `services_visible_to_customer` | boolean | No |
-| `payer_customer_id` | integer | No |
 
 ---
 
@@ -5452,8 +5452,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order_line_item` — object:
 | Field | Type | Required |
 |---|---|---|
-| `description` | string | No |
 | `part_status` | string | No |
+| `description` | string | No |
 
 ---
 

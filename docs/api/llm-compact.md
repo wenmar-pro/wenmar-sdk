@@ -249,7 +249,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /messages** ?conversation_id -> 200: array of object
 - **GET /messages/{id}** ?id -> 200: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
-- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url,sender}
+- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
 
 ## Notifications
 
@@ -427,7 +427,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Vehicles
 
-- **GET /vehicles** ?customer_id,page,per_page,status,type -> 200: array of Vehicle | 403: error envelope
+- **GET /vehicles** ?customer_id,page,per_page,q,status,type -> 200: array of Vehicle | 403: error envelope
 - **POST /vehicles** -> 201: Vehicle | 403: error envelope | 422: error envelope
 - **GET /vehicles/check_duplicate** ?vin -> 200: object{matches} | 403: error envelope
 - **GET /vehicles/customer_vehicles** ?customer_id -> 403: error envelope
@@ -764,7 +764,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UpdateWorkOrderTagsArchiveRequest**: {}
 - **CreateWorkOrderRequest**: {work_order*:object{customer_id,vehicle_id}}
 - **CreateWorkOrdersQuickIntakeRequest**: {customer*:object{phone,first_name,last_name}, work_order*:object{concern_description}, vehicle:object{year,make,model,license_plate,license_plate_state}}
-- **UpdateWorkOrderRequest**: {work_order*:object{saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,work_order_tag_id,sub_status_type_id,services_visible_to_customer,payer_customer_id}}
+- **UpdateWorkOrderRequest**: {work_order*:object{saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,payer_customer_id,work_order_tag_id,sub_status_type_id,services_visible_to_customer}}
 - **CloseWorkOrderRequest**: {}
 - **CompleteWorkOrderRequest**: {work_order_completion_form*:object{odometer_in,odometer_out}}
 - **UpdateWorkOrdersCourtesyCarAssignmentRequest**: {action_type*:string}
@@ -813,7 +813,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateWorkOrdersServicesCommentRequest**: {service_comment*:object{body}}
 - **CreateWorkOrdersServicesExtractionRequest**: {text*:string, extraction_id*:string}
 - **CreateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{item_type,description,hours,labor_rate_id,total,unit_price,quantity}}
-- **UpdateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{description,part_status}}
+- **UpdateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{part_status,description}}
 - **CreateWorkOrdersServicesLineItemsCopieRequest**: {}
 - **CreateWorkOrdersServicesLineItemsInventoryAdditionRequest**: {}
 - **CreateWorkOrdersServicesLineItemsPriceRefresheRequest**: {}

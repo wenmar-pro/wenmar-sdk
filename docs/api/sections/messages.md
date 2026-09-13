@@ -134,6 +134,7 @@ Create a messages resend.
 | `appointment_id` | integer \| null | Yes |
 | `failure_reason` | string \| null | Yes |
 | `attachment_count` | integer | Yes |
+| `sender` | object | No |
 | `sent_at` | string \| null | Yes |
 | `delivered_at` | string \| null | Yes |
 | `read_at` | string \| null | Yes |
@@ -143,7 +144,6 @@ Create a messages resend.
 | `conversation_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
-| `sender` | object | No |
 
 `sender` — object:
 | Field | Type | Required |

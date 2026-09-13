@@ -4192,9 +4192,6 @@ paths:
           type: integer
       requestBody:
         content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
           multipart/form-data:
             schema:
               type: object
@@ -4217,6 +4214,9 @@ paths:
               required:
               - message
               - files
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -5928,11 +5928,6 @@ paths:
       summary: create
       tags:
       - customers
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateCustomerRequest"
       responses:
         '201':
           description: POST /customers -> 201
@@ -5962,6 +5957,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomerRequest"
       description: Create a customer.
       operationId: create_customer
       x-curl-example: |-
@@ -13284,6 +13284,19 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -13306,19 +13319,6 @@ paths:
                     type: string
                   app_url:
                     type: string
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                 required:
                 - id
                 - conversation_id
@@ -23348,6 +23348,11 @@ paths:
         required: false
         schema:
           type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
       - name: status
         in: query
         required: false
@@ -23412,11 +23417,6 @@ paths:
       summary: create
       tags:
       - vehicles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateVehicleRequest"
       responses:
         '201':
           description: POST /vehicles -> 201
@@ -23446,6 +23446,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateVehicleRequest"
       description: Create a vehicle.
       operationId: create_vehicle
       x-curl-example: |-
@@ -30617,14 +30622,14 @@ paths:
                       type: object
                       properties:
                         id:
-                          nullable: true
                           type: integer
+                          nullable: true
                         name:
-                          nullable: true
                           type: string
+                          nullable: true
                         url:
-                          nullable: true
                           type: string
+                          nullable: true
                       required:
                       - id
                       - name
@@ -34329,11 +34334,6 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateWorkOrdersServicesLineItemRequest"
       responses:
         '200':
           description: PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}
@@ -34354,6 +34354,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateWorkOrdersServicesLineItemRequest"
       description: Update a work orders services line item by ID.
       operationId: update_work_orders_services_line_item
       x-curl-example: |-
@@ -40180,14 +40185,14 @@ components:
               type: string
             waiting_for_customer:
               type: boolean
+            payer_customer_id:
+              type: integer
             work_order_tag_id:
               type: integer
             sub_status_type_id:
               type: integer
             services_visible_to_customer:
               type: boolean
-            payer_customer_id:
-              type: integer
       required:
       - work_order
     CloseWorkOrderRequest:
@@ -40677,9 +40682,9 @@ components:
         work_order_line_item:
           type: object
           properties:
-            description:
-              type: string
             part_status:
+              type: string
+            description:
               type: string
       required:
       - work_order_line_item
