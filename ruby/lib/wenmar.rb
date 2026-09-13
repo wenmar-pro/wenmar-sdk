@@ -2,6 +2,8 @@
 
 require_relative "wenmar/version"
 require_relative "wenmar/error"
+require_relative "wenmar/token"
+require_relative "wenmar/oauth"
 require_relative "wenmar/auth"
 require_relative "wenmar/credentials"
 require_relative "wenmar/config"
