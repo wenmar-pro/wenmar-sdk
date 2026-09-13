@@ -3330,7 +3330,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateCashEntrieRequest"
+              "$ref": "#/components/schemas/CreateCashEntryRequest"
       responses:
         '200':
           description: POST /cash_entries -> 200
@@ -3482,12 +3482,12 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      description: Create a cash entrie.
-      operationId: create_cash_entrie
+      description: Create a cash entry.
+      operationId: create_cash_entry
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/cash_entries.json
-      x-wenmar-request-schema: CreateCashEntrieRequest
+      x-wenmar-request-schema: CreateCashEntryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -3587,8 +3587,8 @@ paths:
                 - entered_by
                 - reversed_by
                 - url
-      description: Delete a cash entrie by ID.
-      operationId: delete_cash_entrie
+      description: Delete a cash entry by ID.
+      operationId: delete_cash_entry
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/cash_entries/<id>.json'
       x-retry:
@@ -3682,8 +3682,8 @@ paths:
                 - entered_by
                 - reversed_by
                 - url
-      description: Show a cash entrie by ID.
-      operationId: show_cash_entrie
+      description: Show a cash entry by ID.
+      operationId: show_cash_entry
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/cash_entries/<id>.json'
       x-retry:
@@ -10462,13 +10462,13 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateLaborMatriceRequest"
-      description: Create a labor matrice.
-      operationId: create_labor_matrice
+              "$ref": "#/components/schemas/CreateLaborMatrixRequest"
+      description: Create a labor matrix.
+      operationId: create_labor_matrix
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/labor_matrices.json
-      x-wenmar-request-schema: CreateLaborMatriceRequest
+      x-wenmar-request-schema: CreateLaborMatrixRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -10493,8 +10493,8 @@ paths:
       responses:
         '204':
           description: DELETE /labor_matrices/{id} -> 204
-      description: Delete a labor matrice by ID.
-      operationId: delete_labor_matrice
+      description: Delete a labor matrix by ID.
+      operationId: delete_labor_matrix
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_matrices/<id>.json'
       x-retry:
@@ -10521,7 +10521,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UpdateLaborMatriceRequest"
+              "$ref": "#/components/schemas/UpdateLaborMatrixRequest"
       responses:
         '200':
           description: PATCH /labor_matrices/{id} -> 200
@@ -10529,12 +10529,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/LaborMatrix"
-      description: Update a labor matrice by ID.
-      operationId: update_labor_matrice
+      description: Update a labor matrix by ID.
+      operationId: update_labor_matrix
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/labor_matrices/<id>.json
-      x-wenmar-request-schema: UpdateLaborMatriceRequest
+      x-wenmar-request-schema: UpdateLaborMatrixRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -15235,13 +15235,13 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreatePartsMatriceRequest"
-      description: Create a parts matrice.
-      operationId: create_parts_matrice
+              "$ref": "#/components/schemas/CreatePartsMatrixRequest"
+      description: Create a parts matrix.
+      operationId: create_parts_matrix
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/parts_matrices.json
-      x-wenmar-request-schema: CreatePartsMatriceRequest
+      x-wenmar-request-schema: CreatePartsMatrixRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -15266,8 +15266,8 @@ paths:
       responses:
         '204':
           description: DELETE /parts_matrices/{id} -> 204
-      description: Delete a parts matrice by ID.
-      operationId: delete_parts_matrice
+      description: Delete a parts matrix by ID.
+      operationId: delete_parts_matrix
       x-curl-example: 'curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization:
         Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/parts_matrices/<id>.json'
       x-retry:
@@ -15294,7 +15294,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UpdatePartsMatriceRequest"
+              "$ref": "#/components/schemas/UpdatePartsMatrixRequest"
       responses:
         '200':
           description: PATCH /parts_matrices/{id} -> 200
@@ -15302,12 +15302,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PartsMatrix"
-      description: Update a parts matrice by ID.
-      operationId: update_parts_matrice
+      description: Update a parts matrix by ID.
+      operationId: update_parts_matrix
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/parts_matrices/<id>.json
-      x-wenmar-request-schema: UpdatePartsMatriceRequest
+      x-wenmar-request-schema: UpdatePartsMatrixRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -19850,7 +19850,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateSubStatuseRequest"
+              "$ref": "#/components/schemas/CreateSubStatusRequest"
       responses:
         '201':
           description: POST /sub_statuses -> 201
@@ -19869,12 +19869,12 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      description: Create a sub statuse.
-      operationId: create_sub_statuse
+      description: Create a sub status.
+      operationId: create_sub_status
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/sub_statuses.json
-      x-wenmar-request-schema: CreateSubStatuseRequest
+      x-wenmar-request-schema: CreateSubStatusRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -19900,7 +19900,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UpdateSubStatuseRequest"
+              "$ref": "#/components/schemas/UpdateSubStatusRequest"
       responses:
         '200':
           description: PATCH /sub_statuses/{id} -> 200
@@ -19908,12 +19908,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SubStatusType"
-      description: Update a sub statuse by ID.
-      operationId: update_sub_statuse
+      description: Update a sub status by ID.
+      operationId: update_sub_status
       x-curl-example: |-
         curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/sub_statuses/<id>.json
-      x-wenmar-request-schema: UpdateSubStatuseRequest
+      x-wenmar-request-schema: UpdateSubStatusRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -34554,7 +34554,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesCopieRequest"
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesCopyRequest"
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services/{id}/copies -> 201
@@ -34562,12 +34562,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/WorkOrder"
-      description: Create a work orders services copie.
-      operationId: create_work_orders_services_copie
+      description: Create a work orders services copy.
+      operationId: create_work_orders_services_copy
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
-      x-wenmar-request-schema: CreateWorkOrdersServicesCopieRequest
+      x-wenmar-request-schema: CreateWorkOrdersServicesCopyRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -34780,7 +34780,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesTimeEntrieRequest"
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesTimeEntryRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{id}/time_entries
@@ -34801,12 +34801,12 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      description: Create a work orders services time entrie.
-      operationId: create_work_orders_services_time_entrie
+      description: Create a work orders services time entry.
+      operationId: create_work_orders_services_time_entry
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
-      x-wenmar-request-schema: CreateWorkOrdersServicesTimeEntrieRequest
+      x-wenmar-request-schema: CreateWorkOrdersServicesTimeEntryRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -35486,7 +35486,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsCopieRequest"
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsCopyRequest"
       responses:
         '201':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies
@@ -35495,12 +35495,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/WorkOrder"
-      description: Create a work orders services line items copie.
-      operationId: create_work_orders_services_line_items_copie
+      description: Create a work orders services line items copy.
+      operationId: create_work_orders_services_line_items_copy
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
-      x-wenmar-request-schema: CreateWorkOrdersServicesLineItemsCopieRequest
+      x-wenmar-request-schema: CreateWorkOrdersServicesLineItemsCopyRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -35586,7 +35586,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefresheRequest"
+              "$ref": "#/components/schemas/CreateWorkOrdersServicesLineItemsPriceRefreshRequest"
       responses:
         '200':
           description: POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes
@@ -35607,12 +35607,12 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      description: Create a work orders services line items price refreshe.
-      operationId: create_work_orders_services_line_items_price_refreshe
+      description: Create a work orders services line items price refresh.
+      operationId: create_work_orders_services_line_items_price_refresh
       x-curl-example: |-
         curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
              -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/<id>.json
-      x-wenmar-request-schema: CreateWorkOrdersServicesLineItemsPriceRefresheRequest
+      x-wenmar-request-schema: CreateWorkOrdersServicesLineItemsPriceRefreshRequest
       x-retry:
         max: 3
         backoff: exponential
@@ -39499,7 +39499,7 @@ components:
           - starting_float_cents
       required:
       - cash_drawer_session
-    CreateCashEntrieRequest:
+    CreateCashEntryRequest:
       type: object
       properties:
         cash_entry:
@@ -40161,7 +40161,7 @@ components:
           - reason
       required:
       - adjustment
-    CreateLaborMatriceRequest:
+    CreateLaborMatrixRequest:
       type: object
       properties:
         labor_matrix:
@@ -40179,7 +40179,7 @@ components:
           - active
       required:
       - labor_matrix
-    UpdateLaborMatriceRequest:
+    UpdateLaborMatrixRequest:
       type: object
       properties:
         labor_matrix:
@@ -40585,7 +40585,7 @@ components:
           - description
       required:
       - part
-    CreatePartsMatriceRequest:
+    CreatePartsMatrixRequest:
       type: object
       properties:
         parts_matrix:
@@ -40603,7 +40603,7 @@ components:
           - active
       required:
       - parts_matrix
-    UpdatePartsMatriceRequest:
+    UpdatePartsMatrixRequest:
       type: object
       properties:
         parts_matrix:
@@ -40809,7 +40809,7 @@ components:
     CreateStoreCreditsVoidRequest:
       type: object
       properties: {}
-    CreateSubStatuseRequest:
+    CreateSubStatusRequest:
       type: object
       properties:
         sub_status_type:
@@ -40827,7 +40827,7 @@ components:
           - status_scope
       required:
       - sub_status_type
-    UpdateSubStatuseRequest:
+    UpdateSubStatusRequest:
       type: object
       properties:
         sub_status_type:
@@ -41725,7 +41725,7 @@ components:
     CreateWorkOrdersServicesCompletionRequest:
       type: object
       properties: {}
-    CreateWorkOrdersServicesCopieRequest:
+    CreateWorkOrdersServicesCopyRequest:
       type: object
       properties: {}
     CreateWorkOrdersServicesPackageRequest:
@@ -41744,7 +41744,7 @@ components:
     UpdateWorkOrdersServicesReviveRequest:
       type: object
       properties: {}
-    CreateWorkOrdersServicesTimeEntrieRequest:
+    CreateWorkOrdersServicesTimeEntryRequest:
       type: object
       properties: {}
     UpdateWorkOrdersServicesToggleLaborCompletionRequest:
@@ -41821,13 +41821,13 @@ components:
               type: string
       required:
       - work_order_line_item
-    CreateWorkOrdersServicesLineItemsCopieRequest:
+    CreateWorkOrdersServicesLineItemsCopyRequest:
       type: object
       properties: {}
     CreateWorkOrdersServicesLineItemsInventoryAdditionRequest:
       type: object
       properties: {}
-    CreateWorkOrdersServicesLineItemsPriceRefresheRequest:
+    CreateWorkOrdersServicesLineItemsPriceRefreshRequest:
       type: object
       properties: {}
     PullWorkOrderServiceLineItemRequest:

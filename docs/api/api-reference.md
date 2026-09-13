@@ -47,9 +47,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/campaigns/{id}/send_campaign` | `send_campaign` | Send campaign |
 | POST | `/cash_drawer_session` | `create_cash_drawer_session` | Create a cash drawer session. |
 | GET | `/cash_entries` | `list_cash_entries` | List all cash entries, paginated via the Link header. |
-| POST | `/cash_entries` | `create_cash_entrie` | Create a cash entrie. |
-| DELETE | `/cash_entries/{id}` | `delete_cash_entrie` | Delete a cash entrie by ID. |
-| GET | `/cash_entries/{id}` | `show_cash_entrie` | Show a cash entrie by ID. |
+| POST | `/cash_entries` | `create_cash_entry` | Create a cash entry. |
+| DELETE | `/cash_entries/{id}` | `delete_cash_entry` | Delete a cash entry by ID. |
+| GET | `/cash_entries/{id}` | `show_cash_entry` | Show a cash entry by ID. |
 | GET | `/conversations` | `list_conversations` | List all conversations, paginated via the Link header. |
 | POST | `/conversations` | `create_conversation` | Create a conversation. |
 | POST | `/conversations/bulk_mark_read` | `create_conversations_bulk_mark_read` | Create a conversations bulk mark read. |
@@ -139,9 +139,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | PATCH | `/inventory_levels/{id}` | `update_inventory_level` | Update a inventory level by ID. |
 | POST | `/inventory_levels/{id}/adjust` | `create_inventory_levels_adjust` | Create a inventory levels adjust. |
 | GET | `/labor_matrices` | `list_labor_matrices` | List all labor matrices, paginated via the Link header. |
-| POST | `/labor_matrices` | `create_labor_matrice` | Create a labor matrice. |
-| DELETE | `/labor_matrices/{id}` | `delete_labor_matrice` | Delete a labor matrice by ID. |
-| PATCH | `/labor_matrices/{id}` | `update_labor_matrice` | Update a labor matrice by ID. |
+| POST | `/labor_matrices` | `create_labor_matrix` | Create a labor matrix. |
+| DELETE | `/labor_matrices/{id}` | `delete_labor_matrix` | Delete a labor matrix by ID. |
+| PATCH | `/labor_matrices/{id}` | `update_labor_matrix` | Update a labor matrix by ID. |
 | GET | `/labor_rates` | `list_labor_rates` | List all labor rates, paginated via the Link header. |
 | POST | `/labor_rates` | `create_labor_rate` | Create a labor rate. |
 | PATCH | `/labor_rates/{id}/archive` | `archive_labor_rate` | Archive |
@@ -212,9 +212,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/parts/{id}` | `show_part` | Show a part by ID. |
 | PATCH | `/parts/{id}` | `update_part` | Update a part by ID. |
 | GET | `/parts_matrices` | `list_parts_matrices` | List all parts matrices, paginated via the Link header. |
-| POST | `/parts_matrices` | `create_parts_matrice` | Create a parts matrice. |
-| DELETE | `/parts_matrices/{id}` | `delete_parts_matrice` | Delete a parts matrice by ID. |
-| PATCH | `/parts_matrices/{id}` | `update_parts_matrice` | Update a parts matrice by ID. |
+| POST | `/parts_matrices` | `create_parts_matrix` | Create a parts matrix. |
+| DELETE | `/parts_matrices/{id}` | `delete_parts_matrix` | Delete a parts matrix by ID. |
+| PATCH | `/parts_matrices/{id}` | `update_parts_matrix` | Update a parts matrix by ID. |
 | GET | `/payments` | `list_payments` | List all payments, paginated via the Link header. |
 | GET | `/payments/pending` | `list_payments_pending` | List all payments pending, paginated via the Link header. |
 | GET | `/payments/{id}` | `show_payment` | Show a payment by ID. |
@@ -267,8 +267,8 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/statements/{statement_id}/payments` | `list_statements_payments` | List all statements payments, paginated via the Link header. |
 | POST | `/store_credits/{store_credit_id}/voids` | `create_store_credits_void` | Create a store credits void. |
 | GET | `/sub_statuses` | `list_sub_statuses` | List all sub statuses, paginated via the Link header. |
-| POST | `/sub_statuses` | `create_sub_statuse` | Create a sub statuse. |
-| PATCH | `/sub_statuses/{id}` | `update_sub_statuse` | Update a sub statuse by ID. |
+| POST | `/sub_statuses` | `create_sub_status` | Create a sub status. |
+| PATCH | `/sub_statuses/{id}` | `update_sub_status` | Update a sub status by ID. |
 | GET | `/sublet_packages` | `list_sublet_packages` | List all sublet packages, paginated via the Link header. |
 | POST | `/sublet_packages` | `create_sublet_package` | Create a sublet package. |
 | DELETE | `/sublet_packages/{id}` | `delete_sublet_package` | Delete a sublet package by ID. |
@@ -397,12 +397,12 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/work_orders/{work_order_id}/services/{id}/bulk_pull` | `create_work_orders_services_bulk_pull` | Create a work orders services bulk pull. |
 | DELETE | `/work_orders/{work_order_id}/services/{id}/completion` | `delete_work_orders_services_completion` | Delete a work orders services completion by ID. |
 | POST | `/work_orders/{work_order_id}/services/{id}/completion` | `create_work_orders_services_completion` | Create a work orders services completion. |
-| POST | `/work_orders/{work_order_id}/services/{id}/copies` | `create_work_orders_services_copie` | Create a work orders services copie. |
+| POST | `/work_orders/{work_order_id}/services/{id}/copies` | `create_work_orders_services_copy` | Create a work orders services copy. |
 | POST | `/work_orders/{work_order_id}/services/{id}/packages` | `create_work_orders_services_package` | Create a work orders services package. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/pause` | `update_work_orders_services_pause` | Update a work orders services pause by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/publish` | `update_work_orders_services_publish` | Update a work orders services publish by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/revive` | `update_work_orders_services_revive` | Update a work orders services revive by ID. |
-| POST | `/work_orders/{work_order_id}/services/{id}/time_entries` | `create_work_orders_services_time_entrie` | Create a work orders services time entrie. |
+| POST | `/work_orders/{work_order_id}/services/{id}/time_entries` | `create_work_orders_services_time_entry` | Create a work orders services time entry. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/toggle_labor_completion` | `update_work_orders_services_toggle_labor_completion` | Update a work orders services toggle labor completion by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{id}/update_category` | `update_work_orders_services_update_category` | Update a work orders services update category by ID. |
 | GET | `/work_orders/{work_order_id}/services/{service_id}/comments` | `list_work_orders_services_comments` | List all work orders services comments, paginated via the Link header. |
@@ -413,9 +413,9 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/work_orders/{work_order_id}/services/{service_id}/line_items` | `create_work_orders_services_line_item` | Create a work orders services line item. |
 | DELETE | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}` | `delete_work_orders_services_line_item` | Delete a work orders services line item by ID. |
 | PATCH | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}` | `update_work_orders_services_line_item` | Update a work orders services line item by ID. |
-| POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies` | `create_work_orders_services_line_items_copie` | Create a work orders services line items copie. |
+| POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies` | `create_work_orders_services_line_items_copy` | Create a work orders services line items copy. |
 | POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions` | `create_work_orders_services_line_items_inventory_addition` | Create a work orders services line items inventory addition. |
-| POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes` | `create_work_orders_services_line_items_price_refreshe` | Create a work orders services line items price refreshe. |
+| POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes` | `create_work_orders_services_line_items_price_refresh` | Create a work orders services line items price refresh. |
 | PATCH | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull` | `pull_work_order_service_line_item` | Pull |
 | POST | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/reorder` | `create_work_orders_services_line_items_reorder` | Create a work orders services line items reorder. |
 | PATCH | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull` | `undo_pull_work_order_service_line_item` | Undo pull |

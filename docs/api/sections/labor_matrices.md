@@ -17,13 +17,13 @@ List all labor matrices, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_matrices.json
 ```
 
-## Create labor matrice
+## Create labor matrix
 
 ```
 POST /labor_matrices
 ```
 
-Create a labor matrice.
+Create a labor matrix.
 
 **Response 201** — [LaborMatrix](#labormatrix-schema)
 
@@ -34,13 +34,13 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/labor_matrices.json
 ```
 
-## Delete labor matrice
+## Delete labor matrix
 
 ```
 DELETE /labor_matrices/{id}
 ```
 
-Delete a labor matrice by ID.
+Delete a labor matrix by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -52,13 +52,13 @@ Delete a labor matrice by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/labor_matrices/<id>.json
 ```
 
-## Update labor matrice
+## Update labor matrix
 
 ```
 PATCH /labor_matrices/{id}
 ```
 
-Update a labor matrice by ID.
+Update a labor matrix by ID.
 
 | Param | Type | Required |
 |---|---|---|
@@ -89,7 +89,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### CreateLaborMatriceRequest schema {#createlabormatricerequest-schema}
+### CreateLaborMatrixRequest schema {#createlabormatrixrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|
@@ -116,7 +116,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 
 ---
 
-### UpdateLaborMatriceRequest schema {#updatelabormatricerequest-schema}
+### UpdateLaborMatrixRequest schema {#updatelabormatrixrequest-schema}
 
 | Field | Type | Required |
 |---|---|---|

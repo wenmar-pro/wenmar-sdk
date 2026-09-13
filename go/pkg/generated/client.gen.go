@@ -332,8 +332,8 @@ type CreateCashDrawerSessionRequest struct {
 	} `json:"cash_drawer_session"`
 }
 
-// CreateCashEntrieRequest defines model for CreateCashEntrieRequest.
-type CreateCashEntrieRequest struct {
+// CreateCashEntryRequest defines model for CreateCashEntryRequest.
+type CreateCashEntryRequest struct {
 	CashEntry struct {
 		AmountCents int     `json:"amount_cents"`
 		Description string  `json:"description"`
@@ -506,8 +506,8 @@ type CreateInventoryLevelsAdjustRequest struct {
 	} `json:"adjustment"`
 }
 
-// CreateLaborMatriceRequest defines model for CreateLaborMatriceRequest.
-type CreateLaborMatriceRequest struct {
+// CreateLaborMatrixRequest defines model for CreateLaborMatrixRequest.
+type CreateLaborMatrixRequest struct {
 	LaborMatrix struct {
 		Active     bool   `json:"active"`
 		MatrixType string `json:"matrix_type"`
@@ -593,8 +593,8 @@ type CreatePartRequest struct {
 	} `json:"part"`
 }
 
-// CreatePartsMatriceRequest defines model for CreatePartsMatriceRequest.
-type CreatePartsMatriceRequest struct {
+// CreatePartsMatrixRequest defines model for CreatePartsMatrixRequest.
+type CreatePartsMatrixRequest struct {
 	PartsMatrix struct {
 		Active    bool   `json:"active"`
 		IsDefault bool   `json:"is_default"`
@@ -676,8 +676,8 @@ type CreateStatementsGenerateRequest = map[string]interface{}
 // CreateStoreCreditsVoidRequest defines model for CreateStoreCreditsVoidRequest.
 type CreateStoreCreditsVoidRequest = map[string]interface{}
 
-// CreateSubStatuseRequest defines model for CreateSubStatuseRequest.
-type CreateSubStatuseRequest struct {
+// CreateSubStatusRequest defines model for CreateSubStatusRequest.
+type CreateSubStatusRequest struct {
 	SubStatusType struct {
 		Color       string `json:"color"`
 		Name        string `json:"name"`
@@ -987,8 +987,8 @@ type CreateWorkOrdersServicesCommentRequest struct {
 // CreateWorkOrdersServicesCompletionRequest defines model for CreateWorkOrdersServicesCompletionRequest.
 type CreateWorkOrdersServicesCompletionRequest = map[string]interface{}
 
-// CreateWorkOrdersServicesCopieRequest defines model for CreateWorkOrdersServicesCopieRequest.
-type CreateWorkOrdersServicesCopieRequest = map[string]interface{}
+// CreateWorkOrdersServicesCopyRequest defines model for CreateWorkOrdersServicesCopyRequest.
+type CreateWorkOrdersServicesCopyRequest = map[string]interface{}
 
 // CreateWorkOrdersServicesExtractionRequest defines model for CreateWorkOrdersServicesExtractionRequest.
 type CreateWorkOrdersServicesExtractionRequest struct {
@@ -1009,14 +1009,14 @@ type CreateWorkOrdersServicesLineItemRequest struct {
 	} `json:"work_order_line_item"`
 }
 
-// CreateWorkOrdersServicesLineItemsCopieRequest defines model for CreateWorkOrdersServicesLineItemsCopieRequest.
-type CreateWorkOrdersServicesLineItemsCopieRequest = map[string]interface{}
+// CreateWorkOrdersServicesLineItemsCopyRequest defines model for CreateWorkOrdersServicesLineItemsCopyRequest.
+type CreateWorkOrdersServicesLineItemsCopyRequest = map[string]interface{}
 
 // CreateWorkOrdersServicesLineItemsInventoryAdditionRequest defines model for CreateWorkOrdersServicesLineItemsInventoryAdditionRequest.
 type CreateWorkOrdersServicesLineItemsInventoryAdditionRequest = map[string]interface{}
 
-// CreateWorkOrdersServicesLineItemsPriceRefresheRequest defines model for CreateWorkOrdersServicesLineItemsPriceRefresheRequest.
-type CreateWorkOrdersServicesLineItemsPriceRefresheRequest = map[string]interface{}
+// CreateWorkOrdersServicesLineItemsPriceRefreshRequest defines model for CreateWorkOrdersServicesLineItemsPriceRefreshRequest.
+type CreateWorkOrdersServicesLineItemsPriceRefreshRequest = map[string]interface{}
 
 // CreateWorkOrdersServicesLineItemsReorderRequest defines model for CreateWorkOrdersServicesLineItemsReorderRequest.
 type CreateWorkOrdersServicesLineItemsReorderRequest = map[string]interface{}
@@ -1036,8 +1036,8 @@ type CreateWorkOrdersServicesSubletOrderRequest struct {
 // CreateWorkOrdersServicesSubletOrdersDuplicateRequest defines model for CreateWorkOrdersServicesSubletOrdersDuplicateRequest.
 type CreateWorkOrdersServicesSubletOrdersDuplicateRequest = map[string]interface{}
 
-// CreateWorkOrdersServicesTimeEntrieRequest defines model for CreateWorkOrdersServicesTimeEntrieRequest.
-type CreateWorkOrdersServicesTimeEntrieRequest = map[string]interface{}
+// CreateWorkOrdersServicesTimeEntryRequest defines model for CreateWorkOrdersServicesTimeEntryRequest.
+type CreateWorkOrdersServicesTimeEntryRequest = map[string]interface{}
 
 // CreateWorkOrdersTireStorageRequest defines model for CreateWorkOrdersTireStorageRequest.
 type CreateWorkOrdersTireStorageRequest struct {
@@ -1920,8 +1920,8 @@ type UpdateInventoryLevelRequest struct {
 	} `json:"inventory_level"`
 }
 
-// UpdateLaborMatriceRequest defines model for UpdateLaborMatriceRequest.
-type UpdateLaborMatriceRequest struct {
+// UpdateLaborMatrixRequest defines model for UpdateLaborMatrixRequest.
+type UpdateLaborMatrixRequest struct {
 	LaborMatrix struct {
 		Name string `json:"name"`
 	} `json:"labor_matrix"`
@@ -2056,8 +2056,8 @@ type UpdatePartRequest struct {
 	} `json:"part"`
 }
 
-// UpdatePartsMatriceRequest defines model for UpdatePartsMatriceRequest.
-type UpdatePartsMatriceRequest struct {
+// UpdatePartsMatrixRequest defines model for UpdatePartsMatrixRequest.
+type UpdatePartsMatrixRequest struct {
 	PartsMatrix struct {
 		Name string `json:"name"`
 	} `json:"parts_matrix"`
@@ -2110,8 +2110,8 @@ type UpdateShopFeeRequest struct {
 	} `json:"shop_fee_config"`
 }
 
-// UpdateSubStatuseRequest defines model for UpdateSubStatuseRequest.
-type UpdateSubStatuseRequest struct {
+// UpdateSubStatusRequest defines model for UpdateSubStatusRequest.
+type UpdateSubStatusRequest struct {
 	SubStatusType struct {
 		Active bool `json:"active"`
 	} `json:"sub_status_type"`
@@ -2803,8 +2803,8 @@ type SendCampaignJSONRequestBody = SendCampaignRequest
 // CreateCashDrawerSessionJSONRequestBody defines body for CreateCashDrawerSession for application/json ContentType.
 type CreateCashDrawerSessionJSONRequestBody = CreateCashDrawerSessionRequest
 
-// CreateCashEntrieJSONRequestBody defines body for CreateCashEntrie for application/json ContentType.
-type CreateCashEntrieJSONRequestBody = CreateCashEntrieRequest
+// CreateCashEntryJSONRequestBody defines body for CreateCashEntry for application/json ContentType.
+type CreateCashEntryJSONRequestBody = CreateCashEntryRequest
 
 // CreateConversationJSONRequestBody defines body for CreateConversation for application/json ContentType.
 type CreateConversationJSONRequestBody = CreateConversationRequest
@@ -2968,11 +2968,11 @@ type UpdateInventoryLevelJSONRequestBody = UpdateInventoryLevelRequest
 // CreateInventoryLevelsAdjustJSONRequestBody defines body for CreateInventoryLevelsAdjust for application/json ContentType.
 type CreateInventoryLevelsAdjustJSONRequestBody = CreateInventoryLevelsAdjustRequest
 
-// CreateLaborMatriceJSONRequestBody defines body for CreateLaborMatrice for application/json ContentType.
-type CreateLaborMatriceJSONRequestBody = CreateLaborMatriceRequest
+// CreateLaborMatrixJSONRequestBody defines body for CreateLaborMatrix for application/json ContentType.
+type CreateLaborMatrixJSONRequestBody = CreateLaborMatrixRequest
 
-// UpdateLaborMatriceJSONRequestBody defines body for UpdateLaborMatrice for application/json ContentType.
-type UpdateLaborMatriceJSONRequestBody = UpdateLaborMatriceRequest
+// UpdateLaborMatrixJSONRequestBody defines body for UpdateLaborMatrix for application/json ContentType.
+type UpdateLaborMatrixJSONRequestBody = UpdateLaborMatrixRequest
 
 // CreateLaborRateJSONRequestBody defines body for CreateLaborRate for application/json ContentType.
 type CreateLaborRateJSONRequestBody = CreateLaborRateRequest
@@ -3079,11 +3079,11 @@ type CreatePartJSONRequestBody = CreatePartRequest
 // UpdatePartJSONRequestBody defines body for UpdatePart for application/json ContentType.
 type UpdatePartJSONRequestBody = UpdatePartRequest
 
-// CreatePartsMatriceJSONRequestBody defines body for CreatePartsMatrice for application/json ContentType.
-type CreatePartsMatriceJSONRequestBody = CreatePartsMatriceRequest
+// CreatePartsMatrixJSONRequestBody defines body for CreatePartsMatrix for application/json ContentType.
+type CreatePartsMatrixJSONRequestBody = CreatePartsMatrixRequest
 
-// UpdatePartsMatriceJSONRequestBody defines body for UpdatePartsMatrice for application/json ContentType.
-type UpdatePartsMatriceJSONRequestBody = UpdatePartsMatriceRequest
+// UpdatePartsMatrixJSONRequestBody defines body for UpdatePartsMatrix for application/json ContentType.
+type UpdatePartsMatrixJSONRequestBody = UpdatePartsMatrixRequest
 
 // CreatePaymentsCancellationJSONRequestBody defines body for CreatePaymentsCancellation for application/json ContentType.
 type CreatePaymentsCancellationJSONRequestBody = CreatePaymentsCancellationRequest
@@ -3148,11 +3148,11 @@ type CreateStatementsGenerateJSONRequestBody = CreateStatementsGenerateRequest
 // CreateStoreCreditsVoidJSONRequestBody defines body for CreateStoreCreditsVoid for application/json ContentType.
 type CreateStoreCreditsVoidJSONRequestBody = CreateStoreCreditsVoidRequest
 
-// CreateSubStatuseJSONRequestBody defines body for CreateSubStatuse for application/json ContentType.
-type CreateSubStatuseJSONRequestBody = CreateSubStatuseRequest
+// CreateSubStatusJSONRequestBody defines body for CreateSubStatus for application/json ContentType.
+type CreateSubStatusJSONRequestBody = CreateSubStatusRequest
 
-// UpdateSubStatuseJSONRequestBody defines body for UpdateSubStatuse for application/json ContentType.
-type UpdateSubStatuseJSONRequestBody = UpdateSubStatuseRequest
+// UpdateSubStatusJSONRequestBody defines body for UpdateSubStatus for application/json ContentType.
+type UpdateSubStatusJSONRequestBody = UpdateSubStatusRequest
 
 // CreateSubletPackageJSONRequestBody defines body for CreateSubletPackage for application/json ContentType.
 type CreateSubletPackageJSONRequestBody = CreateSubletPackageRequest
@@ -3379,8 +3379,8 @@ type CreateWorkOrdersServicesBulkPullJSONRequestBody = CreateWorkOrdersServicesB
 // CreateWorkOrdersServicesCompletionJSONRequestBody defines body for CreateWorkOrdersServicesCompletion for application/json ContentType.
 type CreateWorkOrdersServicesCompletionJSONRequestBody = CreateWorkOrdersServicesCompletionRequest
 
-// CreateWorkOrdersServicesCopieJSONRequestBody defines body for CreateWorkOrdersServicesCopie for application/json ContentType.
-type CreateWorkOrdersServicesCopieJSONRequestBody = CreateWorkOrdersServicesCopieRequest
+// CreateWorkOrdersServicesCopyJSONRequestBody defines body for CreateWorkOrdersServicesCopy for application/json ContentType.
+type CreateWorkOrdersServicesCopyJSONRequestBody = CreateWorkOrdersServicesCopyRequest
 
 // CreateWorkOrdersServicesPackageJSONRequestBody defines body for CreateWorkOrdersServicesPackage for application/json ContentType.
 type CreateWorkOrdersServicesPackageJSONRequestBody = CreateWorkOrdersServicesPackageRequest
@@ -3394,8 +3394,8 @@ type UpdateWorkOrdersServicesPublishJSONRequestBody = UpdateWorkOrdersServicesPu
 // UpdateWorkOrdersServicesReviveJSONRequestBody defines body for UpdateWorkOrdersServicesRevive for application/json ContentType.
 type UpdateWorkOrdersServicesReviveJSONRequestBody = UpdateWorkOrdersServicesReviveRequest
 
-// CreateWorkOrdersServicesTimeEntrieJSONRequestBody defines body for CreateWorkOrdersServicesTimeEntrie for application/json ContentType.
-type CreateWorkOrdersServicesTimeEntrieJSONRequestBody = CreateWorkOrdersServicesTimeEntrieRequest
+// CreateWorkOrdersServicesTimeEntryJSONRequestBody defines body for CreateWorkOrdersServicesTimeEntry for application/json ContentType.
+type CreateWorkOrdersServicesTimeEntryJSONRequestBody = CreateWorkOrdersServicesTimeEntryRequest
 
 // UpdateWorkOrdersServicesToggleLaborCompletionJSONRequestBody defines body for UpdateWorkOrdersServicesToggleLaborCompletion for application/json ContentType.
 type UpdateWorkOrdersServicesToggleLaborCompletionJSONRequestBody = UpdateWorkOrdersServicesToggleLaborCompletionRequest
@@ -3415,14 +3415,14 @@ type CreateWorkOrdersServicesLineItemJSONRequestBody = CreateWorkOrdersServicesL
 // UpdateWorkOrdersServicesLineItemJSONRequestBody defines body for UpdateWorkOrdersServicesLineItem for application/json ContentType.
 type UpdateWorkOrdersServicesLineItemJSONRequestBody = UpdateWorkOrdersServicesLineItemRequest
 
-// CreateWorkOrdersServicesLineItemsCopieJSONRequestBody defines body for CreateWorkOrdersServicesLineItemsCopie for application/json ContentType.
-type CreateWorkOrdersServicesLineItemsCopieJSONRequestBody = CreateWorkOrdersServicesLineItemsCopieRequest
+// CreateWorkOrdersServicesLineItemsCopyJSONRequestBody defines body for CreateWorkOrdersServicesLineItemsCopy for application/json ContentType.
+type CreateWorkOrdersServicesLineItemsCopyJSONRequestBody = CreateWorkOrdersServicesLineItemsCopyRequest
 
 // CreateWorkOrdersServicesLineItemsInventoryAdditionJSONRequestBody defines body for CreateWorkOrdersServicesLineItemsInventoryAddition for application/json ContentType.
 type CreateWorkOrdersServicesLineItemsInventoryAdditionJSONRequestBody = CreateWorkOrdersServicesLineItemsInventoryAdditionRequest
 
-// CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody defines body for CreateWorkOrdersServicesLineItemsPriceRefreshe for application/json ContentType.
-type CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody = CreateWorkOrdersServicesLineItemsPriceRefresheRequest
+// CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody defines body for CreateWorkOrdersServicesLineItemsPriceRefresh for application/json ContentType.
+type CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody = CreateWorkOrdersServicesLineItemsPriceRefreshRequest
 
 // PullWorkOrderServiceLineItemJSONRequestBody defines body for PullWorkOrderServiceLineItem for application/json ContentType.
 type PullWorkOrderServiceLineItemJSONRequestBody = PullWorkOrderServiceLineItemRequest
@@ -3959,37 +3959,37 @@ type ClientInterface interface {
 	// Corresponds with GET /cash_entries (the `ListCashEntries` operationId).
 	ListCashEntries(ctx context.Context, params *ListCashEntriesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateCashEntrieWithBody create
+	// CreateCashEntryWithBody create
 	//
-	// Create a cash entrie.
+	// Create a cash entry.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-	CreateCashEntrieWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+	CreateCashEntryWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateCashEntrie create
+	// CreateCashEntry create
 	//
-	// Create a cash entrie.
+	// Create a cash entry.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-	CreateCashEntrie(ctx context.Context, body CreateCashEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+	CreateCashEntry(ctx context.Context, body CreateCashEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// DeleteCashEntrie destroy
+	// DeleteCashEntry destroy
 	//
-	// Delete a cash entrie by ID.
+	// Delete a cash entry by ID.
 	//
-	// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntrie` operationId).
-	DeleteCashEntrie(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntry` operationId).
+	DeleteCashEntry(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ShowCashEntrie show
+	// ShowCashEntry show
 	//
-	// Show a cash entrie by ID.
+	// Show a cash entry by ID.
 	//
-	// Corresponds with GET /cash_entries/{id} (the `ShowCashEntrie` operationId).
-	ShowCashEntrie(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /cash_entries/{id} (the `ShowCashEntry` operationId).
+	ShowCashEntry(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListConversations index
 	//
@@ -5131,48 +5131,48 @@ type ClientInterface interface {
 	// Corresponds with GET /labor_matrices (the `ListLaborMatrices` operationId).
 	ListLaborMatrices(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateLaborMatriceWithBody create
+	// CreateLaborMatrixWithBody create
 	//
-	// Create a labor matrice.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-	CreateLaborMatriceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateLaborMatrice create
-	//
-	// Create a labor matrice.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-	CreateLaborMatrice(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteLaborMatrice destroy
-	//
-	// Delete a labor matrice by ID.
-	//
-	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
-	DeleteLaborMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateLaborMatriceWithBody update
-	//
-	// Update a labor matrice by ID.
+	// Create a labor matrix.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-	UpdateLaborMatriceWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+	CreateLaborMatrixWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateLaborMatrice update
+	// CreateLaborMatrix create
 	//
-	// Update a labor matrice by ID.
+	// Create a labor matrix.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-	UpdateLaborMatrice(ctx context.Context, id int, body UpdateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+	CreateLaborMatrix(ctx context.Context, body CreateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteLaborMatrix destroy
+	//
+	// Delete a labor matrix by ID.
+	//
+	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrix` operationId).
+	DeleteLaborMatrix(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLaborMatrixWithBody update
+	//
+	// Update a labor matrix by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+	UpdateLaborMatrixWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateLaborMatrix update
+	//
+	// Update a labor matrix by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+	UpdateLaborMatrix(ctx context.Context, id int, body UpdateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListLaborRates index
 	//
@@ -6025,48 +6025,48 @@ type ClientInterface interface {
 	// Corresponds with GET /parts_matrices (the `ListPartsMatrices` operationId).
 	ListPartsMatrices(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreatePartsMatriceWithBody create
+	// CreatePartsMatrixWithBody create
 	//
-	// Create a parts matrice.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-	CreatePartsMatriceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreatePartsMatrice create
-	//
-	// Create a parts matrice.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-	CreatePartsMatrice(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeletePartsMatrice destroy
-	//
-	// Delete a parts matrice by ID.
-	//
-	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
-	DeletePartsMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdatePartsMatriceWithBody update
-	//
-	// Update a parts matrice by ID.
+	// Create a parts matrix.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-	UpdatePartsMatriceWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+	CreatePartsMatrixWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdatePartsMatrice update
+	// CreatePartsMatrix create
 	//
-	// Update a parts matrice by ID.
+	// Create a parts matrix.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-	UpdatePartsMatrice(ctx context.Context, id int, body UpdatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+	CreatePartsMatrix(ctx context.Context, body CreatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeletePartsMatrix destroy
+	//
+	// Delete a parts matrix by ID.
+	//
+	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrix` operationId).
+	DeletePartsMatrix(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdatePartsMatrixWithBody update
+	//
+	// Update a parts matrix by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+	UpdatePartsMatrixWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdatePartsMatrix update
+	//
+	// Update a parts matrix by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+	UpdatePartsMatrix(ctx context.Context, id int, body UpdatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListPayments index
 	//
@@ -6647,41 +6647,41 @@ type ClientInterface interface {
 	// Corresponds with GET /sub_statuses (the `ListSubStatuses` operationId).
 	ListSubStatuses(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateSubStatuseWithBody create
+	// CreateSubStatusWithBody create
 	//
-	// Create a sub statuse.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-	CreateSubStatuseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateSubStatuse create
-	//
-	// Create a sub statuse.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-	CreateSubStatuse(ctx context.Context, body CreateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateSubStatuseWithBody update
-	//
-	// Update a sub statuse by ID.
+	// Create a sub status.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-	UpdateSubStatuseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+	CreateSubStatusWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateSubStatuse update
+	// CreateSubStatus create
 	//
-	// Update a sub statuse by ID.
+	// Create a sub status.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-	UpdateSubStatuse(ctx context.Context, id int, body UpdateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+	CreateSubStatus(ctx context.Context, body CreateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSubStatusWithBody update
+	//
+	// Update a sub status by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+	UpdateSubStatusWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSubStatus update
+	//
+	// Update a sub status by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+	UpdateSubStatus(ctx context.Context, id int, body UpdateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSubletPackages index
 	//
@@ -8316,23 +8316,23 @@ type ClientInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/completion (the `CreateWorkOrdersServicesCompletion` operationId).
 	CreateWorkOrdersServicesCompletion(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesCopieWithBody copy
+	// CreateWorkOrdersServicesCopyWithBody copy
 	//
-	// Create a work orders services copie.
+	// Create a work orders services copy.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-	CreateWorkOrdersServicesCopieWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+	CreateWorkOrdersServicesCopyWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesCopie copy
+	// CreateWorkOrdersServicesCopy copy
 	//
-	// Create a work orders services copie.
+	// Create a work orders services copy.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-	CreateWorkOrdersServicesCopie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+	CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrdersServicesPackageWithBody add_package
 	//
@@ -8406,23 +8406,23 @@ type ClientInterface interface {
 	// Corresponds with PATCH /work_orders/{work_order_id}/services/{id}/revive (the `UpdateWorkOrdersServicesRevive` operationId).
 	UpdateWorkOrdersServicesRevive(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesReviveJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesTimeEntrieWithBody create_time_entry
+	// CreateWorkOrdersServicesTimeEntryWithBody create_time_entry
 	//
-	// Create a work orders services time entrie.
+	// Create a work orders services time entry.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-	CreateWorkOrdersServicesTimeEntrieWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+	CreateWorkOrdersServicesTimeEntryWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesTimeEntrie create_time_entry
+	// CreateWorkOrdersServicesTimeEntry create_time_entry
 	//
-	// Create a work orders services time entrie.
+	// Create a work orders services time entry.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-	CreateWorkOrdersServicesTimeEntrie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+	CreateWorkOrdersServicesTimeEntry(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateWorkOrdersServicesToggleLaborCompletionWithBody toggle_labor_completion
 	//
@@ -8560,23 +8560,23 @@ type ClientInterface interface {
 	// Corresponds with PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id} (the `UpdateWorkOrdersServicesLineItem` operationId).
 	UpdateWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, id int, body UpdateWorkOrdersServicesLineItemJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesLineItemsCopieWithBody copy
+	// CreateWorkOrdersServicesLineItemsCopyWithBody copy
 	//
-	// Create a work orders services line items copie.
+	// Create a work orders services line items copy.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-	CreateWorkOrdersServicesLineItemsCopieWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+	CreateWorkOrdersServicesLineItemsCopyWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesLineItemsCopie copy
+	// CreateWorkOrdersServicesLineItemsCopy copy
 	//
-	// Create a work orders services line items copie.
+	// Create a work orders services line items copy.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-	CreateWorkOrdersServicesLineItemsCopie(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+	CreateWorkOrdersServicesLineItemsCopy(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrdersServicesLineItemsInventoryAdditionWithBody inventory_additions
 	//
@@ -8596,23 +8596,23 @@ type ClientInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions (the `CreateWorkOrdersServicesLineItemsInventoryAddition` operationId).
 	CreateWorkOrdersServicesLineItemsInventoryAddition(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsInventoryAdditionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesLineItemsPriceRefresheWithBody price_refreshes
+	// CreateWorkOrdersServicesLineItemsPriceRefreshWithBody price_refreshes
 	//
-	// Create a work orders services line items price refreshe.
+	// Create a work orders services line items price refresh.
 	//
 	// Takes any type of body and a specified content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-	CreateWorkOrdersServicesLineItemsPriceRefresheWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+	CreateWorkOrdersServicesLineItemsPriceRefreshWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateWorkOrdersServicesLineItemsPriceRefreshe price_refreshes
+	// CreateWorkOrdersServicesLineItemsPriceRefresh price_refreshes
 	//
-	// Create a work orders services line items price refreshe.
+	// Create a work orders services line items price refresh.
 	//
 	// Takes a body of the `application/json` content type.
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-	CreateWorkOrdersServicesLineItemsPriceRefreshe(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+	CreateWorkOrdersServicesLineItemsPriceRefresh(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PullWorkOrderServiceLineItemWithBody pull
 	//
@@ -9800,15 +9800,15 @@ func (c *Client) ListCashEntries(ctx context.Context, params *ListCashEntriesPar
 	return c.Client.Do(req)
 }
 
-// CreateCashEntrieWithBody create
+// CreateCashEntryWithBody create
 //
-// Create a cash entrie.
+// Create a cash entry.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-func (c *Client) CreateCashEntrieWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateCashEntrieRequestWithBody(c.Server, contentType, body)
+// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+func (c *Client) CreateCashEntryWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCashEntryRequestWithBody(c.Server, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9819,15 +9819,15 @@ func (c *Client) CreateCashEntrieWithBody(ctx context.Context, contentType strin
 	return c.Client.Do(req)
 }
 
-// CreateCashEntrie create
+// CreateCashEntry create
 //
-// Create a cash entrie.
+// Create a cash entry.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-func (c *Client) CreateCashEntrie(ctx context.Context, body CreateCashEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateCashEntrieRequest(c.Server, body)
+// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+func (c *Client) CreateCashEntry(ctx context.Context, body CreateCashEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCashEntryRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9838,13 +9838,13 @@ func (c *Client) CreateCashEntrie(ctx context.Context, body CreateCashEntrieJSON
 	return c.Client.Do(req)
 }
 
-// DeleteCashEntrie destroy
+// DeleteCashEntry destroy
 //
-// Delete a cash entrie by ID.
+// Delete a cash entry by ID.
 //
-// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntrie` operationId).
-func (c *Client) DeleteCashEntrie(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteCashEntrieRequest(c.Server, id)
+// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntry` operationId).
+func (c *Client) DeleteCashEntry(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteCashEntryRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -9855,13 +9855,13 @@ func (c *Client) DeleteCashEntrie(ctx context.Context, id int, reqEditors ...Req
 	return c.Client.Do(req)
 }
 
-// ShowCashEntrie show
+// ShowCashEntry show
 //
-// Show a cash entrie by ID.
+// Show a cash entry by ID.
 //
-// Corresponds with GET /cash_entries/{id} (the `ShowCashEntrie` operationId).
-func (c *Client) ShowCashEntrie(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewShowCashEntrieRequest(c.Server, id)
+// Corresponds with GET /cash_entries/{id} (the `ShowCashEntry` operationId).
+func (c *Client) ShowCashEntry(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowCashEntryRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -12432,70 +12432,15 @@ func (c *Client) ListLaborMatrices(ctx context.Context, reqEditors ...RequestEdi
 	return c.Client.Do(req)
 }
 
-// CreateLaborMatriceWithBody create
+// CreateLaborMatrixWithBody create
 //
-// Create a labor matrice.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-func (c *Client) CreateLaborMatriceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLaborMatriceRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateLaborMatrice create
-//
-// Create a labor matrice.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-func (c *Client) CreateLaborMatrice(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateLaborMatriceRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeleteLaborMatrice destroy
-//
-// Delete a labor matrice by ID.
-//
-// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
-func (c *Client) DeleteLaborMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteLaborMatriceRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateLaborMatriceWithBody update
-//
-// Update a labor matrice by ID.
+// Create a labor matrix.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-func (c *Client) UpdateLaborMatriceWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLaborMatriceRequestWithBody(c.Server, id, contentType, body)
+// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+func (c *Client) CreateLaborMatrixWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateLaborMatrixRequestWithBody(c.Server, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12506,15 +12451,70 @@ func (c *Client) UpdateLaborMatriceWithBody(ctx context.Context, id int, content
 	return c.Client.Do(req)
 }
 
-// UpdateLaborMatrice update
+// CreateLaborMatrix create
 //
-// Update a labor matrice by ID.
+// Create a labor matrix.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-func (c *Client) UpdateLaborMatrice(ctx context.Context, id int, body UpdateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateLaborMatriceRequest(c.Server, id, body)
+// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+func (c *Client) CreateLaborMatrix(ctx context.Context, body CreateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateLaborMatrixRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteLaborMatrix destroy
+//
+// Delete a labor matrix by ID.
+//
+// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrix` operationId).
+func (c *Client) DeleteLaborMatrix(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteLaborMatrixRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLaborMatrixWithBody update
+//
+// Update a labor matrix by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+func (c *Client) UpdateLaborMatrixWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLaborMatrixRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateLaborMatrix update
+//
+// Update a labor matrix by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+func (c *Client) UpdateLaborMatrix(ctx context.Context, id int, body UpdateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateLaborMatrixRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -14426,70 +14426,15 @@ func (c *Client) ListPartsMatrices(ctx context.Context, reqEditors ...RequestEdi
 	return c.Client.Do(req)
 }
 
-// CreatePartsMatriceWithBody create
+// CreatePartsMatrixWithBody create
 //
-// Create a parts matrice.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-func (c *Client) CreatePartsMatriceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePartsMatriceRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreatePartsMatrice create
-//
-// Create a parts matrice.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-func (c *Client) CreatePartsMatrice(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePartsMatriceRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeletePartsMatrice destroy
-//
-// Delete a parts matrice by ID.
-//
-// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
-func (c *Client) DeletePartsMatrice(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeletePartsMatriceRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdatePartsMatriceWithBody update
-//
-// Update a parts matrice by ID.
+// Create a parts matrix.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-func (c *Client) UpdatePartsMatriceWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePartsMatriceRequestWithBody(c.Server, id, contentType, body)
+// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+func (c *Client) CreatePartsMatrixWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePartsMatrixRequestWithBody(c.Server, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -14500,15 +14445,70 @@ func (c *Client) UpdatePartsMatriceWithBody(ctx context.Context, id int, content
 	return c.Client.Do(req)
 }
 
-// UpdatePartsMatrice update
+// CreatePartsMatrix create
 //
-// Update a parts matrice by ID.
+// Create a parts matrix.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-func (c *Client) UpdatePartsMatrice(ctx context.Context, id int, body UpdatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePartsMatriceRequest(c.Server, id, body)
+// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+func (c *Client) CreatePartsMatrix(ctx context.Context, body CreatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePartsMatrixRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeletePartsMatrix destroy
+//
+// Delete a parts matrix by ID.
+//
+// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrix` operationId).
+func (c *Client) DeletePartsMatrix(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeletePartsMatrixRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdatePartsMatrixWithBody update
+//
+// Update a parts matrix by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+func (c *Client) UpdatePartsMatrixWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdatePartsMatrixRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdatePartsMatrix update
+//
+// Update a parts matrix by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+func (c *Client) UpdatePartsMatrix(ctx context.Context, id int, body UpdatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdatePartsMatrixRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -15828,53 +15828,15 @@ func (c *Client) ListSubStatuses(ctx context.Context, reqEditors ...RequestEdito
 	return c.Client.Do(req)
 }
 
-// CreateSubStatuseWithBody create
+// CreateSubStatusWithBody create
 //
-// Create a sub statuse.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-func (c *Client) CreateSubStatuseWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateSubStatuseRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateSubStatuse create
-//
-// Create a sub statuse.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-func (c *Client) CreateSubStatuse(ctx context.Context, body CreateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateSubStatuseRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdateSubStatuseWithBody update
-//
-// Update a sub statuse by ID.
+// Create a sub status.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-func (c *Client) UpdateSubStatuseWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateSubStatuseRequestWithBody(c.Server, id, contentType, body)
+// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+func (c *Client) CreateSubStatusWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubStatusRequestWithBody(c.Server, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -15885,15 +15847,53 @@ func (c *Client) UpdateSubStatuseWithBody(ctx context.Context, id int, contentTy
 	return c.Client.Do(req)
 }
 
-// UpdateSubStatuse update
+// CreateSubStatus create
 //
-// Update a sub statuse by ID.
+// Create a sub status.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-func (c *Client) UpdateSubStatuse(ctx context.Context, id int, body UpdateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateSubStatuseRequest(c.Server, id, body)
+// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+func (c *Client) CreateSubStatus(ctx context.Context, body CreateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubStatusRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSubStatusWithBody update
+//
+// Update a sub status by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+func (c *Client) UpdateSubStatusWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSubStatusRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSubStatus update
+//
+// Update a sub status by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+func (c *Client) UpdateSubStatus(ctx context.Context, id int, body UpdateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSubStatusRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -19567,15 +19567,15 @@ func (c *Client) CreateWorkOrdersServicesCompletion(ctx context.Context, workOrd
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesCopieWithBody copy
+// CreateWorkOrdersServicesCopyWithBody copy
 //
-// Create a work orders services copie.
+// Create a work orders services copy.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-func (c *Client) CreateWorkOrdersServicesCopieWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesCopieRequestWithBody(c.Server, workOrderId, id, contentType, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+func (c *Client) CreateWorkOrdersServicesCopyWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesCopyRequestWithBody(c.Server, workOrderId, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -19586,15 +19586,15 @@ func (c *Client) CreateWorkOrdersServicesCopieWithBody(ctx context.Context, work
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesCopie copy
+// CreateWorkOrdersServicesCopy copy
 //
-// Create a work orders services copie.
+// Create a work orders services copy.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-func (c *Client) CreateWorkOrdersServicesCopie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesCopieRequest(c.Server, workOrderId, id, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+func (c *Client) CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesCopyRequest(c.Server, workOrderId, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -19757,15 +19757,15 @@ func (c *Client) UpdateWorkOrdersServicesRevive(ctx context.Context, workOrderId
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesTimeEntrieWithBody create_time_entry
+// CreateWorkOrdersServicesTimeEntryWithBody create_time_entry
 //
-// Create a work orders services time entrie.
+// Create a work orders services time entry.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-func (c *Client) CreateWorkOrdersServicesTimeEntrieWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesTimeEntrieRequestWithBody(c.Server, workOrderId, id, contentType, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+func (c *Client) CreateWorkOrdersServicesTimeEntryWithBody(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesTimeEntryRequestWithBody(c.Server, workOrderId, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -19776,15 +19776,15 @@ func (c *Client) CreateWorkOrdersServicesTimeEntrieWithBody(ctx context.Context,
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesTimeEntrie create_time_entry
+// CreateWorkOrdersServicesTimeEntry create_time_entry
 //
-// Create a work orders services time entrie.
+// Create a work orders services time entry.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-func (c *Client) CreateWorkOrdersServicesTimeEntrie(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesTimeEntrieRequest(c.Server, workOrderId, id, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+func (c *Client) CreateWorkOrdersServicesTimeEntry(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesTimeEntryRequest(c.Server, workOrderId, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -20091,15 +20091,15 @@ func (c *Client) UpdateWorkOrdersServicesLineItem(ctx context.Context, workOrder
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesLineItemsCopieWithBody copy
+// CreateWorkOrdersServicesLineItemsCopyWithBody copy
 //
-// Create a work orders services line items copie.
+// Create a work orders services line items copy.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-func (c *Client) CreateWorkOrdersServicesLineItemsCopieWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesLineItemsCopieRequestWithBody(c.Server, workOrderId, serviceId, id, contentType, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+func (c *Client) CreateWorkOrdersServicesLineItemsCopyWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesLineItemsCopyRequestWithBody(c.Server, workOrderId, serviceId, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -20110,15 +20110,15 @@ func (c *Client) CreateWorkOrdersServicesLineItemsCopieWithBody(ctx context.Cont
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesLineItemsCopie copy
+// CreateWorkOrdersServicesLineItemsCopy copy
 //
-// Create a work orders services line items copie.
+// Create a work orders services line items copy.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-func (c *Client) CreateWorkOrdersServicesLineItemsCopie(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesLineItemsCopieRequest(c.Server, workOrderId, serviceId, id, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+func (c *Client) CreateWorkOrdersServicesLineItemsCopy(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesLineItemsCopyRequest(c.Server, workOrderId, serviceId, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -20167,15 +20167,15 @@ func (c *Client) CreateWorkOrdersServicesLineItemsInventoryAddition(ctx context.
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesLineItemsPriceRefresheWithBody price_refreshes
+// CreateWorkOrdersServicesLineItemsPriceRefreshWithBody price_refreshes
 //
-// Create a work orders services line items price refreshe.
+// Create a work orders services line items price refresh.
 //
 // Takes any type of body and a specified content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresheWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesLineItemsPriceRefresheRequestWithBody(c.Server, workOrderId, serviceId, id, contentType, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefreshWithBody(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesLineItemsPriceRefreshRequestWithBody(c.Server, workOrderId, serviceId, id, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -20186,15 +20186,15 @@ func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresheWithBody(ctx cont
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesLineItemsPriceRefreshe price_refreshes
+// CreateWorkOrdersServicesLineItemsPriceRefresh price_refreshes
 //
-// Create a work orders services line items price refreshe.
+// Create a work orders services line items price refresh.
 //
 // Takes a body of the `application/json` content type.
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefreshe(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesLineItemsPriceRefresheRequest(c.Server, workOrderId, serviceId, id, body)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresh(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrdersServicesLineItemsPriceRefreshRequest(c.Server, workOrderId, serviceId, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -22124,19 +22124,19 @@ func NewListCashEntriesRequest(server string, params *ListCashEntriesParams) (*h
 	return req, nil
 }
 
-// NewCreateCashEntrieRequest calls the generic CreateCashEntrie builder with application/json body
-func NewCreateCashEntrieRequest(server string, body CreateCashEntrieJSONRequestBody) (*http.Request, error) {
+// NewCreateCashEntryRequest calls the generic CreateCashEntry builder with application/json body
+func NewCreateCashEntryRequest(server string, body CreateCashEntryJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateCashEntrieRequestWithBody(server, "application/json", bodyReader)
+	return NewCreateCashEntryRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewCreateCashEntrieRequestWithBody constructs an http.Request for the CreateCashEntrie method, with any body, and a specified content type
-func NewCreateCashEntrieRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateCashEntryRequestWithBody constructs an http.Request for the CreateCashEntry method, with any body, and a specified content type
+func NewCreateCashEntryRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -22164,8 +22164,8 @@ func NewCreateCashEntrieRequestWithBody(server string, contentType string, body 
 	return req, nil
 }
 
-// NewDeleteCashEntrieRequest constructs an http.Request for the DeleteCashEntrie method
-func NewDeleteCashEntrieRequest(server string, id int) (*http.Request, error) {
+// NewDeleteCashEntryRequest constructs an http.Request for the DeleteCashEntry method
+func NewDeleteCashEntryRequest(server string, id int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -22198,8 +22198,8 @@ func NewDeleteCashEntrieRequest(server string, id int) (*http.Request, error) {
 	return req, nil
 }
 
-// NewShowCashEntrieRequest constructs an http.Request for the ShowCashEntrie method
-func NewShowCashEntrieRequest(server string, id int) (*http.Request, error) {
+// NewShowCashEntryRequest constructs an http.Request for the ShowCashEntry method
+func NewShowCashEntryRequest(server string, id int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -26294,19 +26294,19 @@ func NewListLaborMatricesRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewCreateLaborMatriceRequest calls the generic CreateLaborMatrice builder with application/json body
-func NewCreateLaborMatriceRequest(server string, body CreateLaborMatriceJSONRequestBody) (*http.Request, error) {
+// NewCreateLaborMatrixRequest calls the generic CreateLaborMatrix builder with application/json body
+func NewCreateLaborMatrixRequest(server string, body CreateLaborMatrixJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateLaborMatriceRequestWithBody(server, "application/json", bodyReader)
+	return NewCreateLaborMatrixRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewCreateLaborMatriceRequestWithBody constructs an http.Request for the CreateLaborMatrice method, with any body, and a specified content type
-func NewCreateLaborMatriceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateLaborMatrixRequestWithBody constructs an http.Request for the CreateLaborMatrix method, with any body, and a specified content type
+func NewCreateLaborMatrixRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -26334,8 +26334,8 @@ func NewCreateLaborMatriceRequestWithBody(server string, contentType string, bod
 	return req, nil
 }
 
-// NewDeleteLaborMatriceRequest constructs an http.Request for the DeleteLaborMatrice method
-func NewDeleteLaborMatriceRequest(server string, id int) (*http.Request, error) {
+// NewDeleteLaborMatrixRequest constructs an http.Request for the DeleteLaborMatrix method
+func NewDeleteLaborMatrixRequest(server string, id int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -26368,19 +26368,19 @@ func NewDeleteLaborMatriceRequest(server string, id int) (*http.Request, error) 
 	return req, nil
 }
 
-// NewUpdateLaborMatriceRequest calls the generic UpdateLaborMatrice builder with application/json body
-func NewUpdateLaborMatriceRequest(server string, id int, body UpdateLaborMatriceJSONRequestBody) (*http.Request, error) {
+// NewUpdateLaborMatrixRequest calls the generic UpdateLaborMatrix builder with application/json body
+func NewUpdateLaborMatrixRequest(server string, id int, body UpdateLaborMatrixJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateLaborMatriceRequestWithBody(server, id, "application/json", bodyReader)
+	return NewUpdateLaborMatrixRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewUpdateLaborMatriceRequestWithBody constructs an http.Request for the UpdateLaborMatrice method, with any body, and a specified content type
-func NewUpdateLaborMatriceRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewUpdateLaborMatrixRequestWithBody constructs an http.Request for the UpdateLaborMatrix method, with any body, and a specified content type
+func NewUpdateLaborMatrixRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -29327,19 +29327,19 @@ func NewListPartsMatricesRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewCreatePartsMatriceRequest calls the generic CreatePartsMatrice builder with application/json body
-func NewCreatePartsMatriceRequest(server string, body CreatePartsMatriceJSONRequestBody) (*http.Request, error) {
+// NewCreatePartsMatrixRequest calls the generic CreatePartsMatrix builder with application/json body
+func NewCreatePartsMatrixRequest(server string, body CreatePartsMatrixJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreatePartsMatriceRequestWithBody(server, "application/json", bodyReader)
+	return NewCreatePartsMatrixRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewCreatePartsMatriceRequestWithBody constructs an http.Request for the CreatePartsMatrice method, with any body, and a specified content type
-func NewCreatePartsMatriceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreatePartsMatrixRequestWithBody constructs an http.Request for the CreatePartsMatrix method, with any body, and a specified content type
+func NewCreatePartsMatrixRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -29367,8 +29367,8 @@ func NewCreatePartsMatriceRequestWithBody(server string, contentType string, bod
 	return req, nil
 }
 
-// NewDeletePartsMatriceRequest constructs an http.Request for the DeletePartsMatrice method
-func NewDeletePartsMatriceRequest(server string, id int) (*http.Request, error) {
+// NewDeletePartsMatrixRequest constructs an http.Request for the DeletePartsMatrix method
+func NewDeletePartsMatrixRequest(server string, id int) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -29401,19 +29401,19 @@ func NewDeletePartsMatriceRequest(server string, id int) (*http.Request, error) 
 	return req, nil
 }
 
-// NewUpdatePartsMatriceRequest calls the generic UpdatePartsMatrice builder with application/json body
-func NewUpdatePartsMatriceRequest(server string, id int, body UpdatePartsMatriceJSONRequestBody) (*http.Request, error) {
+// NewUpdatePartsMatrixRequest calls the generic UpdatePartsMatrix builder with application/json body
+func NewUpdatePartsMatrixRequest(server string, id int, body UpdatePartsMatrixJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdatePartsMatriceRequestWithBody(server, id, "application/json", bodyReader)
+	return NewUpdatePartsMatrixRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewUpdatePartsMatriceRequestWithBody constructs an http.Request for the UpdatePartsMatrice method, with any body, and a specified content type
-func NewUpdatePartsMatriceRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewUpdatePartsMatrixRequestWithBody constructs an http.Request for the UpdatePartsMatrix method, with any body, and a specified content type
+func NewUpdatePartsMatrixRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -31326,19 +31326,19 @@ func NewListSubStatusesRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewCreateSubStatuseRequest calls the generic CreateSubStatuse builder with application/json body
-func NewCreateSubStatuseRequest(server string, body CreateSubStatuseJSONRequestBody) (*http.Request, error) {
+// NewCreateSubStatusRequest calls the generic CreateSubStatus builder with application/json body
+func NewCreateSubStatusRequest(server string, body CreateSubStatusJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateSubStatuseRequestWithBody(server, "application/json", bodyReader)
+	return NewCreateSubStatusRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewCreateSubStatuseRequestWithBody constructs an http.Request for the CreateSubStatuse method, with any body, and a specified content type
-func NewCreateSubStatuseRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateSubStatusRequestWithBody constructs an http.Request for the CreateSubStatus method, with any body, and a specified content type
+func NewCreateSubStatusRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -31366,19 +31366,19 @@ func NewCreateSubStatuseRequestWithBody(server string, contentType string, body 
 	return req, nil
 }
 
-// NewUpdateSubStatuseRequest calls the generic UpdateSubStatuse builder with application/json body
-func NewUpdateSubStatuseRequest(server string, id int, body UpdateSubStatuseJSONRequestBody) (*http.Request, error) {
+// NewUpdateSubStatusRequest calls the generic UpdateSubStatus builder with application/json body
+func NewUpdateSubStatusRequest(server string, id int, body UpdateSubStatusJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateSubStatuseRequestWithBody(server, id, "application/json", bodyReader)
+	return NewUpdateSubStatusRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewUpdateSubStatuseRequestWithBody constructs an http.Request for the UpdateSubStatuse method, with any body, and a specified content type
-func NewUpdateSubStatuseRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewUpdateSubStatusRequestWithBody constructs an http.Request for the UpdateSubStatus method, with any body, and a specified content type
+func NewUpdateSubStatusRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -37055,19 +37055,19 @@ func NewCreateWorkOrdersServicesCompletionRequestWithBody(server string, workOrd
 	return req, nil
 }
 
-// NewCreateWorkOrdersServicesCopieRequest calls the generic CreateWorkOrdersServicesCopie builder with application/json body
-func NewCreateWorkOrdersServicesCopieRequest(server string, workOrderId int, id int, body CreateWorkOrdersServicesCopieJSONRequestBody) (*http.Request, error) {
+// NewCreateWorkOrdersServicesCopyRequest calls the generic CreateWorkOrdersServicesCopy builder with application/json body
+func NewCreateWorkOrdersServicesCopyRequest(server string, workOrderId int, id int, body CreateWorkOrdersServicesCopyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersServicesCopieRequestWithBody(server, workOrderId, id, "application/json", bodyReader)
+	return NewCreateWorkOrdersServicesCopyRequestWithBody(server, workOrderId, id, "application/json", bodyReader)
 }
 
-// NewCreateWorkOrdersServicesCopieRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesCopie method, with any body, and a specified content type
-func NewCreateWorkOrdersServicesCopieRequestWithBody(server string, workOrderId int, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateWorkOrdersServicesCopyRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesCopy method, with any body, and a specified content type
+func NewCreateWorkOrdersServicesCopyRequestWithBody(server string, workOrderId int, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -37325,19 +37325,19 @@ func NewUpdateWorkOrdersServicesReviveRequestWithBody(server string, workOrderId
 	return req, nil
 }
 
-// NewCreateWorkOrdersServicesTimeEntrieRequest calls the generic CreateWorkOrdersServicesTimeEntrie builder with application/json body
-func NewCreateWorkOrdersServicesTimeEntrieRequest(server string, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieJSONRequestBody) (*http.Request, error) {
+// NewCreateWorkOrdersServicesTimeEntryRequest calls the generic CreateWorkOrdersServicesTimeEntry builder with application/json body
+func NewCreateWorkOrdersServicesTimeEntryRequest(server string, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersServicesTimeEntrieRequestWithBody(server, workOrderId, id, "application/json", bodyReader)
+	return NewCreateWorkOrdersServicesTimeEntryRequestWithBody(server, workOrderId, id, "application/json", bodyReader)
 }
 
-// NewCreateWorkOrdersServicesTimeEntrieRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesTimeEntrie method, with any body, and a specified content type
-func NewCreateWorkOrdersServicesTimeEntrieRequestWithBody(server string, workOrderId int, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateWorkOrdersServicesTimeEntryRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesTimeEntry method, with any body, and a specified content type
+func NewCreateWorkOrdersServicesTimeEntryRequestWithBody(server string, workOrderId int, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -37888,19 +37888,19 @@ func NewUpdateWorkOrdersServicesLineItemRequestWithBody(server string, workOrder
 	return req, nil
 }
 
-// NewCreateWorkOrdersServicesLineItemsCopieRequest calls the generic CreateWorkOrdersServicesLineItemsCopie builder with application/json body
-func NewCreateWorkOrdersServicesLineItemsCopieRequest(server string, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieJSONRequestBody) (*http.Request, error) {
+// NewCreateWorkOrdersServicesLineItemsCopyRequest calls the generic CreateWorkOrdersServicesLineItemsCopy builder with application/json body
+func NewCreateWorkOrdersServicesLineItemsCopyRequest(server string, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersServicesLineItemsCopieRequestWithBody(server, workOrderId, serviceId, id, "application/json", bodyReader)
+	return NewCreateWorkOrdersServicesLineItemsCopyRequestWithBody(server, workOrderId, serviceId, id, "application/json", bodyReader)
 }
 
-// NewCreateWorkOrdersServicesLineItemsCopieRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesLineItemsCopie method, with any body, and a specified content type
-func NewCreateWorkOrdersServicesLineItemsCopieRequestWithBody(server string, workOrderId int, serviceId int, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateWorkOrdersServicesLineItemsCopyRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesLineItemsCopy method, with any body, and a specified content type
+func NewCreateWorkOrdersServicesLineItemsCopyRequestWithBody(server string, workOrderId int, serviceId int, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -38010,19 +38010,19 @@ func NewCreateWorkOrdersServicesLineItemsInventoryAdditionRequestWithBody(server
 	return req, nil
 }
 
-// NewCreateWorkOrdersServicesLineItemsPriceRefresheRequest calls the generic CreateWorkOrdersServicesLineItemsPriceRefreshe builder with application/json body
-func NewCreateWorkOrdersServicesLineItemsPriceRefresheRequest(server string, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody) (*http.Request, error) {
+// NewCreateWorkOrdersServicesLineItemsPriceRefreshRequest calls the generic CreateWorkOrdersServicesLineItemsPriceRefresh builder with application/json body
+func NewCreateWorkOrdersServicesLineItemsPriceRefreshRequest(server string, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersServicesLineItemsPriceRefresheRequestWithBody(server, workOrderId, serviceId, id, "application/json", bodyReader)
+	return NewCreateWorkOrdersServicesLineItemsPriceRefreshRequestWithBody(server, workOrderId, serviceId, id, "application/json", bodyReader)
 }
 
-// NewCreateWorkOrdersServicesLineItemsPriceRefresheRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesLineItemsPriceRefreshe method, with any body, and a specified content type
-func NewCreateWorkOrdersServicesLineItemsPriceRefresheRequestWithBody(server string, workOrderId int, serviceId int, id int, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateWorkOrdersServicesLineItemsPriceRefreshRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesLineItemsPriceRefresh method, with any body, and a specified content type
+func NewCreateWorkOrdersServicesLineItemsPriceRefreshRequestWithBody(server string, workOrderId int, serviceId int, id int, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -39466,41 +39466,41 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /cash_entries (the `ListCashEntries` operationId).
 	ListCashEntriesWithResponse(ctx context.Context, params *ListCashEntriesParams, reqEditors ...RequestEditorFn) (*ListCashEntriesResponse, error)
 
-	// CreateCashEntrieWithBodyWithResponse create
+	// CreateCashEntryWithBodyWithResponse create
 	//
-	// Create a cash entrie.
+	// Create a cash entry.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-	CreateCashEntrieWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashEntrieResponse, error)
+	// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+	CreateCashEntryWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashEntryResponse, error)
 
-	// CreateCashEntrieWithResponse create
+	// CreateCashEntryWithResponse create
 	//
-	// Create a cash entrie.
+	// Create a cash entry.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-	CreateCashEntrieWithResponse(ctx context.Context, body CreateCashEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashEntrieResponse, error)
+	// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+	CreateCashEntryWithResponse(ctx context.Context, body CreateCashEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashEntryResponse, error)
 
-	// DeleteCashEntrieWithResponse destroy
+	// DeleteCashEntryWithResponse destroy
 	//
-	// Delete a cash entrie by ID.
+	// Delete a cash entry by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntrie` operationId).
-	DeleteCashEntrieWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCashEntrieResponse, error)
+	// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntry` operationId).
+	DeleteCashEntryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCashEntryResponse, error)
 
-	// ShowCashEntrieWithResponse show
+	// ShowCashEntryWithResponse show
 	//
-	// Show a cash entrie by ID.
+	// Show a cash entry by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /cash_entries/{id} (the `ShowCashEntrie` operationId).
-	ShowCashEntrieWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCashEntrieResponse, error)
+	// Corresponds with GET /cash_entries/{id} (the `ShowCashEntry` operationId).
+	ShowCashEntryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCashEntryResponse, error)
 
 	// ListConversationsWithResponse index
 	//
@@ -40716,50 +40716,50 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /labor_matrices (the `ListLaborMatrices` operationId).
 	ListLaborMatricesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListLaborMatricesResponse, error)
 
-	// CreateLaborMatriceWithBodyWithResponse create
+	// CreateLaborMatrixWithBodyWithResponse create
 	//
-	// Create a labor matrice.
+	// Create a labor matrix.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-	CreateLaborMatriceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLaborMatriceResponse, error)
+	// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+	CreateLaborMatrixWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLaborMatrixResponse, error)
 
-	// CreateLaborMatriceWithResponse create
+	// CreateLaborMatrixWithResponse create
 	//
-	// Create a labor matrice.
+	// Create a labor matrix.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-	CreateLaborMatriceWithResponse(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborMatriceResponse, error)
+	// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+	CreateLaborMatrixWithResponse(ctx context.Context, body CreateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborMatrixResponse, error)
 
-	// DeleteLaborMatriceWithResponse destroy
+	// DeleteLaborMatrixWithResponse destroy
 	//
-	// Delete a labor matrice by ID.
+	// Delete a labor matrix by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
-	DeleteLaborMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatriceResponse, error)
+	// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrix` operationId).
+	DeleteLaborMatrixWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatrixResponse, error)
 
-	// UpdateLaborMatriceWithBodyWithResponse update
+	// UpdateLaborMatrixWithBodyWithResponse update
 	//
-	// Update a labor matrice by ID.
+	// Update a labor matrix by ID.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-	UpdateLaborMatriceWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborMatriceResponse, error)
+	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+	UpdateLaborMatrixWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborMatrixResponse, error)
 
-	// UpdateLaborMatriceWithResponse update
+	// UpdateLaborMatrixWithResponse update
 	//
-	// Update a labor matrice by ID.
+	// Update a labor matrix by ID.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-	UpdateLaborMatriceWithResponse(ctx context.Context, id int, body UpdateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborMatriceResponse, error)
+	// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+	UpdateLaborMatrixWithResponse(ctx context.Context, id int, body UpdateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborMatrixResponse, error)
 
 	// ListLaborRatesWithResponse index
 	//
@@ -41682,50 +41682,50 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /parts_matrices (the `ListPartsMatrices` operationId).
 	ListPartsMatricesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListPartsMatricesResponse, error)
 
-	// CreatePartsMatriceWithBodyWithResponse create
+	// CreatePartsMatrixWithBodyWithResponse create
 	//
-	// Create a parts matrice.
+	// Create a parts matrix.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-	CreatePartsMatriceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePartsMatriceResponse, error)
+	// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+	CreatePartsMatrixWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePartsMatrixResponse, error)
 
-	// CreatePartsMatriceWithResponse create
+	// CreatePartsMatrixWithResponse create
 	//
-	// Create a parts matrice.
+	// Create a parts matrix.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-	CreatePartsMatriceWithResponse(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePartsMatriceResponse, error)
+	// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+	CreatePartsMatrixWithResponse(ctx context.Context, body CreatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePartsMatrixResponse, error)
 
-	// DeletePartsMatriceWithResponse destroy
+	// DeletePartsMatrixWithResponse destroy
 	//
-	// Delete a parts matrice by ID.
+	// Delete a parts matrix by ID.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
-	DeletePartsMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatriceResponse, error)
+	// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrix` operationId).
+	DeletePartsMatrixWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatrixResponse, error)
 
-	// UpdatePartsMatriceWithBodyWithResponse update
+	// UpdatePartsMatrixWithBodyWithResponse update
 	//
-	// Update a parts matrice by ID.
+	// Update a parts matrix by ID.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-	UpdatePartsMatriceWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePartsMatriceResponse, error)
+	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+	UpdatePartsMatrixWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePartsMatrixResponse, error)
 
-	// UpdatePartsMatriceWithResponse update
+	// UpdatePartsMatrixWithResponse update
 	//
-	// Update a parts matrice by ID.
+	// Update a parts matrix by ID.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-	UpdatePartsMatriceWithResponse(ctx context.Context, id int, body UpdatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePartsMatriceResponse, error)
+	// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+	UpdatePartsMatrixWithResponse(ctx context.Context, id int, body UpdatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePartsMatrixResponse, error)
 
 	// ListPaymentsWithResponse index
 	//
@@ -42368,41 +42368,41 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /sub_statuses (the `ListSubStatuses` operationId).
 	ListSubStatusesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListSubStatusesResponse, error)
 
-	// CreateSubStatuseWithBodyWithResponse create
+	// CreateSubStatusWithBodyWithResponse create
 	//
-	// Create a sub statuse.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-	CreateSubStatuseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubStatuseResponse, error)
-
-	// CreateSubStatuseWithResponse create
-	//
-	// Create a sub statuse.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-	CreateSubStatuseWithResponse(ctx context.Context, body CreateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubStatuseResponse, error)
-
-	// UpdateSubStatuseWithBodyWithResponse update
-	//
-	// Update a sub statuse by ID.
+	// Create a sub status.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-	UpdateSubStatuseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubStatuseResponse, error)
+	// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+	CreateSubStatusWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubStatusResponse, error)
 
-	// UpdateSubStatuseWithResponse update
+	// CreateSubStatusWithResponse create
 	//
-	// Update a sub statuse by ID.
+	// Create a sub status.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-	UpdateSubStatuseWithResponse(ctx context.Context, id int, body UpdateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubStatuseResponse, error)
+	// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+	CreateSubStatusWithResponse(ctx context.Context, body CreateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubStatusResponse, error)
+
+	// UpdateSubStatusWithBodyWithResponse update
+	//
+	// Update a sub status by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+	UpdateSubStatusWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubStatusResponse, error)
+
+	// UpdateSubStatusWithResponse update
+	//
+	// Update a sub status by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+	UpdateSubStatusWithResponse(ctx context.Context, id int, body UpdateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubStatusResponse, error)
 
 	// ListSubletPackagesWithResponse index
 	//
@@ -44143,23 +44143,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/completion (the `CreateWorkOrdersServicesCompletion` operationId).
 	CreateWorkOrdersServicesCompletionWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCompletionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCompletionResponse, error)
 
-	// CreateWorkOrdersServicesCopieWithBodyWithResponse copy
+	// CreateWorkOrdersServicesCopyWithBodyWithResponse copy
 	//
-	// Create a work orders services copie.
+	// Create a work orders services copy.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-	CreateWorkOrdersServicesCopieWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+	CreateWorkOrdersServicesCopyWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopyResponse, error)
 
-	// CreateWorkOrdersServicesCopieWithResponse copy
+	// CreateWorkOrdersServicesCopyWithResponse copy
 	//
-	// Create a work orders services copie.
+	// Create a work orders services copy.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-	CreateWorkOrdersServicesCopieWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+	CreateWorkOrdersServicesCopyWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopyResponse, error)
 
 	// CreateWorkOrdersServicesPackageWithBodyWithResponse add_package
 	//
@@ -44233,23 +44233,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /work_orders/{work_order_id}/services/{id}/revive (the `UpdateWorkOrdersServicesRevive` operationId).
 	UpdateWorkOrdersServicesReviveWithResponse(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesReviveJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesReviveResponse, error)
 
-	// CreateWorkOrdersServicesTimeEntrieWithBodyWithResponse create_time_entry
+	// CreateWorkOrdersServicesTimeEntryWithBodyWithResponse create_time_entry
 	//
-	// Create a work orders services time entrie.
+	// Create a work orders services time entry.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-	CreateWorkOrdersServicesTimeEntrieWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntrieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+	CreateWorkOrdersServicesTimeEntryWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntryResponse, error)
 
-	// CreateWorkOrdersServicesTimeEntrieWithResponse create_time_entry
+	// CreateWorkOrdersServicesTimeEntryWithResponse create_time_entry
 	//
-	// Create a work orders services time entrie.
+	// Create a work orders services time entry.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-	CreateWorkOrdersServicesTimeEntrieWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntrieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+	CreateWorkOrdersServicesTimeEntryWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntryResponse, error)
 
 	// UpdateWorkOrdersServicesToggleLaborCompletionWithBodyWithResponse toggle_labor_completion
 	//
@@ -44395,23 +44395,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id} (the `UpdateWorkOrdersServicesLineItem` operationId).
 	UpdateWorkOrdersServicesLineItemWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body UpdateWorkOrdersServicesLineItemJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkOrdersServicesLineItemResponse, error)
 
-	// CreateWorkOrdersServicesLineItemsCopieWithBodyWithResponse copy
+	// CreateWorkOrdersServicesLineItemsCopyWithBodyWithResponse copy
 	//
-	// Create a work orders services line items copie.
+	// Create a work orders services line items copy.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-	CreateWorkOrdersServicesLineItemsCopieWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+	CreateWorkOrdersServicesLineItemsCopyWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopyResponse, error)
 
-	// CreateWorkOrdersServicesLineItemsCopieWithResponse copy
+	// CreateWorkOrdersServicesLineItemsCopyWithResponse copy
 	//
-	// Create a work orders services line items copie.
+	// Create a work orders services line items copy.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-	CreateWorkOrdersServicesLineItemsCopieWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopieResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+	CreateWorkOrdersServicesLineItemsCopyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopyResponse, error)
 
 	// CreateWorkOrdersServicesLineItemsInventoryAdditionWithBodyWithResponse inventory_additions
 	//
@@ -44431,23 +44431,23 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions (the `CreateWorkOrdersServicesLineItemsInventoryAddition` operationId).
 	CreateWorkOrdersServicesLineItemsInventoryAdditionWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsInventoryAdditionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsInventoryAdditionResponse, error)
 
-	// CreateWorkOrdersServicesLineItemsPriceRefresheWithBodyWithResponse price_refreshes
+	// CreateWorkOrdersServicesLineItemsPriceRefreshWithBodyWithResponse price_refreshes
 	//
-	// Create a work orders services line items price refreshe.
+	// Create a work orders services line items price refresh.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-	CreateWorkOrdersServicesLineItemsPriceRefresheWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+	CreateWorkOrdersServicesLineItemsPriceRefreshWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error)
 
-	// CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse price_refreshes
+	// CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse price_refreshes
 	//
-	// Create a work orders services line items price refreshe.
+	// Create a work orders services line items price refresh.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-	CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error)
+	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+	CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error)
 
 	// PullWorkOrderServiceLineItemWithBodyWithResponse pull
 	//
@@ -47600,7 +47600,7 @@ func (r ListCashEntriesResponse) ContentType() string {
 	return ""
 }
 
-type CreateCashEntrieResponse struct {
+type CreateCashEntryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -47656,7 +47656,7 @@ type CreateCashEntrieResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateCashEntrieResponse) GetJSON200() *struct {
+func (r CreateCashEntryResponse) GetJSON200() *struct {
 	AmountCents         int    `json:"amount_cents"`
 	CashDrawerSessionId int    `json:"cash_drawer_session_id"`
 	Category            string `json:"category"`
@@ -47682,7 +47682,7 @@ func (r CreateCashEntrieResponse) GetJSON200() *struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateCashEntrieResponse) GetJSON201() *struct {
+func (r CreateCashEntryResponse) GetJSON201() *struct {
 	AmountCents         int    `json:"amount_cents"`
 	CashDrawerSessionId int    `json:"cash_drawer_session_id"`
 	Category            string `json:"category"`
@@ -47708,19 +47708,19 @@ func (r CreateCashEntrieResponse) GetJSON201() *struct {
 }
 
 // GetJSON422 returns the response for an HTTP 422 `application/json` response
-func (r CreateCashEntrieResponse) GetJSON422() *struct {
+func (r CreateCashEntryResponse) GetJSON422() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON422
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateCashEntrieResponse) GetBody() []byte {
+func (r CreateCashEntryResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateCashEntrieResponse) Status() string {
+func (r CreateCashEntryResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -47728,7 +47728,7 @@ func (r CreateCashEntrieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateCashEntrieResponse) StatusCode() int {
+func (r CreateCashEntryResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -47736,14 +47736,14 @@ func (r CreateCashEntrieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateCashEntrieResponse) ContentType() string {
+func (r CreateCashEntryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type DeleteCashEntrieResponse struct {
+type DeleteCashEntryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -47775,7 +47775,7 @@ type DeleteCashEntrieResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r DeleteCashEntrieResponse) GetJSON200() *struct {
+func (r DeleteCashEntryResponse) GetJSON200() *struct {
 	AmountCents         int    `json:"amount_cents"`
 	CashDrawerSessionId int    `json:"cash_drawer_session_id"`
 	Category            string `json:"category"`
@@ -47804,12 +47804,12 @@ func (r DeleteCashEntrieResponse) GetJSON200() *struct {
 }
 
 // GetBody returns the raw response body bytes
-func (r DeleteCashEntrieResponse) GetBody() []byte {
+func (r DeleteCashEntryResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteCashEntrieResponse) Status() string {
+func (r DeleteCashEntryResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -47817,7 +47817,7 @@ func (r DeleteCashEntrieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteCashEntrieResponse) StatusCode() int {
+func (r DeleteCashEntryResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -47825,14 +47825,14 @@ func (r DeleteCashEntrieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteCashEntrieResponse) ContentType() string {
+func (r DeleteCashEntryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type ShowCashEntrieResponse struct {
+type ShowCashEntryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -47861,7 +47861,7 @@ type ShowCashEntrieResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ShowCashEntrieResponse) GetJSON200() *struct {
+func (r ShowCashEntryResponse) GetJSON200() *struct {
 	AmountCents         int    `json:"amount_cents"`
 	CashDrawerSessionId int    `json:"cash_drawer_session_id"`
 	Category            string `json:"category"`
@@ -47887,12 +47887,12 @@ func (r ShowCashEntrieResponse) GetJSON200() *struct {
 }
 
 // GetBody returns the raw response body bytes
-func (r ShowCashEntrieResponse) GetBody() []byte {
+func (r ShowCashEntryResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r ShowCashEntrieResponse) Status() string {
+func (r ShowCashEntryResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -47900,7 +47900,7 @@ func (r ShowCashEntrieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ShowCashEntrieResponse) StatusCode() int {
+func (r ShowCashEntryResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -47908,7 +47908,7 @@ func (r ShowCashEntrieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ShowCashEntrieResponse) ContentType() string {
+func (r ShowCashEntryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -53876,7 +53876,7 @@ func (r ListLaborMatricesResponse) ContentType() string {
 	return ""
 }
 
-type CreateLaborMatriceResponse struct {
+type CreateLaborMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
@@ -53888,24 +53888,24 @@ type CreateLaborMatriceResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateLaborMatriceResponse) GetJSON201() *LaborMatrix {
+func (r CreateLaborMatrixResponse) GetJSON201() *LaborMatrix {
 	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateLaborMatriceResponse) GetJSON403() *struct {
+func (r CreateLaborMatrixResponse) GetJSON403() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateLaborMatriceResponse) GetBody() []byte {
+func (r CreateLaborMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateLaborMatriceResponse) Status() string {
+func (r CreateLaborMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -53913,7 +53913,7 @@ func (r CreateLaborMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateLaborMatriceResponse) StatusCode() int {
+func (r CreateLaborMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -53921,25 +53921,25 @@ func (r CreateLaborMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateLaborMatriceResponse) ContentType() string {
+func (r CreateLaborMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type DeleteLaborMatriceResponse struct {
+type DeleteLaborMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 }
 
 // GetBody returns the raw response body bytes
-func (r DeleteLaborMatriceResponse) GetBody() []byte {
+func (r DeleteLaborMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r DeleteLaborMatriceResponse) Status() string {
+func (r DeleteLaborMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -53947,7 +53947,7 @@ func (r DeleteLaborMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeleteLaborMatriceResponse) StatusCode() int {
+func (r DeleteLaborMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -53955,14 +53955,14 @@ func (r DeleteLaborMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeleteLaborMatriceResponse) ContentType() string {
+func (r DeleteLaborMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type UpdateLaborMatriceResponse struct {
+type UpdateLaborMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -53970,17 +53970,17 @@ type UpdateLaborMatriceResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateLaborMatriceResponse) GetJSON200() *LaborMatrix {
+func (r UpdateLaborMatrixResponse) GetJSON200() *LaborMatrix {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r UpdateLaborMatriceResponse) GetBody() []byte {
+func (r UpdateLaborMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateLaborMatriceResponse) Status() string {
+func (r UpdateLaborMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -53988,7 +53988,7 @@ func (r UpdateLaborMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateLaborMatriceResponse) StatusCode() int {
+func (r UpdateLaborMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -53996,7 +53996,7 @@ func (r UpdateLaborMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateLaborMatriceResponse) ContentType() string {
+func (r UpdateLaborMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -58443,7 +58443,7 @@ func (r ListPartsMatricesResponse) ContentType() string {
 	return ""
 }
 
-type CreatePartsMatriceResponse struct {
+type CreatePartsMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
@@ -58455,24 +58455,24 @@ type CreatePartsMatriceResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreatePartsMatriceResponse) GetJSON201() *PartsMatrix {
+func (r CreatePartsMatrixResponse) GetJSON201() *PartsMatrix {
 	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreatePartsMatriceResponse) GetJSON403() *struct {
+func (r CreatePartsMatrixResponse) GetJSON403() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
-func (r CreatePartsMatriceResponse) GetBody() []byte {
+func (r CreatePartsMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreatePartsMatriceResponse) Status() string {
+func (r CreatePartsMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -58480,7 +58480,7 @@ func (r CreatePartsMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreatePartsMatriceResponse) StatusCode() int {
+func (r CreatePartsMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -58488,25 +58488,25 @@ func (r CreatePartsMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreatePartsMatriceResponse) ContentType() string {
+func (r CreatePartsMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type DeletePartsMatriceResponse struct {
+type DeletePartsMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 }
 
 // GetBody returns the raw response body bytes
-func (r DeletePartsMatriceResponse) GetBody() []byte {
+func (r DeletePartsMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r DeletePartsMatriceResponse) Status() string {
+func (r DeletePartsMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -58514,7 +58514,7 @@ func (r DeletePartsMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r DeletePartsMatriceResponse) StatusCode() int {
+func (r DeletePartsMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -58522,14 +58522,14 @@ func (r DeletePartsMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeletePartsMatriceResponse) ContentType() string {
+func (r DeletePartsMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type UpdatePartsMatriceResponse struct {
+type UpdatePartsMatrixResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -58537,17 +58537,17 @@ type UpdatePartsMatriceResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdatePartsMatriceResponse) GetJSON200() *PartsMatrix {
+func (r UpdatePartsMatrixResponse) GetJSON200() *PartsMatrix {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r UpdatePartsMatriceResponse) GetBody() []byte {
+func (r UpdatePartsMatrixResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdatePartsMatriceResponse) Status() string {
+func (r UpdatePartsMatrixResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -58555,7 +58555,7 @@ func (r UpdatePartsMatriceResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdatePartsMatriceResponse) StatusCode() int {
+func (r UpdatePartsMatrixResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -58563,7 +58563,7 @@ func (r UpdatePartsMatriceResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdatePartsMatriceResponse) ContentType() string {
+func (r UpdatePartsMatrixResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -62737,7 +62737,7 @@ func (r ListSubStatusesResponse) ContentType() string {
 	return ""
 }
 
-type CreateSubStatuseResponse struct {
+type CreateSubStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
@@ -62749,24 +62749,24 @@ type CreateSubStatuseResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateSubStatuseResponse) GetJSON201() *SubStatusType {
+func (r CreateSubStatusResponse) GetJSON201() *SubStatusType {
 	return r.JSON201
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateSubStatuseResponse) GetJSON403() *struct {
+func (r CreateSubStatusResponse) GetJSON403() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateSubStatuseResponse) GetBody() []byte {
+func (r CreateSubStatusResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateSubStatuseResponse) Status() string {
+func (r CreateSubStatusResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -62774,7 +62774,7 @@ func (r CreateSubStatuseResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateSubStatuseResponse) StatusCode() int {
+func (r CreateSubStatusResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -62782,14 +62782,14 @@ func (r CreateSubStatuseResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateSubStatuseResponse) ContentType() string {
+func (r CreateSubStatusResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type UpdateSubStatuseResponse struct {
+type UpdateSubStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -62797,17 +62797,17 @@ type UpdateSubStatuseResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdateSubStatuseResponse) GetJSON200() *SubStatusType {
+func (r UpdateSubStatusResponse) GetJSON200() *SubStatusType {
 	return r.JSON200
 }
 
 // GetBody returns the raw response body bytes
-func (r UpdateSubStatuseResponse) GetBody() []byte {
+func (r UpdateSubStatusResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateSubStatuseResponse) Status() string {
+func (r UpdateSubStatusResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -62815,7 +62815,7 @@ func (r UpdateSubStatuseResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateSubStatuseResponse) StatusCode() int {
+func (r UpdateSubStatusResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -62823,7 +62823,7 @@ func (r UpdateSubStatuseResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateSubStatuseResponse) ContentType() string {
+func (r UpdateSubStatusResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -74670,7 +74670,7 @@ func (r CreateWorkOrdersServicesCompletionResponse) ContentType() string {
 	return ""
 }
 
-type CreateWorkOrdersServicesCopieResponse struct {
+type CreateWorkOrdersServicesCopyResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
@@ -74678,17 +74678,17 @@ type CreateWorkOrdersServicesCopieResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateWorkOrdersServicesCopieResponse) GetJSON201() *WorkOrder {
+func (r CreateWorkOrdersServicesCopyResponse) GetJSON201() *WorkOrder {
 	return r.JSON201
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateWorkOrdersServicesCopieResponse) GetBody() []byte {
+func (r CreateWorkOrdersServicesCopyResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateWorkOrdersServicesCopieResponse) Status() string {
+func (r CreateWorkOrdersServicesCopyResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -74696,7 +74696,7 @@ func (r CreateWorkOrdersServicesCopieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersServicesCopieResponse) StatusCode() int {
+func (r CreateWorkOrdersServicesCopyResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -74704,7 +74704,7 @@ func (r CreateWorkOrdersServicesCopieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersServicesCopieResponse) ContentType() string {
+func (r CreateWorkOrdersServicesCopyResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -74875,7 +74875,7 @@ func (r UpdateWorkOrdersServicesReviveResponse) ContentType() string {
 	return ""
 }
 
-type CreateWorkOrdersServicesTimeEntrieResponse struct {
+type CreateWorkOrdersServicesTimeEntryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -74887,24 +74887,24 @@ type CreateWorkOrdersServicesTimeEntrieResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateWorkOrdersServicesTimeEntrieResponse) GetJSON200() *WorkOrder {
+func (r CreateWorkOrdersServicesTimeEntryResponse) GetJSON200() *WorkOrder {
 	return r.JSON200
 }
 
 // GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateWorkOrdersServicesTimeEntrieResponse) GetJSON403() *struct {
+func (r CreateWorkOrdersServicesTimeEntryResponse) GetJSON403() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON403
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateWorkOrdersServicesTimeEntrieResponse) GetBody() []byte {
+func (r CreateWorkOrdersServicesTimeEntryResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateWorkOrdersServicesTimeEntrieResponse) Status() string {
+func (r CreateWorkOrdersServicesTimeEntryResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -74912,7 +74912,7 @@ func (r CreateWorkOrdersServicesTimeEntrieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersServicesTimeEntrieResponse) StatusCode() int {
+func (r CreateWorkOrdersServicesTimeEntryResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -74920,7 +74920,7 @@ func (r CreateWorkOrdersServicesTimeEntrieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersServicesTimeEntrieResponse) ContentType() string {
+func (r CreateWorkOrdersServicesTimeEntryResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -75484,7 +75484,7 @@ func (r UpdateWorkOrdersServicesLineItemResponse) ContentType() string {
 	return ""
 }
 
-type CreateWorkOrdersServicesLineItemsCopieResponse struct {
+type CreateWorkOrdersServicesLineItemsCopyResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
@@ -75492,17 +75492,17 @@ type CreateWorkOrdersServicesLineItemsCopieResponse struct {
 }
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateWorkOrdersServicesLineItemsCopieResponse) GetJSON201() *WorkOrder {
+func (r CreateWorkOrdersServicesLineItemsCopyResponse) GetJSON201() *WorkOrder {
 	return r.JSON201
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateWorkOrdersServicesLineItemsCopieResponse) GetBody() []byte {
+func (r CreateWorkOrdersServicesLineItemsCopyResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateWorkOrdersServicesLineItemsCopieResponse) Status() string {
+func (r CreateWorkOrdersServicesLineItemsCopyResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -75510,7 +75510,7 @@ func (r CreateWorkOrdersServicesLineItemsCopieResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersServicesLineItemsCopieResponse) StatusCode() int {
+func (r CreateWorkOrdersServicesLineItemsCopyResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -75518,7 +75518,7 @@ func (r CreateWorkOrdersServicesLineItemsCopieResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersServicesLineItemsCopieResponse) ContentType() string {
+func (r CreateWorkOrdersServicesLineItemsCopyResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -75566,7 +75566,7 @@ func (r CreateWorkOrdersServicesLineItemsInventoryAdditionResponse) ContentType(
 	return ""
 }
 
-type CreateWorkOrdersServicesLineItemsPriceRefresheResponse struct {
+type CreateWorkOrdersServicesLineItemsPriceRefreshResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
@@ -75578,24 +75578,24 @@ type CreateWorkOrdersServicesLineItemsPriceRefresheResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) GetJSON200() *WorkOrder {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) GetJSON200() *WorkOrder {
 	return r.JSON200
 }
 
 // GetJSON422 returns the response for an HTTP 422 `application/json` response
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) GetJSON422() *struct {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) GetJSON422() *struct {
 	Error Error `json:"error"`
 } {
 	return r.JSON422
 }
 
 // GetBody returns the raw response body bytes
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) GetBody() []byte {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) Status() string {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -75603,7 +75603,7 @@ func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) Status() string 
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) StatusCode() int {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -75611,7 +75611,7 @@ func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) StatusCode() int
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersServicesLineItemsPriceRefresheResponse) ContentType() string {
+func (r CreateWorkOrdersServicesLineItemsPriceRefreshResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -77275,64 +77275,64 @@ func (c *ClientWithResponses) ListCashEntriesWithResponse(ctx context.Context, p
 	return ParseListCashEntriesResponse(rsp)
 }
 
-// CreateCashEntrieWithBodyWithResponse create
+// CreateCashEntryWithBodyWithResponse create
 //
-// Create a cash entrie.
+// Create a cash entry.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-func (c *ClientWithResponses) CreateCashEntrieWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashEntrieResponse, error) {
-	rsp, err := c.CreateCashEntrieWithBody(ctx, contentType, body, reqEditors...)
+// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+func (c *ClientWithResponses) CreateCashEntryWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashEntryResponse, error) {
+	rsp, err := c.CreateCashEntryWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateCashEntrieResponse(rsp)
+	return ParseCreateCashEntryResponse(rsp)
 }
 
-// CreateCashEntrieWithResponse create
+// CreateCashEntryWithResponse create
 //
-// Create a cash entrie.
+// Create a cash entry.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /cash_entries (the `CreateCashEntrie` operationId).
-func (c *ClientWithResponses) CreateCashEntrieWithResponse(ctx context.Context, body CreateCashEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashEntrieResponse, error) {
-	rsp, err := c.CreateCashEntrie(ctx, body, reqEditors...)
+// Corresponds with POST /cash_entries (the `CreateCashEntry` operationId).
+func (c *ClientWithResponses) CreateCashEntryWithResponse(ctx context.Context, body CreateCashEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashEntryResponse, error) {
+	rsp, err := c.CreateCashEntry(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateCashEntrieResponse(rsp)
+	return ParseCreateCashEntryResponse(rsp)
 }
 
-// DeleteCashEntrieWithResponse destroy
+// DeleteCashEntryWithResponse destroy
 //
-// Delete a cash entrie by ID.
+// Delete a cash entry by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntrie` operationId).
-func (c *ClientWithResponses) DeleteCashEntrieWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCashEntrieResponse, error) {
-	rsp, err := c.DeleteCashEntrie(ctx, id, reqEditors...)
+// Corresponds with DELETE /cash_entries/{id} (the `DeleteCashEntry` operationId).
+func (c *ClientWithResponses) DeleteCashEntryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteCashEntryResponse, error) {
+	rsp, err := c.DeleteCashEntry(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteCashEntrieResponse(rsp)
+	return ParseDeleteCashEntryResponse(rsp)
 }
 
-// ShowCashEntrieWithResponse show
+// ShowCashEntryWithResponse show
 //
-// Show a cash entrie by ID.
+// Show a cash entry by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /cash_entries/{id} (the `ShowCashEntrie` operationId).
-func (c *ClientWithResponses) ShowCashEntrieWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCashEntrieResponse, error) {
-	rsp, err := c.ShowCashEntrie(ctx, id, reqEditors...)
+// Corresponds with GET /cash_entries/{id} (the `ShowCashEntry` operationId).
+func (c *ClientWithResponses) ShowCashEntryWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*ShowCashEntryResponse, error) {
+	rsp, err := c.ShowCashEntry(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseShowCashEntrieResponse(rsp)
+	return ParseShowCashEntryResponse(rsp)
 }
 
 // ListConversationsWithResponse index
@@ -79401,79 +79401,79 @@ func (c *ClientWithResponses) ListLaborMatricesWithResponse(ctx context.Context,
 	return ParseListLaborMatricesResponse(rsp)
 }
 
-// CreateLaborMatriceWithBodyWithResponse create
+// CreateLaborMatrixWithBodyWithResponse create
 //
-// Create a labor matrice.
+// Create a labor matrix.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-func (c *ClientWithResponses) CreateLaborMatriceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLaborMatriceResponse, error) {
-	rsp, err := c.CreateLaborMatriceWithBody(ctx, contentType, body, reqEditors...)
+// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+func (c *ClientWithResponses) CreateLaborMatrixWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateLaborMatrixResponse, error) {
+	rsp, err := c.CreateLaborMatrixWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateLaborMatriceResponse(rsp)
+	return ParseCreateLaborMatrixResponse(rsp)
 }
 
-// CreateLaborMatriceWithResponse create
+// CreateLaborMatrixWithResponse create
 //
-// Create a labor matrice.
+// Create a labor matrix.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /labor_matrices (the `CreateLaborMatrice` operationId).
-func (c *ClientWithResponses) CreateLaborMatriceWithResponse(ctx context.Context, body CreateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborMatriceResponse, error) {
-	rsp, err := c.CreateLaborMatrice(ctx, body, reqEditors...)
+// Corresponds with POST /labor_matrices (the `CreateLaborMatrix` operationId).
+func (c *ClientWithResponses) CreateLaborMatrixWithResponse(ctx context.Context, body CreateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateLaborMatrixResponse, error) {
+	rsp, err := c.CreateLaborMatrix(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateLaborMatriceResponse(rsp)
+	return ParseCreateLaborMatrixResponse(rsp)
 }
 
-// DeleteLaborMatriceWithResponse destroy
+// DeleteLaborMatrixWithResponse destroy
 //
-// Delete a labor matrice by ID.
+// Delete a labor matrix by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrice` operationId).
-func (c *ClientWithResponses) DeleteLaborMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatriceResponse, error) {
-	rsp, err := c.DeleteLaborMatrice(ctx, id, reqEditors...)
+// Corresponds with DELETE /labor_matrices/{id} (the `DeleteLaborMatrix` operationId).
+func (c *ClientWithResponses) DeleteLaborMatrixWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeleteLaborMatrixResponse, error) {
+	rsp, err := c.DeleteLaborMatrix(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeleteLaborMatriceResponse(rsp)
+	return ParseDeleteLaborMatrixResponse(rsp)
 }
 
-// UpdateLaborMatriceWithBodyWithResponse update
+// UpdateLaborMatrixWithBodyWithResponse update
 //
-// Update a labor matrice by ID.
+// Update a labor matrix by ID.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-func (c *ClientWithResponses) UpdateLaborMatriceWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborMatriceResponse, error) {
-	rsp, err := c.UpdateLaborMatriceWithBody(ctx, id, contentType, body, reqEditors...)
+// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+func (c *ClientWithResponses) UpdateLaborMatrixWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateLaborMatrixResponse, error) {
+	rsp, err := c.UpdateLaborMatrixWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateLaborMatriceResponse(rsp)
+	return ParseUpdateLaborMatrixResponse(rsp)
 }
 
-// UpdateLaborMatriceWithResponse update
+// UpdateLaborMatrixWithResponse update
 //
-// Update a labor matrice by ID.
+// Update a labor matrix by ID.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrice` operationId).
-func (c *ClientWithResponses) UpdateLaborMatriceWithResponse(ctx context.Context, id int, body UpdateLaborMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborMatriceResponse, error) {
-	rsp, err := c.UpdateLaborMatrice(ctx, id, body, reqEditors...)
+// Corresponds with PATCH /labor_matrices/{id} (the `UpdateLaborMatrix` operationId).
+func (c *ClientWithResponses) UpdateLaborMatrixWithResponse(ctx context.Context, id int, body UpdateLaborMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLaborMatrixResponse, error) {
+	rsp, err := c.UpdateLaborMatrix(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateLaborMatriceResponse(rsp)
+	return ParseUpdateLaborMatrixResponse(rsp)
 }
 
 // ListLaborRatesWithResponse index
@@ -81027,79 +81027,79 @@ func (c *ClientWithResponses) ListPartsMatricesWithResponse(ctx context.Context,
 	return ParseListPartsMatricesResponse(rsp)
 }
 
-// CreatePartsMatriceWithBodyWithResponse create
+// CreatePartsMatrixWithBodyWithResponse create
 //
-// Create a parts matrice.
+// Create a parts matrix.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-func (c *ClientWithResponses) CreatePartsMatriceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePartsMatriceResponse, error) {
-	rsp, err := c.CreatePartsMatriceWithBody(ctx, contentType, body, reqEditors...)
+// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+func (c *ClientWithResponses) CreatePartsMatrixWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePartsMatrixResponse, error) {
+	rsp, err := c.CreatePartsMatrixWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreatePartsMatriceResponse(rsp)
+	return ParseCreatePartsMatrixResponse(rsp)
 }
 
-// CreatePartsMatriceWithResponse create
+// CreatePartsMatrixWithResponse create
 //
-// Create a parts matrice.
+// Create a parts matrix.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /parts_matrices (the `CreatePartsMatrice` operationId).
-func (c *ClientWithResponses) CreatePartsMatriceWithResponse(ctx context.Context, body CreatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePartsMatriceResponse, error) {
-	rsp, err := c.CreatePartsMatrice(ctx, body, reqEditors...)
+// Corresponds with POST /parts_matrices (the `CreatePartsMatrix` operationId).
+func (c *ClientWithResponses) CreatePartsMatrixWithResponse(ctx context.Context, body CreatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePartsMatrixResponse, error) {
+	rsp, err := c.CreatePartsMatrix(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreatePartsMatriceResponse(rsp)
+	return ParseCreatePartsMatrixResponse(rsp)
 }
 
-// DeletePartsMatriceWithResponse destroy
+// DeletePartsMatrixWithResponse destroy
 //
-// Delete a parts matrice by ID.
+// Delete a parts matrix by ID.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrice` operationId).
-func (c *ClientWithResponses) DeletePartsMatriceWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatriceResponse, error) {
-	rsp, err := c.DeletePartsMatrice(ctx, id, reqEditors...)
+// Corresponds with DELETE /parts_matrices/{id} (the `DeletePartsMatrix` operationId).
+func (c *ClientWithResponses) DeletePartsMatrixWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*DeletePartsMatrixResponse, error) {
+	rsp, err := c.DeletePartsMatrix(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseDeletePartsMatriceResponse(rsp)
+	return ParseDeletePartsMatrixResponse(rsp)
 }
 
-// UpdatePartsMatriceWithBodyWithResponse update
+// UpdatePartsMatrixWithBodyWithResponse update
 //
-// Update a parts matrice by ID.
+// Update a parts matrix by ID.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-func (c *ClientWithResponses) UpdatePartsMatriceWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePartsMatriceResponse, error) {
-	rsp, err := c.UpdatePartsMatriceWithBody(ctx, id, contentType, body, reqEditors...)
+// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+func (c *ClientWithResponses) UpdatePartsMatrixWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePartsMatrixResponse, error) {
+	rsp, err := c.UpdatePartsMatrixWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdatePartsMatriceResponse(rsp)
+	return ParseUpdatePartsMatrixResponse(rsp)
 }
 
-// UpdatePartsMatriceWithResponse update
+// UpdatePartsMatrixWithResponse update
 //
-// Update a parts matrice by ID.
+// Update a parts matrix by ID.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrice` operationId).
-func (c *ClientWithResponses) UpdatePartsMatriceWithResponse(ctx context.Context, id int, body UpdatePartsMatriceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePartsMatriceResponse, error) {
-	rsp, err := c.UpdatePartsMatrice(ctx, id, body, reqEditors...)
+// Corresponds with PATCH /parts_matrices/{id} (the `UpdatePartsMatrix` operationId).
+func (c *ClientWithResponses) UpdatePartsMatrixWithResponse(ctx context.Context, id int, body UpdatePartsMatrixJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePartsMatrixResponse, error) {
+	rsp, err := c.UpdatePartsMatrix(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdatePartsMatriceResponse(rsp)
+	return ParseUpdatePartsMatrixResponse(rsp)
 }
 
 // ListPaymentsWithResponse index
@@ -82181,64 +82181,64 @@ func (c *ClientWithResponses) ListSubStatusesWithResponse(ctx context.Context, r
 	return ParseListSubStatusesResponse(rsp)
 }
 
-// CreateSubStatuseWithBodyWithResponse create
+// CreateSubStatusWithBodyWithResponse create
 //
-// Create a sub statuse.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-func (c *ClientWithResponses) CreateSubStatuseWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubStatuseResponse, error) {
-	rsp, err := c.CreateSubStatuseWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateSubStatuseResponse(rsp)
-}
-
-// CreateSubStatuseWithResponse create
-//
-// Create a sub statuse.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /sub_statuses (the `CreateSubStatuse` operationId).
-func (c *ClientWithResponses) CreateSubStatuseWithResponse(ctx context.Context, body CreateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubStatuseResponse, error) {
-	rsp, err := c.CreateSubStatuse(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateSubStatuseResponse(rsp)
-}
-
-// UpdateSubStatuseWithBodyWithResponse update
-//
-// Update a sub statuse by ID.
+// Create a sub status.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-func (c *ClientWithResponses) UpdateSubStatuseWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubStatuseResponse, error) {
-	rsp, err := c.UpdateSubStatuseWithBody(ctx, id, contentType, body, reqEditors...)
+// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+func (c *ClientWithResponses) CreateSubStatusWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubStatusResponse, error) {
+	rsp, err := c.CreateSubStatusWithBody(ctx, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateSubStatuseResponse(rsp)
+	return ParseCreateSubStatusResponse(rsp)
 }
 
-// UpdateSubStatuseWithResponse update
+// CreateSubStatusWithResponse create
 //
-// Update a sub statuse by ID.
+// Create a sub status.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatuse` operationId).
-func (c *ClientWithResponses) UpdateSubStatuseWithResponse(ctx context.Context, id int, body UpdateSubStatuseJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubStatuseResponse, error) {
-	rsp, err := c.UpdateSubStatuse(ctx, id, body, reqEditors...)
+// Corresponds with POST /sub_statuses (the `CreateSubStatus` operationId).
+func (c *ClientWithResponses) CreateSubStatusWithResponse(ctx context.Context, body CreateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubStatusResponse, error) {
+	rsp, err := c.CreateSubStatus(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateSubStatuseResponse(rsp)
+	return ParseCreateSubStatusResponse(rsp)
+}
+
+// UpdateSubStatusWithBodyWithResponse update
+//
+// Update a sub status by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+func (c *ClientWithResponses) UpdateSubStatusWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubStatusResponse, error) {
+	rsp, err := c.UpdateSubStatusWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSubStatusResponse(rsp)
+}
+
+// UpdateSubStatusWithResponse update
+//
+// Update a sub status by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /sub_statuses/{id} (the `UpdateSubStatus` operationId).
+func (c *ClientWithResponses) UpdateSubStatusWithResponse(ctx context.Context, id int, body UpdateSubStatusJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubStatusResponse, error) {
+	rsp, err := c.UpdateSubStatus(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSubStatusResponse(rsp)
 }
 
 // ListSubletPackagesWithResponse index
@@ -85198,34 +85198,34 @@ func (c *ClientWithResponses) CreateWorkOrdersServicesCompletionWithResponse(ctx
 	return ParseCreateWorkOrdersServicesCompletionResponse(rsp)
 }
 
-// CreateWorkOrdersServicesCopieWithBodyWithResponse copy
+// CreateWorkOrdersServicesCopyWithBodyWithResponse copy
 //
-// Create a work orders services copie.
+// Create a work orders services copy.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesCopieWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesCopieWithBody(ctx, workOrderId, id, contentType, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesCopyWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopyResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesCopyWithBody(ctx, workOrderId, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesCopieResponse(rsp)
+	return ParseCreateWorkOrdersServicesCopyResponse(rsp)
 }
 
-// CreateWorkOrdersServicesCopieWithResponse copy
+// CreateWorkOrdersServicesCopyWithResponse copy
 //
-// Create a work orders services copie.
+// Create a work orders services copy.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesCopieWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesCopie(ctx, workOrderId, id, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/copies (the `CreateWorkOrdersServicesCopy` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesCopyWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesCopyResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesCopy(ctx, workOrderId, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesCopieResponse(rsp)
+	return ParseCreateWorkOrdersServicesCopyResponse(rsp)
 }
 
 // CreateWorkOrdersServicesPackageWithBodyWithResponse add_package
@@ -85348,34 +85348,34 @@ func (c *ClientWithResponses) UpdateWorkOrdersServicesReviveWithResponse(ctx con
 	return ParseUpdateWorkOrdersServicesReviveResponse(rsp)
 }
 
-// CreateWorkOrdersServicesTimeEntrieWithBodyWithResponse create_time_entry
+// CreateWorkOrdersServicesTimeEntryWithBodyWithResponse create_time_entry
 //
-// Create a work orders services time entrie.
+// Create a work orders services time entry.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesTimeEntrieWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntrieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesTimeEntrieWithBody(ctx, workOrderId, id, contentType, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesTimeEntryWithBodyWithResponse(ctx context.Context, workOrderId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesTimeEntryWithBody(ctx, workOrderId, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesTimeEntrieResponse(rsp)
+	return ParseCreateWorkOrdersServicesTimeEntryResponse(rsp)
 }
 
-// CreateWorkOrdersServicesTimeEntrieWithResponse create_time_entry
+// CreateWorkOrdersServicesTimeEntryWithResponse create_time_entry
 //
-// Create a work orders services time entrie.
+// Create a work orders services time entry.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntrie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesTimeEntrieWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntrieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntrieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesTimeEntrie(ctx, workOrderId, id, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{id}/time_entries (the `CreateWorkOrdersServicesTimeEntry` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesTimeEntryWithResponse(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesTimeEntry(ctx, workOrderId, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesTimeEntrieResponse(rsp)
+	return ParseCreateWorkOrdersServicesTimeEntryResponse(rsp)
 }
 
 // UpdateWorkOrdersServicesToggleLaborCompletionWithBodyWithResponse toggle_labor_completion
@@ -85618,34 +85618,34 @@ func (c *ClientWithResponses) UpdateWorkOrdersServicesLineItemWithResponse(ctx c
 	return ParseUpdateWorkOrdersServicesLineItemResponse(rsp)
 }
 
-// CreateWorkOrdersServicesLineItemsCopieWithBodyWithResponse copy
+// CreateWorkOrdersServicesLineItemsCopyWithBodyWithResponse copy
 //
-// Create a work orders services line items copie.
+// Create a work orders services line items copy.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsCopieWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesLineItemsCopieWithBody(ctx, workOrderId, serviceId, id, contentType, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsCopyWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesLineItemsCopyWithBody(ctx, workOrderId, serviceId, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesLineItemsCopieResponse(rsp)
+	return ParseCreateWorkOrdersServicesLineItemsCopyResponse(rsp)
 }
 
-// CreateWorkOrdersServicesLineItemsCopieWithResponse copy
+// CreateWorkOrdersServicesLineItemsCopyWithResponse copy
 //
-// Create a work orders services line items copie.
+// Create a work orders services line items copy.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopie` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsCopieWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopieJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopieResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesLineItemsCopie(ctx, workOrderId, serviceId, id, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies (the `CreateWorkOrdersServicesLineItemsCopy` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsCopyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesLineItemsCopy(ctx, workOrderId, serviceId, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesLineItemsCopieResponse(rsp)
+	return ParseCreateWorkOrdersServicesLineItemsCopyResponse(rsp)
 }
 
 // CreateWorkOrdersServicesLineItemsInventoryAdditionWithBodyWithResponse inventory_additions
@@ -85678,34 +85678,34 @@ func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsInventoryAddition
 	return ParseCreateWorkOrdersServicesLineItemsInventoryAdditionResponse(rsp)
 }
 
-// CreateWorkOrdersServicesLineItemsPriceRefresheWithBodyWithResponse price_refreshes
+// CreateWorkOrdersServicesLineItemsPriceRefreshWithBodyWithResponse price_refreshes
 //
-// Create a work orders services line items price refreshe.
+// Create a work orders services line items price refresh.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsPriceRefresheWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesLineItemsPriceRefresheWithBody(ctx, workOrderId, serviceId, id, contentType, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsPriceRefreshWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesLineItemsPriceRefreshWithBody(ctx, workOrderId, serviceId, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesLineItemsPriceRefresheResponse(rsp)
+	return ParseCreateWorkOrdersServicesLineItemsPriceRefreshResponse(rsp)
 }
 
-// CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse price_refreshes
+// CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse price_refreshes
 //
-// Create a work orders services line items price refreshe.
+// Create a work orders services line items price refresh.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefreshe` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefresheJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesLineItemsPriceRefreshe(ctx, workOrderId, serviceId, id, body, reqEditors...)
+// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes (the `CreateWorkOrdersServicesLineItemsPriceRefresh` operationId).
+func (c *ClientWithResponses) CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
+	rsp, err := c.CreateWorkOrdersServicesLineItemsPriceRefresh(ctx, workOrderId, serviceId, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateWorkOrdersServicesLineItemsPriceRefresheResponse(rsp)
+	return ParseCreateWorkOrdersServicesLineItemsPriceRefreshResponse(rsp)
 }
 
 // PullWorkOrderServiceLineItemWithBodyWithResponse pull
@@ -87904,15 +87904,15 @@ func ParseListCashEntriesResponse(rsp *http.Response) (*ListCashEntriesResponse,
 	return response, nil
 }
 
-// ParseCreateCashEntrieResponse parses an HTTP response from a CreateCashEntrieWithResponse call
-func ParseCreateCashEntrieResponse(rsp *http.Response) (*CreateCashEntrieResponse, error) {
+// ParseCreateCashEntryResponse parses an HTTP response from a CreateCashEntryWithResponse call
+func ParseCreateCashEntryResponse(rsp *http.Response) (*CreateCashEntryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateCashEntrieResponse{
+	response := &CreateCashEntryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -87988,15 +87988,15 @@ func ParseCreateCashEntrieResponse(rsp *http.Response) (*CreateCashEntrieRespons
 	return response, nil
 }
 
-// ParseDeleteCashEntrieResponse parses an HTTP response from a DeleteCashEntrieWithResponse call
-func ParseDeleteCashEntrieResponse(rsp *http.Response) (*DeleteCashEntrieResponse, error) {
+// ParseDeleteCashEntryResponse parses an HTTP response from a DeleteCashEntryWithResponse call
+func ParseDeleteCashEntryResponse(rsp *http.Response) (*DeleteCashEntryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteCashEntrieResponse{
+	response := &DeleteCashEntryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -88038,15 +88038,15 @@ func ParseDeleteCashEntrieResponse(rsp *http.Response) (*DeleteCashEntrieRespons
 	return response, nil
 }
 
-// ParseShowCashEntrieResponse parses an HTTP response from a ShowCashEntrieWithResponse call
-func ParseShowCashEntrieResponse(rsp *http.Response) (*ShowCashEntrieResponse, error) {
+// ParseShowCashEntryResponse parses an HTTP response from a ShowCashEntryWithResponse call
+func ParseShowCashEntryResponse(rsp *http.Response) (*ShowCashEntryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ShowCashEntrieResponse{
+	response := &ShowCashEntryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -91975,15 +91975,15 @@ func ParseListLaborMatricesResponse(rsp *http.Response) (*ListLaborMatricesRespo
 	return response, nil
 }
 
-// ParseCreateLaborMatriceResponse parses an HTTP response from a CreateLaborMatriceWithResponse call
-func ParseCreateLaborMatriceResponse(rsp *http.Response) (*CreateLaborMatriceResponse, error) {
+// ParseCreateLaborMatrixResponse parses an HTTP response from a CreateLaborMatrixWithResponse call
+func ParseCreateLaborMatrixResponse(rsp *http.Response) (*CreateLaborMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateLaborMatriceResponse{
+	response := &CreateLaborMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -92010,15 +92010,15 @@ func ParseCreateLaborMatriceResponse(rsp *http.Response) (*CreateLaborMatriceRes
 	return response, nil
 }
 
-// ParseDeleteLaborMatriceResponse parses an HTTP response from a DeleteLaborMatriceWithResponse call
-func ParseDeleteLaborMatriceResponse(rsp *http.Response) (*DeleteLaborMatriceResponse, error) {
+// ParseDeleteLaborMatrixResponse parses an HTTP response from a DeleteLaborMatrixWithResponse call
+func ParseDeleteLaborMatrixResponse(rsp *http.Response) (*DeleteLaborMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeleteLaborMatriceResponse{
+	response := &DeleteLaborMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -92026,15 +92026,15 @@ func ParseDeleteLaborMatriceResponse(rsp *http.Response) (*DeleteLaborMatriceRes
 	return response, nil
 }
 
-// ParseUpdateLaborMatriceResponse parses an HTTP response from a UpdateLaborMatriceWithResponse call
-func ParseUpdateLaborMatriceResponse(rsp *http.Response) (*UpdateLaborMatriceResponse, error) {
+// ParseUpdateLaborMatrixResponse parses an HTTP response from a UpdateLaborMatrixWithResponse call
+func ParseUpdateLaborMatrixResponse(rsp *http.Response) (*UpdateLaborMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateLaborMatriceResponse{
+	response := &UpdateLaborMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -94979,15 +94979,15 @@ func ParseListPartsMatricesResponse(rsp *http.Response) (*ListPartsMatricesRespo
 	return response, nil
 }
 
-// ParseCreatePartsMatriceResponse parses an HTTP response from a CreatePartsMatriceWithResponse call
-func ParseCreatePartsMatriceResponse(rsp *http.Response) (*CreatePartsMatriceResponse, error) {
+// ParseCreatePartsMatrixResponse parses an HTTP response from a CreatePartsMatrixWithResponse call
+func ParseCreatePartsMatrixResponse(rsp *http.Response) (*CreatePartsMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreatePartsMatriceResponse{
+	response := &CreatePartsMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -95014,15 +95014,15 @@ func ParseCreatePartsMatriceResponse(rsp *http.Response) (*CreatePartsMatriceRes
 	return response, nil
 }
 
-// ParseDeletePartsMatriceResponse parses an HTTP response from a DeletePartsMatriceWithResponse call
-func ParseDeletePartsMatriceResponse(rsp *http.Response) (*DeletePartsMatriceResponse, error) {
+// ParseDeletePartsMatrixResponse parses an HTTP response from a DeletePartsMatrixWithResponse call
+func ParseDeletePartsMatrixResponse(rsp *http.Response) (*DeletePartsMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &DeletePartsMatriceResponse{
+	response := &DeletePartsMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -95030,15 +95030,15 @@ func ParseDeletePartsMatriceResponse(rsp *http.Response) (*DeletePartsMatriceRes
 	return response, nil
 }
 
-// ParseUpdatePartsMatriceResponse parses an HTTP response from a UpdatePartsMatriceWithResponse call
-func ParseUpdatePartsMatriceResponse(rsp *http.Response) (*UpdatePartsMatriceResponse, error) {
+// ParseUpdatePartsMatrixResponse parses an HTTP response from a UpdatePartsMatrixWithResponse call
+func ParseUpdatePartsMatrixResponse(rsp *http.Response) (*UpdatePartsMatrixResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdatePartsMatriceResponse{
+	response := &UpdatePartsMatrixResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -97739,15 +97739,15 @@ func ParseListSubStatusesResponse(rsp *http.Response) (*ListSubStatusesResponse,
 	return response, nil
 }
 
-// ParseCreateSubStatuseResponse parses an HTTP response from a CreateSubStatuseWithResponse call
-func ParseCreateSubStatuseResponse(rsp *http.Response) (*CreateSubStatuseResponse, error) {
+// ParseCreateSubStatusResponse parses an HTTP response from a CreateSubStatusWithResponse call
+func ParseCreateSubStatusResponse(rsp *http.Response) (*CreateSubStatusResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateSubStatuseResponse{
+	response := &CreateSubStatusResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -97774,15 +97774,15 @@ func ParseCreateSubStatuseResponse(rsp *http.Response) (*CreateSubStatuseRespons
 	return response, nil
 }
 
-// ParseUpdateSubStatuseResponse parses an HTTP response from a UpdateSubStatuseWithResponse call
-func ParseUpdateSubStatuseResponse(rsp *http.Response) (*UpdateSubStatuseResponse, error) {
+// ParseUpdateSubStatusResponse parses an HTTP response from a UpdateSubStatusWithResponse call
+func ParseUpdateSubStatusResponse(rsp *http.Response) (*UpdateSubStatusResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateSubStatuseResponse{
+	response := &UpdateSubStatusResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -105054,15 +105054,15 @@ func ParseCreateWorkOrdersServicesCompletionResponse(rsp *http.Response) (*Creat
 	return response, nil
 }
 
-// ParseCreateWorkOrdersServicesCopieResponse parses an HTTP response from a CreateWorkOrdersServicesCopieWithResponse call
-func ParseCreateWorkOrdersServicesCopieResponse(rsp *http.Response) (*CreateWorkOrdersServicesCopieResponse, error) {
+// ParseCreateWorkOrdersServicesCopyResponse parses an HTTP response from a CreateWorkOrdersServicesCopyWithResponse call
+func ParseCreateWorkOrdersServicesCopyResponse(rsp *http.Response) (*CreateWorkOrdersServicesCopyResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateWorkOrdersServicesCopieResponse{
+	response := &CreateWorkOrdersServicesCopyResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -105187,15 +105187,15 @@ func ParseUpdateWorkOrdersServicesReviveResponse(rsp *http.Response) (*UpdateWor
 	return response, nil
 }
 
-// ParseCreateWorkOrdersServicesTimeEntrieResponse parses an HTTP response from a CreateWorkOrdersServicesTimeEntrieWithResponse call
-func ParseCreateWorkOrdersServicesTimeEntrieResponse(rsp *http.Response) (*CreateWorkOrdersServicesTimeEntrieResponse, error) {
+// ParseCreateWorkOrdersServicesTimeEntryResponse parses an HTTP response from a CreateWorkOrdersServicesTimeEntryWithResponse call
+func ParseCreateWorkOrdersServicesTimeEntryResponse(rsp *http.Response) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateWorkOrdersServicesTimeEntrieResponse{
+	response := &CreateWorkOrdersServicesTimeEntryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -105612,15 +105612,15 @@ func ParseUpdateWorkOrdersServicesLineItemResponse(rsp *http.Response) (*UpdateW
 	return response, nil
 }
 
-// ParseCreateWorkOrdersServicesLineItemsCopieResponse parses an HTTP response from a CreateWorkOrdersServicesLineItemsCopieWithResponse call
-func ParseCreateWorkOrdersServicesLineItemsCopieResponse(rsp *http.Response) (*CreateWorkOrdersServicesLineItemsCopieResponse, error) {
+// ParseCreateWorkOrdersServicesLineItemsCopyResponse parses an HTTP response from a CreateWorkOrdersServicesLineItemsCopyWithResponse call
+func ParseCreateWorkOrdersServicesLineItemsCopyResponse(rsp *http.Response) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateWorkOrdersServicesLineItemsCopieResponse{
+	response := &CreateWorkOrdersServicesLineItemsCopyResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -105664,15 +105664,15 @@ func ParseCreateWorkOrdersServicesLineItemsInventoryAdditionResponse(rsp *http.R
 	return response, nil
 }
 
-// ParseCreateWorkOrdersServicesLineItemsPriceRefresheResponse parses an HTTP response from a CreateWorkOrdersServicesLineItemsPriceRefresheWithResponse call
-func ParseCreateWorkOrdersServicesLineItemsPriceRefresheResponse(rsp *http.Response) (*CreateWorkOrdersServicesLineItemsPriceRefresheResponse, error) {
+// ParseCreateWorkOrdersServicesLineItemsPriceRefreshResponse parses an HTTP response from a CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse call
+func ParseCreateWorkOrdersServicesLineItemsPriceRefreshResponse(rsp *http.Response) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateWorkOrdersServicesLineItemsPriceRefresheResponse{
+	response := &CreateWorkOrdersServicesLineItemsPriceRefreshResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
