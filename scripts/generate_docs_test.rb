@@ -467,6 +467,17 @@ class GenerateDocsTest < Minitest::Test
     refute_includes content, "\n\n\n", "section files must not contain 3+ newline runs"
   end
 
+  def test_prunes_stale_section_files
+    GenerateDocs.write_sections(@tmpdir, spec)
+    stale = File.join(@tmpdir, "sections", "orphan_tag.md")
+    File.write(stale, "# Orphan\n\n<!-- AUTO-GENERATED -->\n")
+
+    GenerateDocs.write_sections(@tmpdir, spec)
+
+    refute File.exist?(stale), "expected stale section file to be pruned"
+    assert File.exist?(File.join(@tmpdir, "sections", "customers.md"))
+  end
+
   def test_writes_api_reference_file
     GenerateDocs.write_api_reference(@tmpdir, spec)
 

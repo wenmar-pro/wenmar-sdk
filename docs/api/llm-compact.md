@@ -579,41 +579,23 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **Account**: {id*:integer, name*:string, slug*:string, billing_email*:string, website*:string, business_type*:string, tax_id*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, formatted_join_code*:string, station_login_url*:string, deletion_scheduled_at*:string, locations*:array of object}
 - **Appointment**: {type*:string, id*:integer, status*:string, appointment_type*:string, appointment_source:string, intake_method*:string, all_day*:boolean, starts_at*:string, ends_at*:string, estimated_duration_minutes:integer, customer_id:integer, vehicle_id:integer, service_advisor_id*:integer, work_order_id*:integer, driver_id:integer, marketing_source_id:integer, customer_name:string, customer_email:string, customer_phone:string, customer_concern:string, follow_up_reason:string, year:any, make:any, model:string, submodel:string, vin:string, license_plate:any, customer_confirmed:boolean, confirmation_sent_at:string, reminder_sent_at:string, customer_arrived_at:string, customer_initiated:boolean, rescheduled_from_id:integer, messages_count:integer, reschedules_count:integer, display_name:string, url*:string, app_url:string, created_at*:string, updated_at:string, customer*:object{id,full_name,display_name,url,app_url,phones_count,emails_count}, vehicle*:object{id,display_name,make,model,year,license_plate,url,app_url}, service_advisor:object{id,full_name,display_name,initials,role,url,app_url}, work_order:any, location:object{id,name,url}, latest_reschedule_id:integer, approve_url:string, reject_url:string, cancel_url:string, follow_up_url:string, work_order_url:string, reconcile_vehicle_url:string}
-- **WorkOrder**: {type*:string, id*:integer, work_order_number*:integer, status*:string, intake_method*:string, scheduled_for*:string, authorized*:boolean, paid*:boolean, created_at*:string, updated_at*:string, closed_at*:string, location_id*:integer, service_advisor_id*:integer, assigned_technician_id*:integer, sub_status_type_id*:integer, payer_customer_id*:integer, vehicle_arrived_at*:string, work_order_services_count*:integer, inspection_reports_count*:integer, services_visible_to_customer*:boolean, inspections_visible_to_customer*:boolean, customer*:object{id,full_name,display_name,url}, vehicle*:object{id,display_name,make,model,year,license_plate,vin,url}, location*:object{id,name,url}, totals*:object{subtotal_cents,tax_cents,total_cents,paid_cents,remaining_cents,currency}, url*:string, app_url*:string, odometer_in:integer, odometer_out:integer, odometer_unit:string, authorized_at:string, authorized_total_cents:integer, customer_notified:boolean, customer_notified_ready:boolean, ready_for_pickup_at:string, completed_at:string, declined_at:string, decline_reason:string, discount_cents:integer, fees_cents:integer, parts_cents:integer, labor_cents:integer, tires_cents:integer, subcontracts_cents:integer, credit_balance_cents:integer, saved_for_later:boolean, closure_reason:string, closure_reason_notes:string, notes:string, purchase_order_number:string, return_method:string, return_method_notes:string, vehicle_keys_location:string, vehicle_location:string, customer_visit_count:integer, customer_total_spend_cents:integer, average_ticket_cents:integer, activity_total:integer, recent_activities:array of object, services_url:string, payments_url:string, wip_url:string, inspection_url:string, parts_url:string, concerns_url:string, service_history_url:string, declined_services_url:string, activity_url:string, vehicle_history_url:string, appointments_url:string, authorization_logs_url:string, payer_customer:object{id,full_name,url}}
+- **ArchiveCustomerRequest**: {}
+- **ArchiveInspectionRequest**: {}
+- **ArchiveLaborRateRequest**: {}
+- **ArchivePackageRequest**: {}
+- **ArchiveServiceCategoryRequest**: {}
+- **ArchiveVehicleRequest**: {}
+- **ArchiveVendorRequest**: {}
 - **BroadcastCampaign**: {id*:integer, type*:string, name*:string, status*:string, sms_body*:string, filters*:object, recipient_count*:integer, sent_count*:integer, failed_count*:integer, progress_percentage*:integer, sent_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, creator*:object{id,name,url}, location*:object{id,name,url}}
+- **CloseWorkOrderRequest**: {}
+- **CompleteInspectionReportRequest**: {}
+- **CompleteWorkOrderRequest**: {work_order_completion_form*:object{odometer_in,odometer_out}}
 - **Conversation**: {id*:integer, status*:string, reply_state*:string, channel*:string, from_number*:any, from_email*:any, last_message_preview*:any, messages_count*:integer, has_failed_message*:boolean, unread_count*:integer, last_message_at*:string, customer_last_read_at*:string, driver_last_read_at*:string, oldest_unanswered_inbound_at*:string, created_at*:string, updated_at*:string, customer*:object{id,name,url}, messages_url*:string, url*:string, app_url*:string}
 - **CoreTaxRule**: {id*:integer, province_code*:string, tax_core_charge*:boolean, tax_core_credit*:boolean, notes*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
 - **CounterSale**: {id*:integer, counter_sale_number*:integer, status*:string, walk_in_name*:string, notes*:string, subtotal_cents*:integer, tax_total_cents*:integer, total_cents*:integer, paid_cents*:integer, remaining_cents*:integer, paid*:boolean, currency*:string, line_items_count*:integer, processed_by*:object{id,name}, location*:object{id,name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string, reopen_url*:string}
-- **CustomerTag**: {id*:integer, name*:string, color*:string, color_hex*:string, color_class*:string, bubble_classes*:string, status*:string, trashed_at*:string}
-- **Customer**: {type*:string, id*:integer, name*:string, full_name*:string, first_name*:string, last_name*:string, company_name*:string, display_name*:string, initials*:string, fleet_identifier*:string, fleet_mode*:string, marketing_opt_in*:boolean, tax_exempt*:boolean, notes*:string, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, primary_phone*:string, primary_phone_formatted*:string, primary_email*:string, home_location_id*:integer, vehicles_count*:integer, emails_count*:integer, phones_count*:integer, vehicles_url*:string, work_orders_url*:string, url*:string, app_url*:string, location*:object{id,name,url}, emails:array of object, phones:array of object, addresses:array of object, outstanding_balance_cents:integer, total_revenue_cents:integer, store_credit_cents:integer, last_visit_at:string, statements_count:integer, currency:string}
-- **Driver**: {id*:integer, full_name*:string, phone*:string, email*:string, customer*:object{id,full_name,url}, work_orders_count*:integer, work_orders_url*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **Statement**: {id*:integer, statement_number*:string, status*:string, statement_date*:string, start_date*:string, end_date*:string, due_date*:string, totals*:object{previous_balance_cents,new_charges_cents,payments_received_cents,credits_cents,balance_due_cents,currency}, sent_at*:string, viewed_at*:string, customer*:object{id,full_name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **Vehicle**: {type*:string, id*:integer, make*:string, model*:string, year*:integer, submodel*:string, body_style*:string, engine*:string, transmission*:string, drivetrain*:string, color*:string, vin*:string, license_plate*:string, license_plate_state*:string, license_plate_country*:string, unit_number*:string, fleet_identifier*:string, vehicle_type*:string, status*:string, notes*:string, customer_id*:integer, production_date*:string, annual_safety_expires_at*:string, odometer_reading*:integer, odometer_unit*:string, trashed_at*:string, created_at*:string, updated_at*:string, home_location_id*:integer, display_name*:string, work_orders_count*:integer, appointments_count*:integer, odometer*:object{reading,unit}, work_orders_url*:string, customer*:object{id,full_name,url}, url*:string, app_url*:string, location*:object{id,name,url}, last_serviced_at:string, lifetime_revenue_cents:integer, open_work_orders_count:integer}
-- **InspectionReport**: {id*:integer, type*:string, name*:string, status*:string, work_order_id*:integer, quick_finding*:boolean, completed*:boolean, items_count*:integer, checked_count*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups:array of any}
-- **Inspection**: {id*:integer, type*:string, name*:string, description*:string, status*:string, trashed_at*:string, is_default*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups*:array of object}
-- **LaborMatrix**: {id*:integer, name*:string, matrix_type*:string, active*:boolean, tiers*:array of object, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **LaborRate**: {id*:integer, name*:string, rate_cents*:integer, cost_per_hour_cents*:integer, is_default*:boolean, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **LaborTemplate**: {id*:integer, description*:string, default_hours*:string, usage_count*:integer, last_used_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **LeadSource**: {type*:string, id*:integer, name*:string, category*:string, active*:boolean, position*:integer, system_default*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **Location**: {id*:integer, name*:string, slug*:string, location_type*:string, currency*:string, time_zone*:string, country*:string, address*:string, city*:string, state*:string, postal_code*:string, contact_email*:any, dock*:array of object, url*:string, app_url*:string}
-- **Notification**: {id*:integer, trigger_type*:string, category*:string, title*:string, message_body*:string, read*:boolean, read_at*:string, created_at*:string, updated_at*:string, location_id*:integer, work_order_id*:integer, triggered_by_id*:integer, action_path*:any, url*:string, app_url*:string, metadata:object{inbound}}
-- **PurchaseOrder**: {id*:integer, type*:string, po_number*:integer, status*:string, order_method*:string, payment_method*:string, fulfillment_method*:string, tracking_number*:string, vendor_invoice_number*:string, vendor_invoice_received_at*:string, notes*:string, freight_cost_cents*:integer, freight_cost_currency*:string, subtotal_cents*:integer, total_cents*:integer, core_charges_cents*:integer, line_items_count*:integer, ordered_at*:string, received_at*:string, payment_due_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order:object{id,number,url}, location*:object{id,name,url}, creator:object{id,name,url}, line_items:array of object}
-- **ReturnOrder**: {id*:integer, type*:string, return_number*:integer, status*:string, credit_method*:any, reason_code*:any, rma_number*:string, is_warranty_claim*:boolean, restocking_fee_cents*:integer, shipping_fee_cents*:integer, notes*:string, line_items_count*:integer, refund_completed_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order*:object{id,number,url}, creator*:object{id,name,url}, location*:object{id,name,url}, line_items:array of object}
-- **SubletOrder**: {id*:integer, type*:string, sublet_number*:integer, title*:string, payment_status*:string, payment_method*:string, total_cents*:integer, total_cost_cents*:integer, margin_cents*:integer, margin_percentage*:integer, sent_to_ap*:boolean, vendor_paid_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor:object{id,name,url}, work_order:object{id,number,url}, work_order_service*:object{id,name}, location*:object{id,name,url}, fulfillment_status:string, notes:string, vendor_invoice_number:any}
-- **Package**: {id*:integer, name*:string, description*:string, service_type*:string, category_id*:integer, category_name*:string, estimated_hours*:string, customer_notes*:string, show_tech_with_cert*:boolean, triggers_tire_storage*:boolean, price_cents*:integer, status*:string, trashed_at*:string, url*:string, app_url*:string, location*:object{id,name,url}}
-- **PartsMatrix**: {id*:integer, name*:string, is_default*:boolean, active*:boolean, default_multiplier*:string, max_markup_cents*:integer, tiers*:array of object, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **ServiceCategory**: {id*:integer, name*:string, description*:string, service_type*:string, icon*:string, color*:string, status*:string, trashed_at*:string, position*:integer, canonical*:boolean, canonical_key*:string, job_count*:integer, url*:string, app_url*:string}
-- **ShopDiscount**: {id*:integer, name*:string, discount_type*:string, amount_cents*:integer, percentage*:number, active*:boolean, category*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **ShopFee**: {id*:integer, name*:string, fee_type*:string, amount_cents*:integer, percentage*:number, active*:boolean, applies_to*:string, is_taxable*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **SubStatusType**: {id*:integer, name*:string, color*:string, status_scope*:string, active*:boolean, is_default*:boolean, position*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **User**: {type*:string, id*:integer, full_name*:string, display_name*:string, email*:string, initials*:string, role*:string, disabled*:boolean, disabled_at*:string, locked*:boolean, confirmed*:boolean, hourly_cost_cents*:integer, hourly_cost_currency*:string, certification_number*:any, certification_label*:any, mfa_enabled*:boolean, mfa_required*:boolean, qr_token_generated_at*:string, home_location_id*:integer, location_ids*:array of integer, created_at*:string, updated_at*:string, home_location*:object{id,name,url}, locations*:array of object, capabilities*:object{can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_view_job_board,can_view_metrics,can_view_activity_feed,can_edit_permissions}, url*:string, app_url*:string, location*:object{id,name,url}}
-- **Vendor**: {id*:integer, name*:string, vendor_type*:string, payment_terms*:string, status*:string, trashed_at*:string, phone*:string, email*:string, website*:string, account_number*:string, notes*:string, quick_order*:boolean, order_url_template*:string, catalog_url_template*:string, location*:object{id,name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
-- **Error**: {code*:string, message*:string, field_errors*:object}
-- **UpdateAccountRequest**: {account*:object{name}}
 - **CreateAccountApiTokenRequest**: {api_token*:object{name}}
 - **CreateAccountStationLinkRegenerateRequest**: {}
 - **CreateAppointmentRequest**: {appointment*:object{starts_at,customer_id,vehicle_id,intake_method}}
-- **UpdateAppointmentRequest**: {appointment*:object{customer_concern}}
 - **CreateAppointmentsApprovalRequest**: {}
 - **CreateAppointmentsCancellationRequest**: {}
 - **CreateAppointmentsFollowUpRequest**: {appointment*:object{starts_at,follow_up_reason}}
@@ -621,10 +603,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateAppointmentsVehicleReconciliationRequest**: {vehicle_action*:string, vehicle_id*:integer}
 - **CreateAppointmentsWorkOrderRequest**: {}
 - **CreateCalendarBlockedTimeRequest**: {blocked_time*:object{starts_at,ends_at,reason}}
-- **UpdateCalendarBlockedTimeRequest**: {blocked_time*:object{reason}}
 - **CreateCampaignRequest**: {broadcast_campaign*:object{name,sms_body}}
-- **DuplicateCampaignRequest**: {}
-- **SendCampaignRequest**: {}
 - **CreateCashDrawerSessionRequest**: {cash_drawer_session*:object{starting_float_cents}}
 - **CreateCashEntryRequest**: {cash_entry*:object{reference,amount_cents,entry_type,description,recipient}}
 - **CreateConversationRequest**: {conversation*:object{customer_id}}
@@ -632,213 +611,234 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateConversationsCustomerLinkRequest**: {customer_id*:integer}
 - **CreateConversationsIgnoreRequest**: {}
 - **CreateConversationsMessageRequest**: {message*:object{body,channel}}
-- **UpdateConversationRequest**: {status*:string}
-- **UpdateCoreTaxRuleRequest**: {core_tax_rule*:object{tax_core_charge}}
 - **CreateCounterSaleRequest**: {}
 - **CreateCounterSalesLineItemRequest**: {counter_sale_line_items:array of object, counter_sale_line_item:object{description,quantity,unit_price,item_type}}
-- **UpdateCounterSalesLineItemRequest**: {counter_sale_line_item*:object{description}}
 - **CreateCounterSalesPaymentRequest**: {payment*:object{method,amount_cents}}
-- **UpdateCounterSaleRequest**: {counter_sale*:object{notes}}
-- **UpdateCounterSalesReopenRequest**: {}
-- **UpdateCurrentLocationRequest**: {location*:object{name}}
-- **CreateCustomerTagRequest**: {name*:string}
-- **UpdateCustomerTagRequest**: {name*:string}
-- **UpdateCustomerTagsArchiveRequest**: {}
-- **UpdateCustomerTagsRestoreRequest**: {}
-- **UpdateCustomerTagsTrashRequest**: {}
 - **CreateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,tax_exempt_number,notes,marketing_opt_in,discount_percent,po_required,customer_tag_id,emails_attributes,phones_attributes,addresses_attributes}}
+- **CreateCustomerTagRequest**: {name*:string}
 - **CreateDriverRequest**: {driver*:object{full_name,phone}}
-- **UpdateDriverRequest**: {driver*:object{full_name}}
-- **UpdateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,notes,marketing_opt_in,discount_percent,po_required,customer_tag_id,emails_attributes,phones_attributes,addresses_attributes,status}}
-- **ArchiveCustomerRequest**: {}
-- **MergeCustomerRequest**: {source_customer_id*:integer}
-- **RestoreCustomerRequest**: {}
-- **TrashCustomerRequest**: {}
 - **CreateExpenseRequest**: {expense*:object{payee,category,description,amount,expense_date,payment_method}}
-- **UpdateExpenseRequest**: {expense*:object{description,receipt_id}}
 - **CreateInspectionReportRequest**: {}
-- **CompleteInspectionReportRequest**: {}
-- **MarkAllInspectionReportRequest**: {status*:string, group_name*:string}
-- **ReassignInspectionReportRequest**: {user_id*:integer}
-- **ReopenInspectionReportRequest**: {}
-- **ResetInspectionReportRequest**: {}
-- **RetryInspectionReportRecordingRequest**: {}
 - **CreateInspectionRequest**: {inspection*:object{name}}
-- **UpdateInspectionRequest**: {inspection*:object{name}}
-- **ArchiveInspectionRequest**: {}
-- **RemoveDefaultInspectionRequest**: {}
-- **RestoreInspectionRequest**: {}
-- **SetDefaultInspectionRequest**: {}
-- **TrashInspectionRequest**: {}
 - **CreateInspectionsGroupRequest**: {inspection_group*:object{name}}
-- **UpdateInspectionsGroupRequest**: {inspection_group*:object{name}}
 - **CreateInspectionsItemRequest**: {inspection_item*:object{name,requires_measurement,measurement_unit}, group_id*:integer}
-- **UpdateInspectionsItemRequest**: {inspection_item*:object{name}}
 - **CreateInspectionsPresetRequest**: {inspection_preset*:object{title,color_rating}}
-- **UpdateInspectionsPresetRequest**: {inspection_preset*:object{title}}
 - **CreateInventoryLevelExtractionRequest**: {text*:string, extraction_id*:string}
-- **UpdateInventoryLevelRequest**: {inventory_level*:object{bin_location,reorder_point,max_stock}}
 - **CreateInventoryLevelsAdjustRequest**: {adjustment*:object{quantity_delta,reason}}
 - **CreateLaborMatrixRequest**: {labor_matrix*:object{name,matrix_type,active}}
-- **UpdateLaborMatrixRequest**: {labor_matrix*:object{name}}
 - **CreateLaborRateRequest**: {labor_rate*:object{name,rate,is_default}}
-- **ArchiveLaborRateRequest**: {}
-- **RestoreLaborRateRequest**: {}
-- **TrashLaborRateRequest**: {}
-- **UpdateLaborTemplateRequest**: {labor_template*:object{default_hours}}
 - **CreateLeadSourceRequest**: {lead_source*:object{name,category}}
 - **CreateLeadSourcesSeedDefaultRequest**: {}
-- **UpdateLeadSourceRequest**: {lead_source*:object{active}}
-- **UpdateLocationRequest**: {location*:object{name}}
-- **UpdateLocationsBusinessProfileRequest**: {location*:object{trade_name}}
-- **UpdateLocationsOperationsRequest**: {location*:object{time_zone}}
-- **UpdateLocationsCloseRequirementsRequest**: {close_requirements*:object{odometer_in,key_location}}
-- **UpdateLocationsDocumentsRequest**: {location*:object{estimate_terms_text}}
-- **UpdateLocationsLeadSourceRequirementsRequest**: {lead_source_requirements*:object{customer_lead_source,ro_marketing_source}}
-- **UpdateLocationsRemindersRequest**: {location*:object{oil_change_reminders_enabled,tire_swap_reminders_enabled}}
-- **UpdateLocationsScheduleConfigRequest**: {schedule_config*:object{slot_duration_minutes}}
-- **UpdateMeNotificationsRequest**: {user*:object{email_fallback_enabled}}
-- **UpdateMePreferencesRequest**: {user*:object{preferences}}
-- **UpdateMeProfileRequest**: {user*:object{full_name,email}}
 - **CreateMessagesResendRequest**: {}
 - **CreateNotificationsBulkMarkReadRequest**: {notification_ids:array of integer}
-- **UpdateNotificationRequest**: {read*:boolean}
 - **CreateOrdersPurchaseOrderRequest**: {purchase_order*:object{vendor_id,payment_method,fulfillment_method,line_items}}
-- **UpdateOrdersPurchaseOrderRequest**: {purchase_order*:object{tracking_number}}
 - **CreateOrdersPurchaseOrdersCancellationRequest**: {}
-- **UpdateOrdersReturnOrderRequest**: {return_order*:object{rma_number}}
 - **CreateOrdersReturnOrdersRefundCompletionRequest**: {}
-- **UpdateOrdersSubletOrdersMarkPaymentCompleteRequest**: {sublet_order_ids*:array of integer, payment_method*:string}
 - **CreatePackageRequest**: {package*:object{name,description}}
-- **ArchivePackageRequest**: {}
 - **CreatePackagesDuplicateRequest**: {}
-- **RestorePackageRequest**: {}
-- **TrashPackageRequest**: {}
 - **CreatePartRequest**: {part*:object{part_number,description,brand,part_type,stocked,initial_quantity,cost,sell,taxable,vendor_id}}
-- **UpdatePartRequest**: {part*:object{description}}
 - **CreatePartsMatrixRequest**: {parts_matrix*:object{name,is_default,active}}
-- **UpdatePartsMatrixRequest**: {parts_matrix*:object{name}}
 - **CreatePaymentsCancellationRequest**: {}
 - **CreatePaymentsConfirmationRequest**: {}
 - **CreatePaymentsFailureRequest**: {}
-- **UpdateReportsCashDrawerSessionsConfirmCloseRequest**: {cash_drawer_session*:object{actual_cash_cents,actual_cheques_cents,leave_behind_cents,variance_explanation}}
+- **CreatePermissionGroupRequest**: {permission_group*:object{name,can_perform_work}}
 - **CreateReportsTaxPeriodRequest**: {tax_period*:object{period_start,period_end}}
-- **UpdateReportsTaxPeriodRequest**: {tax_period*:object{marked_remitted,remitted_date}}
 - **CreateServiceCategoryRequest**: {service_category*:object{name,service_type,icon}}
-- **SeedDefaultsServiceCategoriesRequest**: {}
-- **UpdateServiceCategoryRequest**: {service_category*:object{name,position}}
-- **ArchiveServiceCategoryRequest**: {}
-- **RestoreServiceCategoryRequest**: {}
-- **TrashServiceCategoryRequest**: {}
 - **CreateShopDiscountRequest**: {shop_discount_config*:object{name,discount_type,percentage,active}}
-- **UpdateShopDiscountRequest**: {shop_discount_config*:object{active}}
 - **CreateShopDiscountsDuplicateRequest**: {}
 - **CreateShopFeeRequest**: {shop_fee_config*:object{name,fee_type,amount,active}}
-- **UpdateShopFeeRequest**: {shop_fee_config*:object{active}}
 - **CreateShopFeesDuplicateRequest**: {}
 - **CreateStatementsBulkSendRequest**: {statement_ids*:array of integer, cc_emails*:string, include_invoice_pdfs*:string, body*:string}
 - **CreateStatementsGenerateRequest**: {}
 - **CreateStoreCreditsVoidRequest**: {}
 - **CreateSubStatusRequest**: {sub_status_type*:object{name,color,status_scope}}
-- **UpdateSubStatusRequest**: {sub_status_type*:object{active}}
 - **CreateSubletPackageRequest**: {sublet_package*:object{name,description,active}}
-- **UpdateSubletPackageRequest**: {sublet_package*:object{name}}
-- **CreateWorkOrderTechAssignmentRequest**: {technician_id*:integer}
 - **CreateTireEventRequest**: {tire_event*:object{vehicle_id,event_type,occurred_at,notes}}
-- **CreateTireStorageSlotRequest**: {tire_storage_slot*:object{vehicle_id,customer_id,slot_label,season,stored_at}}
-- **UpdateTireStorageSlotRequest**: {tire_storage_slot*:object{tire_set_description}}
-- **CreateTireStorageSlotsCheckOutRequest**: {}
 - **CreateTireRequest**: {tire*:object{vehicle_id,position,status,size_raw,brand}}
-- **UpdateTireRequest**: {tire*:object{brand}}
+- **CreateTireStorageSlotRequest**: {tire_storage_slot*:object{vehicle_id,customer_id,slot_label,season,stored_at}}
+- **CreateTireStorageSlotsCheckOutRequest**: {}
 - **CreateUserRequest**: {user*:object{full_name,email,role,home_location_id,location_ids,can_perform_work}}
-- **CreatePermissionGroupRequest**: {permission_group*:object{name,can_perform_work}}
-- **UpdatePermissionGroupRequest**: {permission_group*:object{name}}
-- **CreateUsersPermissionGroupsAssignRequest**: {user_id*:integer}
-- **UpdateUserRequest**: {user*:object{full_name}}
 - **CreateUsersDisableRequest**: {}
 - **CreateUsersEnableRequest**: {}
+- **CreateUsersPermissionGroupsAssignRequest**: {user_id*:integer}
 - **CreateUsersResetPinRequest**: {}
 - **CreateUsersSendConfirmationRequest**: {}
 - **CreateUsersSendPasswordResetRequest**: {}
 - **CreateUsersUnlockRequest**: {}
 - **CreateVehicleRequest**: {vehicle*:object{vehicle_type,year,make,model,license_plate,customer_id,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate_state,odometer_reading,odometer_unit,unit_number,fleet_identifier,notes,production_date}}
-- **UpdateVehicleRequest**: {vehicle*:object{make,vehicle_type,odometer_unit,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,notes}, confirm_unit_change:string, convert_odometer:string}
-- **ArchiveVehicleRequest**: {}
-- **MergeVehicleRequest**: {source_vehicle_id*:integer}
-- **RestoreVehicleRequest**: {}
-- **TransferVehicleRequest**: {customer_id*:integer, mode*:string}
-- **TrashVehicleRequest**: {}
 - **CreateVendorRequest**: {vendor*:object{name,vendor_type,payment_terms}}
-- **UpdateVendorRequest**: {vendor*:object{name}}
-- **ArchiveVendorRequest**: {}
-- **RestoreVendorRequest**: {}
-- **TrashVendorRequest**: {}
-- **CreateWorkOrderTagRequest**: {name*:string, color*:string}
-- **UpdateWorkOrderTagRequest**: {name*:string}
-- **UpdateWorkOrderTagsArchiveRequest**: {}
+- **CreateWorkOrderPaymentRequest**: {payment*:object{method,amount_cents}}
 - **CreateWorkOrderRequest**: {work_order*:object{customer_id,vehicle_id}}
-- **CreateWorkOrdersQuickIntakeRequest**: {customer*:object{phone,first_name,last_name}, work_order*:object{concern_description}, vehicle:object{year,make,model,license_plate,license_plate_state}}
-- **UpdateWorkOrderRequest**: {work_order*:object{saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,work_order_tag_id,payer_customer_id,sub_status_type_id,services_visible_to_customer}}
-- **CloseWorkOrderRequest**: {}
-- **CompleteWorkOrderRequest**: {work_order_completion_form*:object{odometer_in,odometer_out}}
-- **UpdateWorkOrdersCourtesyCarAssignmentRequest**: {action_type*:string}
-- **CreateWorkOrdersCourtesyCarAssignmentRequest**: {vehicle_id*:integer}
-- **DeclineWorkOrderRequest**: {closure_reason*:string}
-- **PostWorkOrderToAccountRequest**: {}
-- **ReopenWorkOrderRequest**: {}
-- **SendWorkOrderEstimateRequest**: {}
-- **SendWorkOrderInvoiceSummaryRequest**: {}
-- **SendWorkOrderReminderRequest**: {}
-- **StartWorkOrderRequest**: {}
-- **VoidWorkOrderRequest**: {closure_reason*:string}
+- **CreateWorkOrderTagRequest**: {name*:string, color*:string}
+- **CreateWorkOrderTechAssignmentRequest**: {technician_id*:integer}
 - **CreateWorkOrdersActivityLogRequest**: {activity_log*:object{body}}
 - **CreateWorkOrdersAuthorizationDecisionRequest**: {service_decision_reasons*:object{1047559673}}
 - **CreateWorkOrdersAuthorizationRequest**: {authorization_method*:string, service_ids*:array of integer, service_decisions*:object{1047559673}}
 - **CreateWorkOrdersConcernRequest**: {concern*:object{body,source}}
-- **CreateWorkOrdersConcernsCopyAllToEstimateRequest**: {}
-- **DeclineAllWorkOrderConcernsRequest**: {decline_reason*:string}
-- **UpdateWorkOrdersConcernRequest**: {concern*:object{body}}
 - **CreateWorkOrdersConcernsAddPackageRequest**: {package_id*:integer}
+- **CreateWorkOrdersConcernsCopyAllToEstimateRequest**: {}
 - **CreateWorkOrdersConcernsCopyToEstimateRequest**: {}
+- **CreateWorkOrdersCourtesyCarAssignmentRequest**: {vehicle_id*:integer}
 - **CreateWorkOrdersCreditResolutionRequest**: {resolution*:object{action}}
 - **CreateWorkOrdersFeeExclusionRequest**: {work_order_fee_exclusion*:object{shop_fee_config_id}}
 - **CreateWorkOrdersPaymentLinkSendRequest**: {message*:object{channel,body}}
-- **CreateWorkOrderPaymentRequest**: {payment*:object{method,amount_cents}}
-- **SendWorkOrderPaymentToArRequest**: {}
 - **CreateWorkOrdersPurchaseOrderRequest**: {purchase_order*:object{vendor_id,notes,line_items}}
-- **UpdateWorkOrdersPurchaseOrderRequest**: {purchase_order*:object{notes}}
 - **CreateWorkOrdersPurchaseOrdersReceiveRequest**: {lines*:object{20915845}}
 - **CreateWorkOrdersPurchaseOrdersReturnRequest**: {lines*:object{20915845}, return_order*:object{credit_method}}
+- **CreateWorkOrdersQuickIntakeRequest**: {customer*:object{phone,first_name,last_name}, work_order*:object{concern_description}, vehicle:object{year,make,model,license_plate,license_plate_state}}
 - **CreateWorkOrdersRefundRequest**: {refund*:object{payment_id,amount,reason}}
 - **CreateWorkOrdersServiceRequest**: {work_order_service*:object{name,service_type}, package_id:integer}
-- **UpdateWorkOrdersServicesReorderRequest**: {service_ids*:array of integer}
-- **UpdateWorkOrdersServiceRequest**: {work_order_service*:object{technician_id,position,name,labor_tax_enabled,pricing_mode}}
-- **UpdateWorkOrdersServicesAdjustTimeRequest**: {hours*:integer, minutes*:integer}
 - **CreateWorkOrdersServicesBulkPullRequest**: {}
+- **CreateWorkOrdersServicesCommentRequest**: {service_comment*:object{body}}
 - **CreateWorkOrdersServicesCompletionRequest**: {}
 - **CreateWorkOrdersServicesCopyRequest**: {}
-- **CreateWorkOrdersServicesPackageRequest**: {package_id*:integer}
-- **UpdateWorkOrdersServicesPauseRequest**: {}
-- **UpdateWorkOrdersServicesPublishRequest**: {}
-- **UpdateWorkOrdersServicesReviveRequest**: {}
-- **CreateWorkOrdersServicesTimeEntryRequest**: {}
-- **UpdateWorkOrdersServicesToggleLaborCompletionRequest**: {line_item_id*:integer}
-- **UpdateWorkOrdersServicesUpdateCategoryRequest**: {category_id*:integer}
-- **CreateWorkOrdersServicesCommentRequest**: {service_comment*:object{body}}
 - **CreateWorkOrdersServicesExtractionRequest**: {text*:string, extraction_id*:string}
 - **CreateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{item_type,description,hours,labor_rate_id,total,unit_price,quantity}}
-- **UpdateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{part_status,description}}
 - **CreateWorkOrdersServicesLineItemsCopyRequest**: {}
 - **CreateWorkOrdersServicesLineItemsInventoryAdditionRequest**: {}
 - **CreateWorkOrdersServicesLineItemsPriceRefreshRequest**: {}
-- **PullWorkOrderServiceLineItemRequest**: {}
 - **CreateWorkOrdersServicesLineItemsReorderRequest**: {}
+- **CreateWorkOrdersServicesPackageRequest**: {package_id*:integer}
+- **CreateWorkOrdersServicesSubletOrderRequest**: {sublet_order*:object{title}}
+- **CreateWorkOrdersServicesSubletOrdersDuplicateRequest**: {}
+- **CreateWorkOrdersServicesTimeEntryRequest**: {}
+- **CreateWorkOrdersTireStorageRequest**: {tire_storage_slot*:object{slot_label,season,tire_set_description,notes}}
+- **CreateWorkOrdersVoidRequest**: {payment_id*:integer}
+- **Customer**: {type*:string, id*:integer, name*:string, full_name*:string, first_name*:string, last_name*:string, company_name*:string, display_name*:string, initials*:string, fleet_identifier*:string, fleet_mode*:string, marketing_opt_in*:boolean, tax_exempt*:boolean, notes*:string, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, primary_phone*:string, primary_phone_formatted*:string, primary_email*:string, home_location_id*:integer, vehicles_count*:integer, emails_count*:integer, phones_count*:integer, vehicles_url*:string, work_orders_url*:string, url*:string, app_url*:string, location*:object{id,name,url}, emails:array of object, phones:array of object, addresses:array of object, outstanding_balance_cents:integer, total_revenue_cents:integer, store_credit_cents:integer, last_visit_at:string, statements_count:integer, currency:string}
+- **CustomerTag**: {id*:integer, name*:string, color*:string, color_hex*:string, color_class*:string, bubble_classes*:string, status*:string, trashed_at*:string}
+- **DeclineAllWorkOrderConcernsRequest**: {decline_reason*:string}
+- **DeclineWorkOrderRequest**: {closure_reason*:string}
+- **Driver**: {id*:integer, full_name*:string, phone*:string, email*:string, customer*:object{id,full_name,url}, work_orders_count*:integer, work_orders_url*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **DuplicateCampaignRequest**: {}
+- **Error**: {code*:string, message*:string, field_errors*:object}
+- **Inspection**: {id*:integer, type*:string, name*:string, description*:string, status*:string, trashed_at*:string, is_default*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups*:array of object}
+- **InspectionReport**: {id*:integer, type*:string, name*:string, status*:string, work_order_id*:integer, quick_finding*:boolean, completed*:boolean, items_count*:integer, checked_count*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string, location*:object{id,name,url}, groups:array of any}
+- **LaborMatrix**: {id*:integer, name*:string, matrix_type*:string, active*:boolean, tiers*:array of object, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **LaborRate**: {id*:integer, name*:string, rate_cents*:integer, cost_per_hour_cents*:integer, is_default*:boolean, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **LaborTemplate**: {id*:integer, description*:string, default_hours*:string, usage_count*:integer, last_used_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **LeadSource**: {type*:string, id*:integer, name*:string, category*:string, active*:boolean, position*:integer, system_default*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **Location**: {id*:integer, name*:string, slug*:string, location_type*:string, currency*:string, time_zone*:string, country*:string, address*:string, city*:string, state*:string, postal_code*:string, contact_email*:any, dock*:array of object, url*:string, app_url*:string}
+- **MarkAllInspectionReportRequest**: {status*:string, group_name*:string}
+- **MergeCustomerRequest**: {source_customer_id*:integer}
+- **MergeVehicleRequest**: {source_vehicle_id*:integer}
+- **Notification**: {id*:integer, trigger_type*:string, category*:string, title*:string, message_body*:string, read*:boolean, read_at*:string, created_at*:string, updated_at*:string, location_id*:integer, work_order_id*:integer, triggered_by_id*:integer, action_path*:any, url*:string, app_url*:string, metadata:object{inbound}}
+- **Package**: {id*:integer, name*:string, description*:string, service_type*:string, category_id*:integer, category_name*:string, estimated_hours*:string, customer_notes*:string, show_tech_with_cert*:boolean, triggers_tire_storage*:boolean, price_cents*:integer, status*:string, trashed_at*:string, url*:string, app_url*:string, location*:object{id,name,url}}
+- **PartsMatrix**: {id*:integer, name*:string, is_default*:boolean, active*:boolean, default_multiplier*:string, max_markup_cents*:integer, tiers*:array of object, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **PostWorkOrderToAccountRequest**: {}
+- **PullWorkOrderServiceLineItemRequest**: {}
+- **PurchaseOrder**: {id*:integer, type*:string, po_number*:integer, status*:string, order_method*:string, payment_method*:string, fulfillment_method*:string, tracking_number*:string, vendor_invoice_number*:string, vendor_invoice_received_at*:string, notes*:string, freight_cost_cents*:integer, freight_cost_currency*:string, subtotal_cents*:integer, total_cents*:integer, core_charges_cents*:integer, line_items_count*:integer, ordered_at*:string, received_at*:string, payment_due_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order:object{id,number,url}, location*:object{id,name,url}, creator:object{id,name,url}, line_items:array of object}
+- **ReassignInspectionReportRequest**: {user_id*:integer}
+- **RemoveDefaultInspectionRequest**: {}
+- **ReopenInspectionReportRequest**: {}
+- **ReopenWorkOrderRequest**: {}
+- **ResetInspectionReportRequest**: {}
+- **RestoreCustomerRequest**: {}
+- **RestoreInspectionRequest**: {}
+- **RestoreLaborRateRequest**: {}
+- **RestorePackageRequest**: {}
+- **RestoreServiceCategoryRequest**: {}
+- **RestoreVehicleRequest**: {}
+- **RestoreVendorRequest**: {}
+- **RetryInspectionReportRecordingRequest**: {}
+- **ReturnOrder**: {id*:integer, type*:string, return_number*:integer, status*:string, credit_method*:any, reason_code*:any, rma_number*:string, is_warranty_claim*:boolean, restocking_fee_cents*:integer, shipping_fee_cents*:integer, notes*:string, line_items_count*:integer, refund_completed_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor*:object{id,name,url}, work_order*:object{id,number,url}, creator*:object{id,name,url}, location*:object{id,name,url}, line_items:array of object}
+- **SeedDefaultsServiceCategoriesRequest**: {}
+- **SendCampaignRequest**: {}
+- **SendWorkOrderEstimateRequest**: {}
+- **SendWorkOrderInvoiceSummaryRequest**: {}
+- **SendWorkOrderPaymentToArRequest**: {}
+- **SendWorkOrderReminderRequest**: {}
+- **ServiceCategory**: {id*:integer, name*:string, description*:string, service_type*:string, icon*:string, color*:string, status*:string, trashed_at*:string, position*:integer, canonical*:boolean, canonical_key*:string, job_count*:integer, url*:string, app_url*:string}
+- **SetDefaultInspectionRequest**: {}
+- **ShopDiscount**: {id*:integer, name*:string, discount_type*:string, amount_cents*:integer, percentage*:number, active*:boolean, category*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **ShopFee**: {id*:integer, name*:string, fee_type*:string, amount_cents*:integer, percentage*:number, active*:boolean, applies_to*:string, is_taxable*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **StartWorkOrderRequest**: {}
+- **Statement**: {id*:integer, statement_number*:string, status*:string, statement_date*:string, start_date*:string, end_date*:string, due_date*:string, totals*:object{previous_balance_cents,new_charges_cents,payments_received_cents,credits_cents,balance_due_cents,currency}, sent_at*:string, viewed_at*:string, customer*:object{id,full_name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **SubStatusType**: {id*:integer, name*:string, color*:string, status_scope*:string, active*:boolean, is_default*:boolean, position*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **SubletOrder**: {id*:integer, type*:string, sublet_number*:integer, title*:string, payment_status*:string, payment_method*:string, total_cents*:integer, total_cost_cents*:integer, margin_cents*:integer, margin_percentage*:integer, sent_to_ap*:boolean, vendor_paid_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor:object{id,name,url}, work_order:object{id,number,url}, work_order_service*:object{id,name}, location*:object{id,name,url}, fulfillment_status:string, notes:string, vendor_invoice_number:any}
+- **TransferVehicleRequest**: {customer_id*:integer, mode*:string}
+- **TrashCustomerRequest**: {}
+- **TrashInspectionRequest**: {}
+- **TrashLaborRateRequest**: {}
+- **TrashPackageRequest**: {}
+- **TrashServiceCategoryRequest**: {}
+- **TrashVehicleRequest**: {}
+- **TrashVendorRequest**: {}
 - **UndoPullWorkOrderServiceLineItemRequest**: {}
 - **UndoReturnWorkOrderServiceLineItemRequest**: {}
-- **CreateWorkOrdersServicesSubletOrderRequest**: {sublet_order*:object{title}}
+- **UpdateAccountRequest**: {account*:object{name}}
+- **UpdateAppointmentRequest**: {appointment*:object{customer_concern}}
+- **UpdateCalendarBlockedTimeRequest**: {blocked_time*:object{reason}}
+- **UpdateConversationRequest**: {status*:string}
+- **UpdateCoreTaxRuleRequest**: {core_tax_rule*:object{tax_core_charge}}
+- **UpdateCounterSaleRequest**: {counter_sale*:object{notes}}
+- **UpdateCounterSalesLineItemRequest**: {counter_sale_line_item*:object{description}}
+- **UpdateCounterSalesReopenRequest**: {}
+- **UpdateCurrentLocationRequest**: {location*:object{name}}
+- **UpdateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,notes,marketing_opt_in,discount_percent,po_required,customer_tag_id,emails_attributes,phones_attributes,addresses_attributes,status}}
+- **UpdateCustomerTagRequest**: {name*:string}
+- **UpdateCustomerTagsArchiveRequest**: {}
+- **UpdateCustomerTagsRestoreRequest**: {}
+- **UpdateCustomerTagsTrashRequest**: {}
+- **UpdateDriverRequest**: {driver*:object{full_name}}
+- **UpdateExpenseRequest**: {expense*:object{description,receipt_id}}
+- **UpdateInspectionRequest**: {inspection*:object{name}}
+- **UpdateInspectionsGroupRequest**: {inspection_group*:object{name}}
+- **UpdateInspectionsItemRequest**: {inspection_item*:object{name}}
+- **UpdateInspectionsPresetRequest**: {inspection_preset*:object{title}}
+- **UpdateInventoryLevelRequest**: {inventory_level*:object{bin_location,reorder_point,max_stock}}
+- **UpdateLaborMatrixRequest**: {labor_matrix*:object{name}}
+- **UpdateLaborTemplateRequest**: {labor_template*:object{default_hours}}
+- **UpdateLeadSourceRequest**: {lead_source*:object{active}}
+- **UpdateLocationRequest**: {location*:object{name}}
+- **UpdateLocationsBusinessProfileRequest**: {location*:object{trade_name}}
+- **UpdateLocationsCloseRequirementsRequest**: {close_requirements*:object{odometer_in,key_location}}
+- **UpdateLocationsDocumentsRequest**: {location*:object{estimate_terms_text}}
+- **UpdateLocationsLeadSourceRequirementsRequest**: {lead_source_requirements*:object{customer_lead_source,ro_marketing_source}}
+- **UpdateLocationsOperationsRequest**: {location*:object{time_zone}}
+- **UpdateLocationsRemindersRequest**: {location*:object{oil_change_reminders_enabled,tire_swap_reminders_enabled}}
+- **UpdateLocationsScheduleConfigRequest**: {schedule_config*:object{slot_duration_minutes}}
+- **UpdateMeNotificationsRequest**: {user*:object{email_fallback_enabled}}
+- **UpdateMePreferencesRequest**: {user*:object{preferences}}
+- **UpdateMeProfileRequest**: {user*:object{full_name,email}}
+- **UpdateNotificationRequest**: {read*:boolean}
+- **UpdateOrdersPurchaseOrderRequest**: {purchase_order*:object{tracking_number}}
+- **UpdateOrdersReturnOrderRequest**: {return_order*:object{rma_number}}
+- **UpdateOrdersSubletOrdersMarkPaymentCompleteRequest**: {sublet_order_ids*:array of integer, payment_method*:string}
+- **UpdatePartRequest**: {part*:object{description}}
+- **UpdatePartsMatrixRequest**: {parts_matrix*:object{name}}
+- **UpdatePermissionGroupRequest**: {permission_group*:object{name}}
+- **UpdateReportsCashDrawerSessionsConfirmCloseRequest**: {cash_drawer_session*:object{actual_cash_cents,actual_cheques_cents,leave_behind_cents,variance_explanation}}
+- **UpdateReportsTaxPeriodRequest**: {tax_period*:object{marked_remitted,remitted_date}}
+- **UpdateServiceCategoryRequest**: {service_category*:object{name,position}}
+- **UpdateShopDiscountRequest**: {shop_discount_config*:object{active}}
+- **UpdateShopFeeRequest**: {shop_fee_config*:object{active}}
+- **UpdateSubStatusRequest**: {sub_status_type*:object{active}}
+- **UpdateSubletPackageRequest**: {sublet_package*:object{name}}
+- **UpdateTireRequest**: {tire*:object{brand}}
+- **UpdateTireStorageSlotRequest**: {tire_storage_slot*:object{tire_set_description}}
+- **UpdateUserRequest**: {user*:object{full_name}}
+- **UpdateVehicleRequest**: {vehicle*:object{make,vehicle_type,odometer_unit,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,notes}, confirm_unit_change:string, convert_odometer:string}
+- **UpdateVendorRequest**: {vendor*:object{name}}
+- **UpdateWorkOrderRequest**: {work_order*:object{saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,work_order_tag_id,payer_customer_id,sub_status_type_id,services_visible_to_customer}}
+- **UpdateWorkOrderTagRequest**: {name*:string}
+- **UpdateWorkOrderTagsArchiveRequest**: {}
+- **UpdateWorkOrdersConcernRequest**: {concern*:object{body}}
+- **UpdateWorkOrdersCourtesyCarAssignmentRequest**: {action_type*:string}
+- **UpdateWorkOrdersPurchaseOrderRequest**: {purchase_order*:object{notes}}
+- **UpdateWorkOrdersServiceRequest**: {work_order_service*:object{technician_id,position,name,labor_tax_enabled,pricing_mode}}
+- **UpdateWorkOrdersServicesAdjustTimeRequest**: {hours*:integer, minutes*:integer}
+- **UpdateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{part_status,description}}
+- **UpdateWorkOrdersServicesPauseRequest**: {}
+- **UpdateWorkOrdersServicesPublishRequest**: {}
+- **UpdateWorkOrdersServicesReorderRequest**: {service_ids*:array of integer}
+- **UpdateWorkOrdersServicesReviveRequest**: {}
 - **UpdateWorkOrdersServicesSubletOrderRequest**: {sublet_order*:object{title}}
-- **CreateWorkOrdersServicesSubletOrdersDuplicateRequest**: {}
-- **CreateWorkOrdersTireStorageRequest**: {tire_storage_slot*:object{slot_label,season,tire_set_description,notes}}
+- **UpdateWorkOrdersServicesToggleLaborCompletionRequest**: {line_item_id*:integer}
+- **UpdateWorkOrdersServicesUpdateCategoryRequest**: {category_id*:integer}
 - **UpdateWorkOrdersTireStorageRequest**: {tire_storage_slot*:object{tire_set_description}}
-- **CreateWorkOrdersVoidRequest**: {payment_id*:integer}
+- **User**: {type*:string, id*:integer, full_name*:string, display_name*:string, email*:string, initials*:string, role*:string, disabled*:boolean, disabled_at*:string, locked*:boolean, confirmed*:boolean, hourly_cost_cents*:integer, hourly_cost_currency*:string, certification_number*:any, certification_label*:any, mfa_enabled*:boolean, mfa_required*:boolean, qr_token_generated_at*:string, home_location_id*:integer, location_ids*:array of integer, created_at*:string, updated_at*:string, home_location*:object{id,name,url}, locations*:array of object, capabilities*:object{can_perform_work,can_dispatch_work,can_message_customers,can_manage_technicians,can_override_inspections,can_perform_inspections,can_view_all_active_work_orders,can_close_reopen_work_orders,can_view_job_board,can_view_metrics,can_view_activity_feed,can_edit_permissions}, url*:string, app_url*:string, location*:object{id,name,url}}
+- **Vehicle**: {type*:string, id*:integer, make*:string, model*:string, year*:integer, submodel*:string, body_style*:string, engine*:string, transmission*:string, drivetrain*:string, color*:string, vin*:string, license_plate*:string, license_plate_state*:string, license_plate_country*:string, unit_number*:string, fleet_identifier*:string, vehicle_type*:string, status*:string, notes*:string, customer_id*:integer, production_date*:string, annual_safety_expires_at*:string, odometer_reading*:integer, odometer_unit*:string, trashed_at*:string, created_at*:string, updated_at*:string, home_location_id*:integer, display_name*:string, work_orders_count*:integer, appointments_count*:integer, odometer*:object{reading,unit}, work_orders_url*:string, customer*:object{id,full_name,url}, url*:string, app_url*:string, location*:object{id,name,url}, last_serviced_at:string, lifetime_revenue_cents:integer, open_work_orders_count:integer}
+- **Vendor**: {id*:integer, name*:string, vendor_type*:string, payment_terms*:string, status*:string, trashed_at*:string, phone*:string, email*:string, website*:string, account_number*:string, notes*:string, quick_order*:boolean, order_url_template*:string, catalog_url_template*:string, location*:object{id,name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **VoidWorkOrderRequest**: {closure_reason*:string}
+- **WorkOrder**: {type*:string, id*:integer, work_order_number*:integer, status*:string, intake_method*:string, scheduled_for*:string, authorized*:boolean, paid*:boolean, created_at*:string, updated_at*:string, closed_at*:string, location_id*:integer, service_advisor_id*:integer, assigned_technician_id*:integer, sub_status_type_id*:integer, payer_customer_id*:integer, vehicle_arrived_at*:string, work_order_services_count*:integer, inspection_reports_count*:integer, services_visible_to_customer*:boolean, inspections_visible_to_customer*:boolean, customer*:object{id,full_name,display_name,url}, vehicle*:object{id,display_name,make,model,year,license_plate,vin,url}, location*:object{id,name,url}, totals*:object{subtotal_cents,tax_cents,total_cents,paid_cents,remaining_cents,currency}, url*:string, app_url*:string, odometer_in:integer, odometer_out:integer, odometer_unit:string, authorized_at:string, authorized_total_cents:integer, customer_notified:boolean, customer_notified_ready:boolean, ready_for_pickup_at:string, completed_at:string, declined_at:string, decline_reason:string, discount_cents:integer, fees_cents:integer, parts_cents:integer, labor_cents:integer, tires_cents:integer, subcontracts_cents:integer, credit_balance_cents:integer, saved_for_later:boolean, closure_reason:string, closure_reason_notes:string, notes:string, purchase_order_number:string, return_method:string, return_method_notes:string, vehicle_keys_location:string, vehicle_location:string, customer_visit_count:integer, customer_total_spend_cents:integer, average_ticket_cents:integer, activity_total:integer, recent_activities:array of object, services_url:string, payments_url:string, wip_url:string, inspection_url:string, parts_url:string, concerns_url:string, service_history_url:string, declined_services_url:string, activity_url:string, vehicle_history_url:string, appointments_url:string, authorization_logs_url:string, payer_customer:object{id,full_name,url}}
 

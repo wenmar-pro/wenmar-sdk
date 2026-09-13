@@ -291,8 +291,20 @@ module GenerateDocs
     sections_dir = File.join(outdir, "sections")
     FileUtils.mkdir_p(sections_dir)
 
-    document(spec).each do |tag, ops|
+    by_tag = document(spec)
+    by_tag.each do |tag, ops|
       File.write(File.join(sections_dir, "#{tag}.md"), render_section(tag, ops, spec, fixtures: fixtures))
+    end
+
+    # Prune section files whose tag no longer exists in the spec. Keeps the
+    # generated docs directory from accumulating orphaned sections when tags
+    # are removed upstream. Deterministic: the current tag set is the exact
+    # filename form this writer emits.
+    current = by_tag.keys
+    Dir.glob(File.join(sections_dir, "*.md")).each do |file|
+      basename = File.basename(file, ".md")
+      next if current.include?(basename)
+      File.delete(file)
     end
   end
 
@@ -357,19 +369,7 @@ module GenerateDocs
   end
 
   def section_title(tag)
-    {
-      "account" => "Account",
-      "customer_tags" => "Customer Tags",
-      "customers" => "Customers",
-      "drivers" => "Drivers",
-      "locations" => "Locations",
-      "service_categories" => "Service Categories",
-      "statements" => "Statements",
-      "team" => "Team",
-      "vendors" => "Vendors",
-      "vehicles" => "Vehicles",
-      "work_orders" => "Work Orders"
-    }.fetch(tag) { tag.tr("_", " ").split.map(&:capitalize).join(" ") }
+    tag.tr("_", " ").split.map(&:capitalize).join(" ")
   end
 
   def write_api_reference(outdir, spec)
