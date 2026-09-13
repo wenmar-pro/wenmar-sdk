@@ -1,6 +1,7 @@
 package wenmar
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"net/http"
@@ -24,6 +25,9 @@ type retryTransport struct {
 	transport  http.RoundTripper
 	maxRetries int
 	baseDelay  time.Duration
+	// hooks is set by NewClient after construction (via SetHooks); it defaults
+	// to NoopHooks so a bare retryTransport is safe.
+	hooks Hooks
 }
 
 func newRetryTransportWithRetries(maxRetries int, base http.RoundTripper) *retryTransport {
@@ -34,7 +38,16 @@ func newRetryTransportWithRetries(maxRetries int, base http.RoundTripper) *retry
 		transport:  base,
 		maxRetries: maxRetries,
 		baseDelay:  500 * time.Millisecond,
+		hooks:      NoopHooks{},
 	}
+}
+
+// SetHooks configures the retry transport's observability hooks.
+func (t *retryTransport) SetHooks(h Hooks) {
+	if h == nil {
+		h = NoopHooks{}
+	}
+	t.hooks = h
 }
 
 func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -57,6 +70,13 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		}
 
 		if attempt < t.maxRetries {
+			// attempt is the 0-based retry count; the OnRetry hook expects a
+			// 1-based attempt number (attempt 1 = first retry). We pass a
+			// synthetic error describing the retryable status so hooks that
+			// inspect err have context even when the round-trip itself had no
+			// transport error.
+			info := RequestInfo{Method: req.Method, URL: req.URL.String()}
+			t.hooks.OnRetry(req.Context(), info, attempt+1, fmt.Errorf("retryable status %d", resp.StatusCode))
 			delay := t.backoff(attempt, resp)
 			select {
 			case <-req.Context().Done():

@@ -95,6 +95,16 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 		opt(c)
 	}
 
+	// Wire observability hooks into the transport stack now that the final
+	// hooks (cfgCopy.Hooks or a WithHooks option) are resolved. hooksTransport
+	// is OUTERMOST so one logical SDK request yields exactly one
+	// OnRequestStart/OnRequestEnd pair, while internal retry attempts are
+	// reported separately via OnRetry from the retryTransport.
+	if rt, ok := httpClient.Transport.(*retryTransport); ok {
+		rt.SetHooks(c.hooks)
+	}
+	httpClient.Transport = &hooksTransport{transport: httpClient.Transport, hooks: c.hooks}
+
 	genClient, err := gen.NewClientWithResponses(cfgCopy.BaseURL,
 		gen.WithHTTPClient(httpClient),
 		gen.WithRequestEditorFn(c.requestEditor),

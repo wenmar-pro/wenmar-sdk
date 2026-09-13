@@ -28,6 +28,7 @@ func parseLinkHeader(header, rel string) string {
 
 type Paginator struct {
 	nextURL string
+	page    int // 1-based page number that NextPage will fetch next
 	client  *Client
 	// fetchNext is called with the raw next URL to fetch the next page.
 	// It returns the response body and the full response headers from the next
@@ -117,9 +118,10 @@ func newListResultFromResponse[T any](body []byte, headers http.Header, c *Clien
 		Meta:  meta,
 	}
 	if nextURL != "" {
+		// The first page is page 1, so following its next link fetches page 2.
 		nextURLCopy := nextURL
 		result.Next = func(ctx context.Context) (*ListResult[T], error) {
-			return c.fetchNextPage[T](ctx, nextURLCopy)
+			return c.fetchNextPage[T](ctx, nextURLCopy, 2)
 		}
 	}
 	return result
@@ -143,7 +145,12 @@ func extractPaginationMetaFromHeaders(headers http.Header) (PaginationMeta, stri
 // fetchNextPage fetches the next page (same-origin validated by fetchURL)
 // and decodes it into a typed ListResult. Pagination metadata (TotalCount,
 // PerPage) is populated from the response headers on every page.
-func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListResult[T], error) {
+//
+// page is the 1-based page number being fetched. The OnPaginate hook fires
+// once per page fetch here (the single choke point for the typed and GetAll
+// pagination paths), so a single pagination step is never double-reported.
+func (c *Client) fetchNextPage[T any](ctx context.Context, url string, page int) (*ListResult[T], error) {
+	c.hooks.OnPaginate(ctx, url, page)
 	body, headers, err := c.fetchURL(ctx, url)
 	if err != nil {
 		return nil, err
@@ -158,8 +165,10 @@ func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListRes
 		Meta:  meta,
 	}
 	if nextURL != "" {
+		nextURLCopy := nextURL
+		nextPage := page + 1
 		result.Next = func(ctx context.Context) (*ListResult[T], error) {
-			return c.fetchNextPage[T](ctx, nextURL)
+			return c.fetchNextPage[T](ctx, nextURLCopy, nextPage)
 		}
 	}
 	return result, nil
@@ -174,6 +183,11 @@ func (p *Paginator) HasNext() bool {
 func (p *Paginator) NextPage(ctx context.Context) (any, error) {
 	if !p.HasNext() {
 		return nil, nil
+	}
+
+	p.page++ // fire OnPaginate with the 1-based page being fetched
+	if p.client != nil {
+		p.client.hooks.OnPaginate(ctx, p.nextURL, p.page)
 	}
 
 	body, headers, err := p.fetchNext(ctx, p.nextURL)
@@ -196,6 +210,7 @@ func newPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
 	next := parseLinkHeader(resp.Header.Get("Link"), "next")
 	return &Paginator{
 		nextURL: next,
+		page:    1, // the initial response is page 1, so the first NextPage fetches page 2
 		client:  client,
 		fetchNext: func(ctx context.Context, url string) ([]byte, http.Header, error) {
 			return client.fetchURL(ctx, url)
