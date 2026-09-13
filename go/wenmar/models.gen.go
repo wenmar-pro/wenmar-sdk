@@ -159,6 +159,7 @@ type (
 	DeleteInspectionsPresetResponse = gen.DeleteInspectionsPresetResponse
 	UpdateInspectionsPresetResponse = gen.UpdateInspectionsPresetResponse
 	ListInventoryLevelsBarcodeLookupResponse = gen.ListInventoryLevelsBarcodeLookupResponse
+	CreateInventoryLevelExtractionResponse = gen.CreateInventoryLevelExtractionResponse
 	ShowInventoryLevelResponse = gen.ShowInventoryLevelResponse
 	UpdateInventoryLevelResponse = gen.UpdateInventoryLevelResponse
 	CreateInventoryLevelsAdjustResponse = gen.CreateInventoryLevelsAdjustResponse
@@ -261,7 +262,11 @@ type (
 	ListReportsProfitAndLossResponse = gen.ListReportsProfitAndLossResponse
 	ListReportsSalesSummaryResponse = gen.ListReportsSalesSummaryResponse
 	ListReportsServiceCategoriesResponse = gen.ListReportsServiceCategoriesResponse
+	ListReportsStatementsResponse = gen.ListReportsStatementsResponse
 	ListReportsStoreCreditResponse = gen.ListReportsStoreCreditResponse
+	ListReportsTaxPeriodsResponse = gen.ListReportsTaxPeriodsResponse
+	CreateReportsTaxPeriodResponse = gen.CreateReportsTaxPeriodResponse
+	UpdateReportsTaxPeriodResponse = gen.UpdateReportsTaxPeriodResponse
 	ListReportsTechnicianProductivityResponse = gen.ListReportsTechnicianProductivityResponse
 	ListReportsWorkOrderProfitabilityResponse = gen.ListReportsWorkOrderProfitabilityResponse
 	ListServiceCategoriesResponse = gen.ListServiceCategoriesResponse
@@ -294,6 +299,7 @@ type (
 	DeleteSubletPackageResponse = gen.DeleteSubletPackageResponse
 	UpdateSubletPackageResponse = gen.UpdateSubletPackageResponse
 	UpdateSubletPackagesDeactivateResponse = gen.UpdateSubletPackagesDeactivateResponse
+	CreateWorkOrderTechAssignmentResponse = gen.CreateWorkOrderTechAssignmentResponse
 	ListTireEventsResponse = gen.ListTireEventsResponse
 	CreateTireEventResponse = gen.CreateTireEventResponse
 	ShowTireEventResponse = gen.ShowTireEventResponse
@@ -405,6 +411,7 @@ type (
 	CreateWorkOrdersPurchaseOrdersReturnResponse = gen.CreateWorkOrdersPurchaseOrdersReturnResponse
 	ListWorkOrdersReceiptsResponse = gen.ListWorkOrdersReceiptsResponse
 	CreateWorkOrdersRefundResponse = gen.CreateWorkOrdersRefundResponse
+	ListWorkOrderServicesResponse = gen.ListWorkOrderServicesResponse
 	CreateWorkOrdersServiceResponse = gen.CreateWorkOrdersServiceResponse
 	UpdateWorkOrdersServicesReorderResponse = gen.UpdateWorkOrdersServicesReorderResponse
 	DeleteWorkOrdersServiceResponse = gen.DeleteWorkOrdersServiceResponse
@@ -522,6 +529,7 @@ type (
 	UpdateInspectionsItemRequest = gen.UpdateInspectionsItemRequest
 	CreateInspectionsPresetRequest = gen.CreateInspectionsPresetRequest
 	UpdateInspectionsPresetRequest = gen.UpdateInspectionsPresetRequest
+	CreateInventoryLevelExtractionRequest = gen.CreateInventoryLevelExtractionRequest
 	UpdateInventoryLevelRequest = gen.UpdateInventoryLevelRequest
 	CreateInventoryLevelsAdjustRequest = gen.CreateInventoryLevelsAdjustRequest
 	CreateLaborMatriceRequest = gen.CreateLaborMatriceRequest
@@ -567,6 +575,8 @@ type (
 	CreatePaymentsConfirmationRequest = gen.CreatePaymentsConfirmationRequest
 	CreatePaymentsFailureRequest = gen.CreatePaymentsFailureRequest
 	UpdateReportsCashDrawerSessionsConfirmCloseRequest = gen.UpdateReportsCashDrawerSessionsConfirmCloseRequest
+	CreateReportsTaxPeriodRequest = gen.CreateReportsTaxPeriodRequest
+	UpdateReportsTaxPeriodRequest = gen.UpdateReportsTaxPeriodRequest
 	CreateServiceCategoryRequest = gen.CreateServiceCategoryRequest
 	SeedDefaultsServiceCategoriesRequest = gen.SeedDefaultsServiceCategoriesRequest
 	UpdateServiceCategoryRequest = gen.UpdateServiceCategoryRequest
@@ -586,6 +596,7 @@ type (
 	UpdateSubStatuseRequest = gen.UpdateSubStatuseRequest
 	CreateSubletPackageRequest = gen.CreateSubletPackageRequest
 	UpdateSubletPackageRequest = gen.UpdateSubletPackageRequest
+	CreateWorkOrderTechAssignmentRequest = gen.CreateWorkOrderTechAssignmentRequest
 	CreateTireEventRequest = gen.CreateTireEventRequest
 	CreateTireStorageSlotRequest = gen.CreateTireStorageSlotRequest
 	UpdateTireStorageSlotRequest = gen.UpdateTireStorageSlotRequest
@@ -704,6 +715,8 @@ type (
 	ListOrdersPurchaseOrdersParams = gen.ListOrdersPurchaseOrdersParams
 	ListPartsParams = gen.ListPartsParams
 	ListPaymentsParams = gen.ListPaymentsParams
+	ListReportsStatementsParams = gen.ListReportsStatementsParams
+	CreateWorkOrderTechAssignmentParams = gen.CreateWorkOrderTechAssignmentParams
 	ListUsersParams = gen.ListUsersParams
 	DeleteUsersPermissionGroupsUnassignParams = gen.DeleteUsersPermissionGroupsUnassignParams
 	ListVehiclesParams = gen.ListVehiclesParams

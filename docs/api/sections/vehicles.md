@@ -1187,18 +1187,19 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
-| `customer_id` | integer | No |
-| `vin` | string | No |
+| `vehicle_type` | string | No |
 | `year` | integer | Yes |
 | `make` | string | Yes |
 | `model` | string | Yes |
+| `license_plate` | string | No |
+| `customer_id` | integer | No |
+| `vin` | string | No |
 | `submodel` | string | No |
 | `body_style` | string | No |
 | `engine` | string | No |
 | `transmission` | string | No |
 | `drivetrain` | string | No |
 | `color` | string | No |
-| `license_plate` | string | No |
 | `license_plate_state` | string | No |
 | `odometer_reading` | integer | No |
 | `odometer_unit` | string | No |
@@ -1206,7 +1207,6 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `fleet_identifier` | string | No |
 | `notes` | string | No |
 | `production_date` | string | No |
-| `vehicle_type` | string | No |
 
 ---
 
@@ -1222,6 +1222,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `make` | string | No |
+| `vehicle_type` | string | No |
+| `odometer_unit` | string | No |
 | `model` | string | No |
 | `year` | integer | No |
 | `vin` | string | No |
@@ -1234,9 +1236,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `license_plate` | string | No |
 | `license_plate_state` | string | No |
 | `odometer_reading` | integer | No |
-| `odometer_unit` | string | No |
 | `notes` | string | No |
-| `vehicle_type` | string | No |
 
 ---
 

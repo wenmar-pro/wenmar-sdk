@@ -754,6 +754,61 @@ List all reports service categories, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/service_categories.json
 ```
 
+## List reports statements
+
+```
+GET /reports/statements
+```
+
+List all reports statements, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `filter[status]` | string | No |
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `statement_number` | string | Yes |
+| `status` | string | Yes |
+| `statement_date` | string | Yes |
+| `start_date` | string | Yes |
+| `end_date` | string | Yes |
+| `due_date` | string | Yes |
+| `totals` | object | Yes |
+| `sent_at` | string \| null | Yes |
+| `viewed_at` | string \| null | Yes |
+| `customer` | object | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`totals` — object:
+| Field | Type | Required |
+|---|---|---|
+| `previous_balance_cents` | integer | Yes |
+| `new_charges_cents` | integer | Yes |
+| `payments_received_cents` | integer | Yes |
+| `credits_cents` | integer | Yes |
+| `balance_due_cents` | integer | Yes |
+| `currency` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `full_name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/statements.json
+```
+
 ## List reports store credit
 
 ```
@@ -777,6 +832,145 @@ List all reports store credit, paginated via the Link header.
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/store_credit.json
+```
+
+## List reports tax periods
+
+```
+GET /reports/tax_periods
+```
+
+List all reports tax periods, paginated via the Link header.
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `period_start` | string | Yes |
+| `period_end` | string | Yes |
+| `totals` | object | Yes |
+| `marked_remitted` | boolean | Yes |
+| `remitted_date` | string | Yes |
+| `tax_jurisdiction` | any | Yes |
+| `notes` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `location` | object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`totals` — object:
+| Field | Type | Required |
+|---|---|---|
+| `tax_collected_cents` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/reports/tax_periods.json
+```
+
+## Create reports tax period
+
+```
+POST /reports/tax_periods
+```
+
+Create a reports tax period.
+
+**Response 201**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `period_start` | string | Yes |
+| `period_end` | string | Yes |
+| `totals` | object | Yes |
+| `marked_remitted` | boolean | Yes |
+| `remitted_date` | string | Yes |
+| `tax_jurisdiction` | any | Yes |
+| `notes` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `location` | object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`totals` — object:
+| Field | Type | Required |
+|---|---|---|
+| `tax_collected_cents` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/reports/tax_periods.json
+```
+
+## Update reports tax period
+
+```
+PATCH /reports/tax_periods/{id}
+```
+
+Update a reports tax period by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+
+**Response 200**
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `period_start` | string | Yes |
+| `period_end` | string | Yes |
+| `totals` | object | Yes |
+| `marked_remitted` | boolean | Yes |
+| `remitted_date` | string | Yes |
+| `tax_jurisdiction` | any | Yes |
+| `notes` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `location` | object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`totals` — object:
+| Field | Type | Required |
+|---|---|---|
+| `tax_collected_cents` | integer | Yes |
+| `currency` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+```bash
+curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/reports/tax_periods/<id>.json
 ```
 
 ## List reports technician productivity
@@ -893,4 +1087,32 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `actual_cheques_cents` | integer | No |
 | `leave_behind_cents` | integer | No |
 | `variance_explanation` | any | No |
+
+---
+
+### CreateReportsTaxPeriodRequest schema {#createreportstaxperiodrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `tax_period` | object | Yes |
+
+`tax_period` — object:
+| Field | Type | Required |
+|---|---|---|
+| `period_start` | string | Yes |
+| `period_end` | string | Yes |
+
+---
+
+### UpdateReportsTaxPeriodRequest schema {#updatereportstaxperiodrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `tax_period` | object | Yes |
+
+`tax_period` — object:
+| Field | Type | Required |
+|---|---|---|
+| `marked_remitted` | boolean | Yes |
+| `remitted_date` | string | Yes |
 

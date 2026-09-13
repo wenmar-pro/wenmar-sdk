@@ -3506,6 +3506,51 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
      -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/refunds.json
 ```
 
+## List work order services
+
+```
+GET /work_orders/{work_order_id}/services
+```
+
+List all work order services, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `work_order_id` | integer | Yes |
+
+**Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `service_type` | string | Yes |
+| `authorization_status` | string | Yes |
+| `pricing_mode` | string | Yes |
+| `technician_id` | integer \| null | Yes |
+| `category_id` | integer \| null | Yes |
+| `ordinal` | integer | Yes |
+| `discount_cents` | integer | Yes |
+| `labor_cents` | integer | Yes |
+| `parts_cents` | integer | Yes |
+| `fees_cents` | integer | Yes |
+| `sublet_cents` | integer | Yes |
+| `tires_cents` | integer | Yes |
+| `total_cents` | integer | Yes |
+| `tax_total_cents` | integer | Yes |
+| `estimated_hours` | string | Yes |
+| `customer_notes` | string \| null | Yes |
+| `started_at` | string \| null | Yes |
+| `completed_at` | string \| null | Yes |
+| `authorized_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `line_items` | array of object | Yes |
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/{work_order_id}/services.json
+```
+
 ## Create work orders service
 
 ```
@@ -4871,8 +4916,8 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `vehicle_arrived_at` | string | No |
 | `intake_method` | string | No |
 | `waiting_for_customer` | boolean | No |
+| `work_order_tag_id` | string | No |
 | `payer_customer_id` | integer | No |
-| `work_order_tag_id` | integer | No |
 | `sub_status_type_id` | integer | No |
 | `services_visible_to_customer` | boolean | No |
 
@@ -5362,10 +5407,10 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `technician_id` | integer | No |
-| `name` | string | No |
-| `pricing_mode` | string | No |
 | `position` | integer | No |
+| `name` | string | No |
 | `labor_tax_enabled` | boolean | No |
+| `pricing_mode` | string | No |
 
 ---
 

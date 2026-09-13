@@ -635,6 +635,10 @@ def list_inventory_levels_barcode_lookup(barcode: nil)
   params = { "barcode" => barcode }
       get("/inventory_levels/barcode_lookup", params.compact)
 end
+# Runs create_inventory_level_extraction (POST /inventory_levels/extractions).
+def create_inventory_level_extraction(text:, extraction_id:)
+  post("/inventory_levels/extractions", { text: text, extraction_id: extraction_id })
+end
 # Fetches show_inventory_level.
 def show_inventory_level(id)
   get("/inventory_levels/#{id}")
@@ -1153,9 +1157,40 @@ end
 def list_reports_service_categories()
   get("/reports/service_categories")
 end
+# Lists list_reports_statements resources (paginated).
+# @return [Wenmar::Paginator]
+def list_reports_statements(filter_status: nil)
+  params = { "filter[status]" => filter_status }
+  get("/reports/statements", params.compact)
+end
+
+# Fetches all reports_statements, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_reports_statements(filter_status: nil)
+  paginator_to_a(list_reports_statements(filter_status: filter_status), 1000)
+end
 # Fetches list_reports_store_credit.
 def list_reports_store_credit()
   get("/reports/store_credit")
+end
+# Lists list_reports_tax_periods resources (paginated).
+# @return [Wenmar::Paginator]
+def list_reports_tax_periods()
+  get("/reports/tax_periods")
+end
+
+# Fetches all reports_tax_periods, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_reports_tax_periods()
+  paginator_to_a(list_reports_tax_periods(), 1000)
+end
+# Runs create_reports_tax_period (POST /reports/tax_periods).
+def create_reports_tax_period(tax_period:)
+  post("/reports/tax_periods", { tax_period: tax_period })
+end
+# Runs update_reports_tax_period (PATCH /reports/tax_periods/{id}).
+def update_reports_tax_period(id, tax_period:)
+  patch("/reports/tax_periods/#{id}", { tax_period: tax_period })
 end
 # Fetches list_reports_technician_productivity.
 def list_reports_technician_productivity()
@@ -1326,6 +1361,11 @@ end
 # Runs update_sublet_packages_deactivate (PATCH /sublet_packages/{id}/deactivate).
 def update_sublet_packages_deactivate(id)
   patch("/sublet_packages/#{id}/deactivate")
+end
+# Runs create_work_order_tech_assignment (POST /tech_assignments).
+def create_work_order_tech_assignment(technician_id:, work_order_id: nil)
+  params = { work_order_id: work_order_id }
+  post("/tech_assignments", { technician_id: technician_id }, params.compact)
 end
 # Lists list_tire_events resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1900,6 +1940,17 @@ end
 # Runs create_work_orders_refund (POST /work_orders/{work_order_id}/refunds).
 def create_work_orders_refund(work_order_id, refund:)
   post("/work_orders/#{work_order_id}/refunds", { refund: refund })
+end
+# Lists list_work_order_services resources (paginated).
+# @return [Wenmar::Paginator]
+def list_work_order_services(work_order_id)
+  get("/work_orders/#{work_order_id}/services")
+end
+
+# Fetches all work_order_services, up to 1000 by default.
+# @return [Array<Hash>]
+def get_all_work_order_services(work_order_id)
+  paginator_to_a(list_work_order_services(work_order_id), 1000)
 end
 # Runs create_work_orders_service (POST /work_orders/{work_order_id}/services).
 def create_work_orders_service(work_order_id, work_order_service:)

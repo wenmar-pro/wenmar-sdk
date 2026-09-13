@@ -431,5 +431,26 @@
       { "status": 201, "body": { "id": 3, "service_id": 2 } }
     ],
     "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "list_work_order_services_success",
+    "operation": "list_work_order_services",
+    "method": "GET",
+    "path": "/work_orders/1/services",
+    "pathParams": { "work_order_id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 10, "name": "Oil change", "ordinal": 1 } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.name", "equals": "Oil change" } }
+  },
+  {
+    "name": "create_work_order_tech_assignment_success",
+    "operation": "create_work_order_tech_assignment",
+    "method": "POST",
+    "path": "/tech_assignments",
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "assigned_technician_id": 7 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "assigned_technician_id", "equals": 7 } }
   }
 ]

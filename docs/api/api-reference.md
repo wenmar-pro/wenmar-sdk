@@ -134,6 +134,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/inspections/{inspection_id}/presets/{id}` | `delete_inspections_preset` | Delete a inspections preset by ID. |
 | PATCH | `/inspections/{inspection_id}/presets/{id}` | `update_inspections_preset` | Update a inspections preset by ID. |
 | GET | `/inventory_levels/barcode_lookup` | `list_inventory_levels_barcode_lookup` | List all inventory levels barcode lookup, paginated via the Link header. |
+| POST | `/inventory_levels/extractions` | `create_inventory_level_extraction` | Create a inventory level extraction. |
 | GET | `/inventory_levels/{id}` | `show_inventory_level` | Show a inventory level by ID. |
 | PATCH | `/inventory_levels/{id}` | `update_inventory_level` | Update a inventory level by ID. |
 | POST | `/inventory_levels/{id}/adjust` | `create_inventory_levels_adjust` | Create a inventory levels adjust. |
@@ -236,7 +237,11 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/reports/profit_and_loss` | `list_reports_profit_and_loss` | List all reports profit and loss, paginated via the Link header. |
 | GET | `/reports/sales_summary` | `list_reports_sales_summary` | List all reports sales summary, paginated via the Link header. |
 | GET | `/reports/service_categories` | `list_reports_service_categories` | List all reports service categories, paginated via the Link header. |
+| GET | `/reports/statements` | `list_reports_statements` | List all reports statements, paginated via the Link header. |
 | GET | `/reports/store_credit` | `list_reports_store_credit` | List all reports store credit, paginated via the Link header. |
+| GET | `/reports/tax_periods` | `list_reports_tax_periods` | List all reports tax periods, paginated via the Link header. |
+| POST | `/reports/tax_periods` | `create_reports_tax_period` | Create a reports tax period. |
+| PATCH | `/reports/tax_periods/{id}` | `update_reports_tax_period` | Update a reports tax period by ID. |
 | GET | `/reports/technician_productivity` | `list_reports_technician_productivity` | List all reports technician productivity, paginated via the Link header. |
 | GET | `/reports/work_order_profitability` | `list_reports_work_order_profitability` | List all reports work order profitability, paginated via the Link header. |
 | GET | `/service_categories` | `list_service_categories` | List all service categories, paginated via the Link header. |
@@ -269,6 +274,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | DELETE | `/sublet_packages/{id}` | `delete_sublet_package` | Delete a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}` | `update_sublet_package` | Update a sublet package by ID. |
 | PATCH | `/sublet_packages/{id}/deactivate` | `update_sublet_packages_deactivate` | Update a sublet packages deactivate by ID. |
+| POST | `/tech_assignments` | `create_work_order_tech_assignment` | Create a work order tech assignment. |
 | GET | `/tire_events` | `list_tire_events` | List all tire events, paginated via the Link header. |
 | POST | `/tire_events` | `create_tire_event` | Create a tire event. |
 | GET | `/tire_events/{id}` | `show_tire_event` | Show a tire event by ID. |
@@ -380,6 +386,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/work_orders/{work_order_id}/purchase_orders/{id}/return` | `create_work_orders_purchase_orders_return` | Create a work orders purchase orders return. |
 | GET | `/work_orders/{work_order_id}/receipts` | `list_work_orders_receipts` | List all work orders receipts, paginated via the Link header. |
 | POST | `/work_orders/{work_order_id}/refunds` | `create_work_orders_refund` | Create a work orders refund. |
+| GET | `/work_orders/{work_order_id}/services` | `list_work_order_services` | List all work order services, paginated via the Link header. |
 | POST | `/work_orders/{work_order_id}/services` | `create_work_orders_service` | Create a work orders service. |
 | PATCH | `/work_orders/{work_order_id}/services/reorder` | `update_work_orders_services_reorder` | Update a work orders services reorder by ID. |
 | DELETE | `/work_orders/{work_order_id}/services/{id}` | `delete_work_orders_service` | Delete a work orders service by ID. |

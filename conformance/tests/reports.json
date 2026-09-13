@@ -148,5 +148,46 @@
       { "status": 200, "body": { "currency": "USD", "start_date": "2026-08-01", "end_date": "2026-08-31", "tab": "revenue", "revenue": {}, "tax": {}, "payments": {}, "url": "https://api.example.com/reports/financial", "app_url": "https://app.example.com/reports/financial" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "tab", "equals": "revenue" } }
+  },
+  {
+    "name": "list_reports_statements_success",
+    "operation": "list_reports_statements",
+    "method": "GET",
+    "path": "/reports/statements",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "statement_number": "ST-1", "status": "sent", "totals": { "balance_due_cents": 5000, "currency": "CAD" }, "url": "https://api.example.com/statements/1.json", "app_url": "https://app.example.com/statements/1" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.statement_number", "equals": "ST-1" } }
+  },
+  {
+    "name": "list_reports_tax_periods_success",
+    "operation": "list_reports_tax_periods",
+    "method": "GET",
+    "path": "/reports/tax_periods",
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "period_start": "2026-01-01", "period_end": "2026-03-31", "totals": { "tax_collected_cents": 1200, "currency": "CAD" }, "url": "https://api.example.com/reports/tax_periods/1.json", "app_url": "https://app.example.com/reports/tax_periods/1" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.period_start", "equals": "2026-01-01" } }
+  },
+  {
+    "name": "create_reports_tax_period_success",
+    "operation": "create_reports_tax_period",
+    "method": "POST",
+    "path": "/reports/tax_periods",
+    "mockResponses": [
+      { "status": 201, "body": { "id": 1, "period_start": "2026-01-01", "period_end": "2026-03-31", "totals": { "tax_collected_cents": 0, "currency": "CAD" }, "url": "https://api.example.com/reports/tax_periods/1.json", "app_url": "https://app.example.com/reports/tax_periods/1" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "period_start", "equals": "2026-01-01" } }
+  },
+  {
+    "name": "update_reports_tax_period_success",
+    "operation": "update_reports_tax_period",
+    "method": "PATCH",
+    "path": "/reports/tax_periods/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "period_start": "2026-01-01", "period_end": "2026-03-31", "marked_remitted": true, "totals": { "tax_collected_cents": 0, "currency": "CAD" }, "url": "https://api.example.com/reports/tax_periods/1.json", "app_url": "https://app.example.com/reports/tax_periods/1" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "marked_remitted", "equals": true } }
   }
 ]

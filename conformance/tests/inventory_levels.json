@@ -60,5 +60,20 @@
       "noError": true,
       "responseBody": { "path": "on_hand", "equals": 15 }
     }
+  },
+  {
+    "name": "create_inventory_level_extraction_success",
+    "operation": "create_inventory_level_extraction",
+    "method": "POST",
+    "path": "/inventory_levels/extractions",
+    "requestBody": { "text": "Bosch wiper blade 19in x2", "extraction_id": "ext-123" },
+    "mockResponses": [
+      { "status": 202, "body": { "status": "extraction_queued", "stream_id": "extraction:ext-123" } }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": { "path": "status", "equals": "extraction_queued" }
+    }
   }
 ]

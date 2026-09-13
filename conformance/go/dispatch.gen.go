@@ -995,6 +995,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"create_inventory_level_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInventoryLevelExtraction(ctx, buildFlat[wenmar.CreateInventoryLevelExtractionRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "show_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -1811,8 +1819,40 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_reports_statements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListReportsStatements(ctx, &wenmar.ListReportsStatementsParams{FilterStatus: strPtr(args["query"].(map[string]interface{}), "filter[status]")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_reports_store_credit": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListReportsStoreCredit(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_reports_tax_periods": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListReportsTaxPeriods(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateReportsTaxPeriod(ctx, buildWrapper[wenmar.CreateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateReportsTaxPeriod(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2069,6 +2109,14 @@ var dispatch = map[string]operationFunc{
 
 "update_sublet_packages_deactivate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.UpdateSubletPackagesDeactivate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_order_tech_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrderTechAssignment(ctx, &wenmar.CreateWorkOrderTechAssignmentParams{WorkOrderId: intPtr(args["query"].(map[string]interface{}), "work_order_id")}, buildWrapper[wenmar.CreateWorkOrderTechAssignmentRequest]("technician_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2963,6 +3011,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_work_order_services": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrderServices(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "create_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildFlat[wenmar.CreateWorkOrdersServiceRequest](args["requestBody"].(map[string]interface{})))
 	if err != nil {
@@ -3531,6 +3587,7 @@ var allOperations = []string{
 	"delete_inspections_preset",
 	"update_inspections_preset",
 	"list_inventory_levels_barcode_lookup",
+	"create_inventory_level_extraction",
 	"show_inventory_level",
 	"update_inventory_level",
 	"create_inventory_levels_adjust",
@@ -3633,7 +3690,11 @@ var allOperations = []string{
 	"list_reports_profit_and_loss",
 	"list_reports_sales_summary",
 	"list_reports_service_categories",
+	"list_reports_statements",
 	"list_reports_store_credit",
+	"list_reports_tax_periods",
+	"create_reports_tax_period",
+	"update_reports_tax_period",
 	"list_reports_technician_productivity",
 	"list_reports_work_order_profitability",
 	"list_service_categories",
@@ -3666,6 +3727,7 @@ var allOperations = []string{
 	"delete_sublet_package",
 	"update_sublet_package",
 	"update_sublet_packages_deactivate",
+	"create_work_order_tech_assignment",
 	"list_tire_events",
 	"create_tire_event",
 	"show_tire_event",
@@ -3777,6 +3839,7 @@ var allOperations = []string{
 	"create_work_orders_purchase_orders_return",
 	"list_work_orders_receipts",
 	"create_work_orders_refund",
+	"list_work_order_services",
 	"create_work_orders_service",
 	"update_work_orders_services_reorder",
 	"delete_work_orders_service",

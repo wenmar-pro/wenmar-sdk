@@ -48,6 +48,7 @@
     "CreateInspectionsGroupRequest",
     "CreateInspectionsItemRequest",
     "CreateInspectionsPresetRequest",
+    "CreateInventoryLevelExtractionRequest",
     "CreateInventoryLevelsAdjustRequest",
     "CreateLaborMatriceRequest",
     "CreateLaborRateRequest",
@@ -66,6 +67,7 @@
     "CreatePaymentsConfirmationRequest",
     "CreatePaymentsFailureRequest",
     "CreatePermissionGroupRequest",
+    "CreateReportsTaxPeriodRequest",
     "CreateServiceCategoryRequest",
     "CreateShopDiscountRequest",
     "CreateShopDiscountsDuplicateRequest",
@@ -93,6 +95,7 @@
     "CreateWorkOrderPaymentRequest",
     "CreateWorkOrderRequest",
     "CreateWorkOrderTagRequest",
+    "CreateWorkOrderTechAssignmentRequest",
     "CreateWorkOrdersActivityLogRequest",
     "CreateWorkOrdersAuthorizationDecisionRequest",
     "CreateWorkOrdersAuthorizationRequest",
@@ -230,6 +233,7 @@
     "UpdatePartsMatriceRequest",
     "UpdatePermissionGroupRequest",
     "UpdateReportsCashDrawerSessionsConfirmCloseRequest",
+    "UpdateReportsTaxPeriodRequest",
     "UpdateServiceCategoryRequest",
     "UpdateShopDiscountRequest",
     "UpdateShopFeeRequest",
@@ -2907,6 +2911,27 @@
       "summary": "barcode_lookup"
     },
     {
+      "id": "create_inventory_level_extraction",
+      "method": "post",
+      "path": "/inventory_levels/extractions",
+      "tag": "inventory_levels",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateInventoryLevelExtractionRequest",
+      "requestShape": {
+        "flat": [
+          "text",
+          "extraction_id"
+        ]
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": false,
+      "summary": "create"
+    },
+    {
       "id": "show_inventory_level",
       "method": "get",
       "path": "/inventory_levels/{id}",
@@ -4975,6 +5000,29 @@
       "summary": "show"
     },
     {
+      "id": "list_reports_statements",
+      "method": "get",
+      "path": "/reports/statements",
+      "tag": "reports",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "filter[status]",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
       "id": "list_reports_store_credit",
       "method": "get",
       "path": "/reports/store_credit",
@@ -4989,6 +5037,62 @@
       "responseSchema": null,
       "responseBody": true,
       "summary": "show"
+    },
+    {
+      "id": "list_reports_tax_periods",
+      "method": "get",
+      "path": "/reports/tax_periods",
+      "tag": "reports",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "create_reports_tax_period",
+      "method": "post",
+      "path": "/reports/tax_periods",
+      "tag": "reports",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [],
+      "requestSchema": "CreateReportsTaxPeriodRequest",
+      "requestShape": {
+        "wrapper": "tax_period"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
+      "id": "update_reports_tax_period",
+      "method": "patch",
+      "path": "/reports/tax_periods/{id}",
+      "tag": "reports",
+      "pathParams": [
+        "id"
+      ],
+      "pathParamTypes": {
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "UpdateReportsTaxPeriodRequest",
+      "requestShape": {
+        "wrapper": "tax_period"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "update"
     },
     {
       "id": "list_reports_technician_productivity",
@@ -5612,6 +5716,31 @@
       "responseSchema": null,
       "responseBody": false,
       "summary": "deactivate"
+    },
+    {
+      "id": "create_work_order_tech_assignment",
+      "method": "post",
+      "path": "/tech_assignments",
+      "tag": "tech_assignments",
+      "pathParams": [],
+      "pathParamTypes": {},
+      "queryParams": [
+        {
+          "name": "work_order_id",
+          "type": "integer",
+          "required": false,
+          "description": null
+        }
+      ],
+      "requestSchema": "CreateWorkOrderTechAssignmentRequest",
+      "requestShape": {
+        "wrapper": "technician_id"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
     },
     {
       "id": "list_tire_events",
@@ -7799,7 +7928,7 @@
       "paginated": false,
       "responseSchema": "WorkOrder",
       "responseBody": true,
-      "summary": "show"
+      "summary": "index"
     },
     {
       "id": "create_work_order_payment",
@@ -8025,6 +8154,26 @@
       "responseSchema": "WorkOrder",
       "responseBody": true,
       "summary": "create"
+    },
+    {
+      "id": "list_work_order_services",
+      "method": "get",
+      "path": "/work_orders/{work_order_id}/services",
+      "tag": "work_orders",
+      "pathParams": [
+        "work_order_id"
+      ],
+      "pathParamTypes": {
+        "work_order_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "index"
     },
     {
       "id": "create_work_orders_service",

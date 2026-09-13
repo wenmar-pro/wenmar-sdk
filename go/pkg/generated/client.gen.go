@@ -492,6 +492,12 @@ type CreateInspectionsPresetRequest struct {
 	} `json:"inspection_preset"`
 }
 
+// CreateInventoryLevelExtractionRequest defines model for CreateInventoryLevelExtractionRequest.
+type CreateInventoryLevelExtractionRequest struct {
+	ExtractionId string `json:"extraction_id"`
+	Text         string `json:"text"`
+}
+
 // CreateInventoryLevelsAdjustRequest defines model for CreateInventoryLevelsAdjustRequest.
 type CreateInventoryLevelsAdjustRequest struct {
 	Adjustment struct {
@@ -611,6 +617,14 @@ type CreatePermissionGroupRequest struct {
 		CanPerformWork bool   `json:"can_perform_work"`
 		Name           string `json:"name"`
 	} `json:"permission_group"`
+}
+
+// CreateReportsTaxPeriodRequest defines model for CreateReportsTaxPeriodRequest.
+type CreateReportsTaxPeriodRequest struct {
+	TaxPeriod struct {
+		PeriodEnd   string `json:"period_end"`
+		PeriodStart string `json:"period_start"`
+	} `json:"tax_period"`
 }
 
 // CreateServiceCategoryRequest defines model for CreateServiceCategoryRequest.
@@ -805,6 +819,11 @@ type CreateWorkOrderRequest struct {
 type CreateWorkOrderTagRequest struct {
 	Color string `json:"color"`
 	Name  string `json:"name"`
+}
+
+// CreateWorkOrderTechAssignmentRequest defines model for CreateWorkOrderTechAssignmentRequest.
+type CreateWorkOrderTechAssignmentRequest struct {
+	TechnicianId int `json:"technician_id"`
 }
 
 // CreateWorkOrdersActivityLogRequest defines model for CreateWorkOrdersActivityLogRequest.
@@ -2061,6 +2080,14 @@ type UpdateReportsCashDrawerSessionsConfirmCloseRequest struct {
 	} `json:"cash_drawer_session"`
 }
 
+// UpdateReportsTaxPeriodRequest defines model for UpdateReportsTaxPeriodRequest.
+type UpdateReportsTaxPeriodRequest struct {
+	TaxPeriod struct {
+		MarkedRemitted bool   `json:"marked_remitted"`
+		RemittedDate   string `json:"remitted_date"`
+	} `json:"tax_period"`
+}
+
 // UpdateServiceCategoryRequest defines model for UpdateServiceCategoryRequest.
 type UpdateServiceCategoryRequest struct {
 	ServiceCategory struct {
@@ -2159,7 +2186,7 @@ type UpdateWorkOrderRequest struct {
 		SubStatusTypeId           *int    `json:"sub_status_type_id,omitempty"`
 		VehicleArrivedAt          *string `json:"vehicle_arrived_at,omitempty"`
 		WaitingForCustomer        *bool   `json:"waiting_for_customer,omitempty"`
-		WorkOrderTagId            *int    `json:"work_order_tag_id,omitempty"`
+		WorkOrderTagId            *string `json:"work_order_tag_id,omitempty"`
 	} `json:"work_order"`
 }
 
@@ -2661,6 +2688,16 @@ type ListPaymentsParams struct {
 	Method *string `form:"method,omitempty" json:"method,omitempty"`
 }
 
+// ListReportsStatementsParams defines parameters for ListReportsStatements.
+type ListReportsStatementsParams struct {
+	FilterStatus *string `form:"filter[status],omitempty" json:"filter[status],omitempty"`
+}
+
+// CreateWorkOrderTechAssignmentParams defines parameters for CreateWorkOrderTechAssignment.
+type CreateWorkOrderTechAssignmentParams struct {
+	WorkOrderId *int `form:"work_order_id,omitempty" json:"work_order_id,omitempty"`
+}
+
 // ListUsersParams defines parameters for ListUsers.
 type ListUsersParams struct {
 	Page    *int `form:"page,omitempty" json:"page,omitempty"`
@@ -2922,6 +2959,9 @@ type CreateInspectionsPresetJSONRequestBody = CreateInspectionsPresetRequest
 // UpdateInspectionsPresetJSONRequestBody defines body for UpdateInspectionsPreset for application/json ContentType.
 type UpdateInspectionsPresetJSONRequestBody = UpdateInspectionsPresetRequest
 
+// CreateInventoryLevelExtractionJSONRequestBody defines body for CreateInventoryLevelExtraction for application/json ContentType.
+type CreateInventoryLevelExtractionJSONRequestBody = CreateInventoryLevelExtractionRequest
+
 // UpdateInventoryLevelJSONRequestBody defines body for UpdateInventoryLevel for application/json ContentType.
 type UpdateInventoryLevelJSONRequestBody = UpdateInventoryLevelRequest
 
@@ -3057,6 +3097,12 @@ type CreatePaymentsFailureJSONRequestBody = CreatePaymentsFailureRequest
 // UpdateReportsCashDrawerSessionsConfirmCloseJSONRequestBody defines body for UpdateReportsCashDrawerSessionsConfirmClose for application/json ContentType.
 type UpdateReportsCashDrawerSessionsConfirmCloseJSONRequestBody = UpdateReportsCashDrawerSessionsConfirmCloseRequest
 
+// CreateReportsTaxPeriodJSONRequestBody defines body for CreateReportsTaxPeriod for application/json ContentType.
+type CreateReportsTaxPeriodJSONRequestBody = CreateReportsTaxPeriodRequest
+
+// UpdateReportsTaxPeriodJSONRequestBody defines body for UpdateReportsTaxPeriod for application/json ContentType.
+type UpdateReportsTaxPeriodJSONRequestBody = UpdateReportsTaxPeriodRequest
+
 // CreateServiceCategoryJSONRequestBody defines body for CreateServiceCategory for application/json ContentType.
 type CreateServiceCategoryJSONRequestBody = CreateServiceCategoryRequest
 
@@ -3113,6 +3159,9 @@ type CreateSubletPackageJSONRequestBody = CreateSubletPackageRequest
 
 // UpdateSubletPackageJSONRequestBody defines body for UpdateSubletPackage for application/json ContentType.
 type UpdateSubletPackageJSONRequestBody = UpdateSubletPackageRequest
+
+// CreateWorkOrderTechAssignmentJSONRequestBody defines body for CreateWorkOrderTechAssignment for application/json ContentType.
+type CreateWorkOrderTechAssignmentJSONRequestBody = CreateWorkOrderTechAssignmentRequest
 
 // CreateTireEventJSONRequestBody defines body for CreateTireEvent for application/json ContentType.
 type CreateTireEventJSONRequestBody = CreateTireEventRequest
@@ -5014,6 +5063,24 @@ type ClientInterface interface {
 	// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
 	ListInventoryLevelsBarcodeLookup(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateInventoryLevelExtractionWithBody create
+	//
+	// Create a inventory level extraction.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+	CreateInventoryLevelExtractionWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateInventoryLevelExtraction create
+	//
+	// Create a inventory level extraction.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+	CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ShowInventoryLevel show
 	//
 	// Show a inventory level by ID.
@@ -6199,12 +6266,62 @@ type ClientInterface interface {
 	// Corresponds with GET /reports/service_categories (the `ListReportsServiceCategories` operationId).
 	ListReportsServiceCategories(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListReportsStatements index
+	//
+	// List all reports statements, paginated via the Link header.
+	//
+	// Corresponds with GET /reports/statements (the `ListReportsStatements` operationId).
+	ListReportsStatements(ctx context.Context, params *ListReportsStatementsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListReportsStoreCredit show
 	//
 	// List all reports store credit, paginated via the Link header.
 	//
 	// Corresponds with GET /reports/store_credit (the `ListReportsStoreCredit` operationId).
 	ListReportsStoreCredit(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListReportsTaxPeriods index
+	//
+	// List all reports tax periods, paginated via the Link header.
+	//
+	// Corresponds with GET /reports/tax_periods (the `ListReportsTaxPeriods` operationId).
+	ListReportsTaxPeriods(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateReportsTaxPeriodWithBody create
+	//
+	// Create a reports tax period.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+	CreateReportsTaxPeriodWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateReportsTaxPeriod create
+	//
+	// Create a reports tax period.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+	CreateReportsTaxPeriod(ctx context.Context, body CreateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateReportsTaxPeriodWithBody update
+	//
+	// Update a reports tax period by ID.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+	UpdateReportsTaxPeriodWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateReportsTaxPeriod update
+	//
+	// Update a reports tax period by ID.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+	UpdateReportsTaxPeriod(ctx context.Context, id int, body UpdateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListReportsTechnicianProductivity show
 	//
@@ -6622,6 +6739,24 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderTechAssignmentWithBody create
+	//
+	// Create a work order tech assignment.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+	CreateWorkOrderTechAssignmentWithBody(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkOrderTechAssignment create
+	//
+	// Create a work order tech assignment.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+	CreateWorkOrderTechAssignment(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListTireEvents index
 	//
@@ -7890,7 +8025,7 @@ type ClientInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payment_link/send (the `CreateWorkOrdersPaymentLinkSend` operationId).
 	CreateWorkOrdersPaymentLinkSend(ctx context.Context, workOrderId int, body CreateWorkOrdersPaymentLinkSendJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ShowWorkOrderPayments show
+	// ShowWorkOrderPayments index
 	//
 	// Show a work order payments by ID.
 	//
@@ -8037,6 +8172,13 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
 	CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListWorkOrderServices index
+	//
+	// List all work order services, paginated via the Link header.
+	//
+	// Corresponds with GET /work_orders/{work_order_id}/services (the `ListWorkOrderServices` operationId).
+	ListWorkOrderServices(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkOrdersServiceWithBody create
 	//
@@ -12142,6 +12284,44 @@ func (c *Client) ListInventoryLevelsBarcodeLookup(ctx context.Context, params *L
 	return c.Client.Do(req)
 }
 
+// CreateInventoryLevelExtractionWithBody create
+//
+// Create a inventory level extraction.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+func (c *Client) CreateInventoryLevelExtractionWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateInventoryLevelExtractionRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateInventoryLevelExtraction create
+//
+// Create a inventory level extraction.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+func (c *Client) CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateInventoryLevelExtractionRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ShowInventoryLevel show
 //
 // Show a inventory level by ID.
@@ -14797,6 +14977,23 @@ func (c *Client) ListReportsServiceCategories(ctx context.Context, reqEditors ..
 	return c.Client.Do(req)
 }
 
+// ListReportsStatements index
+//
+// List all reports statements, paginated via the Link header.
+//
+// Corresponds with GET /reports/statements (the `ListReportsStatements` operationId).
+func (c *Client) ListReportsStatements(ctx context.Context, params *ListReportsStatementsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListReportsStatementsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListReportsStoreCredit show
 //
 // List all reports store credit, paginated via the Link header.
@@ -14804,6 +15001,99 @@ func (c *Client) ListReportsServiceCategories(ctx context.Context, reqEditors ..
 // Corresponds with GET /reports/store_credit (the `ListReportsStoreCredit` operationId).
 func (c *Client) ListReportsStoreCredit(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListReportsStoreCreditRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListReportsTaxPeriods index
+//
+// List all reports tax periods, paginated via the Link header.
+//
+// Corresponds with GET /reports/tax_periods (the `ListReportsTaxPeriods` operationId).
+func (c *Client) ListReportsTaxPeriods(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListReportsTaxPeriodsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateReportsTaxPeriodWithBody create
+//
+// Create a reports tax period.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+func (c *Client) CreateReportsTaxPeriodWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReportsTaxPeriodRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateReportsTaxPeriod create
+//
+// Create a reports tax period.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+func (c *Client) CreateReportsTaxPeriod(ctx context.Context, body CreateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReportsTaxPeriodRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateReportsTaxPeriodWithBody update
+//
+// Update a reports tax period by ID.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+func (c *Client) UpdateReportsTaxPeriodWithBody(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReportsTaxPeriodRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateReportsTaxPeriod update
+//
+// Update a reports tax period by ID.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+func (c *Client) UpdateReportsTaxPeriod(ctx context.Context, id int, body UpdateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReportsTaxPeriodRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -15731,6 +16021,44 @@ func (c *Client) UpdateSubletPackage(ctx context.Context, id int, body UpdateSub
 // Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateSubletPackagesDeactivateRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderTechAssignmentWithBody create
+//
+// Create a work order tech assignment.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+func (c *Client) CreateWorkOrderTechAssignmentWithBody(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderTechAssignmentRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkOrderTechAssignment create
+//
+// Create a work order tech assignment.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+func (c *Client) CreateWorkOrderTechAssignment(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkOrderTechAssignmentRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -18598,7 +18926,7 @@ func (c *Client) CreateWorkOrdersPaymentLinkSend(ctx context.Context, workOrderI
 	return c.Client.Do(req)
 }
 
-// ShowWorkOrderPayments show
+// ShowWorkOrderPayments index
 //
 // Show a work order payments by ID.
 //
@@ -18916,6 +19244,23 @@ func (c *Client) CreateWorkOrdersRefundWithBody(ctx context.Context, workOrderId
 // Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
 func (c *Client) CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateWorkOrdersRefundRequest(c.Server, workOrderId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListWorkOrderServices index
+//
+// List all work order services, paginated via the Link header.
+//
+// Corresponds with GET /work_orders/{work_order_id}/services (the `ListWorkOrderServices` operationId).
+func (c *Client) ListWorkOrderServices(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListWorkOrderServicesRequest(c.Server, workOrderId)
 	if err != nil {
 		return nil, err
 	}
@@ -25754,6 +26099,46 @@ func NewListInventoryLevelsBarcodeLookupRequest(server string, params *ListInven
 	return req, nil
 }
 
+// NewCreateInventoryLevelExtractionRequest calls the generic CreateInventoryLevelExtraction builder with application/json body
+func NewCreateInventoryLevelExtractionRequest(server string, body CreateInventoryLevelExtractionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateInventoryLevelExtractionRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateInventoryLevelExtractionRequestWithBody constructs an http.Request for the CreateInventoryLevelExtraction method, with any body, and a specified content type
+func NewCreateInventoryLevelExtractionRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/inventory_levels/extractions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewShowInventoryLevelRequest constructs an http.Request for the ShowInventoryLevel method
 func NewShowInventoryLevelRequest(server string, id int) (*http.Request, error) {
 	var err error
@@ -29785,6 +30170,60 @@ func NewListReportsServiceCategoriesRequest(server string) (*http.Request, error
 	return req, nil
 }
 
+// NewListReportsStatementsRequest constructs an http.Request for the ListReportsStatements method
+func NewListReportsStatementsRequest(server string, params *ListReportsStatementsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/reports/statements")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.FilterStatus != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "filter[status]", *params.FilterStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListReportsStoreCreditRequest constructs an http.Request for the ListReportsStoreCredit method
 func NewListReportsStoreCreditRequest(server string) (*http.Request, error) {
 	var err error
@@ -29808,6 +30247,120 @@ func NewListReportsStoreCreditRequest(server string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewListReportsTaxPeriodsRequest constructs an http.Request for the ListReportsTaxPeriods method
+func NewListReportsTaxPeriodsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/reports/tax_periods")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateReportsTaxPeriodRequest calls the generic CreateReportsTaxPeriod builder with application/json body
+func NewCreateReportsTaxPeriodRequest(server string, body CreateReportsTaxPeriodJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateReportsTaxPeriodRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateReportsTaxPeriodRequestWithBody constructs an http.Request for the CreateReportsTaxPeriod method, with any body, and a specified content type
+func NewCreateReportsTaxPeriodRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/reports/tax_periods")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUpdateReportsTaxPeriodRequest calls the generic UpdateReportsTaxPeriod builder with application/json body
+func NewUpdateReportsTaxPeriodRequest(server string, id int, body UpdateReportsTaxPeriodJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateReportsTaxPeriodRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewUpdateReportsTaxPeriodRequestWithBody constructs an http.Request for the UpdateReportsTaxPeriod method, with any body, and a specified content type
+func NewUpdateReportsTaxPeriodRequestWithBody(server string, id int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/reports/tax_periods/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -31038,6 +31591,73 @@ func NewUpdateSubletPackagesDeactivateRequest(server string, id int) (*http.Requ
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewCreateWorkOrderTechAssignmentRequest calls the generic CreateWorkOrderTechAssignment builder with application/json body
+func NewCreateWorkOrderTechAssignmentRequest(server string, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkOrderTechAssignmentRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateWorkOrderTechAssignmentRequestWithBody constructs an http.Request for the CreateWorkOrderTechAssignment method, with any body, and a specified content type
+func NewCreateWorkOrderTechAssignmentRequestWithBody(server string, params *CreateWorkOrderTechAssignmentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tech_assignments")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.WorkOrderId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "work_order_id", *params.WorkOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -35927,6 +36547,40 @@ func NewCreateWorkOrdersRefundRequestWithBody(server string, workOrderId int, co
 	return req, nil
 }
 
+// NewListWorkOrderServicesRequest constructs an http.Request for the ListWorkOrderServices method
+func NewListWorkOrderServicesRequest(server string, workOrderId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/work_orders/%s/services", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCreateWorkOrdersServiceRequest calls the generic CreateWorkOrdersService builder with application/json body
 func NewCreateWorkOrdersServiceRequest(server string, workOrderId int, body CreateWorkOrdersServiceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -39990,6 +40644,24 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
 	ListInventoryLevelsBarcodeLookupWithResponse(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*ListInventoryLevelsBarcodeLookupResponse, error)
 
+	// CreateInventoryLevelExtractionWithBodyWithResponse create
+	//
+	// Create a inventory level extraction.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+	CreateInventoryLevelExtractionWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error)
+
+	// CreateInventoryLevelExtractionWithResponse create
+	//
+	// Create a inventory level extraction.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+	CreateInventoryLevelExtractionWithResponse(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error)
+
 	// ShowInventoryLevelWithResponse show
 	//
 	// Show a inventory level by ID.
@@ -41289,6 +41961,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /reports/service_categories (the `ListReportsServiceCategories` operationId).
 	ListReportsServiceCategoriesWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListReportsServiceCategoriesResponse, error)
 
+	// ListReportsStatementsWithResponse index
+	//
+	// List all reports statements, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /reports/statements (the `ListReportsStatements` operationId).
+	ListReportsStatementsWithResponse(ctx context.Context, params *ListReportsStatementsParams, reqEditors ...RequestEditorFn) (*ListReportsStatementsResponse, error)
+
 	// ListReportsStoreCreditWithResponse show
 	//
 	// List all reports store credit, paginated via the Link header.
@@ -41297,6 +41978,51 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /reports/store_credit (the `ListReportsStoreCredit` operationId).
 	ListReportsStoreCreditWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListReportsStoreCreditResponse, error)
+
+	// ListReportsTaxPeriodsWithResponse index
+	//
+	// List all reports tax periods, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /reports/tax_periods (the `ListReportsTaxPeriods` operationId).
+	ListReportsTaxPeriodsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListReportsTaxPeriodsResponse, error)
+
+	// CreateReportsTaxPeriodWithBodyWithResponse create
+	//
+	// Create a reports tax period.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+	CreateReportsTaxPeriodWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReportsTaxPeriodResponse, error)
+
+	// CreateReportsTaxPeriodWithResponse create
+	//
+	// Create a reports tax period.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+	CreateReportsTaxPeriodWithResponse(ctx context.Context, body CreateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReportsTaxPeriodResponse, error)
+
+	// UpdateReportsTaxPeriodWithBodyWithResponse update
+	//
+	// Update a reports tax period by ID.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+	UpdateReportsTaxPeriodWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReportsTaxPeriodResponse, error)
+
+	// UpdateReportsTaxPeriodWithResponse update
+	//
+	// Update a reports tax period by ID.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+	UpdateReportsTaxPeriodWithResponse(ctx context.Context, id int, body UpdateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReportsTaxPeriodResponse, error)
 
 	// ListReportsTechnicianProductivityWithResponse show
 	//
@@ -41740,6 +42466,24 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /sublet_packages/{id}/deactivate (the `UpdateSubletPackagesDeactivate` operationId).
 	UpdateSubletPackagesDeactivateWithResponse(ctx context.Context, id int, reqEditors ...RequestEditorFn) (*UpdateSubletPackagesDeactivateResponse, error)
+
+	// CreateWorkOrderTechAssignmentWithBodyWithResponse create
+	//
+	// Create a work order tech assignment.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+	CreateWorkOrderTechAssignmentWithBodyWithResponse(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderTechAssignmentResponse, error)
+
+	// CreateWorkOrderTechAssignmentWithResponse create
+	//
+	// Create a work order tech assignment.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+	CreateWorkOrderTechAssignmentWithResponse(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderTechAssignmentResponse, error)
 
 	// ListTireEventsWithResponse index
 	//
@@ -43090,7 +43834,7 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /work_orders/{work_order_id}/payment_link/send (the `CreateWorkOrdersPaymentLinkSend` operationId).
 	CreateWorkOrdersPaymentLinkSendWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersPaymentLinkSendJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersPaymentLinkSendResponse, error)
 
-	// ShowWorkOrderPaymentsWithResponse show
+	// ShowWorkOrderPaymentsWithResponse index
 	//
 	// Show a work order payments by ID.
 	//
@@ -43245,6 +43989,15 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /work_orders/{work_order_id}/refunds (the `CreateWorkOrdersRefund` operationId).
 	CreateWorkOrdersRefundWithResponse(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersRefundResponse, error)
+
+	// ListWorkOrderServicesWithResponse index
+	//
+	// List all work order services, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /work_orders/{work_order_id}/services (the `ListWorkOrderServices` operationId).
+	ListWorkOrderServicesWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ListWorkOrderServicesResponse, error)
 
 	// CreateWorkOrdersServiceWithBodyWithResponse create
 	//
@@ -52728,6 +53481,75 @@ func (r ListInventoryLevelsBarcodeLookupResponse) ContentType() string {
 	return ""
 }
 
+type CreateInventoryLevelExtractionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *struct {
+		Status   string `json:"status"`
+		StreamId string `json:"stream_id"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CreateInventoryLevelExtractionResponse) GetJSON202() *struct {
+	Status   string `json:"status"`
+	StreamId string `json:"stream_id"`
+} {
+	return r.JSON202
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateInventoryLevelExtractionResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateInventoryLevelExtractionResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateInventoryLevelExtractionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateInventoryLevelExtractionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateInventoryLevelExtractionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateInventoryLevelExtractionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ShowInventoryLevelResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -59986,6 +60808,121 @@ func (r ListReportsServiceCategoriesResponse) ContentType() string {
 	return ""
 }
 
+// ListReportsStatementsResponse200Headers the declared response headers of an HTTP 200 response for ListReportsStatements
+type ListReportsStatementsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListReportsStatementsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl    string `json:"app_url"`
+		CreatedAt string `json:"created_at"`
+		Customer  struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		DueDate         string  `json:"due_date"`
+		EndDate         string  `json:"end_date"`
+		Id              int     `json:"id"`
+		SentAt          *string `json:"sent_at"`
+		StartDate       string  `json:"start_date"`
+		StatementDate   string  `json:"statement_date"`
+		StatementNumber string  `json:"statement_number"`
+		Status          string  `json:"status"`
+		Totals          struct {
+			BalanceDueCents       int    `json:"balance_due_cents"`
+			CreditsCents          int    `json:"credits_cents"`
+			Currency              string `json:"currency"`
+			NewChargesCents       int    `json:"new_charges_cents"`
+			PaymentsReceivedCents int    `json:"payments_received_cents"`
+			PreviousBalanceCents  int    `json:"previous_balance_cents"`
+		} `json:"totals"`
+		UpdatedAt string  `json:"updated_at"`
+		Url       string  `json:"url"`
+		ViewedAt  *string `json:"viewed_at"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListReportsStatementsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListReportsStatementsResponse) GetJSON200() *[]struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Customer  struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	DueDate         string  `json:"due_date"`
+	EndDate         string  `json:"end_date"`
+	Id              int     `json:"id"`
+	SentAt          *string `json:"sent_at"`
+	StartDate       string  `json:"start_date"`
+	StatementDate   string  `json:"statement_date"`
+	StatementNumber string  `json:"statement_number"`
+	Status          string  `json:"status"`
+	Totals          struct {
+		BalanceDueCents       int    `json:"balance_due_cents"`
+		CreditsCents          int    `json:"credits_cents"`
+		Currency              string `json:"currency"`
+		NewChargesCents       int    `json:"new_charges_cents"`
+		PaymentsReceivedCents int    `json:"payments_received_cents"`
+		PreviousBalanceCents  int    `json:"previous_balance_cents"`
+	} `json:"totals"`
+	UpdatedAt string  `json:"updated_at"`
+	Url       string  `json:"url"`
+	ViewedAt  *string `json:"viewed_at"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsStatementsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListReportsStatementsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListReportsStatementsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListReportsStatementsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListReportsStatementsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListReportsStoreCreditResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -60046,6 +60983,286 @@ func (r ListReportsStoreCreditResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ListReportsStoreCreditResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ListReportsTaxPeriodsResponse200Headers the declared response headers of an HTTP 200 response for ListReportsTaxPeriods
+type ListReportsTaxPeriodsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListReportsTaxPeriodsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AppUrl    string `json:"app_url"`
+		CreatedAt string `json:"created_at"`
+		Id        int    `json:"id"`
+		Location  struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		MarkedRemitted  bool        `json:"marked_remitted"`
+		Notes           *string     `json:"notes"`
+		PeriodEnd       string      `json:"period_end"`
+		PeriodStart     string      `json:"period_start"`
+		RemittedDate    string      `json:"remitted_date"`
+		TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+		Totals          struct {
+			Currency          string `json:"currency"`
+			TaxCollectedCents int    `json:"tax_collected_cents"`
+		} `json:"totals"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListReportsTaxPeriodsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListReportsTaxPeriodsResponse) GetJSON200() *[]struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Id        int    `json:"id"`
+	Location  struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	MarkedRemitted  bool        `json:"marked_remitted"`
+	Notes           *string     `json:"notes"`
+	PeriodEnd       string      `json:"period_end"`
+	PeriodStart     string      `json:"period_start"`
+	RemittedDate    string      `json:"remitted_date"`
+	TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+	Totals          struct {
+		Currency          string `json:"currency"`
+		TaxCollectedCents int    `json:"tax_collected_cents"`
+	} `json:"totals"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r ListReportsTaxPeriodsResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListReportsTaxPeriodsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListReportsTaxPeriodsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListReportsTaxPeriodsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListReportsTaxPeriodsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateReportsTaxPeriodResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AppUrl    string `json:"app_url"`
+		CreatedAt string `json:"created_at"`
+		Id        int    `json:"id"`
+		Location  struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		MarkedRemitted  bool        `json:"marked_remitted"`
+		Notes           *string     `json:"notes"`
+		PeriodEnd       string      `json:"period_end"`
+		PeriodStart     string      `json:"period_start"`
+		RemittedDate    string      `json:"remitted_date"`
+		TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+		Totals          struct {
+			Currency          string `json:"currency"`
+			TaxCollectedCents int    `json:"tax_collected_cents"`
+		} `json:"totals"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateReportsTaxPeriodResponse) GetJSON201() *struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Id        int    `json:"id"`
+	Location  struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	MarkedRemitted  bool        `json:"marked_remitted"`
+	Notes           *string     `json:"notes"`
+	PeriodEnd       string      `json:"period_end"`
+	PeriodStart     string      `json:"period_start"`
+	RemittedDate    string      `json:"remitted_date"`
+	TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+	Totals          struct {
+		Currency          string `json:"currency"`
+		TaxCollectedCents int    `json:"tax_collected_cents"`
+	} `json:"totals"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+} {
+	return r.JSON201
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateReportsTaxPeriodResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateReportsTaxPeriodResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateReportsTaxPeriodResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateReportsTaxPeriodResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateReportsTaxPeriodResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateReportsTaxPeriodResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		AppUrl    string `json:"app_url"`
+		CreatedAt string `json:"created_at"`
+		Id        int    `json:"id"`
+		Location  struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		MarkedRemitted  bool        `json:"marked_remitted"`
+		Notes           *string     `json:"notes"`
+		PeriodEnd       string      `json:"period_end"`
+		PeriodStart     string      `json:"period_start"`
+		RemittedDate    string      `json:"remitted_date"`
+		TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+		Totals          struct {
+			Currency          string `json:"currency"`
+			TaxCollectedCents int    `json:"tax_collected_cents"`
+		} `json:"totals"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateReportsTaxPeriodResponse) GetJSON200() *struct {
+	AppUrl    string `json:"app_url"`
+	CreatedAt string `json:"created_at"`
+	Id        int    `json:"id"`
+	Location  struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	MarkedRemitted  bool        `json:"marked_remitted"`
+	Notes           *string     `json:"notes"`
+	PeriodEnd       string      `json:"period_end"`
+	PeriodStart     string      `json:"period_start"`
+	RemittedDate    string      `json:"remitted_date"`
+	TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+	Totals          struct {
+		Currency          string `json:"currency"`
+		TaxCollectedCents int    `json:"tax_collected_cents"`
+	} `json:"totals"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateReportsTaxPeriodResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateReportsTaxPeriodResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateReportsTaxPeriodResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateReportsTaxPeriodResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -61948,6 +63165,273 @@ func (r UpdateSubletPackagesDeactivateResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateSubletPackagesDeactivateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateWorkOrderTechAssignmentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *struct {
+		ActivityTotal        int     `json:"activity_total"`
+		ActivityUrl          string  `json:"activity_url"`
+		AppUrl               string  `json:"app_url"`
+		AppointmentsUrl      string  `json:"appointments_url"`
+		AssignedTechnicianId int     `json:"assigned_technician_id"`
+		AuthorizationLogsUrl string  `json:"authorization_logs_url"`
+		Authorized           bool    `json:"authorized"`
+		AuthorizedAt         *string `json:"authorized_at"`
+		AuthorizedTotalCents int     `json:"authorized_total_cents"`
+		AverageTicketCents   int     `json:"average_ticket_cents"`
+		ClosedAt             *string `json:"closed_at"`
+		ClosureReason        *string `json:"closure_reason"`
+		ClosureReasonNotes   *string `json:"closure_reason_notes"`
+		CompletedAt          *string `json:"completed_at"`
+		ConcernsUrl          string  `json:"concerns_url"`
+		CreatedAt            string  `json:"created_at"`
+		CreditBalanceCents   int     `json:"credit_balance_cents"`
+		Customer             struct {
+			DisplayName string `json:"display_name"`
+			FullName    string `json:"full_name"`
+			Id          int    `json:"id"`
+			Url         string `json:"url"`
+		} `json:"customer"`
+		CustomerNotified             bool    `json:"customer_notified"`
+		CustomerNotifiedReady        bool    `json:"customer_notified_ready"`
+		CustomerTotalSpendCents      int     `json:"customer_total_spend_cents"`
+		CustomerVisitCount           int     `json:"customer_visit_count"`
+		DeclineReason                *string `json:"decline_reason"`
+		DeclinedAt                   *string `json:"declined_at"`
+		DeclinedServicesUrl          string  `json:"declined_services_url"`
+		DiscountCents                int     `json:"discount_cents"`
+		FeesCents                    int     `json:"fees_cents"`
+		Id                           int     `json:"id"`
+		InspectionReportsCount       int     `json:"inspection_reports_count"`
+		InspectionUrl                string  `json:"inspection_url"`
+		InspectionsVisibleToCustomer bool    `json:"inspections_visible_to_customer"`
+		IntakeMethod                 string  `json:"intake_method"`
+		LaborCents                   int     `json:"labor_cents"`
+		Location                     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		LocationId          int     `json:"location_id"`
+		Notes               *string `json:"notes"`
+		OdometerIn          *int    `json:"odometer_in"`
+		OdometerOut         *int    `json:"odometer_out"`
+		OdometerUnit        string  `json:"odometer_unit"`
+		Paid                bool    `json:"paid"`
+		PartsCents          int     `json:"parts_cents"`
+		PartsUrl            string  `json:"parts_url"`
+		PayerCustomerId     *int    `json:"payer_customer_id"`
+		PaymentsUrl         string  `json:"payments_url"`
+		PurchaseOrderNumber *string `json:"purchase_order_number"`
+		ReadyForPickupAt    *string `json:"ready_for_pickup_at"`
+		RecentActivities    []struct {
+			Category    string `json:"category"`
+			CreatedAt   string `json:"created_at"`
+			Description string `json:"description"`
+			Id          int    `json:"id"`
+		} `json:"recent_activities"`
+		ReturnMethod              string  `json:"return_method"`
+		ReturnMethodNotes         *string `json:"return_method_notes"`
+		SavedForLater             bool    `json:"saved_for_later"`
+		ScheduledFor              *string `json:"scheduled_for"`
+		ServiceAdvisorId          *int    `json:"service_advisor_id"`
+		ServiceHistoryUrl         string  `json:"service_history_url"`
+		ServicesUrl               string  `json:"services_url"`
+		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
+		Status                    string  `json:"status"`
+		SubStatusTypeId           *int    `json:"sub_status_type_id"`
+		SubcontractsCents         int     `json:"subcontracts_cents"`
+		TiresCents                int     `json:"tires_cents"`
+		Totals                    struct {
+			Currency       string `json:"currency"`
+			PaidCents      int    `json:"paid_cents"`
+			RemainingCents int    `json:"remaining_cents"`
+			SubtotalCents  int    `json:"subtotal_cents"`
+			TaxCents       int    `json:"tax_cents"`
+			TotalCents     int    `json:"total_cents"`
+		} `json:"totals"`
+		Type      string `json:"type"`
+		UpdatedAt string `json:"updated_at"`
+		Url       string `json:"url"`
+		Vehicle   struct {
+			DisplayName  string `json:"display_name"`
+			Id           int    `json:"id"`
+			LicensePlate string `json:"license_plate"`
+			Make         string `json:"make"`
+			Model        string `json:"model"`
+			Url          string `json:"url"`
+			Vin          string `json:"vin"`
+			Year         int    `json:"year"`
+		} `json:"vehicle"`
+		VehicleArrivedAt       *string `json:"vehicle_arrived_at"`
+		VehicleHistoryUrl      string  `json:"vehicle_history_url"`
+		VehicleKeysLocation    string  `json:"vehicle_keys_location"`
+		VehicleLocation        string  `json:"vehicle_location"`
+		WipUrl                 string  `json:"wip_url"`
+		WorkOrderNumber        int     `json:"work_order_number"`
+		WorkOrderServicesCount int     `json:"work_order_services_count"`
+	}
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateWorkOrderTechAssignmentResponse) GetJSON200() *struct {
+	ActivityTotal        int     `json:"activity_total"`
+	ActivityUrl          string  `json:"activity_url"`
+	AppUrl               string  `json:"app_url"`
+	AppointmentsUrl      string  `json:"appointments_url"`
+	AssignedTechnicianId int     `json:"assigned_technician_id"`
+	AuthorizationLogsUrl string  `json:"authorization_logs_url"`
+	Authorized           bool    `json:"authorized"`
+	AuthorizedAt         *string `json:"authorized_at"`
+	AuthorizedTotalCents int     `json:"authorized_total_cents"`
+	AverageTicketCents   int     `json:"average_ticket_cents"`
+	ClosedAt             *string `json:"closed_at"`
+	ClosureReason        *string `json:"closure_reason"`
+	ClosureReasonNotes   *string `json:"closure_reason_notes"`
+	CompletedAt          *string `json:"completed_at"`
+	ConcernsUrl          string  `json:"concerns_url"`
+	CreatedAt            string  `json:"created_at"`
+	CreditBalanceCents   int     `json:"credit_balance_cents"`
+	Customer             struct {
+		DisplayName string `json:"display_name"`
+		FullName    string `json:"full_name"`
+		Id          int    `json:"id"`
+		Url         string `json:"url"`
+	} `json:"customer"`
+	CustomerNotified             bool    `json:"customer_notified"`
+	CustomerNotifiedReady        bool    `json:"customer_notified_ready"`
+	CustomerTotalSpendCents      int     `json:"customer_total_spend_cents"`
+	CustomerVisitCount           int     `json:"customer_visit_count"`
+	DeclineReason                *string `json:"decline_reason"`
+	DeclinedAt                   *string `json:"declined_at"`
+	DeclinedServicesUrl          string  `json:"declined_services_url"`
+	DiscountCents                int     `json:"discount_cents"`
+	FeesCents                    int     `json:"fees_cents"`
+	Id                           int     `json:"id"`
+	InspectionReportsCount       int     `json:"inspection_reports_count"`
+	InspectionUrl                string  `json:"inspection_url"`
+	InspectionsVisibleToCustomer bool    `json:"inspections_visible_to_customer"`
+	IntakeMethod                 string  `json:"intake_method"`
+	LaborCents                   int     `json:"labor_cents"`
+	Location                     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	LocationId          int     `json:"location_id"`
+	Notes               *string `json:"notes"`
+	OdometerIn          *int    `json:"odometer_in"`
+	OdometerOut         *int    `json:"odometer_out"`
+	OdometerUnit        string  `json:"odometer_unit"`
+	Paid                bool    `json:"paid"`
+	PartsCents          int     `json:"parts_cents"`
+	PartsUrl            string  `json:"parts_url"`
+	PayerCustomerId     *int    `json:"payer_customer_id"`
+	PaymentsUrl         string  `json:"payments_url"`
+	PurchaseOrderNumber *string `json:"purchase_order_number"`
+	ReadyForPickupAt    *string `json:"ready_for_pickup_at"`
+	RecentActivities    []struct {
+		Category    string `json:"category"`
+		CreatedAt   string `json:"created_at"`
+		Description string `json:"description"`
+		Id          int    `json:"id"`
+	} `json:"recent_activities"`
+	ReturnMethod              string  `json:"return_method"`
+	ReturnMethodNotes         *string `json:"return_method_notes"`
+	SavedForLater             bool    `json:"saved_for_later"`
+	ScheduledFor              *string `json:"scheduled_for"`
+	ServiceAdvisorId          *int    `json:"service_advisor_id"`
+	ServiceHistoryUrl         string  `json:"service_history_url"`
+	ServicesUrl               string  `json:"services_url"`
+	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
+	Status                    string  `json:"status"`
+	SubStatusTypeId           *int    `json:"sub_status_type_id"`
+	SubcontractsCents         int     `json:"subcontracts_cents"`
+	TiresCents                int     `json:"tires_cents"`
+	Totals                    struct {
+		Currency       string `json:"currency"`
+		PaidCents      int    `json:"paid_cents"`
+		RemainingCents int    `json:"remaining_cents"`
+		SubtotalCents  int    `json:"subtotal_cents"`
+		TaxCents       int    `json:"tax_cents"`
+		TotalCents     int    `json:"total_cents"`
+	} `json:"totals"`
+	Type      string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
+	Url       string `json:"url"`
+	Vehicle   struct {
+		DisplayName  string `json:"display_name"`
+		Id           int    `json:"id"`
+		LicensePlate string `json:"license_plate"`
+		Make         string `json:"make"`
+		Model        string `json:"model"`
+		Url          string `json:"url"`
+		Vin          string `json:"vin"`
+		Year         int    `json:"year"`
+	} `json:"vehicle"`
+	VehicleArrivedAt       *string `json:"vehicle_arrived_at"`
+	VehicleHistoryUrl      string  `json:"vehicle_history_url"`
+	VehicleKeysLocation    string  `json:"vehicle_keys_location"`
+	VehicleLocation        string  `json:"vehicle_location"`
+	WipUrl                 string  `json:"wip_url"`
+	WorkOrderNumber        int     `json:"work_order_number"`
+	WorkOrderServicesCount int     `json:"work_order_services_count"`
+} {
+	return r.JSON200
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateWorkOrderTechAssignmentResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateWorkOrderTechAssignmentResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkOrderTechAssignmentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkOrderTechAssignmentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkOrderTechAssignmentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkOrderTechAssignmentResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -72509,6 +73993,144 @@ func (r CreateWorkOrdersRefundResponse) ContentType() string {
 	return ""
 }
 
+// ListWorkOrderServicesResponse200Headers the declared response headers of an HTTP 200 response for ListWorkOrderServices
+type ListWorkOrderServicesResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListWorkOrderServicesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]struct {
+		AuthorizationStatus string  `json:"authorization_status"`
+		AuthorizedAt        *string `json:"authorized_at"`
+		CategoryId          *int    `json:"category_id"`
+		CompletedAt         *string `json:"completed_at"`
+		CreatedAt           string  `json:"created_at"`
+		CustomerNotes       *string `json:"customer_notes"`
+		DiscountCents       int     `json:"discount_cents"`
+		EstimatedHours      string  `json:"estimated_hours"`
+		FeesCents           int     `json:"fees_cents"`
+		Id                  int     `json:"id"`
+		LaborCents          int     `json:"labor_cents"`
+		LineItems           []struct {
+			Completed      bool    `json:"completed"`
+			CreatedAt      string  `json:"created_at"`
+			Description    string  `json:"description"`
+			Hours          string  `json:"hours"`
+			Id             int     `json:"id"`
+			IsTaxable      bool    `json:"is_taxable"`
+			IsWarranty     bool    `json:"is_warranty"`
+			ItemType       string  `json:"item_type"`
+			LaborRateId    *int    `json:"labor_rate_id"`
+			Notes          *string `json:"notes"`
+			PricingMode    string  `json:"pricing_mode"`
+			Quantity       string  `json:"quantity"`
+			RateCents      int     `json:"rate_cents"`
+			TaxTotalCents  int     `json:"tax_total_cents"`
+			TechnicianId   *int    `json:"technician_id"`
+			TotalCents     int     `json:"total_cents"`
+			UnitPriceCents int     `json:"unit_price_cents"`
+			UpdatedAt      string  `json:"updated_at"`
+		} `json:"line_items"`
+		Name          string  `json:"name"`
+		Ordinal       int     `json:"ordinal"`
+		PartsCents    int     `json:"parts_cents"`
+		PricingMode   string  `json:"pricing_mode"`
+		ServiceType   string  `json:"service_type"`
+		StartedAt     *string `json:"started_at"`
+		SubletCents   int     `json:"sublet_cents"`
+		TaxTotalCents int     `json:"tax_total_cents"`
+		TechnicianId  *int    `json:"technician_id"`
+		TiresCents    int     `json:"tires_cents"`
+		TotalCents    int     `json:"total_cents"`
+		UpdatedAt     string  `json:"updated_at"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListWorkOrderServicesResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListWorkOrderServicesResponse) GetJSON200() *[]struct {
+	AuthorizationStatus string  `json:"authorization_status"`
+	AuthorizedAt        *string `json:"authorized_at"`
+	CategoryId          *int    `json:"category_id"`
+	CompletedAt         *string `json:"completed_at"`
+	CreatedAt           string  `json:"created_at"`
+	CustomerNotes       *string `json:"customer_notes"`
+	DiscountCents       int     `json:"discount_cents"`
+	EstimatedHours      string  `json:"estimated_hours"`
+	FeesCents           int     `json:"fees_cents"`
+	Id                  int     `json:"id"`
+	LaborCents          int     `json:"labor_cents"`
+	LineItems           []struct {
+		Completed      bool    `json:"completed"`
+		CreatedAt      string  `json:"created_at"`
+		Description    string  `json:"description"`
+		Hours          string  `json:"hours"`
+		Id             int     `json:"id"`
+		IsTaxable      bool    `json:"is_taxable"`
+		IsWarranty     bool    `json:"is_warranty"`
+		ItemType       string  `json:"item_type"`
+		LaborRateId    *int    `json:"labor_rate_id"`
+		Notes          *string `json:"notes"`
+		PricingMode    string  `json:"pricing_mode"`
+		Quantity       string  `json:"quantity"`
+		RateCents      int     `json:"rate_cents"`
+		TaxTotalCents  int     `json:"tax_total_cents"`
+		TechnicianId   *int    `json:"technician_id"`
+		TotalCents     int     `json:"total_cents"`
+		UnitPriceCents int     `json:"unit_price_cents"`
+		UpdatedAt      string  `json:"updated_at"`
+	} `json:"line_items"`
+	Name          string  `json:"name"`
+	Ordinal       int     `json:"ordinal"`
+	PartsCents    int     `json:"parts_cents"`
+	PricingMode   string  `json:"pricing_mode"`
+	ServiceType   string  `json:"service_type"`
+	StartedAt     *string `json:"started_at"`
+	SubletCents   int     `json:"sublet_cents"`
+	TaxTotalCents int     `json:"tax_total_cents"`
+	TechnicianId  *int    `json:"technician_id"`
+	TiresCents    int     `json:"tires_cents"`
+	TotalCents    int     `json:"total_cents"`
+	UpdatedAt     string  `json:"updated_at"`
+} {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListWorkOrderServicesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListWorkOrderServicesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListWorkOrderServicesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListWorkOrderServicesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateWorkOrdersServiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -77659,6 +79281,36 @@ func (c *ClientWithResponses) ListInventoryLevelsBarcodeLookupWithResponse(ctx c
 	return ParseListInventoryLevelsBarcodeLookupResponse(rsp)
 }
 
+// CreateInventoryLevelExtractionWithBodyWithResponse create
+//
+// Create a inventory level extraction.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+func (c *ClientWithResponses) CreateInventoryLevelExtractionWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error) {
+	rsp, err := c.CreateInventoryLevelExtractionWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateInventoryLevelExtractionResponse(rsp)
+}
+
+// CreateInventoryLevelExtractionWithResponse create
+//
+// Create a inventory level extraction.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
+func (c *ClientWithResponses) CreateInventoryLevelExtractionWithResponse(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error) {
+	rsp, err := c.CreateInventoryLevelExtraction(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateInventoryLevelExtractionResponse(rsp)
+}
+
 // ShowInventoryLevelWithResponse show
 //
 // Show a inventory level by ID.
@@ -79840,6 +81492,21 @@ func (c *ClientWithResponses) ListReportsServiceCategoriesWithResponse(ctx conte
 	return ParseListReportsServiceCategoriesResponse(rsp)
 }
 
+// ListReportsStatementsWithResponse index
+//
+// List all reports statements, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /reports/statements (the `ListReportsStatements` operationId).
+func (c *ClientWithResponses) ListReportsStatementsWithResponse(ctx context.Context, params *ListReportsStatementsParams, reqEditors ...RequestEditorFn) (*ListReportsStatementsResponse, error) {
+	rsp, err := c.ListReportsStatements(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListReportsStatementsResponse(rsp)
+}
+
 // ListReportsStoreCreditWithResponse show
 //
 // List all reports store credit, paginated via the Link header.
@@ -79853,6 +81520,81 @@ func (c *ClientWithResponses) ListReportsStoreCreditWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseListReportsStoreCreditResponse(rsp)
+}
+
+// ListReportsTaxPeriodsWithResponse index
+//
+// List all reports tax periods, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /reports/tax_periods (the `ListReportsTaxPeriods` operationId).
+func (c *ClientWithResponses) ListReportsTaxPeriodsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListReportsTaxPeriodsResponse, error) {
+	rsp, err := c.ListReportsTaxPeriods(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListReportsTaxPeriodsResponse(rsp)
+}
+
+// CreateReportsTaxPeriodWithBodyWithResponse create
+//
+// Create a reports tax period.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+func (c *ClientWithResponses) CreateReportsTaxPeriodWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReportsTaxPeriodResponse, error) {
+	rsp, err := c.CreateReportsTaxPeriodWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateReportsTaxPeriodResponse(rsp)
+}
+
+// CreateReportsTaxPeriodWithResponse create
+//
+// Create a reports tax period.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /reports/tax_periods (the `CreateReportsTaxPeriod` operationId).
+func (c *ClientWithResponses) CreateReportsTaxPeriodWithResponse(ctx context.Context, body CreateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReportsTaxPeriodResponse, error) {
+	rsp, err := c.CreateReportsTaxPeriod(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateReportsTaxPeriodResponse(rsp)
+}
+
+// UpdateReportsTaxPeriodWithBodyWithResponse update
+//
+// Update a reports tax period by ID.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+func (c *ClientWithResponses) UpdateReportsTaxPeriodWithBodyWithResponse(ctx context.Context, id int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReportsTaxPeriodResponse, error) {
+	rsp, err := c.UpdateReportsTaxPeriodWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReportsTaxPeriodResponse(rsp)
+}
+
+// UpdateReportsTaxPeriodWithResponse update
+//
+// Update a reports tax period by ID.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /reports/tax_periods/{id} (the `UpdateReportsTaxPeriod` operationId).
+func (c *ClientWithResponses) UpdateReportsTaxPeriodWithResponse(ctx context.Context, id int, body UpdateReportsTaxPeriodJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReportsTaxPeriodResponse, error) {
+	rsp, err := c.UpdateReportsTaxPeriod(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReportsTaxPeriodResponse(rsp)
 }
 
 // ListReportsTechnicianProductivityWithResponse show
@@ -80602,6 +82344,36 @@ func (c *ClientWithResponses) UpdateSubletPackagesDeactivateWithResponse(ctx con
 		return nil, err
 	}
 	return ParseUpdateSubletPackagesDeactivateResponse(rsp)
+}
+
+// CreateWorkOrderTechAssignmentWithBodyWithResponse create
+//
+// Create a work order tech assignment.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+func (c *ClientWithResponses) CreateWorkOrderTechAssignmentWithBodyWithResponse(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrderTechAssignmentResponse, error) {
+	rsp, err := c.CreateWorkOrderTechAssignmentWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderTechAssignmentResponse(rsp)
+}
+
+// CreateWorkOrderTechAssignmentWithResponse create
+//
+// Create a work order tech assignment.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /tech_assignments (the `CreateWorkOrderTechAssignment` operationId).
+func (c *ClientWithResponses) CreateWorkOrderTechAssignmentWithResponse(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrderTechAssignmentResponse, error) {
+	rsp, err := c.CreateWorkOrderTechAssignment(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkOrderTechAssignmentResponse(rsp)
 }
 
 // ListTireEventsWithResponse index
@@ -82907,7 +84679,7 @@ func (c *ClientWithResponses) CreateWorkOrdersPaymentLinkSendWithResponse(ctx co
 	return ParseCreateWorkOrdersPaymentLinkSendResponse(rsp)
 }
 
-// ShowWorkOrderPaymentsWithResponse show
+// ShowWorkOrderPaymentsWithResponse index
 //
 // Show a work order payments by ID.
 //
@@ -83169,6 +84941,21 @@ func (c *ClientWithResponses) CreateWorkOrdersRefundWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseCreateWorkOrdersRefundResponse(rsp)
+}
+
+// ListWorkOrderServicesWithResponse index
+//
+// List all work order services, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /work_orders/{work_order_id}/services (the `ListWorkOrderServices` operationId).
+func (c *ClientWithResponses) ListWorkOrderServicesWithResponse(ctx context.Context, workOrderId int, reqEditors ...RequestEditorFn) (*ListWorkOrderServicesResponse, error) {
+	rsp, err := c.ListWorkOrderServices(ctx, workOrderId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListWorkOrderServicesResponse(rsp)
 }
 
 // CreateWorkOrdersServiceWithBodyWithResponse create
@@ -89930,6 +91717,53 @@ func ParseListInventoryLevelsBarcodeLookupResponse(rsp *http.Response) (*ListInv
 	return response, nil
 }
 
+// ParseCreateInventoryLevelExtractionResponse parses an HTTP response from a CreateInventoryLevelExtractionWithResponse call
+func ParseCreateInventoryLevelExtractionResponse(rsp *http.Response) (*CreateInventoryLevelExtractionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateInventoryLevelExtractionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest struct {
+			Status   string `json:"status"`
+			StreamId string `json:"stream_id"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseShowInventoryLevelResponse parses an HTTP response from a ShowInventoryLevelWithResponse call
 func ParseShowInventoryLevelResponse(rsp *http.Response) (*ShowInventoryLevelResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -94582,6 +96416,95 @@ func ParseListReportsServiceCategoriesResponse(rsp *http.Response) (*ListReports
 	return response, nil
 }
 
+// ParseListReportsStatementsResponse parses an HTTP response from a ListReportsStatementsWithResponse call
+func ParseListReportsStatementsResponse(rsp *http.Response) (*ListReportsStatementsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListReportsStatementsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl    string `json:"app_url"`
+			CreatedAt string `json:"created_at"`
+			Customer  struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			DueDate         string  `json:"due_date"`
+			EndDate         string  `json:"end_date"`
+			Id              int     `json:"id"`
+			SentAt          *string `json:"sent_at"`
+			StartDate       string  `json:"start_date"`
+			StatementDate   string  `json:"statement_date"`
+			StatementNumber string  `json:"statement_number"`
+			Status          string  `json:"status"`
+			Totals          struct {
+				BalanceDueCents       int    `json:"balance_due_cents"`
+				CreditsCents          int    `json:"credits_cents"`
+				Currency              string `json:"currency"`
+				NewChargesCents       int    `json:"new_charges_cents"`
+				PaymentsReceivedCents int    `json:"payments_received_cents"`
+				PreviousBalanceCents  int    `json:"previous_balance_cents"`
+			} `json:"totals"`
+			UpdatedAt string  `json:"updated_at"`
+			Url       string  `json:"url"`
+			ViewedAt  *string `json:"viewed_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListReportsStatementsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseListReportsStoreCreditResponse parses an HTTP response from a ListReportsStoreCreditWithResponse call
 func ParseListReportsStoreCreditResponse(rsp *http.Response) (*ListReportsStoreCreditResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -94618,6 +96541,192 @@ func ParseListReportsStoreCreditResponse(rsp *http.Response) (*ListReportsStoreC
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListReportsTaxPeriodsResponse parses an HTTP response from a ListReportsTaxPeriodsWithResponse call
+func ParseListReportsTaxPeriodsResponse(rsp *http.Response) (*ListReportsTaxPeriodsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListReportsTaxPeriodsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AppUrl    string `json:"app_url"`
+			CreatedAt string `json:"created_at"`
+			Id        int    `json:"id"`
+			Location  struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			MarkedRemitted  bool        `json:"marked_remitted"`
+			Notes           *string     `json:"notes"`
+			PeriodEnd       string      `json:"period_end"`
+			PeriodStart     string      `json:"period_start"`
+			RemittedDate    string      `json:"remitted_date"`
+			TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+			Totals          struct {
+				Currency          string `json:"currency"`
+				TaxCollectedCents int    `json:"tax_collected_cents"`
+			} `json:"totals"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListReportsTaxPeriodsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseCreateReportsTaxPeriodResponse parses an HTTP response from a CreateReportsTaxPeriodWithResponse call
+func ParseCreateReportsTaxPeriodResponse(rsp *http.Response) (*CreateReportsTaxPeriodResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateReportsTaxPeriodResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AppUrl    string `json:"app_url"`
+			CreatedAt string `json:"created_at"`
+			Id        int    `json:"id"`
+			Location  struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			MarkedRemitted  bool        `json:"marked_remitted"`
+			Notes           *string     `json:"notes"`
+			PeriodEnd       string      `json:"period_end"`
+			PeriodStart     string      `json:"period_start"`
+			RemittedDate    string      `json:"remitted_date"`
+			TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+			Totals          struct {
+				Currency          string `json:"currency"`
+				TaxCollectedCents int    `json:"tax_collected_cents"`
+			} `json:"totals"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateReportsTaxPeriodResponse parses an HTTP response from a UpdateReportsTaxPeriodWithResponse call
+func ParseUpdateReportsTaxPeriodResponse(rsp *http.Response) (*UpdateReportsTaxPeriodResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateReportsTaxPeriodResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			AppUrl    string `json:"app_url"`
+			CreatedAt string `json:"created_at"`
+			Id        int    `json:"id"`
+			Location  struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			MarkedRemitted  bool        `json:"marked_remitted"`
+			Notes           *string     `json:"notes"`
+			PeriodEnd       string      `json:"period_end"`
+			PeriodStart     string      `json:"period_start"`
+			RemittedDate    string      `json:"remitted_date"`
+			TaxJurisdiction interface{} `json:"tax_jurisdiction"`
+			Totals          struct {
+				Currency          string `json:"currency"`
+				TaxCollectedCents int    `json:"tax_collected_cents"`
+			} `json:"totals"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
@@ -95906,6 +98015,152 @@ func ParseUpdateSubletPackagesDeactivateResponse(rsp *http.Response) (*UpdateSub
 			return nil, err
 		}
 		response.JSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateWorkOrderTechAssignmentResponse parses an HTTP response from a CreateWorkOrderTechAssignmentWithResponse call
+func ParseCreateWorkOrderTechAssignmentResponse(rsp *http.Response) (*CreateWorkOrderTechAssignmentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkOrderTechAssignmentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest struct {
+			ActivityTotal        int     `json:"activity_total"`
+			ActivityUrl          string  `json:"activity_url"`
+			AppUrl               string  `json:"app_url"`
+			AppointmentsUrl      string  `json:"appointments_url"`
+			AssignedTechnicianId int     `json:"assigned_technician_id"`
+			AuthorizationLogsUrl string  `json:"authorization_logs_url"`
+			Authorized           bool    `json:"authorized"`
+			AuthorizedAt         *string `json:"authorized_at"`
+			AuthorizedTotalCents int     `json:"authorized_total_cents"`
+			AverageTicketCents   int     `json:"average_ticket_cents"`
+			ClosedAt             *string `json:"closed_at"`
+			ClosureReason        *string `json:"closure_reason"`
+			ClosureReasonNotes   *string `json:"closure_reason_notes"`
+			CompletedAt          *string `json:"completed_at"`
+			ConcernsUrl          string  `json:"concerns_url"`
+			CreatedAt            string  `json:"created_at"`
+			CreditBalanceCents   int     `json:"credit_balance_cents"`
+			Customer             struct {
+				DisplayName string `json:"display_name"`
+				FullName    string `json:"full_name"`
+				Id          int    `json:"id"`
+				Url         string `json:"url"`
+			} `json:"customer"`
+			CustomerNotified             bool    `json:"customer_notified"`
+			CustomerNotifiedReady        bool    `json:"customer_notified_ready"`
+			CustomerTotalSpendCents      int     `json:"customer_total_spend_cents"`
+			CustomerVisitCount           int     `json:"customer_visit_count"`
+			DeclineReason                *string `json:"decline_reason"`
+			DeclinedAt                   *string `json:"declined_at"`
+			DeclinedServicesUrl          string  `json:"declined_services_url"`
+			DiscountCents                int     `json:"discount_cents"`
+			FeesCents                    int     `json:"fees_cents"`
+			Id                           int     `json:"id"`
+			InspectionReportsCount       int     `json:"inspection_reports_count"`
+			InspectionUrl                string  `json:"inspection_url"`
+			InspectionsVisibleToCustomer bool    `json:"inspections_visible_to_customer"`
+			IntakeMethod                 string  `json:"intake_method"`
+			LaborCents                   int     `json:"labor_cents"`
+			Location                     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			LocationId          int     `json:"location_id"`
+			Notes               *string `json:"notes"`
+			OdometerIn          *int    `json:"odometer_in"`
+			OdometerOut         *int    `json:"odometer_out"`
+			OdometerUnit        string  `json:"odometer_unit"`
+			Paid                bool    `json:"paid"`
+			PartsCents          int     `json:"parts_cents"`
+			PartsUrl            string  `json:"parts_url"`
+			PayerCustomerId     *int    `json:"payer_customer_id"`
+			PaymentsUrl         string  `json:"payments_url"`
+			PurchaseOrderNumber *string `json:"purchase_order_number"`
+			ReadyForPickupAt    *string `json:"ready_for_pickup_at"`
+			RecentActivities    []struct {
+				Category    string `json:"category"`
+				CreatedAt   string `json:"created_at"`
+				Description string `json:"description"`
+				Id          int    `json:"id"`
+			} `json:"recent_activities"`
+			ReturnMethod              string  `json:"return_method"`
+			ReturnMethodNotes         *string `json:"return_method_notes"`
+			SavedForLater             bool    `json:"saved_for_later"`
+			ScheduledFor              *string `json:"scheduled_for"`
+			ServiceAdvisorId          *int    `json:"service_advisor_id"`
+			ServiceHistoryUrl         string  `json:"service_history_url"`
+			ServicesUrl               string  `json:"services_url"`
+			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
+			Status                    string  `json:"status"`
+			SubStatusTypeId           *int    `json:"sub_status_type_id"`
+			SubcontractsCents         int     `json:"subcontracts_cents"`
+			TiresCents                int     `json:"tires_cents"`
+			Totals                    struct {
+				Currency       string `json:"currency"`
+				PaidCents      int    `json:"paid_cents"`
+				RemainingCents int    `json:"remaining_cents"`
+				SubtotalCents  int    `json:"subtotal_cents"`
+				TaxCents       int    `json:"tax_cents"`
+				TotalCents     int    `json:"total_cents"`
+			} `json:"totals"`
+			Type      string `json:"type"`
+			UpdatedAt string `json:"updated_at"`
+			Url       string `json:"url"`
+			Vehicle   struct {
+				DisplayName  string `json:"display_name"`
+				Id           int    `json:"id"`
+				LicensePlate string `json:"license_plate"`
+				Make         string `json:"make"`
+				Model        string `json:"model"`
+				Url          string `json:"url"`
+				Vin          string `json:"vin"`
+				Year         int    `json:"year"`
+			} `json:"vehicle"`
+			VehicleArrivedAt       *string `json:"vehicle_arrived_at"`
+			VehicleHistoryUrl      string  `json:"vehicle_history_url"`
+			VehicleKeysLocation    string  `json:"vehicle_keys_location"`
+			VehicleLocation        string  `json:"vehicle_location"`
+			WipUrl                 string  `json:"wip_url"`
+			WorkOrderNumber        int     `json:"work_order_number"`
+			WorkOrderServicesCount int     `json:"work_order_services_count"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
 
 	}
 
@@ -102368,6 +104623,103 @@ func ParseCreateWorkOrdersRefundResponse(rsp *http.Response) (*CreateWorkOrdersR
 		}
 		response.JSON201 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseListWorkOrderServicesResponse parses an HTTP response from a ListWorkOrderServicesWithResponse call
+func ParseListWorkOrderServicesResponse(rsp *http.Response) (*ListWorkOrderServicesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListWorkOrderServicesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []struct {
+			AuthorizationStatus string  `json:"authorization_status"`
+			AuthorizedAt        *string `json:"authorized_at"`
+			CategoryId          *int    `json:"category_id"`
+			CompletedAt         *string `json:"completed_at"`
+			CreatedAt           string  `json:"created_at"`
+			CustomerNotes       *string `json:"customer_notes"`
+			DiscountCents       int     `json:"discount_cents"`
+			EstimatedHours      string  `json:"estimated_hours"`
+			FeesCents           int     `json:"fees_cents"`
+			Id                  int     `json:"id"`
+			LaborCents          int     `json:"labor_cents"`
+			LineItems           []struct {
+				Completed      bool    `json:"completed"`
+				CreatedAt      string  `json:"created_at"`
+				Description    string  `json:"description"`
+				Hours          string  `json:"hours"`
+				Id             int     `json:"id"`
+				IsTaxable      bool    `json:"is_taxable"`
+				IsWarranty     bool    `json:"is_warranty"`
+				ItemType       string  `json:"item_type"`
+				LaborRateId    *int    `json:"labor_rate_id"`
+				Notes          *string `json:"notes"`
+				PricingMode    string  `json:"pricing_mode"`
+				Quantity       string  `json:"quantity"`
+				RateCents      int     `json:"rate_cents"`
+				TaxTotalCents  int     `json:"tax_total_cents"`
+				TechnicianId   *int    `json:"technician_id"`
+				TotalCents     int     `json:"total_cents"`
+				UnitPriceCents int     `json:"unit_price_cents"`
+				UpdatedAt      string  `json:"updated_at"`
+			} `json:"line_items"`
+			Name          string  `json:"name"`
+			Ordinal       int     `json:"ordinal"`
+			PartsCents    int     `json:"parts_cents"`
+			PricingMode   string  `json:"pricing_mode"`
+			ServiceType   string  `json:"service_type"`
+			StartedAt     *string `json:"started_at"`
+			SubletCents   int     `json:"sublet_cents"`
+			TaxTotalCents int     `json:"tax_total_cents"`
+			TechnicianId  *int    `json:"technician_id"`
+			TiresCents    int     `json:"tires_cents"`
+			TotalCents    int     `json:"total_cents"`
+			UpdatedAt     string  `json:"updated_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListWorkOrderServicesResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
 	}
 
 	return response, nil

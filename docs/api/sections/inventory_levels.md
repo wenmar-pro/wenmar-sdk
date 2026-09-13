@@ -44,6 +44,30 @@ List all inventory levels barcode lookup, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/barcode_lookup.json
 ```
 
+## Create inventory level extraction
+
+```
+POST /inventory_levels/extractions
+```
+
+Create a inventory level extraction.
+
+**Response 202**
+
+| Field | Type | Required |
+|---|---|---|
+| `status` | string | Yes |
+| `stream_id` | string | Yes |
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/extractions.json
+```
+
 ## Show inventory level
 
 ```
@@ -188,6 +212,15 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
+
+---
+
+### CreateInventoryLevelExtractionRequest schema {#createinventorylevelextractionrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `text` | string | Yes |
+| `extraction_id` | string | Yes |
 
 ---
 

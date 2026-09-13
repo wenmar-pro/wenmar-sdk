@@ -147,7 +147,15 @@ module EnrichSpec
     "post /users/permission_groups"             => "create_permission_group",
     "get /users/permission_groups/{id}"         => "show_permission_group",
     "patch /users/permission_groups/{id}"       => "update_permission_group",
-    "delete /users/permission_groups/{id}"       => "delete_permission_group"
+    "delete /users/permission_groups/{id}"       => "delete_permission_group",
+    # Phase A additions (2026-09-12 parity review).
+    "get /work_orders/{work_order_id}/services" => "list_work_order_services",
+    "post /inventory_levels/extractions"        => "create_inventory_level_extraction",
+    "post /tech_assignments"                    => "create_work_order_tech_assignment",
+    "get /reports/statements"                   => "list_reports_statements",
+    "get /reports/tax_periods"                  => "list_reports_tax_periods",
+    "post /reports/tax_periods"                 => "create_reports_tax_period",
+    "patch /reports/tax_periods/{id}"           => "update_reports_tax_period"
   }.freeze
 
   def self.call(input)
