@@ -219,7 +219,19 @@ module EnrichSpec
     apply_example_overrides!(spec)
     apply_overlays!(spec)
 
+    sort_deterministically!(spec)
+
     spec
+  end
+
+  # Emits paths and component schemas in a stable order so the enriched spec
+  # (and everything downstream) does not depend on the upstream YAML document
+  # order of spec/openapi.yaml. This keeps generated artifacts byte-stable even
+  # if the Rails CI reorders paths between pushes.
+  def self.sort_deterministically!(spec)
+    spec["paths"] = spec["paths"].sort.to_h if spec["paths"]
+    schemas = spec.dig("components", "schemas")
+    spec["components"]["schemas"] = schemas.sort.to_h if schemas
   end
 
   # Applies the simplified OpenAPI Overlay files in overlays/*.yaml to the

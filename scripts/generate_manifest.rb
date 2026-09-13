@@ -121,7 +121,7 @@ operations = SPEC.fetch("paths", {}).flat_map do |path, methods|
       "summary" => operation["summary"]
     }
   end
-end
+end.sort_by { |op| op["id"] }
 
 File.write(OUT_PATH, JSON.pretty_generate(
                         "version" => MANIFEST_VERSION,

@@ -7,71 +7,207 @@ import (
 	"context"
 )
 
-// DeleteAccount runs the delete_account operation (DELETE /account).
-func (c *Client) DeleteAccount(ctx context.Context) (*DeleteAccountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAccount"})
-	resp, err := c.gen.DeleteAccountWithResponse(ctx)
+// ArchiveCustomer runs the archive_customer operation (PATCH /customers/{id}/archive).
+func (c *Client) ArchiveCustomer(ctx context.Context, id int, body ArchiveCustomerRequest) (*ArchiveCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveCustomer"})
+	resp, err := c.gen.ArchiveCustomerWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer"})
 	return resp, nil
 }
 
-// ListAccount runs the list_account operation (GET /account).
-func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccount"})
-	resp, err := c.gen.ListAccountWithResponse(ctx)
+// ArchiveInspection runs the archive_inspection operation (PATCH /inspections/{id}/archive).
+func (c *Client) ArchiveInspection(ctx context.Context, id int, body ArchiveInspectionRequest) (*ArchiveInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveInspection"})
+	resp, err := c.gen.ArchiveInspectionWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection"})
 	return resp, nil
 }
 
-// UpdateAccount runs the update_account operation (PATCH /account).
-func (c *Client) UpdateAccount(ctx context.Context, body UpdateAccountRequest) (*UpdateAccountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateAccount"})
-	resp, err := c.gen.UpdateAccountWithResponse(ctx, body)
+// ArchiveLaborRate runs the archive_labor_rate operation (PATCH /labor_rates/{id}/archive).
+func (c *Client) ArchiveLaborRate(ctx context.Context, id int, body ArchiveLaborRateRequest) (*ArchiveLaborRateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveLaborRate"})
+	resp, err := c.gen.ArchiveLaborRateWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate"})
 	return resp, nil
 }
 
-// ListAccountApiTokens runs the list_account_api_tokens operation (GET /account/api_tokens).
-func (c *Client) ListAccountApiTokens(ctx context.Context) (*ListAccountApiTokensResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountApiTokens"})
-	resp, err := c.gen.ListAccountApiTokensWithResponse(ctx)
+// ArchivePackage runs the archive_package operation (PATCH /packages/{id}/archive).
+func (c *Client) ArchivePackage(ctx context.Context, id int, body ArchivePackageRequest) (*ArchivePackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchivePackage"})
+	resp, err := c.gen.ArchivePackageWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage"})
+	return resp, nil
+}
+
+// ArchiveServiceCategory runs the archive_service_category operation (PATCH /service_categories/{id}/archive).
+func (c *Client) ArchiveServiceCategory(ctx context.Context, id int, body ArchiveServiceCategoryRequest) (*ArchiveServiceCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveServiceCategory"})
+	resp, err := c.gen.ArchiveServiceCategoryWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory"})
+	return resp, nil
+}
+
+// ArchiveVehicle runs the archive_vehicle operation (PATCH /vehicles/{id}/archive).
+func (c *Client) ArchiveVehicle(ctx context.Context, id int, body ArchiveVehicleRequest) (*ArchiveVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVehicle"})
+	resp, err := c.gen.ArchiveVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle"})
+	return resp, nil
+}
+
+// ArchiveVendor runs the archive_vendor operation (PATCH /vendors/{id}/archive).
+func (c *Client) ArchiveVendor(ctx context.Context, id int, body ArchiveVendorRequest) (*ArchiveVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVendor"})
+	resp, err := c.gen.ArchiveVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor"})
+	return resp, nil
+}
+
+// CheckCustomerDuplicate runs the check_customer_duplicate operation (GET /customers/check_duplicate).
+func (c *Client) CheckCustomerDuplicate(ctx context.Context, params *CheckCustomerDuplicateParams) (*CheckCustomerDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"})
+	resp, err := c.gen.CheckCustomerDuplicateWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate"})
+	return resp, nil
+}
+
+// CheckVehicleDuplicate runs the check_vehicle_duplicate operation (GET /vehicles/check_duplicate).
+func (c *Client) CheckVehicleDuplicate(ctx context.Context, params *CheckVehicleDuplicateParams) (*CheckVehicleDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"})
+	resp, err := c.gen.CheckVehicleDuplicateWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate"})
+	return resp, nil
+}
+
+// CloseWorkOrder runs the close_work_order operation (POST /work_orders/{id}/close).
+func (c *Client) CloseWorkOrder(ctx context.Context, id int, body CloseWorkOrderRequest) (*CloseWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CloseWorkOrder"})
+	resp, err := c.gen.CloseWorkOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder"})
+	return resp, nil
+}
+
+// CompleteInspectionReport runs the complete_inspection_report operation (PATCH /inspection_reports/{id}/complete).
+func (c *Client) CompleteInspectionReport(ctx context.Context, id int, body CompleteInspectionReportRequest) (*CompleteInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CompleteInspectionReport"})
+	resp, err := c.gen.CompleteInspectionReportWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport"})
+	return resp, nil
+}
+
+// CompleteWorkOrder runs the complete_work_order operation (POST /work_orders/{id}/complete).
+func (c *Client) CompleteWorkOrder(ctx context.Context, id int, body CompleteWorkOrderRequest) (*CompleteWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CompleteWorkOrder"})
+	resp, err := c.gen.CompleteWorkOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder"})
 	return resp, nil
 }
 
@@ -92,142 +228,6 @@ func (c *Client) CreateAccountApiToken(ctx context.Context, body CreateAccountAp
 	return resp, nil
 }
 
-// DeleteAccountApiToken runs the delete_account_api_token operation (DELETE /account/api_tokens/{id}).
-func (c *Client) DeleteAccountApiToken(ctx context.Context, id int) (*DeleteAccountApiTokenResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAccountApiToken"})
-	resp, err := c.gen.DeleteAccountApiTokenWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken"})
-	return resp, nil
-}
-
-// ListAccountBilling runs the list_account_billing operation (GET /account/billing).
-func (c *Client) ListAccountBilling(ctx context.Context) (*ListAccountBillingResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountBilling"})
-	resp, err := c.gen.ListAccountBillingWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling"})
-	return resp, nil
-}
-
-// ListAccountCapabilities runs the list_account_capabilities operation (GET /account/capabilities).
-func (c *Client) ListAccountCapabilities(ctx context.Context) (*ListAccountCapabilitiesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountCapabilities"})
-	resp, err := c.gen.ListAccountCapabilitiesWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities"})
-	return resp, nil
-}
-
-// ListAccountDriveon runs the list_account_driveon operation (GET /account/driveon).
-func (c *Client) ListAccountDriveon(ctx context.Context) (*ListAccountDriveonResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountDriveon"})
-	resp, err := c.gen.ListAccountDriveonWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon"})
-	return resp, nil
-}
-
-// ListAccountPayments runs the list_account_payments operation (GET /account/payments).
-func (c *Client) ListAccountPayments(ctx context.Context) (*ListAccountPaymentsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountPayments"})
-	resp, err := c.gen.ListAccountPaymentsWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments"})
-	return resp, nil
-}
-
-// ListAccountPhoneNumbers runs the list_account_phone_numbers operation (GET /account/phone_numbers).
-func (c *Client) ListAccountPhoneNumbers(ctx context.Context) (*ListAccountPhoneNumbersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"})
-	resp, err := c.gen.ListAccountPhoneNumbersWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers"})
-	return resp, nil
-}
-
-// ListAccountQuickbooks runs the list_account_quickbooks operation (GET /account/quickbooks).
-func (c *Client) ListAccountQuickbooks(ctx context.Context) (*ListAccountQuickbooksResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountQuickbooks"})
-	resp, err := c.gen.ListAccountQuickbooksWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks"})
-	return resp, nil
-}
-
-// ListAccountStationLink runs the list_account_station_link operation (GET /account/station_link).
-func (c *Client) ListAccountStationLink(ctx context.Context) (*ListAccountStationLinkResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountStationLink"})
-	resp, err := c.gen.ListAccountStationLinkWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink"})
-	return resp, nil
-}
-
 // CreateAccountStationLinkRegenerate runs the create_account_station_link_regenerate operation (POST /account/station_link/regenerate).
 func (c *Client) CreateAccountStationLinkRegenerate(ctx context.Context, body CreateAccountStationLinkRegenerateRequest) (*CreateAccountStationLinkRegenerateResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateAccountStationLinkRegenerate"})
@@ -245,23 +245,6 @@ func (c *Client) CreateAccountStationLinkRegenerate(ctx context.Context, body Cr
 	return resp, nil
 }
 
-// ListAppointmentsRaw runs the list_appointments operation (GET /appointments).
-func (c *Client) ListAppointmentsRaw(ctx context.Context, params *ListAppointmentsParams) (*ListAppointmentsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAppointments"})
-	resp, err := c.gen.ListAppointmentsWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments"})
-	return resp, nil
-}
-
 // CreateAppointment runs the create_appointment operation (POST /appointments).
 func (c *Client) CreateAppointment(ctx context.Context, body CreateAppointmentRequest) (*CreateAppointmentResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateAppointment"})
@@ -276,74 +259,6 @@ func (c *Client) CreateAppointment(ctx context.Context, body CreateAppointmentRe
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateAppointment"}, OperationResult{Operation: "CreateAppointment"})
-	return resp, nil
-}
-
-// ListAppointmentsAvailableSlots runs the list_appointments_available_slots operation (GET /appointments/available_slots).
-func (c *Client) ListAppointmentsAvailableSlots(ctx context.Context, params *ListAppointmentsAvailableSlotsParams) (*ListAppointmentsAvailableSlotsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"})
-	resp, err := c.gen.ListAppointmentsAvailableSlotsWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots"})
-	return resp, nil
-}
-
-// DeleteAppointment runs the delete_appointment operation (DELETE /appointments/{id}).
-func (c *Client) DeleteAppointment(ctx context.Context, id int) (*DeleteAppointmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAppointment"})
-	resp, err := c.gen.DeleteAppointmentWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment"})
-	return resp, nil
-}
-
-// ShowAppointment runs the show_appointment operation (GET /appointments/{id}).
-func (c *Client) ShowAppointment(ctx context.Context, id int) (*ShowAppointmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowAppointment"})
-	resp, err := c.gen.ShowAppointmentWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment"})
-	return resp, nil
-}
-
-// UpdateAppointment runs the update_appointment operation (PATCH /appointments/{id}).
-func (c *Client) UpdateAppointment(ctx context.Context, id int, body UpdateAppointmentRequest) (*UpdateAppointmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateAppointment"})
-	resp, err := c.gen.UpdateAppointmentWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment"})
 	return resp, nil
 }
 
@@ -466,57 +381,6 @@ func (c *Client) CreateCalendarBlockedTime(ctx context.Context, body CreateCalen
 	return resp, nil
 }
 
-// DeleteCalendarBlockedTime runs the delete_calendar_blocked_time operation (DELETE /calendar/blocked_times/{id}).
-func (c *Client) DeleteCalendarBlockedTime(ctx context.Context, id int) (*DeleteCalendarBlockedTimeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"})
-	resp, err := c.gen.DeleteCalendarBlockedTimeWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime"})
-	return resp, nil
-}
-
-// UpdateCalendarBlockedTime runs the update_calendar_blocked_time operation (PATCH /calendar/blocked_times/{id}).
-func (c *Client) UpdateCalendarBlockedTime(ctx context.Context, id int, body UpdateCalendarBlockedTimeRequest) (*UpdateCalendarBlockedTimeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"})
-	resp, err := c.gen.UpdateCalendarBlockedTimeWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime"})
-	return resp, nil
-}
-
-// ListCampaignsRaw runs the list_campaigns operation (GET /campaigns).
-func (c *Client) ListCampaignsRaw(ctx context.Context) (*ListCampaignsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCampaigns"})
-	resp, err := c.gen.ListCampaignsWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns"})
-	return resp, nil
-}
-
 // CreateCampaign runs the create_campaign operation (POST /campaigns).
 func (c *Client) CreateCampaign(ctx context.Context, body CreateCampaignRequest) (*CreateCampaignResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCampaign"})
@@ -531,57 +395,6 @@ func (c *Client) CreateCampaign(ctx context.Context, body CreateCampaignRequest)
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCampaign"}, OperationResult{Operation: "CreateCampaign"})
-	return resp, nil
-}
-
-// ShowCampaign runs the show_campaign operation (GET /campaigns/{id}).
-func (c *Client) ShowCampaign(ctx context.Context, id int) (*ShowCampaignResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCampaign"})
-	resp, err := c.gen.ShowCampaignWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign"})
-	return resp, nil
-}
-
-// DuplicateCampaign runs the duplicate_campaign operation (POST /campaigns/{id}/duplicate).
-func (c *Client) DuplicateCampaign(ctx context.Context, id int, body DuplicateCampaignRequest) (*DuplicateCampaignResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DuplicateCampaign"})
-	resp, err := c.gen.DuplicateCampaignWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign"})
-	return resp, nil
-}
-
-// SendCampaign runs the send_campaign operation (POST /campaigns/{id}/send_campaign).
-func (c *Client) SendCampaign(ctx context.Context, id int, body SendCampaignRequest) (*SendCampaignResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SendCampaign"})
-	resp, err := c.gen.SendCampaignWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign"})
 	return resp, nil
 }
 
@@ -602,23 +415,6 @@ func (c *Client) CreateCashDrawerSession(ctx context.Context, body CreateCashDra
 	return resp, nil
 }
 
-// ListCashEntries runs the list_cash_entries operation (GET /cash_entries).
-func (c *Client) ListCashEntries(ctx context.Context, params *ListCashEntriesParams) (*ListCashEntriesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCashEntries"})
-	resp, err := c.gen.ListCashEntriesWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries"})
-	return resp, nil
-}
-
 // CreateCashEntry runs the create_cash_entry operation (POST /cash_entries).
 func (c *Client) CreateCashEntry(ctx context.Context, body CreateCashEntryRequest) (*CreateCashEntryResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCashEntry"})
@@ -633,57 +429,6 @@ func (c *Client) CreateCashEntry(ctx context.Context, body CreateCashEntryReques
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCashEntry"}, OperationResult{Operation: "CreateCashEntry"})
-	return resp, nil
-}
-
-// DeleteCashEntry runs the delete_cash_entry operation (DELETE /cash_entries/{id}).
-func (c *Client) DeleteCashEntry(ctx context.Context, id int) (*DeleteCashEntryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCashEntry"})
-	resp, err := c.gen.DeleteCashEntryWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry"})
-	return resp, nil
-}
-
-// ShowCashEntry runs the show_cash_entry operation (GET /cash_entries/{id}).
-func (c *Client) ShowCashEntry(ctx context.Context, id int) (*ShowCashEntryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCashEntry"})
-	resp, err := c.gen.ShowCashEntryWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry"})
-	return resp, nil
-}
-
-// ListConversationsRaw runs the list_conversations operation (GET /conversations).
-func (c *Client) ListConversationsRaw(ctx context.Context) (*ListConversationsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListConversations"})
-	resp, err := c.gen.ListConversationsWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations"})
 	return resp, nil
 }
 
@@ -755,23 +500,6 @@ func (c *Client) CreateConversationsIgnore(ctx context.Context, conversationId i
 	return resp, nil
 }
 
-// ListConversationsMessages runs the list_conversations_messages operation (GET /conversations/{conversation_id}/messages).
-func (c *Client) ListConversationsMessages(ctx context.Context, conversationId int) (*ListConversationsMessagesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListConversationsMessages"})
-	resp, err := c.gen.ListConversationsMessagesWithResponse(ctx, conversationId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages"})
-	return resp, nil
-}
-
 // CreateConversationsMessage runs the create_conversations_message operation (POST /conversations/{conversation_id}/messages).
 func (c *Client) CreateConversationsMessage(ctx context.Context, conversationId int, body CreateConversationsMessageRequest) (*CreateConversationsMessageResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateConversationsMessage"})
@@ -786,91 +514,6 @@ func (c *Client) CreateConversationsMessage(ctx context.Context, conversationId 
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateConversationsMessage"}, OperationResult{Operation: "CreateConversationsMessage"})
-	return resp, nil
-}
-
-// ShowConversation runs the show_conversation operation (GET /conversations/{id}).
-func (c *Client) ShowConversation(ctx context.Context, id int) (*ShowConversationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowConversation"})
-	resp, err := c.gen.ShowConversationWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation"})
-	return resp, nil
-}
-
-// UpdateConversation runs the update_conversation operation (PATCH /conversations/{id}).
-func (c *Client) UpdateConversation(ctx context.Context, id int, body UpdateConversationRequest) (*UpdateConversationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateConversation"})
-	resp, err := c.gen.UpdateConversationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation"})
-	return resp, nil
-}
-
-// ListCoreTaxRulesRaw runs the list_core_tax_rules operation (GET /core_tax_rules).
-func (c *Client) ListCoreTaxRulesRaw(ctx context.Context) (*ListCoreTaxRulesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCoreTaxRules"})
-	resp, err := c.gen.ListCoreTaxRulesWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules"})
-	return resp, nil
-}
-
-// UpdateCoreTaxRule runs the update_core_tax_rule operation (PATCH /core_tax_rules/{id}).
-func (c *Client) UpdateCoreTaxRule(ctx context.Context, id int, body UpdateCoreTaxRuleRequest) (*UpdateCoreTaxRuleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"})
-	resp, err := c.gen.UpdateCoreTaxRuleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule"})
-	return resp, nil
-}
-
-// ListCounterSalesRaw runs the list_counter_sales operation (GET /counter_sales).
-func (c *Client) ListCounterSalesRaw(ctx context.Context) (*ListCounterSalesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCounterSales"})
-	resp, err := c.gen.ListCounterSalesWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales"})
 	return resp, nil
 }
 
@@ -908,57 +551,6 @@ func (c *Client) CreateCounterSalesLineItem(ctx context.Context, counterSaleId i
 	return resp, nil
 }
 
-// ListCounterSalesLineItemsBrands runs the list_counter_sales_line_items_brands operation (GET /counter_sales/{counter_sale_id}/line_items/brands).
-func (c *Client) ListCounterSalesLineItemsBrands(ctx context.Context, counterSaleId int) (*ListCounterSalesLineItemsBrandsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"})
-	resp, err := c.gen.ListCounterSalesLineItemsBrandsWithResponse(ctx, counterSaleId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands"})
-	return resp, nil
-}
-
-// DeleteCounterSalesLineItem runs the delete_counter_sales_line_item operation (DELETE /counter_sales/{counter_sale_id}/line_items/{id}).
-func (c *Client) DeleteCounterSalesLineItem(ctx context.Context, counterSaleId int, id int) (*DeleteCounterSalesLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"})
-	resp, err := c.gen.DeleteCounterSalesLineItemWithResponse(ctx, counterSaleId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem"})
-	return resp, nil
-}
-
-// UpdateCounterSalesLineItem runs the update_counter_sales_line_item operation (PATCH /counter_sales/{counter_sale_id}/line_items/{id}).
-func (c *Client) UpdateCounterSalesLineItem(ctx context.Context, counterSaleId int, id int, body UpdateCounterSalesLineItemRequest) (*UpdateCounterSalesLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"})
-	resp, err := c.gen.UpdateCounterSalesLineItemWithResponse(ctx, counterSaleId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem"})
-	return resp, nil
-}
-
 // CreateCounterSalesPayment runs the create_counter_sales_payment operation (POST /counter_sales/{counter_sale_id}/payments).
 func (c *Client) CreateCounterSalesPayment(ctx context.Context, counterSaleId int, body CreateCounterSalesPaymentRequest) (*CreateCounterSalesPaymentResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCounterSalesPayment"})
@@ -973,227 +565,6 @@ func (c *Client) CreateCounterSalesPayment(ctx context.Context, counterSaleId in
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCounterSalesPayment"}, OperationResult{Operation: "CreateCounterSalesPayment"})
-	return resp, nil
-}
-
-// ShowCounterSale runs the show_counter_sale operation (GET /counter_sales/{id}).
-func (c *Client) ShowCounterSale(ctx context.Context, id int) (*ShowCounterSaleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCounterSale"})
-	resp, err := c.gen.ShowCounterSaleWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale"})
-	return resp, nil
-}
-
-// UpdateCounterSale runs the update_counter_sale operation (PATCH /counter_sales/{id}).
-func (c *Client) UpdateCounterSale(ctx context.Context, id int, body UpdateCounterSaleRequest) (*UpdateCounterSaleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSale"})
-	resp, err := c.gen.UpdateCounterSaleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale"})
-	return resp, nil
-}
-
-// UpdateCounterSalesReopen runs the update_counter_sales_reopen operation (PATCH /counter_sales/{id}/reopen).
-func (c *Client) UpdateCounterSalesReopen(ctx context.Context, id int, body UpdateCounterSalesReopenRequest) (*UpdateCounterSalesReopenResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"})
-	resp, err := c.gen.UpdateCounterSalesReopenWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen"})
-	return resp, nil
-}
-
-// ListCurrentLocation runs the list_current_location operation (GET /current_location).
-func (c *Client) ListCurrentLocation(ctx context.Context) (*ListCurrentLocationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCurrentLocation"})
-	resp, err := c.gen.ListCurrentLocationWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation"})
-	return resp, nil
-}
-
-// UpdateCurrentLocation runs the update_current_location operation (PATCH /current_location).
-func (c *Client) UpdateCurrentLocation(ctx context.Context, body UpdateCurrentLocationRequest) (*UpdateCurrentLocationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCurrentLocation"})
-	resp, err := c.gen.UpdateCurrentLocationWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation"})
-	return resp, nil
-}
-
-// ListCustomerTagsRaw runs the list_customer_tags operation (GET /customer_tags).
-func (c *Client) ListCustomerTagsRaw(ctx context.Context, params *ListCustomerTagsParams) (*ListCustomerTagsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomerTags"})
-	resp, err := c.gen.ListCustomerTagsWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags"})
-	return resp, nil
-}
-
-// CreateCustomerTag runs the create_customer_tag operation (POST /customer_tags).
-func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagRequest) (*CreateCustomerTagResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCustomerTag"})
-	resp, err := c.gen.CreateCustomerTagWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag"})
-	return resp, nil
-}
-
-// ShowCustomerTag runs the show_customer_tag operation (GET /customer_tags/{id}).
-func (c *Client) ShowCustomerTag(ctx context.Context, id int) (*ShowCustomerTagResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomerTag"})
-	resp, err := c.gen.ShowCustomerTagWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag"})
-	return resp, nil
-}
-
-// UpdateCustomerTag runs the update_customer_tag operation (PATCH /customer_tags/{id}).
-func (c *Client) UpdateCustomerTag(ctx context.Context, id int, body UpdateCustomerTagRequest) (*UpdateCustomerTagResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTag"})
-	resp, err := c.gen.UpdateCustomerTagWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag"})
-	return resp, nil
-}
-
-// UpdateCustomerTagsArchive runs the update_customer_tags_archive operation (PATCH /customer_tags/{id}/archive).
-func (c *Client) UpdateCustomerTagsArchive(ctx context.Context, id int, body UpdateCustomerTagsArchiveRequest) (*UpdateCustomerTagsArchiveResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"})
-	resp, err := c.gen.UpdateCustomerTagsArchiveWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive"})
-	return resp, nil
-}
-
-// UpdateCustomerTagsRestore runs the update_customer_tags_restore operation (PATCH /customer_tags/{id}/restore).
-func (c *Client) UpdateCustomerTagsRestore(ctx context.Context, id int, body UpdateCustomerTagsRestoreRequest) (*UpdateCustomerTagsRestoreResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"})
-	resp, err := c.gen.UpdateCustomerTagsRestoreWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore"})
-	return resp, nil
-}
-
-// UpdateCustomerTagsTrash runs the update_customer_tags_trash operation (PATCH /customer_tags/{id}/trash).
-func (c *Client) UpdateCustomerTagsTrash(ctx context.Context, id int, body UpdateCustomerTagsTrashRequest) (*UpdateCustomerTagsTrashResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"})
-	resp, err := c.gen.UpdateCustomerTagsTrashWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash"})
-	return resp, nil
-}
-
-// ListCustomersRaw runs the list_customers operation (GET /customers).
-func (c *Client) ListCustomersRaw(ctx context.Context, params *ListCustomersParams) (*ListCustomersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
-	resp, err := c.gen.ListCustomersWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
 	return resp, nil
 }
 
@@ -1214,37 +585,20 @@ func (c *Client) CreateCustomer(ctx context.Context, body CreateCustomerRequest)
 	return resp, nil
 }
 
-// CheckCustomerDuplicate runs the check_customer_duplicate operation (GET /customers/check_duplicate).
-func (c *Client) CheckCustomerDuplicate(ctx context.Context, params *CheckCustomerDuplicateParams) (*CheckCustomerDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"})
-	resp, err := c.gen.CheckCustomerDuplicateWithResponse(ctx, params)
+// CreateCustomerTag runs the create_customer_tag operation (POST /customer_tags).
+func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagRequest) (*CreateCustomerTagResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCustomerTag"})
+	resp, err := c.gen.CreateCustomerTagWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckCustomerDuplicate"}, OperationResult{Operation: "CheckCustomerDuplicate"})
-	return resp, nil
-}
-
-// ListCustomersDriversRaw runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
-func (c *Client) ListCustomersDriversRaw(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersDrivers"})
-	resp, err := c.gen.ListCustomersDriversWithResponse(ctx, customerId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomerTag"}, OperationResult{Operation: "CreateCustomerTag"})
 	return resp, nil
 }
 
@@ -1265,6 +619,1638 @@ func (c *Client) CreateDriver(ctx context.Context, customerId int, body CreateDr
 	return resp, nil
 }
 
+// CreateExpense runs the create_expense operation (POST /expenses).
+func (c *Client) CreateExpense(ctx context.Context, body CreateExpenseRequest) (*CreateExpenseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateExpense"})
+	resp, err := c.gen.CreateExpenseWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense"})
+	return resp, nil
+}
+
+// CreateInspection runs the create_inspection operation (POST /inspections).
+func (c *Client) CreateInspection(ctx context.Context, body CreateInspectionRequest) (*CreateInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspection"})
+	resp, err := c.gen.CreateInspectionWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection"})
+	return resp, nil
+}
+
+// CreateInspectionReport runs the create_inspection_report operation (POST /inspection_reports).
+func (c *Client) CreateInspectionReport(ctx context.Context, params *CreateInspectionReportParams, body CreateInspectionReportRequest) (*CreateInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionReport"})
+	resp, err := c.gen.CreateInspectionReportWithResponse(ctx, params, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport"})
+	return resp, nil
+}
+
+// CreateInspectionsGroup runs the create_inspections_group operation (POST /inspections/{inspection_id}/groups).
+func (c *Client) CreateInspectionsGroup(ctx context.Context, inspectionId int, body CreateInspectionsGroupRequest) (*CreateInspectionsGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsGroup"})
+	resp, err := c.gen.CreateInspectionsGroupWithResponse(ctx, inspectionId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup"})
+	return resp, nil
+}
+
+// CreateInspectionsItem runs the create_inspections_item operation (POST /inspections/{inspection_id}/items).
+func (c *Client) CreateInspectionsItem(ctx context.Context, inspectionId int, body CreateInspectionsItemRequest) (*CreateInspectionsItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsItem"})
+	resp, err := c.gen.CreateInspectionsItemWithResponse(ctx, inspectionId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem"})
+	return resp, nil
+}
+
+// CreateInspectionsPreset runs the create_inspections_preset operation (POST /inspections/{inspection_id}/presets).
+func (c *Client) CreateInspectionsPreset(ctx context.Context, inspectionId int, params *CreateInspectionsPresetParams, body CreateInspectionsPresetRequest) (*CreateInspectionsPresetResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsPreset"})
+	resp, err := c.gen.CreateInspectionsPresetWithResponse(ctx, inspectionId, params, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset"})
+	return resp, nil
+}
+
+// CreateInventoryLevelExtraction runs the create_inventory_level_extraction operation (POST /inventory_levels/extractions).
+func (c *Client) CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionRequest) (*CreateInventoryLevelExtractionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"})
+	resp, err := c.gen.CreateInventoryLevelExtractionWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction"})
+	return resp, nil
+}
+
+// CreateInventoryLevelsAdjust runs the create_inventory_levels_adjust operation (POST /inventory_levels/{id}/adjust).
+func (c *Client) CreateInventoryLevelsAdjust(ctx context.Context, id int, body CreateInventoryLevelsAdjustRequest) (*CreateInventoryLevelsAdjustResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"})
+	resp, err := c.gen.CreateInventoryLevelsAdjustWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust"})
+	return resp, nil
+}
+
+// CreateLaborMatrix runs the create_labor_matrix operation (POST /labor_matrices).
+func (c *Client) CreateLaborMatrix(ctx context.Context, body CreateLaborMatrixRequest) (*CreateLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborMatrix"})
+	resp, err := c.gen.CreateLaborMatrixWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix"})
+	return resp, nil
+}
+
+// CreateLaborRate runs the create_labor_rate operation (POST /labor_rates).
+func (c *Client) CreateLaborRate(ctx context.Context, body CreateLaborRateRequest) (*CreateLaborRateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborRate"})
+	resp, err := c.gen.CreateLaborRateWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate"})
+	return resp, nil
+}
+
+// CreateLeadSource runs the create_lead_source operation (POST /lead_sources).
+func (c *Client) CreateLeadSource(ctx context.Context, body CreateLeadSourceRequest) (*CreateLeadSourceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLeadSource"})
+	resp, err := c.gen.CreateLeadSourceWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource"})
+	return resp, nil
+}
+
+// CreateLeadSourcesSeedDefault runs the create_lead_sources_seed_default operation (POST /lead_sources/seed_defaults).
+func (c *Client) CreateLeadSourcesSeedDefault(ctx context.Context, body CreateLeadSourcesSeedDefaultRequest) (*CreateLeadSourcesSeedDefaultResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"})
+	resp, err := c.gen.CreateLeadSourcesSeedDefaultWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault"})
+	return resp, nil
+}
+
+// CreateMessagesResend runs the create_messages_resend operation (POST /messages/{message_id}/resends).
+func (c *Client) CreateMessagesResend(ctx context.Context, messageId int, body CreateMessagesResendRequest) (*CreateMessagesResendResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateMessagesResend"})
+	resp, err := c.gen.CreateMessagesResendWithResponse(ctx, messageId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend"})
+	return resp, nil
+}
+
+// CreateNotificationsBulkMarkRead runs the create_notifications_bulk_mark_read operation (POST /notifications/bulk_mark_read).
+func (c *Client) CreateNotificationsBulkMarkRead(ctx context.Context, body CreateNotificationsBulkMarkReadRequest) (*CreateNotificationsBulkMarkReadResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"})
+	resp, err := c.gen.CreateNotificationsBulkMarkReadWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead"})
+	return resp, nil
+}
+
+// CreateOrdersPurchaseOrder runs the create_orders_purchase_order operation (POST /orders/purchase_orders).
+func (c *Client) CreateOrdersPurchaseOrder(ctx context.Context, body CreateOrdersPurchaseOrderRequest) (*CreateOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"})
+	resp, err := c.gen.CreateOrdersPurchaseOrderWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// CreateOrdersPurchaseOrdersCancellation runs the create_orders_purchase_orders_cancellation operation (POST /orders/purchase_orders/{purchase_order_id}/cancellations).
+func (c *Client) CreateOrdersPurchaseOrdersCancellation(ctx context.Context, purchaseOrderId int, body CreateOrdersPurchaseOrdersCancellationRequest) (*CreateOrdersPurchaseOrdersCancellationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"})
+	resp, err := c.gen.CreateOrdersPurchaseOrdersCancellationWithResponse(ctx, purchaseOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation"})
+	return resp, nil
+}
+
+// CreateOrdersReturnOrdersRefundCompletion runs the create_orders_return_orders_refund_completion operation (POST /orders/return_orders/{return_order_id}/refund_completions).
+func (c *Client) CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionRequest) (*CreateOrdersReturnOrdersRefundCompletionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"})
+	resp, err := c.gen.CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx, returnOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion"})
+	return resp, nil
+}
+
+// CreatePackage runs the create_package operation (POST /packages).
+func (c *Client) CreatePackage(ctx context.Context, body CreatePackageRequest) (*CreatePackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePackage"})
+	resp, err := c.gen.CreatePackageWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage"})
+	return resp, nil
+}
+
+// CreatePackagesDuplicate runs the create_packages_duplicate operation (POST /packages/{id}/duplicate).
+func (c *Client) CreatePackagesDuplicate(ctx context.Context, id int, body CreatePackagesDuplicateRequest) (*CreatePackagesDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"})
+	resp, err := c.gen.CreatePackagesDuplicateWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate"})
+	return resp, nil
+}
+
+// CreatePart runs the create_part operation (POST /parts).
+func (c *Client) CreatePart(ctx context.Context, body CreatePartRequest) (*CreatePartResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePart"})
+	resp, err := c.gen.CreatePartWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart"})
+	return resp, nil
+}
+
+// CreatePartsMatrix runs the create_parts_matrix operation (POST /parts_matrices).
+func (c *Client) CreatePartsMatrix(ctx context.Context, body CreatePartsMatrixRequest) (*CreatePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePartsMatrix"})
+	resp, err := c.gen.CreatePartsMatrixWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix"})
+	return resp, nil
+}
+
+// CreatePaymentsCancellation runs the create_payments_cancellation operation (POST /payments/{id}/cancellation).
+func (c *Client) CreatePaymentsCancellation(ctx context.Context, id int, body CreatePaymentsCancellationRequest) (*CreatePaymentsCancellationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"})
+	resp, err := c.gen.CreatePaymentsCancellationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation"})
+	return resp, nil
+}
+
+// CreatePaymentsConfirmation runs the create_payments_confirmation operation (POST /payments/{id}/confirmation).
+func (c *Client) CreatePaymentsConfirmation(ctx context.Context, id int, body CreatePaymentsConfirmationRequest) (*CreatePaymentsConfirmationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"})
+	resp, err := c.gen.CreatePaymentsConfirmationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation"})
+	return resp, nil
+}
+
+// CreatePaymentsFailure runs the create_payments_failure operation (POST /payments/{id}/failure).
+func (c *Client) CreatePaymentsFailure(ctx context.Context, id int, body CreatePaymentsFailureRequest) (*CreatePaymentsFailureResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsFailure"})
+	resp, err := c.gen.CreatePaymentsFailureWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure"})
+	return resp, nil
+}
+
+// CreatePermissionGroup runs the create_permission_group operation (POST /users/permission_groups).
+func (c *Client) CreatePermissionGroup(ctx context.Context, body CreatePermissionGroupRequest) (*CreatePermissionGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePermissionGroup"})
+	resp, err := c.gen.CreatePermissionGroupWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup"})
+	return resp, nil
+}
+
+// CreateReportsTaxPeriod runs the create_reports_tax_period operation (POST /reports/tax_periods).
+func (c *Client) CreateReportsTaxPeriod(ctx context.Context, body CreateReportsTaxPeriodRequest) (*CreateReportsTaxPeriodResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"})
+	resp, err := c.gen.CreateReportsTaxPeriodWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod"})
+	return resp, nil
+}
+
+// CreateServiceCategory runs the create_service_category operation (POST /service_categories).
+func (c *Client) CreateServiceCategory(ctx context.Context, body CreateServiceCategoryRequest) (*CreateServiceCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateServiceCategory"})
+	resp, err := c.gen.CreateServiceCategoryWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory"})
+	return resp, nil
+}
+
+// CreateShopDiscount runs the create_shop_discount operation (POST /shop_discounts).
+func (c *Client) CreateShopDiscount(ctx context.Context, body CreateShopDiscountRequest) (*CreateShopDiscountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopDiscount"})
+	resp, err := c.gen.CreateShopDiscountWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount"})
+	return resp, nil
+}
+
+// CreateShopDiscountsDuplicate runs the create_shop_discounts_duplicate operation (POST /shop_discounts/{id}/duplicate).
+func (c *Client) CreateShopDiscountsDuplicate(ctx context.Context, id int, body CreateShopDiscountsDuplicateRequest) (*CreateShopDiscountsDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"})
+	resp, err := c.gen.CreateShopDiscountsDuplicateWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate"})
+	return resp, nil
+}
+
+// CreateShopFee runs the create_shop_fee operation (POST /shop_fees).
+func (c *Client) CreateShopFee(ctx context.Context, body CreateShopFeeRequest) (*CreateShopFeeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopFee"})
+	resp, err := c.gen.CreateShopFeeWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee"})
+	return resp, nil
+}
+
+// CreateShopFeesDuplicate runs the create_shop_fees_duplicate operation (POST /shop_fees/{id}/duplicate).
+func (c *Client) CreateShopFeesDuplicate(ctx context.Context, id int, body CreateShopFeesDuplicateRequest) (*CreateShopFeesDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"})
+	resp, err := c.gen.CreateShopFeesDuplicateWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate"})
+	return resp, nil
+}
+
+// CreateStatementsBulkSend runs the create_statements_bulk_send operation (POST /statements/bulk_send).
+func (c *Client) CreateStatementsBulkSend(ctx context.Context, body CreateStatementsBulkSendRequest) (*CreateStatementsBulkSendResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"})
+	resp, err := c.gen.CreateStatementsBulkSendWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend"})
+	return resp, nil
+}
+
+// CreateStatementsGenerate runs the create_statements_generate operation (POST /statements/generate).
+func (c *Client) CreateStatementsGenerate(ctx context.Context, body CreateStatementsGenerateRequest) (*CreateStatementsGenerateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStatementsGenerate"})
+	resp, err := c.gen.CreateStatementsGenerateWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate"})
+	return resp, nil
+}
+
+// CreateStoreCreditsVoid runs the create_store_credits_void operation (POST /store_credits/{store_credit_id}/voids).
+func (c *Client) CreateStoreCreditsVoid(ctx context.Context, storeCreditId int, body CreateStoreCreditsVoidRequest) (*CreateStoreCreditsVoidResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"})
+	resp, err := c.gen.CreateStoreCreditsVoidWithResponse(ctx, storeCreditId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid"})
+	return resp, nil
+}
+
+// CreateSubStatus runs the create_sub_status operation (POST /sub_statuses).
+func (c *Client) CreateSubStatus(ctx context.Context, body CreateSubStatusRequest) (*CreateSubStatusResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubStatus"})
+	resp, err := c.gen.CreateSubStatusWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus"})
+	return resp, nil
+}
+
+// CreateSubletPackage runs the create_sublet_package operation (POST /sublet_packages).
+func (c *Client) CreateSubletPackage(ctx context.Context, body CreateSubletPackageRequest) (*CreateSubletPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubletPackage"})
+	resp, err := c.gen.CreateSubletPackageWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage"})
+	return resp, nil
+}
+
+// CreateTire runs the create_tire operation (POST /tires).
+func (c *Client) CreateTire(ctx context.Context, body CreateTireRequest) (*CreateTireResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTire"})
+	resp, err := c.gen.CreateTireWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire"})
+	return resp, nil
+}
+
+// CreateTireEvent runs the create_tire_event operation (POST /tire_events).
+func (c *Client) CreateTireEvent(ctx context.Context, body CreateTireEventRequest) (*CreateTireEventResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireEvent"})
+	resp, err := c.gen.CreateTireEventWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent"})
+	return resp, nil
+}
+
+// CreateTireStorageSlot runs the create_tire_storage_slot operation (POST /tire_storage_slots).
+func (c *Client) CreateTireStorageSlot(ctx context.Context, body CreateTireStorageSlotRequest) (*CreateTireStorageSlotResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireStorageSlot"})
+	resp, err := c.gen.CreateTireStorageSlotWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot"})
+	return resp, nil
+}
+
+// CreateTireStorageSlotsCheckOut runs the create_tire_storage_slots_check_out operation (POST /tire_storage_slots/{tire_storage_slot_id}/check_outs).
+func (c *Client) CreateTireStorageSlotsCheckOut(ctx context.Context, tireStorageSlotId int, body CreateTireStorageSlotsCheckOutRequest) (*CreateTireStorageSlotsCheckOutResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"})
+	resp, err := c.gen.CreateTireStorageSlotsCheckOutWithResponse(ctx, tireStorageSlotId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut"})
+	return resp, nil
+}
+
+// CreateUser runs the create_user operation (POST /users).
+func (c *Client) CreateUser(ctx context.Context, body CreateUserRequest) (*CreateUserResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUser"})
+	resp, err := c.gen.CreateUserWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser"})
+	return resp, nil
+}
+
+// CreateUsersDisable runs the create_users_disable operation (POST /users/{id}/disable).
+func (c *Client) CreateUsersDisable(ctx context.Context, id int, body CreateUsersDisableRequest) (*CreateUsersDisableResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersDisable"})
+	resp, err := c.gen.CreateUsersDisableWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable"})
+	return resp, nil
+}
+
+// CreateUsersEnable runs the create_users_enable operation (POST /users/{id}/enable).
+func (c *Client) CreateUsersEnable(ctx context.Context, id int, body CreateUsersEnableRequest) (*CreateUsersEnableResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersEnable"})
+	resp, err := c.gen.CreateUsersEnableWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable"})
+	return resp, nil
+}
+
+// CreateUsersPermissionGroupsAssign runs the create_users_permission_groups_assign operation (POST /users/permission_groups/{id}/assign).
+func (c *Client) CreateUsersPermissionGroupsAssign(ctx context.Context, id int, body CreateUsersPermissionGroupsAssignRequest) (*CreateUsersPermissionGroupsAssignResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"})
+	resp, err := c.gen.CreateUsersPermissionGroupsAssignWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign"})
+	return resp, nil
+}
+
+// CreateUsersResetPin runs the create_users_reset_pin operation (POST /users/{id}/reset_pin).
+func (c *Client) CreateUsersResetPin(ctx context.Context, id int, body CreateUsersResetPinRequest) (*CreateUsersResetPinResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersResetPin"})
+	resp, err := c.gen.CreateUsersResetPinWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin"})
+	return resp, nil
+}
+
+// CreateUsersSendConfirmation runs the create_users_send_confirmation operation (POST /users/{id}/send_confirmation).
+func (c *Client) CreateUsersSendConfirmation(ctx context.Context, id int, body CreateUsersSendConfirmationRequest) (*CreateUsersSendConfirmationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"})
+	resp, err := c.gen.CreateUsersSendConfirmationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation"})
+	return resp, nil
+}
+
+// CreateUsersSendPasswordReset runs the create_users_send_password_reset operation (POST /users/{id}/send_password_reset).
+func (c *Client) CreateUsersSendPasswordReset(ctx context.Context, id int, body CreateUsersSendPasswordResetRequest) (*CreateUsersSendPasswordResetResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"})
+	resp, err := c.gen.CreateUsersSendPasswordResetWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset"})
+	return resp, nil
+}
+
+// CreateUsersUnlock runs the create_users_unlock operation (POST /users/{id}/unlock).
+func (c *Client) CreateUsersUnlock(ctx context.Context, id int, body CreateUsersUnlockRequest) (*CreateUsersUnlockResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersUnlock"})
+	resp, err := c.gen.CreateUsersUnlockWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock"})
+	return resp, nil
+}
+
+// CreateVehicle runs the create_vehicle operation (POST /vehicles).
+func (c *Client) CreateVehicle(ctx context.Context, body CreateVehicleRequest) (*CreateVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateVehicle"})
+	resp, err := c.gen.CreateVehicleWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle"})
+	return resp, nil
+}
+
+// CreateVendor runs the create_vendor operation (POST /vendors).
+func (c *Client) CreateVendor(ctx context.Context, body CreateVendorRequest) (*CreateVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateVendor"})
+	resp, err := c.gen.CreateVendorWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor"})
+	return resp, nil
+}
+
+// CreateWorkOrder runs the create_work_order operation (POST /work_orders).
+func (c *Client) CreateWorkOrder(ctx context.Context, body CreateWorkOrderRequest) (*CreateWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrder"})
+	resp, err := c.gen.CreateWorkOrderWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder"})
+	return resp, nil
+}
+
+// CreateWorkOrderPayment runs the create_work_order_payment operation (POST /work_orders/{work_order_id}/payments).
+func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentRequest) (*CreateWorkOrderPaymentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"})
+	resp, err := c.gen.CreateWorkOrderPaymentWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment"})
+	return resp, nil
+}
+
+// CreateWorkOrderTag runs the create_work_order_tag operation (POST /work_order_tags).
+func (c *Client) CreateWorkOrderTag(ctx context.Context, body CreateWorkOrderTagRequest) (*CreateWorkOrderTagResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderTag"})
+	resp, err := c.gen.CreateWorkOrderTagWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag"})
+	return resp, nil
+}
+
+// CreateWorkOrderTechAssignment runs the create_work_order_tech_assignment operation (POST /tech_assignments).
+func (c *Client) CreateWorkOrderTechAssignment(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentRequest) (*CreateWorkOrderTechAssignmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"})
+	resp, err := c.gen.CreateWorkOrderTechAssignmentWithResponse(ctx, params, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment"})
+	return resp, nil
+}
+
+// CreateWorkOrdersActivityLog runs the create_work_orders_activity_log operation (POST /work_orders/{work_order_id}/activity_logs).
+func (c *Client) CreateWorkOrdersActivityLog(ctx context.Context, workOrderId int, body CreateWorkOrdersActivityLogRequest) (*CreateWorkOrdersActivityLogResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"})
+	resp, err := c.gen.CreateWorkOrdersActivityLogWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog"})
+	return resp, nil
+}
+
+// CreateWorkOrdersAuthorization runs the create_work_orders_authorization operation (POST /work_orders/{work_order_id}/authorizations).
+func (c *Client) CreateWorkOrdersAuthorization(ctx context.Context, workOrderId int, body CreateWorkOrdersAuthorizationRequest) (*CreateWorkOrdersAuthorizationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"})
+	resp, err := c.gen.CreateWorkOrdersAuthorizationWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization"})
+	return resp, nil
+}
+
+// CreateWorkOrdersAuthorizationDecision runs the create_work_orders_authorization_decision operation (POST /work_orders/{work_order_id}/authorization_decisions).
+func (c *Client) CreateWorkOrdersAuthorizationDecision(ctx context.Context, workOrderId int, body CreateWorkOrdersAuthorizationDecisionRequest) (*CreateWorkOrdersAuthorizationDecisionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"})
+	resp, err := c.gen.CreateWorkOrdersAuthorizationDecisionWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision"})
+	return resp, nil
+}
+
+// CreateWorkOrdersConcern runs the create_work_orders_concern operation (POST /work_orders/{work_order_id}/concerns).
+func (c *Client) CreateWorkOrdersConcern(ctx context.Context, workOrderId int, body CreateWorkOrdersConcernRequest) (*CreateWorkOrdersConcernResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"})
+	resp, err := c.gen.CreateWorkOrdersConcernWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern"})
+	return resp, nil
+}
+
+// CreateWorkOrdersConcernsAddPackage runs the create_work_orders_concerns_add_package operation (POST /work_orders/{work_order_id}/concerns/{id}/add_package).
+func (c *Client) CreateWorkOrdersConcernsAddPackage(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersConcernsAddPackageRequest) (*CreateWorkOrdersConcernsAddPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"})
+	resp, err := c.gen.CreateWorkOrdersConcernsAddPackageWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage"})
+	return resp, nil
+}
+
+// CreateWorkOrdersConcernsCopyAllToEstimate runs the create_work_orders_concerns_copy_all_to_estimate operation (POST /work_orders/{work_order_id}/concerns/copy_all_to_estimate).
+func (c *Client) CreateWorkOrdersConcernsCopyAllToEstimate(ctx context.Context, workOrderId int, body CreateWorkOrdersConcernsCopyAllToEstimateRequest) (*CreateWorkOrdersConcernsCopyAllToEstimateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"})
+	resp, err := c.gen.CreateWorkOrdersConcernsCopyAllToEstimateWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"})
+	return resp, nil
+}
+
+// CreateWorkOrdersConcernsCopyToEstimate runs the create_work_orders_concerns_copy_to_estimate operation (POST /work_orders/{work_order_id}/concerns/{id}/copy_to_estimate).
+func (c *Client) CreateWorkOrdersConcernsCopyToEstimate(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersConcernsCopyToEstimateRequest) (*CreateWorkOrdersConcernsCopyToEstimateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"})
+	resp, err := c.gen.CreateWorkOrdersConcernsCopyToEstimateWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate"})
+	return resp, nil
+}
+
+// CreateWorkOrdersCourtesyCarAssignment runs the create_work_orders_courtesy_car_assignment operation (POST /work_orders/{id}/courtesy_car_assignment).
+func (c *Client) CreateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body CreateWorkOrdersCourtesyCarAssignmentRequest) (*CreateWorkOrdersCourtesyCarAssignmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"})
+	resp, err := c.gen.CreateWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment"})
+	return resp, nil
+}
+
+// CreateWorkOrdersCreditResolution runs the create_work_orders_credit_resolution operation (POST /work_orders/{work_order_id}/credit_resolution).
+func (c *Client) CreateWorkOrdersCreditResolution(ctx context.Context, workOrderId int, body CreateWorkOrdersCreditResolutionRequest) (*CreateWorkOrdersCreditResolutionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"})
+	resp, err := c.gen.CreateWorkOrdersCreditResolutionWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution"})
+	return resp, nil
+}
+
+// CreateWorkOrdersFeeExclusion runs the create_work_orders_fee_exclusion operation (POST /work_orders/{work_order_id}/fee_exclusions).
+func (c *Client) CreateWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionRequest) (*CreateWorkOrdersFeeExclusionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"})
+	resp, err := c.gen.CreateWorkOrdersFeeExclusionWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion"})
+	return resp, nil
+}
+
+// CreateWorkOrdersPaymentLinkSend runs the create_work_orders_payment_link_send operation (POST /work_orders/{work_order_id}/payment_link/send).
+func (c *Client) CreateWorkOrdersPaymentLinkSend(ctx context.Context, workOrderId int, body CreateWorkOrdersPaymentLinkSendRequest) (*CreateWorkOrdersPaymentLinkSendResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"})
+	resp, err := c.gen.CreateWorkOrdersPaymentLinkSendWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend"})
+	return resp, nil
+}
+
+// CreateWorkOrdersPurchaseOrder runs the create_work_orders_purchase_order operation (POST /work_orders/{work_order_id}/purchase_orders).
+func (c *Client) CreateWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, body CreateWorkOrdersPurchaseOrderRequest) (*CreateWorkOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"})
+	resp, err := c.gen.CreateWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// CreateWorkOrdersPurchaseOrdersReceive runs the create_work_orders_purchase_orders_receive operation (POST /work_orders/{work_order_id}/purchase_orders/{id}/receive).
+func (c *Client) CreateWorkOrdersPurchaseOrdersReceive(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersPurchaseOrdersReceiveRequest) (*CreateWorkOrdersPurchaseOrdersReceiveResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"})
+	resp, err := c.gen.CreateWorkOrdersPurchaseOrdersReceiveWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive"})
+	return resp, nil
+}
+
+// CreateWorkOrdersPurchaseOrdersReturn runs the create_work_orders_purchase_orders_return operation (POST /work_orders/{work_order_id}/purchase_orders/{id}/return).
+func (c *Client) CreateWorkOrdersPurchaseOrdersReturn(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersPurchaseOrdersReturnRequest) (*CreateWorkOrdersPurchaseOrdersReturnResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"})
+	resp, err := c.gen.CreateWorkOrdersPurchaseOrdersReturnWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn"})
+	return resp, nil
+}
+
+// CreateWorkOrdersQuickIntake runs the create_work_orders_quick_intake operation (POST /work_orders/quick_intake).
+func (c *Client) CreateWorkOrdersQuickIntake(ctx context.Context, body CreateWorkOrdersQuickIntakeRequest) (*CreateWorkOrdersQuickIntakeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"})
+	resp, err := c.gen.CreateWorkOrdersQuickIntakeWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake"})
+	return resp, nil
+}
+
+// CreateWorkOrdersRefund runs the create_work_orders_refund operation (POST /work_orders/{work_order_id}/refunds).
+func (c *Client) CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundRequest) (*CreateWorkOrdersRefundResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"})
+	resp, err := c.gen.CreateWorkOrdersRefundWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund"})
+	return resp, nil
+}
+
+// CreateWorkOrdersService runs the create_work_orders_service operation (POST /work_orders/{work_order_id}/services).
+func (c *Client) CreateWorkOrdersService(ctx context.Context, workOrderId int, body CreateWorkOrdersServiceRequest) (*CreateWorkOrdersServiceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersService"})
+	resp, err := c.gen.CreateWorkOrdersServiceWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesBulkPull runs the create_work_orders_services_bulk_pull operation (POST /work_orders/{work_order_id}/services/{id}/bulk_pull).
+func (c *Client) CreateWorkOrdersServicesBulkPull(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesBulkPullRequest) (*CreateWorkOrdersServicesBulkPullResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"})
+	resp, err := c.gen.CreateWorkOrdersServicesBulkPullWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesComment runs the create_work_orders_services_comment operation (POST /work_orders/{work_order_id}/services/{service_id}/comments).
+func (c *Client) CreateWorkOrdersServicesComment(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesCommentRequest) (*CreateWorkOrdersServicesCommentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"})
+	resp, err := c.gen.CreateWorkOrdersServicesCommentWithResponse(ctx, workOrderId, serviceId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesCompletion runs the create_work_orders_services_completion operation (POST /work_orders/{work_order_id}/services/{id}/completion).
+func (c *Client) CreateWorkOrdersServicesCompletion(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCompletionRequest) (*CreateWorkOrdersServicesCompletionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"})
+	resp, err := c.gen.CreateWorkOrdersServicesCompletionWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesCopy runs the create_work_orders_services_copy operation (POST /work_orders/{work_order_id}/services/{id}/copies).
+func (c *Client) CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyRequest) (*CreateWorkOrdersServicesCopyResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"})
+	resp, err := c.gen.CreateWorkOrdersServicesCopyWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesExtraction runs the create_work_orders_services_extraction operation (POST /work_orders/{work_order_id}/services/{service_id}/extractions).
+func (c *Client) CreateWorkOrdersServicesExtraction(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionRequest) (*CreateWorkOrdersServicesExtractionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"})
+	resp, err := c.gen.CreateWorkOrdersServicesExtractionWithResponse(ctx, workOrderId, serviceId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesLineItem runs the create_work_orders_services_line_item operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items).
+func (c *Client) CreateWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesLineItemRequest) (*CreateWorkOrdersServicesLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesLineItemsCopy runs the create_work_orders_services_line_items_copy operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
+func (c *Client) CreateWorkOrdersServicesLineItemsCopy(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyRequest) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsCopyWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesLineItemsInventoryAddition runs the create_work_orders_services_line_items_inventory_addition operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions).
+func (c *Client) CreateWorkOrdersServicesLineItemsInventoryAddition(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsInventoryAdditionRequest) (*CreateWorkOrdersServicesLineItemsInventoryAdditionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsInventoryAdditionWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesLineItemsPriceRefresh runs the create_work_orders_services_line_items_price_refresh operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
+func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresh(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshRequest) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesLineItemsReorder runs the create_work_orders_services_line_items_reorder operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/reorder).
+func (c *Client) CreateWorkOrdersServicesLineItemsReorder(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsReorderRequest) (*CreateWorkOrdersServicesLineItemsReorderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"})
+	resp, err := c.gen.CreateWorkOrdersServicesLineItemsReorderWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesPackage runs the create_work_orders_services_package operation (POST /work_orders/{work_order_id}/services/{id}/packages).
+func (c *Client) CreateWorkOrdersServicesPackage(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesPackageRequest) (*CreateWorkOrdersServicesPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"})
+	resp, err := c.gen.CreateWorkOrdersServicesPackageWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesSubletOrder runs the create_work_orders_services_sublet_order operation (POST /work_orders/{work_order_id}/services/{service_id}/sublet_orders).
+func (c *Client) CreateWorkOrdersServicesSubletOrder(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesSubletOrderRequest) (*CreateWorkOrdersServicesSubletOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"})
+	resp, err := c.gen.CreateWorkOrdersServicesSubletOrderWithResponse(ctx, workOrderId, serviceId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesSubletOrdersDuplicate runs the create_work_orders_services_sublet_orders_duplicate operation (POST /work_orders/{work_order_id}/services/{service_id}/sublet_orders/{id}/duplicate).
+func (c *Client) CreateWorkOrdersServicesSubletOrdersDuplicate(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesSubletOrdersDuplicateRequest) (*CreateWorkOrdersServicesSubletOrdersDuplicateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"})
+	resp, err := c.gen.CreateWorkOrdersServicesSubletOrdersDuplicateWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"})
+	return resp, nil
+}
+
+// CreateWorkOrdersServicesTimeEntry runs the create_work_orders_services_time_entry operation (POST /work_orders/{work_order_id}/services/{id}/time_entries).
+func (c *Client) CreateWorkOrdersServicesTimeEntry(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryRequest) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"})
+	resp, err := c.gen.CreateWorkOrdersServicesTimeEntryWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry"})
+	return resp, nil
+}
+
+// CreateWorkOrdersTireStorage runs the create_work_orders_tire_storage operation (POST /work_orders/{work_order_id}/tire_storage).
+func (c *Client) CreateWorkOrdersTireStorage(ctx context.Context, workOrderId int, body CreateWorkOrdersTireStorageRequest) (*CreateWorkOrdersTireStorageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"})
+	resp, err := c.gen.CreateWorkOrdersTireStorageWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage"})
+	return resp, nil
+}
+
+// CreateWorkOrdersVoid runs the create_work_orders_void operation (POST /work_orders/{work_order_id}/voids).
+func (c *Client) CreateWorkOrdersVoid(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidRequest) (*CreateWorkOrdersVoidResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"})
+	resp, err := c.gen.CreateWorkOrdersVoidWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid"})
+	return resp, nil
+}
+
+// DeclineAllWorkOrderConcerns runs the decline_all_work_order_concerns operation (POST /work_orders/{work_order_id}/concerns/decline_all).
+func (c *Client) DeclineAllWorkOrderConcerns(ctx context.Context, workOrderId int, body DeclineAllWorkOrderConcernsRequest) (*DeclineAllWorkOrderConcernsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"})
+	resp, err := c.gen.DeclineAllWorkOrderConcernsWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns"})
+	return resp, nil
+}
+
+// DeclineWorkOrder runs the decline_work_order operation (POST /work_orders/{id}/decline).
+func (c *Client) DeclineWorkOrder(ctx context.Context, id int, body DeclineWorkOrderRequest) (*DeclineWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeclineWorkOrder"})
+	resp, err := c.gen.DeclineWorkOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder"})
+	return resp, nil
+}
+
+// DecodeVin runs the decode_vin operation (GET /vehicles/vin_decode).
+func (c *Client) DecodeVin(ctx context.Context, params *DecodeVinParams) (*DecodeVinResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DecodeVin"})
+	resp, err := c.gen.DecodeVinWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin"})
+	return resp, nil
+}
+
+// DeleteAccount runs the delete_account operation (DELETE /account).
+func (c *Client) DeleteAccount(ctx context.Context) (*DeleteAccountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAccount"})
+	resp, err := c.gen.DeleteAccountWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccount"}, OperationResult{Operation: "DeleteAccount"})
+	return resp, nil
+}
+
+// DeleteAccountApiToken runs the delete_account_api_token operation (DELETE /account/api_tokens/{id}).
+func (c *Client) DeleteAccountApiToken(ctx context.Context, id int) (*DeleteAccountApiTokenResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAccountApiToken"})
+	resp, err := c.gen.DeleteAccountApiTokenWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAccountApiToken"}, OperationResult{Operation: "DeleteAccountApiToken"})
+	return resp, nil
+}
+
+// DeleteAppointment runs the delete_appointment operation (DELETE /appointments/{id}).
+func (c *Client) DeleteAppointment(ctx context.Context, id int) (*DeleteAppointmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteAppointment"})
+	resp, err := c.gen.DeleteAppointmentWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteAppointment"}, OperationResult{Operation: "DeleteAppointment"})
+	return resp, nil
+}
+
+// DeleteCalendarBlockedTime runs the delete_calendar_blocked_time operation (DELETE /calendar/blocked_times/{id}).
+func (c *Client) DeleteCalendarBlockedTime(ctx context.Context, id int) (*DeleteCalendarBlockedTimeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"})
+	resp, err := c.gen.DeleteCalendarBlockedTimeWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCalendarBlockedTime"}, OperationResult{Operation: "DeleteCalendarBlockedTime"})
+	return resp, nil
+}
+
+// DeleteCashEntry runs the delete_cash_entry operation (DELETE /cash_entries/{id}).
+func (c *Client) DeleteCashEntry(ctx context.Context, id int) (*DeleteCashEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCashEntry"})
+	resp, err := c.gen.DeleteCashEntryWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCashEntry"}, OperationResult{Operation: "DeleteCashEntry"})
+	return resp, nil
+}
+
+// DeleteCounterSalesLineItem runs the delete_counter_sales_line_item operation (DELETE /counter_sales/{counter_sale_id}/line_items/{id}).
+func (c *Client) DeleteCounterSalesLineItem(ctx context.Context, counterSaleId int, id int) (*DeleteCounterSalesLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"})
+	resp, err := c.gen.DeleteCounterSalesLineItemWithResponse(ctx, counterSaleId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteCounterSalesLineItem"}, OperationResult{Operation: "DeleteCounterSalesLineItem"})
+	return resp, nil
+}
+
 // DeleteDriver runs the delete_driver operation (DELETE /customers/{customer_id}/drivers/{id}).
 func (c *Client) DeleteDriver(ctx context.Context, customerId int, id int) (*DeleteDriverResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteDriver"})
@@ -1282,37 +2268,904 @@ func (c *Client) DeleteDriver(ctx context.Context, customerId int, id int) (*Del
 	return resp, nil
 }
 
-// ShowDriver runs the show_driver operation (GET /customers/{customer_id}/drivers/{id}).
-func (c *Client) ShowDriver(ctx context.Context, customerId int, id int) (*ShowDriverResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowDriver"})
-	resp, err := c.gen.ShowDriverWithResponse(ctx, customerId, id)
+// DeleteExpense runs the delete_expense operation (DELETE /expenses/{id}).
+func (c *Client) DeleteExpense(ctx context.Context, id int) (*DeleteExpenseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteExpense"})
+	resp, err := c.gen.DeleteExpenseWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense"})
 	return resp, nil
 }
 
-// UpdateDriver runs the update_driver operation (PATCH /customers/{customer_id}/drivers/{id}).
-func (c *Client) UpdateDriver(ctx context.Context, customerId int, id int, body UpdateDriverRequest) (*UpdateDriverResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateDriver"})
-	resp, err := c.gen.UpdateDriverWithResponse(ctx, customerId, id, body)
+// DeleteInspectionReport runs the delete_inspection_report operation (DELETE /inspection_reports/{id}).
+func (c *Client) DeleteInspectionReport(ctx context.Context, id int) (*DeleteInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionReport"})
+	resp, err := c.gen.DeleteInspectionReportWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport"})
+	return resp, nil
+}
+
+// DeleteInspectionsGroup runs the delete_inspections_group operation (DELETE /inspections/{inspection_id}/groups/{id}).
+func (c *Client) DeleteInspectionsGroup(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"})
+	resp, err := c.gen.DeleteInspectionsGroupWithResponse(ctx, inspectionId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup"})
+	return resp, nil
+}
+
+// DeleteInspectionsItem runs the delete_inspections_item operation (DELETE /inspections/{inspection_id}/items/{id}).
+func (c *Client) DeleteInspectionsItem(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsItem"})
+	resp, err := c.gen.DeleteInspectionsItemWithResponse(ctx, inspectionId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem"})
+	return resp, nil
+}
+
+// DeleteInspectionsPreset runs the delete_inspections_preset operation (DELETE /inspections/{inspection_id}/presets/{id}).
+func (c *Client) DeleteInspectionsPreset(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsPresetResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"})
+	resp, err := c.gen.DeleteInspectionsPresetWithResponse(ctx, inspectionId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset"})
+	return resp, nil
+}
+
+// DeleteLaborMatrix runs the delete_labor_matrix operation (DELETE /labor_matrices/{id}).
+func (c *Client) DeleteLaborMatrix(ctx context.Context, id int) (*DeleteLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborMatrix"})
+	resp, err := c.gen.DeleteLaborMatrixWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix"})
+	return resp, nil
+}
+
+// DeleteLaborTemplate runs the delete_labor_template operation (DELETE /labor_templates/{id}).
+func (c *Client) DeleteLaborTemplate(ctx context.Context, id int) (*DeleteLaborTemplateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborTemplate"})
+	resp, err := c.gen.DeleteLaborTemplateWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate"})
+	return resp, nil
+}
+
+// DeleteLeadSource runs the delete_lead_source operation (DELETE /lead_sources/{id}).
+func (c *Client) DeleteLeadSource(ctx context.Context, id int) (*DeleteLeadSourceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLeadSource"})
+	resp, err := c.gen.DeleteLeadSourceWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource"})
+	return resp, nil
+}
+
+// DeleteOrdersPurchaseOrder runs the delete_orders_purchase_order operation (DELETE /orders/purchase_orders/{id}).
+func (c *Client) DeleteOrdersPurchaseOrder(ctx context.Context, id int) (*DeleteOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"})
+	resp, err := c.gen.DeleteOrdersPurchaseOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// DeleteOrdersReturnOrder runs the delete_orders_return_order operation (DELETE /orders/return_orders/{id}).
+func (c *Client) DeleteOrdersReturnOrder(ctx context.Context, id int) (*DeleteOrdersReturnOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"})
+	resp, err := c.gen.DeleteOrdersReturnOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder"})
+	return resp, nil
+}
+
+// DeletePart runs the delete_part operation (DELETE /parts/{id}).
+func (c *Client) DeletePart(ctx context.Context, id int) (*DeletePartResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePart"})
+	resp, err := c.gen.DeletePartWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart"})
+	return resp, nil
+}
+
+// DeletePartsMatrix runs the delete_parts_matrix operation (DELETE /parts_matrices/{id}).
+func (c *Client) DeletePartsMatrix(ctx context.Context, id int) (*DeletePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePartsMatrix"})
+	resp, err := c.gen.DeletePartsMatrixWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix"})
+	return resp, nil
+}
+
+// DeleteShopDiscount runs the delete_shop_discount operation (DELETE /shop_discounts/{id}).
+func (c *Client) DeleteShopDiscount(ctx context.Context, id int) (*DeleteShopDiscountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteShopDiscount"})
+	resp, err := c.gen.DeleteShopDiscountWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount"})
+	return resp, nil
+}
+
+// DeleteShopFee runs the delete_shop_fee operation (DELETE /shop_fees/{id}).
+func (c *Client) DeleteShopFee(ctx context.Context, id int) (*DeleteShopFeeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteShopFee"})
+	resp, err := c.gen.DeleteShopFeeWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee"})
+	return resp, nil
+}
+
+// DeleteSubletPackage runs the delete_sublet_package operation (DELETE /sublet_packages/{id}).
+func (c *Client) DeleteSubletPackage(ctx context.Context, id int) (*DeleteSubletPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteSubletPackage"})
+	resp, err := c.gen.DeleteSubletPackageWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage"})
+	return resp, nil
+}
+
+// DeleteTire runs the delete_tire operation (DELETE /tires/{id}).
+func (c *Client) DeleteTire(ctx context.Context, id int) (*DeleteTireResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteTire"})
+	resp, err := c.gen.DeleteTireWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire"})
+	return resp, nil
+}
+
+// DeleteTireStorageSlot runs the delete_tire_storage_slot operation (DELETE /tire_storage_slots/{id}).
+func (c *Client) DeleteTireStorageSlot(ctx context.Context, id int) (*DeleteTireStorageSlotResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"})
+	resp, err := c.gen.DeleteTireStorageSlotWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot"})
+	return resp, nil
+}
+
+// DeleteUser runs the delete_user operation (DELETE /users/{id}).
+func (c *Client) DeleteUser(ctx context.Context, id int) (*DeleteUserResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteUser"})
+	resp, err := c.gen.DeleteUserWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser"})
+	return resp, nil
+}
+
+// DeleteUsersPermissionGroupsUnassign runs the delete_users_permission_groups_unassign operation (DELETE /users/permission_groups/{id}/unassign).
+func (c *Client) DeleteUsersPermissionGroupsUnassign(ctx context.Context, id int, params *DeleteUsersPermissionGroupsUnassignParams) (*DeleteUsersPermissionGroupsUnassignResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"})
+	resp, err := c.gen.DeleteUsersPermissionGroupsUnassignWithResponse(ctx, id, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersConcern runs the delete_work_orders_concern operation (DELETE /work_orders/{work_order_id}/concerns/{id}).
+func (c *Client) DeleteWorkOrdersConcern(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersConcernResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"})
+	resp, err := c.gen.DeleteWorkOrdersConcernWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersCourtesyCarAssignment runs the delete_work_orders_courtesy_car_assignment operation (DELETE /work_orders/{id}/courtesy_car_assignment).
+func (c *Client) DeleteWorkOrdersCourtesyCarAssignment(ctx context.Context, id int) (*DeleteWorkOrdersCourtesyCarAssignmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"})
+	resp, err := c.gen.DeleteWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersFeeExclusion runs the delete_work_orders_fee_exclusion operation (DELETE /work_orders/{work_order_id}/fee_exclusions/{id}).
+func (c *Client) DeleteWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersFeeExclusionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"})
+	resp, err := c.gen.DeleteWorkOrdersFeeExclusionWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersPurchaseOrder runs the delete_work_orders_purchase_order operation (DELETE /work_orders/{work_order_id}/purchase_orders/{id}).
+func (c *Client) DeleteWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"})
+	resp, err := c.gen.DeleteWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersService runs the delete_work_orders_service operation (DELETE /work_orders/{work_order_id}/services/{id}).
+func (c *Client) DeleteWorkOrdersService(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServiceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"})
+	resp, err := c.gen.DeleteWorkOrdersServiceWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersServicesAuthorization runs the delete_work_orders_services_authorization operation (DELETE /work_orders/{work_order_id}/services/{id}/authorization).
+func (c *Client) DeleteWorkOrdersServicesAuthorization(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServicesAuthorizationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"})
+	resp, err := c.gen.DeleteWorkOrdersServicesAuthorizationWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersServicesComment runs the delete_work_orders_services_comment operation (DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id}).
+func (c *Client) DeleteWorkOrdersServicesComment(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesCommentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"})
+	resp, err := c.gen.DeleteWorkOrdersServicesCommentWithResponse(ctx, workOrderId, serviceId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersServicesCompletion runs the delete_work_orders_services_completion operation (DELETE /work_orders/{work_order_id}/services/{id}/completion).
+func (c *Client) DeleteWorkOrdersServicesCompletion(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServicesCompletionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"})
+	resp, err := c.gen.DeleteWorkOrdersServicesCompletionWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersServicesLineItem runs the delete_work_orders_services_line_item operation (DELETE /work_orders/{work_order_id}/services/{service_id}/line_items/{id}).
+func (c *Client) DeleteWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"})
+	resp, err := c.gen.DeleteWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersServicesSubletOrder runs the delete_work_orders_services_sublet_order operation (DELETE /work_orders/{work_order_id}/services/{service_id}/sublet_orders/{id}).
+func (c *Client) DeleteWorkOrdersServicesSubletOrder(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesSubletOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"})
+	resp, err := c.gen.DeleteWorkOrdersServicesSubletOrderWithResponse(ctx, workOrderId, serviceId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder"})
+	return resp, nil
+}
+
+// DeleteWorkOrdersTireStorage runs the delete_work_orders_tire_storage operation (DELETE /work_orders/{work_order_id}/tire_storage/{id}).
+func (c *Client) DeleteWorkOrdersTireStorage(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersTireStorageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"})
+	resp, err := c.gen.DeleteWorkOrdersTireStorageWithResponse(ctx, workOrderId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage"})
+	return resp, nil
+}
+
+// DuplicateCampaign runs the duplicate_campaign operation (POST /campaigns/{id}/duplicate).
+func (c *Client) DuplicateCampaign(ctx context.Context, id int, body DuplicateCampaignRequest) (*DuplicateCampaignResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DuplicateCampaign"})
+	resp, err := c.gen.DuplicateCampaignWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DuplicateCampaign"}, OperationResult{Operation: "DuplicateCampaign"})
+	return resp, nil
+}
+
+// ListAccount runs the list_account operation (GET /account).
+func (c *Client) ListAccount(ctx context.Context) (*ListAccountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccount"})
+	resp, err := c.gen.ListAccountWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccount"}, OperationResult{Operation: "ListAccount"})
+	return resp, nil
+}
+
+// ListAccountApiTokens runs the list_account_api_tokens operation (GET /account/api_tokens).
+func (c *Client) ListAccountApiTokens(ctx context.Context) (*ListAccountApiTokensResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountApiTokens"})
+	resp, err := c.gen.ListAccountApiTokensWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountApiTokens"}, OperationResult{Operation: "ListAccountApiTokens"})
+	return resp, nil
+}
+
+// ListAccountBilling runs the list_account_billing operation (GET /account/billing).
+func (c *Client) ListAccountBilling(ctx context.Context) (*ListAccountBillingResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountBilling"})
+	resp, err := c.gen.ListAccountBillingWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountBilling"}, OperationResult{Operation: "ListAccountBilling"})
+	return resp, nil
+}
+
+// ListAccountCapabilities runs the list_account_capabilities operation (GET /account/capabilities).
+func (c *Client) ListAccountCapabilities(ctx context.Context) (*ListAccountCapabilitiesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountCapabilities"})
+	resp, err := c.gen.ListAccountCapabilitiesWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountCapabilities"}, OperationResult{Operation: "ListAccountCapabilities"})
+	return resp, nil
+}
+
+// ListAccountDriveon runs the list_account_driveon operation (GET /account/driveon).
+func (c *Client) ListAccountDriveon(ctx context.Context) (*ListAccountDriveonResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountDriveon"})
+	resp, err := c.gen.ListAccountDriveonWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountDriveon"}, OperationResult{Operation: "ListAccountDriveon"})
+	return resp, nil
+}
+
+// ListAccountPayments runs the list_account_payments operation (GET /account/payments).
+func (c *Client) ListAccountPayments(ctx context.Context) (*ListAccountPaymentsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountPayments"})
+	resp, err := c.gen.ListAccountPaymentsWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPayments"}, OperationResult{Operation: "ListAccountPayments"})
+	return resp, nil
+}
+
+// ListAccountPhoneNumbers runs the list_account_phone_numbers operation (GET /account/phone_numbers).
+func (c *Client) ListAccountPhoneNumbers(ctx context.Context) (*ListAccountPhoneNumbersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"})
+	resp, err := c.gen.ListAccountPhoneNumbersWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountPhoneNumbers"}, OperationResult{Operation: "ListAccountPhoneNumbers"})
+	return resp, nil
+}
+
+// ListAccountQuickbooks runs the list_account_quickbooks operation (GET /account/quickbooks).
+func (c *Client) ListAccountQuickbooks(ctx context.Context) (*ListAccountQuickbooksResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountQuickbooks"})
+	resp, err := c.gen.ListAccountQuickbooksWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountQuickbooks"}, OperationResult{Operation: "ListAccountQuickbooks"})
+	return resp, nil
+}
+
+// ListAccountStationLink runs the list_account_station_link operation (GET /account/station_link).
+func (c *Client) ListAccountStationLink(ctx context.Context) (*ListAccountStationLinkResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAccountStationLink"})
+	resp, err := c.gen.ListAccountStationLinkWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAccountStationLink"}, OperationResult{Operation: "ListAccountStationLink"})
+	return resp, nil
+}
+
+// ListAppointmentsRaw runs the list_appointments operation (GET /appointments).
+func (c *Client) ListAppointmentsRaw(ctx context.Context, params *ListAppointmentsParams) (*ListAppointmentsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAppointments"})
+	resp, err := c.gen.ListAppointmentsWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointments"}, OperationResult{Operation: "ListAppointments"})
+	return resp, nil
+}
+
+// ListAppointmentsAvailableSlots runs the list_appointments_available_slots operation (GET /appointments/available_slots).
+func (c *Client) ListAppointmentsAvailableSlots(ctx context.Context, params *ListAppointmentsAvailableSlotsParams) (*ListAppointmentsAvailableSlotsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"})
+	resp, err := c.gen.ListAppointmentsAvailableSlotsWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListAppointmentsAvailableSlots"}, OperationResult{Operation: "ListAppointmentsAvailableSlots"})
+	return resp, nil
+}
+
+// ListCampaignsRaw runs the list_campaigns operation (GET /campaigns).
+func (c *Client) ListCampaignsRaw(ctx context.Context) (*ListCampaignsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCampaigns"})
+	resp, err := c.gen.ListCampaignsWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCampaigns"}, OperationResult{Operation: "ListCampaigns"})
+	return resp, nil
+}
+
+// ListCashEntries runs the list_cash_entries operation (GET /cash_entries).
+func (c *Client) ListCashEntries(ctx context.Context, params *ListCashEntriesParams) (*ListCashEntriesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCashEntries"})
+	resp, err := c.gen.ListCashEntriesWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCashEntries"}, OperationResult{Operation: "ListCashEntries"})
+	return resp, nil
+}
+
+// ListConversationsRaw runs the list_conversations operation (GET /conversations).
+func (c *Client) ListConversationsRaw(ctx context.Context) (*ListConversationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListConversations"})
+	resp, err := c.gen.ListConversationsWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversations"}, OperationResult{Operation: "ListConversations"})
+	return resp, nil
+}
+
+// ListConversationsMessages runs the list_conversations_messages operation (GET /conversations/{conversation_id}/messages).
+func (c *Client) ListConversationsMessages(ctx context.Context, conversationId int) (*ListConversationsMessagesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListConversationsMessages"})
+	resp, err := c.gen.ListConversationsMessagesWithResponse(ctx, conversationId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListConversationsMessages"}, OperationResult{Operation: "ListConversationsMessages"})
+	return resp, nil
+}
+
+// ListCoreTaxRulesRaw runs the list_core_tax_rules operation (GET /core_tax_rules).
+func (c *Client) ListCoreTaxRulesRaw(ctx context.Context) (*ListCoreTaxRulesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCoreTaxRules"})
+	resp, err := c.gen.ListCoreTaxRulesWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCoreTaxRules"}, OperationResult{Operation: "ListCoreTaxRules"})
+	return resp, nil
+}
+
+// ListCounterSalesRaw runs the list_counter_sales operation (GET /counter_sales).
+func (c *Client) ListCounterSalesRaw(ctx context.Context) (*ListCounterSalesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCounterSales"})
+	resp, err := c.gen.ListCounterSalesWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSales"}, OperationResult{Operation: "ListCounterSales"})
+	return resp, nil
+}
+
+// ListCounterSalesLineItemsBrands runs the list_counter_sales_line_items_brands operation (GET /counter_sales/{counter_sale_id}/line_items/brands).
+func (c *Client) ListCounterSalesLineItemsBrands(ctx context.Context, counterSaleId int) (*ListCounterSalesLineItemsBrandsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"})
+	resp, err := c.gen.ListCounterSalesLineItemsBrandsWithResponse(ctx, counterSaleId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCounterSalesLineItemsBrands"}, OperationResult{Operation: "ListCounterSalesLineItemsBrands"})
+	return resp, nil
+}
+
+// ListCurrentLocation runs the list_current_location operation (GET /current_location).
+func (c *Client) ListCurrentLocation(ctx context.Context) (*ListCurrentLocationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCurrentLocation"})
+	resp, err := c.gen.ListCurrentLocationWithResponse(ctx)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCurrentLocation"}, OperationResult{Operation: "ListCurrentLocation"})
+	return resp, nil
+}
+
+// ListCustomerTagsRaw runs the list_customer_tags operation (GET /customer_tags).
+func (c *Client) ListCustomerTagsRaw(ctx context.Context, params *ListCustomerTagsParams) (*ListCustomerTagsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomerTags"})
+	resp, err := c.gen.ListCustomerTagsWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomerTags"}, OperationResult{Operation: "ListCustomerTags"})
+	return resp, nil
+}
+
+// ListCustomersRaw runs the list_customers operation (GET /customers).
+func (c *Client) ListCustomersRaw(ctx context.Context, params *ListCustomersParams) (*ListCustomersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomers"})
+	resp, err := c.gen.ListCustomersWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomers"}, OperationResult{Operation: "ListCustomers"})
+	return resp, nil
+}
+
+// ListCustomersDriversRaw runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
+func (c *Client) ListCustomersDriversRaw(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersDrivers"})
+	resp, err := c.gen.ListCustomersDriversWithResponse(ctx, customerId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersDrivers"}, OperationResult{Operation: "ListCustomersDrivers"})
 	return resp, nil
 }
 
@@ -1384,108 +3237,6 @@ func (c *Client) ListCustomersWorkOrdersRaw(ctx context.Context, customerId int)
 	return resp, nil
 }
 
-// ShowCustomer runs the show_customer operation (GET /customers/{id}).
-func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomer"})
-	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer"})
-	return resp, nil
-}
-
-// UpdateCustomer runs the update_customer operation (PATCH /customers/{id}).
-func (c *Client) UpdateCustomer(ctx context.Context, id int, body UpdateCustomerRequest) (*UpdateCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomer"})
-	resp, err := c.gen.UpdateCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer"})
-	return resp, nil
-}
-
-// ArchiveCustomer runs the archive_customer operation (PATCH /customers/{id}/archive).
-func (c *Client) ArchiveCustomer(ctx context.Context, id int, body ArchiveCustomerRequest) (*ArchiveCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveCustomer"})
-	resp, err := c.gen.ArchiveCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveCustomer"}, OperationResult{Operation: "ArchiveCustomer"})
-	return resp, nil
-}
-
-// MergeCustomer runs the merge_customer operation (POST /customers/{id}/merges).
-func (c *Client) MergeCustomer(ctx context.Context, id int, body MergeCustomerRequest) (*MergeCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeCustomer"})
-	resp, err := c.gen.MergeCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer"})
-	return resp, nil
-}
-
-// RestoreCustomer runs the restore_customer operation (PATCH /customers/{id}/restore).
-func (c *Client) RestoreCustomer(ctx context.Context, id int, body RestoreCustomerRequest) (*RestoreCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreCustomer"})
-	resp, err := c.gen.RestoreCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer"})
-	return resp, nil
-}
-
-// TrashCustomer runs the trash_customer operation (PATCH /customers/{id}/trash).
-func (c *Client) TrashCustomer(ctx context.Context, id int, body TrashCustomerRequest) (*TrashCustomerResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashCustomer"})
-	resp, err := c.gen.TrashCustomerWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer"})
-	return resp, nil
-}
-
 // ListDriversRaw runs the list_drivers operation (GET /drivers).
 func (c *Client) ListDriversRaw(ctx context.Context, params *ListDriversParams) (*ListDriversResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListDrivers"})
@@ -1520,74 +3271,6 @@ func (c *Client) ListExpenses(ctx context.Context) (*ListExpensesResponse, error
 	return resp, nil
 }
 
-// CreateExpense runs the create_expense operation (POST /expenses).
-func (c *Client) CreateExpense(ctx context.Context, body CreateExpenseRequest) (*CreateExpenseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateExpense"})
-	resp, err := c.gen.CreateExpenseWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateExpense"}, OperationResult{Operation: "CreateExpense"})
-	return resp, nil
-}
-
-// DeleteExpense runs the delete_expense operation (DELETE /expenses/{id}).
-func (c *Client) DeleteExpense(ctx context.Context, id int) (*DeleteExpenseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteExpense"})
-	resp, err := c.gen.DeleteExpenseWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteExpense"}, OperationResult{Operation: "DeleteExpense"})
-	return resp, nil
-}
-
-// ShowExpense runs the show_expense operation (GET /expenses/{id}).
-func (c *Client) ShowExpense(ctx context.Context, id int) (*ShowExpenseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowExpense"})
-	resp, err := c.gen.ShowExpenseWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense"})
-	return resp, nil
-}
-
-// UpdateExpense runs the update_expense operation (PATCH /expenses/{id}).
-func (c *Client) UpdateExpense(ctx context.Context, id int, body UpdateExpenseRequest) (*UpdateExpenseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateExpense"})
-	resp, err := c.gen.UpdateExpenseWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense"})
-	return resp, nil
-}
-
 // ListFleets runs the list_fleets operation (GET /fleets).
 func (c *Client) ListFleets(ctx context.Context) (*ListFleetsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListFleets"})
@@ -1602,176 +3285,6 @@ func (c *Client) ListFleets(ctx context.Context) (*ListFleetsResponse, error) {
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListFleets"}, OperationResult{Operation: "ListFleets"})
-	return resp, nil
-}
-
-// CreateInspectionReport runs the create_inspection_report operation (POST /inspection_reports).
-func (c *Client) CreateInspectionReport(ctx context.Context, params *CreateInspectionReportParams, body CreateInspectionReportRequest) (*CreateInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionReport"})
-	resp, err := c.gen.CreateInspectionReportWithResponse(ctx, params, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionReport"}, OperationResult{Operation: "CreateInspectionReport"})
-	return resp, nil
-}
-
-// DeleteInspectionReport runs the delete_inspection_report operation (DELETE /inspection_reports/{id}).
-func (c *Client) DeleteInspectionReport(ctx context.Context, id int) (*DeleteInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionReport"})
-	resp, err := c.gen.DeleteInspectionReportWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionReport"}, OperationResult{Operation: "DeleteInspectionReport"})
-	return resp, nil
-}
-
-// ShowInspectionReport runs the show_inspection_report operation (GET /inspection_reports/{id}).
-func (c *Client) ShowInspectionReport(ctx context.Context, id int) (*ShowInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspectionReport"})
-	resp, err := c.gen.ShowInspectionReportWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport"})
-	return resp, nil
-}
-
-// CompleteInspectionReport runs the complete_inspection_report operation (PATCH /inspection_reports/{id}/complete).
-func (c *Client) CompleteInspectionReport(ctx context.Context, id int, body CompleteInspectionReportRequest) (*CompleteInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CompleteInspectionReport"})
-	resp, err := c.gen.CompleteInspectionReportWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteInspectionReport"}, OperationResult{Operation: "CompleteInspectionReport"})
-	return resp, nil
-}
-
-// ShowInspectionReportGroup runs the show_inspection_report_group operation (GET /inspection_reports/{id}/group).
-func (c *Client) ShowInspectionReportGroup(ctx context.Context, id int, params *ShowInspectionReportGroupParams) (*ShowInspectionReportGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"})
-	resp, err := c.gen.ShowInspectionReportGroupWithResponse(ctx, id, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup"})
-	return resp, nil
-}
-
-// MarkAllInspectionReport runs the mark_all_inspection_report operation (POST /inspection_reports/{id}/mark_all).
-func (c *Client) MarkAllInspectionReport(ctx context.Context, id int, body MarkAllInspectionReportRequest) (*MarkAllInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MarkAllInspectionReport"})
-	resp, err := c.gen.MarkAllInspectionReportWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport"})
-	return resp, nil
-}
-
-// ReassignInspectionReport runs the reassign_inspection_report operation (PATCH /inspection_reports/{id}/reassign).
-func (c *Client) ReassignInspectionReport(ctx context.Context, id int, body ReassignInspectionReportRequest) (*ReassignInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReassignInspectionReport"})
-	resp, err := c.gen.ReassignInspectionReportWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport"})
-	return resp, nil
-}
-
-// ReopenInspectionReport runs the reopen_inspection_report operation (PATCH /inspection_reports/{id}/reopen).
-func (c *Client) ReopenInspectionReport(ctx context.Context, id int, body ReopenInspectionReportRequest) (*ReopenInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReopenInspectionReport"})
-	resp, err := c.gen.ReopenInspectionReportWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport"})
-	return resp, nil
-}
-
-// ResetInspectionReport runs the reset_inspection_report operation (PATCH /inspection_reports/{id}/reset).
-func (c *Client) ResetInspectionReport(ctx context.Context, id int, body ResetInspectionReportRequest) (*ResetInspectionReportResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ResetInspectionReport"})
-	resp, err := c.gen.ResetInspectionReportWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport"})
-	return resp, nil
-}
-
-// RetryInspectionReportRecording runs the retry_inspection_report_recording operation (POST /inspection_reports/{id}/retry_recording).
-func (c *Client) RetryInspectionReportRecording(ctx context.Context, id int, params *RetryInspectionReportRecordingParams, body RetryInspectionReportRecordingRequest) (*RetryInspectionReportRecordingResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"})
-	resp, err := c.gen.RetryInspectionReportRecordingWithResponse(ctx, id, params, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording"})
 	return resp, nil
 }
 
@@ -1792,295 +3305,6 @@ func (c *Client) ListInspectionsRaw(ctx context.Context, params *ListInspections
 	return resp, nil
 }
 
-// CreateInspection runs the create_inspection operation (POST /inspections).
-func (c *Client) CreateInspection(ctx context.Context, body CreateInspectionRequest) (*CreateInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspection"})
-	resp, err := c.gen.CreateInspectionWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspection"}, OperationResult{Operation: "CreateInspection"})
-	return resp, nil
-}
-
-// ShowInspection runs the show_inspection operation (GET /inspections/{id}).
-func (c *Client) ShowInspection(ctx context.Context, id int) (*ShowInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspection"})
-	resp, err := c.gen.ShowInspectionWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection"})
-	return resp, nil
-}
-
-// UpdateInspection runs the update_inspection operation (PATCH /inspections/{id}).
-func (c *Client) UpdateInspection(ctx context.Context, id int, body UpdateInspectionRequest) (*UpdateInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspection"})
-	resp, err := c.gen.UpdateInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection"})
-	return resp, nil
-}
-
-// ArchiveInspection runs the archive_inspection operation (PATCH /inspections/{id}/archive).
-func (c *Client) ArchiveInspection(ctx context.Context, id int, body ArchiveInspectionRequest) (*ArchiveInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveInspection"})
-	resp, err := c.gen.ArchiveInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveInspection"}, OperationResult{Operation: "ArchiveInspection"})
-	return resp, nil
-}
-
-// RemoveDefaultInspection runs the remove_default_inspection operation (PATCH /inspections/{id}/remove_default).
-func (c *Client) RemoveDefaultInspection(ctx context.Context, id int, body RemoveDefaultInspectionRequest) (*RemoveDefaultInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RemoveDefaultInspection"})
-	resp, err := c.gen.RemoveDefaultInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection"})
-	return resp, nil
-}
-
-// RestoreInspection runs the restore_inspection operation (PATCH /inspections/{id}/restore).
-func (c *Client) RestoreInspection(ctx context.Context, id int, body RestoreInspectionRequest) (*RestoreInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreInspection"})
-	resp, err := c.gen.RestoreInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection"})
-	return resp, nil
-}
-
-// SetDefaultInspection runs the set_default_inspection operation (PATCH /inspections/{id}/set_default).
-func (c *Client) SetDefaultInspection(ctx context.Context, id int, body SetDefaultInspectionRequest) (*SetDefaultInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SetDefaultInspection"})
-	resp, err := c.gen.SetDefaultInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection"})
-	return resp, nil
-}
-
-// TrashInspection runs the trash_inspection operation (PATCH /inspections/{id}/trash).
-func (c *Client) TrashInspection(ctx context.Context, id int, body TrashInspectionRequest) (*TrashInspectionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashInspection"})
-	resp, err := c.gen.TrashInspectionWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection"})
-	return resp, nil
-}
-
-// CreateInspectionsGroup runs the create_inspections_group operation (POST /inspections/{inspection_id}/groups).
-func (c *Client) CreateInspectionsGroup(ctx context.Context, inspectionId int, body CreateInspectionsGroupRequest) (*CreateInspectionsGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsGroup"})
-	resp, err := c.gen.CreateInspectionsGroupWithResponse(ctx, inspectionId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsGroup"}, OperationResult{Operation: "CreateInspectionsGroup"})
-	return resp, nil
-}
-
-// DeleteInspectionsGroup runs the delete_inspections_group operation (DELETE /inspections/{inspection_id}/groups/{id}).
-func (c *Client) DeleteInspectionsGroup(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"})
-	resp, err := c.gen.DeleteInspectionsGroupWithResponse(ctx, inspectionId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsGroup"}, OperationResult{Operation: "DeleteInspectionsGroup"})
-	return resp, nil
-}
-
-// UpdateInspectionsGroup runs the update_inspections_group operation (PATCH /inspections/{inspection_id}/groups/{id}).
-func (c *Client) UpdateInspectionsGroup(ctx context.Context, inspectionId int, id int, body UpdateInspectionsGroupRequest) (*UpdateInspectionsGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"})
-	resp, err := c.gen.UpdateInspectionsGroupWithResponse(ctx, inspectionId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup"})
-	return resp, nil
-}
-
-// CreateInspectionsItem runs the create_inspections_item operation (POST /inspections/{inspection_id}/items).
-func (c *Client) CreateInspectionsItem(ctx context.Context, inspectionId int, body CreateInspectionsItemRequest) (*CreateInspectionsItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsItem"})
-	resp, err := c.gen.CreateInspectionsItemWithResponse(ctx, inspectionId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsItem"}, OperationResult{Operation: "CreateInspectionsItem"})
-	return resp, nil
-}
-
-// DeleteInspectionsItem runs the delete_inspections_item operation (DELETE /inspections/{inspection_id}/items/{id}).
-func (c *Client) DeleteInspectionsItem(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsItem"})
-	resp, err := c.gen.DeleteInspectionsItemWithResponse(ctx, inspectionId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsItem"}, OperationResult{Operation: "DeleteInspectionsItem"})
-	return resp, nil
-}
-
-// UpdateInspectionsItem runs the update_inspections_item operation (PATCH /inspections/{inspection_id}/items/{id}).
-func (c *Client) UpdateInspectionsItem(ctx context.Context, inspectionId int, id int, body UpdateInspectionsItemRequest) (*UpdateInspectionsItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsItem"})
-	resp, err := c.gen.UpdateInspectionsItemWithResponse(ctx, inspectionId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem"})
-	return resp, nil
-}
-
-// CreateInspectionsPreset runs the create_inspections_preset operation (POST /inspections/{inspection_id}/presets).
-func (c *Client) CreateInspectionsPreset(ctx context.Context, inspectionId int, params *CreateInspectionsPresetParams, body CreateInspectionsPresetRequest) (*CreateInspectionsPresetResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInspectionsPreset"})
-	resp, err := c.gen.CreateInspectionsPresetWithResponse(ctx, inspectionId, params, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInspectionsPreset"}, OperationResult{Operation: "CreateInspectionsPreset"})
-	return resp, nil
-}
-
-// DeleteInspectionsPreset runs the delete_inspections_preset operation (DELETE /inspections/{inspection_id}/presets/{id}).
-func (c *Client) DeleteInspectionsPreset(ctx context.Context, inspectionId int, id int) (*DeleteInspectionsPresetResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"})
-	resp, err := c.gen.DeleteInspectionsPresetWithResponse(ctx, inspectionId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteInspectionsPreset"}, OperationResult{Operation: "DeleteInspectionsPreset"})
-	return resp, nil
-}
-
-// UpdateInspectionsPreset runs the update_inspections_preset operation (PATCH /inspections/{inspection_id}/presets/{id}).
-func (c *Client) UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetRequest) (*UpdateInspectionsPresetResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"})
-	resp, err := c.gen.UpdateInspectionsPresetWithResponse(ctx, inspectionId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset"})
-	return resp, nil
-}
-
 // ListInventoryLevelsBarcodeLookup runs the list_inventory_levels_barcode_lookup operation (GET /inventory_levels/barcode_lookup).
 func (c *Client) ListInventoryLevelsBarcodeLookup(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams) (*ListInventoryLevelsBarcodeLookupResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"})
@@ -2095,74 +3319,6 @@ func (c *Client) ListInventoryLevelsBarcodeLookup(ctx context.Context, params *L
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"}, OperationResult{Operation: "ListInventoryLevelsBarcodeLookup"})
-	return resp, nil
-}
-
-// CreateInventoryLevelExtraction runs the create_inventory_level_extraction operation (POST /inventory_levels/extractions).
-func (c *Client) CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionRequest) (*CreateInventoryLevelExtractionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"})
-	resp, err := c.gen.CreateInventoryLevelExtractionWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction"})
-	return resp, nil
-}
-
-// ShowInventoryLevel runs the show_inventory_level operation (GET /inventory_levels/{id}).
-func (c *Client) ShowInventoryLevel(ctx context.Context, id int) (*ShowInventoryLevelResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInventoryLevel"})
-	resp, err := c.gen.ShowInventoryLevelWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel"})
-	return resp, nil
-}
-
-// UpdateInventoryLevel runs the update_inventory_level operation (PATCH /inventory_levels/{id}).
-func (c *Client) UpdateInventoryLevel(ctx context.Context, id int, body UpdateInventoryLevelRequest) (*UpdateInventoryLevelResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInventoryLevel"})
-	resp, err := c.gen.UpdateInventoryLevelWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel"})
-	return resp, nil
-}
-
-// CreateInventoryLevelsAdjust runs the create_inventory_levels_adjust operation (POST /inventory_levels/{id}/adjust).
-func (c *Client) CreateInventoryLevelsAdjust(ctx context.Context, id int, body CreateInventoryLevelsAdjustRequest) (*CreateInventoryLevelsAdjustResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"})
-	resp, err := c.gen.CreateInventoryLevelsAdjustWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"}, OperationResult{Operation: "CreateInventoryLevelsAdjust"})
 	return resp, nil
 }
 
@@ -2183,57 +3339,6 @@ func (c *Client) ListLaborMatricesRaw(ctx context.Context) (*ListLaborMatricesRe
 	return resp, nil
 }
 
-// CreateLaborMatrix runs the create_labor_matrix operation (POST /labor_matrices).
-func (c *Client) CreateLaborMatrix(ctx context.Context, body CreateLaborMatrixRequest) (*CreateLaborMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborMatrix"})
-	resp, err := c.gen.CreateLaborMatrixWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborMatrix"}, OperationResult{Operation: "CreateLaborMatrix"})
-	return resp, nil
-}
-
-// DeleteLaborMatrix runs the delete_labor_matrix operation (DELETE /labor_matrices/{id}).
-func (c *Client) DeleteLaborMatrix(ctx context.Context, id int) (*DeleteLaborMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborMatrix"})
-	resp, err := c.gen.DeleteLaborMatrixWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborMatrix"}, OperationResult{Operation: "DeleteLaborMatrix"})
-	return resp, nil
-}
-
-// UpdateLaborMatrix runs the update_labor_matrix operation (PATCH /labor_matrices/{id}).
-func (c *Client) UpdateLaborMatrix(ctx context.Context, id int, body UpdateLaborMatrixRequest) (*UpdateLaborMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborMatrix"})
-	resp, err := c.gen.UpdateLaborMatrixWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix"})
-	return resp, nil
-}
-
 // ListLaborRatesRaw runs the list_labor_rates operation (GET /labor_rates).
 func (c *Client) ListLaborRatesRaw(ctx context.Context) (*ListLaborRatesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLaborRates"})
@@ -2248,74 +3353,6 @@ func (c *Client) ListLaborRatesRaw(ctx context.Context) (*ListLaborRatesResponse
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLaborRates"}, OperationResult{Operation: "ListLaborRates"})
-	return resp, nil
-}
-
-// CreateLaborRate runs the create_labor_rate operation (POST /labor_rates).
-func (c *Client) CreateLaborRate(ctx context.Context, body CreateLaborRateRequest) (*CreateLaborRateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLaborRate"})
-	resp, err := c.gen.CreateLaborRateWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLaborRate"}, OperationResult{Operation: "CreateLaborRate"})
-	return resp, nil
-}
-
-// ArchiveLaborRate runs the archive_labor_rate operation (PATCH /labor_rates/{id}/archive).
-func (c *Client) ArchiveLaborRate(ctx context.Context, id int, body ArchiveLaborRateRequest) (*ArchiveLaborRateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveLaborRate"})
-	resp, err := c.gen.ArchiveLaborRateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveLaborRate"}, OperationResult{Operation: "ArchiveLaborRate"})
-	return resp, nil
-}
-
-// RestoreLaborRate runs the restore_labor_rate operation (PATCH /labor_rates/{id}/restore).
-func (c *Client) RestoreLaborRate(ctx context.Context, id int, body RestoreLaborRateRequest) (*RestoreLaborRateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreLaborRate"})
-	resp, err := c.gen.RestoreLaborRateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate"})
-	return resp, nil
-}
-
-// TrashLaborRate runs the trash_labor_rate operation (PATCH /labor_rates/{id}/trash).
-func (c *Client) TrashLaborRate(ctx context.Context, id int, body TrashLaborRateRequest) (*TrashLaborRateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashLaborRate"})
-	resp, err := c.gen.TrashLaborRateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate"})
 	return resp, nil
 }
 
@@ -2336,40 +3373,6 @@ func (c *Client) ListLaborTemplatesRaw(ctx context.Context) (*ListLaborTemplates
 	return resp, nil
 }
 
-// DeleteLaborTemplate runs the delete_labor_template operation (DELETE /labor_templates/{id}).
-func (c *Client) DeleteLaborTemplate(ctx context.Context, id int) (*DeleteLaborTemplateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLaborTemplate"})
-	resp, err := c.gen.DeleteLaborTemplateWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLaborTemplate"}, OperationResult{Operation: "DeleteLaborTemplate"})
-	return resp, nil
-}
-
-// UpdateLaborTemplate runs the update_labor_template operation (PATCH /labor_templates/{id}).
-func (c *Client) UpdateLaborTemplate(ctx context.Context, id int, body UpdateLaborTemplateRequest) (*UpdateLaborTemplateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborTemplate"})
-	resp, err := c.gen.UpdateLaborTemplateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate"})
-	return resp, nil
-}
-
 // ListLeadSourcesRaw runs the list_lead_sources operation (GET /lead_sources).
 func (c *Client) ListLeadSourcesRaw(ctx context.Context) (*ListLeadSourcesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLeadSources"})
@@ -2384,108 +3387,6 @@ func (c *Client) ListLeadSourcesRaw(ctx context.Context) (*ListLeadSourcesRespon
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLeadSources"}, OperationResult{Operation: "ListLeadSources"})
-	return resp, nil
-}
-
-// CreateLeadSource runs the create_lead_source operation (POST /lead_sources).
-func (c *Client) CreateLeadSource(ctx context.Context, body CreateLeadSourceRequest) (*CreateLeadSourceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLeadSource"})
-	resp, err := c.gen.CreateLeadSourceWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSource"}, OperationResult{Operation: "CreateLeadSource"})
-	return resp, nil
-}
-
-// CreateLeadSourcesSeedDefault runs the create_lead_sources_seed_default operation (POST /lead_sources/seed_defaults).
-func (c *Client) CreateLeadSourcesSeedDefault(ctx context.Context, body CreateLeadSourcesSeedDefaultRequest) (*CreateLeadSourcesSeedDefaultResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"})
-	resp, err := c.gen.CreateLeadSourcesSeedDefaultWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateLeadSourcesSeedDefault"}, OperationResult{Operation: "CreateLeadSourcesSeedDefault"})
-	return resp, nil
-}
-
-// DeleteLeadSource runs the delete_lead_source operation (DELETE /lead_sources/{id}).
-func (c *Client) DeleteLeadSource(ctx context.Context, id int) (*DeleteLeadSourceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteLeadSource"})
-	resp, err := c.gen.DeleteLeadSourceWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteLeadSource"}, OperationResult{Operation: "DeleteLeadSource"})
-	return resp, nil
-}
-
-// UpdateLeadSource runs the update_lead_source operation (PATCH /lead_sources/{id}).
-func (c *Client) UpdateLeadSource(ctx context.Context, id int, body UpdateLeadSourceRequest) (*UpdateLeadSourceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLeadSource"})
-	resp, err := c.gen.UpdateLeadSourceWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource"})
-	return resp, nil
-}
-
-// ShowLocation runs the show_location operation (GET /locations/{id}).
-func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowLocation"})
-	resp, err := c.gen.ShowLocationWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation"})
-	return resp, nil
-}
-
-// UpdateLocation runs the update_location operation (PATCH /locations/{id}).
-func (c *Client) UpdateLocation(ctx context.Context, id string, body UpdateLocationRequest) (*UpdateLocationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocation"})
-	resp, err := c.gen.UpdateLocationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation"})
 	return resp, nil
 }
 
@@ -2506,57 +3407,6 @@ func (c *Client) ListLocationsBusinessProfile(ctx context.Context, id string) (*
 	return resp, nil
 }
 
-// UpdateLocationsBusinessProfile runs the update_locations_business_profile operation (PATCH /locations/{id}/business_profile).
-func (c *Client) UpdateLocationsBusinessProfile(ctx context.Context, id string, body UpdateLocationsBusinessProfileRequest) (*UpdateLocationsBusinessProfileResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"})
-	resp, err := c.gen.UpdateLocationsBusinessProfileWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile"})
-	return resp, nil
-}
-
-// ListLocationsOperations runs the list_locations_operations operation (GET /locations/{id}/operations).
-func (c *Client) ListLocationsOperations(ctx context.Context, id string) (*ListLocationsOperationsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsOperations"})
-	resp, err := c.gen.ListLocationsOperationsWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations"})
-	return resp, nil
-}
-
-// UpdateLocationsOperations runs the update_locations_operations operation (PATCH /locations/{id}/operations).
-func (c *Client) UpdateLocationsOperations(ctx context.Context, id string, body UpdateLocationsOperationsRequest) (*UpdateLocationsOperationsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsOperations"})
-	resp, err := c.gen.UpdateLocationsOperationsWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations"})
-	return resp, nil
-}
-
 // ListLocationsCloseRequirements runs the list_locations_close_requirements operation (GET /locations/{location_id}/close_requirements).
 func (c *Client) ListLocationsCloseRequirements(ctx context.Context, locationId string) (*ListLocationsCloseRequirementsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsCloseRequirements"})
@@ -2571,23 +3421,6 @@ func (c *Client) ListLocationsCloseRequirements(ctx context.Context, locationId 
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsCloseRequirements"}, OperationResult{Operation: "ListLocationsCloseRequirements"})
-	return resp, nil
-}
-
-// UpdateLocationsCloseRequirements runs the update_locations_close_requirements operation (PATCH /locations/{location_id}/close_requirements).
-func (c *Client) UpdateLocationsCloseRequirements(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsRequest) (*UpdateLocationsCloseRequirementsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"})
-	resp, err := c.gen.UpdateLocationsCloseRequirementsWithResponse(ctx, locationId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements"})
 	return resp, nil
 }
 
@@ -2625,23 +3458,6 @@ func (c *Client) ListLocationsDocuments(ctx context.Context, locationId string) 
 	return resp, nil
 }
 
-// UpdateLocationsDocuments runs the update_locations_documents operation (PATCH /locations/{location_id}/documents).
-func (c *Client) UpdateLocationsDocuments(ctx context.Context, locationId string, body UpdateLocationsDocumentsRequest) (*UpdateLocationsDocumentsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"})
-	resp, err := c.gen.UpdateLocationsDocumentsWithResponse(ctx, locationId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments"})
-	return resp, nil
-}
-
 // ListLocationsLeadSourceRequirements runs the list_locations_lead_source_requirements operation (GET /locations/{location_id}/lead_source_requirements).
 func (c *Client) ListLocationsLeadSourceRequirements(ctx context.Context, locationId string) (*ListLocationsLeadSourceRequirementsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsLeadSourceRequirements"})
@@ -2659,20 +3475,20 @@ func (c *Client) ListLocationsLeadSourceRequirements(ctx context.Context, locati
 	return resp, nil
 }
 
-// UpdateLocationsLeadSourceRequirements runs the update_locations_lead_source_requirements operation (PATCH /locations/{location_id}/lead_source_requirements).
-func (c *Client) UpdateLocationsLeadSourceRequirements(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsRequest) (*UpdateLocationsLeadSourceRequirementsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"})
-	resp, err := c.gen.UpdateLocationsLeadSourceRequirementsWithResponse(ctx, locationId, body)
+// ListLocationsOperations runs the list_locations_operations operation (GET /locations/{id}/operations).
+func (c *Client) ListLocationsOperations(ctx context.Context, id string) (*ListLocationsOperationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsOperations"})
+	resp, err := c.gen.ListLocationsOperationsWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsOperations"}, OperationResult{Operation: "ListLocationsOperations"})
 	return resp, nil
 }
 
@@ -2693,23 +3509,6 @@ func (c *Client) ListLocationsReminders(ctx context.Context, locationId string) 
 	return resp, nil
 }
 
-// UpdateLocationsReminders runs the update_locations_reminders operation (PATCH /locations/{location_id}/reminders).
-func (c *Client) UpdateLocationsReminders(ctx context.Context, locationId string, body UpdateLocationsRemindersRequest) (*UpdateLocationsRemindersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsReminders"})
-	resp, err := c.gen.UpdateLocationsRemindersWithResponse(ctx, locationId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders"})
-	return resp, nil
-}
-
 // ListLocationsScheduleConfig runs the list_locations_schedule_config operation (GET /locations/{location_id}/schedule_config).
 func (c *Client) ListLocationsScheduleConfig(ctx context.Context, locationId string) (*ListLocationsScheduleConfigResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLocationsScheduleConfig"})
@@ -2724,23 +3523,6 @@ func (c *Client) ListLocationsScheduleConfig(ctx context.Context, locationId str
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListLocationsScheduleConfig"}, OperationResult{Operation: "ListLocationsScheduleConfig"})
-	return resp, nil
-}
-
-// UpdateLocationsScheduleConfig runs the update_locations_schedule_config operation (PATCH /locations/{location_id}/schedule_config).
-func (c *Client) UpdateLocationsScheduleConfig(ctx context.Context, locationId string, body UpdateLocationsScheduleConfigRequest) (*UpdateLocationsScheduleConfigResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"})
-	resp, err := c.gen.UpdateLocationsScheduleConfigWithResponse(ctx, locationId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig"})
 	return resp, nil
 }
 
@@ -2761,23 +3543,6 @@ func (c *Client) ListMeNotifications(ctx context.Context) (*ListMeNotificationsR
 	return resp, nil
 }
 
-// UpdateMeNotifications runs the update_me_notifications operation (PATCH /me/notifications).
-func (c *Client) UpdateMeNotifications(ctx context.Context, body UpdateMeNotificationsRequest) (*UpdateMeNotificationsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMeNotifications"})
-	resp, err := c.gen.UpdateMeNotificationsWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications"})
-	return resp, nil
-}
-
 // ListMePreferences runs the list_me_preferences operation (GET /me/preferences).
 func (c *Client) ListMePreferences(ctx context.Context) (*ListMePreferencesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListMePreferences"})
@@ -2792,23 +3557,6 @@ func (c *Client) ListMePreferences(ctx context.Context) (*ListMePreferencesRespo
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListMePreferences"}, OperationResult{Operation: "ListMePreferences"})
-	return resp, nil
-}
-
-// UpdateMePreferences runs the update_me_preferences operation (PATCH /me/preferences).
-func (c *Client) UpdateMePreferences(ctx context.Context, body UpdateMePreferencesRequest) (*UpdateMePreferencesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMePreferences"})
-	resp, err := c.gen.UpdateMePreferencesWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences"})
 	return resp, nil
 }
 
@@ -2829,23 +3577,6 @@ func (c *Client) ListMeProfile(ctx context.Context) (*ListMeProfileResponse, err
 	return resp, nil
 }
 
-// UpdateMeProfile runs the update_me_profile operation (PATCH /me/profile).
-func (c *Client) UpdateMeProfile(ctx context.Context, body UpdateMeProfileRequest) (*UpdateMeProfileResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMeProfile"})
-	resp, err := c.gen.UpdateMeProfileWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile"})
-	return resp, nil
-}
-
 // ListMessages runs the list_messages operation (GET /messages).
 func (c *Client) ListMessages(ctx context.Context, params *ListMessagesParams) (*ListMessagesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListMessages"})
@@ -2860,40 +3591,6 @@ func (c *Client) ListMessages(ctx context.Context, params *ListMessagesParams) (
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListMessages"}, OperationResult{Operation: "ListMessages"})
-	return resp, nil
-}
-
-// ShowMessage runs the show_message operation (GET /messages/{id}).
-func (c *Client) ShowMessage(ctx context.Context, id int) (*ShowMessageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowMessage"})
-	resp, err := c.gen.ShowMessageWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage"})
-	return resp, nil
-}
-
-// CreateMessagesResend runs the create_messages_resend operation (POST /messages/{message_id}/resends).
-func (c *Client) CreateMessagesResend(ctx context.Context, messageId int, body CreateMessagesResendRequest) (*CreateMessagesResendResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateMessagesResend"})
-	resp, err := c.gen.CreateMessagesResendWithResponse(ctx, messageId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateMessagesResend"}, OperationResult{Operation: "CreateMessagesResend"})
 	return resp, nil
 }
 
@@ -2914,57 +3611,6 @@ func (c *Client) ListNotificationsRaw(ctx context.Context, params *ListNotificat
 	return resp, nil
 }
 
-// CreateNotificationsBulkMarkRead runs the create_notifications_bulk_mark_read operation (POST /notifications/bulk_mark_read).
-func (c *Client) CreateNotificationsBulkMarkRead(ctx context.Context, body CreateNotificationsBulkMarkReadRequest) (*CreateNotificationsBulkMarkReadResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"})
-	resp, err := c.gen.CreateNotificationsBulkMarkReadWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateNotificationsBulkMarkRead"}, OperationResult{Operation: "CreateNotificationsBulkMarkRead"})
-	return resp, nil
-}
-
-// ShowNotification runs the show_notification operation (GET /notifications/{id}).
-func (c *Client) ShowNotification(ctx context.Context, id int) (*ShowNotificationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowNotification"})
-	resp, err := c.gen.ShowNotificationWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification"})
-	return resp, nil
-}
-
-// UpdateNotification runs the update_notification operation (PATCH /notifications/{id}).
-func (c *Client) UpdateNotification(ctx context.Context, id int, body UpdateNotificationRequest) (*UpdateNotificationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateNotification"})
-	resp, err := c.gen.UpdateNotificationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification"})
-	return resp, nil
-}
-
 // ListOrdersPurchaseOrdersRaw runs the list_orders_purchase_orders operation (GET /orders/purchase_orders).
 func (c *Client) ListOrdersPurchaseOrdersRaw(ctx context.Context, params *ListOrdersPurchaseOrdersParams) (*ListOrdersPurchaseOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListOrdersPurchaseOrders"})
@@ -2979,91 +3625,6 @@ func (c *Client) ListOrdersPurchaseOrdersRaw(ctx context.Context, params *ListOr
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListOrdersPurchaseOrders"}, OperationResult{Operation: "ListOrdersPurchaseOrders"})
-	return resp, nil
-}
-
-// CreateOrdersPurchaseOrder runs the create_orders_purchase_order operation (POST /orders/purchase_orders).
-func (c *Client) CreateOrdersPurchaseOrder(ctx context.Context, body CreateOrdersPurchaseOrderRequest) (*CreateOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"})
-	resp, err := c.gen.CreateOrdersPurchaseOrderWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrder"}, OperationResult{Operation: "CreateOrdersPurchaseOrder"})
-	return resp, nil
-}
-
-// DeleteOrdersPurchaseOrder runs the delete_orders_purchase_order operation (DELETE /orders/purchase_orders/{id}).
-func (c *Client) DeleteOrdersPurchaseOrder(ctx context.Context, id int) (*DeleteOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"})
-	resp, err := c.gen.DeleteOrdersPurchaseOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteOrdersPurchaseOrder"})
-	return resp, nil
-}
-
-// ShowOrdersPurchaseOrder runs the show_orders_purchase_order operation (GET /orders/purchase_orders/{id}).
-func (c *Client) ShowOrdersPurchaseOrder(ctx context.Context, id int) (*ShowOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"})
-	resp, err := c.gen.ShowOrdersPurchaseOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder"})
-	return resp, nil
-}
-
-// UpdateOrdersPurchaseOrder runs the update_orders_purchase_order operation (PATCH /orders/purchase_orders/{id}).
-func (c *Client) UpdateOrdersPurchaseOrder(ctx context.Context, id int, body UpdateOrdersPurchaseOrderRequest) (*UpdateOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"})
-	resp, err := c.gen.UpdateOrdersPurchaseOrderWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder"})
-	return resp, nil
-}
-
-// CreateOrdersPurchaseOrdersCancellation runs the create_orders_purchase_orders_cancellation operation (POST /orders/purchase_orders/{purchase_order_id}/cancellations).
-func (c *Client) CreateOrdersPurchaseOrdersCancellation(ctx context.Context, purchaseOrderId int, body CreateOrdersPurchaseOrdersCancellationRequest) (*CreateOrdersPurchaseOrdersCancellationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"})
-	resp, err := c.gen.CreateOrdersPurchaseOrdersCancellationWithResponse(ctx, purchaseOrderId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersPurchaseOrdersCancellation"}, OperationResult{Operation: "CreateOrdersPurchaseOrdersCancellation"})
 	return resp, nil
 }
 
@@ -3084,74 +3645,6 @@ func (c *Client) ListOrdersReturnOrdersRaw(ctx context.Context) (*ListOrdersRetu
 	return resp, nil
 }
 
-// DeleteOrdersReturnOrder runs the delete_orders_return_order operation (DELETE /orders/return_orders/{id}).
-func (c *Client) DeleteOrdersReturnOrder(ctx context.Context, id int) (*DeleteOrdersReturnOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"})
-	resp, err := c.gen.DeleteOrdersReturnOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteOrdersReturnOrder"}, OperationResult{Operation: "DeleteOrdersReturnOrder"})
-	return resp, nil
-}
-
-// ShowOrdersReturnOrder runs the show_orders_return_order operation (GET /orders/return_orders/{id}).
-func (c *Client) ShowOrdersReturnOrder(ctx context.Context, id int) (*ShowOrdersReturnOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"})
-	resp, err := c.gen.ShowOrdersReturnOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder"})
-	return resp, nil
-}
-
-// UpdateOrdersReturnOrder runs the update_orders_return_order operation (PATCH /orders/return_orders/{id}).
-func (c *Client) UpdateOrdersReturnOrder(ctx context.Context, id int, body UpdateOrdersReturnOrderRequest) (*UpdateOrdersReturnOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"})
-	resp, err := c.gen.UpdateOrdersReturnOrderWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder"})
-	return resp, nil
-}
-
-// CreateOrdersReturnOrdersRefundCompletion runs the create_orders_return_orders_refund_completion operation (POST /orders/return_orders/{return_order_id}/refund_completions).
-func (c *Client) CreateOrdersReturnOrdersRefundCompletion(ctx context.Context, returnOrderId int, body CreateOrdersReturnOrdersRefundCompletionRequest) (*CreateOrdersReturnOrdersRefundCompletionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"})
-	resp, err := c.gen.CreateOrdersReturnOrdersRefundCompletionWithResponse(ctx, returnOrderId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateOrdersReturnOrdersRefundCompletion"}, OperationResult{Operation: "CreateOrdersReturnOrdersRefundCompletion"})
-	return resp, nil
-}
-
 // ListOrdersSubletOrdersRaw runs the list_orders_sublet_orders operation (GET /orders/sublet_orders).
 func (c *Client) ListOrdersSubletOrdersRaw(ctx context.Context) (*ListOrdersSubletOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListOrdersSubletOrders"})
@@ -3166,40 +3659,6 @@ func (c *Client) ListOrdersSubletOrdersRaw(ctx context.Context) (*ListOrdersSubl
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListOrdersSubletOrders"}, OperationResult{Operation: "ListOrdersSubletOrders"})
-	return resp, nil
-}
-
-// UpdateOrdersSubletOrdersMarkPaymentComplete runs the update_orders_sublet_orders_mark_payment_complete operation (PATCH /orders/sublet_orders/mark_payment_complete).
-func (c *Client) UpdateOrdersSubletOrdersMarkPaymentComplete(ctx context.Context, body UpdateOrdersSubletOrdersMarkPaymentCompleteRequest) (*UpdateOrdersSubletOrdersMarkPaymentCompleteResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"})
-	resp, err := c.gen.UpdateOrdersSubletOrdersMarkPaymentCompleteWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"})
-	return resp, nil
-}
-
-// ShowOrdersSubletOrder runs the show_orders_sublet_order operation (GET /orders/sublet_orders/{id}).
-func (c *Client) ShowOrdersSubletOrder(ctx context.Context, id int) (*ShowOrdersSubletOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"})
-	resp, err := c.gen.ShowOrdersSubletOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder"})
 	return resp, nil
 }
 
@@ -3220,108 +3679,6 @@ func (c *Client) ListPackagesRaw(ctx context.Context) (*ListPackagesResponse, er
 	return resp, nil
 }
 
-// CreatePackage runs the create_package operation (POST /packages).
-func (c *Client) CreatePackage(ctx context.Context, body CreatePackageRequest) (*CreatePackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePackage"})
-	resp, err := c.gen.CreatePackageWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackage"}, OperationResult{Operation: "CreatePackage"})
-	return resp, nil
-}
-
-// UpdatePackage runs the update_package operation (PATCH /packages/{id}).
-func (c *Client) UpdatePackage(ctx context.Context, id int) (*UpdatePackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePackage"})
-	resp, err := c.gen.UpdatePackageWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage"})
-	return resp, nil
-}
-
-// ArchivePackage runs the archive_package operation (PATCH /packages/{id}/archive).
-func (c *Client) ArchivePackage(ctx context.Context, id int, body ArchivePackageRequest) (*ArchivePackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchivePackage"})
-	resp, err := c.gen.ArchivePackageWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchivePackage"}, OperationResult{Operation: "ArchivePackage"})
-	return resp, nil
-}
-
-// CreatePackagesDuplicate runs the create_packages_duplicate operation (POST /packages/{id}/duplicate).
-func (c *Client) CreatePackagesDuplicate(ctx context.Context, id int, body CreatePackagesDuplicateRequest) (*CreatePackagesDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"})
-	resp, err := c.gen.CreatePackagesDuplicateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePackagesDuplicate"}, OperationResult{Operation: "CreatePackagesDuplicate"})
-	return resp, nil
-}
-
-// RestorePackage runs the restore_package operation (PATCH /packages/{id}/restore).
-func (c *Client) RestorePackage(ctx context.Context, id int, body RestorePackageRequest) (*RestorePackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestorePackage"})
-	resp, err := c.gen.RestorePackageWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage"})
-	return resp, nil
-}
-
-// TrashPackage runs the trash_package operation (PATCH /packages/{id}/trash).
-func (c *Client) TrashPackage(ctx context.Context, id int, body TrashPackageRequest) (*TrashPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashPackage"})
-	resp, err := c.gen.TrashPackageWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage"})
-	return resp, nil
-}
-
 // ListParts runs the list_parts operation (GET /parts).
 func (c *Client) ListParts(ctx context.Context, params *ListPartsParams) (*ListPartsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListParts"})
@@ -3339,74 +3696,6 @@ func (c *Client) ListParts(ctx context.Context, params *ListPartsParams) (*ListP
 	return resp, nil
 }
 
-// CreatePart runs the create_part operation (POST /parts).
-func (c *Client) CreatePart(ctx context.Context, body CreatePartRequest) (*CreatePartResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePart"})
-	resp, err := c.gen.CreatePartWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePart"}, OperationResult{Operation: "CreatePart"})
-	return resp, nil
-}
-
-// DeletePart runs the delete_part operation (DELETE /parts/{id}).
-func (c *Client) DeletePart(ctx context.Context, id int) (*DeletePartResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePart"})
-	resp, err := c.gen.DeletePartWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePart"}, OperationResult{Operation: "DeletePart"})
-	return resp, nil
-}
-
-// ShowPart runs the show_part operation (GET /parts/{id}).
-func (c *Client) ShowPart(ctx context.Context, id int) (*ShowPartResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowPart"})
-	resp, err := c.gen.ShowPartWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart"})
-	return resp, nil
-}
-
-// UpdatePart runs the update_part operation (PATCH /parts/{id}).
-func (c *Client) UpdatePart(ctx context.Context, id int, body UpdatePartRequest) (*UpdatePartResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePart"})
-	resp, err := c.gen.UpdatePartWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart"})
-	return resp, nil
-}
-
 // ListPartsMatricesRaw runs the list_parts_matrices operation (GET /parts_matrices).
 func (c *Client) ListPartsMatricesRaw(ctx context.Context) (*ListPartsMatricesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListPartsMatrices"})
@@ -3421,57 +3710,6 @@ func (c *Client) ListPartsMatricesRaw(ctx context.Context) (*ListPartsMatricesRe
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPartsMatrices"}, OperationResult{Operation: "ListPartsMatrices"})
-	return resp, nil
-}
-
-// CreatePartsMatrix runs the create_parts_matrix operation (POST /parts_matrices).
-func (c *Client) CreatePartsMatrix(ctx context.Context, body CreatePartsMatrixRequest) (*CreatePartsMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePartsMatrix"})
-	resp, err := c.gen.CreatePartsMatrixWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePartsMatrix"}, OperationResult{Operation: "CreatePartsMatrix"})
-	return resp, nil
-}
-
-// DeletePartsMatrix runs the delete_parts_matrix operation (DELETE /parts_matrices/{id}).
-func (c *Client) DeletePartsMatrix(ctx context.Context, id int) (*DeletePartsMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeletePartsMatrix"})
-	resp, err := c.gen.DeletePartsMatrixWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeletePartsMatrix"}, OperationResult{Operation: "DeletePartsMatrix"})
-	return resp, nil
-}
-
-// UpdatePartsMatrix runs the update_parts_matrix operation (PATCH /parts_matrices/{id}).
-func (c *Client) UpdatePartsMatrix(ctx context.Context, id int, body UpdatePartsMatrixRequest) (*UpdatePartsMatrixResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePartsMatrix"})
-	resp, err := c.gen.UpdatePartsMatrixWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix"})
 	return resp, nil
 }
 
@@ -3509,71 +3747,20 @@ func (c *Client) ListPaymentsPending(ctx context.Context) (*ListPaymentsPendingR
 	return resp, nil
 }
 
-// ShowPayment runs the show_payment operation (GET /payments/{id}).
-func (c *Client) ShowPayment(ctx context.Context, id int) (*ShowPaymentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowPayment"})
-	resp, err := c.gen.ShowPaymentWithResponse(ctx, id)
+// ListPermissionGroups runs the list_permission_groups operation (GET /users/permission_groups).
+func (c *Client) ListPermissionGroups(ctx context.Context) (*ListPermissionGroupsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListPermissionGroups"})
+	resp, err := c.gen.ListPermissionGroupsWithResponse(ctx)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment"})
-	return resp, nil
-}
-
-// CreatePaymentsCancellation runs the create_payments_cancellation operation (POST /payments/{id}/cancellation).
-func (c *Client) CreatePaymentsCancellation(ctx context.Context, id int, body CreatePaymentsCancellationRequest) (*CreatePaymentsCancellationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"})
-	resp, err := c.gen.CreatePaymentsCancellationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsCancellation"}, OperationResult{Operation: "CreatePaymentsCancellation"})
-	return resp, nil
-}
-
-// CreatePaymentsConfirmation runs the create_payments_confirmation operation (POST /payments/{id}/confirmation).
-func (c *Client) CreatePaymentsConfirmation(ctx context.Context, id int, body CreatePaymentsConfirmationRequest) (*CreatePaymentsConfirmationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"})
-	resp, err := c.gen.CreatePaymentsConfirmationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsConfirmation"}, OperationResult{Operation: "CreatePaymentsConfirmation"})
-	return resp, nil
-}
-
-// CreatePaymentsFailure runs the create_payments_failure operation (POST /payments/{id}/failure).
-func (c *Client) CreatePaymentsFailure(ctx context.Context, id int, body CreatePaymentsFailureRequest) (*CreatePaymentsFailureResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePaymentsFailure"})
-	resp, err := c.gen.CreatePaymentsFailureWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePaymentsFailure"}, OperationResult{Operation: "CreatePaymentsFailure"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups"})
 	return resp, nil
 }
 
@@ -3628,23 +3815,6 @@ func (c *Client) ListReportsCashDrawerSessions(ctx context.Context) (*ListReport
 	return resp, nil
 }
 
-// ShowReportsCashDrawerSession runs the show_reports_cash_drawer_session operation (GET /reports/cash_drawer_sessions/{id}).
-func (c *Client) ShowReportsCashDrawerSession(ctx context.Context, id int) (*ShowReportsCashDrawerSessionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"})
-	resp, err := c.gen.ShowReportsCashDrawerSessionWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession"})
-	return resp, nil
-}
-
 // ListReportsCashDrawerSessionsClose runs the list_reports_cash_drawer_sessions_close operation (GET /reports/cash_drawer_sessions/{id}/close).
 func (c *Client) ListReportsCashDrawerSessionsClose(ctx context.Context, id int) (*ListReportsCashDrawerSessionsCloseResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListReportsCashDrawerSessionsClose"})
@@ -3659,23 +3829,6 @@ func (c *Client) ListReportsCashDrawerSessionsClose(ctx context.Context, id int)
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListReportsCashDrawerSessionsClose"}, OperationResult{Operation: "ListReportsCashDrawerSessionsClose"})
-	return resp, nil
-}
-
-// UpdateReportsCashDrawerSessionsConfirmClose runs the update_reports_cash_drawer_sessions_confirm_close operation (PATCH /reports/cash_drawer_sessions/{id}/confirm_close).
-func (c *Client) UpdateReportsCashDrawerSessionsConfirmClose(ctx context.Context, id int, body UpdateReportsCashDrawerSessionsConfirmCloseRequest) (*UpdateReportsCashDrawerSessionsConfirmCloseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"})
-	resp, err := c.gen.UpdateReportsCashDrawerSessionsConfirmCloseWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"})
 	return resp, nil
 }
 
@@ -3900,40 +4053,6 @@ func (c *Client) ListReportsTaxPeriods(ctx context.Context) (*ListReportsTaxPeri
 	return resp, nil
 }
 
-// CreateReportsTaxPeriod runs the create_reports_tax_period operation (POST /reports/tax_periods).
-func (c *Client) CreateReportsTaxPeriod(ctx context.Context, body CreateReportsTaxPeriodRequest) (*CreateReportsTaxPeriodResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"})
-	resp, err := c.gen.CreateReportsTaxPeriodWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateReportsTaxPeriod"}, OperationResult{Operation: "CreateReportsTaxPeriod"})
-	return resp, nil
-}
-
-// UpdateReportsTaxPeriod runs the update_reports_tax_period operation (PATCH /reports/tax_periods/{id}).
-func (c *Client) UpdateReportsTaxPeriod(ctx context.Context, id int, body UpdateReportsTaxPeriodRequest) (*UpdateReportsTaxPeriodResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"})
-	resp, err := c.gen.UpdateReportsTaxPeriodWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod"})
-	return resp, nil
-}
-
 // ListReportsTechnicianProductivity runs the list_reports_technician_productivity operation (GET /reports/technician_productivity).
 func (c *Client) ListReportsTechnicianProductivity(ctx context.Context) (*ListReportsTechnicianProductivityResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListReportsTechnicianProductivity"})
@@ -3985,108 +4104,6 @@ func (c *Client) ListServiceCategoriesRaw(ctx context.Context) (*ListServiceCate
 	return resp, nil
 }
 
-// CreateServiceCategory runs the create_service_category operation (POST /service_categories).
-func (c *Client) CreateServiceCategory(ctx context.Context, body CreateServiceCategoryRequest) (*CreateServiceCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateServiceCategory"})
-	resp, err := c.gen.CreateServiceCategoryWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateServiceCategory"}, OperationResult{Operation: "CreateServiceCategory"})
-	return resp, nil
-}
-
-// SeedDefaultsServiceCategories runs the seed_defaults_service_categories operation (POST /service_categories/seed_defaults).
-func (c *Client) SeedDefaultsServiceCategories(ctx context.Context, body SeedDefaultsServiceCategoriesRequest) (*SeedDefaultsServiceCategoriesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"})
-	resp, err := c.gen.SeedDefaultsServiceCategoriesWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories"})
-	return resp, nil
-}
-
-// UpdateServiceCategory runs the update_service_category operation (PATCH /service_categories/{id}).
-func (c *Client) UpdateServiceCategory(ctx context.Context, id int, body UpdateServiceCategoryRequest) (*UpdateServiceCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateServiceCategory"})
-	resp, err := c.gen.UpdateServiceCategoryWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory"})
-	return resp, nil
-}
-
-// ArchiveServiceCategory runs the archive_service_category operation (PATCH /service_categories/{id}/archive).
-func (c *Client) ArchiveServiceCategory(ctx context.Context, id int, body ArchiveServiceCategoryRequest) (*ArchiveServiceCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveServiceCategory"})
-	resp, err := c.gen.ArchiveServiceCategoryWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveServiceCategory"}, OperationResult{Operation: "ArchiveServiceCategory"})
-	return resp, nil
-}
-
-// RestoreServiceCategory runs the restore_service_category operation (PATCH /service_categories/{id}/restore).
-func (c *Client) RestoreServiceCategory(ctx context.Context, id int, body RestoreServiceCategoryRequest) (*RestoreServiceCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreServiceCategory"})
-	resp, err := c.gen.RestoreServiceCategoryWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory"})
-	return resp, nil
-}
-
-// TrashServiceCategory runs the trash_service_category operation (PATCH /service_categories/{id}/trash).
-func (c *Client) TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryRequest) (*TrashServiceCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashServiceCategory"})
-	resp, err := c.gen.TrashServiceCategoryWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory"})
-	return resp, nil
-}
-
 // ListShopDiscountsRaw runs the list_shop_discounts operation (GET /shop_discounts).
 func (c *Client) ListShopDiscountsRaw(ctx context.Context) (*ListShopDiscountsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListShopDiscounts"})
@@ -4101,74 +4118,6 @@ func (c *Client) ListShopDiscountsRaw(ctx context.Context) (*ListShopDiscountsRe
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListShopDiscounts"}, OperationResult{Operation: "ListShopDiscounts"})
-	return resp, nil
-}
-
-// CreateShopDiscount runs the create_shop_discount operation (POST /shop_discounts).
-func (c *Client) CreateShopDiscount(ctx context.Context, body CreateShopDiscountRequest) (*CreateShopDiscountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopDiscount"})
-	resp, err := c.gen.CreateShopDiscountWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscount"}, OperationResult{Operation: "CreateShopDiscount"})
-	return resp, nil
-}
-
-// DeleteShopDiscount runs the delete_shop_discount operation (DELETE /shop_discounts/{id}).
-func (c *Client) DeleteShopDiscount(ctx context.Context, id int) (*DeleteShopDiscountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteShopDiscount"})
-	resp, err := c.gen.DeleteShopDiscountWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopDiscount"}, OperationResult{Operation: "DeleteShopDiscount"})
-	return resp, nil
-}
-
-// UpdateShopDiscount runs the update_shop_discount operation (PATCH /shop_discounts/{id}).
-func (c *Client) UpdateShopDiscount(ctx context.Context, id int, body UpdateShopDiscountRequest) (*UpdateShopDiscountResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateShopDiscount"})
-	resp, err := c.gen.UpdateShopDiscountWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount"})
-	return resp, nil
-}
-
-// CreateShopDiscountsDuplicate runs the create_shop_discounts_duplicate operation (POST /shop_discounts/{id}/duplicate).
-func (c *Client) CreateShopDiscountsDuplicate(ctx context.Context, id int, body CreateShopDiscountsDuplicateRequest) (*CreateShopDiscountsDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"})
-	resp, err := c.gen.CreateShopDiscountsDuplicateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopDiscountsDuplicate"}, OperationResult{Operation: "CreateShopDiscountsDuplicate"})
 	return resp, nil
 }
 
@@ -4189,125 +4138,6 @@ func (c *Client) ListShopFeesRaw(ctx context.Context) (*ListShopFeesResponse, er
 	return resp, nil
 }
 
-// CreateShopFee runs the create_shop_fee operation (POST /shop_fees).
-func (c *Client) CreateShopFee(ctx context.Context, body CreateShopFeeRequest) (*CreateShopFeeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopFee"})
-	resp, err := c.gen.CreateShopFeeWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFee"}, OperationResult{Operation: "CreateShopFee"})
-	return resp, nil
-}
-
-// DeleteShopFee runs the delete_shop_fee operation (DELETE /shop_fees/{id}).
-func (c *Client) DeleteShopFee(ctx context.Context, id int) (*DeleteShopFeeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteShopFee"})
-	resp, err := c.gen.DeleteShopFeeWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteShopFee"}, OperationResult{Operation: "DeleteShopFee"})
-	return resp, nil
-}
-
-// UpdateShopFee runs the update_shop_fee operation (PATCH /shop_fees/{id}).
-func (c *Client) UpdateShopFee(ctx context.Context, id int, body UpdateShopFeeRequest) (*UpdateShopFeeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateShopFee"})
-	resp, err := c.gen.UpdateShopFeeWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee"})
-	return resp, nil
-}
-
-// CreateShopFeesDuplicate runs the create_shop_fees_duplicate operation (POST /shop_fees/{id}/duplicate).
-func (c *Client) CreateShopFeesDuplicate(ctx context.Context, id int, body CreateShopFeesDuplicateRequest) (*CreateShopFeesDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"})
-	resp, err := c.gen.CreateShopFeesDuplicateWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateShopFeesDuplicate"}, OperationResult{Operation: "CreateShopFeesDuplicate"})
-	return resp, nil
-}
-
-// CreateStatementsBulkSend runs the create_statements_bulk_send operation (POST /statements/bulk_send).
-func (c *Client) CreateStatementsBulkSend(ctx context.Context, body CreateStatementsBulkSendRequest) (*CreateStatementsBulkSendResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"})
-	resp, err := c.gen.CreateStatementsBulkSendWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsBulkSend"}, OperationResult{Operation: "CreateStatementsBulkSend"})
-	return resp, nil
-}
-
-// CreateStatementsGenerate runs the create_statements_generate operation (POST /statements/generate).
-func (c *Client) CreateStatementsGenerate(ctx context.Context, body CreateStatementsGenerateRequest) (*CreateStatementsGenerateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStatementsGenerate"})
-	resp, err := c.gen.CreateStatementsGenerateWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate"})
-	return resp, nil
-}
-
-// ShowStatement runs the show_statement operation (GET /statements/{id}).
-func (c *Client) ShowStatement(ctx context.Context, id int) (*ShowStatementResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowStatement"})
-	resp, err := c.gen.ShowStatementWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement"})
-	return resp, nil
-}
-
 // ListStatementsPayments runs the list_statements_payments operation (GET /statements/{statement_id}/payments).
 func (c *Client) ListStatementsPayments(ctx context.Context, statementId int) (*ListStatementsPaymentsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListStatementsPayments"})
@@ -4322,23 +4152,6 @@ func (c *Client) ListStatementsPayments(ctx context.Context, statementId int) (*
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListStatementsPayments"}, OperationResult{Operation: "ListStatementsPayments"})
-	return resp, nil
-}
-
-// CreateStoreCreditsVoid runs the create_store_credits_void operation (POST /store_credits/{store_credit_id}/voids).
-func (c *Client) CreateStoreCreditsVoid(ctx context.Context, storeCreditId int, body CreateStoreCreditsVoidRequest) (*CreateStoreCreditsVoidResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"})
-	resp, err := c.gen.CreateStoreCreditsVoidWithResponse(ctx, storeCreditId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsVoid"}, OperationResult{Operation: "CreateStoreCreditsVoid"})
 	return resp, nil
 }
 
@@ -4359,40 +4172,6 @@ func (c *Client) ListSubStatusesRaw(ctx context.Context) (*ListSubStatusesRespon
 	return resp, nil
 }
 
-// CreateSubStatus runs the create_sub_status operation (POST /sub_statuses).
-func (c *Client) CreateSubStatus(ctx context.Context, body CreateSubStatusRequest) (*CreateSubStatusResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubStatus"})
-	resp, err := c.gen.CreateSubStatusWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubStatus"}, OperationResult{Operation: "CreateSubStatus"})
-	return resp, nil
-}
-
-// UpdateSubStatus runs the update_sub_status operation (PATCH /sub_statuses/{id}).
-func (c *Client) UpdateSubStatus(ctx context.Context, id int, body UpdateSubStatusRequest) (*UpdateSubStatusResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubStatus"})
-	resp, err := c.gen.UpdateSubStatusWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus"})
-	return resp, nil
-}
-
 // ListSubletPackages runs the list_sublet_packages operation (GET /sublet_packages).
 func (c *Client) ListSubletPackages(ctx context.Context) (*ListSubletPackagesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListSubletPackages"})
@@ -4407,91 +4186,6 @@ func (c *Client) ListSubletPackages(ctx context.Context) (*ListSubletPackagesRes
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListSubletPackages"}, OperationResult{Operation: "ListSubletPackages"})
-	return resp, nil
-}
-
-// CreateSubletPackage runs the create_sublet_package operation (POST /sublet_packages).
-func (c *Client) CreateSubletPackage(ctx context.Context, body CreateSubletPackageRequest) (*CreateSubletPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateSubletPackage"})
-	resp, err := c.gen.CreateSubletPackageWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateSubletPackage"}, OperationResult{Operation: "CreateSubletPackage"})
-	return resp, nil
-}
-
-// DeleteSubletPackage runs the delete_sublet_package operation (DELETE /sublet_packages/{id}).
-func (c *Client) DeleteSubletPackage(ctx context.Context, id int) (*DeleteSubletPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteSubletPackage"})
-	resp, err := c.gen.DeleteSubletPackageWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteSubletPackage"}, OperationResult{Operation: "DeleteSubletPackage"})
-	return resp, nil
-}
-
-// UpdateSubletPackage runs the update_sublet_package operation (PATCH /sublet_packages/{id}).
-func (c *Client) UpdateSubletPackage(ctx context.Context, id int, body UpdateSubletPackageRequest) (*UpdateSubletPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubletPackage"})
-	resp, err := c.gen.UpdateSubletPackageWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage"})
-	return resp, nil
-}
-
-// UpdateSubletPackagesDeactivate runs the update_sublet_packages_deactivate operation (PATCH /sublet_packages/{id}/deactivate).
-func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int) (*UpdateSubletPackagesDeactivateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"})
-	resp, err := c.gen.UpdateSubletPackagesDeactivateWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate"})
-	return resp, nil
-}
-
-// CreateWorkOrderTechAssignment runs the create_work_order_tech_assignment operation (POST /tech_assignments).
-func (c *Client) CreateWorkOrderTechAssignment(ctx context.Context, params *CreateWorkOrderTechAssignmentParams, body CreateWorkOrderTechAssignmentRequest) (*CreateWorkOrderTechAssignmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"})
-	resp, err := c.gen.CreateWorkOrderTechAssignmentWithResponse(ctx, params, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTechAssignment"}, OperationResult{Operation: "CreateWorkOrderTechAssignment"})
 	return resp, nil
 }
 
@@ -4512,40 +4206,6 @@ func (c *Client) ListTireEvents(ctx context.Context) (*ListTireEventsResponse, e
 	return resp, nil
 }
 
-// CreateTireEvent runs the create_tire_event operation (POST /tire_events).
-func (c *Client) CreateTireEvent(ctx context.Context, body CreateTireEventRequest) (*CreateTireEventResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireEvent"})
-	resp, err := c.gen.CreateTireEventWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireEvent"}, OperationResult{Operation: "CreateTireEvent"})
-	return resp, nil
-}
-
-// ShowTireEvent runs the show_tire_event operation (GET /tire_events/{id}).
-func (c *Client) ShowTireEvent(ctx context.Context, id int) (*ShowTireEventResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTireEvent"})
-	resp, err := c.gen.ShowTireEventWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent"})
-	return resp, nil
-}
-
 // ListTireStorageSlots runs the list_tire_storage_slots operation (GET /tire_storage_slots).
 func (c *Client) ListTireStorageSlots(ctx context.Context) (*ListTireStorageSlotsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListTireStorageSlots"})
@@ -4560,91 +4220,6 @@ func (c *Client) ListTireStorageSlots(ctx context.Context) (*ListTireStorageSlot
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListTireStorageSlots"}, OperationResult{Operation: "ListTireStorageSlots"})
-	return resp, nil
-}
-
-// CreateTireStorageSlot runs the create_tire_storage_slot operation (POST /tire_storage_slots).
-func (c *Client) CreateTireStorageSlot(ctx context.Context, body CreateTireStorageSlotRequest) (*CreateTireStorageSlotResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireStorageSlot"})
-	resp, err := c.gen.CreateTireStorageSlotWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlot"}, OperationResult{Operation: "CreateTireStorageSlot"})
-	return resp, nil
-}
-
-// DeleteTireStorageSlot runs the delete_tire_storage_slot operation (DELETE /tire_storage_slots/{id}).
-func (c *Client) DeleteTireStorageSlot(ctx context.Context, id int) (*DeleteTireStorageSlotResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"})
-	resp, err := c.gen.DeleteTireStorageSlotWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTireStorageSlot"}, OperationResult{Operation: "DeleteTireStorageSlot"})
-	return resp, nil
-}
-
-// ShowTireStorageSlot runs the show_tire_storage_slot operation (GET /tire_storage_slots/{id}).
-func (c *Client) ShowTireStorageSlot(ctx context.Context, id int) (*ShowTireStorageSlotResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTireStorageSlot"})
-	resp, err := c.gen.ShowTireStorageSlotWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot"})
-	return resp, nil
-}
-
-// UpdateTireStorageSlot runs the update_tire_storage_slot operation (PATCH /tire_storage_slots/{id}).
-func (c *Client) UpdateTireStorageSlot(ctx context.Context, id int, body UpdateTireStorageSlotRequest) (*UpdateTireStorageSlotResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"})
-	resp, err := c.gen.UpdateTireStorageSlotWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot"})
-	return resp, nil
-}
-
-// CreateTireStorageSlotsCheckOut runs the create_tire_storage_slots_check_out operation (POST /tire_storage_slots/{tire_storage_slot_id}/check_outs).
-func (c *Client) CreateTireStorageSlotsCheckOut(ctx context.Context, tireStorageSlotId int, body CreateTireStorageSlotsCheckOutRequest) (*CreateTireStorageSlotsCheckOutResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"})
-	resp, err := c.gen.CreateTireStorageSlotsCheckOutWithResponse(ctx, tireStorageSlotId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTireStorageSlotsCheckOut"}, OperationResult{Operation: "CreateTireStorageSlotsCheckOut"})
 	return resp, nil
 }
 
@@ -4665,74 +4240,6 @@ func (c *Client) ListTires(ctx context.Context) (*ListTiresResponse, error) {
 	return resp, nil
 }
 
-// CreateTire runs the create_tire operation (POST /tires).
-func (c *Client) CreateTire(ctx context.Context, body CreateTireRequest) (*CreateTireResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateTire"})
-	resp, err := c.gen.CreateTireWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateTire"}, OperationResult{Operation: "CreateTire"})
-	return resp, nil
-}
-
-// DeleteTire runs the delete_tire operation (DELETE /tires/{id}).
-func (c *Client) DeleteTire(ctx context.Context, id int) (*DeleteTireResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteTire"})
-	resp, err := c.gen.DeleteTireWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteTire"}, OperationResult{Operation: "DeleteTire"})
-	return resp, nil
-}
-
-// ShowTire runs the show_tire operation (GET /tires/{id}).
-func (c *Client) ShowTire(ctx context.Context, id int) (*ShowTireResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTire"})
-	resp, err := c.gen.ShowTireWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire"})
-	return resp, nil
-}
-
-// UpdateTire runs the update_tire operation (PATCH /tires/{id}).
-func (c *Client) UpdateTire(ctx context.Context, id int, body UpdateTireRequest) (*UpdateTireResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTire"})
-	resp, err := c.gen.UpdateTireWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire"})
-	return resp, nil
-}
-
 // ListUsersRaw runs the list_users operation (GET /users).
 func (c *Client) ListUsersRaw(ctx context.Context, params *ListUsersParams) (*ListUsersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListUsers"})
@@ -4747,193 +4254,6 @@ func (c *Client) ListUsersRaw(ctx context.Context, params *ListUsersParams) (*Li
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListUsers"}, OperationResult{Operation: "ListUsers"})
-	return resp, nil
-}
-
-// CreateUser runs the create_user operation (POST /users).
-func (c *Client) CreateUser(ctx context.Context, body CreateUserRequest) (*CreateUserResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUser"})
-	resp, err := c.gen.CreateUserWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUser"}, OperationResult{Operation: "CreateUser"})
-	return resp, nil
-}
-
-// ListPermissionGroups runs the list_permission_groups operation (GET /users/permission_groups).
-func (c *Client) ListPermissionGroups(ctx context.Context) (*ListPermissionGroupsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListPermissionGroups"})
-	resp, err := c.gen.ListPermissionGroupsWithResponse(ctx)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListPermissionGroups"}, OperationResult{Operation: "ListPermissionGroups"})
-	return resp, nil
-}
-
-// CreatePermissionGroup runs the create_permission_group operation (POST /users/permission_groups).
-func (c *Client) CreatePermissionGroup(ctx context.Context, body CreatePermissionGroupRequest) (*CreatePermissionGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreatePermissionGroup"})
-	resp, err := c.gen.CreatePermissionGroupWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreatePermissionGroup"}, OperationResult{Operation: "CreatePermissionGroup"})
-	return resp, nil
-}
-
-// UpdatePermissionGroup runs the update_permission_group operation (PATCH /users/permission_groups/{id}).
-func (c *Client) UpdatePermissionGroup(ctx context.Context, id int, body UpdatePermissionGroupRequest) (*UpdatePermissionGroupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePermissionGroup"})
-	resp, err := c.gen.UpdatePermissionGroupWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup"})
-	return resp, nil
-}
-
-// CreateUsersPermissionGroupsAssign runs the create_users_permission_groups_assign operation (POST /users/permission_groups/{id}/assign).
-func (c *Client) CreateUsersPermissionGroupsAssign(ctx context.Context, id int, body CreateUsersPermissionGroupsAssignRequest) (*CreateUsersPermissionGroupsAssignResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"})
-	resp, err := c.gen.CreateUsersPermissionGroupsAssignWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersPermissionGroupsAssign"}, OperationResult{Operation: "CreateUsersPermissionGroupsAssign"})
-	return resp, nil
-}
-
-// DeleteUsersPermissionGroupsUnassign runs the delete_users_permission_groups_unassign operation (DELETE /users/permission_groups/{id}/unassign).
-func (c *Client) DeleteUsersPermissionGroupsUnassign(ctx context.Context, id int, params *DeleteUsersPermissionGroupsUnassignParams) (*DeleteUsersPermissionGroupsUnassignResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"})
-	resp, err := c.gen.DeleteUsersPermissionGroupsUnassignWithResponse(ctx, id, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUsersPermissionGroupsUnassign"}, OperationResult{Operation: "DeleteUsersPermissionGroupsUnassign"})
-	return resp, nil
-}
-
-// DeleteUser runs the delete_user operation (DELETE /users/{id}).
-func (c *Client) DeleteUser(ctx context.Context, id int) (*DeleteUserResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteUser"})
-	resp, err := c.gen.DeleteUserWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteUser"}, OperationResult{Operation: "DeleteUser"})
-	return resp, nil
-}
-
-// ShowUser runs the show_user operation (GET /users/{id}).
-func (c *Client) ShowUser(ctx context.Context, id int) (*ShowUserResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowUser"})
-	resp, err := c.gen.ShowUserWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser"})
-	return resp, nil
-}
-
-// UpdateUser runs the update_user operation (PATCH /users/{id}).
-func (c *Client) UpdateUser(ctx context.Context, id int, body UpdateUserRequest) (*UpdateUserResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateUser"})
-	resp, err := c.gen.UpdateUserWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser"})
-	return resp, nil
-}
-
-// CreateUsersDisable runs the create_users_disable operation (POST /users/{id}/disable).
-func (c *Client) CreateUsersDisable(ctx context.Context, id int, body CreateUsersDisableRequest) (*CreateUsersDisableResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersDisable"})
-	resp, err := c.gen.CreateUsersDisableWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersDisable"}, OperationResult{Operation: "CreateUsersDisable"})
-	return resp, nil
-}
-
-// CreateUsersEnable runs the create_users_enable operation (POST /users/{id}/enable).
-func (c *Client) CreateUsersEnable(ctx context.Context, id int, body CreateUsersEnableRequest) (*CreateUsersEnableResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersEnable"})
-	resp, err := c.gen.CreateUsersEnableWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersEnable"}, OperationResult{Operation: "CreateUsersEnable"})
 	return resp, nil
 }
 
@@ -4954,74 +4274,6 @@ func (c *Client) ListUsersQrCode(ctx context.Context, id int) (*ListUsersQrCodeR
 	return resp, nil
 }
 
-// CreateUsersResetPin runs the create_users_reset_pin operation (POST /users/{id}/reset_pin).
-func (c *Client) CreateUsersResetPin(ctx context.Context, id int, body CreateUsersResetPinRequest) (*CreateUsersResetPinResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersResetPin"})
-	resp, err := c.gen.CreateUsersResetPinWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersResetPin"}, OperationResult{Operation: "CreateUsersResetPin"})
-	return resp, nil
-}
-
-// CreateUsersSendConfirmation runs the create_users_send_confirmation operation (POST /users/{id}/send_confirmation).
-func (c *Client) CreateUsersSendConfirmation(ctx context.Context, id int, body CreateUsersSendConfirmationRequest) (*CreateUsersSendConfirmationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"})
-	resp, err := c.gen.CreateUsersSendConfirmationWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendConfirmation"}, OperationResult{Operation: "CreateUsersSendConfirmation"})
-	return resp, nil
-}
-
-// CreateUsersSendPasswordReset runs the create_users_send_password_reset operation (POST /users/{id}/send_password_reset).
-func (c *Client) CreateUsersSendPasswordReset(ctx context.Context, id int, body CreateUsersSendPasswordResetRequest) (*CreateUsersSendPasswordResetResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"})
-	resp, err := c.gen.CreateUsersSendPasswordResetWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersSendPasswordReset"}, OperationResult{Operation: "CreateUsersSendPasswordReset"})
-	return resp, nil
-}
-
-// CreateUsersUnlock runs the create_users_unlock operation (POST /users/{id}/unlock).
-func (c *Client) CreateUsersUnlock(ctx context.Context, id int, body CreateUsersUnlockRequest) (*CreateUsersUnlockResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateUsersUnlock"})
-	resp, err := c.gen.CreateUsersUnlockWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateUsersUnlock"}, OperationResult{Operation: "CreateUsersUnlock"})
-	return resp, nil
-}
-
 // ListVehiclesRaw runs the list_vehicles operation (GET /vehicles).
 func (c *Client) ListVehiclesRaw(ctx context.Context, params *ListVehiclesParams) (*ListVehiclesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVehicles"})
@@ -5039,40 +4291,6 @@ func (c *Client) ListVehiclesRaw(ctx context.Context, params *ListVehiclesParams
 	return resp, nil
 }
 
-// CreateVehicle runs the create_vehicle operation (POST /vehicles).
-func (c *Client) CreateVehicle(ctx context.Context, body CreateVehicleRequest) (*CreateVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateVehicle"})
-	resp, err := c.gen.CreateVehicleWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVehicle"}, OperationResult{Operation: "CreateVehicle"})
-	return resp, nil
-}
-
-// CheckVehicleDuplicate runs the check_vehicle_duplicate operation (GET /vehicles/check_duplicate).
-func (c *Client) CheckVehicleDuplicate(ctx context.Context, params *CheckVehicleDuplicateParams) (*CheckVehicleDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"})
-	resp, err := c.gen.CheckVehicleDuplicateWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CheckVehicleDuplicate"}, OperationResult{Operation: "CheckVehicleDuplicate"})
-	return resp, nil
-}
-
 // ListVehiclesCustomerVehicles runs the list_vehicles_customer_vehicles operation (GET /vehicles/customer_vehicles).
 func (c *Client) ListVehiclesCustomerVehicles(ctx context.Context, params *ListVehiclesCustomerVehiclesParams) (*ListVehiclesCustomerVehiclesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVehiclesCustomerVehicles"})
@@ -5087,159 +4305,6 @@ func (c *Client) ListVehiclesCustomerVehicles(ctx context.Context, params *ListV
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVehiclesCustomerVehicles"}, OperationResult{Operation: "ListVehiclesCustomerVehicles"})
-	return resp, nil
-}
-
-// PrefillVehicle runs the prefill_vehicle operation (GET /vehicles/prefill).
-func (c *Client) PrefillVehicle(ctx context.Context, params *PrefillVehicleParams) (*PrefillVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "PrefillVehicle"})
-	resp, err := c.gen.PrefillVehicleWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle"})
-	return resp, nil
-}
-
-// DecodeVin runs the decode_vin operation (GET /vehicles/vin_decode).
-func (c *Client) DecodeVin(ctx context.Context, params *DecodeVinParams) (*DecodeVinResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DecodeVin"})
-	resp, err := c.gen.DecodeVinWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DecodeVin"}, OperationResult{Operation: "DecodeVin"})
-	return resp, nil
-}
-
-// ShowVehicle runs the show_vehicle operation (GET /vehicles/{id}).
-func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVehicle"})
-	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle"})
-	return resp, nil
-}
-
-// UpdateVehicle runs the update_vehicle operation (PATCH /vehicles/{id}).
-func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleRequest) (*UpdateVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateVehicle"})
-	resp, err := c.gen.UpdateVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle"})
-	return resp, nil
-}
-
-// ArchiveVehicle runs the archive_vehicle operation (PATCH /vehicles/{id}/archive).
-func (c *Client) ArchiveVehicle(ctx context.Context, id int, body ArchiveVehicleRequest) (*ArchiveVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVehicle"})
-	resp, err := c.gen.ArchiveVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVehicle"}, OperationResult{Operation: "ArchiveVehicle"})
-	return resp, nil
-}
-
-// MergeVehicle runs the merge_vehicle operation (POST /vehicles/{id}/merges).
-func (c *Client) MergeVehicle(ctx context.Context, id int, body MergeVehicleRequest) (*MergeVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeVehicle"})
-	resp, err := c.gen.MergeVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle"})
-	return resp, nil
-}
-
-// RestoreVehicle runs the restore_vehicle operation (PATCH /vehicles/{id}/restore).
-func (c *Client) RestoreVehicle(ctx context.Context, id int, body RestoreVehicleRequest) (*RestoreVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVehicle"})
-	resp, err := c.gen.RestoreVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle"})
-	return resp, nil
-}
-
-// TransferVehicle runs the transfer_vehicle operation (POST /vehicles/{id}/transfers).
-func (c *Client) TransferVehicle(ctx context.Context, id int, body TransferVehicleRequest) (*TransferVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TransferVehicle"})
-	resp, err := c.gen.TransferVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle"})
-	return resp, nil
-}
-
-// TrashVehicle runs the trash_vehicle operation (PATCH /vehicles/{id}/trash).
-func (c *Client) TrashVehicle(ctx context.Context, id int, body TrashVehicleRequest) (*TrashVehicleResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVehicle"})
-	resp, err := c.gen.TrashVehicleWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle"})
 	return resp, nil
 }
 
@@ -5277,108 +4342,6 @@ func (c *Client) ListVendorsRaw(ctx context.Context) (*ListVendorsResponse, erro
 	return resp, nil
 }
 
-// CreateVendor runs the create_vendor operation (POST /vendors).
-func (c *Client) CreateVendor(ctx context.Context, body CreateVendorRequest) (*CreateVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateVendor"})
-	resp, err := c.gen.CreateVendorWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateVendor"}, OperationResult{Operation: "CreateVendor"})
-	return resp, nil
-}
-
-// ShowVendor runs the show_vendor operation (GET /vendors/{id}).
-func (c *Client) ShowVendor(ctx context.Context, id int) (*ShowVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVendor"})
-	resp, err := c.gen.ShowVendorWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor"})
-	return resp, nil
-}
-
-// UpdateVendor runs the update_vendor operation (PATCH /vendors/{id}).
-func (c *Client) UpdateVendor(ctx context.Context, id int, body UpdateVendorRequest) (*UpdateVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateVendor"})
-	resp, err := c.gen.UpdateVendorWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor"})
-	return resp, nil
-}
-
-// ArchiveVendor runs the archive_vendor operation (PATCH /vendors/{id}/archive).
-func (c *Client) ArchiveVendor(ctx context.Context, id int, body ArchiveVendorRequest) (*ArchiveVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ArchiveVendor"})
-	resp, err := c.gen.ArchiveVendorWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ArchiveVendor"}, OperationResult{Operation: "ArchiveVendor"})
-	return resp, nil
-}
-
-// RestoreVendor runs the restore_vendor operation (PATCH /vendors/{id}/restore).
-func (c *Client) RestoreVendor(ctx context.Context, id int, body RestoreVendorRequest) (*RestoreVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVendor"})
-	resp, err := c.gen.RestoreVendorWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor"})
-	return resp, nil
-}
-
-// TrashVendor runs the trash_vendor operation (PATCH /vendors/{id}/trash).
-func (c *Client) TrashVendor(ctx context.Context, id int, body TrashVendorRequest) (*TrashVendorResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVendor"})
-	resp, err := c.gen.TrashVendorWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor"})
-	return resp, nil
-}
-
 // ListVendorsPurchaseOrdersRaw runs the list_vendors_purchase_orders operation (GET /vendors/{vendor_id}/purchase_orders).
 func (c *Client) ListVendorsPurchaseOrdersRaw(ctx context.Context, vendorId int) (*ListVendorsPurchaseOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListVendorsPurchaseOrders"})
@@ -5393,6 +4356,23 @@ func (c *Client) ListVendorsPurchaseOrdersRaw(ctx context.Context, vendorId int)
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListVendorsPurchaseOrders"}, OperationResult{Operation: "ListVendorsPurchaseOrders"})
+	return resp, nil
+}
+
+// ListWorkOrderServices runs the list_work_order_services operation (GET /work_orders/{work_order_id}/services).
+func (c *Client) ListWorkOrderServices(ctx context.Context, workOrderId int) (*ListWorkOrderServicesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrderServices"})
+	resp, err := c.gen.ListWorkOrderServicesWithResponse(ctx, workOrderId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices"})
 	return resp, nil
 }
 
@@ -5413,57 +4393,6 @@ func (c *Client) ListWorkOrderTags(ctx context.Context) (*ListWorkOrderTagsRespo
 	return resp, nil
 }
 
-// CreateWorkOrderTag runs the create_work_order_tag operation (POST /work_order_tags).
-func (c *Client) CreateWorkOrderTag(ctx context.Context, body CreateWorkOrderTagRequest) (*CreateWorkOrderTagResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderTag"})
-	resp, err := c.gen.CreateWorkOrderTagWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderTag"}, OperationResult{Operation: "CreateWorkOrderTag"})
-	return resp, nil
-}
-
-// UpdateWorkOrderTag runs the update_work_order_tag operation (PATCH /work_order_tags/{id}).
-func (c *Client) UpdateWorkOrderTag(ctx context.Context, id int, body UpdateWorkOrderTagRequest) (*UpdateWorkOrderTagResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"})
-	resp, err := c.gen.UpdateWorkOrderTagWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag"})
-	return resp, nil
-}
-
-// UpdateWorkOrderTagsArchive runs the update_work_order_tags_archive operation (PATCH /work_order_tags/{id}/archive).
-func (c *Client) UpdateWorkOrderTagsArchive(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveRequest) (*UpdateWorkOrderTagsArchiveResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"})
-	resp, err := c.gen.UpdateWorkOrderTagsArchiveWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive"})
-	return resp, nil
-}
-
 // ListWorkOrdersRaw runs the list_work_orders operation (GET /work_orders).
 func (c *Client) ListWorkOrdersRaw(ctx context.Context, params *ListWorkOrdersParams) (*ListWorkOrdersResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrders"})
@@ -5478,74 +4407,6 @@ func (c *Client) ListWorkOrdersRaw(ctx context.Context, params *ListWorkOrdersPa
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrders"}, OperationResult{Operation: "ListWorkOrders"})
-	return resp, nil
-}
-
-// CreateWorkOrder runs the create_work_order operation (POST /work_orders).
-func (c *Client) CreateWorkOrder(ctx context.Context, body CreateWorkOrderRequest) (*CreateWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrder"})
-	resp, err := c.gen.CreateWorkOrderWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrder"}, OperationResult{Operation: "CreateWorkOrder"})
-	return resp, nil
-}
-
-// CreateWorkOrdersQuickIntake runs the create_work_orders_quick_intake operation (POST /work_orders/quick_intake).
-func (c *Client) CreateWorkOrdersQuickIntake(ctx context.Context, body CreateWorkOrdersQuickIntakeRequest) (*CreateWorkOrdersQuickIntakeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"})
-	resp, err := c.gen.CreateWorkOrdersQuickIntakeWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersQuickIntake"}, OperationResult{Operation: "CreateWorkOrdersQuickIntake"})
-	return resp, nil
-}
-
-// ShowWorkOrder runs the show_work_order operation (GET /work_orders/{id}).
-func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*ShowWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrder"})
-	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder"})
-	return resp, nil
-}
-
-// UpdateWorkOrder runs the update_work_order operation (PATCH /work_orders/{id}).
-func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderRequest) (*UpdateWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrder"})
-	resp, err := c.gen.UpdateWorkOrderWithResponse(ctx, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder"})
 	return resp, nil
 }
 
@@ -5600,122 +4461,207 @@ func (c *Client) ListWorkOrdersAuthorizationLogs(ctx context.Context, id int) (*
 	return resp, nil
 }
 
-// CloseWorkOrder runs the close_work_order operation (POST /work_orders/{id}/close).
-func (c *Client) CloseWorkOrder(ctx context.Context, id int, body CloseWorkOrderRequest) (*CloseWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CloseWorkOrder"})
-	resp, err := c.gen.CloseWorkOrderWithResponse(ctx, id, body)
+// ListWorkOrdersConcerns runs the list_work_orders_concerns operation (GET /work_orders/{work_order_id}/concerns).
+func (c *Client) ListWorkOrdersConcerns(ctx context.Context, workOrderId int) (*ListWorkOrdersConcernsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"})
+	resp, err := c.gen.ListWorkOrdersConcernsWithResponse(ctx, workOrderId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CloseWorkOrder"}, OperationResult{Operation: "CloseWorkOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns"})
 	return resp, nil
 }
 
-// CompleteWorkOrder runs the complete_work_order operation (POST /work_orders/{id}/complete).
-func (c *Client) CompleteWorkOrder(ctx context.Context, id int, body CompleteWorkOrderRequest) (*CompleteWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CompleteWorkOrder"})
-	resp, err := c.gen.CompleteWorkOrderWithResponse(ctx, id, body)
+// ListWorkOrdersPaymentLink runs the list_work_orders_payment_link operation (GET /work_orders/{work_order_id}/payment_link).
+func (c *Client) ListWorkOrdersPaymentLink(ctx context.Context, workOrderId int) (*ListWorkOrdersPaymentLinkResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"})
+	resp, err := c.gen.ListWorkOrdersPaymentLinkWithResponse(ctx, workOrderId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CompleteWorkOrder"}, OperationResult{Operation: "CompleteWorkOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink"})
 	return resp, nil
 }
 
-// DeleteWorkOrdersCourtesyCarAssignment runs the delete_work_orders_courtesy_car_assignment operation (DELETE /work_orders/{id}/courtesy_car_assignment).
-func (c *Client) DeleteWorkOrdersCourtesyCarAssignment(ctx context.Context, id int) (*DeleteWorkOrdersCourtesyCarAssignmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"})
-	resp, err := c.gen.DeleteWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id)
+// ListWorkOrdersReceipts runs the list_work_orders_receipts operation (GET /work_orders/{work_order_id}/receipts).
+func (c *Client) ListWorkOrdersReceipts(ctx context.Context, workOrderId int) (*ListWorkOrdersReceiptsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"})
+	resp, err := c.gen.ListWorkOrdersReceiptsWithResponse(ctx, workOrderId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "DeleteWorkOrdersCourtesyCarAssignment"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts"})
 	return resp, nil
 }
 
-// UpdateWorkOrdersCourtesyCarAssignment runs the update_work_orders_courtesy_car_assignment operation (PATCH /work_orders/{id}/courtesy_car_assignment).
-func (c *Client) UpdateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentRequest) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"})
-	resp, err := c.gen.UpdateWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id, body)
+// ListWorkOrdersServicesAdjustTime runs the list_work_orders_services_adjust_time operation (GET /work_orders/{work_order_id}/services/{id}/adjust_time).
+func (c *Client) ListWorkOrdersServicesAdjustTime(ctx context.Context, workOrderId int, id int) (*ListWorkOrdersServicesAdjustTimeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"})
+	resp, err := c.gen.ListWorkOrdersServicesAdjustTimeWithResponse(ctx, workOrderId, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime"})
 	return resp, nil
 }
 
-// CreateWorkOrdersCourtesyCarAssignment runs the create_work_orders_courtesy_car_assignment operation (POST /work_orders/{id}/courtesy_car_assignment).
-func (c *Client) CreateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body CreateWorkOrdersCourtesyCarAssignmentRequest) (*CreateWorkOrdersCourtesyCarAssignmentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"})
-	resp, err := c.gen.CreateWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id, body)
+// ListWorkOrdersServicesComments runs the list_work_orders_services_comments operation (GET /work_orders/{work_order_id}/services/{service_id}/comments).
+func (c *Client) ListWorkOrdersServicesComments(ctx context.Context, workOrderId int, serviceId int) (*ListWorkOrdersServicesCommentsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"})
+	resp, err := c.gen.ListWorkOrdersServicesCommentsWithResponse(ctx, workOrderId, serviceId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "CreateWorkOrdersCourtesyCarAssignment"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments"})
 	return resp, nil
 }
 
-// DeclineWorkOrder runs the decline_work_order operation (POST /work_orders/{id}/decline).
-func (c *Client) DeclineWorkOrder(ctx context.Context, id int, body DeclineWorkOrderRequest) (*DeclineWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeclineWorkOrder"})
-	resp, err := c.gen.DeclineWorkOrderWithResponse(ctx, id, body)
+// ListWorkOrdersServicesLineItems runs the list_work_orders_services_line_items operation (GET /work_orders/{work_order_id}/services/{service_id}/line_items).
+func (c *Client) ListWorkOrdersServicesLineItems(ctx context.Context, workOrderId int, serviceId int) (*ListWorkOrdersServicesLineItemsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"})
+	resp, err := c.gen.ListWorkOrdersServicesLineItemsWithResponse(ctx, workOrderId, serviceId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineWorkOrder"}, OperationResult{Operation: "DeclineWorkOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems"})
 	return resp, nil
 }
 
-// ShowWorkOrderDeclinedServices runs the show_work_order_declined_services operation (GET /work_orders/{id}/declined_services).
-func (c *Client) ShowWorkOrderDeclinedServices(ctx context.Context, id int) (*ShowWorkOrderDeclinedServicesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"})
-	resp, err := c.gen.ShowWorkOrderDeclinedServicesWithResponse(ctx, id)
+// ListWorkOrdersSubletOrdersRaw runs the list_work_orders_sublet_orders operation (GET /work_orders/{work_order_id}/sublet_orders).
+func (c *Client) ListWorkOrdersSubletOrdersRaw(ctx context.Context, workOrderId int) (*ListWorkOrdersSubletOrdersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"})
+	resp, err := c.gen.ListWorkOrdersSubletOrdersWithResponse(ctx, workOrderId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders"})
+	return resp, nil
+}
+
+// ListWorkOrdersTireStorage runs the list_work_orders_tire_storage operation (GET /work_orders/{work_order_id}/tire_storage).
+func (c *Client) ListWorkOrdersTireStorage(ctx context.Context, workOrderId int) (*ListWorkOrdersTireStorageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"})
+	resp, err := c.gen.ListWorkOrdersTireStorageWithResponse(ctx, workOrderId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage"})
+	return resp, nil
+}
+
+// ListWorkOrdersVehicleHistory runs the list_work_orders_vehicle_history operation (GET /work_orders/{id}/vehicle_history).
+func (c *Client) ListWorkOrdersVehicleHistory(ctx context.Context, id int) (*ListWorkOrdersVehicleHistoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"})
+	resp, err := c.gen.ListWorkOrdersVehicleHistoryWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory"})
+	return resp, nil
+}
+
+// MarkAllInspectionReport runs the mark_all_inspection_report operation (POST /inspection_reports/{id}/mark_all).
+func (c *Client) MarkAllInspectionReport(ctx context.Context, id int, body MarkAllInspectionReportRequest) (*MarkAllInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MarkAllInspectionReport"})
+	resp, err := c.gen.MarkAllInspectionReportWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MarkAllInspectionReport"}, OperationResult{Operation: "MarkAllInspectionReport"})
+	return resp, nil
+}
+
+// MergeCustomer runs the merge_customer operation (POST /customers/{id}/merges).
+func (c *Client) MergeCustomer(ctx context.Context, id int, body MergeCustomerRequest) (*MergeCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeCustomer"})
+	resp, err := c.gen.MergeCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeCustomer"}, OperationResult{Operation: "MergeCustomer"})
+	return resp, nil
+}
+
+// MergeVehicle runs the merge_vehicle operation (POST /vehicles/{id}/merges).
+func (c *Client) MergeVehicle(ctx context.Context, id int, body MergeVehicleRequest) (*MergeVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "MergeVehicle"})
+	resp, err := c.gen.MergeVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "MergeVehicle"}, OperationResult{Operation: "MergeVehicle"})
 	return resp, nil
 }
 
@@ -5736,6 +4682,91 @@ func (c *Client) PostWorkOrderToAccount(ctx context.Context, id int, body PostWo
 	return resp, nil
 }
 
+// PrefillVehicle runs the prefill_vehicle operation (GET /vehicles/prefill).
+func (c *Client) PrefillVehicle(ctx context.Context, params *PrefillVehicleParams) (*PrefillVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "PrefillVehicle"})
+	resp, err := c.gen.PrefillVehicleWithResponse(ctx, params)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PrefillVehicle"}, OperationResult{Operation: "PrefillVehicle"})
+	return resp, nil
+}
+
+// PullWorkOrderServiceLineItem runs the pull_work_order_service_line_item operation (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull).
+func (c *Client) PullWorkOrderServiceLineItem(ctx context.Context, workOrderId int, serviceId int, id int, body PullWorkOrderServiceLineItemRequest) (*PullWorkOrderServiceLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"})
+	resp, err := c.gen.PullWorkOrderServiceLineItemWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem"})
+	return resp, nil
+}
+
+// ReassignInspectionReport runs the reassign_inspection_report operation (PATCH /inspection_reports/{id}/reassign).
+func (c *Client) ReassignInspectionReport(ctx context.Context, id int, body ReassignInspectionReportRequest) (*ReassignInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReassignInspectionReport"})
+	resp, err := c.gen.ReassignInspectionReportWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReassignInspectionReport"}, OperationResult{Operation: "ReassignInspectionReport"})
+	return resp, nil
+}
+
+// RemoveDefaultInspection runs the remove_default_inspection operation (PATCH /inspections/{id}/remove_default).
+func (c *Client) RemoveDefaultInspection(ctx context.Context, id int, body RemoveDefaultInspectionRequest) (*RemoveDefaultInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RemoveDefaultInspection"})
+	resp, err := c.gen.RemoveDefaultInspectionWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RemoveDefaultInspection"}, OperationResult{Operation: "RemoveDefaultInspection"})
+	return resp, nil
+}
+
+// ReopenInspectionReport runs the reopen_inspection_report operation (PATCH /inspection_reports/{id}/reopen).
+func (c *Client) ReopenInspectionReport(ctx context.Context, id int, body ReopenInspectionReportRequest) (*ReopenInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReopenInspectionReport"})
+	resp, err := c.gen.ReopenInspectionReportWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenInspectionReport"}, OperationResult{Operation: "ReopenInspectionReport"})
+	return resp, nil
+}
+
 // ReopenWorkOrder runs the reopen_work_order operation (POST /work_orders/{id}/reopen).
 func (c *Client) ReopenWorkOrder(ctx context.Context, id int, body ReopenWorkOrderRequest) (*ReopenWorkOrderResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReopenWorkOrder"})
@@ -5750,6 +4781,210 @@ func (c *Client) ReopenWorkOrder(ctx context.Context, id int, body ReopenWorkOrd
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReopenWorkOrder"}, OperationResult{Operation: "ReopenWorkOrder"})
+	return resp, nil
+}
+
+// ResetInspectionReport runs the reset_inspection_report operation (PATCH /inspection_reports/{id}/reset).
+func (c *Client) ResetInspectionReport(ctx context.Context, id int, body ResetInspectionReportRequest) (*ResetInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ResetInspectionReport"})
+	resp, err := c.gen.ResetInspectionReportWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ResetInspectionReport"}, OperationResult{Operation: "ResetInspectionReport"})
+	return resp, nil
+}
+
+// RestoreCustomer runs the restore_customer operation (PATCH /customers/{id}/restore).
+func (c *Client) RestoreCustomer(ctx context.Context, id int, body RestoreCustomerRequest) (*RestoreCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreCustomer"})
+	resp, err := c.gen.RestoreCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreCustomer"}, OperationResult{Operation: "RestoreCustomer"})
+	return resp, nil
+}
+
+// RestoreInspection runs the restore_inspection operation (PATCH /inspections/{id}/restore).
+func (c *Client) RestoreInspection(ctx context.Context, id int, body RestoreInspectionRequest) (*RestoreInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreInspection"})
+	resp, err := c.gen.RestoreInspectionWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreInspection"}, OperationResult{Operation: "RestoreInspection"})
+	return resp, nil
+}
+
+// RestoreLaborRate runs the restore_labor_rate operation (PATCH /labor_rates/{id}/restore).
+func (c *Client) RestoreLaborRate(ctx context.Context, id int, body RestoreLaborRateRequest) (*RestoreLaborRateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreLaborRate"})
+	resp, err := c.gen.RestoreLaborRateWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreLaborRate"}, OperationResult{Operation: "RestoreLaborRate"})
+	return resp, nil
+}
+
+// RestorePackage runs the restore_package operation (PATCH /packages/{id}/restore).
+func (c *Client) RestorePackage(ctx context.Context, id int, body RestorePackageRequest) (*RestorePackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestorePackage"})
+	resp, err := c.gen.RestorePackageWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestorePackage"}, OperationResult{Operation: "RestorePackage"})
+	return resp, nil
+}
+
+// RestoreServiceCategory runs the restore_service_category operation (PATCH /service_categories/{id}/restore).
+func (c *Client) RestoreServiceCategory(ctx context.Context, id int, body RestoreServiceCategoryRequest) (*RestoreServiceCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreServiceCategory"})
+	resp, err := c.gen.RestoreServiceCategoryWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreServiceCategory"}, OperationResult{Operation: "RestoreServiceCategory"})
+	return resp, nil
+}
+
+// RestoreVehicle runs the restore_vehicle operation (PATCH /vehicles/{id}/restore).
+func (c *Client) RestoreVehicle(ctx context.Context, id int, body RestoreVehicleRequest) (*RestoreVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVehicle"})
+	resp, err := c.gen.RestoreVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVehicle"}, OperationResult{Operation: "RestoreVehicle"})
+	return resp, nil
+}
+
+// RestoreVendor runs the restore_vendor operation (PATCH /vendors/{id}/restore).
+func (c *Client) RestoreVendor(ctx context.Context, id int, body RestoreVendorRequest) (*RestoreVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RestoreVendor"})
+	resp, err := c.gen.RestoreVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RestoreVendor"}, OperationResult{Operation: "RestoreVendor"})
+	return resp, nil
+}
+
+// RetryInspectionReportRecording runs the retry_inspection_report_recording operation (POST /inspection_reports/{id}/retry_recording).
+func (c *Client) RetryInspectionReportRecording(ctx context.Context, id int, params *RetryInspectionReportRecordingParams, body RetryInspectionReportRecordingRequest) (*RetryInspectionReportRecordingResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"})
+	resp, err := c.gen.RetryInspectionReportRecordingWithResponse(ctx, id, params, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "RetryInspectionReportRecording"}, OperationResult{Operation: "RetryInspectionReportRecording"})
+	return resp, nil
+}
+
+// ReverseWorkOrderPaymentAr runs the reverse_work_order_payment_ar operation (DELETE /work_orders/{work_order_id}/payments/reverse_ar).
+func (c *Client) ReverseWorkOrderPaymentAr(ctx context.Context, workOrderId int) (*ReverseWorkOrderPaymentArResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"})
+	resp, err := c.gen.ReverseWorkOrderPaymentArWithResponse(ctx, workOrderId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr"})
+	return resp, nil
+}
+
+// SeedDefaultsServiceCategories runs the seed_defaults_service_categories operation (POST /service_categories/seed_defaults).
+func (c *Client) SeedDefaultsServiceCategories(ctx context.Context, body SeedDefaultsServiceCategoriesRequest) (*SeedDefaultsServiceCategoriesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"})
+	resp, err := c.gen.SeedDefaultsServiceCategoriesWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SeedDefaultsServiceCategories"}, OperationResult{Operation: "SeedDefaultsServiceCategories"})
+	return resp, nil
+}
+
+// SendCampaign runs the send_campaign operation (POST /campaigns/{id}/send_campaign).
+func (c *Client) SendCampaign(ctx context.Context, id int, body SendCampaignRequest) (*SendCampaignResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SendCampaign"})
+	resp, err := c.gen.SendCampaignWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendCampaign"}, OperationResult{Operation: "SendCampaign"})
 	return resp, nil
 }
 
@@ -5787,6 +5022,23 @@ func (c *Client) SendWorkOrderInvoiceSummary(ctx context.Context, id int, body S
 	return resp, nil
 }
 
+// SendWorkOrderPaymentToAr runs the send_work_order_payment_to_ar operation (POST /work_orders/{work_order_id}/payments/send_to_ar).
+func (c *Client) SendWorkOrderPaymentToAr(ctx context.Context, workOrderId int, body SendWorkOrderPaymentToArRequest) (*SendWorkOrderPaymentToArResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"})
+	resp, err := c.gen.SendWorkOrderPaymentToArWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr"})
+	return resp, nil
+}
+
 // SendWorkOrderReminder runs the send_work_order_reminder operation (POST /work_orders/{id}/send_reminder).
 func (c *Client) SendWorkOrderReminder(ctx context.Context, id int, body SendWorkOrderReminderRequest) (*SendWorkOrderReminderResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SendWorkOrderReminder"})
@@ -5804,275 +5056,547 @@ func (c *Client) SendWorkOrderReminder(ctx context.Context, id int, body SendWor
 	return resp, nil
 }
 
-// ShowWorkOrderServiceHistory runs the show_work_order_service_history operation (GET /work_orders/{id}/service_history).
-func (c *Client) ShowWorkOrderServiceHistory(ctx context.Context, id int) (*ShowWorkOrderServiceHistoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"})
-	resp, err := c.gen.ShowWorkOrderServiceHistoryWithResponse(ctx, id)
+// SetDefaultInspection runs the set_default_inspection operation (PATCH /inspections/{id}/set_default).
+func (c *Client) SetDefaultInspection(ctx context.Context, id int, body SetDefaultInspectionRequest) (*SetDefaultInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SetDefaultInspection"})
+	resp, err := c.gen.SetDefaultInspectionWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SetDefaultInspection"}, OperationResult{Operation: "SetDefaultInspection"})
 	return resp, nil
 }
 
-// StartWorkOrder runs the start_work_order operation (POST /work_orders/{id}/start).
-func (c *Client) StartWorkOrder(ctx context.Context, id int, body StartWorkOrderRequest) (*StartWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "StartWorkOrder"})
-	resp, err := c.gen.StartWorkOrderWithResponse(ctx, id, body)
+// ShowAppointment runs the show_appointment operation (GET /appointments/{id}).
+func (c *Client) ShowAppointment(ctx context.Context, id int) (*ShowAppointmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowAppointment"})
+	resp, err := c.gen.ShowAppointmentWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowAppointment"}, OperationResult{Operation: "ShowAppointment"})
 	return resp, nil
 }
 
-// ListWorkOrdersVehicleHistory runs the list_work_orders_vehicle_history operation (GET /work_orders/{id}/vehicle_history).
-func (c *Client) ListWorkOrdersVehicleHistory(ctx context.Context, id int) (*ListWorkOrdersVehicleHistoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"})
-	resp, err := c.gen.ListWorkOrdersVehicleHistoryWithResponse(ctx, id)
+// ShowCampaign runs the show_campaign operation (GET /campaigns/{id}).
+func (c *Client) ShowCampaign(ctx context.Context, id int) (*ShowCampaignResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCampaign"})
+	resp, err := c.gen.ShowCampaignWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersVehicleHistory"}, OperationResult{Operation: "ListWorkOrdersVehicleHistory"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCampaign"}, OperationResult{Operation: "ShowCampaign"})
 	return resp, nil
 }
 
-// VoidWorkOrder runs the void_work_order operation (POST /work_orders/{id}/void).
-func (c *Client) VoidWorkOrder(ctx context.Context, id int, body VoidWorkOrderRequest) (*VoidWorkOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "VoidWorkOrder"})
-	resp, err := c.gen.VoidWorkOrderWithResponse(ctx, id, body)
+// ShowCashEntry runs the show_cash_entry operation (GET /cash_entries/{id}).
+func (c *Client) ShowCashEntry(ctx context.Context, id int) (*ShowCashEntryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCashEntry"})
+	resp, err := c.gen.ShowCashEntryWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCashEntry"}, OperationResult{Operation: "ShowCashEntry"})
 	return resp, nil
 }
 
-// CreateWorkOrdersActivityLog runs the create_work_orders_activity_log operation (POST /work_orders/{work_order_id}/activity_logs).
-func (c *Client) CreateWorkOrdersActivityLog(ctx context.Context, workOrderId int, body CreateWorkOrdersActivityLogRequest) (*CreateWorkOrdersActivityLogResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"})
-	resp, err := c.gen.CreateWorkOrdersActivityLogWithResponse(ctx, workOrderId, body)
+// ShowConversation runs the show_conversation operation (GET /conversations/{id}).
+func (c *Client) ShowConversation(ctx context.Context, id int) (*ShowConversationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowConversation"})
+	resp, err := c.gen.ShowConversationWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersActivityLog"}, OperationResult{Operation: "CreateWorkOrdersActivityLog"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowConversation"}, OperationResult{Operation: "ShowConversation"})
 	return resp, nil
 }
 
-// CreateWorkOrdersAuthorizationDecision runs the create_work_orders_authorization_decision operation (POST /work_orders/{work_order_id}/authorization_decisions).
-func (c *Client) CreateWorkOrdersAuthorizationDecision(ctx context.Context, workOrderId int, body CreateWorkOrdersAuthorizationDecisionRequest) (*CreateWorkOrdersAuthorizationDecisionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"})
-	resp, err := c.gen.CreateWorkOrdersAuthorizationDecisionWithResponse(ctx, workOrderId, body)
+// ShowCounterSale runs the show_counter_sale operation (GET /counter_sales/{id}).
+func (c *Client) ShowCounterSale(ctx context.Context, id int) (*ShowCounterSaleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCounterSale"})
+	resp, err := c.gen.ShowCounterSaleWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorizationDecision"}, OperationResult{Operation: "CreateWorkOrdersAuthorizationDecision"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCounterSale"}, OperationResult{Operation: "ShowCounterSale"})
 	return resp, nil
 }
 
-// CreateWorkOrdersAuthorization runs the create_work_orders_authorization operation (POST /work_orders/{work_order_id}/authorizations).
-func (c *Client) CreateWorkOrdersAuthorization(ctx context.Context, workOrderId int, body CreateWorkOrdersAuthorizationRequest) (*CreateWorkOrdersAuthorizationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"})
-	resp, err := c.gen.CreateWorkOrdersAuthorizationWithResponse(ctx, workOrderId, body)
+// ShowCustomer runs the show_customer operation (GET /customers/{id}).
+func (c *Client) ShowCustomer(ctx context.Context, id int) (*ShowCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomer"})
+	resp, err := c.gen.ShowCustomerWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersAuthorization"}, OperationResult{Operation: "CreateWorkOrdersAuthorization"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomer"}, OperationResult{Operation: "ShowCustomer"})
 	return resp, nil
 }
 
-// ListWorkOrdersConcerns runs the list_work_orders_concerns operation (GET /work_orders/{work_order_id}/concerns).
-func (c *Client) ListWorkOrdersConcerns(ctx context.Context, workOrderId int) (*ListWorkOrdersConcernsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"})
-	resp, err := c.gen.ListWorkOrdersConcernsWithResponse(ctx, workOrderId)
+// ShowCustomerTag runs the show_customer_tag operation (GET /customer_tags/{id}).
+func (c *Client) ShowCustomerTag(ctx context.Context, id int) (*ShowCustomerTagResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomerTag"})
+	resp, err := c.gen.ShowCustomerTagWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersConcerns"}, OperationResult{Operation: "ListWorkOrdersConcerns"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag"})
 	return resp, nil
 }
 
-// CreateWorkOrdersConcern runs the create_work_orders_concern operation (POST /work_orders/{work_order_id}/concerns).
-func (c *Client) CreateWorkOrdersConcern(ctx context.Context, workOrderId int, body CreateWorkOrdersConcernRequest) (*CreateWorkOrdersConcernResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"})
-	resp, err := c.gen.CreateWorkOrdersConcernWithResponse(ctx, workOrderId, body)
+// ShowDriver runs the show_driver operation (GET /customers/{customer_id}/drivers/{id}).
+func (c *Client) ShowDriver(ctx context.Context, customerId int, id int) (*ShowDriverResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowDriver"})
+	resp, err := c.gen.ShowDriverWithResponse(ctx, customerId, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcern"}, OperationResult{Operation: "CreateWorkOrdersConcern"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowDriver"}, OperationResult{Operation: "ShowDriver"})
 	return resp, nil
 }
 
-// CreateWorkOrdersConcernsCopyAllToEstimate runs the create_work_orders_concerns_copy_all_to_estimate operation (POST /work_orders/{work_order_id}/concerns/copy_all_to_estimate).
-func (c *Client) CreateWorkOrdersConcernsCopyAllToEstimate(ctx context.Context, workOrderId int, body CreateWorkOrdersConcernsCopyAllToEstimateRequest) (*CreateWorkOrdersConcernsCopyAllToEstimateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"})
-	resp, err := c.gen.CreateWorkOrdersConcernsCopyAllToEstimateWithResponse(ctx, workOrderId, body)
+// ShowExpense runs the show_expense operation (GET /expenses/{id}).
+func (c *Client) ShowExpense(ctx context.Context, id int) (*ShowExpenseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowExpense"})
+	resp, err := c.gen.ShowExpenseWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyAllToEstimate"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowExpense"}, OperationResult{Operation: "ShowExpense"})
 	return resp, nil
 }
 
-// DeclineAllWorkOrderConcerns runs the decline_all_work_order_concerns operation (POST /work_orders/{work_order_id}/concerns/decline_all).
-func (c *Client) DeclineAllWorkOrderConcerns(ctx context.Context, workOrderId int, body DeclineAllWorkOrderConcernsRequest) (*DeclineAllWorkOrderConcernsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"})
-	resp, err := c.gen.DeclineAllWorkOrderConcernsWithResponse(ctx, workOrderId, body)
+// ShowInspection runs the show_inspection operation (GET /inspections/{id}).
+func (c *Client) ShowInspection(ctx context.Context, id int) (*ShowInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspection"})
+	resp, err := c.gen.ShowInspectionWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeclineAllWorkOrderConcerns"}, OperationResult{Operation: "DeclineAllWorkOrderConcerns"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspection"}, OperationResult{Operation: "ShowInspection"})
 	return resp, nil
 }
 
-// DeleteWorkOrdersConcern runs the delete_work_orders_concern operation (DELETE /work_orders/{work_order_id}/concerns/{id}).
-func (c *Client) DeleteWorkOrdersConcern(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersConcernResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"})
-	resp, err := c.gen.DeleteWorkOrdersConcernWithResponse(ctx, workOrderId, id)
+// ShowInspectionReport runs the show_inspection_report operation (GET /inspection_reports/{id}).
+func (c *Client) ShowInspectionReport(ctx context.Context, id int) (*ShowInspectionReportResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspectionReport"})
+	resp, err := c.gen.ShowInspectionReportWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersConcern"}, OperationResult{Operation: "DeleteWorkOrdersConcern"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReport"}, OperationResult{Operation: "ShowInspectionReport"})
 	return resp, nil
 }
 
-// UpdateWorkOrdersConcern runs the update_work_orders_concern operation (PATCH /work_orders/{work_order_id}/concerns/{id}).
-func (c *Client) UpdateWorkOrdersConcern(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersConcernRequest) (*UpdateWorkOrdersConcernResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"})
-	resp, err := c.gen.UpdateWorkOrdersConcernWithResponse(ctx, workOrderId, id, body)
+// ShowInspectionReportGroup runs the show_inspection_report_group operation (GET /inspection_reports/{id}/group).
+func (c *Client) ShowInspectionReportGroup(ctx context.Context, id int, params *ShowInspectionReportGroupParams) (*ShowInspectionReportGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"})
+	resp, err := c.gen.ShowInspectionReportGroupWithResponse(ctx, id, params)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInspectionReportGroup"}, OperationResult{Operation: "ShowInspectionReportGroup"})
 	return resp, nil
 }
 
-// CreateWorkOrdersConcernsAddPackage runs the create_work_orders_concerns_add_package operation (POST /work_orders/{work_order_id}/concerns/{id}/add_package).
-func (c *Client) CreateWorkOrdersConcernsAddPackage(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersConcernsAddPackageRequest) (*CreateWorkOrdersConcernsAddPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"})
-	resp, err := c.gen.CreateWorkOrdersConcernsAddPackageWithResponse(ctx, workOrderId, id, body)
+// ShowInventoryLevel runs the show_inventory_level operation (GET /inventory_levels/{id}).
+func (c *Client) ShowInventoryLevel(ctx context.Context, id int) (*ShowInventoryLevelResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowInventoryLevel"})
+	resp, err := c.gen.ShowInventoryLevelWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsAddPackage"}, OperationResult{Operation: "CreateWorkOrdersConcernsAddPackage"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowInventoryLevel"}, OperationResult{Operation: "ShowInventoryLevel"})
 	return resp, nil
 }
 
-// CreateWorkOrdersConcernsCopyToEstimate runs the create_work_orders_concerns_copy_to_estimate operation (POST /work_orders/{work_order_id}/concerns/{id}/copy_to_estimate).
-func (c *Client) CreateWorkOrdersConcernsCopyToEstimate(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersConcernsCopyToEstimateRequest) (*CreateWorkOrdersConcernsCopyToEstimateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"})
-	resp, err := c.gen.CreateWorkOrdersConcernsCopyToEstimateWithResponse(ctx, workOrderId, id, body)
+// ShowLocation runs the show_location operation (GET /locations/{id}).
+func (c *Client) ShowLocation(ctx context.Context, id string) (*ShowLocationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowLocation"})
+	resp, err := c.gen.ShowLocationWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersConcernsCopyToEstimate"}, OperationResult{Operation: "CreateWorkOrdersConcernsCopyToEstimate"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowLocation"}, OperationResult{Operation: "ShowLocation"})
 	return resp, nil
 }
 
-// CreateWorkOrdersCreditResolution runs the create_work_orders_credit_resolution operation (POST /work_orders/{work_order_id}/credit_resolution).
-func (c *Client) CreateWorkOrdersCreditResolution(ctx context.Context, workOrderId int, body CreateWorkOrdersCreditResolutionRequest) (*CreateWorkOrdersCreditResolutionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"})
-	resp, err := c.gen.CreateWorkOrdersCreditResolutionWithResponse(ctx, workOrderId, body)
+// ShowMessage runs the show_message operation (GET /messages/{id}).
+func (c *Client) ShowMessage(ctx context.Context, id int) (*ShowMessageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowMessage"})
+	resp, err := c.gen.ShowMessageWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersCreditResolution"}, OperationResult{Operation: "CreateWorkOrdersCreditResolution"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowMessage"}, OperationResult{Operation: "ShowMessage"})
+	return resp, nil
+}
+
+// ShowNotification runs the show_notification operation (GET /notifications/{id}).
+func (c *Client) ShowNotification(ctx context.Context, id int) (*ShowNotificationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowNotification"})
+	resp, err := c.gen.ShowNotificationWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowNotification"}, OperationResult{Operation: "ShowNotification"})
+	return resp, nil
+}
+
+// ShowOrdersPurchaseOrder runs the show_orders_purchase_order operation (GET /orders/purchase_orders/{id}).
+func (c *Client) ShowOrdersPurchaseOrder(ctx context.Context, id int) (*ShowOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"})
+	resp, err := c.gen.ShowOrdersPurchaseOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersPurchaseOrder"}, OperationResult{Operation: "ShowOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// ShowOrdersReturnOrder runs the show_orders_return_order operation (GET /orders/return_orders/{id}).
+func (c *Client) ShowOrdersReturnOrder(ctx context.Context, id int) (*ShowOrdersReturnOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"})
+	resp, err := c.gen.ShowOrdersReturnOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersReturnOrder"}, OperationResult{Operation: "ShowOrdersReturnOrder"})
+	return resp, nil
+}
+
+// ShowOrdersSubletOrder runs the show_orders_sublet_order operation (GET /orders/sublet_orders/{id}).
+func (c *Client) ShowOrdersSubletOrder(ctx context.Context, id int) (*ShowOrdersSubletOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"})
+	resp, err := c.gen.ShowOrdersSubletOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowOrdersSubletOrder"}, OperationResult{Operation: "ShowOrdersSubletOrder"})
+	return resp, nil
+}
+
+// ShowPart runs the show_part operation (GET /parts/{id}).
+func (c *Client) ShowPart(ctx context.Context, id int) (*ShowPartResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowPart"})
+	resp, err := c.gen.ShowPartWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPart"}, OperationResult{Operation: "ShowPart"})
+	return resp, nil
+}
+
+// ShowPayment runs the show_payment operation (GET /payments/{id}).
+func (c *Client) ShowPayment(ctx context.Context, id int) (*ShowPaymentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowPayment"})
+	resp, err := c.gen.ShowPaymentWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowPayment"}, OperationResult{Operation: "ShowPayment"})
+	return resp, nil
+}
+
+// ShowReportsCashDrawerSession runs the show_reports_cash_drawer_session operation (GET /reports/cash_drawer_sessions/{id}).
+func (c *Client) ShowReportsCashDrawerSession(ctx context.Context, id int) (*ShowReportsCashDrawerSessionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"})
+	resp, err := c.gen.ShowReportsCashDrawerSessionWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowReportsCashDrawerSession"}, OperationResult{Operation: "ShowReportsCashDrawerSession"})
+	return resp, nil
+}
+
+// ShowStatement runs the show_statement operation (GET /statements/{id}).
+func (c *Client) ShowStatement(ctx context.Context, id int) (*ShowStatementResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowStatement"})
+	resp, err := c.gen.ShowStatementWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowStatement"}, OperationResult{Operation: "ShowStatement"})
+	return resp, nil
+}
+
+// ShowTire runs the show_tire operation (GET /tires/{id}).
+func (c *Client) ShowTire(ctx context.Context, id int) (*ShowTireResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTire"})
+	resp, err := c.gen.ShowTireWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTire"}, OperationResult{Operation: "ShowTire"})
+	return resp, nil
+}
+
+// ShowTireEvent runs the show_tire_event operation (GET /tire_events/{id}).
+func (c *Client) ShowTireEvent(ctx context.Context, id int) (*ShowTireEventResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTireEvent"})
+	resp, err := c.gen.ShowTireEventWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireEvent"}, OperationResult{Operation: "ShowTireEvent"})
+	return resp, nil
+}
+
+// ShowTireStorageSlot runs the show_tire_storage_slot operation (GET /tire_storage_slots/{id}).
+func (c *Client) ShowTireStorageSlot(ctx context.Context, id int) (*ShowTireStorageSlotResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowTireStorageSlot"})
+	resp, err := c.gen.ShowTireStorageSlotWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowTireStorageSlot"}, OperationResult{Operation: "ShowTireStorageSlot"})
+	return resp, nil
+}
+
+// ShowUser runs the show_user operation (GET /users/{id}).
+func (c *Client) ShowUser(ctx context.Context, id int) (*ShowUserResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowUser"})
+	resp, err := c.gen.ShowUserWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowUser"}, OperationResult{Operation: "ShowUser"})
+	return resp, nil
+}
+
+// ShowVehicle runs the show_vehicle operation (GET /vehicles/{id}).
+func (c *Client) ShowVehicle(ctx context.Context, id int) (*ShowVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVehicle"})
+	resp, err := c.gen.ShowVehicleWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVehicle"}, OperationResult{Operation: "ShowVehicle"})
+	return resp, nil
+}
+
+// ShowVendor runs the show_vendor operation (GET /vendors/{id}).
+func (c *Client) ShowVendor(ctx context.Context, id int) (*ShowVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowVendor"})
+	resp, err := c.gen.ShowVendorWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowVendor"}, OperationResult{Operation: "ShowVendor"})
+	return resp, nil
+}
+
+// ShowWorkOrder runs the show_work_order operation (GET /work_orders/{id}).
+func (c *Client) ShowWorkOrder(ctx context.Context, id int) (*ShowWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrder"})
+	resp, err := c.gen.ShowWorkOrderWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrder"}, OperationResult{Operation: "ShowWorkOrder"})
+	return resp, nil
+}
+
+// ShowWorkOrderDeclinedServices runs the show_work_order_declined_services operation (GET /work_orders/{id}/declined_services).
+func (c *Client) ShowWorkOrderDeclinedServices(ctx context.Context, id int) (*ShowWorkOrderDeclinedServicesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"})
+	resp, err := c.gen.ShowWorkOrderDeclinedServicesWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderDeclinedServices"}, OperationResult{Operation: "ShowWorkOrderDeclinedServices"})
 	return resp, nil
 }
 
@@ -6090,40 +5614,6 @@ func (c *Client) ShowWorkOrderEstimate(ctx context.Context, workOrderId int) (*S
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderEstimate"}, OperationResult{Operation: "ShowWorkOrderEstimate"})
-	return resp, nil
-}
-
-// CreateWorkOrdersFeeExclusion runs the create_work_orders_fee_exclusion operation (POST /work_orders/{work_order_id}/fee_exclusions).
-func (c *Client) CreateWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, body CreateWorkOrdersFeeExclusionRequest) (*CreateWorkOrdersFeeExclusionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"})
-	resp, err := c.gen.CreateWorkOrdersFeeExclusionWithResponse(ctx, workOrderId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersFeeExclusion"}, OperationResult{Operation: "CreateWorkOrdersFeeExclusion"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersFeeExclusion runs the delete_work_orders_fee_exclusion operation (DELETE /work_orders/{work_order_id}/fee_exclusions/{id}).
-func (c *Client) DeleteWorkOrdersFeeExclusion(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersFeeExclusionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"})
-	resp, err := c.gen.DeleteWorkOrdersFeeExclusionWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersFeeExclusion"}, OperationResult{Operation: "DeleteWorkOrdersFeeExclusion"})
 	return resp, nil
 }
 
@@ -6161,40 +5651,6 @@ func (c *Client) ShowWorkOrderParts(ctx context.Context, workOrderId int) (*Show
 	return resp, nil
 }
 
-// ListWorkOrdersPaymentLink runs the list_work_orders_payment_link operation (GET /work_orders/{work_order_id}/payment_link).
-func (c *Client) ListWorkOrdersPaymentLink(ctx context.Context, workOrderId int) (*ListWorkOrdersPaymentLinkResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"})
-	resp, err := c.gen.ListWorkOrdersPaymentLinkWithResponse(ctx, workOrderId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersPaymentLink"}, OperationResult{Operation: "ListWorkOrdersPaymentLink"})
-	return resp, nil
-}
-
-// CreateWorkOrdersPaymentLinkSend runs the create_work_orders_payment_link_send operation (POST /work_orders/{work_order_id}/payment_link/send).
-func (c *Client) CreateWorkOrdersPaymentLinkSend(ctx context.Context, workOrderId int, body CreateWorkOrdersPaymentLinkSendRequest) (*CreateWorkOrdersPaymentLinkSendResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"})
-	resp, err := c.gen.CreateWorkOrdersPaymentLinkSendWithResponse(ctx, workOrderId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPaymentLinkSend"}, OperationResult{Operation: "CreateWorkOrdersPaymentLinkSend"})
-	return resp, nil
-}
-
 // ShowWorkOrderPayments runs the show_work_order_payments operation (GET /work_orders/{work_order_id}/payments).
 func (c *Client) ShowWorkOrderPayments(ctx context.Context, workOrderId int) (*ShowWorkOrderPaymentsResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderPayments"})
@@ -6212,717 +5668,241 @@ func (c *Client) ShowWorkOrderPayments(ctx context.Context, workOrderId int) (*S
 	return resp, nil
 }
 
-// CreateWorkOrderPayment runs the create_work_order_payment operation (POST /work_orders/{work_order_id}/payments).
-func (c *Client) CreateWorkOrderPayment(ctx context.Context, workOrderId int, body CreateWorkOrderPaymentRequest) (*CreateWorkOrderPaymentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"})
-	resp, err := c.gen.CreateWorkOrderPaymentWithResponse(ctx, workOrderId, body)
+// ShowWorkOrderServiceHistory runs the show_work_order_service_history operation (GET /work_orders/{id}/service_history).
+func (c *Client) ShowWorkOrderServiceHistory(ctx context.Context, id int) (*ShowWorkOrderServiceHistoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"})
+	resp, err := c.gen.ShowWorkOrderServiceHistoryWithResponse(ctx, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrderPayment"}, OperationResult{Operation: "CreateWorkOrderPayment"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderServiceHistory"}, OperationResult{Operation: "ShowWorkOrderServiceHistory"})
 	return resp, nil
 }
 
-// ReverseWorkOrderPaymentAr runs the reverse_work_order_payment_ar operation (DELETE /work_orders/{work_order_id}/payments/reverse_ar).
-func (c *Client) ReverseWorkOrderPaymentAr(ctx context.Context, workOrderId int) (*ReverseWorkOrderPaymentArResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"})
-	resp, err := c.gen.ReverseWorkOrderPaymentArWithResponse(ctx, workOrderId)
+// ShowWorkOrderWip runs the show_work_order_wip operation (GET /work_orders/{work_order_id}/wip).
+func (c *Client) ShowWorkOrderWip(ctx context.Context, workOrderId int) (*ShowWorkOrderWipResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderWip"})
+	resp, err := c.gen.ShowWorkOrderWipWithResponse(ctx, workOrderId)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ReverseWorkOrderPaymentAr"}, OperationResult{Operation: "ReverseWorkOrderPaymentAr"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip"})
 	return resp, nil
 }
 
-// SendWorkOrderPaymentToAr runs the send_work_order_payment_to_ar operation (POST /work_orders/{work_order_id}/payments/send_to_ar).
-func (c *Client) SendWorkOrderPaymentToAr(ctx context.Context, workOrderId int, body SendWorkOrderPaymentToArRequest) (*SendWorkOrderPaymentToArResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"})
-	resp, err := c.gen.SendWorkOrderPaymentToArWithResponse(ctx, workOrderId, body)
+// ShowWorkOrdersSignature runs the show_work_orders_signature operation (GET /work_orders/{work_order_id}/signatures/{id}).
+func (c *Client) ShowWorkOrdersSignature(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersSignatureResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"})
+	resp, err := c.gen.ShowWorkOrdersSignatureWithResponse(ctx, workOrderId, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "SendWorkOrderPaymentToAr"}, OperationResult{Operation: "SendWorkOrderPaymentToAr"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature"})
 	return resp, nil
 }
 
-// CreateWorkOrdersPurchaseOrder runs the create_work_orders_purchase_order operation (POST /work_orders/{work_order_id}/purchase_orders).
-func (c *Client) CreateWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, body CreateWorkOrdersPurchaseOrderRequest) (*CreateWorkOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"})
-	resp, err := c.gen.CreateWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, body)
+// ShowWorkOrdersSubletOrder runs the show_work_orders_sublet_order operation (GET /work_orders/{work_order_id}/sublet_orders/{id}).
+func (c *Client) ShowWorkOrdersSubletOrder(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersSubletOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"})
+	resp, err := c.gen.ShowWorkOrdersSubletOrderWithResponse(ctx, workOrderId, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder"})
 	return resp, nil
 }
 
-// DeleteWorkOrdersPurchaseOrder runs the delete_work_orders_purchase_order operation (DELETE /work_orders/{work_order_id}/purchase_orders/{id}).
-func (c *Client) DeleteWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"})
-	resp, err := c.gen.DeleteWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, id)
+// ShowWorkOrdersTireStorage runs the show_work_orders_tire_storage operation (GET /work_orders/{work_order_id}/tire_storage/{id}).
+func (c *Client) ShowWorkOrdersTireStorage(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersTireStorageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"})
+	resp, err := c.gen.ShowWorkOrdersTireStorageWithResponse(ctx, workOrderId, id)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersPurchaseOrder"}, OperationResult{Operation: "DeleteWorkOrdersPurchaseOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage"})
 	return resp, nil
 }
 
-// UpdateWorkOrdersPurchaseOrder runs the update_work_orders_purchase_order operation (PATCH /work_orders/{work_order_id}/purchase_orders/{id}).
-func (c *Client) UpdateWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersPurchaseOrderRequest) (*UpdateWorkOrdersPurchaseOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"})
-	resp, err := c.gen.UpdateWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, id, body)
+// StartWorkOrder runs the start_work_order operation (POST /work_orders/{id}/start).
+func (c *Client) StartWorkOrder(ctx context.Context, id int, body StartWorkOrderRequest) (*StartWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "StartWorkOrder"})
+	resp, err := c.gen.StartWorkOrderWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "StartWorkOrder"}, OperationResult{Operation: "StartWorkOrder"})
 	return resp, nil
 }
 
-// CreateWorkOrdersPurchaseOrdersReceive runs the create_work_orders_purchase_orders_receive operation (POST /work_orders/{work_order_id}/purchase_orders/{id}/receive).
-func (c *Client) CreateWorkOrdersPurchaseOrdersReceive(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersPurchaseOrdersReceiveRequest) (*CreateWorkOrdersPurchaseOrdersReceiveResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"})
-	resp, err := c.gen.CreateWorkOrdersPurchaseOrdersReceiveWithResponse(ctx, workOrderId, id, body)
+// TransferVehicle runs the transfer_vehicle operation (POST /vehicles/{id}/transfers).
+func (c *Client) TransferVehicle(ctx context.Context, id int, body TransferVehicleRequest) (*TransferVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TransferVehicle"})
+	resp, err := c.gen.TransferVehicleWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReceive"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReceive"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TransferVehicle"}, OperationResult{Operation: "TransferVehicle"})
 	return resp, nil
 }
 
-// CreateWorkOrdersPurchaseOrdersReturn runs the create_work_orders_purchase_orders_return operation (POST /work_orders/{work_order_id}/purchase_orders/{id}/return).
-func (c *Client) CreateWorkOrdersPurchaseOrdersReturn(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersPurchaseOrdersReturnRequest) (*CreateWorkOrdersPurchaseOrdersReturnResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"})
-	resp, err := c.gen.CreateWorkOrdersPurchaseOrdersReturnWithResponse(ctx, workOrderId, id, body)
+// TrashCustomer runs the trash_customer operation (PATCH /customers/{id}/trash).
+func (c *Client) TrashCustomer(ctx context.Context, id int, body TrashCustomerRequest) (*TrashCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashCustomer"})
+	resp, err := c.gen.TrashCustomerWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersPurchaseOrdersReturn"}, OperationResult{Operation: "CreateWorkOrdersPurchaseOrdersReturn"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashCustomer"}, OperationResult{Operation: "TrashCustomer"})
 	return resp, nil
 }
 
-// ListWorkOrdersReceipts runs the list_work_orders_receipts operation (GET /work_orders/{work_order_id}/receipts).
-func (c *Client) ListWorkOrdersReceipts(ctx context.Context, workOrderId int) (*ListWorkOrdersReceiptsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"})
-	resp, err := c.gen.ListWorkOrdersReceiptsWithResponse(ctx, workOrderId)
+// TrashInspection runs the trash_inspection operation (PATCH /inspections/{id}/trash).
+func (c *Client) TrashInspection(ctx context.Context, id int, body TrashInspectionRequest) (*TrashInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashInspection"})
+	resp, err := c.gen.TrashInspectionWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersReceipts"}, OperationResult{Operation: "ListWorkOrdersReceipts"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashInspection"}, OperationResult{Operation: "TrashInspection"})
 	return resp, nil
 }
 
-// CreateWorkOrdersRefund runs the create_work_orders_refund operation (POST /work_orders/{work_order_id}/refunds).
-func (c *Client) CreateWorkOrdersRefund(ctx context.Context, workOrderId int, body CreateWorkOrdersRefundRequest) (*CreateWorkOrdersRefundResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"})
-	resp, err := c.gen.CreateWorkOrdersRefundWithResponse(ctx, workOrderId, body)
+// TrashLaborRate runs the trash_labor_rate operation (PATCH /labor_rates/{id}/trash).
+func (c *Client) TrashLaborRate(ctx context.Context, id int, body TrashLaborRateRequest) (*TrashLaborRateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashLaborRate"})
+	resp, err := c.gen.TrashLaborRateWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersRefund"}, OperationResult{Operation: "CreateWorkOrdersRefund"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashLaborRate"}, OperationResult{Operation: "TrashLaborRate"})
 	return resp, nil
 }
 
-// ListWorkOrderServices runs the list_work_order_services operation (GET /work_orders/{work_order_id}/services).
-func (c *Client) ListWorkOrderServices(ctx context.Context, workOrderId int) (*ListWorkOrderServicesResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrderServices"})
-	resp, err := c.gen.ListWorkOrderServicesWithResponse(ctx, workOrderId)
+// TrashPackage runs the trash_package operation (PATCH /packages/{id}/trash).
+func (c *Client) TrashPackage(ctx context.Context, id int, body TrashPackageRequest) (*TrashPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashPackage"})
+	resp, err := c.gen.TrashPackageWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrderServices"}, OperationResult{Operation: "ListWorkOrderServices"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashPackage"}, OperationResult{Operation: "TrashPackage"})
 	return resp, nil
 }
 
-// CreateWorkOrdersService runs the create_work_orders_service operation (POST /work_orders/{work_order_id}/services).
-func (c *Client) CreateWorkOrdersService(ctx context.Context, workOrderId int, body CreateWorkOrdersServiceRequest) (*CreateWorkOrdersServiceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersService"})
-	resp, err := c.gen.CreateWorkOrdersServiceWithResponse(ctx, workOrderId, body)
+// TrashServiceCategory runs the trash_service_category operation (PATCH /service_categories/{id}/trash).
+func (c *Client) TrashServiceCategory(ctx context.Context, id int, body TrashServiceCategoryRequest) (*TrashServiceCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashServiceCategory"})
+	resp, err := c.gen.TrashServiceCategoryWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersService"}, OperationResult{Operation: "CreateWorkOrdersService"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashServiceCategory"}, OperationResult{Operation: "TrashServiceCategory"})
 	return resp, nil
 }
 
-// UpdateWorkOrdersServicesReorder runs the update_work_orders_services_reorder operation (PATCH /work_orders/{work_order_id}/services/reorder).
-func (c *Client) UpdateWorkOrdersServicesReorder(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderRequest) (*UpdateWorkOrdersServicesReorderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"})
-	resp, err := c.gen.UpdateWorkOrdersServicesReorderWithResponse(ctx, workOrderId, body)
+// TrashVehicle runs the trash_vehicle operation (PATCH /vehicles/{id}/trash).
+func (c *Client) TrashVehicle(ctx context.Context, id int, body TrashVehicleRequest) (*TrashVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVehicle"})
+	resp, err := c.gen.TrashVehicleWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVehicle"}, OperationResult{Operation: "TrashVehicle"})
 	return resp, nil
 }
 
-// DeleteWorkOrdersService runs the delete_work_orders_service operation (DELETE /work_orders/{work_order_id}/services/{id}).
-func (c *Client) DeleteWorkOrdersService(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServiceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"})
-	resp, err := c.gen.DeleteWorkOrdersServiceWithResponse(ctx, workOrderId, id)
+// TrashVendor runs the trash_vendor operation (PATCH /vendors/{id}/trash).
+func (c *Client) TrashVendor(ctx context.Context, id int, body TrashVendorRequest) (*TrashVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "TrashVendor"})
+	resp, err := c.gen.TrashVendorWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersService"}, OperationResult{Operation: "DeleteWorkOrdersService"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersService runs the update_work_orders_service operation (PATCH /work_orders/{work_order_id}/services/{id}).
-func (c *Client) UpdateWorkOrdersService(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServiceRequest) (*UpdateWorkOrdersServiceResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"})
-	resp, err := c.gen.UpdateWorkOrdersServiceWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService"})
-	return resp, nil
-}
-
-// ListWorkOrdersServicesAdjustTime runs the list_work_orders_services_adjust_time operation (GET /work_orders/{work_order_id}/services/{id}/adjust_time).
-func (c *Client) ListWorkOrdersServicesAdjustTime(ctx context.Context, workOrderId int, id int) (*ListWorkOrdersServicesAdjustTimeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"})
-	resp, err := c.gen.ListWorkOrdersServicesAdjustTimeWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "ListWorkOrdersServicesAdjustTime"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesAdjustTime runs the update_work_orders_services_adjust_time operation (PATCH /work_orders/{work_order_id}/services/{id}/adjust_time).
-func (c *Client) UpdateWorkOrdersServicesAdjustTime(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesAdjustTimeRequest) (*UpdateWorkOrdersServicesAdjustTimeResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"})
-	resp, err := c.gen.UpdateWorkOrdersServicesAdjustTimeWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersServicesAuthorization runs the delete_work_orders_services_authorization operation (DELETE /work_orders/{work_order_id}/services/{id}/authorization).
-func (c *Client) DeleteWorkOrdersServicesAuthorization(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServicesAuthorizationResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"})
-	resp, err := c.gen.DeleteWorkOrdersServicesAuthorizationWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesAuthorization"}, OperationResult{Operation: "DeleteWorkOrdersServicesAuthorization"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesBulkPull runs the create_work_orders_services_bulk_pull operation (POST /work_orders/{work_order_id}/services/{id}/bulk_pull).
-func (c *Client) CreateWorkOrdersServicesBulkPull(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesBulkPullRequest) (*CreateWorkOrdersServicesBulkPullResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"})
-	resp, err := c.gen.CreateWorkOrdersServicesBulkPullWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesBulkPull"}, OperationResult{Operation: "CreateWorkOrdersServicesBulkPull"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersServicesCompletion runs the delete_work_orders_services_completion operation (DELETE /work_orders/{work_order_id}/services/{id}/completion).
-func (c *Client) DeleteWorkOrdersServicesCompletion(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersServicesCompletionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"})
-	resp, err := c.gen.DeleteWorkOrdersServicesCompletionWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesCompletion"}, OperationResult{Operation: "DeleteWorkOrdersServicesCompletion"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesCompletion runs the create_work_orders_services_completion operation (POST /work_orders/{work_order_id}/services/{id}/completion).
-func (c *Client) CreateWorkOrdersServicesCompletion(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCompletionRequest) (*CreateWorkOrdersServicesCompletionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"})
-	resp, err := c.gen.CreateWorkOrdersServicesCompletionWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCompletion"}, OperationResult{Operation: "CreateWorkOrdersServicesCompletion"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesCopy runs the create_work_orders_services_copy operation (POST /work_orders/{work_order_id}/services/{id}/copies).
-func (c *Client) CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesCopyRequest) (*CreateWorkOrdersServicesCopyResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"})
-	resp, err := c.gen.CreateWorkOrdersServicesCopyWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesPackage runs the create_work_orders_services_package operation (POST /work_orders/{work_order_id}/services/{id}/packages).
-func (c *Client) CreateWorkOrdersServicesPackage(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesPackageRequest) (*CreateWorkOrdersServicesPackageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"})
-	resp, err := c.gen.CreateWorkOrdersServicesPackageWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesPackage"}, OperationResult{Operation: "CreateWorkOrdersServicesPackage"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesPause runs the update_work_orders_services_pause operation (PATCH /work_orders/{work_order_id}/services/{id}/pause).
-func (c *Client) UpdateWorkOrdersServicesPause(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesPauseRequest) (*UpdateWorkOrdersServicesPauseResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"})
-	resp, err := c.gen.UpdateWorkOrdersServicesPauseWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesPublish runs the update_work_orders_services_publish operation (PATCH /work_orders/{work_order_id}/services/{id}/publish).
-func (c *Client) UpdateWorkOrdersServicesPublish(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesPublishRequest) (*UpdateWorkOrdersServicesPublishResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"})
-	resp, err := c.gen.UpdateWorkOrdersServicesPublishWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesRevive runs the update_work_orders_services_revive operation (PATCH /work_orders/{work_order_id}/services/{id}/revive).
-func (c *Client) UpdateWorkOrdersServicesRevive(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesReviveRequest) (*UpdateWorkOrdersServicesReviveResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"})
-	resp, err := c.gen.UpdateWorkOrdersServicesReviveWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesTimeEntry runs the create_work_orders_services_time_entry operation (POST /work_orders/{work_order_id}/services/{id}/time_entries).
-func (c *Client) CreateWorkOrdersServicesTimeEntry(ctx context.Context, workOrderId int, id int, body CreateWorkOrdersServicesTimeEntryRequest) (*CreateWorkOrdersServicesTimeEntryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"})
-	resp, err := c.gen.CreateWorkOrdersServicesTimeEntryWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesTimeEntry"}, OperationResult{Operation: "CreateWorkOrdersServicesTimeEntry"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesToggleLaborCompletion runs the update_work_orders_services_toggle_labor_completion operation (PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_completion).
-func (c *Client) UpdateWorkOrdersServicesToggleLaborCompletion(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesToggleLaborCompletionRequest) (*UpdateWorkOrdersServicesToggleLaborCompletionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"})
-	resp, err := c.gen.UpdateWorkOrdersServicesToggleLaborCompletionWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesUpdateCategory runs the update_work_orders_services_update_category operation (PATCH /work_orders/{work_order_id}/services/{id}/update_category).
-func (c *Client) UpdateWorkOrdersServicesUpdateCategory(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesUpdateCategoryRequest) (*UpdateWorkOrdersServicesUpdateCategoryResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"})
-	resp, err := c.gen.UpdateWorkOrdersServicesUpdateCategoryWithResponse(ctx, workOrderId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory"})
-	return resp, nil
-}
-
-// ListWorkOrdersServicesComments runs the list_work_orders_services_comments operation (GET /work_orders/{work_order_id}/services/{service_id}/comments).
-func (c *Client) ListWorkOrdersServicesComments(ctx context.Context, workOrderId int, serviceId int) (*ListWorkOrdersServicesCommentsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"})
-	resp, err := c.gen.ListWorkOrdersServicesCommentsWithResponse(ctx, workOrderId, serviceId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesComments"}, OperationResult{Operation: "ListWorkOrdersServicesComments"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesComment runs the create_work_orders_services_comment operation (POST /work_orders/{work_order_id}/services/{service_id}/comments).
-func (c *Client) CreateWorkOrdersServicesComment(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesCommentRequest) (*CreateWorkOrdersServicesCommentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"})
-	resp, err := c.gen.CreateWorkOrdersServicesCommentWithResponse(ctx, workOrderId, serviceId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesComment"}, OperationResult{Operation: "CreateWorkOrdersServicesComment"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersServicesComment runs the delete_work_orders_services_comment operation (DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id}).
-func (c *Client) DeleteWorkOrdersServicesComment(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesCommentResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"})
-	resp, err := c.gen.DeleteWorkOrdersServicesCommentWithResponse(ctx, workOrderId, serviceId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesComment"}, OperationResult{Operation: "DeleteWorkOrdersServicesComment"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesExtraction runs the create_work_orders_services_extraction operation (POST /work_orders/{work_order_id}/services/{service_id}/extractions).
-func (c *Client) CreateWorkOrdersServicesExtraction(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionRequest) (*CreateWorkOrdersServicesExtractionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"})
-	resp, err := c.gen.CreateWorkOrdersServicesExtractionWithResponse(ctx, workOrderId, serviceId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction"})
-	return resp, nil
-}
-
-// ListWorkOrdersServicesLineItems runs the list_work_orders_services_line_items operation (GET /work_orders/{work_order_id}/services/{service_id}/line_items).
-func (c *Client) ListWorkOrdersServicesLineItems(ctx context.Context, workOrderId int, serviceId int) (*ListWorkOrdersServicesLineItemsResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"})
-	resp, err := c.gen.ListWorkOrdersServicesLineItemsWithResponse(ctx, workOrderId, serviceId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersServicesLineItems"}, OperationResult{Operation: "ListWorkOrdersServicesLineItems"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesLineItem runs the create_work_orders_services_line_item operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items).
-func (c *Client) CreateWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesLineItemRequest) (*CreateWorkOrdersServicesLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItem"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItem"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersServicesLineItem runs the delete_work_orders_services_line_item operation (DELETE /work_orders/{work_order_id}/services/{service_id}/line_items/{id}).
-func (c *Client) DeleteWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"})
-	resp, err := c.gen.DeleteWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesLineItem"}, OperationResult{Operation: "DeleteWorkOrdersServicesLineItem"})
-	return resp, nil
-}
-
-// UpdateWorkOrdersServicesLineItem runs the update_work_orders_services_line_item operation (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}).
-func (c *Client) UpdateWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, id int, body UpdateWorkOrdersServicesLineItemRequest) (*UpdateWorkOrdersServicesLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"})
-	resp, err := c.gen.UpdateWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesLineItemsCopy runs the create_work_orders_services_line_items_copy operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/copies).
-func (c *Client) CreateWorkOrdersServicesLineItemsCopy(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsCopyRequest) (*CreateWorkOrdersServicesLineItemsCopyResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsCopyWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsCopy"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesLineItemsInventoryAddition runs the create_work_orders_services_line_items_inventory_addition operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/inventory_additions).
-func (c *Client) CreateWorkOrdersServicesLineItemsInventoryAddition(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsInventoryAdditionRequest) (*CreateWorkOrdersServicesLineItemsInventoryAdditionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsInventoryAdditionWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsInventoryAddition"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesLineItemsPriceRefresh runs the create_work_orders_services_line_items_price_refresh operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/price_refreshes).
-func (c *Client) CreateWorkOrdersServicesLineItemsPriceRefresh(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsPriceRefreshRequest) (*CreateWorkOrdersServicesLineItemsPriceRefreshResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsPriceRefreshWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsPriceRefresh"})
-	return resp, nil
-}
-
-// PullWorkOrderServiceLineItem runs the pull_work_order_service_line_item operation (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull).
-func (c *Client) PullWorkOrderServiceLineItem(ctx context.Context, workOrderId int, serviceId int, id int, body PullWorkOrderServiceLineItemRequest) (*PullWorkOrderServiceLineItemResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"})
-	resp, err := c.gen.PullWorkOrderServiceLineItemWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "PullWorkOrderServiceLineItem"}, OperationResult{Operation: "PullWorkOrderServiceLineItem"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesLineItemsReorder runs the create_work_orders_services_line_items_reorder operation (POST /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/reorder).
-func (c *Client) CreateWorkOrdersServicesLineItemsReorder(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesLineItemsReorderRequest) (*CreateWorkOrdersServicesLineItemsReorderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"})
-	resp, err := c.gen.CreateWorkOrdersServicesLineItemsReorderWithResponse(ctx, workOrderId, serviceId, id, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesLineItemsReorder"}, OperationResult{Operation: "CreateWorkOrdersServicesLineItemsReorder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "TrashVendor"}, OperationResult{Operation: "TrashVendor"})
 	return resp, nil
 }
 
@@ -6960,37 +5940,1176 @@ func (c *Client) UndoReturnWorkOrderServiceLineItem(ctx context.Context, workOrd
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesSubletOrder runs the create_work_orders_services_sublet_order operation (POST /work_orders/{work_order_id}/services/{service_id}/sublet_orders).
-func (c *Client) CreateWorkOrdersServicesSubletOrder(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesSubletOrderRequest) (*CreateWorkOrdersServicesSubletOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"})
-	resp, err := c.gen.CreateWorkOrdersServicesSubletOrderWithResponse(ctx, workOrderId, serviceId, body)
+// UpdateAccount runs the update_account operation (PATCH /account).
+func (c *Client) UpdateAccount(ctx context.Context, body UpdateAccountRequest) (*UpdateAccountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateAccount"})
+	resp, err := c.gen.UpdateAccountWithResponse(ctx, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAccount"}, OperationResult{Operation: "UpdateAccount"})
 	return resp, nil
 }
 
-// DeleteWorkOrdersServicesSubletOrder runs the delete_work_orders_services_sublet_order operation (DELETE /work_orders/{work_order_id}/services/{service_id}/sublet_orders/{id}).
-func (c *Client) DeleteWorkOrdersServicesSubletOrder(ctx context.Context, workOrderId int, serviceId int, id int) (*DeleteWorkOrdersServicesSubletOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"})
-	resp, err := c.gen.DeleteWorkOrdersServicesSubletOrderWithResponse(ctx, workOrderId, serviceId, id)
+// UpdateAppointment runs the update_appointment operation (PATCH /appointments/{id}).
+func (c *Client) UpdateAppointment(ctx context.Context, id int, body UpdateAppointmentRequest) (*UpdateAppointmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateAppointment"})
+	resp, err := c.gen.UpdateAppointmentWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersServicesSubletOrder"}, OperationResult{Operation: "DeleteWorkOrdersServicesSubletOrder"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateAppointment"}, OperationResult{Operation: "UpdateAppointment"})
+	return resp, nil
+}
+
+// UpdateCalendarBlockedTime runs the update_calendar_blocked_time operation (PATCH /calendar/blocked_times/{id}).
+func (c *Client) UpdateCalendarBlockedTime(ctx context.Context, id int, body UpdateCalendarBlockedTimeRequest) (*UpdateCalendarBlockedTimeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"})
+	resp, err := c.gen.UpdateCalendarBlockedTimeWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCalendarBlockedTime"}, OperationResult{Operation: "UpdateCalendarBlockedTime"})
+	return resp, nil
+}
+
+// UpdateConversation runs the update_conversation operation (PATCH /conversations/{id}).
+func (c *Client) UpdateConversation(ctx context.Context, id int, body UpdateConversationRequest) (*UpdateConversationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateConversation"})
+	resp, err := c.gen.UpdateConversationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateConversation"}, OperationResult{Operation: "UpdateConversation"})
+	return resp, nil
+}
+
+// UpdateCoreTaxRule runs the update_core_tax_rule operation (PATCH /core_tax_rules/{id}).
+func (c *Client) UpdateCoreTaxRule(ctx context.Context, id int, body UpdateCoreTaxRuleRequest) (*UpdateCoreTaxRuleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"})
+	resp, err := c.gen.UpdateCoreTaxRuleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCoreTaxRule"}, OperationResult{Operation: "UpdateCoreTaxRule"})
+	return resp, nil
+}
+
+// UpdateCounterSale runs the update_counter_sale operation (PATCH /counter_sales/{id}).
+func (c *Client) UpdateCounterSale(ctx context.Context, id int, body UpdateCounterSaleRequest) (*UpdateCounterSaleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSale"})
+	resp, err := c.gen.UpdateCounterSaleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSale"}, OperationResult{Operation: "UpdateCounterSale"})
+	return resp, nil
+}
+
+// UpdateCounterSalesLineItem runs the update_counter_sales_line_item operation (PATCH /counter_sales/{counter_sale_id}/line_items/{id}).
+func (c *Client) UpdateCounterSalesLineItem(ctx context.Context, counterSaleId int, id int, body UpdateCounterSalesLineItemRequest) (*UpdateCounterSalesLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"})
+	resp, err := c.gen.UpdateCounterSalesLineItemWithResponse(ctx, counterSaleId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesLineItem"}, OperationResult{Operation: "UpdateCounterSalesLineItem"})
+	return resp, nil
+}
+
+// UpdateCounterSalesReopen runs the update_counter_sales_reopen operation (PATCH /counter_sales/{id}/reopen).
+func (c *Client) UpdateCounterSalesReopen(ctx context.Context, id int, body UpdateCounterSalesReopenRequest) (*UpdateCounterSalesReopenResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"})
+	resp, err := c.gen.UpdateCounterSalesReopenWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCounterSalesReopen"}, OperationResult{Operation: "UpdateCounterSalesReopen"})
+	return resp, nil
+}
+
+// UpdateCurrentLocation runs the update_current_location operation (PATCH /current_location).
+func (c *Client) UpdateCurrentLocation(ctx context.Context, body UpdateCurrentLocationRequest) (*UpdateCurrentLocationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCurrentLocation"})
+	resp, err := c.gen.UpdateCurrentLocationWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCurrentLocation"}, OperationResult{Operation: "UpdateCurrentLocation"})
+	return resp, nil
+}
+
+// UpdateCustomer runs the update_customer operation (PATCH /customers/{id}).
+func (c *Client) UpdateCustomer(ctx context.Context, id int, body UpdateCustomerRequest) (*UpdateCustomerResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomer"})
+	resp, err := c.gen.UpdateCustomerWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomer"}, OperationResult{Operation: "UpdateCustomer"})
+	return resp, nil
+}
+
+// UpdateCustomerTag runs the update_customer_tag operation (PATCH /customer_tags/{id}).
+func (c *Client) UpdateCustomerTag(ctx context.Context, id int, body UpdateCustomerTagRequest) (*UpdateCustomerTagResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTag"})
+	resp, err := c.gen.UpdateCustomerTagWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTag"}, OperationResult{Operation: "UpdateCustomerTag"})
+	return resp, nil
+}
+
+// UpdateCustomerTagsArchive runs the update_customer_tags_archive operation (PATCH /customer_tags/{id}/archive).
+func (c *Client) UpdateCustomerTagsArchive(ctx context.Context, id int, body UpdateCustomerTagsArchiveRequest) (*UpdateCustomerTagsArchiveResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"})
+	resp, err := c.gen.UpdateCustomerTagsArchiveWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsArchive"}, OperationResult{Operation: "UpdateCustomerTagsArchive"})
+	return resp, nil
+}
+
+// UpdateCustomerTagsRestore runs the update_customer_tags_restore operation (PATCH /customer_tags/{id}/restore).
+func (c *Client) UpdateCustomerTagsRestore(ctx context.Context, id int, body UpdateCustomerTagsRestoreRequest) (*UpdateCustomerTagsRestoreResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"})
+	resp, err := c.gen.UpdateCustomerTagsRestoreWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsRestore"}, OperationResult{Operation: "UpdateCustomerTagsRestore"})
+	return resp, nil
+}
+
+// UpdateCustomerTagsTrash runs the update_customer_tags_trash operation (PATCH /customer_tags/{id}/trash).
+func (c *Client) UpdateCustomerTagsTrash(ctx context.Context, id int, body UpdateCustomerTagsTrashRequest) (*UpdateCustomerTagsTrashResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"})
+	resp, err := c.gen.UpdateCustomerTagsTrashWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateCustomerTagsTrash"}, OperationResult{Operation: "UpdateCustomerTagsTrash"})
+	return resp, nil
+}
+
+// UpdateDriver runs the update_driver operation (PATCH /customers/{customer_id}/drivers/{id}).
+func (c *Client) UpdateDriver(ctx context.Context, customerId int, id int, body UpdateDriverRequest) (*UpdateDriverResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateDriver"})
+	resp, err := c.gen.UpdateDriverWithResponse(ctx, customerId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateDriver"}, OperationResult{Operation: "UpdateDriver"})
+	return resp, nil
+}
+
+// UpdateExpense runs the update_expense operation (PATCH /expenses/{id}).
+func (c *Client) UpdateExpense(ctx context.Context, id int, body UpdateExpenseRequest) (*UpdateExpenseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateExpense"})
+	resp, err := c.gen.UpdateExpenseWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateExpense"}, OperationResult{Operation: "UpdateExpense"})
+	return resp, nil
+}
+
+// UpdateInspection runs the update_inspection operation (PATCH /inspections/{id}).
+func (c *Client) UpdateInspection(ctx context.Context, id int, body UpdateInspectionRequest) (*UpdateInspectionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspection"})
+	resp, err := c.gen.UpdateInspectionWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspection"}, OperationResult{Operation: "UpdateInspection"})
+	return resp, nil
+}
+
+// UpdateInspectionsGroup runs the update_inspections_group operation (PATCH /inspections/{inspection_id}/groups/{id}).
+func (c *Client) UpdateInspectionsGroup(ctx context.Context, inspectionId int, id int, body UpdateInspectionsGroupRequest) (*UpdateInspectionsGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"})
+	resp, err := c.gen.UpdateInspectionsGroupWithResponse(ctx, inspectionId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsGroup"}, OperationResult{Operation: "UpdateInspectionsGroup"})
+	return resp, nil
+}
+
+// UpdateInspectionsItem runs the update_inspections_item operation (PATCH /inspections/{inspection_id}/items/{id}).
+func (c *Client) UpdateInspectionsItem(ctx context.Context, inspectionId int, id int, body UpdateInspectionsItemRequest) (*UpdateInspectionsItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsItem"})
+	resp, err := c.gen.UpdateInspectionsItemWithResponse(ctx, inspectionId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsItem"}, OperationResult{Operation: "UpdateInspectionsItem"})
+	return resp, nil
+}
+
+// UpdateInspectionsPreset runs the update_inspections_preset operation (PATCH /inspections/{inspection_id}/presets/{id}).
+func (c *Client) UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetRequest) (*UpdateInspectionsPresetResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"})
+	resp, err := c.gen.UpdateInspectionsPresetWithResponse(ctx, inspectionId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInspectionsPreset"}, OperationResult{Operation: "UpdateInspectionsPreset"})
+	return resp, nil
+}
+
+// UpdateInventoryLevel runs the update_inventory_level operation (PATCH /inventory_levels/{id}).
+func (c *Client) UpdateInventoryLevel(ctx context.Context, id int, body UpdateInventoryLevelRequest) (*UpdateInventoryLevelResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateInventoryLevel"})
+	resp, err := c.gen.UpdateInventoryLevelWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateInventoryLevel"}, OperationResult{Operation: "UpdateInventoryLevel"})
+	return resp, nil
+}
+
+// UpdateLaborMatrix runs the update_labor_matrix operation (PATCH /labor_matrices/{id}).
+func (c *Client) UpdateLaborMatrix(ctx context.Context, id int, body UpdateLaborMatrixRequest) (*UpdateLaborMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborMatrix"})
+	resp, err := c.gen.UpdateLaborMatrixWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborMatrix"}, OperationResult{Operation: "UpdateLaborMatrix"})
+	return resp, nil
+}
+
+// UpdateLaborTemplate runs the update_labor_template operation (PATCH /labor_templates/{id}).
+func (c *Client) UpdateLaborTemplate(ctx context.Context, id int, body UpdateLaborTemplateRequest) (*UpdateLaborTemplateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLaborTemplate"})
+	resp, err := c.gen.UpdateLaborTemplateWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLaborTemplate"}, OperationResult{Operation: "UpdateLaborTemplate"})
+	return resp, nil
+}
+
+// UpdateLeadSource runs the update_lead_source operation (PATCH /lead_sources/{id}).
+func (c *Client) UpdateLeadSource(ctx context.Context, id int, body UpdateLeadSourceRequest) (*UpdateLeadSourceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLeadSource"})
+	resp, err := c.gen.UpdateLeadSourceWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLeadSource"}, OperationResult{Operation: "UpdateLeadSource"})
+	return resp, nil
+}
+
+// UpdateLocation runs the update_location operation (PATCH /locations/{id}).
+func (c *Client) UpdateLocation(ctx context.Context, id string, body UpdateLocationRequest) (*UpdateLocationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocation"})
+	resp, err := c.gen.UpdateLocationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocation"}, OperationResult{Operation: "UpdateLocation"})
+	return resp, nil
+}
+
+// UpdateLocationsBusinessProfile runs the update_locations_business_profile operation (PATCH /locations/{id}/business_profile).
+func (c *Client) UpdateLocationsBusinessProfile(ctx context.Context, id string, body UpdateLocationsBusinessProfileRequest) (*UpdateLocationsBusinessProfileResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"})
+	resp, err := c.gen.UpdateLocationsBusinessProfileWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsBusinessProfile"}, OperationResult{Operation: "UpdateLocationsBusinessProfile"})
+	return resp, nil
+}
+
+// UpdateLocationsCloseRequirements runs the update_locations_close_requirements operation (PATCH /locations/{location_id}/close_requirements).
+func (c *Client) UpdateLocationsCloseRequirements(ctx context.Context, locationId string, body UpdateLocationsCloseRequirementsRequest) (*UpdateLocationsCloseRequirementsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"})
+	resp, err := c.gen.UpdateLocationsCloseRequirementsWithResponse(ctx, locationId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsCloseRequirements"}, OperationResult{Operation: "UpdateLocationsCloseRequirements"})
+	return resp, nil
+}
+
+// UpdateLocationsDocuments runs the update_locations_documents operation (PATCH /locations/{location_id}/documents).
+func (c *Client) UpdateLocationsDocuments(ctx context.Context, locationId string, body UpdateLocationsDocumentsRequest) (*UpdateLocationsDocumentsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"})
+	resp, err := c.gen.UpdateLocationsDocumentsWithResponse(ctx, locationId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsDocuments"}, OperationResult{Operation: "UpdateLocationsDocuments"})
+	return resp, nil
+}
+
+// UpdateLocationsLeadSourceRequirements runs the update_locations_lead_source_requirements operation (PATCH /locations/{location_id}/lead_source_requirements).
+func (c *Client) UpdateLocationsLeadSourceRequirements(ctx context.Context, locationId string, body UpdateLocationsLeadSourceRequirementsRequest) (*UpdateLocationsLeadSourceRequirementsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"})
+	resp, err := c.gen.UpdateLocationsLeadSourceRequirementsWithResponse(ctx, locationId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsLeadSourceRequirements"}, OperationResult{Operation: "UpdateLocationsLeadSourceRequirements"})
+	return resp, nil
+}
+
+// UpdateLocationsOperations runs the update_locations_operations operation (PATCH /locations/{id}/operations).
+func (c *Client) UpdateLocationsOperations(ctx context.Context, id string, body UpdateLocationsOperationsRequest) (*UpdateLocationsOperationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsOperations"})
+	resp, err := c.gen.UpdateLocationsOperationsWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsOperations"}, OperationResult{Operation: "UpdateLocationsOperations"})
+	return resp, nil
+}
+
+// UpdateLocationsReminders runs the update_locations_reminders operation (PATCH /locations/{location_id}/reminders).
+func (c *Client) UpdateLocationsReminders(ctx context.Context, locationId string, body UpdateLocationsRemindersRequest) (*UpdateLocationsRemindersResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsReminders"})
+	resp, err := c.gen.UpdateLocationsRemindersWithResponse(ctx, locationId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsReminders"}, OperationResult{Operation: "UpdateLocationsReminders"})
+	return resp, nil
+}
+
+// UpdateLocationsScheduleConfig runs the update_locations_schedule_config operation (PATCH /locations/{location_id}/schedule_config).
+func (c *Client) UpdateLocationsScheduleConfig(ctx context.Context, locationId string, body UpdateLocationsScheduleConfigRequest) (*UpdateLocationsScheduleConfigResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"})
+	resp, err := c.gen.UpdateLocationsScheduleConfigWithResponse(ctx, locationId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateLocationsScheduleConfig"}, OperationResult{Operation: "UpdateLocationsScheduleConfig"})
+	return resp, nil
+}
+
+// UpdateMeNotifications runs the update_me_notifications operation (PATCH /me/notifications).
+func (c *Client) UpdateMeNotifications(ctx context.Context, body UpdateMeNotificationsRequest) (*UpdateMeNotificationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMeNotifications"})
+	resp, err := c.gen.UpdateMeNotificationsWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeNotifications"}, OperationResult{Operation: "UpdateMeNotifications"})
+	return resp, nil
+}
+
+// UpdateMePreferences runs the update_me_preferences operation (PATCH /me/preferences).
+func (c *Client) UpdateMePreferences(ctx context.Context, body UpdateMePreferencesRequest) (*UpdateMePreferencesResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMePreferences"})
+	resp, err := c.gen.UpdateMePreferencesWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMePreferences"}, OperationResult{Operation: "UpdateMePreferences"})
+	return resp, nil
+}
+
+// UpdateMeProfile runs the update_me_profile operation (PATCH /me/profile).
+func (c *Client) UpdateMeProfile(ctx context.Context, body UpdateMeProfileRequest) (*UpdateMeProfileResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateMeProfile"})
+	resp, err := c.gen.UpdateMeProfileWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateMeProfile"}, OperationResult{Operation: "UpdateMeProfile"})
+	return resp, nil
+}
+
+// UpdateNotification runs the update_notification operation (PATCH /notifications/{id}).
+func (c *Client) UpdateNotification(ctx context.Context, id int, body UpdateNotificationRequest) (*UpdateNotificationResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateNotification"})
+	resp, err := c.gen.UpdateNotificationWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateNotification"}, OperationResult{Operation: "UpdateNotification"})
+	return resp, nil
+}
+
+// UpdateOrdersPurchaseOrder runs the update_orders_purchase_order operation (PATCH /orders/purchase_orders/{id}).
+func (c *Client) UpdateOrdersPurchaseOrder(ctx context.Context, id int, body UpdateOrdersPurchaseOrderRequest) (*UpdateOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"})
+	resp, err := c.gen.UpdateOrdersPurchaseOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// UpdateOrdersReturnOrder runs the update_orders_return_order operation (PATCH /orders/return_orders/{id}).
+func (c *Client) UpdateOrdersReturnOrder(ctx context.Context, id int, body UpdateOrdersReturnOrderRequest) (*UpdateOrdersReturnOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"})
+	resp, err := c.gen.UpdateOrdersReturnOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersReturnOrder"}, OperationResult{Operation: "UpdateOrdersReturnOrder"})
+	return resp, nil
+}
+
+// UpdateOrdersSubletOrdersMarkPaymentComplete runs the update_orders_sublet_orders_mark_payment_complete operation (PATCH /orders/sublet_orders/mark_payment_complete).
+func (c *Client) UpdateOrdersSubletOrdersMarkPaymentComplete(ctx context.Context, body UpdateOrdersSubletOrdersMarkPaymentCompleteRequest) (*UpdateOrdersSubletOrdersMarkPaymentCompleteResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"})
+	resp, err := c.gen.UpdateOrdersSubletOrdersMarkPaymentCompleteWithResponse(ctx, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"}, OperationResult{Operation: "UpdateOrdersSubletOrdersMarkPaymentComplete"})
+	return resp, nil
+}
+
+// UpdatePackage runs the update_package operation (PATCH /packages/{id}).
+func (c *Client) UpdatePackage(ctx context.Context, id int) (*UpdatePackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePackage"})
+	resp, err := c.gen.UpdatePackageWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePackage"}, OperationResult{Operation: "UpdatePackage"})
+	return resp, nil
+}
+
+// UpdatePart runs the update_part operation (PATCH /parts/{id}).
+func (c *Client) UpdatePart(ctx context.Context, id int, body UpdatePartRequest) (*UpdatePartResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePart"})
+	resp, err := c.gen.UpdatePartWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePart"}, OperationResult{Operation: "UpdatePart"})
+	return resp, nil
+}
+
+// UpdatePartsMatrix runs the update_parts_matrix operation (PATCH /parts_matrices/{id}).
+func (c *Client) UpdatePartsMatrix(ctx context.Context, id int, body UpdatePartsMatrixRequest) (*UpdatePartsMatrixResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePartsMatrix"})
+	resp, err := c.gen.UpdatePartsMatrixWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePartsMatrix"}, OperationResult{Operation: "UpdatePartsMatrix"})
+	return resp, nil
+}
+
+// UpdatePermissionGroup runs the update_permission_group operation (PATCH /users/permission_groups/{id}).
+func (c *Client) UpdatePermissionGroup(ctx context.Context, id int, body UpdatePermissionGroupRequest) (*UpdatePermissionGroupResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdatePermissionGroup"})
+	resp, err := c.gen.UpdatePermissionGroupWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdatePermissionGroup"}, OperationResult{Operation: "UpdatePermissionGroup"})
+	return resp, nil
+}
+
+// UpdateReportsCashDrawerSessionsConfirmClose runs the update_reports_cash_drawer_sessions_confirm_close operation (PATCH /reports/cash_drawer_sessions/{id}/confirm_close).
+func (c *Client) UpdateReportsCashDrawerSessionsConfirmClose(ctx context.Context, id int, body UpdateReportsCashDrawerSessionsConfirmCloseRequest) (*UpdateReportsCashDrawerSessionsConfirmCloseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"})
+	resp, err := c.gen.UpdateReportsCashDrawerSessionsConfirmCloseWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"}, OperationResult{Operation: "UpdateReportsCashDrawerSessionsConfirmClose"})
+	return resp, nil
+}
+
+// UpdateReportsTaxPeriod runs the update_reports_tax_period operation (PATCH /reports/tax_periods/{id}).
+func (c *Client) UpdateReportsTaxPeriod(ctx context.Context, id int, body UpdateReportsTaxPeriodRequest) (*UpdateReportsTaxPeriodResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"})
+	resp, err := c.gen.UpdateReportsTaxPeriodWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateReportsTaxPeriod"}, OperationResult{Operation: "UpdateReportsTaxPeriod"})
+	return resp, nil
+}
+
+// UpdateServiceCategory runs the update_service_category operation (PATCH /service_categories/{id}).
+func (c *Client) UpdateServiceCategory(ctx context.Context, id int, body UpdateServiceCategoryRequest) (*UpdateServiceCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateServiceCategory"})
+	resp, err := c.gen.UpdateServiceCategoryWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateServiceCategory"}, OperationResult{Operation: "UpdateServiceCategory"})
+	return resp, nil
+}
+
+// UpdateShopDiscount runs the update_shop_discount operation (PATCH /shop_discounts/{id}).
+func (c *Client) UpdateShopDiscount(ctx context.Context, id int, body UpdateShopDiscountRequest) (*UpdateShopDiscountResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateShopDiscount"})
+	resp, err := c.gen.UpdateShopDiscountWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopDiscount"}, OperationResult{Operation: "UpdateShopDiscount"})
+	return resp, nil
+}
+
+// UpdateShopFee runs the update_shop_fee operation (PATCH /shop_fees/{id}).
+func (c *Client) UpdateShopFee(ctx context.Context, id int, body UpdateShopFeeRequest) (*UpdateShopFeeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateShopFee"})
+	resp, err := c.gen.UpdateShopFeeWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateShopFee"}, OperationResult{Operation: "UpdateShopFee"})
+	return resp, nil
+}
+
+// UpdateSubStatus runs the update_sub_status operation (PATCH /sub_statuses/{id}).
+func (c *Client) UpdateSubStatus(ctx context.Context, id int, body UpdateSubStatusRequest) (*UpdateSubStatusResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubStatus"})
+	resp, err := c.gen.UpdateSubStatusWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubStatus"}, OperationResult{Operation: "UpdateSubStatus"})
+	return resp, nil
+}
+
+// UpdateSubletPackage runs the update_sublet_package operation (PATCH /sublet_packages/{id}).
+func (c *Client) UpdateSubletPackage(ctx context.Context, id int, body UpdateSubletPackageRequest) (*UpdateSubletPackageResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubletPackage"})
+	resp, err := c.gen.UpdateSubletPackageWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackage"}, OperationResult{Operation: "UpdateSubletPackage"})
+	return resp, nil
+}
+
+// UpdateSubletPackagesDeactivate runs the update_sublet_packages_deactivate operation (PATCH /sublet_packages/{id}/deactivate).
+func (c *Client) UpdateSubletPackagesDeactivate(ctx context.Context, id int) (*UpdateSubletPackagesDeactivateResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"})
+	resp, err := c.gen.UpdateSubletPackagesDeactivateWithResponse(ctx, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateSubletPackagesDeactivate"}, OperationResult{Operation: "UpdateSubletPackagesDeactivate"})
+	return resp, nil
+}
+
+// UpdateTire runs the update_tire operation (PATCH /tires/{id}).
+func (c *Client) UpdateTire(ctx context.Context, id int, body UpdateTireRequest) (*UpdateTireResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTire"})
+	resp, err := c.gen.UpdateTireWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTire"}, OperationResult{Operation: "UpdateTire"})
+	return resp, nil
+}
+
+// UpdateTireStorageSlot runs the update_tire_storage_slot operation (PATCH /tire_storage_slots/{id}).
+func (c *Client) UpdateTireStorageSlot(ctx context.Context, id int, body UpdateTireStorageSlotRequest) (*UpdateTireStorageSlotResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"})
+	resp, err := c.gen.UpdateTireStorageSlotWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateTireStorageSlot"}, OperationResult{Operation: "UpdateTireStorageSlot"})
+	return resp, nil
+}
+
+// UpdateUser runs the update_user operation (PATCH /users/{id}).
+func (c *Client) UpdateUser(ctx context.Context, id int, body UpdateUserRequest) (*UpdateUserResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateUser"})
+	resp, err := c.gen.UpdateUserWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateUser"}, OperationResult{Operation: "UpdateUser"})
+	return resp, nil
+}
+
+// UpdateVehicle runs the update_vehicle operation (PATCH /vehicles/{id}).
+func (c *Client) UpdateVehicle(ctx context.Context, id int, body UpdateVehicleRequest) (*UpdateVehicleResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateVehicle"})
+	resp, err := c.gen.UpdateVehicleWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVehicle"}, OperationResult{Operation: "UpdateVehicle"})
+	return resp, nil
+}
+
+// UpdateVendor runs the update_vendor operation (PATCH /vendors/{id}).
+func (c *Client) UpdateVendor(ctx context.Context, id int, body UpdateVendorRequest) (*UpdateVendorResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateVendor"})
+	resp, err := c.gen.UpdateVendorWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateVendor"}, OperationResult{Operation: "UpdateVendor"})
+	return resp, nil
+}
+
+// UpdateWorkOrder runs the update_work_order operation (PATCH /work_orders/{id}).
+func (c *Client) UpdateWorkOrder(ctx context.Context, id int, body UpdateWorkOrderRequest) (*UpdateWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrder"})
+	resp, err := c.gen.UpdateWorkOrderWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrder"}, OperationResult{Operation: "UpdateWorkOrder"})
+	return resp, nil
+}
+
+// UpdateWorkOrderTag runs the update_work_order_tag operation (PATCH /work_order_tags/{id}).
+func (c *Client) UpdateWorkOrderTag(ctx context.Context, id int, body UpdateWorkOrderTagRequest) (*UpdateWorkOrderTagResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"})
+	resp, err := c.gen.UpdateWorkOrderTagWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTag"}, OperationResult{Operation: "UpdateWorkOrderTag"})
+	return resp, nil
+}
+
+// UpdateWorkOrderTagsArchive runs the update_work_order_tags_archive operation (PATCH /work_order_tags/{id}/archive).
+func (c *Client) UpdateWorkOrderTagsArchive(ctx context.Context, id int, body UpdateWorkOrderTagsArchiveRequest) (*UpdateWorkOrderTagsArchiveResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"})
+	resp, err := c.gen.UpdateWorkOrderTagsArchiveWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrderTagsArchive"}, OperationResult{Operation: "UpdateWorkOrderTagsArchive"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersConcern runs the update_work_orders_concern operation (PATCH /work_orders/{work_order_id}/concerns/{id}).
+func (c *Client) UpdateWorkOrdersConcern(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersConcernRequest) (*UpdateWorkOrdersConcernResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"})
+	resp, err := c.gen.UpdateWorkOrdersConcernWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersConcern"}, OperationResult{Operation: "UpdateWorkOrdersConcern"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersCourtesyCarAssignment runs the update_work_orders_courtesy_car_assignment operation (PATCH /work_orders/{id}/courtesy_car_assignment).
+func (c *Client) UpdateWorkOrdersCourtesyCarAssignment(ctx context.Context, id int, body UpdateWorkOrdersCourtesyCarAssignmentRequest) (*UpdateWorkOrdersCourtesyCarAssignmentResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"})
+	resp, err := c.gen.UpdateWorkOrdersCourtesyCarAssignmentWithResponse(ctx, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersCourtesyCarAssignment"}, OperationResult{Operation: "UpdateWorkOrdersCourtesyCarAssignment"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersPurchaseOrder runs the update_work_orders_purchase_order operation (PATCH /work_orders/{work_order_id}/purchase_orders/{id}).
+func (c *Client) UpdateWorkOrdersPurchaseOrder(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersPurchaseOrderRequest) (*UpdateWorkOrdersPurchaseOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"})
+	resp, err := c.gen.UpdateWorkOrdersPurchaseOrderWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersPurchaseOrder"}, OperationResult{Operation: "UpdateWorkOrdersPurchaseOrder"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersService runs the update_work_orders_service operation (PATCH /work_orders/{work_order_id}/services/{id}).
+func (c *Client) UpdateWorkOrdersService(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServiceRequest) (*UpdateWorkOrdersServiceResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"})
+	resp, err := c.gen.UpdateWorkOrdersServiceWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersService"}, OperationResult{Operation: "UpdateWorkOrdersService"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesAdjustTime runs the update_work_orders_services_adjust_time operation (PATCH /work_orders/{work_order_id}/services/{id}/adjust_time).
+func (c *Client) UpdateWorkOrdersServicesAdjustTime(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesAdjustTimeRequest) (*UpdateWorkOrdersServicesAdjustTimeResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"})
+	resp, err := c.gen.UpdateWorkOrdersServicesAdjustTimeWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesAdjustTime"}, OperationResult{Operation: "UpdateWorkOrdersServicesAdjustTime"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesLineItem runs the update_work_orders_services_line_item operation (PATCH /work_orders/{work_order_id}/services/{service_id}/line_items/{id}).
+func (c *Client) UpdateWorkOrdersServicesLineItem(ctx context.Context, workOrderId int, serviceId int, id int, body UpdateWorkOrdersServicesLineItemRequest) (*UpdateWorkOrdersServicesLineItemResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"})
+	resp, err := c.gen.UpdateWorkOrdersServicesLineItemWithResponse(ctx, workOrderId, serviceId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesLineItem"}, OperationResult{Operation: "UpdateWorkOrdersServicesLineItem"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesPause runs the update_work_orders_services_pause operation (PATCH /work_orders/{work_order_id}/services/{id}/pause).
+func (c *Client) UpdateWorkOrdersServicesPause(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesPauseRequest) (*UpdateWorkOrdersServicesPauseResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"})
+	resp, err := c.gen.UpdateWorkOrdersServicesPauseWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPause"}, OperationResult{Operation: "UpdateWorkOrdersServicesPause"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesPublish runs the update_work_orders_services_publish operation (PATCH /work_orders/{work_order_id}/services/{id}/publish).
+func (c *Client) UpdateWorkOrdersServicesPublish(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesPublishRequest) (*UpdateWorkOrdersServicesPublishResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"})
+	resp, err := c.gen.UpdateWorkOrdersServicesPublishWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesPublish"}, OperationResult{Operation: "UpdateWorkOrdersServicesPublish"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesReorder runs the update_work_orders_services_reorder operation (PATCH /work_orders/{work_order_id}/services/reorder).
+func (c *Client) UpdateWorkOrdersServicesReorder(ctx context.Context, workOrderId int, body UpdateWorkOrdersServicesReorderRequest) (*UpdateWorkOrdersServicesReorderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"})
+	resp, err := c.gen.UpdateWorkOrdersServicesReorderWithResponse(ctx, workOrderId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesReorder"}, OperationResult{Operation: "UpdateWorkOrdersServicesReorder"})
+	return resp, nil
+}
+
+// UpdateWorkOrdersServicesRevive runs the update_work_orders_services_revive operation (PATCH /work_orders/{work_order_id}/services/{id}/revive).
+func (c *Client) UpdateWorkOrdersServicesRevive(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesReviveRequest) (*UpdateWorkOrdersServicesReviveResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"})
+	resp, err := c.gen.UpdateWorkOrdersServicesReviveWithResponse(ctx, workOrderId, id, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesRevive"}, OperationResult{Operation: "UpdateWorkOrdersServicesRevive"})
 	return resp, nil
 }
 
@@ -7011,139 +7130,37 @@ func (c *Client) UpdateWorkOrdersServicesSubletOrder(ctx context.Context, workOr
 	return resp, nil
 }
 
-// CreateWorkOrdersServicesSubletOrdersDuplicate runs the create_work_orders_services_sublet_orders_duplicate operation (POST /work_orders/{work_order_id}/services/{service_id}/sublet_orders/{id}/duplicate).
-func (c *Client) CreateWorkOrdersServicesSubletOrdersDuplicate(ctx context.Context, workOrderId int, serviceId int, id int, body CreateWorkOrdersServicesSubletOrdersDuplicateRequest) (*CreateWorkOrdersServicesSubletOrdersDuplicateResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"})
-	resp, err := c.gen.CreateWorkOrdersServicesSubletOrdersDuplicateWithResponse(ctx, workOrderId, serviceId, id, body)
+// UpdateWorkOrdersServicesToggleLaborCompletion runs the update_work_orders_services_toggle_labor_completion operation (PATCH /work_orders/{work_order_id}/services/{id}/toggle_labor_completion).
+func (c *Client) UpdateWorkOrdersServicesToggleLaborCompletion(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesToggleLaborCompletionRequest) (*UpdateWorkOrdersServicesToggleLaborCompletionResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"})
+	resp, err := c.gen.UpdateWorkOrdersServicesToggleLaborCompletionWithResponse(ctx, workOrderId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"}, OperationResult{Operation: "CreateWorkOrdersServicesSubletOrdersDuplicate"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"}, OperationResult{Operation: "UpdateWorkOrdersServicesToggleLaborCompletion"})
 	return resp, nil
 }
 
-// ShowWorkOrdersSignature runs the show_work_orders_signature operation (GET /work_orders/{work_order_id}/signatures/{id}).
-func (c *Client) ShowWorkOrdersSignature(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersSignatureResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"})
-	resp, err := c.gen.ShowWorkOrdersSignatureWithResponse(ctx, workOrderId, id)
+// UpdateWorkOrdersServicesUpdateCategory runs the update_work_orders_services_update_category operation (PATCH /work_orders/{work_order_id}/services/{id}/update_category).
+func (c *Client) UpdateWorkOrdersServicesUpdateCategory(ctx context.Context, workOrderId int, id int, body UpdateWorkOrdersServicesUpdateCategoryRequest) (*UpdateWorkOrdersServicesUpdateCategoryResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"})
+	resp, err := c.gen.UpdateWorkOrdersServicesUpdateCategoryWithResponse(ctx, workOrderId, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSignature"}, OperationResult{Operation: "ShowWorkOrdersSignature"})
-	return resp, nil
-}
-
-// ListWorkOrdersSubletOrdersRaw runs the list_work_orders_sublet_orders operation (GET /work_orders/{work_order_id}/sublet_orders).
-func (c *Client) ListWorkOrdersSubletOrdersRaw(ctx context.Context, workOrderId int) (*ListWorkOrdersSubletOrdersResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"})
-	resp, err := c.gen.ListWorkOrdersSubletOrdersWithResponse(ctx, workOrderId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersSubletOrders"}, OperationResult{Operation: "ListWorkOrdersSubletOrders"})
-	return resp, nil
-}
-
-// ShowWorkOrdersSubletOrder runs the show_work_orders_sublet_order operation (GET /work_orders/{work_order_id}/sublet_orders/{id}).
-func (c *Client) ShowWorkOrdersSubletOrder(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersSubletOrderResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"})
-	resp, err := c.gen.ShowWorkOrdersSubletOrderWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersSubletOrder"}, OperationResult{Operation: "ShowWorkOrdersSubletOrder"})
-	return resp, nil
-}
-
-// ListWorkOrdersTireStorage runs the list_work_orders_tire_storage operation (GET /work_orders/{work_order_id}/tire_storage).
-func (c *Client) ListWorkOrdersTireStorage(ctx context.Context, workOrderId int) (*ListWorkOrdersTireStorageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"})
-	resp, err := c.gen.ListWorkOrdersTireStorageWithResponse(ctx, workOrderId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListWorkOrdersTireStorage"}, OperationResult{Operation: "ListWorkOrdersTireStorage"})
-	return resp, nil
-}
-
-// CreateWorkOrdersTireStorage runs the create_work_orders_tire_storage operation (POST /work_orders/{work_order_id}/tire_storage).
-func (c *Client) CreateWorkOrdersTireStorage(ctx context.Context, workOrderId int, body CreateWorkOrdersTireStorageRequest) (*CreateWorkOrdersTireStorageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"})
-	resp, err := c.gen.CreateWorkOrdersTireStorageWithResponse(ctx, workOrderId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersTireStorage"}, OperationResult{Operation: "CreateWorkOrdersTireStorage"})
-	return resp, nil
-}
-
-// DeleteWorkOrdersTireStorage runs the delete_work_orders_tire_storage operation (DELETE /work_orders/{work_order_id}/tire_storage/{id}).
-func (c *Client) DeleteWorkOrdersTireStorage(ctx context.Context, workOrderId int, id int) (*DeleteWorkOrdersTireStorageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"})
-	resp, err := c.gen.DeleteWorkOrdersTireStorageWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "DeleteWorkOrdersTireStorage"}, OperationResult{Operation: "DeleteWorkOrdersTireStorage"})
-	return resp, nil
-}
-
-// ShowWorkOrdersTireStorage runs the show_work_orders_tire_storage operation (GET /work_orders/{work_order_id}/tire_storage/{id}).
-func (c *Client) ShowWorkOrdersTireStorage(ctx context.Context, workOrderId int, id int) (*ShowWorkOrdersTireStorageResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"})
-	resp, err := c.gen.ShowWorkOrdersTireStorageWithResponse(ctx, workOrderId, id)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrdersTireStorage"}, OperationResult{Operation: "ShowWorkOrdersTireStorage"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "UpdateWorkOrdersServicesUpdateCategory"}, OperationResult{Operation: "UpdateWorkOrdersServicesUpdateCategory"})
 	return resp, nil
 }
 
@@ -7164,39 +7181,181 @@ func (c *Client) UpdateWorkOrdersTireStorage(ctx context.Context, workOrderId in
 	return resp, nil
 }
 
-// CreateWorkOrdersVoid runs the create_work_orders_void operation (POST /work_orders/{work_order_id}/voids).
-func (c *Client) CreateWorkOrdersVoid(ctx context.Context, workOrderId int, body CreateWorkOrdersVoidRequest) (*CreateWorkOrdersVoidResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"})
-	resp, err := c.gen.CreateWorkOrdersVoidWithResponse(ctx, workOrderId, body)
+// VoidWorkOrder runs the void_work_order operation (POST /work_orders/{id}/void).
+func (c *Client) VoidWorkOrder(ctx context.Context, id int, body VoidWorkOrderRequest) (*VoidWorkOrderResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "VoidWorkOrder"})
+	resp, err := c.gen.VoidWorkOrderWithResponse(ctx, id, body)
 	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid", Err: err})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder", Err: err})
 		return nil, err
 	}
 	if resp.StatusCode() >= 400 {
 		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid", Err: perr})
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder", Err: perr})
 		return nil, perr
 	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersVoid"}, OperationResult{Operation: "CreateWorkOrdersVoid"})
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "VoidWorkOrder"}, OperationResult{Operation: "VoidWorkOrder"})
 	return resp, nil
 }
 
-// ShowWorkOrderWip runs the show_work_order_wip operation (GET /work_orders/{work_order_id}/wip).
-func (c *Client) ShowWorkOrderWip(ctx context.Context, workOrderId int) (*ShowWorkOrderWipResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowWorkOrderWip"})
-	resp, err := c.gen.ShowWorkOrderWipWithResponse(ctx, workOrderId)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowWorkOrderWip"}, OperationResult{Operation: "ShowWorkOrderWip"})
-	return resp, nil
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -7223,19 +7382,6 @@ func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsP
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListCampaigns fetches a page of list_campaigns results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampaign], error) {
@@ -7245,14 +7391,6 @@ func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampai
 	}
 	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
 
 
 // ListConversations fetches a page of list_conversations results as a typed ListResult.
@@ -7266,13 +7404,6 @@ func (c *Client) ListConversations(ctx context.Context) (*ListResult[Conversatio
 }
 
 
-
-
-
-
-
-
-
 // ListCoreTaxRules fetches a page of list_core_tax_rules results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCoreTaxRules(ctx context.Context) (*ListResult[CoreTaxRule], error) {
@@ -7282,7 +7413,6 @@ func (c *Client) ListCoreTaxRules(ctx context.Context) (*ListResult[CoreTaxRule]
 	}
 	return newListResultFromResponse[CoreTaxRule](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
 
 // ListCounterSales fetches a page of list_counter_sales results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7296,15 +7426,6 @@ func (c *Client) ListCounterSales(ctx context.Context) (*ListResult[CounterSale]
 
 
 
-
-
-
-
-
-
-
-
-
 // ListCustomerTags fetches a page of list_customer_tags results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCustomerTags(ctx context.Context, params *ListCustomerTagsParams) (*ListResult[CustomerTag], error) {
@@ -7314,12 +7435,6 @@ func (c *Client) ListCustomerTags(ctx context.Context, params *ListCustomerTagsP
 	}
 	return newListResultFromResponse[CustomerTag](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
 
 // ListCustomers fetches a page of list_customers results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7331,8 +7446,6 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams)
 	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
 // ListCustomersDrivers fetches a page of list_customers_drivers results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*ListResult[Driver], error) {
@@ -7342,10 +7455,6 @@ func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*Lis
 	}
 	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
 
 // ListCustomersStatements fetches a page of list_customers_statements results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7378,12 +7487,6 @@ func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*
 	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
-
-
-
-
 // ListDrivers fetches a page of list_drivers results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*ListResult[Driver], error) {
@@ -7393,20 +7496,6 @@ func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*L
 	}
 	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7421,27 +7510,6 @@ func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsPar
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListLaborMatrices fetches a page of list_labor_matrices results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListLaborMatrices(ctx context.Context) (*ListResult[LaborMatrix], error) {
@@ -7451,9 +7519,6 @@ func (c *Client) ListLaborMatrices(ctx context.Context) (*ListResult[LaborMatrix
 	}
 	return newListResultFromResponse[LaborMatrix](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
 
 // ListLaborRates fetches a page of list_labor_rates results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7465,10 +7530,6 @@ func (c *Client) ListLaborRates(ctx context.Context) (*ListResult[LaborRate], er
 	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
-
-
 // ListLaborTemplates fetches a page of list_labor_templates results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListLaborTemplates(ctx context.Context) (*ListResult[LaborTemplate], error) {
@@ -7478,8 +7539,6 @@ func (c *Client) ListLaborTemplates(ctx context.Context) (*ListResult[LaborTempl
 	}
 	return newListResultFromResponse[LaborTemplate](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
 
 // ListLeadSources fetches a page of list_lead_sources results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7503,24 +7562,6 @@ func (c *Client) ListLeadSources(ctx context.Context) (*ListResult[LeadSource], 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListNotifications fetches a page of list_notifications results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListNotifications(ctx context.Context, params *ListNotificationsParams) (*ListResult[Notification], error) {
@@ -7530,9 +7571,6 @@ func (c *Client) ListNotifications(ctx context.Context, params *ListNotification
 	}
 	return newListResultFromResponse[Notification](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
 
 // ListOrdersPurchaseOrders fetches a page of list_orders_purchase_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7544,11 +7582,6 @@ func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrder
 	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
-
-
-
 // ListOrdersReturnOrders fetches a page of list_orders_return_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListResult[ReturnOrder], error) {
@@ -7558,10 +7591,6 @@ func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListResult[Return
 	}
 	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
 
 // ListOrdersSubletOrders fetches a page of list_orders_sublet_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7573,8 +7602,6 @@ func (c *Client) ListOrdersSubletOrders(ctx context.Context) (*ListResult[Sublet
 	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
 // ListPackages fetches a page of list_packages results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error) {
@@ -7584,16 +7611,6 @@ func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error)
 	}
 	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
-
-
 
 
 // ListPartsMatrices fetches a page of list_parts_matrices results as a typed ListResult.
@@ -7628,16 +7645,6 @@ func (c *Client) ListPartsMatrices(ctx context.Context) (*ListResult[PartsMatrix
 
 
 
-
-
-
-
-
-
-
-
-
-
 // ListServiceCategories fetches a page of list_service_categories results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListServiceCategories(ctx context.Context) (*ListResult[ServiceCategory], error) {
@@ -7647,12 +7654,6 @@ func (c *Client) ListServiceCategories(ctx context.Context) (*ListResult[Service
 	}
 	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
 
 // ListShopDiscounts fetches a page of list_shop_discounts results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7664,10 +7665,6 @@ func (c *Client) ListShopDiscounts(ctx context.Context) (*ListResult[ShopDiscoun
 	return newListResultFromResponse[ShopDiscount](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
-
-
 // ListShopFees fetches a page of list_shop_fees results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListShopFees(ctx context.Context) (*ListResult[ShopFee], error) {
@@ -7677,14 +7674,6 @@ func (c *Client) ListShopFees(ctx context.Context) (*ListResult[ShopFee], error)
 	}
 	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
 
 
 // ListSubStatuses fetches a page of list_sub_statuses results as a typed ListResult.
@@ -7701,24 +7690,6 @@ func (c *Client) ListSubStatuses(ctx context.Context) (*ListResult[SubStatusType
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListUsers fetches a page of list_users results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams) (*ListResult[User], error) {
@@ -7730,21 +7701,6 @@ func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams) (*ListR
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListVehicles fetches a page of list_vehicles results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (*ListResult[Vehicle], error) {
@@ -7754,17 +7710,6 @@ func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (
 	}
 	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // ListVehiclesWorkOrders fetches a page of list_vehicles_work_orders results as a typed ListResult.
@@ -7787,12 +7732,6 @@ func (c *Client) ListVendors(ctx context.Context) (*ListResult[Vendor], error) {
 	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
-
-
-
-
-
 // ListVendorsPurchaseOrders fetches a page of list_vendors_purchase_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*ListResult[PurchaseOrder], error) {
@@ -7802,8 +7741,6 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*
 	}
 	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
 
 
 
@@ -7818,10 +7755,6 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 }
 
 
-
-
-
-
 // ListWorkOrdersAppointments fetches a page of list_work_orders_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListWorkOrdersAppointments(ctx context.Context, id int) (*ListResult[Appointment], error) {
@@ -7831,85 +7764,6 @@ func (c *Client) ListWorkOrdersAppointments(ctx context.Context, id int) (*ListR
 	}
 	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c), nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7950,6 +7804,311 @@ func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // GetAllAppointments auto-paginates list_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointmentsParams, opts *GetAllOptions) ([]Appointment, error) {
@@ -7963,19 +8122,6 @@ func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointment
 	}
 	return items, nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // GetAllCampaigns auto-paginates list_campaigns, following the Link header.
@@ -7993,14 +8139,6 @@ func (c *Client) GetAllCampaigns(ctx context.Context, opts *GetAllOptions) ([]Br
 }
 
 
-
-
-
-
-
-
-
-
 // GetAllConversations auto-paginates list_conversations, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllConversations(ctx context.Context, opts *GetAllOptions) ([]Conversation, error) {
@@ -8016,13 +8154,6 @@ func (c *Client) GetAllConversations(ctx context.Context, opts *GetAllOptions) (
 }
 
 
-
-
-
-
-
-
-
 // GetAllCoreTaxRules auto-paginates list_core_tax_rules, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllCoreTaxRules(ctx context.Context, opts *GetAllOptions) ([]CoreTaxRule, error) {
@@ -8036,7 +8167,6 @@ func (c *Client) GetAllCoreTaxRules(ctx context.Context, opts *GetAllOptions) ([
 	}
 	return items, nil
 }
-
 
 // GetAllCounterSales auto-paginates list_counter_sales, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8054,15 +8184,6 @@ func (c *Client) GetAllCounterSales(ctx context.Context, opts *GetAllOptions) ([
 
 
 
-
-
-
-
-
-
-
-
-
 // GetAllCustomerTags auto-paginates list_customer_tags, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllCustomerTags(ctx context.Context, params *ListCustomerTagsParams, opts *GetAllOptions) ([]CustomerTag, error) {
@@ -8076,12 +8197,6 @@ func (c *Client) GetAllCustomerTags(ctx context.Context, params *ListCustomerTag
 	}
 	return items, nil
 }
-
-
-
-
-
-
 
 // GetAllCustomers auto-paginates list_customers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8097,8 +8212,6 @@ func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParam
 	return items, nil
 }
 
-
-
 // GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opts *GetAllOptions) ([]Driver, error) {
@@ -8112,10 +8225,6 @@ func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opt
 	}
 	return items, nil
 }
-
-
-
-
 
 // GetAllCustomersStatements auto-paginates list_customers_statements, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8160,12 +8269,6 @@ func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int, 
 	return items, nil
 }
 
-
-
-
-
-
-
 // GetAllDrivers auto-paginates list_drivers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, opts *GetAllOptions) ([]Driver, error) {
@@ -8179,20 +8282,6 @@ func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, o
 	}
 	return items, nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -8211,27 +8300,6 @@ func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsP
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllLaborMatrices auto-paginates list_labor_matrices, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllLaborMatrices(ctx context.Context, opts *GetAllOptions) ([]LaborMatrix, error) {
@@ -8245,9 +8313,6 @@ func (c *Client) GetAllLaborMatrices(ctx context.Context, opts *GetAllOptions) (
 	}
 	return items, nil
 }
-
-
-
 
 // GetAllLaborRates auto-paginates list_labor_rates, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8263,10 +8328,6 @@ func (c *Client) GetAllLaborRates(ctx context.Context, opts *GetAllOptions) ([]L
 	return items, nil
 }
 
-
-
-
-
 // GetAllLaborTemplates auto-paginates list_labor_templates, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllLaborTemplates(ctx context.Context, opts *GetAllOptions) ([]LaborTemplate, error) {
@@ -8280,8 +8341,6 @@ func (c *Client) GetAllLaborTemplates(ctx context.Context, opts *GetAllOptions) 
 	}
 	return items, nil
 }
-
-
 
 // GetAllLeadSources auto-paginates list_lead_sources, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8309,24 +8368,6 @@ func (c *Client) GetAllLeadSources(ctx context.Context, opts *GetAllOptions) ([]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllNotifications auto-paginates list_notifications, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllNotifications(ctx context.Context, params *ListNotificationsParams, opts *GetAllOptions) ([]Notification, error) {
@@ -8340,9 +8381,6 @@ func (c *Client) GetAllNotifications(ctx context.Context, params *ListNotificati
 	}
 	return items, nil
 }
-
-
-
 
 // GetAllOrdersPurchaseOrders auto-paginates list_orders_purchase_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8358,11 +8396,6 @@ func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrd
 	return items, nil
 }
 
-
-
-
-
-
 // GetAllOrdersReturnOrders auto-paginates list_orders_return_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllOrdersReturnOrders(ctx context.Context, opts *GetAllOptions) ([]ReturnOrder, error) {
@@ -8376,10 +8409,6 @@ func (c *Client) GetAllOrdersReturnOrders(ctx context.Context, opts *GetAllOptio
 	}
 	return items, nil
 }
-
-
-
-
 
 // GetAllOrdersSubletOrders auto-paginates list_orders_sublet_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8395,8 +8424,6 @@ func (c *Client) GetAllOrdersSubletOrders(ctx context.Context, opts *GetAllOptio
 	return items, nil
 }
 
-
-
 // GetAllPackages auto-paginates list_packages, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Package, error) {
@@ -8410,16 +8437,6 @@ func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Pac
 	}
 	return items, nil
 }
-
-
-
-
-
-
-
-
-
-
 
 
 // GetAllPartsMatrices auto-paginates list_parts_matrices, following the Link header.
@@ -8458,16 +8475,6 @@ func (c *Client) GetAllPartsMatrices(ctx context.Context, opts *GetAllOptions) (
 
 
 
-
-
-
-
-
-
-
-
-
-
 // GetAllServiceCategories auto-paginates list_service_categories, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllServiceCategories(ctx context.Context, opts *GetAllOptions) ([]ServiceCategory, error) {
@@ -8481,12 +8488,6 @@ func (c *Client) GetAllServiceCategories(ctx context.Context, opts *GetAllOption
 	}
 	return items, nil
 }
-
-
-
-
-
-
 
 // GetAllShopDiscounts auto-paginates list_shop_discounts, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8502,10 +8503,6 @@ func (c *Client) GetAllShopDiscounts(ctx context.Context, opts *GetAllOptions) (
 	return items, nil
 }
 
-
-
-
-
 // GetAllShopFees auto-paginates list_shop_fees, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllShopFees(ctx context.Context, opts *GetAllOptions) ([]ShopFee, error) {
@@ -8519,14 +8516,6 @@ func (c *Client) GetAllShopFees(ctx context.Context, opts *GetAllOptions) ([]Sho
 	}
 	return items, nil
 }
-
-
-
-
-
-
-
-
 
 
 // GetAllSubStatuses auto-paginates list_sub_statuses, following the Link header.
@@ -8547,24 +8536,6 @@ func (c *Client) GetAllSubStatuses(ctx context.Context, opts *GetAllOptions) ([]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllUsers auto-paginates list_users, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllUsers(ctx context.Context, params *ListUsersParams, opts *GetAllOptions) ([]User, error) {
@@ -8580,21 +8551,6 @@ func (c *Client) GetAllUsers(ctx context.Context, params *ListUsersParams, opts 
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllVehicles auto-paginates list_vehicles, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams, opts *GetAllOptions) ([]Vehicle, error) {
@@ -8608,17 +8564,6 @@ func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams,
 	}
 	return items, nil
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header.
@@ -8649,12 +8594,6 @@ func (c *Client) GetAllVendors(ctx context.Context, opts *GetAllOptions) ([]Vend
 	return items, nil
 }
 
-
-
-
-
-
-
 // GetAllVendorsPurchaseOrders auto-paginates list_vendors_purchase_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, opts *GetAllOptions) ([]PurchaseOrder, error) {
@@ -8671,8 +8610,6 @@ func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, 
 
 
 
-
-
 // GetAllWorkOrders auto-paginates list_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersParams, opts *GetAllOptions) ([]WorkOrder, error) {
@@ -8686,10 +8623,6 @@ func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersPar
 	}
 	return items, nil
 }
-
-
-
-
 
 
 // GetAllWorkOrdersAppointments auto-paginates list_work_orders_appointments, following the Link header.
@@ -8713,85 +8646,6 @@ func (c *Client) GetAllWorkOrdersAppointments(ctx context.Context, id int, opts 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllWorkOrdersSubletOrders auto-paginates list_work_orders_sublet_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId int, opts *GetAllOptions) ([]SubletOrder, error) {
@@ -8805,6 +8659,152 @@ func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId i
 	}
 	return items, nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

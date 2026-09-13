@@ -11,32 +11,96 @@ import (
 type operationFunc func(ctx context.Context, t *testing.T, client *wenmar.Client, args map[string]interface{}) (interface{}, error)
 
 var dispatch = map[string]operationFunc{
-"delete_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteAccount(ctx)
+"archive_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveCustomerRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccount(ctx)
+"archive_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveInspectionRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateAccount(ctx, buildWrapper[wenmar.UpdateAccountRequest]("account", args["requestBody"].(map[string]interface{})))
+"archive_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveLaborRateRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_account_api_tokens": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountApiTokens(ctx)
+"archive_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchivePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchivePackageRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"archive_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveServiceCategoryRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"archive_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVehicleRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"archive_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ArchiveVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVendorRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"check_customer_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CheckCustomerDuplicate(ctx, &wenmar.CheckCustomerDuplicateParams{Email: strPtr(args["query"].(map[string]interface{}), "email"), FirstName: strPtr(args["query"].(map[string]interface{}), "first_name"), LastName: strPtr(args["query"].(map[string]interface{}), "last_name"), Phone: intPtr(args["query"].(map[string]interface{}), "phone")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"check_vehicle_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CheckVehicleDuplicate(ctx, &wenmar.CheckVehicleDuplicateParams{Vin: strPtr(args["query"].(map[string]interface{}), "vin")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"close_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CloseWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CloseWorkOrderRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"complete_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CompleteInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CompleteInspectionReportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"complete_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CompleteWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CompleteWorkOrderRequest]("work_order_completion_form", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -51,70 +115,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_account_api_token": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteAccountApiToken(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_billing": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountBilling(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_capabilities": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountCapabilities(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_driveon": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountDriveon(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_payments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountPayments(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_phone_numbers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountPhoneNumbers(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_quickbooks": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountQuickbooks(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_account_station_link": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAccountStationLink(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_account_station_link_regenerate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateAccountStationLinkRegenerate(ctx, wenmar.CreateAccountStationLinkRegenerateRequest{})
 	if err != nil {
@@ -123,48 +123,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_appointments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAppointmentsRaw(ctx, &wenmar.ListAppointmentsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateAppointment(ctx, buildWrapper[wenmar.CreateAppointmentRequest]("appointment", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_appointments_available_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAppointmentsAvailableSlots(ctx, &wenmar.ListAppointmentsAvailableSlotsParams{Date: strPtr(args["query"].(map[string]interface{}), "date"), DurationMinutes: intPtr(args["query"].(map[string]interface{}), "duration_minutes")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateAppointmentRequest]("appointment", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -227,56 +187,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_calendar_blocked_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteCalendarBlockedTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_calendar_blocked_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCalendarBlockedTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCalendarBlockedTimeRequest]("blocked_time", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_campaigns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCampaignsRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateCampaign(ctx, buildWrapper[wenmar.CreateCampaignRequest]("broadcast_campaign", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"duplicate_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DuplicateCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.DuplicateCampaignRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"send_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.SendCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.SendCampaignRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -291,40 +203,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_cash_entries": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCashEntries(ctx, &wenmar.ListCashEntriesParams{CashDrawerSessionId: intPtr(args["query"].(map[string]interface{}), "cash_drawer_session_id")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_cash_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateCashEntry(ctx, buildWrapper[wenmar.CreateCashEntryRequest]("cash_entry", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_cash_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteCashEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_cash_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowCashEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_conversations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListConversationsRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -363,56 +243,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_conversations_messages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListConversationsMessages(ctx, intArg(args["pathParams"].(map[string]interface{}), "conversation_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_conversations_message": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateConversationsMessage(ctx, intArg(args["pathParams"].(map[string]interface{}), "conversation_id"), buildWrapper[wenmar.CreateConversationsMessageRequest]("message", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowConversation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateConversation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateConversationRequest]("status", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_core_tax_rules": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCoreTaxRulesRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_core_tax_rule": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCoreTaxRule(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCoreTaxRuleRequest]("core_tax_rule", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_counter_sales": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCounterSalesRaw(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -435,136 +267,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_counter_sales_line_items_brands": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCounterSalesLineItemsBrands(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_counter_sales_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteCounterSalesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_counter_sales_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCounterSalesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCounterSalesLineItemRequest]("counter_sale_line_item", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_counter_sales_payment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateCounterSalesPayment(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"), buildWrapper[wenmar.CreateCounterSalesPaymentRequest]("payment", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_counter_sale": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowCounterSale(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_counter_sale": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCounterSale(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCounterSaleRequest]("counter_sale", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_counter_sales_reopen": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCounterSalesReopen(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCounterSalesReopenRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_current_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCurrentLocation(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_current_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCurrentLocation(ctx, buildWrapper[wenmar.UpdateCurrentLocationRequest]("location", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_customer_tags": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomerTagsRaw(ctx, &wenmar.ListCustomerTagsParams{Status: strPtr(args["query"].(map[string]interface{}), "status")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateCustomerTag(ctx, buildWrapper[wenmar.CreateCustomerTagRequest]("name", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowCustomerTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCustomerTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCustomerTagRequest]("name", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_customer_tags_archive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCustomerTagsArchive(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsArchiveRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_customer_tags_restore": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCustomerTagsRestore(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsRestoreRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_customer_tags_trash": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCustomerTagsTrash(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsTrashRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_customers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
 		return nil, err
 	}
@@ -579,16 +283,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"check_customer_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CheckCustomerDuplicate(ctx, &wenmar.CheckCustomerDuplicateParams{Email: strPtr(args["query"].(map[string]interface{}), "email"), FirstName: strPtr(args["query"].(map[string]interface{}), "first_name"), LastName: strPtr(args["query"].(map[string]interface{}), "last_name"), Phone: intPtr(args["query"].(map[string]interface{}), "phone")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_customers_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListCustomersDriversRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+"create_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateCustomerTag(ctx, buildWrapper[wenmar.CreateCustomerTagRequest]("name", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -603,6 +299,774 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"create_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateExpense(ctx, buildWrapper[wenmar.CreateExpenseRequest]("expense", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInspection(ctx, buildWrapper[wenmar.CreateInspectionRequest]("inspection", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInspectionReport(ctx, &wenmar.CreateInspectionReportParams{InspectionId: intPtr(args["query"].(map[string]interface{}), "inspection_id"), WorkOrderId: intPtr(args["query"].(map[string]interface{}), "work_order_id")}, wenmar.CreateInspectionReportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), buildWrapper[wenmar.CreateInspectionsGroupRequest]("inspection_group", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), buildFlat[wenmar.CreateInspectionsItemRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), &wenmar.CreateInspectionsPresetParams{ItemId: intPtr(args["query"].(map[string]interface{}), "item_id")}, buildWrapper[wenmar.CreateInspectionsPresetRequest]("inspection_preset", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inventory_level_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInventoryLevelExtraction(ctx, buildFlat[wenmar.CreateInventoryLevelExtractionRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_inventory_levels_adjust": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateInventoryLevelsAdjust(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateInventoryLevelsAdjustRequest]("adjustment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLaborMatrix(ctx, buildWrapper[wenmar.CreateLaborMatrixRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLaborRate(ctx, buildWrapper[wenmar.CreateLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLeadSource(ctx, buildWrapper[wenmar.CreateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_lead_sources_seed_default": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateLeadSourcesSeedDefault(ctx, wenmar.CreateLeadSourcesSeedDefaultRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_messages_resend": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateMessagesResend(ctx, intArg(args["pathParams"].(map[string]interface{}), "message_id"), wenmar.CreateMessagesResendRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_notifications_bulk_mark_read": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateNotificationsBulkMarkRead(ctx, wenmar.CreateNotificationsBulkMarkReadRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateOrdersPurchaseOrder(ctx, buildWrapper[wenmar.CreateOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_orders_purchase_orders_cancellation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateOrdersPurchaseOrdersCancellation(ctx, intArg(args["pathParams"].(map[string]interface{}), "purchase_order_id"), wenmar.CreateOrdersPurchaseOrdersCancellationRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_orders_return_orders_refund_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateOrdersReturnOrdersRefundCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "return_order_id"), wenmar.CreateOrdersReturnOrdersRefundCompletionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePackage(ctx, buildWrapper[wenmar.CreatePackageRequest]("package", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_packages_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePackagesDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePackagesDuplicateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePart(ctx, buildWrapper[wenmar.CreatePartRequest]("part", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePartsMatrix(ctx, buildWrapper[wenmar.CreatePartsMatrixRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_payments_cancellation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePaymentsCancellation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsCancellationRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_payments_confirmation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePaymentsConfirmation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsConfirmationRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_payments_failure": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePaymentsFailure(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsFailureRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreatePermissionGroup(ctx, buildWrapper[wenmar.CreatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateReportsTaxPeriod(ctx, buildWrapper[wenmar.CreateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateServiceCategory(ctx, buildWrapper[wenmar.CreateServiceCategoryRequest]("service_category", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopDiscount(ctx, buildWrapper[wenmar.CreateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_discounts_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopDiscountsDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateShopDiscountsDuplicateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopFee(ctx, buildWrapper[wenmar.CreateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_shop_fees_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateShopFeesDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateShopFeesDuplicateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_statements_bulk_send": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateStatementsBulkSend(ctx, buildFlat[wenmar.CreateStatementsBulkSendRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_statements_generate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateStatementsGenerate(ctx, wenmar.CreateStatementsGenerateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_store_credits_void": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateStoreCreditsVoid(ctx, intArg(args["pathParams"].(map[string]interface{}), "store_credit_id"), wenmar.CreateStoreCreditsVoidRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_sub_status": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateSubStatus(ctx, buildWrapper[wenmar.CreateSubStatusRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateSubletPackage(ctx, buildWrapper[wenmar.CreateSubletPackageRequest]("sublet_package", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTire(ctx, buildWrapper[wenmar.CreateTireRequest]("tire", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTireEvent(ctx, buildWrapper[wenmar.CreateTireEventRequest]("tire_event", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTireStorageSlot(ctx, buildWrapper[wenmar.CreateTireStorageSlotRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_tire_storage_slots_check_out": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateTireStorageSlotsCheckOut(ctx, intArg(args["pathParams"].(map[string]interface{}), "tire_storage_slot_id"), wenmar.CreateTireStorageSlotsCheckOutRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUser(ctx, buildWrapper[wenmar.CreateUserRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_disable": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersDisable(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersDisableRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_enable": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersEnable(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersEnableRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_permission_groups_assign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersPermissionGroupsAssign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateUsersPermissionGroupsAssignRequest]("user_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_reset_pin": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersResetPin(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersResetPinRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_send_confirmation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersSendConfirmation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersSendConfirmationRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_send_password_reset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersSendPasswordReset(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersSendPasswordResetRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_users_unlock": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateUsersUnlock(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersUnlockRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateVehicle(ctx, buildWrapper[wenmar.CreateVehicleRequest]("vehicle", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateVendor(ctx, buildWrapper[wenmar.CreateVendorRequest]("vendor", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrder(ctx, buildWrapper[wenmar.CreateWorkOrderRequest]("work_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_order_payment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrderPayment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrderPaymentRequest]("payment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_order_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrderTag(ctx, buildFlat[wenmar.CreateWorkOrderTagRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_order_tech_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrderTechAssignment(ctx, &wenmar.CreateWorkOrderTechAssignmentParams{WorkOrderId: intPtr(args["query"].(map[string]interface{}), "work_order_id")}, buildWrapper[wenmar.CreateWorkOrderTechAssignmentRequest]("technician_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_activity_log": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersActivityLog(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersActivityLogRequest]("activity_log", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_authorization": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersAuthorization(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildFlat[wenmar.CreateWorkOrdersAuthorizationRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_authorization_decision": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersAuthorizationDecision(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersAuthorizationDecisionRequest]("service_decision_reasons", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersConcernRequest]("concern", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_concerns_add_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersConcernsAddPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersConcernsAddPackageRequest]("package_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_concerns_copy_all_to_estimate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersConcernsCopyAllToEstimate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), wenmar.CreateWorkOrdersConcernsCopyAllToEstimateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_concerns_copy_to_estimate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersConcernsCopyToEstimate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersConcernsCopyToEstimateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersCourtesyCarAssignmentRequest]("vehicle_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_credit_resolution": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersCreditResolution(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersCreditResolutionRequest]("resolution", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_fee_exclusion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersFeeExclusion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersFeeExclusionRequest]("work_order_fee_exclusion", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_payment_link_send": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersPaymentLinkSend(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersPaymentLinkSendRequest]("message", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_purchase_orders_receive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersPurchaseOrdersReceive(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersPurchaseOrdersReceiveRequest]("lines", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_purchase_orders_return": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersPurchaseOrdersReturn(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.CreateWorkOrdersPurchaseOrdersReturnRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_quick_intake": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersQuickIntake(ctx, buildFlat[wenmar.CreateWorkOrdersQuickIntakeRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_refund": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersRefund(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersRefundRequest]("refund", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildFlat[wenmar.CreateWorkOrdersServiceRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_bulk_pull": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesBulkPull(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesBulkPullRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_comment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesComment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesCommentRequest]("service_comment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesCompletionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_copy": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesCopy(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesCopyRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesExtraction(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildFlat[wenmar.CreateWorkOrdersServicesExtractionRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesLineItemRequest]("work_order_line_item", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_line_items_copy": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesLineItemsCopy(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsCopyRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_line_items_inventory_addition": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesLineItemsInventoryAddition(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsInventoryAdditionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_line_items_price_refresh": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesLineItemsPriceRefresh(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsPriceRefreshRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_line_items_reorder": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesLineItemsReorder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsReorderRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersServicesPackageRequest]("package_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesSubletOrderRequest]("sublet_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_sublet_orders_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesSubletOrdersDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesSubletOrdersDuplicateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_services_time_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersServicesTimeEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesTimeEntryRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersTireStorageRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_work_orders_void": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateWorkOrdersVoid(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersVoidRequest]("payment_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"decline_all_work_order_concerns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeclineAllWorkOrderConcerns(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.DeclineAllWorkOrderConcernsRequest]("decline_reason", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"decline_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeclineWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.DeclineWorkOrderRequest]("closure_reason", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"decode_vin": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DecodeVin(ctx, &wenmar.DecodeVinParams{Vin: strPtr(args["query"].(map[string]interface{}), "vin")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteAccount(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_account_api_token": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteAccountApiToken(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_calendar_blocked_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteCalendarBlockedTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_cash_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteCashEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_counter_sales_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteCounterSalesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "delete_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.DeleteDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
@@ -611,16 +1075,424 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"show_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+"delete_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateDriverRequest]("driver", args["requestBody"].(map[string]interface{})))
+"delete_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteLaborMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_labor_template": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteLaborTemplate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeletePart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeletePartsMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteSubletPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_users_permission_groups_unassign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteUsersPermissionGroupsUnassign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.DeleteUsersPermissionGroupsUnassignParams{AssignmentId: intPtr(args["query"].(map[string]interface{}), "assignment_id")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_fee_exclusion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersFeeExclusion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_services_authorization": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersServicesAuthorization(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_services_comment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersServicesComment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_services_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersServicesCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_services_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersServicesSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"delete_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DeleteWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"duplicate_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.DuplicateCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.DuplicateCampaignRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccount(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_api_tokens": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountApiTokens(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_billing": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountBilling(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_capabilities": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountCapabilities(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_driveon": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountDriveon(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_payments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountPayments(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_phone_numbers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountPhoneNumbers(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_quickbooks": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountQuickbooks(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_account_station_link": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAccountStationLink(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_appointments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAppointmentsRaw(ctx, &wenmar.ListAppointmentsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_appointments_available_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListAppointmentsAvailableSlots(ctx, &wenmar.ListAppointmentsAvailableSlotsParams{Date: strPtr(args["query"].(map[string]interface{}), "date"), DurationMinutes: intPtr(args["query"].(map[string]interface{}), "duration_minutes")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_campaigns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCampaignsRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_cash_entries": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCashEntries(ctx, &wenmar.ListCashEntriesParams{CashDrawerSessionId: intPtr(args["query"].(map[string]interface{}), "cash_drawer_session_id")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_conversations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListConversationsRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_conversations_messages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListConversationsMessages(ctx, intArg(args["pathParams"].(map[string]interface{}), "conversation_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_core_tax_rules": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCoreTaxRulesRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_counter_sales": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCounterSalesRaw(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_counter_sales_line_items_brands": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCounterSalesLineItemsBrands(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_current_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCurrentLocation(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_customer_tags": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCustomerTagsRaw(ctx, &wenmar.ListCustomerTagsParams{Status: strPtr(args["query"].(map[string]interface{}), "status")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_customers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCustomersRaw(ctx, &wenmar.ListCustomersParams{CustomerTagId: intPtr(args["query"].(map[string]interface{}), "customer_tag_id"), HasBalance: boolPtr(args["query"].(map[string]interface{}), "has_balance"), HasVehicle: boolPtr(args["query"].(map[string]interface{}), "has_vehicle"), LastVisitMonths: intPtr(args["query"].(map[string]interface{}), "last_visit_months"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_customers_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCustomersDriversRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -659,54 +1531,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"show_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCustomerRequest]("customer", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveCustomerRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"merge_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.MergeCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeCustomerRequest]("source_customer_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreCustomerRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashCustomerRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListDriversRaw(ctx, &wenmar.ListDriversParams{FiltersHasOpenWorkOrder: boolPtr(args["query"].(map[string]interface{}), "filters[has_open_work_order]"), FiltersQ: strPtr(args["query"].(map[string]interface{}), "filters[q]")})
 	if err != nil {
@@ -723,120 +1547,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateExpense(ctx, buildWrapper[wenmar.CreateExpenseRequest]("expense", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateExpenseRequest]("expense", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_fleets": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListFleets(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInspectionReport(ctx, &wenmar.CreateInspectionReportParams{InspectionId: intPtr(args["query"].(map[string]interface{}), "inspection_id"), WorkOrderId: intPtr(args["query"].(map[string]interface{}), "work_order_id")}, wenmar.CreateInspectionReportRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"complete_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CompleteInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CompleteInspectionReportRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_inspection_report_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowInspectionReportGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.ShowInspectionReportGroupParams{GroupName: strPtr(args["query"].(map[string]interface{}), "group_name")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"mark_all_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.MarkAllInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.MarkAllInspectionReportRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"reassign_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ReassignInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.ReassignInspectionReportRequest]("user_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"reopen_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ReopenInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ReopenInspectionReportRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"reset_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ResetInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ResetInspectionReportRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"retry_inspection_report_recording": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RetryInspectionReportRecording(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.RetryInspectionReportRecordingParams{RecordingId: intPtr(args["query"].(map[string]interface{}), "recording_id")}, wenmar.RetryInspectionReportRecordingRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -851,176 +1563,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInspection(ctx, buildWrapper[wenmar.CreateInspectionRequest]("inspection", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionRequest]("inspection", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveInspectionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"remove_default_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RemoveDefaultInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RemoveDefaultInspectionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreInspectionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"set_default_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.SetDefaultInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.SetDefaultInspectionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashInspectionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), buildWrapper[wenmar.CreateInspectionsGroupRequest]("inspection_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsGroupRequest]("inspection_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), buildFlat[wenmar.CreateInspectionsItemRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsItemRequest]("inspection_item", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), &wenmar.CreateInspectionsPresetParams{ItemId: intPtr(args["query"].(map[string]interface{}), "item_id")}, buildWrapper[wenmar.CreateInspectionsPresetRequest]("inspection_preset", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsPresetRequest]("inspection_preset", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_inventory_levels_barcode_lookup": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListInventoryLevelsBarcodeLookup(ctx, &wenmar.ListInventoryLevelsBarcodeLookupParams{Barcode: strPtr(args["query"].(map[string]interface{}), "barcode")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inventory_level_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInventoryLevelExtraction(ctx, buildFlat[wenmar.CreateInventoryLevelExtractionRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInventoryLevelRequest]("inventory_level", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_inventory_levels_adjust": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInventoryLevelsAdjust(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateInventoryLevelsAdjustRequest]("adjustment", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1035,64 +1579,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateLaborMatrix(ctx, buildWrapper[wenmar.CreateLaborMatrixRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteLaborMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLaborMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborMatrixRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_labor_rates": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListLaborRatesRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateLaborRate(ctx, buildWrapper[wenmar.CreateLaborRateRequest]("labor_rate", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveLaborRateRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreLaborRateRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashLaborRateRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -1107,72 +1595,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_labor_template": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteLaborTemplate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_labor_template": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLaborTemplate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborTemplateRequest]("labor_template", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_lead_sources": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListLeadSourcesRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateLeadSource(ctx, buildWrapper[wenmar.CreateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_lead_sources_seed_default": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateLeadSourcesSeedDefault(ctx, wenmar.CreateLeadSourcesSeedDefaultRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowLocation(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocation(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationRequest]("location", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1187,40 +1611,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_locations_business_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsBusinessProfile(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsBusinessProfileRequest]("location", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsOperationsRequest]("location", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_locations_close_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListLocationsCloseRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_locations_close_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsCloseRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsCloseRequirementsRequest]("close_requirements", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1243,14 +1635,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_locations_documents": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsDocuments(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsDocumentsRequest]("location", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_locations_lead_source_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListLocationsLeadSourceRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"))
 	if err != nil {
@@ -1259,8 +1643,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_locations_lead_source_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsLeadSourceRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsLeadSourceRequirementsRequest]("lead_source_requirements", args["requestBody"].(map[string]interface{})))
+"list_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -1275,24 +1659,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_locations_reminders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsReminders(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsRemindersRequest]("location", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_locations_schedule_config": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListLocationsScheduleConfig(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_locations_schedule_config": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateLocationsScheduleConfig(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsScheduleConfigRequest]("schedule_config", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1307,24 +1675,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_me_notifications": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateMeNotifications(ctx, buildWrapper[wenmar.UpdateMeNotificationsRequest]("user", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_me_preferences": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListMePreferences(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_me_preferences": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateMePreferences(ctx, buildWrapper[wenmar.UpdateMePreferencesRequest]("user", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1339,32 +1691,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"update_me_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateMeProfile(ctx, buildWrapper[wenmar.UpdateMeProfileRequest]("user", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_messages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListMessages(ctx, &wenmar.ListMessagesParams{ConversationId: intPtr(args["query"].(map[string]interface{}), "conversation_id")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_message": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowMessage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_messages_resend": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateMessagesResend(ctx, intArg(args["pathParams"].(map[string]interface{}), "message_id"), wenmar.CreateMessagesResendRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -1379,72 +1707,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_notifications_bulk_mark_read": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateNotificationsBulkMarkRead(ctx, wenmar.CreateNotificationsBulkMarkReadRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_notification": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowNotification(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_notification": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateNotification(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateNotificationRequest]("read", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_orders_purchase_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListOrdersPurchaseOrdersRaw(ctx, &wenmar.ListOrdersPurchaseOrdersParams{Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), VendorId: intPtr(args["query"].(map[string]interface{}), "vendor_id")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateOrdersPurchaseOrder(ctx, buildWrapper[wenmar.CreateOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_orders_purchase_orders_cancellation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateOrdersPurchaseOrdersCancellation(ctx, intArg(args["pathParams"].(map[string]interface{}), "purchase_order_id"), wenmar.CreateOrdersPurchaseOrdersCancellationRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -1459,56 +1723,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"delete_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateOrdersReturnOrderRequest]("return_order", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_orders_return_orders_refund_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateOrdersReturnOrdersRefundCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "return_order_id"), wenmar.CreateOrdersReturnOrdersRefundCompletionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_orders_sublet_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListOrdersSubletOrdersRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_orders_sublet_orders_mark_payment_complete": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateOrdersSubletOrdersMarkPaymentComplete(ctx, buildFlat[wenmar.UpdateOrdersSubletOrdersMarkPaymentCompleteRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_orders_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowOrdersSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -1523,54 +1739,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePackage(ctx, buildWrapper[wenmar.CreatePackageRequest]("package", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdatePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchivePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchivePackageRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_packages_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePackagesDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePackagesDuplicateRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestorePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestorePackageRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashPackageRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_parts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListParts(ctx, &wenmar.ListPartsParams{Brand: strPtr(args["query"].(map[string]interface{}), "brand"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), StockStatus: strPtr(args["query"].(map[string]interface{}), "stock_status"), Stocked: boolPtr(args["query"].(map[string]interface{}), "stocked")})
 	if err != nil {
@@ -1579,64 +1747,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePart(ctx, buildWrapper[wenmar.CreatePartRequest]("part", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeletePart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowPart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdatePart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePartRequest]("part", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_parts_matrices": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListPartsMatricesRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePartsMatrix(ctx, buildWrapper[wenmar.CreatePartsMatrixRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeletePartsMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdatePartsMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePartsMatrixRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1659,32 +1771,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"show_payment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowPayment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_payments_cancellation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePaymentsCancellation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsCancellationRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_payments_confirmation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePaymentsConfirmation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsConfirmationRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_payments_failure": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePaymentsFailure(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreatePaymentsFailureRequest{})
+"list_permission_groups": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListPermissionGroups(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -1715,24 +1803,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"show_reports_cash_drawer_session": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowReportsCashDrawerSession(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_reports_cash_drawer_sessions_close": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListReportsCashDrawerSessionsClose(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_reports_cash_drawer_sessions_confirm_close": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateReportsCashDrawerSessionsConfirmClose(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateReportsCashDrawerSessionsConfirmCloseRequest]("cash_drawer_session", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1843,22 +1915,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateReportsTaxPeriod(ctx, buildWrapper[wenmar.CreateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateReportsTaxPeriod(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_reports_technician_productivity": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListReportsTechnicianProductivity(ctx)
 	if err != nil {
@@ -1883,88 +1939,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateServiceCategory(ctx, buildWrapper[wenmar.CreateServiceCategoryRequest]("service_category", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"seed_defaults_service_categories": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.SeedDefaultsServiceCategories(ctx, wenmar.SeedDefaultsServiceCategoriesRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateServiceCategoryRequest]("service_category", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveServiceCategoryRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreServiceCategoryRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashServiceCategoryRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_shop_discounts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListShopDiscountsRaw(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateShopDiscount(ctx, buildWrapper[wenmar.CreateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_shop_discounts_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateShopDiscountsDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateShopDiscountsDuplicateRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -1979,72 +1955,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateShopFee(ctx, buildWrapper[wenmar.CreateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_shop_fees_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateShopFeesDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateShopFeesDuplicateRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_statements_bulk_send": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateStatementsBulkSend(ctx, buildFlat[wenmar.CreateStatementsBulkSendRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_statements_generate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateStatementsGenerate(ctx, wenmar.CreateStatementsGenerateRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_statement": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowStatement(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_statements_payments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListStatementsPayments(ctx, intArg(args["pathParams"].(map[string]interface{}), "statement_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_store_credits_void": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateStoreCreditsVoid(ctx, intArg(args["pathParams"].(map[string]interface{}), "store_credit_id"), wenmar.CreateStoreCreditsVoidRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2059,64 +1971,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_sub_status": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSubStatus(ctx, buildWrapper[wenmar.CreateSubStatusRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_sub_status": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSubStatus(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSubStatusRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_sublet_packages": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListSubletPackages(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateSubletPackage(ctx, buildWrapper[wenmar.CreateSubletPackageRequest]("sublet_package", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteSubletPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSubletPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSubletPackageRequest]("sublet_package", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_sublet_packages_deactivate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateSubletPackagesDeactivate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_order_tech_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrderTechAssignment(ctx, &wenmar.CreateWorkOrderTechAssignmentParams{WorkOrderId: intPtr(args["query"].(map[string]interface{}), "work_order_id")}, buildWrapper[wenmar.CreateWorkOrderTechAssignmentRequest]("technician_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2131,64 +1987,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTireEvent(ctx, buildWrapper[wenmar.CreateTireEventRequest]("tire_event", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowTireEvent(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_tire_storage_slots": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListTireStorageSlots(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTireStorageSlot(ctx, buildWrapper[wenmar.CreateTireStorageSlotRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTireStorageSlotRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_tire_storage_slots_check_out": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTireStorageSlotsCheckOut(ctx, intArg(args["pathParams"].(map[string]interface{}), "tire_storage_slot_id"), wenmar.CreateTireStorageSlotsCheckOutRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2203,128 +2003,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateTire(ctx, buildWrapper[wenmar.CreateTireRequest]("tire", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTireRequest]("tire", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_users": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListUsersRaw(ctx, &wenmar.ListUsersParams{Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUser(ctx, buildWrapper[wenmar.CreateUserRequest]("user", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_permission_groups": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListPermissionGroups(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreatePermissionGroup(ctx, buildWrapper[wenmar.CreatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdatePermissionGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_permission_groups_assign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersPermissionGroupsAssign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateUsersPermissionGroupsAssignRequest]("user_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_users_permission_groups_unassign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteUsersPermissionGroupsUnassign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.DeleteUsersPermissionGroupsUnassignParams{AssignmentId: intPtr(args["query"].(map[string]interface{}), "assignment_id")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateUserRequest]("user", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_disable": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersDisable(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersDisableRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_enable": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersEnable(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersEnableRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2339,38 +2019,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_users_reset_pin": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersResetPin(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersResetPinRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_send_confirmation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersSendConfirmation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersSendConfirmationRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_send_password_reset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersSendPasswordReset(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersSendPasswordResetRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_users_unlock": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateUsersUnlock(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateUsersUnlockRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListVehiclesRaw(ctx, &wenmar.ListVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id"), Page: intPtr(args["query"].(map[string]interface{}), "page"), PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status"), Type: strPtr(args["query"].(map[string]interface{}), "type")})
 	if err != nil {
@@ -2379,96 +2027,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateVehicle(ctx, buildWrapper[wenmar.CreateVehicleRequest]("vehicle", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"check_vehicle_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CheckVehicleDuplicate(ctx, &wenmar.CheckVehicleDuplicateParams{Vin: strPtr(args["query"].(map[string]interface{}), "vin")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_vehicles_customer_vehicles": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListVehiclesCustomerVehicles(ctx, &wenmar.ListVehiclesCustomerVehiclesParams{CustomerId: intPtr(args["query"].(map[string]interface{}), "customer_id")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"prefill_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.PrefillVehicle(ctx, &wenmar.PrefillVehicleParams{Make: strPtr(args["query"].(map[string]interface{}), "make"), Model: strPtr(args["query"].(map[string]interface{}), "model"), Vin: strPtr(args["query"].(map[string]interface{}), "vin"), Year: intPtr(args["query"].(map[string]interface{}), "year")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"decode_vin": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DecodeVin(ctx, &wenmar.DecodeVinParams{Vin: strPtr(args["query"].(map[string]interface{}), "vin")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.UpdateVehicleRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVehicleRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"merge_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.MergeVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeVehicleRequest]("source_vehicle_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVehicleRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"transfer_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TransferVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.TransferVehicleRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVehicleRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2491,56 +2051,16 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateVendor(ctx, buildWrapper[wenmar.CreateVendorRequest]("vendor", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateVendorRequest]("vendor", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"archive_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ArchiveVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ArchiveVendorRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"restore_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.RestoreVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVendorRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"trash_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.TrashVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVendorRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_vendors_purchase_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListVendorsPurchaseOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "vendor_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_work_order_services": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrderServices(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2555,64 +2075,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_work_order_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrderTag(ctx, buildFlat[wenmar.CreateWorkOrderTagRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_order_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrderTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrderTagRequest]("name", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_order_tags_archive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrderTagsArchive(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrderTagsArchiveRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "list_work_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListWorkOrdersRaw(ctx, &wenmar.ListWorkOrdersParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrder(ctx, buildWrapper[wenmar.CreateWorkOrderRequest]("work_order", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_quick_intake": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersQuickIntake(ctx, buildFlat[wenmar.CreateWorkOrdersQuickIntakeRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrderRequest]("work_order", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2643,56 +2107,96 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"close_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CloseWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CloseWorkOrderRequest{})
+"list_work_orders_concerns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersConcerns(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"complete_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CompleteWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CompleteWorkOrderRequest]("work_order_completion_form", args["requestBody"].(map[string]interface{})))
+"list_work_orders_payment_link": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersPaymentLink(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"delete_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+"list_work_orders_receipts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersReceipts(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersCourtesyCarAssignmentRequest]("action_type", args["requestBody"].(map[string]interface{})))
+"list_work_orders_services_adjust_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersServicesAdjustTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersCourtesyCarAssignmentRequest]("vehicle_id", args["requestBody"].(map[string]interface{})))
+"list_work_orders_services_comments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersServicesComments(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"decline_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeclineWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.DeclineWorkOrderRequest]("closure_reason", args["requestBody"].(map[string]interface{})))
+"list_work_orders_services_line_items": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersServicesLineItems(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"show_work_order_declined_services": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrderDeclinedServices(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+"list_work_orders_sublet_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersSubletOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_work_orders_vehicle_history": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListWorkOrdersVehicleHistory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"mark_all_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.MarkAllInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.MarkAllInspectionReportRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"merge_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.MergeCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeCustomerRequest]("source_customer_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"merge_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.MergeVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.MergeVehicleRequest]("source_vehicle_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -2707,8 +2211,144 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"prefill_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.PrefillVehicle(ctx, &wenmar.PrefillVehicleParams{Make: strPtr(args["query"].(map[string]interface{}), "make"), Model: strPtr(args["query"].(map[string]interface{}), "model"), Vin: strPtr(args["query"].(map[string]interface{}), "vin"), Year: intPtr(args["query"].(map[string]interface{}), "year")})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"pull_work_order_service_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.PullWorkOrderServiceLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.PullWorkOrderServiceLineItemRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"reassign_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ReassignInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.ReassignInspectionReportRequest]("user_id", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"remove_default_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RemoveDefaultInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RemoveDefaultInspectionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"reopen_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ReopenInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ReopenInspectionReportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "reopen_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ReopenWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ReopenWorkOrderRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"reset_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ResetInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.ResetInspectionReportRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreCustomerRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreInspectionRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreLaborRateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestorePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestorePackageRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreServiceCategoryRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVehicleRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"restore_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RestoreVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.RestoreVendorRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"retry_inspection_report_recording": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.RetryInspectionReportRecording(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.RetryInspectionReportRecordingParams{RecordingId: intPtr(args["query"].(map[string]interface{}), "recording_id")}, wenmar.RetryInspectionReportRecordingRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"reverse_work_order_payment_ar": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ReverseWorkOrderPaymentAr(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"seed_defaults_service_categories": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.SeedDefaultsServiceCategories(ctx, wenmar.SeedDefaultsServiceCategoriesRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"send_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.SendCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.SendCampaignRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -2731,6 +2371,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"send_work_order_payment_to_ar": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.SendWorkOrderPaymentToAr(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), wenmar.SendWorkOrderPaymentToArRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "send_work_order_reminder": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.SendWorkOrderReminder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.SendWorkOrderReminderRequest{})
 	if err != nil {
@@ -2739,128 +2387,256 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"show_work_order_service_history": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrderServiceHistory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+"set_default_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.SetDefaultInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.SetDefaultInspectionRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"start_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.StartWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.StartWorkOrderRequest{})
+"show_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_work_orders_vehicle_history": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersVehicleHistory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+"show_campaign": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCampaign(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"void_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.VoidWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.VoidWorkOrderRequest]("closure_reason", args["requestBody"].(map[string]interface{})))
+"show_cash_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCashEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_activity_log": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersActivityLog(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersActivityLogRequest]("activity_log", args["requestBody"].(map[string]interface{})))
+"show_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowConversation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_authorization_decision": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersAuthorizationDecision(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersAuthorizationDecisionRequest]("service_decision_reasons", args["requestBody"].(map[string]interface{})))
+"show_counter_sale": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCounterSale(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_authorization": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersAuthorization(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildFlat[wenmar.CreateWorkOrdersAuthorizationRequest](args["requestBody"].(map[string]interface{})))
+"show_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_work_orders_concerns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersConcerns(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+"show_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCustomerTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersConcernRequest]("concern", args["requestBody"].(map[string]interface{})))
+"show_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_concerns_copy_all_to_estimate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersConcernsCopyAllToEstimate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), wenmar.CreateWorkOrdersConcernsCopyAllToEstimateRequest{})
+"show_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"decline_all_work_order_concerns": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeclineAllWorkOrderConcerns(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.DeclineAllWorkOrderConcernsRequest]("decline_reason", args["requestBody"].(map[string]interface{})))
+"show_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"delete_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+"show_inspection_report": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowInspectionReport(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersConcernRequest]("concern", args["requestBody"].(map[string]interface{})))
+"show_inspection_report_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowInspectionReportGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), &wenmar.ShowInspectionReportGroupParams{GroupName: strPtr(args["query"].(map[string]interface{}), "group_name")})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_concerns_add_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersConcernsAddPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersConcernsAddPackageRequest]("package_id", args["requestBody"].(map[string]interface{})))
+"show_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_concerns_copy_to_estimate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersConcernsCopyToEstimate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersConcernsCopyToEstimateRequest{})
+"show_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowLocation(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_credit_resolution": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersCreditResolution(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersCreditResolutionRequest]("resolution", args["requestBody"].(map[string]interface{})))
+"show_message": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowMessage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_notification": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowNotification(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_orders_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowOrdersSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowPart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_payment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowPayment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_reports_cash_drawer_session": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowReportsCashDrawerSession(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_statement": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowStatement(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_tire_event": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowTireEvent(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_work_order_declined_services": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrderDeclinedServices(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2869,22 +2645,6 @@ var dispatch = map[string]operationFunc{
 
 "show_work_order_estimate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowWorkOrderEstimate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_fee_exclusion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersFeeExclusion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersFeeExclusionRequest]("work_order_fee_exclusion", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_fee_exclusion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersFeeExclusion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2907,22 +2667,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"list_work_orders_payment_link": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersPaymentLink(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_payment_link_send": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersPaymentLinkSend(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersPaymentLinkSendRequest]("message", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "show_work_order_payments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowWorkOrderPayments(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
@@ -2931,336 +2675,112 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_work_order_payment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrderPayment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrderPaymentRequest]("payment", args["requestBody"].(map[string]interface{})))
+"show_work_order_service_history": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrderServiceHistory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"reverse_work_order_payment_ar": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ReverseWorkOrderPaymentAr(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+"show_work_order_wip": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrderWip(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"send_work_order_payment_to_ar": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.SendWorkOrderPaymentToAr(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), wenmar.SendWorkOrderPaymentToArRequest{})
+"show_work_orders_signature": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrdersSignature(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+"show_work_orders_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrdersSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"delete_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+"show_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+"start_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.StartWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.StartWorkOrderRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_purchase_orders_receive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersPurchaseOrdersReceive(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersPurchaseOrdersReceiveRequest]("lines", args["requestBody"].(map[string]interface{})))
+"transfer_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TransferVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.TransferVehicleRequest](args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_purchase_orders_return": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersPurchaseOrdersReturn(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.CreateWorkOrdersPurchaseOrdersReturnRequest](args["requestBody"].(map[string]interface{})))
+"trash_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashCustomerRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_work_orders_receipts": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersReceipts(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+"trash_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashInspectionRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_refund": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersRefund(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersRefundRequest]("refund", args["requestBody"].(map[string]interface{})))
+"trash_labor_rate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashLaborRate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashLaborRateRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"list_work_order_services": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrderServices(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+"trash_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashPackageRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildFlat[wenmar.CreateWorkOrdersServiceRequest](args["requestBody"].(map[string]interface{})))
+"trash_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashServiceCategoryRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"update_work_orders_services_reorder": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesReorder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.UpdateWorkOrdersServicesReorderRequest]("service_ids", args["requestBody"].(map[string]interface{})))
+"trash_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVehicleRequest{})
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"delete_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServiceRequest]("work_order_service", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_work_orders_services_adjust_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersServicesAdjustTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_adjust_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesAdjustTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.UpdateWorkOrdersServicesAdjustTimeRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_services_authorization": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersServicesAuthorization(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_bulk_pull": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesBulkPull(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesBulkPullRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_services_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersServicesCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesCompletionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_copy": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesCopy(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesCopyRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateWorkOrdersServicesPackageRequest]("package_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_pause": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesPause(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesPauseRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_publish": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesPublish(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesPublishRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_revive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesRevive(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesReviveRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_time_entry": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesTimeEntry(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesTimeEntryRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_toggle_labor_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesToggleLaborCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesToggleLaborCompletionRequest]("line_item_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_update_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesUpdateCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesUpdateCategoryRequest]("category_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_work_orders_services_comments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersServicesComments(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_comment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesComment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesCommentRequest]("service_comment", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_services_comment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersServicesComment(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesExtraction(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildFlat[wenmar.CreateWorkOrdersServicesExtractionRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_work_orders_services_line_items": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersServicesLineItems(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesLineItemRequest]("work_order_line_item", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"update_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.UpdateWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesLineItemRequest]("work_order_line_item", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_line_items_copy": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesLineItemsCopy(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsCopyRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_line_items_inventory_addition": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesLineItemsInventoryAddition(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsInventoryAdditionRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_line_items_price_refresh": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesLineItemsPriceRefresh(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsPriceRefreshRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"pull_work_order_service_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.PullWorkOrderServiceLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.PullWorkOrderServiceLineItemRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_line_items_reorder": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesLineItemsReorder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesLineItemsReorderRequest{})
+"trash_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.TrashVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.TrashVendorRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -3283,16 +2803,552 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_services_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildWrapper[wenmar.CreateWorkOrdersServicesSubletOrderRequest]("sublet_order", args["requestBody"].(map[string]interface{})))
+"update_account": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateAccount(ctx, buildWrapper[wenmar.UpdateAccountRequest]("account", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"delete_work_orders_services_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersServicesSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+"update_appointment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateAppointment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateAppointmentRequest]("appointment", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_calendar_blocked_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCalendarBlockedTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCalendarBlockedTimeRequest]("blocked_time", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_conversation": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateConversation(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateConversationRequest]("status", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_core_tax_rule": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCoreTaxRule(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCoreTaxRuleRequest]("core_tax_rule", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_counter_sale": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCounterSale(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCounterSaleRequest]("counter_sale", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_counter_sales_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCounterSalesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "counter_sale_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCounterSalesLineItemRequest]("counter_sale_line_item", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_counter_sales_reopen": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCounterSalesReopen(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCounterSalesReopenRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_current_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCurrentLocation(ctx, buildWrapper[wenmar.UpdateCurrentLocationRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_customer": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCustomer(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCustomerRequest]("customer", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCustomerTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateCustomerTagRequest]("name", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_customer_tags_archive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCustomerTagsArchive(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsArchiveRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_customer_tags_restore": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCustomerTagsRestore(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsRestoreRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_customer_tags_trash": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateCustomerTagsTrash(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateCustomerTagsTrashRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateDriverRequest]("driver", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_expense": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateExpense(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateExpenseRequest]("expense", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_inspection": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateInspection(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionRequest]("inspection", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_inspections_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateInspectionsGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsGroupRequest]("inspection_group", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_inspections_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateInspectionsItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsItemRequest]("inspection_item", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_inspections_preset": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateInspectionsPreset(ctx, intArg(args["pathParams"].(map[string]interface{}), "inspection_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInspectionsPresetRequest]("inspection_preset", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_inventory_level": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateInventoryLevel(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateInventoryLevelRequest]("inventory_level", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_labor_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLaborMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborMatrixRequest]("labor_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_labor_template": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLaborTemplate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLaborTemplateRequest]("labor_template", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_lead_source": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLeadSource(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLeadSourceRequest]("lead_source", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_location": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocation(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_business_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsBusinessProfile(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsBusinessProfileRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_close_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsCloseRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsCloseRequirementsRequest]("close_requirements", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_documents": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsDocuments(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsDocumentsRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_lead_source_requirements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsLeadSourceRequirements(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsLeadSourceRequirementsRequest]("lead_source_requirements", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_operations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsOperations(ctx, strArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateLocationsOperationsRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_reminders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsReminders(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsRemindersRequest]("location", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_locations_schedule_config": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateLocationsScheduleConfig(ctx, strArg(args["pathParams"].(map[string]interface{}), "location_id"), buildWrapper[wenmar.UpdateLocationsScheduleConfigRequest]("schedule_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_me_notifications": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateMeNotifications(ctx, buildWrapper[wenmar.UpdateMeNotificationsRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_me_preferences": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateMePreferences(ctx, buildWrapper[wenmar.UpdateMePreferencesRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_me_profile": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateMeProfile(ctx, buildWrapper[wenmar.UpdateMeProfileRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_notification": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateNotification(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateNotificationRequest]("read", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_orders_return_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateOrdersReturnOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateOrdersReturnOrderRequest]("return_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_orders_sublet_orders_mark_payment_complete": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateOrdersSubletOrdersMarkPaymentComplete(ctx, buildFlat[wenmar.UpdateOrdersSubletOrdersMarkPaymentCompleteRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_part": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePart(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePartRequest]("part", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_parts_matrix": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePartsMatrix(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePartsMatrixRequest]("parts_matrix", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_permission_group": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdatePermissionGroup(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdatePermissionGroupRequest]("permission_group", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_reports_cash_drawer_sessions_confirm_close": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateReportsCashDrawerSessionsConfirmClose(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateReportsCashDrawerSessionsConfirmCloseRequest]("cash_drawer_session", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_reports_tax_period": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateReportsTaxPeriod(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateReportsTaxPeriodRequest]("tax_period", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_service_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateServiceCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateServiceCategoryRequest]("service_category", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_shop_discount": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateShopDiscount(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopDiscountRequest]("shop_discount_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_shop_fee": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateShopFee(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateShopFeeRequest]("shop_fee_config", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_sub_status": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateSubStatus(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSubStatusRequest]("sub_status_type", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_sublet_package": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateSubletPackage(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateSubletPackageRequest]("sublet_package", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_sublet_packages_deactivate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateSubletPackagesDeactivate(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_tire": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateTire(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTireRequest]("tire", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_tire_storage_slot": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateTireStorageSlot(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateTireStorageSlotRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_user": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateUser(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateUserRequest]("user", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_vehicle": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateVehicle(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.UpdateVehicleRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_vendor": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateVendor(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateVendorRequest]("vendor", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrderRequest]("work_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_order_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrderTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrderTagRequest]("name", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_order_tags_archive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrderTagsArchive(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrderTagsArchiveRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_concern": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersConcern(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersConcernRequest]("concern", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_courtesy_car_assignment": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersCourtesyCarAssignment(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersCourtesyCarAssignmentRequest]("action_type", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_purchase_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersPurchaseOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersPurchaseOrderRequest]("purchase_order", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_service": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersService(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServiceRequest]("work_order_service", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_adjust_time": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesAdjustTime(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildFlat[wenmar.UpdateWorkOrdersServicesAdjustTimeRequest](args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_line_item": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesLineItem(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesLineItemRequest]("work_order_line_item", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_pause": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesPause(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesPauseRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_publish": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesPublish(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesPublishRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_reorder": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesReorder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.UpdateWorkOrdersServicesReorderRequest]("service_ids", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"update_work_orders_services_revive": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesRevive(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.UpdateWorkOrdersServicesReviveRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -3307,64 +3363,16 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_services_sublet_orders_duplicate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesSubletOrdersDuplicate(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesSubletOrdersDuplicateRequest{})
+"update_work_orders_services_toggle_labor_completion": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesToggleLaborCompletion(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesToggleLaborCompletionRequest]("line_item_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
 	return decodeBody(resp.Body)
 },
 
-"show_work_orders_signature": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrdersSignature(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_work_orders_sublet_orders": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersSubletOrdersRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_work_orders_sublet_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrdersSubletOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersTireStorageRequest]("tire_storage_slot", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"delete_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.DeleteWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_work_orders_tire_storage": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrdersTireStorage(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
+"update_work_orders_services_update_category": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.UpdateWorkOrdersServicesUpdateCategory(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.UpdateWorkOrdersServicesUpdateCategoryRequest]("category_id", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -3379,16 +3387,8 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_work_orders_void": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersVoid(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), buildWrapper[wenmar.CreateWorkOrdersVoidRequest]("payment_id", args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"show_work_order_wip": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ShowWorkOrderWip(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"))
+"void_work_order": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.VoidWorkOrder(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.VoidWorkOrderRequest]("closure_reason", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -3464,26 +3464,21 @@ var dispatch = map[string]operationFunc{
 
 // allOperations lists every operation covered by the dispatch map.
 var allOperations = []string{
-	"delete_account",
-	"list_account",
-	"update_account",
-	"list_account_api_tokens",
+	"archive_customer",
+	"archive_inspection",
+	"archive_labor_rate",
+	"archive_package",
+	"archive_service_category",
+	"archive_vehicle",
+	"archive_vendor",
+	"check_customer_duplicate",
+	"check_vehicle_duplicate",
+	"close_work_order",
+	"complete_inspection_report",
+	"complete_work_order",
 	"create_account_api_token",
-	"delete_account_api_token",
-	"list_account_billing",
-	"list_account_capabilities",
-	"list_account_driveon",
-	"list_account_payments",
-	"list_account_phone_numbers",
-	"list_account_quickbooks",
-	"list_account_station_link",
 	"create_account_station_link_regenerate",
-	"list_appointments",
 	"create_appointment",
-	"list_appointments_available_slots",
-	"delete_appointment",
-	"show_appointment",
-	"update_appointment",
 	"create_appointments_approval",
 	"create_appointments_cancellation",
 	"create_appointments_follow_up",
@@ -3491,195 +3486,209 @@ var allOperations = []string{
 	"create_appointments_vehicle_reconciliation",
 	"create_appointments_work_order",
 	"create_calendar_blocked_time",
-	"delete_calendar_blocked_time",
-	"update_calendar_blocked_time",
-	"list_campaigns",
 	"create_campaign",
-	"show_campaign",
-	"duplicate_campaign",
-	"send_campaign",
 	"create_cash_drawer_session",
-	"list_cash_entries",
 	"create_cash_entry",
-	"delete_cash_entry",
-	"show_cash_entry",
-	"list_conversations",
 	"create_conversation",
 	"create_conversations_bulk_mark_read",
 	"create_conversations_customer_link",
 	"create_conversations_ignore",
-	"list_conversations_messages",
 	"create_conversations_message",
-	"show_conversation",
-	"update_conversation",
-	"list_core_tax_rules",
-	"update_core_tax_rule",
-	"list_counter_sales",
 	"create_counter_sale",
 	"create_counter_sales_line_item",
-	"list_counter_sales_line_items_brands",
-	"delete_counter_sales_line_item",
-	"update_counter_sales_line_item",
 	"create_counter_sales_payment",
-	"show_counter_sale",
-	"update_counter_sale",
-	"update_counter_sales_reopen",
-	"list_current_location",
-	"update_current_location",
-	"list_customer_tags",
-	"create_customer_tag",
-	"show_customer_tag",
-	"update_customer_tag",
-	"update_customer_tags_archive",
-	"update_customer_tags_restore",
-	"update_customer_tags_trash",
-	"list_customers",
 	"create_customer",
-	"check_customer_duplicate",
-	"list_customers_drivers",
+	"create_customer_tag",
 	"create_driver",
+	"create_expense",
+	"create_inspection",
+	"create_inspection_report",
+	"create_inspections_group",
+	"create_inspections_item",
+	"create_inspections_preset",
+	"create_inventory_level_extraction",
+	"create_inventory_levels_adjust",
+	"create_labor_matrix",
+	"create_labor_rate",
+	"create_lead_source",
+	"create_lead_sources_seed_default",
+	"create_messages_resend",
+	"create_notifications_bulk_mark_read",
+	"create_orders_purchase_order",
+	"create_orders_purchase_orders_cancellation",
+	"create_orders_return_orders_refund_completion",
+	"create_package",
+	"create_packages_duplicate",
+	"create_part",
+	"create_parts_matrix",
+	"create_payments_cancellation",
+	"create_payments_confirmation",
+	"create_payments_failure",
+	"create_permission_group",
+	"create_reports_tax_period",
+	"create_service_category",
+	"create_shop_discount",
+	"create_shop_discounts_duplicate",
+	"create_shop_fee",
+	"create_shop_fees_duplicate",
+	"create_statements_bulk_send",
+	"create_statements_generate",
+	"create_store_credits_void",
+	"create_sub_status",
+	"create_sublet_package",
+	"create_tire",
+	"create_tire_event",
+	"create_tire_storage_slot",
+	"create_tire_storage_slots_check_out",
+	"create_user",
+	"create_users_disable",
+	"create_users_enable",
+	"create_users_permission_groups_assign",
+	"create_users_reset_pin",
+	"create_users_send_confirmation",
+	"create_users_send_password_reset",
+	"create_users_unlock",
+	"create_vehicle",
+	"create_vendor",
+	"create_work_order",
+	"create_work_order_payment",
+	"create_work_order_tag",
+	"create_work_order_tech_assignment",
+	"create_work_orders_activity_log",
+	"create_work_orders_authorization",
+	"create_work_orders_authorization_decision",
+	"create_work_orders_concern",
+	"create_work_orders_concerns_add_package",
+	"create_work_orders_concerns_copy_all_to_estimate",
+	"create_work_orders_concerns_copy_to_estimate",
+	"create_work_orders_courtesy_car_assignment",
+	"create_work_orders_credit_resolution",
+	"create_work_orders_fee_exclusion",
+	"create_work_orders_payment_link_send",
+	"create_work_orders_purchase_order",
+	"create_work_orders_purchase_orders_receive",
+	"create_work_orders_purchase_orders_return",
+	"create_work_orders_quick_intake",
+	"create_work_orders_refund",
+	"create_work_orders_service",
+	"create_work_orders_services_bulk_pull",
+	"create_work_orders_services_comment",
+	"create_work_orders_services_completion",
+	"create_work_orders_services_copy",
+	"create_work_orders_services_extraction",
+	"create_work_orders_services_line_item",
+	"create_work_orders_services_line_items_copy",
+	"create_work_orders_services_line_items_inventory_addition",
+	"create_work_orders_services_line_items_price_refresh",
+	"create_work_orders_services_line_items_reorder",
+	"create_work_orders_services_package",
+	"create_work_orders_services_sublet_order",
+	"create_work_orders_services_sublet_orders_duplicate",
+	"create_work_orders_services_time_entry",
+	"create_work_orders_tire_storage",
+	"create_work_orders_void",
+	"decline_all_work_order_concerns",
+	"decline_work_order",
+	"decode_vin",
+	"delete_account",
+	"delete_account_api_token",
+	"delete_appointment",
+	"delete_calendar_blocked_time",
+	"delete_cash_entry",
+	"delete_counter_sales_line_item",
 	"delete_driver",
-	"show_driver",
-	"update_driver",
+	"delete_expense",
+	"delete_inspection_report",
+	"delete_inspections_group",
+	"delete_inspections_item",
+	"delete_inspections_preset",
+	"delete_labor_matrix",
+	"delete_labor_template",
+	"delete_lead_source",
+	"delete_orders_purchase_order",
+	"delete_orders_return_order",
+	"delete_part",
+	"delete_parts_matrix",
+	"delete_shop_discount",
+	"delete_shop_fee",
+	"delete_sublet_package",
+	"delete_tire",
+	"delete_tire_storage_slot",
+	"delete_user",
+	"delete_users_permission_groups_unassign",
+	"delete_work_orders_concern",
+	"delete_work_orders_courtesy_car_assignment",
+	"delete_work_orders_fee_exclusion",
+	"delete_work_orders_purchase_order",
+	"delete_work_orders_service",
+	"delete_work_orders_services_authorization",
+	"delete_work_orders_services_comment",
+	"delete_work_orders_services_completion",
+	"delete_work_orders_services_line_item",
+	"delete_work_orders_services_sublet_order",
+	"delete_work_orders_tire_storage",
+	"duplicate_campaign",
+	"list_account",
+	"list_account_api_tokens",
+	"list_account_billing",
+	"list_account_capabilities",
+	"list_account_driveon",
+	"list_account_payments",
+	"list_account_phone_numbers",
+	"list_account_quickbooks",
+	"list_account_station_link",
+	"list_appointments",
+	"list_appointments_available_slots",
+	"list_campaigns",
+	"list_cash_entries",
+	"list_conversations",
+	"list_conversations_messages",
+	"list_core_tax_rules",
+	"list_counter_sales",
+	"list_counter_sales_line_items_brands",
+	"list_current_location",
+	"list_customer_tags",
+	"list_customers",
+	"list_customers_drivers",
 	"list_customers_statements",
 	"list_customers_vehicles",
 	"list_customers_vehicles_history",
 	"list_customers_work_orders",
-	"show_customer",
-	"update_customer",
-	"archive_customer",
-	"merge_customer",
-	"restore_customer",
-	"trash_customer",
 	"list_drivers",
 	"list_expenses",
-	"create_expense",
-	"delete_expense",
-	"show_expense",
-	"update_expense",
 	"list_fleets",
-	"create_inspection_report",
-	"delete_inspection_report",
-	"show_inspection_report",
-	"complete_inspection_report",
-	"show_inspection_report_group",
-	"mark_all_inspection_report",
-	"reassign_inspection_report",
-	"reopen_inspection_report",
-	"reset_inspection_report",
-	"retry_inspection_report_recording",
 	"list_inspections",
-	"create_inspection",
-	"show_inspection",
-	"update_inspection",
-	"archive_inspection",
-	"remove_default_inspection",
-	"restore_inspection",
-	"set_default_inspection",
-	"trash_inspection",
-	"create_inspections_group",
-	"delete_inspections_group",
-	"update_inspections_group",
-	"create_inspections_item",
-	"delete_inspections_item",
-	"update_inspections_item",
-	"create_inspections_preset",
-	"delete_inspections_preset",
-	"update_inspections_preset",
 	"list_inventory_levels_barcode_lookup",
-	"create_inventory_level_extraction",
-	"show_inventory_level",
-	"update_inventory_level",
-	"create_inventory_levels_adjust",
 	"list_labor_matrices",
-	"create_labor_matrix",
-	"delete_labor_matrix",
-	"update_labor_matrix",
 	"list_labor_rates",
-	"create_labor_rate",
-	"archive_labor_rate",
-	"restore_labor_rate",
-	"trash_labor_rate",
 	"list_labor_templates",
-	"delete_labor_template",
-	"update_labor_template",
 	"list_lead_sources",
-	"create_lead_source",
-	"create_lead_sources_seed_default",
-	"delete_lead_source",
-	"update_lead_source",
-	"show_location",
-	"update_location",
 	"list_locations_business_profile",
-	"update_locations_business_profile",
-	"list_locations_operations",
-	"update_locations_operations",
 	"list_locations_close_requirements",
-	"update_locations_close_requirements",
 	"list_locations_courtesy_cars",
 	"list_locations_documents",
-	"update_locations_documents",
 	"list_locations_lead_source_requirements",
-	"update_locations_lead_source_requirements",
+	"list_locations_operations",
 	"list_locations_reminders",
-	"update_locations_reminders",
 	"list_locations_schedule_config",
-	"update_locations_schedule_config",
 	"list_me_notifications",
-	"update_me_notifications",
 	"list_me_preferences",
-	"update_me_preferences",
 	"list_me_profile",
-	"update_me_profile",
 	"list_messages",
-	"show_message",
-	"create_messages_resend",
 	"list_notifications",
-	"create_notifications_bulk_mark_read",
-	"show_notification",
-	"update_notification",
 	"list_orders_purchase_orders",
-	"create_orders_purchase_order",
-	"delete_orders_purchase_order",
-	"show_orders_purchase_order",
-	"update_orders_purchase_order",
-	"create_orders_purchase_orders_cancellation",
 	"list_orders_return_orders",
-	"delete_orders_return_order",
-	"show_orders_return_order",
-	"update_orders_return_order",
-	"create_orders_return_orders_refund_completion",
 	"list_orders_sublet_orders",
-	"update_orders_sublet_orders_mark_payment_complete",
-	"show_orders_sublet_order",
 	"list_packages",
-	"create_package",
-	"update_package",
-	"archive_package",
-	"create_packages_duplicate",
-	"restore_package",
-	"trash_package",
 	"list_parts",
-	"create_part",
-	"delete_part",
-	"show_part",
-	"update_part",
 	"list_parts_matrices",
-	"create_parts_matrix",
-	"delete_parts_matrix",
-	"update_parts_matrix",
 	"list_payments",
 	"list_payments_pending",
-	"show_payment",
-	"create_payments_cancellation",
-	"create_payments_confirmation",
-	"create_payments_failure",
+	"list_permission_groups",
 	"list_reports_accounting",
 	"list_reports_ar_aging",
 	"list_reports_cash_drawer_sessions",
-	"show_reports_cash_drawer_session",
 	"list_reports_cash_drawer_sessions_close",
-	"update_reports_cash_drawer_sessions_confirm_close",
 	"list_reports_declined_work",
 	"list_reports_end_of_day",
 	"list_reports_financial",
@@ -3693,200 +3702,191 @@ var allOperations = []string{
 	"list_reports_statements",
 	"list_reports_store_credit",
 	"list_reports_tax_periods",
-	"create_reports_tax_period",
-	"update_reports_tax_period",
 	"list_reports_technician_productivity",
 	"list_reports_work_order_profitability",
 	"list_service_categories",
-	"create_service_category",
-	"seed_defaults_service_categories",
-	"update_service_category",
-	"archive_service_category",
-	"restore_service_category",
-	"trash_service_category",
 	"list_shop_discounts",
-	"create_shop_discount",
-	"delete_shop_discount",
-	"update_shop_discount",
-	"create_shop_discounts_duplicate",
 	"list_shop_fees",
-	"create_shop_fee",
-	"delete_shop_fee",
-	"update_shop_fee",
-	"create_shop_fees_duplicate",
-	"create_statements_bulk_send",
-	"create_statements_generate",
-	"show_statement",
 	"list_statements_payments",
-	"create_store_credits_void",
 	"list_sub_statuses",
-	"create_sub_status",
-	"update_sub_status",
 	"list_sublet_packages",
-	"create_sublet_package",
-	"delete_sublet_package",
-	"update_sublet_package",
-	"update_sublet_packages_deactivate",
-	"create_work_order_tech_assignment",
 	"list_tire_events",
-	"create_tire_event",
-	"show_tire_event",
 	"list_tire_storage_slots",
-	"create_tire_storage_slot",
-	"delete_tire_storage_slot",
-	"show_tire_storage_slot",
-	"update_tire_storage_slot",
-	"create_tire_storage_slots_check_out",
 	"list_tires",
-	"create_tire",
-	"delete_tire",
-	"show_tire",
-	"update_tire",
 	"list_users",
-	"create_user",
-	"list_permission_groups",
-	"create_permission_group",
-	"update_permission_group",
-	"create_users_permission_groups_assign",
-	"delete_users_permission_groups_unassign",
-	"delete_user",
-	"show_user",
-	"update_user",
-	"create_users_disable",
-	"create_users_enable",
 	"list_users_qr_code",
-	"create_users_reset_pin",
-	"create_users_send_confirmation",
-	"create_users_send_password_reset",
-	"create_users_unlock",
 	"list_vehicles",
-	"create_vehicle",
-	"check_vehicle_duplicate",
 	"list_vehicles_customer_vehicles",
-	"prefill_vehicle",
-	"decode_vin",
-	"show_vehicle",
-	"update_vehicle",
-	"archive_vehicle",
-	"merge_vehicle",
-	"restore_vehicle",
-	"transfer_vehicle",
-	"trash_vehicle",
 	"list_vehicles_work_orders",
 	"list_vendors",
-	"create_vendor",
-	"show_vendor",
-	"update_vendor",
-	"archive_vendor",
-	"restore_vendor",
-	"trash_vendor",
 	"list_vendors_purchase_orders",
+	"list_work_order_services",
 	"list_work_order_tags",
-	"create_work_order_tag",
-	"update_work_order_tag",
-	"update_work_order_tags_archive",
 	"list_work_orders",
-	"create_work_order",
-	"create_work_orders_quick_intake",
-	"show_work_order",
-	"update_work_order",
 	"list_work_orders_activity",
 	"list_work_orders_appointments",
 	"list_work_orders_authorization_logs",
-	"close_work_order",
-	"complete_work_order",
-	"delete_work_orders_courtesy_car_assignment",
-	"update_work_orders_courtesy_car_assignment",
-	"create_work_orders_courtesy_car_assignment",
-	"decline_work_order",
-	"show_work_order_declined_services",
+	"list_work_orders_concerns",
+	"list_work_orders_payment_link",
+	"list_work_orders_receipts",
+	"list_work_orders_services_adjust_time",
+	"list_work_orders_services_comments",
+	"list_work_orders_services_line_items",
+	"list_work_orders_sublet_orders",
+	"list_work_orders_tire_storage",
+	"list_work_orders_vehicle_history",
+	"mark_all_inspection_report",
+	"merge_customer",
+	"merge_vehicle",
 	"post_work_order_to_account",
+	"prefill_vehicle",
+	"pull_work_order_service_line_item",
+	"reassign_inspection_report",
+	"remove_default_inspection",
+	"reopen_inspection_report",
 	"reopen_work_order",
+	"reset_inspection_report",
+	"restore_customer",
+	"restore_inspection",
+	"restore_labor_rate",
+	"restore_package",
+	"restore_service_category",
+	"restore_vehicle",
+	"restore_vendor",
+	"retry_inspection_report_recording",
+	"reverse_work_order_payment_ar",
+	"seed_defaults_service_categories",
+	"send_campaign",
 	"send_work_order_estimate",
 	"send_work_order_invoice_summary",
+	"send_work_order_payment_to_ar",
 	"send_work_order_reminder",
-	"show_work_order_service_history",
-	"start_work_order",
-	"list_work_orders_vehicle_history",
-	"void_work_order",
-	"create_work_orders_activity_log",
-	"create_work_orders_authorization_decision",
-	"create_work_orders_authorization",
-	"list_work_orders_concerns",
-	"create_work_orders_concern",
-	"create_work_orders_concerns_copy_all_to_estimate",
-	"decline_all_work_order_concerns",
-	"delete_work_orders_concern",
-	"update_work_orders_concern",
-	"create_work_orders_concerns_add_package",
-	"create_work_orders_concerns_copy_to_estimate",
-	"create_work_orders_credit_resolution",
+	"set_default_inspection",
+	"show_appointment",
+	"show_campaign",
+	"show_cash_entry",
+	"show_conversation",
+	"show_counter_sale",
+	"show_customer",
+	"show_customer_tag",
+	"show_driver",
+	"show_expense",
+	"show_inspection",
+	"show_inspection_report",
+	"show_inspection_report_group",
+	"show_inventory_level",
+	"show_location",
+	"show_message",
+	"show_notification",
+	"show_orders_purchase_order",
+	"show_orders_return_order",
+	"show_orders_sublet_order",
+	"show_part",
+	"show_payment",
+	"show_reports_cash_drawer_session",
+	"show_statement",
+	"show_tire",
+	"show_tire_event",
+	"show_tire_storage_slot",
+	"show_user",
+	"show_vehicle",
+	"show_vendor",
+	"show_work_order",
+	"show_work_order_declined_services",
 	"show_work_order_estimate",
-	"create_work_orders_fee_exclusion",
-	"delete_work_orders_fee_exclusion",
 	"show_work_order_inspection",
 	"show_work_order_parts",
-	"list_work_orders_payment_link",
-	"create_work_orders_payment_link_send",
 	"show_work_order_payments",
-	"create_work_order_payment",
-	"reverse_work_order_payment_ar",
-	"send_work_order_payment_to_ar",
-	"create_work_orders_purchase_order",
-	"delete_work_orders_purchase_order",
-	"update_work_orders_purchase_order",
-	"create_work_orders_purchase_orders_receive",
-	"create_work_orders_purchase_orders_return",
-	"list_work_orders_receipts",
-	"create_work_orders_refund",
-	"list_work_order_services",
-	"create_work_orders_service",
-	"update_work_orders_services_reorder",
-	"delete_work_orders_service",
-	"update_work_orders_service",
-	"list_work_orders_services_adjust_time",
-	"update_work_orders_services_adjust_time",
-	"delete_work_orders_services_authorization",
-	"create_work_orders_services_bulk_pull",
-	"delete_work_orders_services_completion",
-	"create_work_orders_services_completion",
-	"create_work_orders_services_copy",
-	"create_work_orders_services_package",
-	"update_work_orders_services_pause",
-	"update_work_orders_services_publish",
-	"update_work_orders_services_revive",
-	"create_work_orders_services_time_entry",
-	"update_work_orders_services_toggle_labor_completion",
-	"update_work_orders_services_update_category",
-	"list_work_orders_services_comments",
-	"create_work_orders_services_comment",
-	"delete_work_orders_services_comment",
-	"create_work_orders_services_extraction",
-	"list_work_orders_services_line_items",
-	"create_work_orders_services_line_item",
-	"delete_work_orders_services_line_item",
-	"update_work_orders_services_line_item",
-	"create_work_orders_services_line_items_copy",
-	"create_work_orders_services_line_items_inventory_addition",
-	"create_work_orders_services_line_items_price_refresh",
-	"pull_work_order_service_line_item",
-	"create_work_orders_services_line_items_reorder",
+	"show_work_order_service_history",
+	"show_work_order_wip",
+	"show_work_orders_signature",
+	"show_work_orders_sublet_order",
+	"show_work_orders_tire_storage",
+	"start_work_order",
+	"transfer_vehicle",
+	"trash_customer",
+	"trash_inspection",
+	"trash_labor_rate",
+	"trash_package",
+	"trash_service_category",
+	"trash_vehicle",
+	"trash_vendor",
 	"undo_pull_work_order_service_line_item",
 	"undo_return_work_order_service_line_item",
-	"create_work_orders_services_sublet_order",
-	"delete_work_orders_services_sublet_order",
+	"update_account",
+	"update_appointment",
+	"update_calendar_blocked_time",
+	"update_conversation",
+	"update_core_tax_rule",
+	"update_counter_sale",
+	"update_counter_sales_line_item",
+	"update_counter_sales_reopen",
+	"update_current_location",
+	"update_customer",
+	"update_customer_tag",
+	"update_customer_tags_archive",
+	"update_customer_tags_restore",
+	"update_customer_tags_trash",
+	"update_driver",
+	"update_expense",
+	"update_inspection",
+	"update_inspections_group",
+	"update_inspections_item",
+	"update_inspections_preset",
+	"update_inventory_level",
+	"update_labor_matrix",
+	"update_labor_template",
+	"update_lead_source",
+	"update_location",
+	"update_locations_business_profile",
+	"update_locations_close_requirements",
+	"update_locations_documents",
+	"update_locations_lead_source_requirements",
+	"update_locations_operations",
+	"update_locations_reminders",
+	"update_locations_schedule_config",
+	"update_me_notifications",
+	"update_me_preferences",
+	"update_me_profile",
+	"update_notification",
+	"update_orders_purchase_order",
+	"update_orders_return_order",
+	"update_orders_sublet_orders_mark_payment_complete",
+	"update_package",
+	"update_part",
+	"update_parts_matrix",
+	"update_permission_group",
+	"update_reports_cash_drawer_sessions_confirm_close",
+	"update_reports_tax_period",
+	"update_service_category",
+	"update_shop_discount",
+	"update_shop_fee",
+	"update_sub_status",
+	"update_sublet_package",
+	"update_sublet_packages_deactivate",
+	"update_tire",
+	"update_tire_storage_slot",
+	"update_user",
+	"update_vehicle",
+	"update_vendor",
+	"update_work_order",
+	"update_work_order_tag",
+	"update_work_order_tags_archive",
+	"update_work_orders_concern",
+	"update_work_orders_courtesy_car_assignment",
+	"update_work_orders_purchase_order",
+	"update_work_orders_service",
+	"update_work_orders_services_adjust_time",
+	"update_work_orders_services_line_item",
+	"update_work_orders_services_pause",
+	"update_work_orders_services_publish",
+	"update_work_orders_services_reorder",
+	"update_work_orders_services_revive",
 	"update_work_orders_services_sublet_order",
-	"create_work_orders_services_sublet_orders_duplicate",
-	"show_work_orders_signature",
-	"list_work_orders_sublet_orders",
-	"show_work_orders_sublet_order",
-	"list_work_orders_tire_storage",
-	"create_work_orders_tire_storage",
-	"delete_work_orders_tire_storage",
-	"show_work_orders_tire_storage",
+	"update_work_orders_services_toggle_labor_completion",
+	"update_work_orders_services_update_category",
 	"update_work_orders_tire_storage",
-	"create_work_orders_void",
-	"show_work_order_wip",
+	"void_work_order",
 	"list_customers_paginated",
 	"list_work_orders_paginated",
 	"list_customers_with_params_paginated",
