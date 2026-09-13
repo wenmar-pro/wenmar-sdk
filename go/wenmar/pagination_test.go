@@ -191,7 +191,7 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 	if nextURL == "" {
 		t.Fatal("expected Link header with next URL")
 	}
-	body, link, err := client.fetchURL(context.Background(), nextURL)
+	body, headers, err := client.fetchURL(context.Background(), nextURL)
 	if err != nil {
 		t.Fatalf("unexpected error on fetchURL: %v", err)
 	}
@@ -200,8 +200,8 @@ func TestPaginationFollowsNextURL(t *testing.T) {
 	if len(page2) != 1 || page2[0]["id"] != float64(2) {
 		t.Fatalf("expected page 2 customer (id=2), got %v", page2)
 	}
-	if parseLinkHeader(link, "next") != "" {
-		t.Errorf("expected no further next link on page 2, got %q", link)
+	if parseLinkHeader(headers.Get("Link"), "next") != "" {
+		t.Errorf("expected no further next link on page 2, got %q", headers.Get("Link"))
 	}
 }
 
@@ -384,5 +384,109 @@ func TestGetAllCustomers_WithMaxItemsOption(t *testing.T) {
 	}
 	if len(items) != 1 {
 		t.Errorf("expected 1 item (MaxItems=1), got %d", len(items))
+	}
+}
+
+// makeItems returns a slice of perPage anonymous objects, used to build fake
+// paginated chains without a network server.
+func makeItems(n int) []map[string]any {
+	items := make([]map[string]any, n)
+	for i := range items {
+		items[i] = map[string]any{"id": i}
+	}
+	return items
+}
+
+// buildPageChain builds a linked list of ListResults (pageCount pages, perPage
+// items each). The final page has no Next.
+func buildPageChain(client *Client, pageCount, perPage int) *ListResult[map[string]any] {
+	var next *ListResult[map[string]any]
+	for i := 0; i < pageCount; i++ {
+		page := &ListResult[map[string]any]{Items: makeItems(perPage)}
+		if next != nil {
+			n := next
+			page.Next = func(context.Context) (*ListResult[map[string]any], error) { return n, nil }
+		}
+		next = page
+	}
+	return next
+}
+
+func TestGetAll_NilOptsAppliesDefaultCap(t *testing.T) {
+	client := newTestClient(t, "https://api.example.com", "test")
+	// 3 pages of 500 = 1500 items total.
+	first := buildPageChain(client, 3, 500)
+
+	items, truncated, err := getAll[map[string]any](context.Background(), first, nil)
+	if err != nil {
+		t.Fatalf("getAll failed: %v", err)
+	}
+	if len(items) != DefaultGetAllOptions.MaxItems {
+		t.Errorf("expected %d items (default cap), got %d", DefaultGetAllOptions.MaxItems, len(items))
+	}
+	if !truncated {
+		t.Error("expected truncated=true when the default cap is hit")
+	}
+}
+
+func TestGetAll_ExplicitZeroIsUnlimited(t *testing.T) {
+	client := newTestClient(t, "https://api.example.com", "test")
+	// 3 pages of 500 = 1500 items total.
+	first := buildPageChain(client, 3, 500)
+
+	items, truncated, err := getAll[map[string]any](context.Background(), first, &GetAllOptions{MaxItems: 0})
+	if err != nil {
+		t.Fatalf("getAll failed: %v", err)
+	}
+	if len(items) != 1500 {
+		t.Errorf("expected all 1500 items (MaxItems=0 = unlimited), got %d", len(items))
+	}
+	if truncated {
+		t.Error("expected truncated=false when no cap applies")
+	}
+}
+
+func TestListCustomers_NextPagePopulatesMeta(t *testing.T) {
+	var serverURL string
+	var call int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&call, 1)
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("X-Total-Count", "10")
+		w.Header().Set("X-Per-Page", "5")
+		if atomic.LoadInt32(&call) == 1 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		} else {
+			w.Write([]byte(`[{"id":2,"type":"Customer","first_name":"C","last_name":"D","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+		}
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	result, err := c.ListCustomers(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("ListCustomers failed: %v", err)
+	}
+	if result.Meta.TotalCount != 10 || result.Meta.PerPage != 5 {
+		t.Fatalf("expected page 1 meta TotalCount=10 PerPage=5, got %+v", result.Meta)
+	}
+	if !result.HasNext() {
+		t.Fatal("expected HasNext()=true on page 1")
+	}
+
+	page2, err := result.Next(context.Background())
+	if err != nil {
+		t.Fatalf("Next failed: %v", err)
+	}
+	if len(page2.Items) != 1 {
+		t.Fatalf("expected 1 item on page 2, got %d", len(page2.Items))
+	}
+	if page2.Meta.TotalCount != 10 {
+		t.Errorf("expected page 2 TotalCount=10 from X-Total-Count header, got %d", page2.Meta.TotalCount)
+	}
+	if page2.Meta.PerPage != 5 {
+		t.Errorf("expected page 2 PerPage=5 from X-Per-Page header, got %d", page2.Meta.PerPage)
 	}
 }

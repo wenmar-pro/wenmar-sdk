@@ -275,12 +275,12 @@ func paginateBody(c *wenmar.Client, body []byte, link string, maxPages int) (int
 		if next == "" {
 			break
 		}
-		nextBody, nextLink, err := c.FetchPage(ctx, next)
+		nextBody, nextHeaders, err := c.FetchPage(ctx, next)
 		if err != nil {
 			return nil, err
 		}
 		body = nextBody
-		link = nextLink
+		link = nextHeaders.Get("Link")
 	}
 	return decodeBody(body)
 }

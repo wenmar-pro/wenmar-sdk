@@ -2,6 +2,7 @@ package wenmar
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"sync/atomic"
@@ -102,5 +103,116 @@ func TestConditionalGet_CacheKeyIsLocationAware(t *testing.T) {
 	// Each distinct location produced its own cache miss -> 2 outbound calls.
 	if calls != 2 {
 		t.Errorf("expected 2 calls (one per location), got %d", calls)
+	}
+}
+
+func TestConditionalGet_304PreservesPaginationHeaders(t *testing.T) {
+	var serverURL string
+	var calls int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		n := atomic.AddInt32(&calls, 1)
+		if n == 1 {
+			w.Header().Set("Content-Type", "application/json")
+			w.Header().Set("ETag", `"list-etag"`)
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=2>; rel="next"`, serverURL))
+			w.Header().Set("X-Total-Count", "42")
+			w.Header().Set("X-Per-Page", "25")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+			return
+		}
+		w.WriteHeader(http.StatusNotModified)
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test-token")
+
+	// First call caches the list (with its pagination headers).
+	resp1, err := c.ListCustomersRaw(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("first call failed: %v", err)
+	}
+	if resp1.HTTPResponse.Header.Get("Link") == "" {
+		t.Fatal("expected Link header on first response")
+	}
+
+	// Second call hits the 304 and should return the cached body AND the
+	// cached headers, so a PaginatorFromResponse client keeps paginating.
+	resp2, err := c.ListCustomersRaw(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("second call failed: %v", err)
+	}
+	if resp2.JSON200 == nil || len(*resp2.JSON200) != 1 {
+		t.Fatalf("expected cached list parsed on 304, got %+v", resp2.JSON200)
+	}
+
+	h := resp2.HTTPResponse.Header
+	if got := h.Get("Link"); got == "" || got != resp1.HTTPResponse.Header.Get("Link") {
+		t.Errorf("expected Link header preserved on 304, got %q", got)
+	}
+	if got := h.Get("X-Total-Count"); got != "42" {
+		t.Errorf("expected X-Total-Count preserved on 304, got %q", got)
+	}
+	if got := h.Get("X-Per-Page"); got != "25" {
+		t.Errorf("expected X-Per-Page preserved on 304, got %q", got)
+	}
+
+	if calls != 2 {
+		t.Errorf("expected 2 HTTP calls (200 + 304), got %d", calls)
+	}
+
+	// Driving a Paginator from the 304 response must still see the next page.
+	paginator := c.PaginatorFromResponse(resp2.HTTPResponse)
+	if !paginator.HasNext() {
+		t.Error("expected PaginatorFromResponse on the 304 to have a next page (Link preserved)")
+	}
+}
+
+func TestConditionalGet_CachesLastModifiedOnly(t *testing.T) {
+	var calls int32
+	var lastIMS string
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		lastIMS = r.Header.Get("If-Modified-Since")
+		n := atomic.AddInt32(&calls, 1)
+		if n == 1 {
+			w.Header().Set("Content-Type", "application/json")
+			w.Header().Set("Last-Modified", "Wed, 21 Oct 2015 07:28:00 GMT")
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+			return
+		}
+		if lastIMS == "Wed, 21 Oct 2015 07:28:00 GMT" {
+			w.WriteHeader(http.StatusNotModified)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`[]`))
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+
+	if _, err := c.ListCustomersRaw(context.Background(), nil); err != nil {
+		t.Fatalf("first call failed: %v", err)
+	}
+	if lastIMS != "" {
+		t.Errorf("expected no If-Modified-Since on first call, got %q", lastIMS)
+	}
+
+	resp2, err := c.ListCustomersRaw(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("second call failed: %v", err)
+	}
+	if lastIMS != "Wed, 21 Oct 2015 07:28:00 GMT" {
+		t.Errorf("expected If-Modified-Since set from cached Last-Modified, got %q", lastIMS)
+	}
+	// A Last-Modified-only 200 should be cached, so the repeat returns the
+	// cached body on 304 rather than a fresh (possibly empty) 200.
+	if resp2.JSON200 == nil || len(*resp2.JSON200) != 1 {
+		t.Errorf("expected cached body on 304 for Last-Modified-only response, got %+v", resp2.JSON200)
+	}
+	if calls != 2 {
+		t.Errorf("expected 2 HTTP calls (200 + 304), got %d", calls)
 	}
 }

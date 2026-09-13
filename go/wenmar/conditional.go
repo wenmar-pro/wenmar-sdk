@@ -6,10 +6,13 @@ import (
 	"sync"
 )
 
-// cacheEntry holds the validators and body for a conditional-GET cache slot.
+// cacheEntry holds the validators, headers, and body for a conditional-GET
+// cache slot. Header is the full response header set so a 304 can reproduce
+// headers (e.g. Link, X-Total-Count, X-Per-Page) that pagination relies on.
 type cacheEntry struct {
 	ETag         string
 	LastModified string
+	Header       http.Header
 	Body         []byte
 }
 
@@ -74,19 +77,23 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 	if isGet && resp.StatusCode == http.StatusNotModified && entry != nil {
 		resp.Body.Close()
-		cachedResp := cloneResponseWithBody(entry.Body)
+		cachedResp := cloneResponseWithBody(entry.Body, entry.Header)
 		return cachedResp, nil
 	}
 
 	if isGet && resp.StatusCode == http.StatusOK {
 		etag := resp.Header.Get("ETag")
-		if etag != "" {
+		lastModified := resp.Header.Get("Last-Modified")
+		// Cache any 200 that carries a validator (ETag or Last-Modified) so a
+		// conditional revalidation can later return 304.
+		if etag != "" || lastModified != "" {
 			body := readResponseBody(resp)
 			if body != nil {
 				t.mu.Lock()
 				t.cache[cacheKey(req)] = &cacheEntry{
 					ETag:         etag,
-					LastModified: resp.Header.Get("Last-Modified"),
+					LastModified: lastModified,
+					Header:       resp.Header.Clone(),
 					Body:         body,
 				}
 				t.mu.Unlock()
@@ -99,13 +106,21 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 	return resp, nil
 }
 
-func cloneResponseWithBody(body []byte) *http.Response {
-	headers := make(http.Header)
-	headers.Set("Content-Type", "application/json")
+// cloneResponseWithBody builds a 200 response around the cached body, carrying
+// the cached headers (so Link/X-Total-Count/X-Per-Page survive a 304). The
+// headers are deep-cloned to avoid mutating the shared cache entry.
+func cloneResponseWithBody(body []byte, headers http.Header) *http.Response {
+	cloned := make(http.Header)
+	for k, vv := range headers {
+		cloned[k] = append([]string(nil), vv...)
+	}
+	if cloned.Get("Content-Type") == "" {
+		cloned.Set("Content-Type", "application/json")
+	}
 	return &http.Response{
 		StatusCode: http.StatusOK,
 		Status:     "200 OK",
-		Header:     headers,
+		Header:     cloned,
 		Body:       &bodyReadCloser{data: body},
 		Request:    nil,
 	}

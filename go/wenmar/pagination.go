@@ -30,8 +30,9 @@ type Paginator struct {
 	nextURL string
 	client  *Client
 	// fetchNext is called with the raw next URL to fetch the next page.
-	// It returns the response body and the Link header from the next response.
-	fetchNext func(ctx context.Context, url string) (body []byte, linkHeader string, err error)
+	// It returns the response body and the full response headers from the next
+	// response.
+	fetchNext func(ctx context.Context, url string) (body []byte, headers http.Header, err error)
 }
 
 // PaginationMeta holds metadata about a paginated list result.
@@ -61,11 +62,17 @@ type GetAllOptions struct {
 	MaxPages int // Stop after this many pages (0 = no cap)
 }
 
+// DefaultGetAllOptions is used by getAll when a caller passes nil opts. It
+// enforces a 1,000-item safety cap so a malicious or non-terminating Link
+// chain cannot loop unbounded. Callers wanting an unlimited collection must
+// pass an explicit &GetAllOptions{} (MaxItems stays 0 = unlimited).
+var DefaultGetAllOptions = GetAllOptions{MaxItems: 1000}
+
 // getAll auto-paginates and collects all items into a single slice.
 // If MaxItems or MaxPages is hit, truncated is true.
 func getAll[T any](ctx context.Context, first *ListResult[T], opts *GetAllOptions) (items []T, truncated bool, err error) {
 	if opts == nil {
-		opts = &GetAllOptions{}
+		opts = &DefaultGetAllOptions
 	}
 	items = append(items, first.Items...)
 	pages := 1
@@ -148,9 +155,10 @@ func extractPaginationMetaFromHeaders(headers http.Header) (PaginationMeta, stri
 }
 
 // fetchNextPage fetches the next page (same-origin validated by fetchURL)
-// and decodes it into a typed ListResult.
+// and decodes it into a typed ListResult. Pagination metadata (TotalCount,
+// PerPage) is populated from the response headers on every page.
 func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListResult[T], error) {
-	body, linkHeader, err := c.fetchURL(ctx, url)
+	body, headers, err := c.fetchURL(ctx, url)
 	if err != nil {
 		return nil, err
 	}
@@ -158,10 +166,10 @@ func (c *Client) fetchNextPage[T any](ctx context.Context, url string) (*ListRes
 	if err != nil {
 		return nil, err
 	}
-	nextURL := parseLinkHeader(linkHeader, "next")
+	meta, nextURL := extractPaginationMetaFromHeaders(headers)
 	result := &ListResult[T]{
 		Items: items,
-		Meta:  PaginationMeta{HasMore: nextURL != ""},
+		Meta:  meta,
 	}
 	if nextURL != "" {
 		result.Next = func(ctx context.Context) (*ListResult[T], error) {
@@ -182,13 +190,13 @@ func (p *Paginator) NextPage(ctx context.Context) (any, error) {
 		return nil, nil
 	}
 
-	body, linkHeader, err := p.fetchNext(ctx, p.nextURL)
+	body, headers, err := p.fetchNext(ctx, p.nextURL)
 	if err != nil {
 		return nil, err
 	}
 
 	// Advance to the next link from the response, if any.
-	p.nextURL = parseLinkHeader(linkHeader, "next")
+	p.nextURL = parseLinkHeader(headers.Get("Link"), "next")
 
 	// Decode the body as a generic value for the caller.
 	var result any
@@ -203,7 +211,7 @@ func newPaginatorFromResponse(resp *http.Response, client *Client) *Paginator {
 	return &Paginator{
 		nextURL: next,
 		client:  client,
-		fetchNext: func(ctx context.Context, url string) ([]byte, string, error) {
+		fetchNext: func(ctx context.Context, url string) ([]byte, http.Header, error) {
 			return client.fetchURL(ctx, url)
 		},
 	}
@@ -226,13 +234,13 @@ func sameOrigin(rawURL, baseURL string) bool {
 }
 
 // fetchURL performs a raw GET against the given URL (which may include query
-// params like ?page=2) and returns the response body and Link header.
+// params like ?page=2) and returns the response body and its headers.
 // It validates the URL is same-origin as the client's BaseURL before
 // attaching credentials, preventing token exfiltration via malicious
 // Link headers.
-func (c *Client) fetchURL(ctx context.Context, url string) ([]byte, string, error) {
+func (c *Client) fetchURL(ctx context.Context, url string) ([]byte, http.Header, error) {
 	if !sameOrigin(url, c.BaseURL) {
-		return nil, "", &APIError{
+		return nil, nil, &APIError{
 			Code:       "invalid_pagination",
 			Message:    "pagination next URL is not same-origin as base URL",
 			StatusCode: 0,
@@ -243,27 +251,27 @@ func (c *Client) fetchURL(ctx context.Context, url string) ([]byte, string, erro
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
-		return nil, "", err
+		return nil, nil, err
 	}
 	if err := c.requestEditor(ctx, req); err != nil {
-		return nil, "", err
+		return nil, nil, err
 	}
 
 	resp, err := c.http.Do(req)
 	if err != nil {
-		return nil, "", err
+		return nil, nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 400 {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, "", ParseErrorBodyWithRequest(body, resp.StatusCode, "GET", url)
+		return nil, nil, ParseErrorBodyWithRequest(body, resp.StatusCode, "GET", url)
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, "", err
+		return nil, nil, err
 	}
 
-	return body, resp.Header.Get("Link"), nil
+	return body, resp.Header.Clone(), nil
 }
