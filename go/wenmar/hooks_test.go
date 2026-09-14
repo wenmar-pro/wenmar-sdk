@@ -49,7 +49,7 @@ func (h *recordingHooks) OnOperationEnd(_ context.Context, info OperationInfo, r
 	defer h.mu.Unlock()
 	h.ends = append(h.ends, result)
 }
-func (h *recordingHooks) OnRequestStart(context.Context, RequestInfo)    {}
+func (h *recordingHooks) OnRequestStart(context.Context, RequestInfo)              {}
 func (h *recordingHooks) OnRequestEnd(context.Context, RequestInfo, RequestResult) {}
-func (h *recordingHooks) OnRetry(context.Context, RequestInfo, int, error)        {}
+func (h *recordingHooks) OnRetry(context.Context, RequestInfo, int, error)         {}
 func (h *recordingHooks) OnPaginate(context.Context, string, int)                  {}

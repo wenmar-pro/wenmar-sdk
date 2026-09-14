@@ -36,7 +36,7 @@ func (h *OTelHook) OnOperationEnd(ctx context.Context, info OperationInfo, resul
 	span.End()
 }
 
-func (h *OTelHook) OnRequestStart(_ context.Context, _ RequestInfo)    {}
+func (h *OTelHook) OnRequestStart(_ context.Context, _ RequestInfo)                {}
 func (h *OTelHook) OnRequestEnd(_ context.Context, _ RequestInfo, _ RequestResult) {}
-func (h *OTelHook) OnRetry(_ context.Context, _ RequestInfo, _ int, _ error)        {}
-func (h *OTelHook) OnPaginate(_ context.Context, _ string, _ int)                    {}
+func (h *OTelHook) OnRetry(_ context.Context, _ RequestInfo, _ int, _ error)       {}
+func (h *OTelHook) OnPaginate(_ context.Context, _ string, _ int)                  {}

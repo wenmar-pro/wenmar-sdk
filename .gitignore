@@ -3,3 +3,14 @@
 docs/scalar/openapi.enriched.yaml
 docs/handoffs
 docs/superpowers
+
+# Ruby
+.bundle/
+vendor/bundle/
+.ruby-lsp/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.log

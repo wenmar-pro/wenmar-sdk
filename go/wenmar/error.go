@@ -128,7 +128,9 @@ func statusFallbackCode(statusCode int) string {
 
 // FieldErrors extracts validation field errors from the FieldErrors map.
 // The Wenmar API sends validation errors as:
-//   field_errors: { "first_name": ["can't be blank"], "email": ["is invalid"] }
+//
+//	field_errors: { "first_name": ["can't be blank"], "email": ["is invalid"] }
+//
 // This method coerces the loosely-typed JSON values into a
 // map[string][]string for easy form-level error display.
 // Returns nil if there are no field errors.

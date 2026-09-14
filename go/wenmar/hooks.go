@@ -47,11 +47,11 @@ type Hooks interface {
 type NoopHooks struct{}
 
 func (NoopHooks) OnOperationStart(ctx context.Context, _ OperationInfo) context.Context { return ctx }
-func (NoopHooks) OnOperationEnd(context.Context, OperationInfo, OperationResult)      {}
-func (NoopHooks) OnRequestStart(context.Context, RequestInfo)                          {}
-func (NoopHooks) OnRequestEnd(context.Context, RequestInfo, RequestResult)             {}
-func (NoopHooks) OnRetry(context.Context, RequestInfo, int, error)                     {}
-func (NoopHooks) OnPaginate(context.Context, string, int)                              {}
+func (NoopHooks) OnOperationEnd(context.Context, OperationInfo, OperationResult)        {}
+func (NoopHooks) OnRequestStart(context.Context, RequestInfo)                           {}
+func (NoopHooks) OnRequestEnd(context.Context, RequestInfo, RequestResult)              {}
+func (NoopHooks) OnRetry(context.Context, RequestInfo, int, error)                      {}
+func (NoopHooks) OnPaginate(context.Context, string, int)                               {}
 
 // ClientOption configures a Client.
 type ClientOption func(*Client)

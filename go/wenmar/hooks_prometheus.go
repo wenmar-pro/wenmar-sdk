@@ -32,7 +32,9 @@ func NewPrometheusHooks(reg prometheus.Registerer, _ prometheus.Gatherer) *Prome
 	return h
 }
 
-func (h *PrometheusHook) OnOperationStart(ctx context.Context, _ OperationInfo) context.Context { return ctx }
+func (h *PrometheusHook) OnOperationStart(ctx context.Context, _ OperationInfo) context.Context {
+	return ctx
+}
 func (h *PrometheusHook) OnOperationEnd(_ context.Context, info OperationInfo, result OperationResult) {
 	status := "success"
 	if result.Err != nil {
@@ -40,7 +42,7 @@ func (h *PrometheusHook) OnOperationEnd(_ context.Context, info OperationInfo, r
 	}
 	h.opsTotal.WithLabelValues(info.Operation, status).Inc()
 }
-func (h *PrometheusHook) OnRequestStart(_ context.Context, _ RequestInfo)    {}
+func (h *PrometheusHook) OnRequestStart(_ context.Context, _ RequestInfo) {}
 func (h *PrometheusHook) OnRequestEnd(_ context.Context, info RequestInfo, result RequestResult) {
 	h.httpTotal.WithLabelValues(result.Method, statusLabel(result.StatusCode)).Inc()
 }

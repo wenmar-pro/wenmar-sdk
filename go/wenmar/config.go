@@ -44,10 +44,10 @@ func DefaultConfig() Config {
 // LoadConfigFromEnv reads WENMAR_* environment variables, falling back to
 // DefaultConfig for any that are unset.
 //
-//   WENMAR_BASE_URL    - base URL (must be https or localhost)
-//   WENMAR_TIMEOUT     - request timeout (e.g. "30s", "1m")
-//   WENMAR_MAX_RETRIES - integer retry count
-//   WENMAR_CACHE       - "true" or "false"
+//	WENMAR_BASE_URL    - base URL (must be https or localhost)
+//	WENMAR_TIMEOUT     - request timeout (e.g. "30s", "1m")
+//	WENMAR_MAX_RETRIES - integer retry count
+//	WENMAR_CACHE       - "true" or "false"
 func LoadConfigFromEnv() Config {
 	cfg := DefaultConfig()
 	if v := os.Getenv("WENMAR_BASE_URL"); v != "" {

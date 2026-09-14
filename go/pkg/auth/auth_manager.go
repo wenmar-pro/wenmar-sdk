@@ -17,8 +17,8 @@ var ErrOAuthNotImplemented = errors.New("OAuth token refresh is not yet implemen
 // AuthManager coordinates token storage, retrieval, and refresh. When OAuth
 // lands, only refreshFn changes — no caller code breaks.
 type AuthManager struct {
-	Store    CredentialStore
-	Provider TokenProvider
+	Store     CredentialStore
+	Provider  TokenProvider
 	refreshFn func(ctx context.Context, refreshToken string) (*Token, error)
 }
 

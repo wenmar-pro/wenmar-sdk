@@ -19,9 +19,9 @@ type CredentialStore interface {
 }
 
 const (
-	keyringService      = "wenmar"
+	keyringService       = "wenmar"
 	legacyKeyringService = "wenmar-cli"
-	keyringUser         = "token"
+	keyringUser          = "token"
 )
 
 // KeyringStore uses the system keyring (macOS Keychain, Windows Credential

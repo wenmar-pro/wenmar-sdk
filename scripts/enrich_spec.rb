@@ -1,4 +1,5 @@
 require "yaml"
+require_relative "generator_utils"
 
 module EnrichSpec
   # The singularize rules are intentionally narrow. They handle the simple
@@ -445,7 +446,7 @@ module EnrichSpec
   end
 
   def self.pascal_case(identifier)
-    identifier.split("_").reject(&:empty?).map { |part| part[0].upcase + part[1..] }.join
+    GeneratorUtils.pascal(identifier)
   end
 
   def self.extract_components!(spec)
