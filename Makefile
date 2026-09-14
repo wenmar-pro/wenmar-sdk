@@ -74,5 +74,6 @@ check: enrich generate docs test conformance check-conformance-parity check-ruby
 		echo "::error::generated API docs have drifted. Run 'make docs' and commit."; \
 		exit 1; \
 	fi
+	ruby scripts/check_readme_index.rb
 	ruby scripts/check_fixture_coverage.rb
 	@echo "All checks passed."

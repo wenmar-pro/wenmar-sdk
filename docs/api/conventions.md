@@ -34,7 +34,7 @@ the default. When there is no next page, the `Link` header is absent.
 All errors use one envelope:
 
 ```json
-{ "error": { "code": "not_found", "message": "Customer not found", "details": {} } }
+{ "error": { "code": "not_found", "message": "Customer not found", "field_errors": {} } }
 ```
 
 | `code` | HTTP status | When |
@@ -42,9 +42,9 @@ All errors use one envelope:
 | `unauthorized` | 401 | Missing/invalid/expired bearer token |
 | `forbidden` | 403 | Authorization failure |
 | `not_found` | 404 | Record not found |
-| `validation_failed` | 422 | Request body failed validation — `details` keyed by field |
+| `validation_failed` | 422 | Request body failed validation — `field_errors` keyed by field |
 
-The `details` object carries per-field validation errors, e.g.
+The `field_errors` object carries per-field validation errors, e.g.
 `{ "full_name": ["can't be blank"] }`.
 
 ## Auth

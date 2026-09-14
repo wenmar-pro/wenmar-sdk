@@ -4,6 +4,45 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.6 to v0.7
+
+v0.7 fixes a noun-singularization bug in the operationId generator. Several
+generated method names were mis-singularized (the generator naively stripped a
+trailing `s`), producing names like `create_cash_entrie` and
+`update_labor_matrice`. These are now correct. This is a breaking rename of the
+generated SDK methods (and the corresponding conformance dispatch entries); the
+HTTP paths are unchanged.
+
+| Before (v0.6) | After (v0.7) |
+|---|---|
+| `CreateCashEntrie` / `create_cash_entrie` | `CreateCashEntry` / `create_cash_entry` |
+| `ShowCashEntrie` / `show_cash_entrie` | `ShowCashEntry` / `show_cash_entry` |
+| `DeleteCashEntrie` / `delete_cash_entrie` | `DeleteCashEntry` / `delete_cash_entry` |
+| `CreateLaborMatrice` / `create_labor_matrice` | `CreateLaborMatrix` / `create_labor_matrix` |
+| `UpdateLaborMatrice` / `update_labor_matrice` | `UpdateLaborMatrix` / `update_labor_matrix` |
+| `DeleteLaborMatrice` / `delete_labor_matrice` | `DeleteLaborMatrix` / `delete_labor_matrix` |
+| `CreatePartsMatrice` / `create_parts_matrice` | `CreatePartsMatrix` / `create_parts_matrix` |
+| `UpdatePartsMatrice` / `update_parts_matrice` | `UpdatePartsMatrix` / `update_parts_matrix` |
+| `DeletePartsMatrice` / `delete_parts_matrice` | `DeletePartsMatrix` / `delete_parts_matrix` |
+| `CreateSubStatuse` / `create_sub_statuse` | `CreateSubStatus` / `create_sub_status` |
+| `UpdateSubStatuse` / `update_sub_statuse` | `UpdateSubStatus` / `update_sub_status` |
+| `CreateWorkOrdersServicesCopie` / `create_work_orders_services_copie` | `CreateWorkOrdersServicesCopy` / `create_work_orders_services_copy` |
+| `CreateWorkOrdersServicesTimeEntrie` / `create_work_orders_services_time_entrie` | `CreateWorkOrdersServicesTimeEntry` / `create_work_orders_services_time_entry` |
+| `CreateWorkOrdersServicesLineItemsCopie` / `create_work_orders_services_line_items_copie` | `CreateWorkOrdersServicesLineItemsCopy` / `create_work_orders_services_line_items_copy` |
+| `CreateWorkOrdersServicesLineItemsPriceRefreshe` / `create_work_orders_services_line_items_price_refreshe` | `CreateWorkOrdersServicesLineItemsPriceRefresh` / `create_work_orders_services_line_items_price_refresh` |
+
+Other v0.7 changes:
+
+- The Ruby gem version is now sourced from `Wenmar::VERSION` (was hardcoded and
+  had drifted); both SDKs report `0.7.0`.
+- The Ruby SDK gains OAuth refresh + credential storage (`Wenmar::Token`,
+  `Wenmar::OAuth`, `Wenmar::CredentialStore`, `Wenmar::AuthManager`,
+  `Wenmar::CredentialStoreProvider`). The Go SDK gains
+  `auth.NewAuthManagerWithOAuth` for Doorkeeper refresh.
+- The documented 1,000-item auto-pagination cap is now actually enforced; the
+  default `GetAll*` behavior for `nil` options truncates at 1,000 (a `truncated`
+  flag is reported internally).
+
 ## Migrating from v0.3 to v0.4.1
 
 v0.4.1 is a breaking release that moves both SDKs onto a generated operation

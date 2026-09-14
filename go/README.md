@@ -43,7 +43,17 @@ The client uses the `context` package for cancellation and deadlines.
 
 `wenmar.NewClient(cfg, tp)` takes a `Config` and a `TokenProvider`. The
 `Config` supports a custom `HTTPClient`, `Timeout`, `MaxRetries`,
-`CacheEnabled`, and `Hooks`. An empty token provider is an error.
+`CacheEnabled`, `Token`/`TokenProvider`, and `Hooks`.
+
+When the `TokenProvider` argument is nil, `NewClient` falls back to
+`cfg.TokenProvider`, then to `cfg.Token` via a static provider, and only errors
+if all are empty:
+
+```go
+cfg := wenmar.DefaultConfig()
+cfg.Token = "YOUR_API_TOKEN" // used when no provider is passed
+client, err := wenmar.NewClient(cfg, nil)
+```
 
 ## Location scoping
 
@@ -57,7 +67,9 @@ resp, err := shop.ListCustomers(ctx, nil) // sends X-Wenmar-Location: 42
 
 ## API coverage
 
-All 76 operations are generated into `operations.gen.go`. Key methods:
+The full surface is generated into `operations.gen.go` — hundreds of methods
+across every tag. See the [generated API reference](../docs/api/api-reference.md)
+for the live list. A representative sample:
 
 | Operation | Method |
 |---|---|
@@ -69,14 +81,20 @@ All 76 operations are generated into `operations.gen.go`. Key methods:
 | Create vehicle | `CreateVehicle(ctx, body CreateVehicleRequest)` |
 | Show vehicle | `ShowVehicle(ctx, id)` |
 | Update vehicle | `UpdateVehicle(ctx, id, body UpdateVehicleRequest)` |
-| Delete vehicle | `DeleteVehicle(ctx, id)` |
+| Trash vehicle | `TrashVehicle(ctx, id)` |
+| Archive vehicle | `ArchiveVehicle(ctx, id)` |
+| Restore vehicle | `RestoreVehicle(ctx, id)` |
 | Decode VIN | `DecodeVin(ctx, params *DecodeVinParams)` |
 | Check duplicates | `CheckVehicleDuplicate(ctx, params *CheckVehicleDuplicateParams)` |
 | List work orders | `ListWorkOrders(ctx)` |
 | Create work order | `CreateWorkOrder(ctx, body CreateWorkOrderRequest)` |
 | Show work order | `ShowWorkOrder(ctx, id)` |
 | Update work order | `UpdateWorkOrder(ctx, id, body UpdateWorkOrderRequest)` |
-| Delete work order | `DeleteWorkOrder(ctx, id)` |
+
+Work orders use a domain workflow (`stage`) and are never hard-deleted — use the
+lifecycle/workflow actions (e.g. `VoidWorkOrder`, `ReopenWorkOrder`) instead.
+Lifecycle-managed resources (customers, vehicles, vendors, …) support
+`Trash*`/`Archive*`/`Restore*` rather than `DELETE`.
 
 Every paginated list also has a `GetAll*` variant that auto-paginates with a
 1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil, nil)`.

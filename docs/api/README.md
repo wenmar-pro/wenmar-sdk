@@ -24,7 +24,7 @@ To create something, it's the same idea, but you also have to include the `Conte
 ```shell
 curl -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H 'Content-Type: application/json' \
-  -A 'User-Agent: MyApp (yourname@example.com)' \
+  -A 'MyApp (yourname@example.com)' \
   -d '{ "customer": { "first_name": "Jane", "last_name": "Doe" } }' \
   https://app.wenmarpro.com/customers
 ```
@@ -115,7 +115,7 @@ Handling errors
 Every error response uses one consistent envelope:
 
 ```json
-{ "error": { "code": "not_found", "message": "Customer not found", "details": {} } }
+{ "error": { "code": "not_found", "message": "Customer not found", "field_errors": {} } }
 ```
 
 | HTTP status | `code` | When |
@@ -123,7 +123,7 @@ Every error response uses one consistent envelope:
 | 401 | `unauthorized` | Missing or invalid bearer token |
 | 403 | `forbidden` | Authorization failure |
 | 404 | `not_found` | Resource not found |
-| 422 | `validation_failed` | Request body failed validation — `details` keyed by field |
+| 422 | `validation_failed` | Request body failed validation — `field_errors` keyed by field |
 | 429 | `rate_limited` | Too many requests — retry after delay |
 | 500+ | `internal_error` | Server-side failure |
 
@@ -205,16 +205,52 @@ API endpoints
 - [Authentication](authentication.md#authentication)
 <!-- START API ENDPOINTS -->
 - [Account](sections/account.md#account)
-- [Customers](sections/customers.md#customers)
+- [Appointments](sections/appointments.md#appointments)
+- [Calendar](sections/calendar.md#calendar)
+- [Campaigns](sections/campaigns.md#campaigns)
+- [Cash Drawer Session](sections/cash_drawer_session.md#cash-drawer-session)
+- [Cash Entries](sections/cash_entries.md#cash-entries)
+- [Conversations](sections/conversations.md#conversations)
+- [Core Tax Rules](sections/core_tax_rules.md#core-tax-rules)
+- [Counter Sales](sections/counter_sales.md#counter-sales)
+- [Current Location](sections/current_location.md#current-location)
 - [Customer Tags](sections/customer_tags.md#customer-tags)
+- [Customers](sections/customers.md#customers)
+- [Drivers](sections/drivers.md#drivers)
+- [Expenses](sections/expenses.md#expenses)
+- [Fleets](sections/fleets.md#fleets)
+- [Inspection Reports](sections/inspection_reports.md#inspection-reports)
+- [Inspections](sections/inspections.md#inspections)
+- [Inventory Levels](sections/inventory_levels.md#inventory-levels)
+- [Labor Matrices](sections/labor_matrices.md#labor-matrices)
+- [Labor Rates](sections/labor_rates.md#labor-rates)
+- [Labor Templates](sections/labor_templates.md#labor-templates)
+- [Lead Sources](sections/lead_sources.md#lead-sources)
 - [Locations](sections/locations.md#locations)
+- [Me](sections/me.md#me)
+- [Messages](sections/messages.md#messages)
+- [Notifications](sections/notifications.md#notifications)
+- [Orders](sections/orders.md#orders)
+- [Packages](sections/packages.md#packages)
+- [Parts](sections/parts.md#parts)
+- [Parts Matrices](sections/parts_matrices.md#parts-matrices)
+- [Payments](sections/payments.md#payments)
+- [Reports](sections/reports.md#reports)
 - [Service Categories](sections/service_categories.md#service-categories)
-- [Settings](sections/settings.md#settings)
+- [Shop Discounts](sections/shop_discounts.md#shop-discounts)
+- [Shop Fees](sections/shop_fees.md#shop-fees)
 - [Statements](sections/statements.md#statements)
-- [Team](sections/team.md#team)
-- [Vehicle Tags](sections/vehicle_tags.md#vehicle-tags)
+- [Store Credits](sections/store_credits.md#store-credits)
+- [Sub Statuses](sections/sub_statuses.md#sub-statuses)
+- [Sublet Packages](sections/sublet_packages.md#sublet-packages)
+- [Tech Assignments](sections/tech_assignments.md#tech-assignments)
+- [Tire Events](sections/tire_events.md#tire-events)
+- [Tire Storage Slots](sections/tire_storage_slots.md#tire-storage-slots)
+- [Tires](sections/tires.md#tires)
+- [Users](sections/users.md#users)
 - [Vehicles](sections/vehicles.md#vehicles)
 - [Vendors](sections/vendors.md#vendors)
+- [Work Order Tags](sections/work_order_tags.md#work-order-tags)
 - [Work Orders](sections/work_orders.md#work-orders)
 <!-- END API ENDPOINTS -->
 

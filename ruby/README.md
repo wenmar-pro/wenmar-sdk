@@ -55,26 +55,34 @@ shop.list_customers # sends X-Wenmar-Location: 42
 
 ## API coverage
 
-All 76 operations are generated into `resources.rb`. Key methods:
+The full surface is generated into `resources.rb` — hundreds of methods across
+every tag. See the [generated API reference](../docs/api/api-reference.md) for
+the live list. A representative sample:
 
 | Operation | Method |
 |---|---|
-| List customers | `list_customers(query: nil, page: nil, ...)` |
+| List customers | `list_customers(customer_tag_id:, has_balance:, has_vehicle:, last_visit_months:, page:, per_page:, q:, status:, type:)` |
 | Create customer | `create_customer(customer:)` |
 | Show customer | `show_customer(id)` |
 | Update customer | `update_customer(id, customer:)` |
-| List vehicles | `list_vehicles(customer_id: nil, page: nil)` |
+| List vehicles | `list_vehicles(page:, per_page:, q:, ...)` |
 | Create vehicle | `create_vehicle(vehicle:)` |
 | Show vehicle | `show_vehicle(id)` |
 | Update vehicle | `update_vehicle(id, vehicle:)` |
 | Trash vehicle | `trash_vehicle(id)` |
 | Decode VIN | `decode_vin(vin:)` |
 | Check duplicates | `check_vehicle_duplicate(vin:)` |
-| List work orders | `list_work_orders` |
+| List work orders | `list_work_orders(page:, per_page:, q:, ...)` |
 | Create work order | `create_work_order(work_order:)` |
 | Show work order | `show_work_order(id)` |
 | Update work order | `update_work_order(id, work_order:)` |
-| Delete work order | `delete_work_order(id)` |
+| Void work order | `void_work_order(id, closure_reason:)` |
+| Reopen work order | `reopen_work_order(id)` |
+
+Work orders use a domain workflow (`stage`) and are never hard-deleted — use
+`void_work_order`/`reopen_work_order`. Lifecycle-managed resources (customers,
+vehicles, vendors, …) support `trash_*`/`archive_*`/`restore_*` rather than
+`delete`.
 
 Every paginated list also has a `get_all_*` variant that auto-paginates with a
 1,000-item safety cap, e.g. `get_all_customers`.
@@ -111,7 +119,36 @@ See [docs/errors.md](../docs/api/errors.md) for the full error envelope and code
 ## Retry
 
 The client retries 429/503/504 with exponential backoff (max 3 retries). It
-respects the `Retry-After` response header. Mutations are only retried on 429.
+respects the `Retry-After` response header. Mutations are only retried on 429 —
+never on transport errors, which could duplicate a write.
+
+## OAuth and credential storage
+
+For OAuth (the browser `authorization_code` + PKCE flow is a CLI concern; the
+SDK ships the token model, store, and refresh machinery):
+
+```ruby
+require "wenmar"
+
+# Exchange a refresh token for a new access token.
+token = Wenmar::OAuth.refresh(
+  base_url: "https://app.wenmarpro.com",
+  refresh_token: refresh_token
+)
+
+# Persist the full token (access + refresh + expiry) with 0600 permissions.
+store = Wenmar::CredentialStore.new
+store.save_token(token)
+
+# Auto-refresh when the token is expired or within 5 minutes of expiry.
+manager = Wenmar::AuthManager.new(store: store, oauth: { base_url: "https://app.wenmarpro.com" })
+provider = Wenmar::CredentialStoreProvider.new(store: store, manager: manager)
+client = Wenmar::Client.new(token_provider: provider)
+```
+
+`Wenmar::KeychainStore` is an alternative macOS keychain-backed store (it
+requires the optional `ruby-keychain` gem, which is **not** a runtime
+dependency — install it yourself if you want keychain storage).
 
 ## Documentation
 

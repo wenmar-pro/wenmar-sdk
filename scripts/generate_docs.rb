@@ -372,8 +372,32 @@ module GenerateDocs
     tag.tr("_", " ").split.map(&:capitalize).join(" ")
   end
 
-  def write_api_reference(outdir, spec)
-    rows = endpoint_rows(spec).sort_by { |r| [r[:tag], r[:path], r[:method]] }
+  # Rewrites the "API endpoints" index between the START/END API ENDPOINTS
+  # markers in docs/api/README.md so the hand-written README's section list
+  # can never drift from the generated sections.
+  def write_readme_index(outdir, spec)
+    readme_path = File.join(outdir, "README.md")
+    return unless File.exist?(readme_path)
+
+    content = File.read(readme_path)
+    start_marker = "<!-- START API ENDPOINTS -->"
+    end_marker = "<!-- END API ENDPOINTS -->"
+    start_idx = content.index(start_marker)
+    end_idx = content.index(end_marker)
+    return unless start_idx && end_idx && end_idx > start_idx
+
+    tags = document(spec).keys
+    lines = tags.map do |tag|
+      title = section_title(tag)
+      anchor = title.downcase.tr(" ", "-")
+      "- [#{title}](sections/#{tag}.md##{anchor})"
+    end
+    replacement = "#{start_marker}\n#{lines.join("\n")}\n#{end_marker}"
+    updated = content[0...start_idx] + replacement + content[(end_idx + end_marker.length)..]
+    File.write(readme_path, updated)
+  end
+
+  def write_api_reference(outdir, spec)    rows = endpoint_rows(spec).sort_by { |r| [r[:tag], r[:path], r[:method]] }
     table = +"| Method | Path | Operation | Description |\n|---|---|---|---|\n"
     rows.each do |r|
       desc = (r[:description] || "").strip
@@ -425,7 +449,7 @@ module GenerateDocs
 
       Base URL: `https://app.wenmarpro.com`
       Auth: `Authorization: Bearer <token>`
-      Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message, details } }`.
+      Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message, field_errors } }`.
 
       #{body}
       ## Schemas
@@ -511,5 +535,6 @@ if __FILE__ == $0
   GenerateDocs.write_sections(outdir, spec, fixtures: fixtures)
   GenerateDocs.write_api_reference(outdir, spec)
   GenerateDocs.write_llm_compact(outdir, spec)
+  GenerateDocs.write_readme_index(outdir, spec)
   puts "API docs written to #{outdir} (#{fixtures.size} fixtures loaded)"
 end

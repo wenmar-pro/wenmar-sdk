@@ -5,7 +5,7 @@
 
 Base URL: `https://app.wenmarpro.com`
 Auth: `Authorization: Bearer <token>`
-Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message, details } }`.
+Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message, field_errors } }`.
 
 ## Account
 
