@@ -22,6 +22,7 @@ ROOT = File.expand_path("..", __dir__)
 MANIFEST_PATH = File.join(ROOT, "spec", "operations.json")
 GO_DISPATCH = File.join(ROOT, "conformance", "go", "dispatch.gen.go")
 RUBY_DISPATCH = File.join(ROOT, "conformance", "ruby", "dispatch.gen.rb")
+COVERAGE_ALLOWLIST = File.join(ROOT, "conformance", "coverage_allowlist.json")
 
 TEST_ALIASES = GeneratorUtils::TEST_ALIASES
 
@@ -82,17 +83,47 @@ unless go_extra.empty? && ruby_extra.empty?
   fail!("dispatch files contain operations not in the manifest: go=[#{go_extra.join(', ')}] ruby=[#{ruby_extra.join(', ')}]")
 end
 
-# Coverage check: warn about manifest operations with no test scenario.
-# Resolve test operations to manifest operations (direct or alias) so the
-# comparison is apples-to-apples.
+# Coverage check: every manifest operation must have a conformance scenario,
+# unless it is explicitly listed in conformance/coverage_allowlist.json.
+#
+# The allowlist may only shrink. If a NEW operation ships without a scenario
+# (and isn't listed) the gate fails hard — the allowlist exists to record the
+# known backlog, not to permit new gaps. Setting WENMAR_STRICT_COVERAGE=1
+# additionally fails when the allowlist is non-empty, so the backlog can be
+# driven to zero.
 resolved_test_ops = test_ops.uniq.map { |op| TEST_ALIASES[op] || op }
 untested = manifest.reject { |op| resolved_test_ops.include?(op) }
+
+allowlist = if File.exist?(COVERAGE_ALLOWLIST)
+              JSON.parse(File.read(COVERAGE_ALLOWLIST))["operations"] || []
+            else
+              []
+            end
+
+# Allowlist entries that are now tested must be removed (keep it shrinking).
+stale_allowlist = allowlist.reject { |op| untested.include?(op) }
+unless stale_allowlist.empty?
+  fail!("coverage_allowlist.json lists operations that now have scenarios (remove them): #{stale_allowlist.sort.join(', ')}")
+end
+
+# Allowlist entries that no longer exist at all are also stale.
+unknown_allowlist = allowlist - manifest
+unless unknown_allowlist.empty?
+  fail!("coverage_allowlist.json lists unknown operations (remove them): #{unknown_allowlist.sort.join(', ')}")
+end
+
+newly_untested = untested - allowlist
+unless newly_untested.empty?
+  fail!("operations have no conformance test scenario and are not allowlisted:\n  #{newly_untested.sort.join("\n  ")}\n" \
+        "Add scenarios in conformance/tests/*.json, or record them in conformance/coverage_allowlist.json.")
+end
+
 if untested.any?
-  puts "WARNING: #{untested.size} operations have no conformance test scenario:"
+  puts "WARNING: #{untested.size} operations have no conformance test scenario (all allowlisted):"
   untested.sort.each { |op| puts "  - #{op}" }
-  puts "To make this a hard failure, set WENMAR_STRICT_COVERAGE=1"
+  puts "coverage_allowlist.json may only shrink; add scenarios and remove ids from it."
   if ENV["WENMAR_STRICT_COVERAGE"] == "1"
-    exit 1
+    fail!("WENMAR_STRICT_COVERAGE=1 but #{untested.size} operations remain untested (allowlist non-empty)")
   end
 else
   puts "All #{manifest.size} operations have at least one test scenario."

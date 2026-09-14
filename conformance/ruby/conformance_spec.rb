@@ -53,7 +53,10 @@ module Conformance
       }
 
       begin
-        result = fn.call(client, args)
+        repeat = (tc.dig("expect", "repeat") || 1).to_i
+        repeat = 1 if repeat < 1
+        result = nil
+        repeat.times { result = fn.call(client, args) }
         if tc.dig("expect", "noError")
           assert_body_path(result, tc.dig("expect", "responseBody"), tc["name"]) if tc.dig("expect", "responseBody")
         else
@@ -113,9 +116,19 @@ module Conformance
 
     def assert_request_headers(tc, captured_headers)
       expected = tc.dig("expect", "requestHeaders")
+      return unless expected
+
       expected.each do |k, v|
         actual = captured_headers[k] || captured_headers[k.to_s]
         assert_equal v, actual, "[#{tc["name"]}] expected header #{k}=#{v}, got #{actual}"
+      end
+    end
+
+    def assert_request_headers_present(tc, captured_headers)
+      Array(tc.dig("expect", "requestHeadersPresent")).each do |k|
+        actual = captured_headers[k] || captured_headers[k.to_s]
+        refute_nil actual, "[#{tc["name"]}] expected request header #{k} to be present"
+        refute_empty actual.to_s, "[#{tc["name"]}] expected request header #{k} to be non-empty"
       end
     end
 

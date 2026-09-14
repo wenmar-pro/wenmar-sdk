@@ -1,0 +1,63 @@
+[
+  {
+    "name": "conditional_get_returns_cached_body_on_304",
+    "operation": "show_customer",
+    "method": "GET",
+    "path": "/customers/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json", "ETag": "\"v1\"" },
+        "body": { "id": 1, "full_name": "Jane" }
+      },
+      {
+        "status": 304,
+        "headers": { "Content-Type": "application/json" }
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 2,
+      "repeat": 2,
+      "responseBody": { "path": "full_name", "equals": "Jane" }
+    }
+  },
+  {
+    "name": "sends_user_agent_header",
+    "operation": "list_customers",
+    "method": "GET",
+    "path": "/customers",
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": [ { "id": 1, "full_name": "Jane" } ]
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 1,
+      "requestHeadersPresent": ["User-Agent"]
+    }
+  },
+  {
+    "name": "sends_content_type_on_create",
+    "operation": "create_customer",
+    "method": "POST",
+    "path": "/customers",
+    "requestBody": { "customer": { "first_name": "Jane" } },
+    "mockResponses": [
+      {
+        "status": 201,
+        "headers": { "Content-Type": "application/json" },
+        "body": { "id": 1, "full_name": "Jane" }
+      }
+    ],
+    "expect": {
+      "noError": true,
+      "requestCount": 1,
+      "requestHeadersPresent": ["Content-Type"]
+    }
+  }
+]

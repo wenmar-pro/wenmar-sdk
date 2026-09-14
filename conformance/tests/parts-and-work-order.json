@@ -1,0 +1,64 @@
+[
+  {
+    "name": "list_parts",
+    "operation": "list_parts",
+    "method": "GET",
+    "path": "/parts",
+    "query": { "q": "brake", "per_page": 10 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": [ { "id": 1, "name": "Brake Pad" } ]
+      }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "show_part",
+    "operation": "show_part",
+    "method": "GET",
+    "path": "/parts/1",
+    "pathParams": { "id": 1 },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": { "id": 1, "name": "Brake Pad" }
+      }
+    ],
+    "expect": { "noError": true, "requestCount": 1, "responseBody": { "path": "name", "equals": "Brake Pad" } }
+  },
+  {
+    "name": "update_part",
+    "operation": "update_part",
+    "method": "PATCH",
+    "path": "/parts/1",
+    "pathParams": { "id": 1 },
+    "requestBody": { "part": { "name": "Brake Pad XL" } },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": { "id": 1, "name": "Brake Pad XL" }
+      }
+    ],
+    "expect": { "noError": true, "requestCount": 1 }
+  },
+  {
+    "name": "start_work_order",
+    "operation": "start_work_order",
+    "method": "POST",
+    "path": "/work_orders/1/start",
+    "pathParams": { "id": 1 },
+    "requestBody": { "work_order": {} },
+    "mockResponses": [
+      {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "body": { "id": 1, "stage": "in_progress" }
+      }
+    ],
+    "expect": { "noError": true, "requestCount": 1, "responseBody": { "path": "stage", "equals": "in_progress" } }
+  }
+]

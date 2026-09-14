@@ -19,15 +19,15 @@ import (
 var ctx = context.Background()
 
 type TestCase struct {
-	Name          string            `json:"name"`
-	Operation     string            `json:"operation"`
-	Method        string            `json:"method"`
-	Path          string            `json:"path"`
-	PathParams    map[string]any    `json:"pathParams"`
-	Query         map[string]any    `json:"query"`
-	RequestBody   map[string]any    `json:"requestBody"`
-	MockResponses []MockResponse    `json:"mockResponses"`
-	Expect        Expectation       `json:"expect"`
+	Name          string         `json:"name"`
+	Operation     string         `json:"operation"`
+	Method        string         `json:"method"`
+	Path          string         `json:"path"`
+	PathParams    map[string]any `json:"pathParams"`
+	Query         map[string]any `json:"query"`
+	RequestBody   map[string]any `json:"requestBody"`
+	MockResponses []MockResponse `json:"mockResponses"`
+	Expect        Expectation    `json:"expect"`
 }
 
 type MockResponse struct {
@@ -37,14 +37,16 @@ type MockResponse struct {
 }
 
 type Expectation struct {
-	RequestCount            int            `json:"requestCount"`
-	NoError                 bool           `json:"noError"`
-	ErrorCode               string         `json:"errorCode"`
-	ErrorStatus             int            `json:"errorStatus"`
+	RequestCount            int                 `json:"requestCount"`
+	NoError                 bool                `json:"noError"`
+	ErrorCode               string              `json:"errorCode"`
+	ErrorStatus             int                 `json:"errorStatus"`
 	FieldErrors             map[string][]string `json:"fieldErrors"`
-	AssertNoOutboundRequest bool           `json:"assertNoOutboundRequest"`
-	ResponseBody            *BodyAssertion `json:"responseBody"`
-	RequestHeaders          map[string]string `json:"requestHeaders"`
+	AssertNoOutboundRequest bool                `json:"assertNoOutboundRequest"`
+	ResponseBody            *BodyAssertion      `json:"responseBody"`
+	RequestHeaders          map[string]string   `json:"requestHeaders"`
+	RequestHeadersPresent   []string            `json:"requestHeadersPresent"`
+	Repeat                  int                 `json:"repeat"`
 }
 
 type BodyAssertion struct {
@@ -111,7 +113,18 @@ func runCase(t *testing.T, tc TestCase) {
 		t.Fatalf("operation %q not in dispatch", tc.Operation)
 	}
 
-	body, err := fn(ctx, t, client, args)
+	// Repeat lets a case exercise stateful behavior (e.g. conditional-GET
+	// caching: the first call stores the ETag, the second revalidates and gets
+	// a 304). The same client is reused so its cache persists across calls.
+	repeat := tc.Expect.Repeat
+	if repeat < 1 {
+		repeat = 1
+	}
+
+	var body any
+	for i := 0; i < repeat; i++ {
+		body, err = fn(ctx, t, client, args)
+	}
 	if err != nil {
 		if tc.Expect.NoError {
 			t.Fatalf("expected success, got error: %v", err)
@@ -161,6 +174,14 @@ func runCase(t *testing.T, tc TestCase) {
 			if lastRequestHeaders.Get(k) != v {
 				t.Errorf("expected header %s=%q, got %q", k, v, lastRequestHeaders.Get(k))
 			}
+		}
+	}
+
+	// Header-presence assertions are useful for headers whose exact value is
+	// environment-specific (e.g. User-Agent carrying the SDK version).
+	for _, k := range tc.Expect.RequestHeadersPresent {
+		if lastRequestHeaders.Get(k) == "" {
+			t.Errorf("expected request header %q to be present", k)
 		}
 	}
 }
