@@ -6,14 +6,11 @@
 #
 # Enforced by scripts/check_fixture_coverage.rb (wired into CI).
 #
-# Each `targets` entry is one of:
+# Each `targets` entry is:
 #   operation entry — { id, operation: <operationId>, fixture: <path> }
 #     Validates the COMPLETE response body of `operation` (the response body is
 #     the bare resource — no data envelope) against the fixture named by
 #     `fixture`.
-#   pointer entry    — { id, fixture, pointer, schema }
-#     Validates the object selected by JSON pointer `pointer` within `fixture`
-#     against the named inline schema. `pointer: ""` selects the whole document.
 
 targets:
   - id: customer-get
@@ -115,14 +112,3 @@ targets:
   - id: service-category-create
     operation: create_service_category
     fixture: service_categories/get.json
-
-covered_schemas:
-  customer: [customer-get, customer-list, customer-create, customer-update]
-  vehicle: [vehicle-get, vehicle-list, vehicle-create, vehicle-update]
-  work_order: [work-order-get, work-order-list, work-order-create, work-order-update]
-  driver: [driver-get, driver-list, driver-create, driver-update]
-  statement: [statement-get, statement-list]
-  vendor: [vendor-get, vendor-list]
-  service_category: [service-category-list, service-category-create]
-  account: [account-get]
-  location: [location-get]

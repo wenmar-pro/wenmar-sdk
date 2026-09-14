@@ -26,8 +26,7 @@ end
 
 # Go: expression to pull a path param from args.
 def go_path_param(pp, op)
-  t = (op["pathParamTypes"] || {})[pp] || "integer"
-  if t == "string"
+  if path_param_type(op, pp) == "string"
     "strArg(args[\"pathParams\"].(map[string]interface{}), \"#{pp}\")"
   else
     "intArg(args[\"pathParams\"].(map[string]interface{}), \"#{pp}\")"

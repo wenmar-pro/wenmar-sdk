@@ -42,9 +42,14 @@ end
 # Each method looks like:
 #   def method(pos, kw: nil, ...)   (optional keyword)
 #   def method(pos, kw:, ...)       (required keyword)
+#
+# The signature capture is multiline-safe ((?:...|\n)*) so a generator that
+# wraps a long parameter list across lines is still parsed. If the generator
+# ever stops emitting one `def` per line group, this gate fails loudly via the
+# count check in main rather than silently under-reporting.
 def resource_kwargs(content)
   result = {}
-  content.scan(/def\s+([a-z0-9_]+)\((.*?)\)/) do |method, sig|
+  content.scan(/def\s+([a-z0-9_]+)\(((?:[^()]|\n)*?)\)/) do |method, sig|
     kwargs = sig.scan(/([a-z0-9_]+):\s*(?:nil|args)?/).flatten
     result[method] = kwargs
   end

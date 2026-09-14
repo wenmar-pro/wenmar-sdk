@@ -30,6 +30,9 @@ test: ## Run Go, Ruby, and script unit tests
 	cd ruby && bundle exec ruby -Ilib spec/auth_manager_spec.rb
 	ruby scripts/enrich_spec_test.rb
 	ruby scripts/generate_docs_test.rb
+	ruby scripts/generator_utils_test.rb
+	ruby scripts/generate_manifest_test.rb
+	ruby scripts/check_fixture_coverage_test.rb
 
 conformance: ## Run both conformance suites
 	cd conformance/go && go test ./...

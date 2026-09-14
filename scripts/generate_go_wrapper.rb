@@ -19,8 +19,7 @@ include GeneratorUtils
 def path_param_types(op)
   types = {}
   op["pathParams"].each do |p|
-    t = (op["pathParamTypes"] || {})[p] || "integer"
-    types[go_param_name(p)] = t == "integer" ? "int" : "string"
+    types[go_param_name(p)] = path_param_type(op, p) == "integer" ? "int" : "string"
   end
   types
 end

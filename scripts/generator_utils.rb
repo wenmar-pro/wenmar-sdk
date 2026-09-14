@@ -47,6 +47,19 @@ module GeneratorUtils
     op["paginated"] && op["responseSchema"] && op["id"].start_with?("list_")
   end
 
+  # Resolve the OpenAPI type of a path parameter from the manifest's
+  # pathParamTypes map. Fails loudly when the type is missing rather than
+  # silently assuming integer, which would generate a Go signature that can't
+  # compile against the generated client (or worse, a wrong one).
+  def path_param_type(op, name)
+    type = (op["pathParamTypes"] || {})[name]
+    if type.nil? || type.empty?
+      raise "path param '#{name}' on operation '#{op["id"]}' has no recorded type " \
+            "(#{op["method"].upcase} #{op["path"]}); regenerate spec/operations.json"
+    end
+    type
+  end
+
   # Normalize an OpenAPI tag to a filename/section key
   # (e.g. "Work Orders" -> "work_orders").
   def normalize_tag(tag)

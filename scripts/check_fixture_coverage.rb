@@ -13,9 +13,9 @@ require "yaml"
 require "json"
 
 ROOT = File.expand_path("..", __dir__)
-SPEC_PATH = File.join(ROOT, "spec", "openapi.enriched.yaml")
-MANIFEST_PATH = File.join(ROOT, "spec", "fixtures", "manifest.yaml")
-FIXTURES_DIR = File.join(ROOT, "spec", "fixtures")
+SPEC_PATH = ENV.fetch("WENMAR_SPEC_PATH", File.join(ROOT, "spec", "openapi.enriched.yaml"))
+MANIFEST_PATH = ENV.fetch("WENMAR_FIXTURE_MANIFEST", File.join(ROOT, "spec", "fixtures", "manifest.yaml"))
+FIXTURES_DIR = ENV.fetch("WENMAR_FIXTURES_DIR", File.join(ROOT, "spec", "fixtures"))
 
 def fail!(message)
   warn "FAIL: #{message}"
@@ -76,6 +76,12 @@ end
 
 # Structural validation: required fields present, types match, nullability.
 def validate_schema(instance, schema, path = "$")
+  return unless schema.is_a?(Hash)
+  fail!("unresolved $ref at #{path}: #{schema["$ref"]}") if schema["$ref"]
+  # A schema with no declared type (e.g. a free-form object) cannot be
+  # structurally validated; everything that declares a type must be handled.
+  return if schema["type"].nil?
+
   return if instance.nil? && schema["nullable"]
 
   case schema["type"]
@@ -106,6 +112,10 @@ def validate_schema(instance, schema, path = "$")
     unless instance.is_a?(Integer)
       fail!("expected integer at #{path}, got #{instance.class}")
     end
+  when "number"
+    unless instance.is_a?(Numeric)
+      fail!("expected number at #{path}, got #{instance.class}")
+    end
   when "string"
     unless instance.is_a?(String)
       fail!("expected string at #{path}, got #{instance.class}")
@@ -114,6 +124,11 @@ def validate_schema(instance, schema, path = "$")
     unless instance == true || instance == false
       fail!("expected boolean at #{path}, got #{instance.class}")
     end
+  else
+    # Fail loudly rather than silently passing an unvalidated fixture. When the
+    # spec gains a new scalar type (e.g. "file"), teach validate_schema about
+    # it instead of letting fixtures drift unchecked.
+    fail!("unhandled schema type #{schema["type"].inspect} at #{path}; extend validate_schema")
   end
 end
 
@@ -135,11 +150,8 @@ def validate_target(spec, target)
     fail!("no 2xx response schema for operation '#{target["operation"]}'") unless schema
 
     validate_schema(fixture, schema, target["fixture"])
-  elsif target["pointer"]
-    # Pointer entries are not used yet; the operation entries cover all schemas.
-    fail!("pointer entries not yet supported: #{target["id"]}")
   else
-    fail!("target #{target["id"]} has neither operation nor pointer")
+    fail!("target #{target["id"]} is missing required key 'operation'")
   end
 end
 
