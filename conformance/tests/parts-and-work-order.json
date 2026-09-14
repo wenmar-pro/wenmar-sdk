@@ -60,5 +60,37 @@
       }
     ],
     "expect": { "noError": true, "requestCount": 1, "responseBody": { "path": "stage", "equals": "in_progress" } }
+  },
+  {
+    "name": "create_part_success",
+    "operation": "create_part",
+    "method": "POST",
+    "path": "/parts",
+    "requestBody": { "part": { "part_number": "BP-1001", "description": "Brake Pad Set", "brand": "Acme", "part_type": "part", "stocked": true, "initial_quantity": 10, "cost": "25.00", "sell": "45.00", "taxable": true } },
+    "mockResponses": [
+      { "status": 201, "headers": { "Content-Type": "application/json" }, "body": { "id": 7, "part_number": "BP-1001", "description": "Brake Pad Set", "stocked": true, "cost_cents": 2500, "sell_cents": 4500 } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "part_number", "equals": "BP-1001" } }
+  },
+  {
+    "name": "delete_part_success",
+    "operation": "delete_part",
+    "method": "DELETE",
+    "path": "/parts/7",
+    "pathParams": { "id": 7 },
+    "mockResponses": [ { "status": 204, "headers": { "Content-Type": "application/json" }, "body": "" } ],
+    "expect": { "requestCount": 1, "noError": true }
+  },
+  {
+    "name": "create_work_orders_concerns_add_package_success",
+    "operation": "create_work_orders_concerns_add_package",
+    "method": "POST",
+    "path": "/work_orders/1/concerns/3/add_package",
+    "pathParams": { "work_order_id": 1, "id": 3 },
+    "requestBody": { "package_id": 9 },
+    "mockResponses": [
+      { "status": 200, "headers": { "Content-Type": "application/json" }, "body": { "id": 3, "type": "concern", "body": "Brake noise", "converted_service": { "package_id": 9 } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 3 } }
   }
 ]
