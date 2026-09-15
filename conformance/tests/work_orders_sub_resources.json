@@ -452,5 +452,441 @@
       { "status": 200, "body": { "id": 1, "assigned_technician_id": 7 } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "assigned_technician_id", "equals": 7 } }
+  },
+  {
+    "name": "create_work_orders_concern_success",
+    "operation": "create_work_orders_concern",
+    "method": "POST",
+    "path": "/work_orders/1/concerns",
+    "pathParams": {
+      "work_order_id": 1
+    },
+    "requestBody": {
+      "concern": {
+        "body": "Brake pads worn below 3mm",
+        "source": "inspection"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 5,
+          "type": "concern",
+          "body": "Brake pads worn below 3mm",
+          "source": "inspection",
+          "severity": null,
+          "finding_notes": null,
+          "position": 1,
+          "converted": false,
+          "converted_service_id": null,
+          "creator": {
+            "id": 2,
+            "name": "Jane Service",
+            "url": "https://api.example.com/team/members/2.json"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 5
+      }
+    }
+  },
+  {
+    "name": "update_work_orders_concern_success",
+    "operation": "update_work_orders_concern",
+    "method": "PATCH",
+    "path": "/work_orders/1/concerns/5",
+    "pathParams": {
+      "work_order_id": 1,
+      "id": 5
+    },
+    "requestBody": {
+      "concern": {
+        "body": "Brake pads worn below 2mm"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 5,
+          "type": "concern",
+          "body": "Brake pads worn below 2mm",
+          "source": "inspection",
+          "severity": null,
+          "finding_notes": null,
+          "position": 1,
+          "converted": false,
+          "converted_service_id": null,
+          "creator": {
+            "id": 2,
+            "name": "Jane Service",
+            "url": "https://api.example.com/team/members/2.json"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "body",
+        "equals": "Brake pads worn below 2mm"
+      }
+    }
+  },
+  {
+    "name": "delete_work_orders_concern_success",
+    "operation": "delete_work_orders_concern",
+    "method": "DELETE",
+    "path": "/work_orders/1/concerns/5",
+    "pathParams": {
+      "work_order_id": 1,
+      "id": 5
+    },
+    "mockResponses": [
+      {
+        "status": 204,
+        "body": ""
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "create_work_orders_concerns_copy_to_estimate_success",
+    "operation": "create_work_orders_concerns_copy_to_estimate",
+    "method": "POST",
+    "path": "/work_orders/1/concerns/5/copy_to_estimate",
+    "pathParams": {
+      "work_order_id": 1,
+      "id": 5
+    },
+    "requestBody": {},
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 5,
+          "type": "concern",
+          "body": "Brake pads worn below 3mm",
+          "source": "inspection",
+          "severity": null,
+          "finding_notes": null,
+          "position": 1,
+          "converted": true,
+          "converted_service_id": 9,
+          "creator": {
+            "id": 2,
+            "name": "Jane Service",
+            "url": "https://api.example.com/team/members/2.json"
+          }
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "converted",
+        "equals": true
+      }
+    }
+  },
+  {
+    "name": "create_work_orders_concerns_copy_all_to_estimate_success",
+    "operation": "create_work_orders_concerns_copy_all_to_estimate",
+    "method": "POST",
+    "path": "/work_orders/1/concerns/copy_all_to_estimate",
+    "pathParams": {
+      "work_order_id": 1
+    },
+    "requestBody": {},
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "work_order",
+          "work_order_number": 1001,
+          "status": "open"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
+  },
+  {
+    "name": "list_work_orders_sublet_orders_success",
+    "operation": "list_work_orders_sublet_orders",
+    "method": "GET",
+    "path": "/work_orders/1/sublet_orders",
+    "pathParams": {
+      "work_order_id": 1
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": [
+          {
+            "id": 2,
+            "type": "SubletOrder",
+            "sublet_number": 2001,
+            "title": "Machine brake rotors",
+            "fulfillment_status": "pending",
+            "payment_status": "unpaid",
+            "payment_method": null,
+            "notes": null,
+            "total_cents": 12000,
+            "total_cost_cents": 8000,
+            "margin_cents": 4000,
+            "margin_percentage": 33,
+            "sent_to_ap": false,
+            "vendor_invoice_number": null
+          }
+        ]
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "show_work_orders_sublet_order_success",
+    "operation": "show_work_orders_sublet_order",
+    "method": "GET",
+    "path": "/work_orders/1/sublet_orders/2",
+    "pathParams": {
+      "work_order_id": 1,
+      "id": 2
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 2,
+          "type": "SubletOrder",
+          "sublet_number": 2001,
+          "title": "Machine brake rotors",
+          "fulfillment_status": "pending",
+          "payment_status": "unpaid",
+          "payment_method": null,
+          "notes": null,
+          "total_cents": 12000,
+          "total_cost_cents": 8000,
+          "margin_cents": 4000,
+          "margin_percentage": 33,
+          "sent_to_ap": false,
+          "vendor_invoice_number": null
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "sublet_number",
+        "equals": 2001
+      }
+    }
+  },
+  {
+    "name": "create_work_orders_services_sublet_order_success",
+    "operation": "create_work_orders_services_sublet_order",
+    "method": "POST",
+    "path": "/work_orders/1/services/3/sublet_orders",
+    "pathParams": {
+      "work_order_id": 1,
+      "service_id": 3
+    },
+    "requestBody": {
+      "sublet_order": {
+        "title": "Machine brake rotors"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 4,
+          "type": "SubletOrder",
+          "sublet_number": 2002,
+          "title": "Machine brake rotors",
+          "fulfillment_status": "pending",
+          "payment_status": "unpaid",
+          "payment_method": null,
+          "notes": null,
+          "total_cents": 0,
+          "total_cost_cents": 0,
+          "margin_cents": 0,
+          "margin_percentage": 0,
+          "sent_to_ap": false,
+          "vendor_invoice_number": null
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 4
+      }
+    }
+  },
+  {
+    "name": "update_work_orders_services_sublet_order_success",
+    "operation": "update_work_orders_services_sublet_order",
+    "method": "PATCH",
+    "path": "/work_orders/1/services/3/sublet_orders/4",
+    "pathParams": {
+      "work_order_id": 1,
+      "service_id": 3,
+      "id": 4
+    },
+    "requestBody": {
+      "sublet_order": {
+        "title": "Machine brake rotors — rush"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 4,
+          "type": "SubletOrder",
+          "sublet_number": 2002,
+          "title": "Machine brake rotors — rush",
+          "fulfillment_status": "pending",
+          "payment_status": "unpaid",
+          "payment_method": null,
+          "notes": null,
+          "total_cents": 0,
+          "total_cost_cents": 0,
+          "margin_cents": 0,
+          "margin_percentage": 0,
+          "sent_to_ap": false,
+          "vendor_invoice_number": null
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "title",
+        "equals": "Machine brake rotors — rush"
+      }
+    }
+  },
+  {
+    "name": "delete_work_orders_services_sublet_order_success",
+    "operation": "delete_work_orders_services_sublet_order",
+    "method": "DELETE",
+    "path": "/work_orders/1/services/3/sublet_orders/4",
+    "pathParams": {
+      "work_order_id": 1,
+      "service_id": 3,
+      "id": 4
+    },
+    "mockResponses": [
+      {
+        "status": 204,
+        "body": ""
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true
+    }
+  },
+  {
+    "name": "create_work_orders_services_sublet_orders_duplicate_success",
+    "operation": "create_work_orders_services_sublet_orders_duplicate",
+    "method": "POST",
+    "path": "/work_orders/1/services/3/sublet_orders/4/duplicate",
+    "pathParams": {
+      "work_order_id": 1,
+      "service_id": 3,
+      "id": 4
+    },
+    "requestBody": {},
+    "mockResponses": [
+      {
+        "status": 201,
+        "body": {
+          "id": 5,
+          "type": "SubletOrder",
+          "sublet_number": 2003,
+          "title": "Machine brake rotors (copy)",
+          "fulfillment_status": "pending",
+          "payment_status": "unpaid",
+          "payment_method": null,
+          "notes": null,
+          "total_cents": 0,
+          "total_cost_cents": 0,
+          "margin_cents": 0,
+          "margin_percentage": 0,
+          "sent_to_ap": false,
+          "vendor_invoice_number": null
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 5
+      }
+    }
+  },
+  {
+    "name": "create_work_orders_credit_resolution_success",
+    "operation": "create_work_orders_credit_resolution",
+    "method": "POST",
+    "path": "/work_orders/1/credit_resolution",
+    "pathParams": {
+      "work_order_id": 1
+    },
+    "requestBody": {
+      "resolution": {
+        "action": "store_credit"
+      }
+    },
+    "mockResponses": [
+      {
+        "status": 200,
+        "body": {
+          "id": 1,
+          "type": "work_order",
+          "work_order_number": 1001,
+          "status": "open"
+        }
+      }
+    ],
+    "expect": {
+      "requestCount": 1,
+      "noError": true,
+      "responseBody": {
+        "path": "id",
+        "equals": 1
+      }
+    }
   }
 ]
