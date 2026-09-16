@@ -92,6 +92,7 @@ type Appointment struct {
 	ReminderSentAt      *string     `json:"reminder_sent_at,omitempty"`
 	RescheduledFromId   *int        `json:"rescheduled_from_id,omitempty"`
 	ReschedulesCount    *int        `json:"reschedules_count,omitempty"`
+	SchedulingStatus    string      `json:"scheduling_status"`
 	ServiceAdvisor      *struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
@@ -103,7 +104,6 @@ type Appointment struct {
 	} `json:"service_advisor,omitempty"`
 	ServiceAdvisorId int     `json:"service_advisor_id"`
 	StartsAt         string  `json:"starts_at"`
-	Status           string  `json:"status"`
 	Submodel         *string `json:"submodel,omitempty"`
 	Type             string  `json:"type"`
 	UpdatedAt        *string `json:"updated_at,omitempty"`
@@ -253,7 +253,7 @@ type CounterSale struct {
 	} `json:"processed_by"`
 	RemainingCents int     `json:"remaining_cents"`
 	ReopenUrl      string  `json:"reopen_url"`
-	Status         string  `json:"status"`
+	SaleStatus     string  `json:"sale_status"`
 	SubtotalCents  int     `json:"subtotal_cents"`
 	TaxTotalCents  int     `json:"tax_total_cents"`
 	TotalCents     int     `json:"total_cents"`
@@ -1303,20 +1303,23 @@ type Location struct {
 	City         string      `json:"city"`
 	ContactEmail interface{} `json:"contact_email"`
 	Country      string      `json:"country"`
+	CreatedAt    string      `json:"created_at"`
 	Currency     string      `json:"currency"`
 	Dock         []struct {
 		Enabled bool    `json:"enabled"`
 		Name    string  `json:"name"`
 		Url     *string `json:"url"`
 	} `json:"dock"`
-	Id           int    `json:"id"`
-	LocationType string `json:"location_type"`
-	Name         string `json:"name"`
-	PostalCode   string `json:"postal_code"`
-	Slug         string `json:"slug"`
-	State        string `json:"state"`
-	TimeZone     string `json:"time_zone"`
-	Url          string `json:"url"`
+	Id           int           `json:"id"`
+	LocationType string        `json:"location_type"`
+	Name         string        `json:"name"`
+	Phones       []interface{} `json:"phones"`
+	PostalCode   string        `json:"postal_code"`
+	Slug         string        `json:"slug"`
+	State        string        `json:"state"`
+	TimeZone     string        `json:"time_zone"`
+	UpdatedAt    string        `json:"updated_at"`
+	Url          string        `json:"url"`
 }
 
 // MarkAllInspectionReportRequest defines model for MarkAllInspectionReportRequest.
@@ -1440,21 +1443,21 @@ type PurchaseOrder struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"location"`
-	Notes          *string `json:"notes"`
-	OrderMethod    string  `json:"order_method"`
-	OrderedAt      string  `json:"ordered_at"`
-	PaymentDueAt   *string `json:"payment_due_at"`
-	PaymentMethod  string  `json:"payment_method"`
-	PoNumber       int     `json:"po_number"`
-	ReceivedAt     *string `json:"received_at"`
-	Status         string  `json:"status"`
-	SubtotalCents  int     `json:"subtotal_cents"`
-	TotalCents     int     `json:"total_cents"`
-	TrackingNumber *string `json:"tracking_number"`
-	Type           string  `json:"type"`
-	UpdatedAt      string  `json:"updated_at"`
-	Url            string  `json:"url"`
-	Vendor         struct {
+	Notes           *string `json:"notes"`
+	OrderMethod     string  `json:"order_method"`
+	OrderedAt       string  `json:"ordered_at"`
+	PaymentDueAt    *string `json:"payment_due_at"`
+	PaymentMethod   string  `json:"payment_method"`
+	PoNumber        int     `json:"po_number"`
+	ReceivedAt      *string `json:"received_at"`
+	ReceivingStatus string  `json:"receiving_status"`
+	SubtotalCents   int     `json:"subtotal_cents"`
+	TotalCents      int     `json:"total_cents"`
+	TrackingNumber  *string `json:"tracking_number"`
+	Type            string  `json:"type"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Vendor          struct {
 		Id   int    `json:"id"`
 		Name string `json:"name"`
 		Url  string `json:"url"`
@@ -1547,9 +1550,9 @@ type ReturnOrder struct {
 	RefundCompletedAt  *string     `json:"refund_completed_at"`
 	RestockingFeeCents int         `json:"restocking_fee_cents"`
 	ReturnNumber       int         `json:"return_number"`
+	ReturnStatus       string      `json:"return_status"`
 	RmaNumber          *string     `json:"rma_number"`
 	ShippingFeeCents   int         `json:"shipping_fee_cents"`
-	Status             string      `json:"status"`
 	Type               string      `json:"type"`
 	UpdatedAt          string      `json:"updated_at"`
 	Url                string      `json:"url"`
@@ -1640,9 +1643,10 @@ type StartWorkOrderRequest = map[string]interface{}
 
 // Statement defines model for Statement.
 type Statement struct {
-	AppUrl    string `json:"app_url"`
-	CreatedAt string `json:"created_at"`
-	Customer  struct {
+	AppUrl        string `json:"app_url"`
+	BillingStatus string `json:"billing_status"`
+	CreatedAt     string `json:"created_at"`
+	Customer      struct {
 		FullName string `json:"full_name"`
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
@@ -1654,7 +1658,6 @@ type Statement struct {
 	StartDate       string  `json:"start_date"`
 	StatementDate   string  `json:"statement_date"`
 	StatementNumber string  `json:"statement_number"`
-	Status          string  `json:"status"`
 	Totals          struct {
 		BalanceDueCents       int    `json:"balance_due_cents"`
 		CreditsCents          int    `json:"credits_cents"`
@@ -2516,13 +2519,11 @@ type WorkOrder struct {
 	ServiceHistoryUrl         *string `json:"service_history_url,omitempty"`
 	ServicesUrl               *string `json:"services_url,omitempty"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-
-	// Status Example: in_progress
-	Status            string `json:"status"`
-	SubStatusTypeId   *int   `json:"sub_status_type_id"`
-	SubcontractsCents *int   `json:"subcontracts_cents,omitempty"`
-	TiresCents        *int   `json:"tires_cents,omitempty"`
-	Totals            struct {
+	Stage                     string  `json:"stage"`
+	SubStatusTypeId           *int    `json:"sub_status_type_id"`
+	SubcontractsCents         *int    `json:"subcontracts_cents,omitempty"`
+	TiresCents                *int    `json:"tires_cents,omitempty"`
+	Totals                    struct {
 		// Currency Example: CAD
 		Currency       string `json:"currency"`
 		PaidCents      int    `json:"paid_cents"`
@@ -2559,9 +2560,9 @@ type WorkOrder struct {
 
 // ListAppointmentsParams defines parameters for ListAppointments.
 type ListAppointmentsParams struct {
-	PerPage *int    `form:"per_page,omitempty" json:"per_page,omitempty"`
-	Q       *string `form:"q,omitempty" json:"q,omitempty"`
-	Status  *string `form:"status,omitempty" json:"status,omitempty"`
+	PerPage          *int    `form:"per_page,omitempty" json:"per_page,omitempty"`
+	Q                *string `form:"q,omitempty" json:"q,omitempty"`
+	SchedulingStatus *string `form:"scheduling_status,omitempty" json:"scheduling_status,omitempty"`
 }
 
 // ListAppointmentsAvailableSlotsParams defines parameters for ListAppointmentsAvailableSlots.
@@ -2646,11 +2647,6 @@ type CreateInspectionsPresetParams struct {
 	ItemId *int `form:"item_id,omitempty" json:"item_id,omitempty"`
 }
 
-// ListInventoryLevelsBarcodeLookupParams defines parameters for ListInventoryLevelsBarcodeLookup.
-type ListInventoryLevelsBarcodeLookupParams struct {
-	Barcode *string `form:"barcode,omitempty" json:"barcode,omitempty"`
-}
-
 // ListMessagesParams defines parameters for ListMessages.
 type ListMessagesParams struct {
 	ConversationId *int `form:"conversation_id,omitempty" json:"conversation_id,omitempty"`
@@ -2690,7 +2686,7 @@ type ListPaymentsParams struct {
 
 // ListReportsStatementsParams defines parameters for ListReportsStatements.
 type ListReportsStatementsParams struct {
-	FilterStatus *string `form:"filter[status],omitempty" json:"filter[status],omitempty"`
+	FilterBillingStatus *string `form:"filter[billing_status],omitempty" json:"filter[billing_status],omitempty"`
 }
 
 // CreateWorkOrderTechAssignmentParams defines parameters for CreateWorkOrderTechAssignment.
@@ -5055,13 +5051,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 	UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListInventoryLevelsBarcodeLookup barcode_lookup
-	//
-	// List all inventory levels barcode lookup, paginated via the Link header.
-	//
-	// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
-	ListInventoryLevelsBarcodeLookup(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateInventoryLevelExtractionWithBody create
 	//
@@ -12257,23 +12246,6 @@ func (c *Client) UpdateInspectionsPresetWithBody(ctx context.Context, inspection
 // Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 func (c *Client) UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateInspectionsPresetRequest(c.Server, inspectionId, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// ListInventoryLevelsBarcodeLookup barcode_lookup
-//
-// List all inventory levels barcode lookup, paginated via the Link header.
-//
-// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
-func (c *Client) ListInventoryLevelsBarcodeLookup(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListInventoryLevelsBarcodeLookupRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -21185,9 +21157,9 @@ func NewListAppointmentsRequest(server string, params *ListAppointmentsParams) (
 
 		}
 
-		if params.Status != nil {
+		if params.SchedulingStatus != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "status", *params.Status, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "scheduling_status", *params.SchedulingStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -26045,60 +26017,6 @@ func NewUpdateInspectionsPresetRequestWithBody(server string, inspectionId int, 
 	return req, nil
 }
 
-// NewListInventoryLevelsBarcodeLookupRequest constructs an http.Request for the ListInventoryLevelsBarcodeLookup method
-func NewListInventoryLevelsBarcodeLookupRequest(server string, params *ListInventoryLevelsBarcodeLookupParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/inventory_levels/barcode_lookup")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		// queryValues collects non-styled parameters (passthrough, JSON)
-		// that are safe to round-trip through url.Values.Encode().
-		queryValues := queryURL.Query()
-		// rawQueryFragments collects pre-encoded query fragments from
-		// styled parameters, preserving literal commas as delimiters
-		// per the OpenAPI spec (e.g. "color=blue,black,brown").
-		var rawQueryFragments []string
-
-		if params.Barcode != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "barcode", *params.Barcode, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if encoded := queryValues.Encode(); encoded != "" {
-			rawQueryFragments = append(rawQueryFragments, encoded)
-		}
-		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewCreateInventoryLevelExtractionRequest calls the generic CreateInventoryLevelExtraction builder with application/json body
 func NewCreateInventoryLevelExtractionRequest(server string, body CreateInventoryLevelExtractionJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -30198,9 +30116,9 @@ func NewListReportsStatementsRequest(server string, params *ListReportsStatement
 		// per the OpenAPI spec (e.g. "color=blue,black,brown").
 		var rawQueryFragments []string
 
-		if params.FilterStatus != nil {
+		if params.FilterBillingStatus != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "filter[status]", *params.FilterStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "filter[billing_status]", *params.FilterBillingStatus, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -40635,15 +40553,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 	UpdateInspectionsPresetWithResponse(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateInspectionsPresetResponse, error)
 
-	// ListInventoryLevelsBarcodeLookupWithResponse barcode_lookup
-	//
-	// List all inventory levels barcode lookup, paginated via the Link header.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
-	ListInventoryLevelsBarcodeLookupWithResponse(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*ListInventoryLevelsBarcodeLookupResponse, error)
-
 	// CreateInventoryLevelExtractionWithBodyWithResponse create
 	//
 	// Create a inventory level extraction.
@@ -45219,17 +45128,34 @@ type ListAccountDriveonResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
 		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		LocationType                    string                 `json:"location_type"`
 		Name                            string                 `json:"name"`
 		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                      string                 `json:"postal_code"`
+		Slug                            string                 `json:"slug"`
+		State                           string                 `json:"state"`
+		TimeZone                        string                 `json:"time_zone"`
 		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                       string                 `json:"updated_at"`
 		Url                             string                 `json:"url"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -45240,17 +45166,34 @@ type ListAccountDriveonResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListAccountDriveonResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
 	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	LocationType                    string                 `json:"location_type"`
 	Name                            string                 `json:"name"`
 	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                      string                 `json:"postal_code"`
+	Slug                            string                 `json:"slug"`
+	State                           string                 `json:"state"`
+	TimeZone                        string                 `json:"time_zone"`
 	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                       string                 `json:"updated_at"`
 	Url                             string                 `json:"url"`
 } {
 	return r.JSON200
@@ -45738,13 +45681,27 @@ type ListAppointmentsAvailableSlotsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *[]interface{}
+	JSON200 *[]struct {
+		Available   bool   `json:"available"`
+		Blocked     bool   `json:"blocked"`
+		Booked      int    `json:"booked"`
+		Capacity    int    `json:"capacity"`
+		SlotsNeeded int    `json:"slots_needed"`
+		Time        string `json:"time"`
+	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListAppointmentsAvailableSlotsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListAppointmentsAvailableSlotsResponse) GetJSON200() *[]interface{} {
+func (r ListAppointmentsAvailableSlotsResponse) GetJSON200() *[]struct {
+	Available   bool   `json:"available"`
+	Blocked     bool   `json:"blocked"`
+	Booked      int    `json:"booked"`
+	Capacity    int    `json:"capacity"`
+	SlotsNeeded int    `json:"slots_needed"`
+	Time        string `json:"time"`
+} {
 	return r.JSON200
 }
 
@@ -45939,6 +45896,7 @@ type CreateAppointmentsApprovalResponse struct {
 		ReminderSentAt      *string     `json:"reminder_sent_at"`
 		RescheduledFromId   *int        `json:"rescheduled_from_id"`
 		ReschedulesCount    int         `json:"reschedules_count"`
+		SchedulingStatus    string      `json:"scheduling_status"`
 		ServiceAdvisor      struct {
 			AppUrl      string `json:"app_url"`
 			DisplayName string `json:"display_name"`
@@ -45950,7 +45908,6 @@ type CreateAppointmentsApprovalResponse struct {
 		} `json:"service_advisor"`
 		ServiceAdvisorId int                     `json:"service_advisor_id"`
 		StartsAt         string                  `json:"starts_at"`
-		Status           string                  `json:"status"`
 		Submodel         *string                 `json:"submodel"`
 		Type             string                  `json:"type"`
 		UpdatedAt        string                  `json:"updated_at"`
@@ -46008,6 +45965,7 @@ func (r CreateAppointmentsApprovalResponse) GetJSON200() *struct {
 	ReminderSentAt      *string     `json:"reminder_sent_at"`
 	RescheduledFromId   *int        `json:"rescheduled_from_id"`
 	ReschedulesCount    int         `json:"reschedules_count"`
+	SchedulingStatus    string      `json:"scheduling_status"`
 	ServiceAdvisor      struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
@@ -46019,7 +45977,6 @@ func (r CreateAppointmentsApprovalResponse) GetJSON200() *struct {
 	} `json:"service_advisor"`
 	ServiceAdvisorId int                     `json:"service_advisor_id"`
 	StartsAt         string                  `json:"starts_at"`
-	Status           string                  `json:"status"`
 	Submodel         *string                 `json:"submodel"`
 	Type             string                  `json:"type"`
 	UpdatedAt        string                  `json:"updated_at"`
@@ -46110,6 +46067,7 @@ type CreateAppointmentsCancellationResponse struct {
 		ReminderSentAt      *string     `json:"reminder_sent_at"`
 		RescheduledFromId   *int        `json:"rescheduled_from_id"`
 		ReschedulesCount    int         `json:"reschedules_count"`
+		SchedulingStatus    string      `json:"scheduling_status"`
 		ServiceAdvisor      struct {
 			AppUrl      string `json:"app_url"`
 			DisplayName string `json:"display_name"`
@@ -46121,7 +46079,6 @@ type CreateAppointmentsCancellationResponse struct {
 		} `json:"service_advisor"`
 		ServiceAdvisorId int                     `json:"service_advisor_id"`
 		StartsAt         string                  `json:"starts_at"`
-		Status           string                  `json:"status"`
 		Submodel         *string                 `json:"submodel"`
 		Type             string                  `json:"type"`
 		UpdatedAt        string                  `json:"updated_at"`
@@ -46179,6 +46136,7 @@ func (r CreateAppointmentsCancellationResponse) GetJSON200() *struct {
 	ReminderSentAt      *string     `json:"reminder_sent_at"`
 	RescheduledFromId   *int        `json:"rescheduled_from_id"`
 	ReschedulesCount    int         `json:"reschedules_count"`
+	SchedulingStatus    string      `json:"scheduling_status"`
 	ServiceAdvisor      struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
@@ -46190,7 +46148,6 @@ func (r CreateAppointmentsCancellationResponse) GetJSON200() *struct {
 	} `json:"service_advisor"`
 	ServiceAdvisorId int                     `json:"service_advisor_id"`
 	StartsAt         string                  `json:"starts_at"`
-	Status           string                  `json:"status"`
 	Submodel         *string                 `json:"submodel"`
 	Type             string                  `json:"type"`
 	UpdatedAt        string                  `json:"updated_at"`
@@ -46288,10 +46245,10 @@ type CreateAppointmentsFollowUpResponse struct {
 		ReminderSentAt    *string     `json:"reminder_sent_at"`
 		RescheduledFromId *int        `json:"rescheduled_from_id"`
 		ReschedulesCount  int         `json:"reschedules_count"`
+		SchedulingStatus  string      `json:"scheduling_status"`
 		ServiceAdvisor    interface{} `json:"service_advisor"`
 		ServiceAdvisorId  *int        `json:"service_advisor_id"`
 		StartsAt          string      `json:"starts_at"`
-		Status            string      `json:"status"`
 		Submodel          *string     `json:"submodel"`
 		Type              string      `json:"type"`
 		UpdatedAt         string      `json:"updated_at"`
@@ -46312,7 +46269,7 @@ type CreateAppointmentsFollowUpResponse struct {
 			AppUrl      string `json:"app_url"`
 			DisplayName string `json:"display_name"`
 			Id          int    `json:"id"`
-			Status      string `json:"status"`
+			Stage       string `json:"stage"`
 			Url         string `json:"url"`
 		} `json:"work_order"`
 		WorkOrderId int `json:"work_order_id"`
@@ -46370,10 +46327,10 @@ func (r CreateAppointmentsFollowUpResponse) GetJSON201() *struct {
 	ReminderSentAt    *string     `json:"reminder_sent_at"`
 	RescheduledFromId *int        `json:"rescheduled_from_id"`
 	ReschedulesCount  int         `json:"reschedules_count"`
+	SchedulingStatus  string      `json:"scheduling_status"`
 	ServiceAdvisor    interface{} `json:"service_advisor"`
 	ServiceAdvisorId  *int        `json:"service_advisor_id"`
 	StartsAt          string      `json:"starts_at"`
-	Status            string      `json:"status"`
 	Submodel          *string     `json:"submodel"`
 	Type              string      `json:"type"`
 	UpdatedAt         string      `json:"updated_at"`
@@ -46394,7 +46351,7 @@ func (r CreateAppointmentsFollowUpResponse) GetJSON201() *struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
 		Id          int    `json:"id"`
-		Status      string `json:"status"`
+		Stage       string `json:"stage"`
 		Url         string `json:"url"`
 	} `json:"work_order"`
 	WorkOrderId int `json:"work_order_id"`
@@ -46478,6 +46435,7 @@ type CreateAppointmentsRejectionResponse struct {
 		ReminderSentAt      *string     `json:"reminder_sent_at"`
 		RescheduledFromId   *int        `json:"rescheduled_from_id"`
 		ReschedulesCount    int         `json:"reschedules_count"`
+		SchedulingStatus    string      `json:"scheduling_status"`
 		ServiceAdvisor      struct {
 			AppUrl      string `json:"app_url"`
 			DisplayName string `json:"display_name"`
@@ -46489,7 +46447,6 @@ type CreateAppointmentsRejectionResponse struct {
 		} `json:"service_advisor"`
 		ServiceAdvisorId int                     `json:"service_advisor_id"`
 		StartsAt         string                  `json:"starts_at"`
-		Status           string                  `json:"status"`
 		Submodel         *string                 `json:"submodel"`
 		Type             string                  `json:"type"`
 		UpdatedAt        string                  `json:"updated_at"`
@@ -46547,6 +46504,7 @@ func (r CreateAppointmentsRejectionResponse) GetJSON200() *struct {
 	ReminderSentAt      *string     `json:"reminder_sent_at"`
 	RescheduledFromId   *int        `json:"rescheduled_from_id"`
 	ReschedulesCount    int         `json:"reschedules_count"`
+	SchedulingStatus    string      `json:"scheduling_status"`
 	ServiceAdvisor      struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
@@ -46558,7 +46516,6 @@ func (r CreateAppointmentsRejectionResponse) GetJSON200() *struct {
 	} `json:"service_advisor"`
 	ServiceAdvisorId int                     `json:"service_advisor_id"`
 	StartsAt         string                  `json:"starts_at"`
-	Status           string                  `json:"status"`
 	Submodel         *string                 `json:"submodel"`
 	Type             string                  `json:"type"`
 	UpdatedAt        string                  `json:"updated_at"`
@@ -46656,6 +46613,7 @@ type CreateAppointmentsVehicleReconciliationResponse struct {
 		ReminderSentAt    *string     `json:"reminder_sent_at"`
 		RescheduledFromId *int        `json:"rescheduled_from_id"`
 		ReschedulesCount  int         `json:"reschedules_count"`
+		SchedulingStatus  string      `json:"scheduling_status"`
 		ServiceAdvisor    struct {
 			AppUrl      string `json:"app_url"`
 			DisplayName string `json:"display_name"`
@@ -46667,7 +46625,6 @@ type CreateAppointmentsVehicleReconciliationResponse struct {
 		} `json:"service_advisor"`
 		ServiceAdvisorId int     `json:"service_advisor_id"`
 		StartsAt         string  `json:"starts_at"`
-		Status           string  `json:"status"`
 		Submodel         *string `json:"submodel"`
 		Type             string  `json:"type"`
 		UpdatedAt        string  `json:"updated_at"`
@@ -46741,6 +46698,7 @@ func (r CreateAppointmentsVehicleReconciliationResponse) GetJSON200() *struct {
 	ReminderSentAt    *string     `json:"reminder_sent_at"`
 	RescheduledFromId *int        `json:"rescheduled_from_id"`
 	ReschedulesCount  int         `json:"reschedules_count"`
+	SchedulingStatus  string      `json:"scheduling_status"`
 	ServiceAdvisor    struct {
 		AppUrl      string `json:"app_url"`
 		DisplayName string `json:"display_name"`
@@ -46752,7 +46710,6 @@ func (r CreateAppointmentsVehicleReconciliationResponse) GetJSON200() *struct {
 	} `json:"service_advisor"`
 	ServiceAdvisorId int     `json:"service_advisor_id"`
 	StartsAt         string  `json:"starts_at"`
-	Status           string  `json:"status"`
 	Submodel         *string `json:"submodel"`
 	Type             string  `json:"type"`
 	UpdatedAt        string  `json:"updated_at"`
@@ -48999,7 +48956,7 @@ type CreateCounterSalesPaymentResponse struct {
 		} `json:"processed_by"`
 		RemainingCents int     `json:"remaining_cents"`
 		ReopenUrl      string  `json:"reopen_url"`
-		Status         string  `json:"status"`
+		SaleStatus     string  `json:"sale_status"`
 		SubtotalCents  int     `json:"subtotal_cents"`
 		TaxTotalCents  int     `json:"tax_total_cents"`
 		TotalCents     int     `json:"total_cents"`
@@ -49031,7 +48988,7 @@ func (r CreateCounterSalesPaymentResponse) GetJSON200() *struct {
 	} `json:"processed_by"`
 	RemainingCents int     `json:"remaining_cents"`
 	ReopenUrl      string  `json:"reopen_url"`
-	Status         string  `json:"status"`
+	SaleStatus     string  `json:"sale_status"`
 	SubtotalCents  int     `json:"subtotal_cents"`
 	TaxTotalCents  int     `json:"tax_total_cents"`
 	TotalCents     int     `json:"total_cents"`
@@ -49178,7 +49135,7 @@ type UpdateCounterSalesReopenResponse struct {
 		} `json:"processed_by"`
 		RemainingCents int     `json:"remaining_cents"`
 		ReopenUrl      string  `json:"reopen_url"`
-		Status         string  `json:"status"`
+		SaleStatus     string  `json:"sale_status"`
 		SubtotalCents  int     `json:"subtotal_cents"`
 		TaxTotalCents  int     `json:"tax_total_cents"`
 		TotalCents     int     `json:"total_cents"`
@@ -49218,7 +49175,7 @@ func (r UpdateCounterSalesReopenResponse) GetJSON200() *struct {
 	} `json:"processed_by"`
 	RemainingCents int     `json:"remaining_cents"`
 	ReopenUrl      string  `json:"reopen_url"`
-	Status         string  `json:"status"`
+	SaleStatus     string  `json:"sale_status"`
 	SubtotalCents  int     `json:"subtotal_cents"`
 	TaxTotalCents  int     `json:"tax_total_cents"`
 	TotalCents     int     `json:"total_cents"`
@@ -49282,20 +49239,23 @@ type ListCurrentLocationResponse struct {
 		City         string      `json:"city"`
 		ContactEmail interface{} `json:"contact_email"`
 		Country      string      `json:"country"`
+		CreatedAt    string      `json:"created_at"`
 		Currency     string      `json:"currency"`
 		Dock         []struct {
 			Enabled bool    `json:"enabled"`
 			Name    string  `json:"name"`
 			Url     *string `json:"url"`
 		} `json:"dock"`
-		Id           int    `json:"id"`
-		LocationType string `json:"location_type"`
-		Name         string `json:"name"`
-		PostalCode   string `json:"postal_code"`
-		Slug         string `json:"slug"`
-		State        string `json:"state"`
-		TimeZone     string `json:"time_zone"`
-		Url          string `json:"url"`
+		Id           int           `json:"id"`
+		LocationType string        `json:"location_type"`
+		Name         string        `json:"name"`
+		Phones       []interface{} `json:"phones"`
+		PostalCode   string        `json:"postal_code"`
+		Slug         string        `json:"slug"`
+		State        string        `json:"state"`
+		TimeZone     string        `json:"time_zone"`
+		UpdatedAt    string        `json:"updated_at"`
+		Url          string        `json:"url"`
 	}
 }
 
@@ -49306,20 +49266,23 @@ func (r ListCurrentLocationResponse) GetJSON200() *struct {
 	City         string      `json:"city"`
 	ContactEmail interface{} `json:"contact_email"`
 	Country      string      `json:"country"`
+	CreatedAt    string      `json:"created_at"`
 	Currency     string      `json:"currency"`
 	Dock         []struct {
 		Enabled bool    `json:"enabled"`
 		Name    string  `json:"name"`
 		Url     *string `json:"url"`
 	} `json:"dock"`
-	Id           int    `json:"id"`
-	LocationType string `json:"location_type"`
-	Name         string `json:"name"`
-	PostalCode   string `json:"postal_code"`
-	Slug         string `json:"slug"`
-	State        string `json:"state"`
-	TimeZone     string `json:"time_zone"`
-	Url          string `json:"url"`
+	Id           int           `json:"id"`
+	LocationType string        `json:"location_type"`
+	Name         string        `json:"name"`
+	Phones       []interface{} `json:"phones"`
+	PostalCode   string        `json:"postal_code"`
+	Slug         string        `json:"slug"`
+	State        string        `json:"state"`
+	TimeZone     string        `json:"time_zone"`
+	UpdatedAt    string        `json:"updated_at"`
+	Url          string        `json:"url"`
 } {
 	return r.JSON200
 }
@@ -49363,20 +49326,23 @@ type UpdateCurrentLocationResponse struct {
 		City         string      `json:"city"`
 		ContactEmail interface{} `json:"contact_email"`
 		Country      string      `json:"country"`
+		CreatedAt    string      `json:"created_at"`
 		Currency     string      `json:"currency"`
 		Dock         []struct {
 			Enabled bool    `json:"enabled"`
 			Name    string  `json:"name"`
 			Url     *string `json:"url"`
 		} `json:"dock"`
-		Id           int    `json:"id"`
-		LocationType string `json:"location_type"`
-		Name         string `json:"name"`
-		PostalCode   string `json:"postal_code"`
-		Slug         string `json:"slug"`
-		State        string `json:"state"`
-		TimeZone     string `json:"time_zone"`
-		Url          string `json:"url"`
+		Id           int           `json:"id"`
+		LocationType string        `json:"location_type"`
+		Name         string        `json:"name"`
+		Phones       []interface{} `json:"phones"`
+		PostalCode   string        `json:"postal_code"`
+		Slug         string        `json:"slug"`
+		State        string        `json:"state"`
+		TimeZone     string        `json:"time_zone"`
+		UpdatedAt    string        `json:"updated_at"`
+		Url          string        `json:"url"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
@@ -49391,20 +49357,23 @@ func (r UpdateCurrentLocationResponse) GetJSON200() *struct {
 	City         string      `json:"city"`
 	ContactEmail interface{} `json:"contact_email"`
 	Country      string      `json:"country"`
+	CreatedAt    string      `json:"created_at"`
 	Currency     string      `json:"currency"`
 	Dock         []struct {
 		Enabled bool    `json:"enabled"`
 		Name    string  `json:"name"`
 		Url     *string `json:"url"`
 	} `json:"dock"`
-	Id           int    `json:"id"`
-	LocationType string `json:"location_type"`
-	Name         string `json:"name"`
-	PostalCode   string `json:"postal_code"`
-	Slug         string `json:"slug"`
-	State        string `json:"state"`
-	TimeZone     string `json:"time_zone"`
-	Url          string `json:"url"`
+	Id           int           `json:"id"`
+	LocationType string        `json:"location_type"`
+	Name         string        `json:"name"`
+	Phones       []interface{} `json:"phones"`
+	PostalCode   string        `json:"postal_code"`
+	Slug         string        `json:"slug"`
+	State        string        `json:"state"`
+	TimeZone     string        `json:"time_zone"`
+	UpdatedAt    string        `json:"updated_at"`
+	Url          string        `json:"url"`
 } {
 	return r.JSON200
 }
@@ -53391,96 +53360,6 @@ func (r UpdateInspectionsPresetResponse) ContentType() string {
 	return ""
 }
 
-type ListInventoryLevelsBarcodeLookupResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		AppUrl       string                  `json:"app_url"`
-		Barcode      string                  `json:"barcode"`
-		BinLocation  *string                 `json:"bin_location"`
-		Brand        string                  `json:"brand"`
-		CostCents    int                     `json:"cost_cents"`
-		CreatedAt    string                  `json:"created_at"`
-		Description  string                  `json:"description"`
-		Id           int                     `json:"id"`
-		OnHand       int                     `json:"on_hand"`
-		PartNumber   string                  `json:"part_number"`
-		PartType     string                  `json:"part_type"`
-		ReorderPoint *int                    `json:"reorder_point"`
-		SellCents    int                     `json:"sell_cents"`
-		Stocked      bool                    `json:"stocked"`
-		Taxable      bool                    `json:"taxable"`
-		UpdatedAt    string                  `json:"updated_at"`
-		Url          string                  `json:"url"`
-		Vendor       *map[string]interface{} `json:"vendor"`
-	}
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListInventoryLevelsBarcodeLookupResponse) GetJSON200() *struct {
-	AppUrl       string                  `json:"app_url"`
-	Barcode      string                  `json:"barcode"`
-	BinLocation  *string                 `json:"bin_location"`
-	Brand        string                  `json:"brand"`
-	CostCents    int                     `json:"cost_cents"`
-	CreatedAt    string                  `json:"created_at"`
-	Description  string                  `json:"description"`
-	Id           int                     `json:"id"`
-	OnHand       int                     `json:"on_hand"`
-	PartNumber   string                  `json:"part_number"`
-	PartType     string                  `json:"part_type"`
-	ReorderPoint *int                    `json:"reorder_point"`
-	SellCents    int                     `json:"sell_cents"`
-	Stocked      bool                    `json:"stocked"`
-	Taxable      bool                    `json:"taxable"`
-	UpdatedAt    string                  `json:"updated_at"`
-	Url          string                  `json:"url"`
-	Vendor       *map[string]interface{} `json:"vendor"`
-} {
-	return r.JSON200
-}
-
-// GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r ListInventoryLevelsBarcodeLookupResponse) GetJSON404() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON404
-}
-
-// GetBody returns the raw response body bytes
-func (r ListInventoryLevelsBarcodeLookupResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListInventoryLevelsBarcodeLookupResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListInventoryLevelsBarcodeLookupResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListInventoryLevelsBarcodeLookupResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type CreateInventoryLevelExtractionResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -55187,17 +55066,34 @@ type ListLocationsCloseRequirementsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
 		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		LocationType                    string                 `json:"location_type"`
 		Name                            string                 `json:"name"`
 		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                      string                 `json:"postal_code"`
+		Slug                            string                 `json:"slug"`
+		State                           string                 `json:"state"`
+		TimeZone                        string                 `json:"time_zone"`
 		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                       string                 `json:"updated_at"`
 		Url                             string                 `json:"url"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -55208,17 +55104,34 @@ type ListLocationsCloseRequirementsResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListLocationsCloseRequirementsResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
 	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	LocationType                    string                 `json:"location_type"`
 	Name                            string                 `json:"name"`
 	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                      string                 `json:"postal_code"`
+	Slug                            string                 `json:"slug"`
+	State                           string                 `json:"state"`
+	TimeZone                        string                 `json:"time_zone"`
 	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                       string                 `json:"updated_at"`
 	Url                             string                 `json:"url"`
 } {
 	return r.JSON200
@@ -55265,40 +55178,74 @@ type UpdateLocationsCloseRequirementsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		AppUrl                          string `json:"app_url"`
-		BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
-		BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+		Address                         string      `json:"address"`
+		AppUrl                          string      `json:"app_url"`
+		ArDefaultBccEmails              interface{} `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{} `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{} `json:"ar_reply_to_email"`
+		BatteryCheckRemindersEnabled    bool        `json:"battery_check_reminders_enabled"`
+		BrakeInspectionRemindersEnabled bool        `json:"brake_inspection_reminders_enabled"`
+		City                            string      `json:"city"`
 		CloseRequirements               struct {
 			KeyLocation string `json:"key_location"`
 			OdometerIn  string `json:"odometer_in"`
 		} `json:"close_requirements"`
+		ContactEmail              interface{}            `json:"contact_email"`
+		Country                   string                 `json:"country"`
+		CreatedAt                 string                 `json:"created_at"`
+		Currency                  string                 `json:"currency"`
+		DefaultLaborTaxEnabled    bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled    bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber      *string                `json:"driveon_station_number"`
 		Id                        int                    `json:"id"`
 		LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+		LocationType              string                 `json:"location_type"`
 		Name                      string                 `json:"name"`
 		OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                string                 `json:"postal_code"`
+		Slug                      string                 `json:"slug"`
+		State                     string                 `json:"state"`
+		TimeZone                  string                 `json:"time_zone"`
 		TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                 string                 `json:"updated_at"`
 		Url                       string                 `json:"url"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r UpdateLocationsCloseRequirementsResponse) GetJSON200() *struct {
-	AppUrl                          string `json:"app_url"`
-	BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
-	BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+	Address                         string      `json:"address"`
+	AppUrl                          string      `json:"app_url"`
+	ArDefaultBccEmails              interface{} `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{} `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{} `json:"ar_reply_to_email"`
+	BatteryCheckRemindersEnabled    bool        `json:"battery_check_reminders_enabled"`
+	BrakeInspectionRemindersEnabled bool        `json:"brake_inspection_reminders_enabled"`
+	City                            string      `json:"city"`
 	CloseRequirements               struct {
 		KeyLocation string `json:"key_location"`
 		OdometerIn  string `json:"odometer_in"`
 	} `json:"close_requirements"`
+	ContactEmail              interface{}            `json:"contact_email"`
+	Country                   string                 `json:"country"`
+	CreatedAt                 string                 `json:"created_at"`
+	Currency                  string                 `json:"currency"`
+	DefaultLaborTaxEnabled    bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled    bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber      *string                `json:"driveon_station_number"`
 	Id                        int                    `json:"id"`
 	LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+	LocationType              string                 `json:"location_type"`
 	Name                      string                 `json:"name"`
 	OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                string                 `json:"postal_code"`
+	Slug                      string                 `json:"slug"`
+	State                     string                 `json:"state"`
+	TimeZone                  string                 `json:"time_zone"`
 	TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                 string                 `json:"updated_at"`
 	Url                       string                 `json:"url"`
 } {
 	return r.JSON200
@@ -55538,17 +55485,34 @@ type ListLocationsLeadSourceRequirementsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
 		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		LocationType                    string                 `json:"location_type"`
 		Name                            string                 `json:"name"`
 		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                      string                 `json:"postal_code"`
+		Slug                            string                 `json:"slug"`
+		State                           string                 `json:"state"`
+		TimeZone                        string                 `json:"time_zone"`
 		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                       string                 `json:"updated_at"`
 		Url                             string                 `json:"url"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -55559,17 +55523,34 @@ type ListLocationsLeadSourceRequirementsResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListLocationsLeadSourceRequirementsResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
 	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	LocationType                    string                 `json:"location_type"`
 	Name                            string                 `json:"name"`
 	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                      string                 `json:"postal_code"`
+	Slug                            string                 `json:"slug"`
+	State                           string                 `json:"state"`
+	TimeZone                        string                 `json:"time_zone"`
 	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                       string                 `json:"updated_at"`
 	Url                             string                 `json:"url"`
 } {
 	return r.JSON200
@@ -55616,10 +55597,21 @@ type UpdateLocationsLeadSourceRequirementsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
@@ -55627,19 +55619,36 @@ type UpdateLocationsLeadSourceRequirementsResponse struct {
 			CustomerLeadSource string `json:"customer_lead_source"`
 			RoMarketingSource  string `json:"ro_marketing_source"`
 		} `json:"lead_source_requirements"`
+		LocationType              string `json:"location_type"`
 		Name                      string `json:"name"`
 		OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+		PostalCode                string `json:"postal_code"`
+		Slug                      string `json:"slug"`
+		State                     string `json:"state"`
+		TimeZone                  string `json:"time_zone"`
 		TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                 string `json:"updated_at"`
 		Url                       string `json:"url"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r UpdateLocationsLeadSourceRequirementsResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
@@ -55647,9 +55656,15 @@ func (r UpdateLocationsLeadSourceRequirementsResponse) GetJSON200() *struct {
 		CustomerLeadSource string `json:"customer_lead_source"`
 		RoMarketingSource  string `json:"ro_marketing_source"`
 	} `json:"lead_source_requirements"`
+	LocationType              string `json:"location_type"`
 	Name                      string `json:"name"`
 	OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+	PostalCode                string `json:"postal_code"`
+	Slug                      string `json:"slug"`
+	State                     string `json:"state"`
+	TimeZone                  string `json:"time_zone"`
 	TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                 string `json:"updated_at"`
 	Url                       string `json:"url"`
 } {
 	return r.JSON200
@@ -55689,17 +55704,34 @@ type ListLocationsRemindersResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
 		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		LocationType                    string                 `json:"location_type"`
 		Name                            string                 `json:"name"`
 		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                      string                 `json:"postal_code"`
+		Slug                            string                 `json:"slug"`
+		State                           string                 `json:"state"`
+		TimeZone                        string                 `json:"time_zone"`
 		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                       string                 `json:"updated_at"`
 		Url                             string                 `json:"url"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
@@ -55710,17 +55742,34 @@ type ListLocationsRemindersResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListLocationsRemindersResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
 	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	LocationType                    string                 `json:"location_type"`
 	Name                            string                 `json:"name"`
 	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                      string                 `json:"postal_code"`
+	Slug                            string                 `json:"slug"`
+	State                           string                 `json:"state"`
+	TimeZone                        string                 `json:"time_zone"`
 	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                       string                 `json:"updated_at"`
 	Url                             string                 `json:"url"`
 } {
 	return r.JSON200
@@ -55767,34 +55816,68 @@ type UpdateLocationsRemindersResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
+		Address                         string                 `json:"address"`
 		AppUrl                          string                 `json:"app_url"`
+		ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+		ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+		ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 		BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 		BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+		City                            string                 `json:"city"`
 		CloseRequirements               map[string]interface{} `json:"close_requirements"`
+		ContactEmail                    interface{}            `json:"contact_email"`
+		Country                         string                 `json:"country"`
+		CreatedAt                       string                 `json:"created_at"`
+		Currency                        string                 `json:"currency"`
+		DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+		DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 		DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 		DriveonStationNumber            *string                `json:"driveon_station_number"`
 		Id                              int                    `json:"id"`
 		LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+		LocationType                    string                 `json:"location_type"`
 		Name                            string                 `json:"name"`
 		OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+		PostalCode                      string                 `json:"postal_code"`
+		Slug                            string                 `json:"slug"`
+		State                           string                 `json:"state"`
+		TimeZone                        string                 `json:"time_zone"`
 		TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+		UpdatedAt                       string                 `json:"updated_at"`
 		Url                             string                 `json:"url"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r UpdateLocationsRemindersResponse) GetJSON200() *struct {
+	Address                         string                 `json:"address"`
 	AppUrl                          string                 `json:"app_url"`
+	ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+	ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+	ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 	BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 	BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+	City                            string                 `json:"city"`
 	CloseRequirements               map[string]interface{} `json:"close_requirements"`
+	ContactEmail                    interface{}            `json:"contact_email"`
+	Country                         string                 `json:"country"`
+	CreatedAt                       string                 `json:"created_at"`
+	Currency                        string                 `json:"currency"`
+	DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+	DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 	DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 	DriveonStationNumber            *string                `json:"driveon_station_number"`
 	Id                              int                    `json:"id"`
 	LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+	LocationType                    string                 `json:"location_type"`
 	Name                            string                 `json:"name"`
 	OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+	PostalCode                      string                 `json:"postal_code"`
+	Slug                            string                 `json:"slug"`
+	State                           string                 `json:"state"`
+	TimeZone                        string                 `json:"time_zone"`
 	TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+	UpdatedAt                       string                 `json:"updated_at"`
 	Url                             string                 `json:"url"`
 } {
 	return r.JSON200
@@ -58005,24 +58088,26 @@ type ListPartsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]struct {
-		AppUrl       string                  `json:"app_url"`
-		Barcode      *string                 `json:"barcode"`
-		BinLocation  *string                 `json:"bin_location"`
-		Brand        string                  `json:"brand"`
-		CostCents    int                     `json:"cost_cents"`
-		CreatedAt    string                  `json:"created_at"`
-		Description  string                  `json:"description"`
-		Id           int                     `json:"id"`
-		OnHand       int                     `json:"on_hand"`
-		PartNumber   string                  `json:"part_number"`
-		PartType     string                  `json:"part_type"`
-		ReorderPoint *string                 `json:"reorder_point"`
-		SellCents    int                     `json:"sell_cents"`
-		Stocked      bool                    `json:"stocked"`
-		Taxable      bool                    `json:"taxable"`
-		UpdatedAt    string                  `json:"updated_at"`
-		Url          string                  `json:"url"`
-		Vendor       *map[string]interface{} `json:"vendor"`
+		AppUrl          string                  `json:"app_url"`
+		Barcode         *string                 `json:"barcode"`
+		BinLocation     *string                 `json:"bin_location"`
+		Brand           string                  `json:"brand"`
+		CoreChargeCents int                     `json:"core_charge_cents"`
+		CostCents       int                     `json:"cost_cents"`
+		CreatedAt       string                  `json:"created_at"`
+		Description     string                  `json:"description"`
+		Id              int                     `json:"id"`
+		OnHand          int                     `json:"on_hand"`
+		PartNumber      string                  `json:"part_number"`
+		PartType        string                  `json:"part_type"`
+		ReorderPoint    *string                 `json:"reorder_point"`
+		SellCents       int                     `json:"sell_cents"`
+		Stocked         bool                    `json:"stocked"`
+		Taxable         bool                    `json:"taxable"`
+		UpdatedAt       string                  `json:"updated_at"`
+		Url             string                  `json:"url"`
+		Vendor          *map[string]interface{} `json:"vendor"`
+		VendorId        *int                    `json:"vendor_id"`
 	}
 	// Headers200 the parsed response headers for an HTTP 200 response
 	Headers200 *ListPartsResponse200Headers
@@ -58030,24 +58115,26 @@ type ListPartsResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListPartsResponse) GetJSON200() *[]struct {
-	AppUrl       string                  `json:"app_url"`
-	Barcode      *string                 `json:"barcode"`
-	BinLocation  *string                 `json:"bin_location"`
-	Brand        string                  `json:"brand"`
-	CostCents    int                     `json:"cost_cents"`
-	CreatedAt    string                  `json:"created_at"`
-	Description  string                  `json:"description"`
-	Id           int                     `json:"id"`
-	OnHand       int                     `json:"on_hand"`
-	PartNumber   string                  `json:"part_number"`
-	PartType     string                  `json:"part_type"`
-	ReorderPoint *string                 `json:"reorder_point"`
-	SellCents    int                     `json:"sell_cents"`
-	Stocked      bool                    `json:"stocked"`
-	Taxable      bool                    `json:"taxable"`
-	UpdatedAt    string                  `json:"updated_at"`
-	Url          string                  `json:"url"`
-	Vendor       *map[string]interface{} `json:"vendor"`
+	AppUrl          string                  `json:"app_url"`
+	Barcode         *string                 `json:"barcode"`
+	BinLocation     *string                 `json:"bin_location"`
+	Brand           string                  `json:"brand"`
+	CoreChargeCents int                     `json:"core_charge_cents"`
+	CostCents       int                     `json:"cost_cents"`
+	CreatedAt       string                  `json:"created_at"`
+	Description     string                  `json:"description"`
+	Id              int                     `json:"id"`
+	OnHand          int                     `json:"on_hand"`
+	PartNumber      string                  `json:"part_number"`
+	PartType        string                  `json:"part_type"`
+	ReorderPoint    *string                 `json:"reorder_point"`
+	SellCents       int                     `json:"sell_cents"`
+	Stocked         bool                    `json:"stocked"`
+	Taxable         bool                    `json:"taxable"`
+	UpdatedAt       string                  `json:"updated_at"`
+	Url             string                  `json:"url"`
+	Vendor          *map[string]interface{} `json:"vendor"`
+	VendorId        *int                    `json:"vendor_id"`
 } {
 	return r.JSON200
 }
@@ -58086,28 +58173,30 @@ type CreatePartResponse struct {
 	HTTPResponse *http.Response
 	// JSON201 the response for an HTTP 201 `application/json` response
 	JSON201 *struct {
-		AppUrl       string  `json:"app_url"`
-		Barcode      *string `json:"barcode"`
-		BinLocation  *string `json:"bin_location"`
-		Brand        string  `json:"brand"`
-		CostCents    int     `json:"cost_cents"`
-		CreatedAt    string  `json:"created_at"`
-		Description  string  `json:"description"`
-		Id           int     `json:"id"`
-		OnHand       int     `json:"on_hand"`
-		PartNumber   string  `json:"part_number"`
-		PartType     string  `json:"part_type"`
-		ReorderPoint *int    `json:"reorder_point"`
-		SellCents    int     `json:"sell_cents"`
-		Stocked      bool    `json:"stocked"`
-		Taxable      bool    `json:"taxable"`
-		UpdatedAt    string  `json:"updated_at"`
-		Url          string  `json:"url"`
-		Vendor       *struct {
+		AppUrl          string  `json:"app_url"`
+		Barcode         *string `json:"barcode"`
+		BinLocation     *string `json:"bin_location"`
+		Brand           string  `json:"brand"`
+		CoreChargeCents int     `json:"core_charge_cents"`
+		CostCents       int     `json:"cost_cents"`
+		CreatedAt       string  `json:"created_at"`
+		Description     string  `json:"description"`
+		Id              int     `json:"id"`
+		OnHand          int     `json:"on_hand"`
+		PartNumber      string  `json:"part_number"`
+		PartType        string  `json:"part_type"`
+		ReorderPoint    *int    `json:"reorder_point"`
+		SellCents       int     `json:"sell_cents"`
+		Stocked         bool    `json:"stocked"`
+		Taxable         bool    `json:"taxable"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Vendor          *struct {
 			Id   int    `json:"id"`
 			Name string `json:"name"`
 			Url  string `json:"url"`
 		} `json:"vendor"`
+		VendorId *int `json:"vendor_id"`
 	}
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
@@ -58121,28 +58210,30 @@ type CreatePartResponse struct {
 
 // GetJSON201 returns the response for an HTTP 201 `application/json` response
 func (r CreatePartResponse) GetJSON201() *struct {
-	AppUrl       string  `json:"app_url"`
-	Barcode      *string `json:"barcode"`
-	BinLocation  *string `json:"bin_location"`
-	Brand        string  `json:"brand"`
-	CostCents    int     `json:"cost_cents"`
-	CreatedAt    string  `json:"created_at"`
-	Description  string  `json:"description"`
-	Id           int     `json:"id"`
-	OnHand       int     `json:"on_hand"`
-	PartNumber   string  `json:"part_number"`
-	PartType     string  `json:"part_type"`
-	ReorderPoint *int    `json:"reorder_point"`
-	SellCents    int     `json:"sell_cents"`
-	Stocked      bool    `json:"stocked"`
-	Taxable      bool    `json:"taxable"`
-	UpdatedAt    string  `json:"updated_at"`
-	Url          string  `json:"url"`
-	Vendor       *struct {
+	AppUrl          string  `json:"app_url"`
+	Barcode         *string `json:"barcode"`
+	BinLocation     *string `json:"bin_location"`
+	Brand           string  `json:"brand"`
+	CoreChargeCents int     `json:"core_charge_cents"`
+	CostCents       int     `json:"cost_cents"`
+	CreatedAt       string  `json:"created_at"`
+	Description     string  `json:"description"`
+	Id              int     `json:"id"`
+	OnHand          int     `json:"on_hand"`
+	PartNumber      string  `json:"part_number"`
+	PartType        string  `json:"part_type"`
+	ReorderPoint    *int    `json:"reorder_point"`
+	SellCents       int     `json:"sell_cents"`
+	Stocked         bool    `json:"stocked"`
+	Taxable         bool    `json:"taxable"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Vendor          *struct {
 		Id   int    `json:"id"`
 		Name string `json:"name"`
 		Url  string `json:"url"`
 	} `json:"vendor"`
+	VendorId *int `json:"vendor_id"`
 } {
 	return r.JSON201
 }
@@ -58229,24 +58320,26 @@ type ShowPartResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		AppUrl       string                  `json:"app_url"`
-		Barcode      *string                 `json:"barcode"`
-		BinLocation  string                  `json:"bin_location"`
-		Brand        string                  `json:"brand"`
-		CostCents    int                     `json:"cost_cents"`
-		CreatedAt    string                  `json:"created_at"`
-		Description  string                  `json:"description"`
-		Id           int                     `json:"id"`
-		OnHand       int                     `json:"on_hand"`
-		PartNumber   string                  `json:"part_number"`
-		PartType     string                  `json:"part_type"`
-		ReorderPoint string                  `json:"reorder_point"`
-		SellCents    int                     `json:"sell_cents"`
-		Stocked      bool                    `json:"stocked"`
-		Taxable      bool                    `json:"taxable"`
-		UpdatedAt    string                  `json:"updated_at"`
-		Url          string                  `json:"url"`
-		Vendor       *map[string]interface{} `json:"vendor"`
+		AppUrl          string                  `json:"app_url"`
+		Barcode         *string                 `json:"barcode"`
+		BinLocation     string                  `json:"bin_location"`
+		Brand           string                  `json:"brand"`
+		CoreChargeCents int                     `json:"core_charge_cents"`
+		CostCents       int                     `json:"cost_cents"`
+		CreatedAt       string                  `json:"created_at"`
+		Description     string                  `json:"description"`
+		Id              int                     `json:"id"`
+		OnHand          int                     `json:"on_hand"`
+		PartNumber      string                  `json:"part_number"`
+		PartType        string                  `json:"part_type"`
+		ReorderPoint    string                  `json:"reorder_point"`
+		SellCents       int                     `json:"sell_cents"`
+		Stocked         bool                    `json:"stocked"`
+		Taxable         bool                    `json:"taxable"`
+		UpdatedAt       string                  `json:"updated_at"`
+		Url             string                  `json:"url"`
+		Vendor          *map[string]interface{} `json:"vendor"`
+		VendorId        *int                    `json:"vendor_id"`
 	}
 	// JSON404 the response for an HTTP 404 `application/json` response
 	JSON404 *struct {
@@ -58256,24 +58349,26 @@ type ShowPartResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ShowPartResponse) GetJSON200() *struct {
-	AppUrl       string                  `json:"app_url"`
-	Barcode      *string                 `json:"barcode"`
-	BinLocation  string                  `json:"bin_location"`
-	Brand        string                  `json:"brand"`
-	CostCents    int                     `json:"cost_cents"`
-	CreatedAt    string                  `json:"created_at"`
-	Description  string                  `json:"description"`
-	Id           int                     `json:"id"`
-	OnHand       int                     `json:"on_hand"`
-	PartNumber   string                  `json:"part_number"`
-	PartType     string                  `json:"part_type"`
-	ReorderPoint string                  `json:"reorder_point"`
-	SellCents    int                     `json:"sell_cents"`
-	Stocked      bool                    `json:"stocked"`
-	Taxable      bool                    `json:"taxable"`
-	UpdatedAt    string                  `json:"updated_at"`
-	Url          string                  `json:"url"`
-	Vendor       *map[string]interface{} `json:"vendor"`
+	AppUrl          string                  `json:"app_url"`
+	Barcode         *string                 `json:"barcode"`
+	BinLocation     string                  `json:"bin_location"`
+	Brand           string                  `json:"brand"`
+	CoreChargeCents int                     `json:"core_charge_cents"`
+	CostCents       int                     `json:"cost_cents"`
+	CreatedAt       string                  `json:"created_at"`
+	Description     string                  `json:"description"`
+	Id              int                     `json:"id"`
+	OnHand          int                     `json:"on_hand"`
+	PartNumber      string                  `json:"part_number"`
+	PartType        string                  `json:"part_type"`
+	ReorderPoint    string                  `json:"reorder_point"`
+	SellCents       int                     `json:"sell_cents"`
+	Stocked         bool                    `json:"stocked"`
+	Taxable         bool                    `json:"taxable"`
+	UpdatedAt       string                  `json:"updated_at"`
+	Url             string                  `json:"url"`
+	Vendor          *map[string]interface{} `json:"vendor"`
+	VendorId        *int                    `json:"vendor_id"`
 } {
 	return r.JSON200
 }
@@ -58319,47 +58414,51 @@ type UpdatePartResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		AppUrl       string                  `json:"app_url"`
-		Barcode      *string                 `json:"barcode"`
-		BinLocation  *string                 `json:"bin_location"`
-		Brand        string                  `json:"brand"`
-		CostCents    int                     `json:"cost_cents"`
-		CreatedAt    string                  `json:"created_at"`
-		Description  string                  `json:"description"`
-		Id           int                     `json:"id"`
-		OnHand       int                     `json:"on_hand"`
-		PartNumber   string                  `json:"part_number"`
-		PartType     string                  `json:"part_type"`
-		ReorderPoint *int                    `json:"reorder_point"`
-		SellCents    int                     `json:"sell_cents"`
-		Stocked      bool                    `json:"stocked"`
-		Taxable      bool                    `json:"taxable"`
-		UpdatedAt    string                  `json:"updated_at"`
-		Url          string                  `json:"url"`
-		Vendor       *map[string]interface{} `json:"vendor"`
+		AppUrl          string                  `json:"app_url"`
+		Barcode         *string                 `json:"barcode"`
+		BinLocation     *string                 `json:"bin_location"`
+		Brand           string                  `json:"brand"`
+		CoreChargeCents int                     `json:"core_charge_cents"`
+		CostCents       int                     `json:"cost_cents"`
+		CreatedAt       string                  `json:"created_at"`
+		Description     string                  `json:"description"`
+		Id              int                     `json:"id"`
+		OnHand          int                     `json:"on_hand"`
+		PartNumber      string                  `json:"part_number"`
+		PartType        string                  `json:"part_type"`
+		ReorderPoint    *int                    `json:"reorder_point"`
+		SellCents       int                     `json:"sell_cents"`
+		Stocked         bool                    `json:"stocked"`
+		Taxable         bool                    `json:"taxable"`
+		UpdatedAt       string                  `json:"updated_at"`
+		Url             string                  `json:"url"`
+		Vendor          *map[string]interface{} `json:"vendor"`
+		VendorId        *int                    `json:"vendor_id"`
 	}
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r UpdatePartResponse) GetJSON200() *struct {
-	AppUrl       string                  `json:"app_url"`
-	Barcode      *string                 `json:"barcode"`
-	BinLocation  *string                 `json:"bin_location"`
-	Brand        string                  `json:"brand"`
-	CostCents    int                     `json:"cost_cents"`
-	CreatedAt    string                  `json:"created_at"`
-	Description  string                  `json:"description"`
-	Id           int                     `json:"id"`
-	OnHand       int                     `json:"on_hand"`
-	PartNumber   string                  `json:"part_number"`
-	PartType     string                  `json:"part_type"`
-	ReorderPoint *int                    `json:"reorder_point"`
-	SellCents    int                     `json:"sell_cents"`
-	Stocked      bool                    `json:"stocked"`
-	Taxable      bool                    `json:"taxable"`
-	UpdatedAt    string                  `json:"updated_at"`
-	Url          string                  `json:"url"`
-	Vendor       *map[string]interface{} `json:"vendor"`
+	AppUrl          string                  `json:"app_url"`
+	Barcode         *string                 `json:"barcode"`
+	BinLocation     *string                 `json:"bin_location"`
+	Brand           string                  `json:"brand"`
+	CoreChargeCents int                     `json:"core_charge_cents"`
+	CostCents       int                     `json:"cost_cents"`
+	CreatedAt       string                  `json:"created_at"`
+	Description     string                  `json:"description"`
+	Id              int                     `json:"id"`
+	OnHand          int                     `json:"on_hand"`
+	PartNumber      string                  `json:"part_number"`
+	PartType        string                  `json:"part_type"`
+	ReorderPoint    *int                    `json:"reorder_point"`
+	SellCents       int                     `json:"sell_cents"`
+	Stocked         bool                    `json:"stocked"`
+	Taxable         bool                    `json:"taxable"`
+	UpdatedAt       string                  `json:"updated_at"`
+	Url             string                  `json:"url"`
+	Vendor          *map[string]interface{} `json:"vendor"`
+	VendorId        *int                    `json:"vendor_id"`
 } {
 	return r.JSON200
 }
@@ -60820,9 +60919,10 @@ type ListReportsStatementsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]struct {
-		AppUrl    string `json:"app_url"`
-		CreatedAt string `json:"created_at"`
-		Customer  struct {
+		AppUrl        string `json:"app_url"`
+		BillingStatus string `json:"billing_status"`
+		CreatedAt     string `json:"created_at"`
+		Customer      struct {
 			FullName string `json:"full_name"`
 			Id       int    `json:"id"`
 			Url      string `json:"url"`
@@ -60834,7 +60934,6 @@ type ListReportsStatementsResponse struct {
 		StartDate       string  `json:"start_date"`
 		StatementDate   string  `json:"statement_date"`
 		StatementNumber string  `json:"statement_number"`
-		Status          string  `json:"status"`
 		Totals          struct {
 			BalanceDueCents       int    `json:"balance_due_cents"`
 			CreditsCents          int    `json:"credits_cents"`
@@ -60857,9 +60956,10 @@ type ListReportsStatementsResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListReportsStatementsResponse) GetJSON200() *[]struct {
-	AppUrl    string `json:"app_url"`
-	CreatedAt string `json:"created_at"`
-	Customer  struct {
+	AppUrl        string `json:"app_url"`
+	BillingStatus string `json:"billing_status"`
+	CreatedAt     string `json:"created_at"`
+	Customer      struct {
 		FullName string `json:"full_name"`
 		Id       int    `json:"id"`
 		Url      string `json:"url"`
@@ -60871,7 +60971,6 @@ func (r ListReportsStatementsResponse) GetJSON200() *[]struct {
 	StartDate       string  `json:"start_date"`
 	StatementDate   string  `json:"statement_date"`
 	StatementNumber string  `json:"statement_number"`
-	Status          string  `json:"status"`
 	Totals          struct {
 		BalanceDueCents       int    `json:"balance_due_cents"`
 		CreditsCents          int    `json:"credits_cents"`
@@ -63245,7 +63344,7 @@ type CreateWorkOrderTechAssignmentResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -63359,7 +63458,7 @@ func (r CreateWorkOrderTechAssignmentResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -68979,7 +69078,7 @@ type ListWorkOrdersAuthorizationLogsResponse struct {
 				LaborTaxCents     int    `json:"labor_tax_cents"`
 				PartsCents        int    `json:"parts_cents"`
 				PartsTaxCents     int    `json:"parts_tax_cents"`
-				Status            string `json:"status"`
+				Stage             string `json:"stage"`
 				SubcontractsCents int    `json:"subcontracts_cents"`
 				SubtotalCents     int    `json:"subtotal_cents"`
 				TaxTotalCents     int    `json:"tax_total_cents"`
@@ -69073,7 +69172,7 @@ func (r ListWorkOrdersAuthorizationLogsResponse) GetJSON200() *[]struct {
 			LaborTaxCents     int    `json:"labor_tax_cents"`
 			PartsCents        int    `json:"parts_cents"`
 			PartsTaxCents     int    `json:"parts_tax_cents"`
-			Status            string `json:"status"`
+			Stage             string `json:"stage"`
 			SubcontractsCents int    `json:"subcontracts_cents"`
 			SubtotalCents     int    `json:"subtotal_cents"`
 			TaxTotalCents     int    `json:"tax_total_cents"`
@@ -69191,7 +69290,7 @@ type CloseWorkOrderResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -69302,7 +69401,7 @@ func (r CloseWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -69449,7 +69548,7 @@ type CompleteWorkOrderResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -69556,7 +69655,7 @@ func (r CompleteWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -69830,7 +69929,7 @@ type DeclineWorkOrderResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -69937,7 +70036,7 @@ func (r DeclineWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -70139,7 +70238,7 @@ type PostWorkOrderToAccountResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -70246,7 +70345,7 @@ func (r PostWorkOrderToAccountResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -70385,7 +70484,7 @@ type ReopenWorkOrderResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -70495,7 +70594,7 @@ func (r ReopenWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -70636,7 +70735,7 @@ type SendWorkOrderEstimateResponse struct {
 		ServiceHistoryUrl         string        `json:"service_history_url"`
 		ServicesUrl               string        `json:"services_url"`
 		ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-		Status                    string        `json:"status"`
+		Stage                     string        `json:"stage"`
 		SubStatusTypeId           *int          `json:"sub_status_type_id"`
 		SubcontractsCents         int           `json:"subcontracts_cents"`
 		TiresCents                int           `json:"tires_cents"`
@@ -70737,7 +70836,7 @@ func (r SendWorkOrderEstimateResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string        `json:"service_history_url"`
 	ServicesUrl               string        `json:"services_url"`
 	ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-	Status                    string        `json:"status"`
+	Stage                     string        `json:"stage"`
 	SubStatusTypeId           *int          `json:"sub_status_type_id"`
 	SubcontractsCents         int           `json:"subcontracts_cents"`
 	TiresCents                int           `json:"tires_cents"`
@@ -70877,7 +70976,7 @@ type SendWorkOrderInvoiceSummaryResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -70984,7 +71083,7 @@ func (r SendWorkOrderInvoiceSummaryResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -71118,7 +71217,7 @@ type SendWorkOrderReminderResponse struct {
 		ServiceHistoryUrl         string        `json:"service_history_url"`
 		ServicesUrl               string        `json:"services_url"`
 		ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-		Status                    string        `json:"status"`
+		Stage                     string        `json:"stage"`
 		SubStatusTypeId           *int          `json:"sub_status_type_id"`
 		SubcontractsCents         int           `json:"subcontracts_cents"`
 		TiresCents                int           `json:"tires_cents"`
@@ -71219,7 +71318,7 @@ func (r SendWorkOrderReminderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string        `json:"service_history_url"`
 	ServicesUrl               string        `json:"services_url"`
 	ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-	Status                    string        `json:"status"`
+	Stage                     string        `json:"stage"`
 	SubStatusTypeId           *int          `json:"sub_status_type_id"`
 	SubcontractsCents         int           `json:"subcontracts_cents"`
 	TiresCents                int           `json:"tires_cents"`
@@ -71417,7 +71516,7 @@ type StartWorkOrderResponse struct {
 		ServiceHistoryUrl         string        `json:"service_history_url"`
 		ServicesUrl               string        `json:"services_url"`
 		ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-		Status                    string        `json:"status"`
+		Stage                     string        `json:"stage"`
 		SubStatusTypeId           *int          `json:"sub_status_type_id"`
 		SubcontractsCents         int           `json:"subcontracts_cents"`
 		TiresCents                int           `json:"tires_cents"`
@@ -71518,7 +71617,7 @@ func (r StartWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string        `json:"service_history_url"`
 	ServicesUrl               string        `json:"services_url"`
 	ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-	Status                    string        `json:"status"`
+	Stage                     string        `json:"stage"`
 	SubStatusTypeId           *int          `json:"sub_status_type_id"`
 	SubcontractsCents         int           `json:"subcontracts_cents"`
 	TiresCents                int           `json:"tires_cents"`
@@ -71600,7 +71699,7 @@ type ListWorkOrdersVehicleHistoryResponse struct {
 		CreatedAt       string  `json:"created_at"`
 		Id              int     `json:"id"`
 		ServicesSummary string  `json:"services_summary"`
-		Status          string  `json:"status"`
+		Stage           string  `json:"stage"`
 		Type            string  `json:"type"`
 		Url             string  `json:"url"`
 		WorkOrderNumber int     `json:"work_order_number"`
@@ -71616,7 +71715,7 @@ func (r ListWorkOrdersVehicleHistoryResponse) GetJSON200() *[]struct {
 	CreatedAt       string  `json:"created_at"`
 	Id              int     `json:"id"`
 	ServicesSummary string  `json:"services_summary"`
-	Status          string  `json:"status"`
+	Stage           string  `json:"stage"`
 	Type            string  `json:"type"`
 	Url             string  `json:"url"`
 	WorkOrderNumber int     `json:"work_order_number"`
@@ -71728,7 +71827,7 @@ type VoidWorkOrderResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -71835,7 +71934,7 @@ func (r VoidWorkOrderResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -72324,7 +72423,7 @@ type DeclineAllWorkOrderConcernsResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           int     `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -72434,7 +72533,7 @@ func (r DeclineAllWorkOrderConcernsResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           int     `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -73240,7 +73339,7 @@ type ReverseWorkOrderPaymentArResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -73347,7 +73446,7 @@ func (r ReverseWorkOrderPaymentArResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -73487,7 +73586,7 @@ type SendWorkOrderPaymentToArResponse struct {
 		ServiceHistoryUrl         string  `json:"service_history_url"`
 		ServicesUrl               string  `json:"services_url"`
 		ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-		Status                    string  `json:"status"`
+		Stage                     string  `json:"stage"`
 		SubStatusTypeId           *int    `json:"sub_status_type_id"`
 		SubcontractsCents         int     `json:"subcontracts_cents"`
 		TiresCents                int     `json:"tires_cents"`
@@ -73594,7 +73693,7 @@ func (r SendWorkOrderPaymentToArResponse) GetJSON200() *struct {
 	ServiceHistoryUrl         string  `json:"service_history_url"`
 	ServicesUrl               string  `json:"services_url"`
 	ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-	Status                    string  `json:"status"`
+	Stage                     string  `json:"stage"`
 	SubStatusTypeId           *int    `json:"sub_status_type_id"`
 	SubcontractsCents         int     `json:"subcontracts_cents"`
 	TiresCents                int     `json:"tires_cents"`
@@ -79264,21 +79363,6 @@ func (c *ClientWithResponses) UpdateInspectionsPresetWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseUpdateInspectionsPresetResponse(rsp)
-}
-
-// ListInventoryLevelsBarcodeLookupWithResponse barcode_lookup
-//
-// List all inventory levels barcode lookup, paginated via the Link header.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /inventory_levels/barcode_lookup (the `ListInventoryLevelsBarcodeLookup` operationId).
-func (c *ClientWithResponses) ListInventoryLevelsBarcodeLookupWithResponse(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams, reqEditors ...RequestEditorFn) (*ListInventoryLevelsBarcodeLookupResponse, error) {
-	rsp, err := c.ListInventoryLevelsBarcodeLookup(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListInventoryLevelsBarcodeLookupResponse(rsp)
 }
 
 // CreateInventoryLevelExtractionWithBodyWithResponse create
@@ -86465,17 +86549,34 @@ func ParseListAccountDriveonResponse(rsp *http.Response) (*ListAccountDriveonRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
 			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			LocationType                    string                 `json:"location_type"`
 			Name                            string                 `json:"name"`
 			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                      string                 `json:"postal_code"`
+			Slug                            string                 `json:"slug"`
+			State                           string                 `json:"state"`
+			TimeZone                        string                 `json:"time_zone"`
 			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                       string                 `json:"updated_at"`
 			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -86808,7 +86909,14 @@ func ParseListAppointmentsAvailableSlotsResponse(rsp *http.Response) (*ListAppoi
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []interface{}
+		var dest []struct {
+			Available   bool   `json:"available"`
+			Blocked     bool   `json:"blocked"`
+			Booked      int    `json:"booked"`
+			Capacity    int    `json:"capacity"`
+			SlotsNeeded int    `json:"slots_needed"`
+			Time        string `json:"time"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -86974,6 +87082,7 @@ func ParseCreateAppointmentsApprovalResponse(rsp *http.Response) (*CreateAppoint
 			ReminderSentAt      *string     `json:"reminder_sent_at"`
 			RescheduledFromId   *int        `json:"rescheduled_from_id"`
 			ReschedulesCount    int         `json:"reschedules_count"`
+			SchedulingStatus    string      `json:"scheduling_status"`
 			ServiceAdvisor      struct {
 				AppUrl      string `json:"app_url"`
 				DisplayName string `json:"display_name"`
@@ -86985,7 +87094,6 @@ func ParseCreateAppointmentsApprovalResponse(rsp *http.Response) (*CreateAppoint
 			} `json:"service_advisor"`
 			ServiceAdvisorId int                     `json:"service_advisor_id"`
 			StartsAt         string                  `json:"starts_at"`
-			Status           string                  `json:"status"`
 			Submodel         *string                 `json:"submodel"`
 			Type             string                  `json:"type"`
 			UpdatedAt        string                  `json:"updated_at"`
@@ -87065,6 +87173,7 @@ func ParseCreateAppointmentsCancellationResponse(rsp *http.Response) (*CreateApp
 			ReminderSentAt      *string     `json:"reminder_sent_at"`
 			RescheduledFromId   *int        `json:"rescheduled_from_id"`
 			ReschedulesCount    int         `json:"reschedules_count"`
+			SchedulingStatus    string      `json:"scheduling_status"`
 			ServiceAdvisor      struct {
 				AppUrl      string `json:"app_url"`
 				DisplayName string `json:"display_name"`
@@ -87076,7 +87185,6 @@ func ParseCreateAppointmentsCancellationResponse(rsp *http.Response) (*CreateApp
 			} `json:"service_advisor"`
 			ServiceAdvisorId int                     `json:"service_advisor_id"`
 			StartsAt         string                  `json:"starts_at"`
-			Status           string                  `json:"status"`
 			Submodel         *string                 `json:"submodel"`
 			Type             string                  `json:"type"`
 			UpdatedAt        string                  `json:"updated_at"`
@@ -87163,10 +87271,10 @@ func ParseCreateAppointmentsFollowUpResponse(rsp *http.Response) (*CreateAppoint
 			ReminderSentAt    *string     `json:"reminder_sent_at"`
 			RescheduledFromId *int        `json:"rescheduled_from_id"`
 			ReschedulesCount  int         `json:"reschedules_count"`
+			SchedulingStatus  string      `json:"scheduling_status"`
 			ServiceAdvisor    interface{} `json:"service_advisor"`
 			ServiceAdvisorId  *int        `json:"service_advisor_id"`
 			StartsAt          string      `json:"starts_at"`
-			Status            string      `json:"status"`
 			Submodel          *string     `json:"submodel"`
 			Type              string      `json:"type"`
 			UpdatedAt         string      `json:"updated_at"`
@@ -87187,7 +87295,7 @@ func ParseCreateAppointmentsFollowUpResponse(rsp *http.Response) (*CreateAppoint
 				AppUrl      string `json:"app_url"`
 				DisplayName string `json:"display_name"`
 				Id          int    `json:"id"`
-				Status      string `json:"status"`
+				Stage       string `json:"stage"`
 				Url         string `json:"url"`
 			} `json:"work_order"`
 			WorkOrderId int `json:"work_order_id"`
@@ -87260,6 +87368,7 @@ func ParseCreateAppointmentsRejectionResponse(rsp *http.Response) (*CreateAppoin
 			ReminderSentAt      *string     `json:"reminder_sent_at"`
 			RescheduledFromId   *int        `json:"rescheduled_from_id"`
 			ReschedulesCount    int         `json:"reschedules_count"`
+			SchedulingStatus    string      `json:"scheduling_status"`
 			ServiceAdvisor      struct {
 				AppUrl      string `json:"app_url"`
 				DisplayName string `json:"display_name"`
@@ -87271,7 +87380,6 @@ func ParseCreateAppointmentsRejectionResponse(rsp *http.Response) (*CreateAppoin
 			} `json:"service_advisor"`
 			ServiceAdvisorId int                     `json:"service_advisor_id"`
 			StartsAt         string                  `json:"starts_at"`
-			Status           string                  `json:"status"`
 			Submodel         *string                 `json:"submodel"`
 			Type             string                  `json:"type"`
 			UpdatedAt        string                  `json:"updated_at"`
@@ -87358,6 +87466,7 @@ func ParseCreateAppointmentsVehicleReconciliationResponse(rsp *http.Response) (*
 			ReminderSentAt    *string     `json:"reminder_sent_at"`
 			RescheduledFromId *int        `json:"rescheduled_from_id"`
 			ReschedulesCount  int         `json:"reschedules_count"`
+			SchedulingStatus  string      `json:"scheduling_status"`
 			ServiceAdvisor    struct {
 				AppUrl      string `json:"app_url"`
 				DisplayName string `json:"display_name"`
@@ -87369,7 +87478,6 @@ func ParseCreateAppointmentsVehicleReconciliationResponse(rsp *http.Response) (*
 			} `json:"service_advisor"`
 			ServiceAdvisorId int     `json:"service_advisor_id"`
 			StartsAt         string  `json:"starts_at"`
-			Status           string  `json:"status"`
 			Submodel         *string `json:"submodel"`
 			Type             string  `json:"type"`
 			UpdatedAt        string  `json:"updated_at"`
@@ -88838,7 +88946,7 @@ func ParseCreateCounterSalesPaymentResponse(rsp *http.Response) (*CreateCounterS
 			} `json:"processed_by"`
 			RemainingCents int     `json:"remaining_cents"`
 			ReopenUrl      string  `json:"reopen_url"`
-			Status         string  `json:"status"`
+			SaleStatus     string  `json:"sale_status"`
 			SubtotalCents  int     `json:"subtotal_cents"`
 			TaxTotalCents  int     `json:"tax_total_cents"`
 			TotalCents     int     `json:"total_cents"`
@@ -88944,7 +89052,7 @@ func ParseUpdateCounterSalesReopenResponse(rsp *http.Response) (*UpdateCounterSa
 			} `json:"processed_by"`
 			RemainingCents int     `json:"remaining_cents"`
 			ReopenUrl      string  `json:"reopen_url"`
-			Status         string  `json:"status"`
+			SaleStatus     string  `json:"sale_status"`
 			SubtotalCents  int     `json:"subtotal_cents"`
 			TaxTotalCents  int     `json:"tax_total_cents"`
 			TotalCents     int     `json:"total_cents"`
@@ -89001,20 +89109,23 @@ func ParseListCurrentLocationResponse(rsp *http.Response) (*ListCurrentLocationR
 			City         string      `json:"city"`
 			ContactEmail interface{} `json:"contact_email"`
 			Country      string      `json:"country"`
+			CreatedAt    string      `json:"created_at"`
 			Currency     string      `json:"currency"`
 			Dock         []struct {
 				Enabled bool    `json:"enabled"`
 				Name    string  `json:"name"`
 				Url     *string `json:"url"`
 			} `json:"dock"`
-			Id           int    `json:"id"`
-			LocationType string `json:"location_type"`
-			Name         string `json:"name"`
-			PostalCode   string `json:"postal_code"`
-			Slug         string `json:"slug"`
-			State        string `json:"state"`
-			TimeZone     string `json:"time_zone"`
-			Url          string `json:"url"`
+			Id           int           `json:"id"`
+			LocationType string        `json:"location_type"`
+			Name         string        `json:"name"`
+			Phones       []interface{} `json:"phones"`
+			PostalCode   string        `json:"postal_code"`
+			Slug         string        `json:"slug"`
+			State        string        `json:"state"`
+			TimeZone     string        `json:"time_zone"`
+			UpdatedAt    string        `json:"updated_at"`
+			Url          string        `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -89047,20 +89158,23 @@ func ParseUpdateCurrentLocationResponse(rsp *http.Response) (*UpdateCurrentLocat
 			City         string      `json:"city"`
 			ContactEmail interface{} `json:"contact_email"`
 			Country      string      `json:"country"`
+			CreatedAt    string      `json:"created_at"`
 			Currency     string      `json:"currency"`
 			Dock         []struct {
 				Enabled bool    `json:"enabled"`
 				Name    string  `json:"name"`
 				Url     *string `json:"url"`
 			} `json:"dock"`
-			Id           int    `json:"id"`
-			LocationType string `json:"location_type"`
-			Name         string `json:"name"`
-			PostalCode   string `json:"postal_code"`
-			Slug         string `json:"slug"`
-			State        string `json:"state"`
-			TimeZone     string `json:"time_zone"`
-			Url          string `json:"url"`
+			Id           int           `json:"id"`
+			LocationType string        `json:"location_type"`
+			Name         string        `json:"name"`
+			Phones       []interface{} `json:"phones"`
+			PostalCode   string        `json:"postal_code"`
+			Slug         string        `json:"slug"`
+			State        string        `json:"state"`
+			TimeZone     string        `json:"time_zone"`
+			UpdatedAt    string        `json:"updated_at"`
+			Url          string        `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -91663,60 +91777,6 @@ func ParseUpdateInspectionsPresetResponse(rsp *http.Response) (*UpdateInspection
 	return response, nil
 }
 
-// ParseListInventoryLevelsBarcodeLookupResponse parses an HTTP response from a ListInventoryLevelsBarcodeLookupWithResponse call
-func ParseListInventoryLevelsBarcodeLookupResponse(rsp *http.Response) (*ListInventoryLevelsBarcodeLookupResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListInventoryLevelsBarcodeLookupResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			AppUrl       string                  `json:"app_url"`
-			Barcode      string                  `json:"barcode"`
-			BinLocation  *string                 `json:"bin_location"`
-			Brand        string                  `json:"brand"`
-			CostCents    int                     `json:"cost_cents"`
-			CreatedAt    string                  `json:"created_at"`
-			Description  string                  `json:"description"`
-			Id           int                     `json:"id"`
-			OnHand       int                     `json:"on_hand"`
-			PartNumber   string                  `json:"part_number"`
-			PartType     string                  `json:"part_type"`
-			ReorderPoint *int                    `json:"reorder_point"`
-			SellCents    int                     `json:"sell_cents"`
-			Stocked      bool                    `json:"stocked"`
-			Taxable      bool                    `json:"taxable"`
-			UpdatedAt    string                  `json:"updated_at"`
-			Url          string                  `json:"url"`
-			Vendor       *map[string]interface{} `json:"vendor"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseCreateInventoryLevelExtractionResponse parses an HTTP response from a CreateInventoryLevelExtractionWithResponse call
 func ParseCreateInventoryLevelExtractionResponse(rsp *http.Response) (*CreateInventoryLevelExtractionResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -92841,17 +92901,34 @@ func ParseListLocationsCloseRequirementsResponse(rsp *http.Response) (*ListLocat
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
 			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			LocationType                    string                 `json:"location_type"`
 			Name                            string                 `json:"name"`
 			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                      string                 `json:"postal_code"`
+			Slug                            string                 `json:"slug"`
+			State                           string                 `json:"state"`
+			TimeZone                        string                 `json:"time_zone"`
 			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                       string                 `json:"updated_at"`
 			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -92889,20 +92966,37 @@ func ParseUpdateLocationsCloseRequirementsResponse(rsp *http.Response) (*UpdateL
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			AppUrl                          string `json:"app_url"`
-			BatteryCheckRemindersEnabled    bool   `json:"battery_check_reminders_enabled"`
-			BrakeInspectionRemindersEnabled bool   `json:"brake_inspection_reminders_enabled"`
+			Address                         string      `json:"address"`
+			AppUrl                          string      `json:"app_url"`
+			ArDefaultBccEmails              interface{} `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{} `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{} `json:"ar_reply_to_email"`
+			BatteryCheckRemindersEnabled    bool        `json:"battery_check_reminders_enabled"`
+			BrakeInspectionRemindersEnabled bool        `json:"brake_inspection_reminders_enabled"`
+			City                            string      `json:"city"`
 			CloseRequirements               struct {
 				KeyLocation string `json:"key_location"`
 				OdometerIn  string `json:"odometer_in"`
 			} `json:"close_requirements"`
+			ContactEmail              interface{}            `json:"contact_email"`
+			Country                   string                 `json:"country"`
+			CreatedAt                 string                 `json:"created_at"`
+			Currency                  string                 `json:"currency"`
+			DefaultLaborTaxEnabled    bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled    bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber      *string                `json:"driveon_station_number"`
 			Id                        int                    `json:"id"`
 			LeadSourceRequirements    map[string]interface{} `json:"lead_source_requirements"`
+			LocationType              string                 `json:"location_type"`
 			Name                      string                 `json:"name"`
 			OilChangeRemindersEnabled bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                string                 `json:"postal_code"`
+			Slug                      string                 `json:"slug"`
+			State                     string                 `json:"state"`
+			TimeZone                  string                 `json:"time_zone"`
 			TireSwapRemindersEnabled  bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                 string                 `json:"updated_at"`
 			Url                       string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -93058,17 +93152,34 @@ func ParseListLocationsLeadSourceRequirementsResponse(rsp *http.Response) (*List
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
 			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			LocationType                    string                 `json:"location_type"`
 			Name                            string                 `json:"name"`
 			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                      string                 `json:"postal_code"`
+			Slug                            string                 `json:"slug"`
+			State                           string                 `json:"state"`
+			TimeZone                        string                 `json:"time_zone"`
 			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                       string                 `json:"updated_at"`
 			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -93106,10 +93217,21 @@ func ParseUpdateLocationsLeadSourceRequirementsResponse(rsp *http.Response) (*Up
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
@@ -93117,9 +93239,15 @@ func ParseUpdateLocationsLeadSourceRequirementsResponse(rsp *http.Response) (*Up
 				CustomerLeadSource string `json:"customer_lead_source"`
 				RoMarketingSource  string `json:"ro_marketing_source"`
 			} `json:"lead_source_requirements"`
+			LocationType              string `json:"location_type"`
 			Name                      string `json:"name"`
 			OilChangeRemindersEnabled bool   `json:"oil_change_reminders_enabled"`
+			PostalCode                string `json:"postal_code"`
+			Slug                      string `json:"slug"`
+			State                     string `json:"state"`
+			TimeZone                  string `json:"time_zone"`
 			TireSwapRemindersEnabled  bool   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                 string `json:"updated_at"`
 			Url                       string `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -93148,17 +93276,34 @@ func ParseListLocationsRemindersResponse(rsp *http.Response) (*ListLocationsRemi
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
 			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			LocationType                    string                 `json:"location_type"`
 			Name                            string                 `json:"name"`
 			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                      string                 `json:"postal_code"`
+			Slug                            string                 `json:"slug"`
+			State                           string                 `json:"state"`
+			TimeZone                        string                 `json:"time_zone"`
 			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                       string                 `json:"updated_at"`
 			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -93196,17 +93341,34 @@ func ParseUpdateLocationsRemindersResponse(rsp *http.Response) (*UpdateLocations
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
+			Address                         string                 `json:"address"`
 			AppUrl                          string                 `json:"app_url"`
+			ArDefaultBccEmails              interface{}            `json:"ar_default_bcc_emails"`
+			ArDefaultCcEmails               interface{}            `json:"ar_default_cc_emails"`
+			ArReplyToEmail                  interface{}            `json:"ar_reply_to_email"`
 			BatteryCheckRemindersEnabled    bool                   `json:"battery_check_reminders_enabled"`
 			BrakeInspectionRemindersEnabled bool                   `json:"brake_inspection_reminders_enabled"`
+			City                            string                 `json:"city"`
 			CloseRequirements               map[string]interface{} `json:"close_requirements"`
+			ContactEmail                    interface{}            `json:"contact_email"`
+			Country                         string                 `json:"country"`
+			CreatedAt                       string                 `json:"created_at"`
+			Currency                        string                 `json:"currency"`
+			DefaultLaborTaxEnabled          bool                   `json:"default_labor_tax_enabled"`
+			DefaultPartsTaxEnabled          bool                   `json:"default_parts_tax_enabled"`
 			DefaultStartingFloatCents       int                    `json:"default_starting_float_cents"`
 			DriveonStationNumber            *string                `json:"driveon_station_number"`
 			Id                              int                    `json:"id"`
 			LeadSourceRequirements          map[string]interface{} `json:"lead_source_requirements"`
+			LocationType                    string                 `json:"location_type"`
 			Name                            string                 `json:"name"`
 			OilChangeRemindersEnabled       bool                   `json:"oil_change_reminders_enabled"`
+			PostalCode                      string                 `json:"postal_code"`
+			Slug                            string                 `json:"slug"`
+			State                           string                 `json:"state"`
+			TimeZone                        string                 `json:"time_zone"`
 			TireSwapRemindersEnabled        bool                   `json:"tire_swap_reminders_enabled"`
+			UpdatedAt                       string                 `json:"updated_at"`
 			Url                             string                 `json:"url"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
@@ -94685,24 +94847,26 @@ func ParseListPartsResponse(rsp *http.Response) (*ListPartsResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest []struct {
-			AppUrl       string                  `json:"app_url"`
-			Barcode      *string                 `json:"barcode"`
-			BinLocation  *string                 `json:"bin_location"`
-			Brand        string                  `json:"brand"`
-			CostCents    int                     `json:"cost_cents"`
-			CreatedAt    string                  `json:"created_at"`
-			Description  string                  `json:"description"`
-			Id           int                     `json:"id"`
-			OnHand       int                     `json:"on_hand"`
-			PartNumber   string                  `json:"part_number"`
-			PartType     string                  `json:"part_type"`
-			ReorderPoint *string                 `json:"reorder_point"`
-			SellCents    int                     `json:"sell_cents"`
-			Stocked      bool                    `json:"stocked"`
-			Taxable      bool                    `json:"taxable"`
-			UpdatedAt    string                  `json:"updated_at"`
-			Url          string                  `json:"url"`
-			Vendor       *map[string]interface{} `json:"vendor"`
+			AppUrl          string                  `json:"app_url"`
+			Barcode         *string                 `json:"barcode"`
+			BinLocation     *string                 `json:"bin_location"`
+			Brand           string                  `json:"brand"`
+			CoreChargeCents int                     `json:"core_charge_cents"`
+			CostCents       int                     `json:"cost_cents"`
+			CreatedAt       string                  `json:"created_at"`
+			Description     string                  `json:"description"`
+			Id              int                     `json:"id"`
+			OnHand          int                     `json:"on_hand"`
+			PartNumber      string                  `json:"part_number"`
+			PartType        string                  `json:"part_type"`
+			ReorderPoint    *string                 `json:"reorder_point"`
+			SellCents       int                     `json:"sell_cents"`
+			Stocked         bool                    `json:"stocked"`
+			Taxable         bool                    `json:"taxable"`
+			UpdatedAt       string                  `json:"updated_at"`
+			Url             string                  `json:"url"`
+			Vendor          *map[string]interface{} `json:"vendor"`
+			VendorId        *int                    `json:"vendor_id"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -94757,28 +94921,30 @@ func ParseCreatePartResponse(rsp *http.Response) (*CreatePartResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest struct {
-			AppUrl       string  `json:"app_url"`
-			Barcode      *string `json:"barcode"`
-			BinLocation  *string `json:"bin_location"`
-			Brand        string  `json:"brand"`
-			CostCents    int     `json:"cost_cents"`
-			CreatedAt    string  `json:"created_at"`
-			Description  string  `json:"description"`
-			Id           int     `json:"id"`
-			OnHand       int     `json:"on_hand"`
-			PartNumber   string  `json:"part_number"`
-			PartType     string  `json:"part_type"`
-			ReorderPoint *int    `json:"reorder_point"`
-			SellCents    int     `json:"sell_cents"`
-			Stocked      bool    `json:"stocked"`
-			Taxable      bool    `json:"taxable"`
-			UpdatedAt    string  `json:"updated_at"`
-			Url          string  `json:"url"`
-			Vendor       *struct {
+			AppUrl          string  `json:"app_url"`
+			Barcode         *string `json:"barcode"`
+			BinLocation     *string `json:"bin_location"`
+			Brand           string  `json:"brand"`
+			CoreChargeCents int     `json:"core_charge_cents"`
+			CostCents       int     `json:"cost_cents"`
+			CreatedAt       string  `json:"created_at"`
+			Description     string  `json:"description"`
+			Id              int     `json:"id"`
+			OnHand          int     `json:"on_hand"`
+			PartNumber      string  `json:"part_number"`
+			PartType        string  `json:"part_type"`
+			ReorderPoint    *int    `json:"reorder_point"`
+			SellCents       int     `json:"sell_cents"`
+			Stocked         bool    `json:"stocked"`
+			Taxable         bool    `json:"taxable"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Vendor          *struct {
 				Id   int    `json:"id"`
 				Name string `json:"name"`
 				Url  string `json:"url"`
 			} `json:"vendor"`
+			VendorId *int `json:"vendor_id"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -94840,24 +95006,26 @@ func ParseShowPartResponse(rsp *http.Response) (*ShowPartResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			AppUrl       string                  `json:"app_url"`
-			Barcode      *string                 `json:"barcode"`
-			BinLocation  string                  `json:"bin_location"`
-			Brand        string                  `json:"brand"`
-			CostCents    int                     `json:"cost_cents"`
-			CreatedAt    string                  `json:"created_at"`
-			Description  string                  `json:"description"`
-			Id           int                     `json:"id"`
-			OnHand       int                     `json:"on_hand"`
-			PartNumber   string                  `json:"part_number"`
-			PartType     string                  `json:"part_type"`
-			ReorderPoint string                  `json:"reorder_point"`
-			SellCents    int                     `json:"sell_cents"`
-			Stocked      bool                    `json:"stocked"`
-			Taxable      bool                    `json:"taxable"`
-			UpdatedAt    string                  `json:"updated_at"`
-			Url          string                  `json:"url"`
-			Vendor       *map[string]interface{} `json:"vendor"`
+			AppUrl          string                  `json:"app_url"`
+			Barcode         *string                 `json:"barcode"`
+			BinLocation     string                  `json:"bin_location"`
+			Brand           string                  `json:"brand"`
+			CoreChargeCents int                     `json:"core_charge_cents"`
+			CostCents       int                     `json:"cost_cents"`
+			CreatedAt       string                  `json:"created_at"`
+			Description     string                  `json:"description"`
+			Id              int                     `json:"id"`
+			OnHand          int                     `json:"on_hand"`
+			PartNumber      string                  `json:"part_number"`
+			PartType        string                  `json:"part_type"`
+			ReorderPoint    string                  `json:"reorder_point"`
+			SellCents       int                     `json:"sell_cents"`
+			Stocked         bool                    `json:"stocked"`
+			Taxable         bool                    `json:"taxable"`
+			UpdatedAt       string                  `json:"updated_at"`
+			Url             string                  `json:"url"`
+			Vendor          *map[string]interface{} `json:"vendor"`
+			VendorId        *int                    `json:"vendor_id"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -94897,24 +95065,26 @@ func ParseUpdatePartResponse(rsp *http.Response) (*UpdatePartResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			AppUrl       string                  `json:"app_url"`
-			Barcode      *string                 `json:"barcode"`
-			BinLocation  *string                 `json:"bin_location"`
-			Brand        string                  `json:"brand"`
-			CostCents    int                     `json:"cost_cents"`
-			CreatedAt    string                  `json:"created_at"`
-			Description  string                  `json:"description"`
-			Id           int                     `json:"id"`
-			OnHand       int                     `json:"on_hand"`
-			PartNumber   string                  `json:"part_number"`
-			PartType     string                  `json:"part_type"`
-			ReorderPoint *int                    `json:"reorder_point"`
-			SellCents    int                     `json:"sell_cents"`
-			Stocked      bool                    `json:"stocked"`
-			Taxable      bool                    `json:"taxable"`
-			UpdatedAt    string                  `json:"updated_at"`
-			Url          string                  `json:"url"`
-			Vendor       *map[string]interface{} `json:"vendor"`
+			AppUrl          string                  `json:"app_url"`
+			Barcode         *string                 `json:"barcode"`
+			BinLocation     *string                 `json:"bin_location"`
+			Brand           string                  `json:"brand"`
+			CoreChargeCents int                     `json:"core_charge_cents"`
+			CostCents       int                     `json:"cost_cents"`
+			CreatedAt       string                  `json:"created_at"`
+			Description     string                  `json:"description"`
+			Id              int                     `json:"id"`
+			OnHand          int                     `json:"on_hand"`
+			PartNumber      string                  `json:"part_number"`
+			PartType        string                  `json:"part_type"`
+			ReorderPoint    *int                    `json:"reorder_point"`
+			SellCents       int                     `json:"sell_cents"`
+			Stocked         bool                    `json:"stocked"`
+			Taxable         bool                    `json:"taxable"`
+			UpdatedAt       string                  `json:"updated_at"`
+			Url             string                  `json:"url"`
+			Vendor          *map[string]interface{} `json:"vendor"`
+			VendorId        *int                    `json:"vendor_id"`
 		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
@@ -96432,9 +96602,10 @@ func ParseListReportsStatementsResponse(rsp *http.Response) (*ListReportsStateme
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest []struct {
-			AppUrl    string `json:"app_url"`
-			CreatedAt string `json:"created_at"`
-			Customer  struct {
+			AppUrl        string `json:"app_url"`
+			BillingStatus string `json:"billing_status"`
+			CreatedAt     string `json:"created_at"`
+			Customer      struct {
 				FullName string `json:"full_name"`
 				Id       int    `json:"id"`
 				Url      string `json:"url"`
@@ -96446,7 +96617,6 @@ func ParseListReportsStatementsResponse(rsp *http.Response) (*ListReportsStateme
 			StartDate       string  `json:"start_date"`
 			StatementDate   string  `json:"statement_date"`
 			StatementNumber string  `json:"statement_number"`
-			Status          string  `json:"status"`
 			Totals          struct {
 				BalanceDueCents       int    `json:"balance_due_cents"`
 				CreditsCents          int    `json:"credits_cents"`
@@ -98106,7 +98276,7 @@ func ParseCreateWorkOrderTechAssignmentResponse(rsp *http.Response) (*CreateWork
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -101729,7 +101899,7 @@ func ParseListWorkOrdersAuthorizationLogsResponse(rsp *http.Response) (*ListWork
 					LaborTaxCents     int    `json:"labor_tax_cents"`
 					PartsCents        int    `json:"parts_cents"`
 					PartsTaxCents     int    `json:"parts_tax_cents"`
-					Status            string `json:"status"`
+					Stage             string `json:"stage"`
 					SubcontractsCents int    `json:"subcontracts_cents"`
 					SubtotalCents     int    `json:"subtotal_cents"`
 					TaxTotalCents     int    `json:"tax_total_cents"`
@@ -101863,7 +102033,7 @@ func ParseCloseWorkOrderResponse(rsp *http.Response) (*CloseWorkOrderResponse, e
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102001,7 +102171,7 @@ func ParseCompleteWorkOrderResponse(rsp *http.Response) (*CompleteWorkOrderRespo
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102217,7 +102387,7 @@ func ParseDeclineWorkOrderResponse(rsp *http.Response) (*DeclineWorkOrderRespons
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102405,7 +102575,7 @@ func ParsePostWorkOrderToAccountResponse(rsp *http.Response) (*PostWorkOrderToAc
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102533,7 +102703,7 @@ func ParseReopenWorkOrderResponse(rsp *http.Response) (*ReopenWorkOrderResponse,
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102665,7 +102835,7 @@ func ParseSendWorkOrderEstimateResponse(rsp *http.Response) (*SendWorkOrderEstim
 			ServiceHistoryUrl         string        `json:"service_history_url"`
 			ServicesUrl               string        `json:"services_url"`
 			ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-			Status                    string        `json:"status"`
+			Stage                     string        `json:"stage"`
 			SubStatusTypeId           *int          `json:"sub_status_type_id"`
 			SubcontractsCents         int           `json:"subcontracts_cents"`
 			TiresCents                int           `json:"tires_cents"`
@@ -102794,7 +102964,7 @@ func ParseSendWorkOrderInvoiceSummaryResponse(rsp *http.Response) (*SendWorkOrde
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -102917,7 +103087,7 @@ func ParseSendWorkOrderReminderResponse(rsp *http.Response) (*SendWorkOrderRemin
 			ServiceHistoryUrl         string        `json:"service_history_url"`
 			ServicesUrl               string        `json:"services_url"`
 			ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-			Status                    string        `json:"status"`
+			Stage                     string        `json:"stage"`
 			SubStatusTypeId           *int          `json:"sub_status_type_id"`
 			SubcontractsCents         int           `json:"subcontracts_cents"`
 			TiresCents                int           `json:"tires_cents"`
@@ -103100,7 +103270,7 @@ func ParseStartWorkOrderResponse(rsp *http.Response) (*StartWorkOrderResponse, e
 			ServiceHistoryUrl         string        `json:"service_history_url"`
 			ServicesUrl               string        `json:"services_url"`
 			ServicesVisibleToCustomer bool          `json:"services_visible_to_customer"`
-			Status                    string        `json:"status"`
+			Stage                     string        `json:"stage"`
 			SubStatusTypeId           *int          `json:"sub_status_type_id"`
 			SubcontractsCents         int           `json:"subcontracts_cents"`
 			TiresCents                int           `json:"tires_cents"`
@@ -103164,7 +103334,7 @@ func ParseListWorkOrdersVehicleHistoryResponse(rsp *http.Response) (*ListWorkOrd
 			CreatedAt       string  `json:"created_at"`
 			Id              int     `json:"id"`
 			ServicesSummary string  `json:"services_summary"`
-			Status          string  `json:"status"`
+			Stage           string  `json:"stage"`
 			Type            string  `json:"type"`
 			Url             string  `json:"url"`
 			WorkOrderNumber int     `json:"work_order_number"`
@@ -103292,7 +103462,7 @@ func ParseVoidWorkOrderResponse(rsp *http.Response) (*VoidWorkOrderResponse, err
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -103668,7 +103838,7 @@ func ParseDeclineAllWorkOrderConcernsResponse(rsp *http.Response) (*DeclineAllWo
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           int     `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -104231,7 +104401,7 @@ func ParseReverseWorkOrderPaymentArResponse(rsp *http.Response) (*ReverseWorkOrd
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`
@@ -104360,7 +104530,7 @@ func ParseSendWorkOrderPaymentToArResponse(rsp *http.Response) (*SendWorkOrderPa
 			ServiceHistoryUrl         string  `json:"service_history_url"`
 			ServicesUrl               string  `json:"services_url"`
 			ServicesVisibleToCustomer bool    `json:"services_visible_to_customer"`
-			Status                    string  `json:"status"`
+			Stage                     string  `json:"stage"`
 			SubStatusTypeId           *int    `json:"sub_status_type_id"`
 			SubcontractsCents         int     `json:"subcontracts_cents"`
 			TiresCents                int     `json:"tires_cents"`

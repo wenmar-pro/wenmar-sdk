@@ -497,7 +497,7 @@ List all customers statements, paginated via the Link header.
   {
     "id": 1,
     "statement_number": "ST-0001",
-    "status": "sent",
+    "billing_status": "sent",
     "statement_date": "2026-08-01",
     "start_date": "2026-07-01",
     "end_date": "2026-07-31",
@@ -1250,7 +1250,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `id` | integer | Yes |
 | `statement_number` | string | Yes |
-| `status` | string | Yes |
+| `billing_status` | string | Yes |
 | `statement_date` | string | Yes |
 | `start_date` | string | Yes |
 | `end_date` | string | Yes |
@@ -1358,7 +1358,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |

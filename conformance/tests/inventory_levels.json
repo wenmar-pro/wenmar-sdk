@@ -31,21 +31,6 @@
     }
   },
   {
-    "name": "list_inventory_levels_barcode_lookup_success",
-    "operation": "list_inventory_levels_barcode_lookup",
-    "method": "GET",
-    "path": "/inventory_levels/barcode_lookup",
-    "query": { "barcode": "1234567890123" },
-    "mockResponses": [
-      { "status": 200, "body": { "id": 1, "part_number": "BRK-001", "barcode": "1234567890123" } }
-    ],
-    "expect": {
-      "requestCount": 1,
-      "noError": true,
-      "responseBody": { "path": "barcode", "equals": "1234567890123" }
-    }
-  },
-  {
     "name": "create_inventory_levels_adjust_success",
     "operation": "create_inventory_levels_adjust",
     "method": "POST",

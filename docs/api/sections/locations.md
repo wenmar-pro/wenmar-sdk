@@ -45,7 +45,10 @@ Show a location by ID.
   "city": "Toronto",
   "state": "ON",
   "postal_code": "M5V 1A1",
-  "contact_email": "shop@acme.example"
+  "contact_email": "shop@acme.example",
+  "created_at": "2026-08-27T12:00:00.000-04:00",
+  "updated_at": "2026-08-27T12:00:00.000-04:00",
+  "phones": []
 }
 ```
 
@@ -342,8 +345,25 @@ List all locations close requirements, paginated via the Link header.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -381,8 +401,25 @@ Update a locations close requirements by ID.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -519,8 +556,25 @@ List all locations lead source requirements, paginated via the Link header.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -558,8 +612,25 @@ Update a locations lead source requirements by ID.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -600,8 +671,25 @@ List all locations reminders, paginated via the Link header.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -639,8 +727,25 @@ Update a locations reminders by ID.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |
@@ -746,6 +851,9 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `state` | string | Yes |
 | `postal_code` | string | Yes |
 | `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `phones` | array of any | Yes |
 | `dock` | array of object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |

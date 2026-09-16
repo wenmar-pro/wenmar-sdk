@@ -4,9 +4,9 @@
     "operation": "list_appointments",
     "method": "GET",
     "path": "/appointments",
-    "query": { "status": "scheduled" },
+    "query": { "scheduling_status": "scheduled" },
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } ] }
+      { "status": 200, "body": [ { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "customer_name": "Jane Doe" } ] }
     ],
     "expect": {
       "requestCount": 1,
@@ -21,12 +21,12 @@
     "path": "/appointments/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "customer_name": "Jane Doe" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "scheduled" }
+      "responseBody": { "path": "scheduling_status", "equals": "scheduled" }
     }
   },
   {
@@ -36,7 +36,7 @@
     "path": "/appointments",
     "requestBody": { "appointment": { "customer_name": "Jane Doe", "starts_at": "2026-09-02T10:00:00Z" } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_name": "Jane Doe" } }
+      { "status": 201, "body": { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "customer_name": "Jane Doe" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -52,7 +52,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "appointment": { "customer_concern": "Brakes squealing" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "customer_concern": "Brakes squealing" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "customer_concern": "Brakes squealing" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -96,12 +96,12 @@
     "path": "/appointments/1/approvals",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "approved" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "approved" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "approved" }
+      "responseBody": { "path": "scheduling_status", "equals": "approved" }
     }
   },
   {
@@ -111,12 +111,12 @@
     "path": "/appointments/1/cancellations",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "cancelled" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "cancelled" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "cancelled" }
+      "responseBody": { "path": "scheduling_status", "equals": "cancelled" }
     }
   },
   {
@@ -127,7 +127,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "appointment": { "follow_up_reason": "customer_unreachable" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "follow_up", "follow_up_reason": "customer_unreachable" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "follow_up", "follow_up_reason": "customer_unreachable" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -142,12 +142,12 @@
     "path": "/appointments/1/rejections",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "rejected" } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "rejected" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "rejected" }
+      "responseBody": { "path": "scheduling_status", "equals": "rejected" }
     }
   },
   {
@@ -158,7 +158,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "vehicle_action": "create", "vehicle_id": 5 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "vehicle": { "id": 5 } } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "vehicle": { "id": 5 } } }
     ],
     "expect": {
       "requestCount": 1,
@@ -173,7 +173,7 @@
     "path": "/appointments/1/work_orders",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "appointment", "status": "scheduled", "work_order": { "id": 9 } } }
+      { "status": 200, "body": { "id": 1, "type": "appointment", "scheduling_status": "scheduled", "work_order": { "id": 9 } } }
     ],
     "expect": {
       "requestCount": 1,

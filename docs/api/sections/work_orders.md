@@ -27,7 +27,7 @@ List all work orders, paginated via the Link header.
     "type": "WorkOrder",
     "id": 1,
     "work_order_number": 1001,
-    "status": "in_progress",
+    "stage": "in_progress",
     "intake_method": "drop_off",
     "scheduled_for": null,
     "authorized": false,
@@ -121,7 +121,7 @@ List all work orders, paginated via the Link header.
     "type": "WorkOrder",
     "id": 2,
     "work_order_number": 1002,
-    "status": "open",
+    "stage": "open",
     "intake_method": "drive_in",
     "scheduled_for": null,
     "authorized": false,
@@ -235,7 +235,7 @@ Create a work order.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -389,7 +389,7 @@ Show a work order by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -523,7 +523,7 @@ Update a work order by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -731,7 +731,7 @@ List all work orders authorization logs, paginated via the Link header.
 | Field | Type | Required |
 |---|---|---|
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `total_cents` | integer | Yes |
 | `labor_cents` | integer | Yes |
 | `parts_cents` | integer | Yes |
@@ -768,7 +768,7 @@ Close
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -901,7 +901,7 @@ Complete
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1090,7 +1090,7 @@ Decline
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1247,7 +1247,7 @@ Post to account
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1378,7 +1378,7 @@ Reopen
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1510,7 +1510,7 @@ Send estimate
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1640,7 +1640,7 @@ Send invoice summary
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1771,7 +1771,7 @@ Send reminder
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -1928,7 +1928,7 @@ Start
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -2058,7 +2058,7 @@ List all work orders vehicle history, paginated via the Link header.
 | `id` | integer | Yes |
 | `type` | string | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `created_at` | string | Yes |
 | `closed_at` | string \| null | Yes |
 | `services_summary` | string | Yes |
@@ -2088,7 +2088,7 @@ Void
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -2367,7 +2367,7 @@ Decline all
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -2603,7 +2603,7 @@ Show a work order estimate by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -2750,7 +2750,7 @@ Show a work order inspection by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -2834,7 +2834,7 @@ Show a work order parts by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -2982,7 +2982,7 @@ Show a work order payments by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "completed",
+  "stage": "completed",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -3108,7 +3108,7 @@ Reverse ar
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -3238,7 +3238,7 @@ Send to ar
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -4637,7 +4637,7 @@ Show a work order wip by ID.
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,
@@ -4730,7 +4730,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
@@ -4929,7 +4929,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | string \| null | No |
 | `intake_method` | string | Yes |
@@ -5242,7 +5242,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `id` | integer | Yes |
 | `type` | string | Yes |
 | `po_number` | integer | Yes |
-| `status` | string | Yes |
+| `receiving_status` | string | Yes |
 | `order_method` | string | Yes |
 | `payment_method` | string | Yes |
 | `fulfillment_method` | string | Yes |

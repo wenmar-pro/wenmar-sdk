@@ -764,7 +764,7 @@ List all reports statements, paginated via the Link header.
 
 | Param | Type | Required |
 |---|---|---|
-| `filter[status]` | string | No |
+| `filter[billing_status]` | string | No |
 
 **Response 200** — array
 
@@ -772,7 +772,7 @@ List all reports statements, paginated via the Link header.
 |---|---|---|
 | `id` | integer | Yes |
 | `statement_number` | string | Yes |
-| `status` | string | Yes |
+| `billing_status` | string | Yes |
 | `statement_date` | string | Yes |
 | `start_date` | string | Yes |
 | `end_date` | string | Yes |

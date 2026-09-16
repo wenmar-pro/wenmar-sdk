@@ -64,12 +64,12 @@
     "method": "GET",
     "path": "/work_orders",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "status": "open" } ] }
+      { "status": 200, "body": [ { "id": 1, "stage": "open" } ] }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "0.status", "equals": "open" }
+      "responseBody": { "path": "0.stage", "equals": "open" }
     }
   },
   {
@@ -79,12 +79,12 @@
     "path": "/work_orders/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "stage": "open" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "open" }
+      "responseBody": { "path": "stage", "equals": "open" }
     }
   },
   {

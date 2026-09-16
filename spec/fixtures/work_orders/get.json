@@ -2,7 +2,7 @@
   "type": "WorkOrder",
   "id": 1,
   "work_order_number": 1001,
-  "status": "in_progress",
+  "stage": "in_progress",
   "intake_method": "drop_off",
   "scheduled_for": null,
   "authorized": true,

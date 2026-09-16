@@ -3,47 +3,6 @@
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
-## List inventory levels barcode lookup
-
-```
-GET /inventory_levels/barcode_lookup
-```
-
-List all inventory levels barcode lookup, paginated via the Link header.
-
-| Param | Type | Required |
-|---|---|---|
-| `barcode` | string | No |
-
-**Response 200**
-
-| Field | Type | Required |
-|---|---|---|
-| `id` | integer | Yes |
-| `part_number` | string | Yes |
-| `description` | string | Yes |
-| `brand` | string | Yes |
-| `part_type` | string | Yes |
-| `barcode` | string | Yes |
-| `stocked` | boolean | Yes |
-| `cost_cents` | integer | Yes |
-| `sell_cents` | integer | Yes |
-| `taxable` | boolean | Yes |
-| `vendor` | object | Yes |
-| `on_hand` | integer | Yes |
-| `reorder_point` | integer \| null | Yes |
-| `bin_location` | string \| null | Yes |
-| `created_at` | string | Yes |
-| `updated_at` | string | Yes |
-| `url` | string | Yes |
-| `app_url` | string | Yes |
-
-**Response 404** — [Error](#error-schema) error envelope
-
-```bash
-curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/barcode_lookup.json
-```
-
 ## Create inventory level extraction
 
 ```
@@ -203,6 +162,15 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 
 ---
 
+### CreateInventoryLevelExtractionRequest schema {#createinventorylevelextractionrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `text` | string | Yes |
+| `extraction_id` | string | Yes |
+
+---
+
 ### Error schema {#error-schema}
 
 | Field | Type | Required |
@@ -212,15 +180,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `field_errors` | object | Yes |
 
 `field_errors` — object:
-
----
-
-### CreateInventoryLevelExtractionRequest schema {#createinventorylevelextractionrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `text` | string | Yes |
-| `extraction_id` | string | Yes |
 
 ---
 

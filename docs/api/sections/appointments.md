@@ -15,7 +15,7 @@ List all appointments, paginated via the Link header.
 |---|---|---|
 | `per_page` | integer | No |
 | `q` | string | No |
-| `status` | string | No |
+| `scheduling_status` | string | No |
 
 **Response 200** — array of [Appointment](#appointment-schema)
 
@@ -56,6 +56,15 @@ List all appointments available slots, paginated via the Link header.
 | `duration_minutes` | integer | No |
 
 **Response 200** — array
+
+| Field | Type | Required |
+|---|---|---|
+| `time` | string | Yes |
+| `booked` | integer | Yes |
+| `capacity` | integer | Yes |
+| `available` | boolean | Yes |
+| `blocked` | boolean | Yes |
+| `slots_needed` | integer | Yes |
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/appointments/available_slots.json
@@ -136,7 +145,7 @@ Create a appointments approval.
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
 | `intake_method` | string | Yes |
@@ -228,7 +237,7 @@ Create a appointments cancellation.
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
 | `intake_method` | string | Yes |
@@ -320,7 +329,7 @@ Create a appointments follow up.
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | string | Yes |
 | `intake_method` | string | Yes |
@@ -397,7 +406,7 @@ Create a appointments follow up.
 |---|---|---|
 | `id` | integer | Yes |
 | `display_name` | string | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 
@@ -431,7 +440,7 @@ Create a appointments rejection.
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
 | `intake_method` | string | Yes |
@@ -523,7 +532,7 @@ Create a appointments vehicle reconciliation.
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | any | Yes |
 | `intake_method` | string | Yes |
@@ -646,7 +655,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 |---|---|---|
 | `type` | string | Yes |
 | `id` | integer | Yes |
-| `status` | string | Yes |
+| `scheduling_status` | string | Yes |
 | `appointment_type` | string | Yes |
 | `appointment_source` | string \| null | No |
 | `intake_method` | string | Yes |
@@ -811,7 +820,7 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |

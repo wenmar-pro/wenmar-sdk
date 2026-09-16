@@ -230,7 +230,6 @@ type (
 	ListExpensesResponse = gen.ListExpensesResponse
 	ListFleetsResponse = gen.ListFleetsResponse
 	ListInspectionsResponse = gen.ListInspectionsResponse
-	ListInventoryLevelsBarcodeLookupResponse = gen.ListInventoryLevelsBarcodeLookupResponse
 	ListLaborMatricesResponse = gen.ListLaborMatricesResponse
 	ListLaborRatesResponse = gen.ListLaborRatesResponse
 	ListLaborTemplatesResponse = gen.ListLaborTemplatesResponse
@@ -711,7 +710,6 @@ type (
 	ListCustomersParams = gen.ListCustomersParams
 	ListDriversParams = gen.ListDriversParams
 	ListInspectionsParams = gen.ListInspectionsParams
-	ListInventoryLevelsBarcodeLookupParams = gen.ListInventoryLevelsBarcodeLookupParams
 	ListMessagesParams = gen.ListMessagesParams
 	ListNotificationsParams = gen.ListNotificationsParams
 	ListOrdersPurchaseOrdersParams = gen.ListOrdersPurchaseOrdersParams

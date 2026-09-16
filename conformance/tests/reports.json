@@ -155,7 +155,7 @@
     "method": "GET",
     "path": "/reports/statements",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "statement_number": "ST-1", "status": "sent", "totals": { "balance_due_cents": 5000, "currency": "CAD" }, "url": "https://api.example.com/statements/1.json", "app_url": "https://app.example.com/statements/1" } ] }
+      { "status": 200, "body": [ { "id": 1, "statement_number": "ST-1", "billing_status": "sent", "totals": { "balance_due_cents": 5000, "currency": "CAD" }, "url": "https://api.example.com/statements/1.json", "app_url": "https://app.example.com/statements/1" } ] }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.statement_number", "equals": "ST-1" } }
   },

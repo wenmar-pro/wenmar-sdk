@@ -133,7 +133,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/inspections/{inspection_id}/presets` | `create_inspections_preset` | Create a inspections preset. |
 | DELETE | `/inspections/{inspection_id}/presets/{id}` | `delete_inspections_preset` | Delete a inspections preset by ID. |
 | PATCH | `/inspections/{inspection_id}/presets/{id}` | `update_inspections_preset` | Update a inspections preset by ID. |
-| GET | `/inventory_levels/barcode_lookup` | `list_inventory_levels_barcode_lookup` | List all inventory levels barcode lookup, paginated via the Link header. |
 | POST | `/inventory_levels/extractions` | `create_inventory_level_extraction` | Create a inventory level extraction. |
 | GET | `/inventory_levels/{id}` | `show_inventory_level` | Show a inventory level by ID. |
 | PATCH | `/inventory_levels/{id}` | `update_inventory_level` | Update a inventory level by ID. |

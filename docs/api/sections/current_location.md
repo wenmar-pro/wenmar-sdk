@@ -27,6 +27,9 @@ List all current location, paginated via the Link header.
 | `state` | string | Yes |
 | `postal_code` | string | Yes |
 | `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `phones` | array of any | Yes |
 | `dock` | array of object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
@@ -59,6 +62,9 @@ Update a current location by ID.
 | `state` | string | Yes |
 | `postal_code` | string | Yes |
 | `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `phones` | array of any | Yes |
 | `dock` | array of object | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |

@@ -7,7 +7,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "vehicle_id": 20 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -19,9 +19,9 @@
     "pathParams": { "id": 1 },
     "requestBody": { "action_type": "assign" },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
-    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "status", "equals": "open" } }
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "stage", "equals": "open" } }
   },
   {
     "name": "delete_work_orders_courtesy_car_assignment_success",
@@ -30,7 +30,7 @@
     "path": "/work_orders/1/courtesy_car_assignment",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -87,7 +87,7 @@
     "pathParams": { "work_order_id": 1 },
     "requestBody": { "work_order_fee_exclusion": { "fee_id": 5 } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -107,7 +107,7 @@
     "path": "/work_orders/1/payments/reverse_ar",
     "pathParams": { "work_order_id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -118,7 +118,7 @@
     "path": "/work_orders/1/payments/send_to_ar",
     "pathParams": { "work_order_id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -130,7 +130,7 @@
     "pathParams": { "work_order_id": 1 },
     "requestBody": { "refund": { "amount_cents": 5000, "method": "credit" } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -142,7 +142,7 @@
     "pathParams": { "work_order_id": 1 },
     "requestBody": { "payment_id": 10 },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -154,7 +154,7 @@
     "pathParams": { "work_order_id": 1 },
     "requestBody": { "work_order_service": { "name": "Oil Change", "category_id": 1 } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -166,7 +166,7 @@
     "pathParams": { "work_order_id": 1, "id": 2 },
     "requestBody": { "work_order_service": { "name": "Brake Service" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -217,7 +217,7 @@
     "pathParams": { "work_order_id": 1, "id": 2 },
     "requestBody": { "hours": 1, "minutes": 30 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -250,7 +250,7 @@
     "path": "/work_orders/1/services/2/pause",
     "pathParams": { "work_order_id": 1, "id": 2 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -261,7 +261,7 @@
     "path": "/work_orders/1/services/2/publish",
     "pathParams": { "work_order_id": 1, "id": 2 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -283,7 +283,7 @@
     "path": "/work_orders/1/services/2/revive",
     "pathParams": { "work_order_id": 1, "id": 2 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -295,7 +295,7 @@
     "pathParams": { "work_order_id": 1, "id": 2 },
     "requestBody": { "line_item_id": 5 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -318,7 +318,7 @@
     "pathParams": { "work_order_id": 1, "id": 2 },
     "requestBody": { "category_id": 3 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -330,7 +330,7 @@
     "pathParams": { "work_order_id": 1, "service_id": 2 },
     "requestBody": { "work_order_line_item": { "name": "Oil Filter", "amount_cents": 1500 } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 201, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -342,7 +342,7 @@
     "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
     "requestBody": { "work_order_line_item": { "amount_cents": 2000 } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -384,7 +384,7 @@
     "path": "/work_orders/1/services/2/line_items/3/pull",
     "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -406,7 +406,7 @@
     "path": "/work_orders/1/services/2/line_items/3/undo_pull",
     "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -417,7 +417,7 @@
     "path": "/work_orders/1/services/2/line_items/3/undo_return",
     "pathParams": { "work_order_id": 1, "service_id": 2, "id": 3 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "work_order", "work_order_number": 1001, "stage": "open" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 1 } }
   },
@@ -617,7 +617,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "open"
+          "stage": "open"
         }
       }
     ],
@@ -876,7 +876,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "open"
+          "stage": "open"
         }
       }
     ],

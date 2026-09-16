@@ -35,6 +35,8 @@ List all parts, paginated via the Link header.
 | `sell_cents` | integer | Yes |
 | `taxable` | boolean | Yes |
 | `vendor` | object | Yes |
+| `vendor_id` | integer \| null | Yes |
+| `core_charge_cents` | integer | Yes |
 | `on_hand` | integer | Yes |
 | `reorder_point` | string \| null | Yes |
 | `bin_location` | string \| null | Yes |
@@ -70,6 +72,8 @@ Create a part.
 | `sell_cents` | integer | Yes |
 | `taxable` | boolean | Yes |
 | `vendor` | object | Yes |
+| `vendor_id` | integer \| null | Yes |
+| `core_charge_cents` | integer | Yes |
 | `on_hand` | integer | Yes |
 | `reorder_point` | integer \| null | Yes |
 | `bin_location` | string \| null | Yes |
@@ -139,6 +143,8 @@ Show a part by ID.
 | `sell_cents` | integer | Yes |
 | `taxable` | boolean | Yes |
 | `vendor` | object | Yes |
+| `vendor_id` | integer \| null | Yes |
+| `core_charge_cents` | integer | Yes |
 | `on_hand` | integer | Yes |
 | `reorder_point` | string | Yes |
 | `bin_location` | string | Yes |
@@ -182,6 +188,8 @@ Update a part by ID.
 | `sell_cents` | integer | Yes |
 | `taxable` | boolean | Yes |
 | `vendor` | object | Yes |
+| `vendor_id` | integer \| null | Yes |
+| `core_charge_cents` | integer | Yes |
 | `on_hand` | integer | Yes |
 | `reorder_point` | integer \| null | Yes |
 | `bin_location` | string \| null | Yes |

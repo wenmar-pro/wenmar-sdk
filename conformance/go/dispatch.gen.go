@@ -1396,7 +1396,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_appointments": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListAppointmentsRaw(ctx, &wenmar.ListAppointmentsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), Status: strPtr(args["query"].(map[string]interface{}), "status")})
+	resp, err := c.ListAppointmentsRaw(ctx, &wenmar.ListAppointmentsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page"), Q: strPtr(args["query"].(map[string]interface{}), "q"), SchedulingStatus: strPtr(args["query"].(map[string]interface{}), "scheduling_status")})
 	if err != nil {
 		return nil, err
 	}
@@ -1557,14 +1557,6 @@ var dispatch = map[string]operationFunc{
 
 "list_inspections": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListInspectionsRaw(ctx, &wenmar.ListInspectionsParams{PerPage: intPtr(args["query"].(map[string]interface{}), "per_page")})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"list_inventory_levels_barcode_lookup": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListInventoryLevelsBarcodeLookup(ctx, &wenmar.ListInventoryLevelsBarcodeLookupParams{Barcode: strPtr(args["query"].(map[string]interface{}), "barcode")})
 	if err != nil {
 		return nil, err
 	}
@@ -1892,7 +1884,7 @@ var dispatch = map[string]operationFunc{
 },
 
 "list_reports_statements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.ListReportsStatements(ctx, &wenmar.ListReportsStatementsParams{FilterStatus: strPtr(args["query"].(map[string]interface{}), "filter[status]")})
+	resp, err := c.ListReportsStatements(ctx, &wenmar.ListReportsStatementsParams{FilterBillingStatus: strPtr(args["query"].(map[string]interface{}), "filter[billing_status]")})
 	if err != nil {
 		return nil, err
 	}
@@ -3658,7 +3650,6 @@ var allOperations = []string{
 	"list_expenses",
 	"list_fleets",
 	"list_inspections",
-	"list_inventory_levels_barcode_lookup",
 	"list_labor_matrices",
 	"list_labor_rates",
 	"list_labor_templates",

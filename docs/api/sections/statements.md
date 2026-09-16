@@ -59,7 +59,7 @@ Show a statement by ID.
 {
   "id": 1,
   "statement_number": "ST-0001",
-  "status": "sent",
+  "billing_status": "sent",
   "statement_date": "2026-08-01",
   "start_date": "2026-07-01",
   "end_date": "2026-07-31",
@@ -178,7 +178,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 |---|---|---|
 | `id` | integer | Yes |
 | `statement_number` | string | Yes |
-| `status` | string | Yes |
+| `billing_status` | string | Yes |
 | `statement_date` | string | Yes |
 | `start_date` | string | Yes |
 | `end_date` | string | Yes |

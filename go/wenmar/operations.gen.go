@@ -3305,23 +3305,6 @@ func (c *Client) ListInspectionsRaw(ctx context.Context, params *ListInspections
 	return resp, nil
 }
 
-// ListInventoryLevelsBarcodeLookup runs the list_inventory_levels_barcode_lookup operation (GET /inventory_levels/barcode_lookup).
-func (c *Client) ListInventoryLevelsBarcodeLookup(ctx context.Context, params *ListInventoryLevelsBarcodeLookupParams) (*ListInventoryLevelsBarcodeLookupResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"})
-	resp, err := c.gen.ListInventoryLevelsBarcodeLookupWithResponse(ctx, params)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"}, OperationResult{Operation: "ListInventoryLevelsBarcodeLookup", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"}, OperationResult{Operation: "ListInventoryLevelsBarcodeLookup", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListInventoryLevelsBarcodeLookup"}, OperationResult{Operation: "ListInventoryLevelsBarcodeLookup"})
-	return resp, nil
-}
-
 // ListLaborMatricesRaw runs the list_labor_matrices operation (GET /labor_matrices).
 func (c *Client) ListLaborMatricesRaw(ctx context.Context) (*ListLaborMatricesResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListLaborMatrices"})
@@ -7509,7 +7492,6 @@ func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsPar
 	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
-
 // ListLaborMatrices fetches a page of list_labor_matrices results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListLaborMatrices(ctx context.Context) (*ListResult[LaborMatrix], error) {
@@ -8298,7 +8280,6 @@ func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsP
 	}
 	return items, nil
 }
-
 
 // GetAllLaborMatrices auto-paginates list_labor_matrices, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).

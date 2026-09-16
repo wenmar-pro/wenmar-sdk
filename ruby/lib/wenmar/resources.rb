@@ -705,15 +705,15 @@ def list_account_station_link()
 end
 # Lists list_appointments resources (paginated).
 # @return [Wenmar::Paginator]
-def list_appointments(per_page: nil, q: nil, status: nil)
-  params = { "per_page" => per_page, "q" => q, "status" => status }
+def list_appointments(per_page: nil, q: nil, scheduling_status: nil)
+  params = { "per_page" => per_page, "q" => q, "scheduling_status" => scheduling_status }
   get("/appointments", params.compact)
 end
 
 # Fetches all appointments, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_appointments(per_page: nil, q: nil, status: nil)
-  paginator_to_a(list_appointments(per_page: per_page, q: q, status: status), 1000)
+def get_all_appointments(per_page: nil, q: nil, scheduling_status: nil)
+  paginator_to_a(list_appointments(per_page: per_page, q: q, scheduling_status: scheduling_status), 1000)
 end
 # Lists list_appointments_available_slots resources (paginated).
 # @return [Wenmar::Paginator]
@@ -919,11 +919,6 @@ end
 # @return [Array<Hash>]
 def get_all_inspections(per_page: nil)
   paginator_to_a(list_inspections(per_page: per_page), 1000)
-end
-# Fetches list_inventory_levels_barcode_lookup.
-def list_inventory_levels_barcode_lookup(barcode: nil)
-  params = { "barcode" => barcode }
-      get("/inventory_levels/barcode_lookup", params.compact)
 end
 # Lists list_labor_matrices resources (paginated).
 # @return [Wenmar::Paginator]
@@ -1204,15 +1199,15 @@ def list_reports_service_categories()
 end
 # Lists list_reports_statements resources (paginated).
 # @return [Wenmar::Paginator]
-def list_reports_statements(filter_status: nil)
-  params = { "filter[status]" => filter_status }
+def list_reports_statements(filter_billing_status: nil)
+  params = { "filter[billing_status]" => filter_billing_status }
   get("/reports/statements", params.compact)
 end
 
 # Fetches all reports_statements, up to 1000 by default.
 # @return [Array<Hash>]
-def get_all_reports_statements(filter_status: nil)
-  paginator_to_a(list_reports_statements(filter_status: filter_status), 1000)
+def get_all_reports_statements(filter_billing_status: nil)
+  paginator_to_a(list_reports_statements(filter_billing_status: filter_billing_status), 1000)
 end
 # Fetches list_reports_store_credit.
 def list_reports_store_credit()

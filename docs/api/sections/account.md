@@ -252,8 +252,25 @@ List all account driveon, paginated via the Link header.
 |---|---|---|
 | `id` | integer | Yes |
 | `name` | string | Yes |
-| `default_starting_float_cents` | integer | Yes |
+| `slug` | string | Yes |
+| `location_type` | string | Yes |
+| `currency` | string | Yes |
+| `time_zone` | string | Yes |
+| `country` | string | Yes |
+| `address` | string | Yes |
+| `city` | string | Yes |
+| `state` | string | Yes |
+| `postal_code` | string | Yes |
+| `contact_email` | any | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
 | `driveon_station_number` | string \| null | Yes |
+| `default_starting_float_cents` | integer | Yes |
+| `default_labor_tax_enabled` | boolean | Yes |
+| `default_parts_tax_enabled` | boolean | Yes |
+| `ar_reply_to_email` | any | Yes |
+| `ar_default_cc_emails` | any | Yes |
+| `ar_default_bcc_emails` | any | Yes |
 | `oil_change_reminders_enabled` | boolean | Yes |
 | `tire_swap_reminders_enabled` | boolean | Yes |
 | `brake_inspection_reminders_enabled` | boolean | Yes |

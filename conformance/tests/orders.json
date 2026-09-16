@@ -5,7 +5,7 @@
     "method": "GET",
     "path": "/orders/purchase_orders",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 50000 } ] }
+      { "status": 200, "body": [ { "id": 1, "type": "purchase_order", "po_number": 1001, "receiving_status": "open", "total_cents": 50000 } ] }
     ],
     "expect": {
       "requestCount": 1,
@@ -20,12 +20,12 @@
     "path": "/orders/purchase_orders/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 50000 } }
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "receiving_status": "open", "total_cents": 50000 } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "open" }
+      "responseBody": { "path": "receiving_status", "equals": "open" }
     }
   },
   {
@@ -35,7 +35,7 @@
     "path": "/orders/purchase_orders",
     "requestBody": { "purchase_order": { "vendor_id": 2 } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "total_cents": 0 } }
+      { "status": 201, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "receiving_status": "open", "total_cents": 0 } }
     ],
     "expect": {
       "requestCount": 1,
@@ -51,7 +51,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "purchase_order": { "notes": "Rush order" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "open", "notes": "Rush order" } }
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "receiving_status": "open", "notes": "Rush order" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -80,12 +80,12 @@
     "path": "/orders/purchase_orders/1/cancellations",
     "pathParams": { "purchase_order_id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "status": "cancelled" } }
+      { "status": 200, "body": { "id": 1, "type": "purchase_order", "po_number": 1001, "receiving_status": "cancelled" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "cancelled" }
+      "responseBody": { "path": "receiving_status", "equals": "cancelled" }
     }
   },
   {
@@ -94,7 +94,7 @@
     "method": "GET",
     "path": "/orders/return_orders",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "type": "return_order", "return_number": 1001, "status": "open" } ] }
+      { "status": 200, "body": [ { "id": 1, "type": "return_order", "return_number": 1001, "return_status": "open" } ] }
     ],
     "expect": {
       "requestCount": 1,
@@ -109,12 +109,12 @@
     "path": "/orders/return_orders/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "open" } }
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "return_status": "open" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "open" }
+      "responseBody": { "path": "return_status", "equals": "open" }
     }
   },
   {
@@ -125,7 +125,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "return_order": { "notes": "Returned damaged" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "open", "notes": "Returned damaged" } }
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "return_status": "open", "notes": "Returned damaged" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -154,12 +154,12 @@
     "path": "/orders/return_orders/1/refund_completions",
     "pathParams": { "return_order_id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "status": "refunded" } }
+      { "status": 200, "body": { "id": 1, "type": "return_order", "return_number": 1001, "return_status": "refunded" } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "refunded" }
+      "responseBody": { "path": "return_status", "equals": "refunded" }
     }
   },
   {

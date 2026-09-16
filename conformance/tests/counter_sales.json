@@ -5,7 +5,7 @@
     "method": "GET",
     "path": "/counter_sales",
     "mockResponses": [
-      { "status": 200, "body": [ { "id": 1, "counter_sale_number": 1001, "status": "open", "total_cents": 2500 } ] }
+      { "status": 200, "body": [ { "id": 1, "counter_sale_number": 1001, "sale_status": "open", "total_cents": 2500 } ] }
     ],
     "expect": {
       "requestCount": 1,
@@ -20,12 +20,12 @@
     "path": "/counter_sales/1",
     "pathParams": { "id": 1 },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "counter_sale_number": 1001, "status": "open", "total_cents": 2500 } }
+      { "status": 200, "body": { "id": 1, "counter_sale_number": 1001, "sale_status": "open", "total_cents": 2500 } }
     ],
     "expect": {
       "requestCount": 1,
       "noError": true,
-      "responseBody": { "path": "status", "equals": "open" }
+      "responseBody": { "path": "sale_status", "equals": "open" }
     }
   },
   {
@@ -35,7 +35,7 @@
     "path": "/counter_sales",
     "requestBody": { "counter_sale": { "walk_in_name": "Walk-in Customer" } },
     "mockResponses": [
-      { "status": 201, "body": { "id": 1, "counter_sale_number": 1001, "status": "open", "walk_in_name": "Walk-in Customer" } }
+      { "status": 201, "body": { "id": 1, "counter_sale_number": 1001, "sale_status": "open", "walk_in_name": "Walk-in Customer" } }
     ],
     "expect": {
       "requestCount": 1,
@@ -51,7 +51,7 @@
     "pathParams": { "id": 1 },
     "requestBody": { "counter_sale": { "notes": "Paid in cash" } },
     "mockResponses": [
-      { "status": 200, "body": { "id": 1, "counter_sale_number": 1001, "status": "open", "notes": "Paid in cash" } }
+      { "status": 200, "body": { "id": 1, "counter_sale_number": 1001, "sale_status": "open", "notes": "Paid in cash" } }
     ],
     "expect": {
       "requestCount": 1,

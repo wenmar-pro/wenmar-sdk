@@ -509,11 +509,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -535,8 +569,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -887,7 +938,7 @@ paths:
         required: false
         schema:
           type: string
-      - name: status
+      - name: scheduling_status
         in: query
         required: false
         schema:
@@ -1005,7 +1056,28 @@ paths:
             application/json:
               schema:
                 type: array
-                items: {}
+                items:
+                  type: object
+                  properties:
+                    time:
+                      type: string
+                    booked:
+                      type: integer
+                    capacity:
+                      type: integer
+                    available:
+                      type: boolean
+                    blocked:
+                      type: boolean
+                    slots_needed:
+                      type: integer
+                  required:
+                  - time
+                  - booked
+                  - capacity
+                  - available
+                  - blocked
+                  - slots_needed
           headers:
             Link:
               schema:
@@ -1160,7 +1232,7 @@ paths:
                     type: string
                   id:
                     type: integer
-                  status:
+                  scheduling_status:
                     type: string
                   appointment_type:
                     type: string
@@ -1313,7 +1385,7 @@ paths:
                 required:
                 - type
                 - id
-                - status
+                - scheduling_status
                 - appointment_type
                 - appointment_source
                 - intake_method
@@ -1407,7 +1479,7 @@ paths:
                     type: string
                   id:
                     type: integer
-                  status:
+                  scheduling_status:
                     type: string
                   appointment_type:
                     type: string
@@ -1560,7 +1632,7 @@ paths:
                 required:
                 - type
                 - id
-                - status
+                - scheduling_status
                 - appointment_type
                 - appointment_source
                 - intake_method
@@ -1654,7 +1726,7 @@ paths:
                     type: string
                   id:
                     type: integer
-                  status:
+                  scheduling_status:
                     type: string
                   appointment_type:
                     type: string
@@ -1800,7 +1872,7 @@ paths:
                         type: integer
                       display_name:
                         type: string
-                      status:
+                      stage:
                         type: string
                       url:
                         type: string
@@ -1809,7 +1881,7 @@ paths:
                     required:
                     - id
                     - display_name
-                    - status
+                    - stage
                     - url
                     - app_url
                   location:
@@ -1839,7 +1911,7 @@ paths:
                 required:
                 - type
                 - id
-                - status
+                - scheduling_status
                 - appointment_type
                 - appointment_source
                 - intake_method
@@ -1931,7 +2003,7 @@ paths:
                     type: string
                   id:
                     type: integer
-                  status:
+                  scheduling_status:
                     type: string
                   appointment_type:
                     type: string
@@ -2084,7 +2156,7 @@ paths:
                 required:
                 - type
                 - id
-                - status
+                - scheduling_status
                 - appointment_type
                 - appointment_source
                 - intake_method
@@ -2178,7 +2250,7 @@ paths:
                     type: string
                   id:
                     type: integer
-                  status:
+                  scheduling_status:
                     type: string
                   appointment_type:
                     type: string
@@ -2374,7 +2446,7 @@ paths:
                 required:
                 - type
                 - id
-                - status
+                - scheduling_status
                 - appointment_type
                 - appointment_source
                 - intake_method
@@ -4967,7 +5039,7 @@ paths:
                     type: integer
                   counter_sale_number:
                     type: integer
-                  status:
+                  sale_status:
                     type: string
                   walk_in_name:
                     nullable: true
@@ -5027,7 +5099,7 @@ paths:
                 required:
                 - id
                 - counter_sale_number
-                - status
+                - sale_status
                 - walk_in_name
                 - notes
                 - subtotal_cents
@@ -5154,7 +5226,7 @@ paths:
                     type: integer
                   counter_sale_number:
                     type: integer
-                  status:
+                  sale_status:
                     type: string
                   walk_in_name:
                     nullable: true
@@ -5214,7 +5286,7 @@ paths:
                 required:
                 - id
                 - counter_sale_number
-                - status
+                - sale_status
                 - walk_in_name
                 - notes
                 - subtotal_cents
@@ -5312,6 +5384,13 @@ paths:
                     type: string
                   contact_email:
                     nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  phones:
+                    type: array
+                    items: {}
                   dock:
                     type: array
                     items:
@@ -5345,6 +5424,9 @@ paths:
                 - state
                 - postal_code
                 - contact_email
+                - created_at
+                - updated_at
+                - phones
                 - dock
                 - url
                 - app_url
@@ -5403,6 +5485,13 @@ paths:
                     type: string
                   contact_email:
                     nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  phones:
+                    type: array
+                    items: {}
                   dock:
                     type: array
                     items:
@@ -5436,6 +5525,9 @@ paths:
                 - state
                 - postal_code
                 - contact_email
+                - created_at
+                - updated_at
+                - phones
                 - dock
                 - url
                 - app_url
@@ -5828,39 +5920,6 @@ paths:
       summary: index
       tags:
       - customers
-      responses:
-        '200':
-          description: GET /customers -> 200
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Customer"
-          headers:
-            Link:
-              schema:
-                type: string
-              description: RFC 5988 pagination links
-            X-Total-Count:
-              schema:
-                type: integer
-              description: Total matching records
-            X-Per-Page:
-              schema:
-                type: integer
-              description: Records per page
-        '401':
-          description: GET /customers -> 401
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       parameters:
       - name: customer_tag_id
         in: query
@@ -5907,6 +5966,39 @@ paths:
         required: false
         schema:
           type: string
+      responses:
+        '200':
+          description: GET /customers -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Customer"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '401':
+          description: GET /customers -> 401
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: List all customers, paginated via the Link header.
       operationId: list_customers
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -9888,109 +9980,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/inventory_levels/barcode_lookup":
-    get:
-      summary: barcode_lookup
-      tags:
-      - inventory_levels
-      parameters:
-      - name: barcode
-        in: query
-        required: false
-        schema:
-          type: string
-      responses:
-        '200':
-          description: GET /inventory_levels/barcode_lookup -> 200
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  part_number:
-                    type: string
-                  description:
-                    type: string
-                  brand:
-                    type: string
-                  part_type:
-                    type: string
-                  barcode:
-                    type: string
-                  stocked:
-                    type: boolean
-                  cost_cents:
-                    type: integer
-                  sell_cents:
-                    type: integer
-                  taxable:
-                    type: boolean
-                  vendor:
-                    nullable: true
-                    type: object
-                  on_hand:
-                    type: integer
-                  reorder_point:
-                    nullable: true
-                    type: integer
-                  bin_location:
-                    nullable: true
-                    type: string
-                  created_at:
-                    type: string
-                  updated_at:
-                    type: string
-                  url:
-                    type: string
-                  app_url:
-                    type: string
-                required:
-                - id
-                - part_number
-                - description
-                - brand
-                - part_type
-                - barcode
-                - stocked
-                - cost_cents
-                - sell_cents
-                - taxable
-                - vendor
-                - on_hand
-                - reorder_point
-                - bin_location
-                - created_at
-                - updated_at
-                - url
-                - app_url
-        '404':
-          description: GET /inventory_levels/barcode_lookup -> 404
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: List all inventory levels barcode lookup, paginated via the Link
-        header.
-      operationId: list_inventory_levels_barcode_lookup
-      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
-        $WENMAR_TOKEN" https://app.wenmarpro.com/inventory_levels/barcode_lookup.json'
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/inventory_levels/extractions":
     post:
       summary: create
@@ -11774,11 +11763,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -11800,8 +11823,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -11862,11 +11902,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -11895,8 +11969,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -12144,11 +12235,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -12170,8 +12295,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -12234,11 +12376,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -12267,8 +12443,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -12316,11 +12509,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -12342,8 +12569,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -12404,11 +12648,45 @@ paths:
                     type: integer
                   name:
                     type: string
-                  default_starting_float_cents:
-                    type: integer
+                  slug:
+                    type: string
+                  location_type:
+                    type: string
+                  currency:
+                    type: string
+                  time_zone:
+                    type: string
+                  country:
+                    type: string
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  state:
+                    type: string
+                  postal_code:
+                    type: string
+                  contact_email:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
                   driveon_station_number:
                     nullable: true
                     type: string
+                  default_starting_float_cents:
+                    type: integer
+                  default_labor_tax_enabled:
+                    type: boolean
+                  default_parts_tax_enabled:
+                    type: boolean
+                  ar_reply_to_email:
+                    nullable: true
+                  ar_default_cc_emails:
+                    nullable: true
+                  ar_default_bcc_emails:
+                    nullable: true
                   oil_change_reminders_enabled:
                     type: boolean
                   tire_swap_reminders_enabled:
@@ -12430,8 +12708,25 @@ paths:
                 required:
                 - id
                 - name
-                - default_starting_float_cents
+                - slug
+                - location_type
+                - currency
+                - time_zone
+                - country
+                - address
+                - city
+                - state
+                - postal_code
+                - contact_email
+                - created_at
+                - updated_at
                 - driveon_station_number
+                - default_starting_float_cents
+                - default_labor_tax_enabled
+                - default_parts_tax_enabled
+                - ar_reply_to_email
+                - ar_default_cc_emails
+                - ar_default_bcc_emails
                 - oil_change_reminders_enabled
                 - tire_swap_reminders_enabled
                 - brake_inspection_reminders_enabled
@@ -14753,14 +15048,19 @@ paths:
                     vendor:
                       nullable: true
                       type: object
+                    vendor_id:
+                      nullable: true
+                      type: integer
+                    core_charge_cents:
+                      type: integer
                     on_hand:
                       type: integer
                     reorder_point:
                       nullable: true
                       type: string
                     bin_location:
-                      type: string
                       nullable: true
+                      type: string
                     created_at:
                       type: string
                     updated_at:
@@ -14781,6 +15081,8 @@ paths:
                   - sell_cents
                   - taxable
                   - vendor
+                  - vendor_id
+                  - core_charge_cents
                   - on_hand
                   - reorder_point
                   - bin_location
@@ -14819,11 +15121,6 @@ paths:
       summary: create
       tags:
       - parts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreatePartRequest"
       responses:
         '201':
           description: POST /parts -> 201
@@ -14867,6 +15164,11 @@ paths:
                     - id
                     - name
                     - url
+                  vendor_id:
+                    nullable: true
+                    type: integer
+                  core_charge_cents:
+                    type: integer
                   on_hand:
                     type: integer
                   reorder_point:
@@ -14895,6 +15197,8 @@ paths:
                 - sell_cents
                 - taxable
                 - vendor
+                - vendor_id
+                - core_charge_cents
                 - on_hand
                 - reorder_point
                 - bin_location
@@ -14924,6 +15228,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePartRequest"
       description: Create a part.
       operationId: create_part
       x-curl-example: |-
@@ -15010,6 +15319,11 @@ paths:
                   vendor:
                     nullable: true
                     type: object
+                  vendor_id:
+                    nullable: true
+                    type: integer
+                  core_charge_cents:
+                    type: integer
                   on_hand:
                     type: integer
                   reorder_point:
@@ -15036,6 +15350,8 @@ paths:
                 - sell_cents
                 - taxable
                 - vendor
+                - vendor_id
+                - core_charge_cents
                 - on_hand
                 - reorder_point
                 - bin_location
@@ -15117,14 +15433,19 @@ paths:
                   vendor:
                     nullable: true
                     type: object
+                  vendor_id:
+                    nullable: true
+                    type: integer
+                  core_charge_cents:
+                    type: integer
                   on_hand:
                     type: integer
                   reorder_point:
                     nullable: true
                     type: integer
                   bin_location:
-                    nullable: true
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -15145,6 +15466,8 @@ paths:
                 - sell_cents
                 - taxable
                 - vendor
+                - vendor_id
+                - core_charge_cents
                 - on_hand
                 - reorder_point
                 - bin_location
@@ -17882,7 +18205,7 @@ paths:
                       type: integer
                     statement_number:
                       type: string
-                    status:
+                    billing_status:
                       type: string
                     statement_date:
                       type: string
@@ -17944,7 +18267,7 @@ paths:
                   required:
                   - id
                   - statement_number
-                  - status
+                  - billing_status
                   - statement_date
                   - start_date
                   - end_date
@@ -17982,7 +18305,7 @@ paths:
                 required:
                 - error
       parameters:
-      - name: filter[status]
+      - name: filter[billing_status]
         in: query
         required: false
         schema:
@@ -20307,7 +20630,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -20552,7 +20875,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -24316,11 +24639,6 @@ paths:
       summary: create
       tags:
       - vehicles
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateVehicleRequest"
       responses:
         '201':
           description: POST /vehicles -> 201
@@ -24350,6 +24668,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateVehicleRequest"
       description: Create a vehicle.
       operationId: create_vehicle
       x-curl-example: |-
@@ -24645,6 +24968,11 @@ paths:
         required: true
         schema:
           type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdateVehicleRequest"
       responses:
         '200':
           description: PATCH /vehicles/{id} -> 200
@@ -24663,11 +24991,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/UpdateVehicleRequest"
       description: Update a vehicle by ID.
       operationId: update_vehicle
       x-curl-example: |-
@@ -27158,7 +27481,7 @@ paths:
                           properties:
                             id:
                               type: integer
-                            status:
+                            stage:
                               type: string
                             total_cents:
                               type: integer
@@ -27186,7 +27509,7 @@ paths:
                               type: integer
                           required:
                           - id
-                          - status
+                          - stage
                           - total_cents
                           - labor_cents
                           - parts_cents
@@ -27438,7 +27761,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -27685,7 +28008,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -27816,7 +28139,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -28062,7 +28385,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -28296,7 +28619,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -28541,7 +28864,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -28720,7 +29043,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -28966,7 +29289,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -29076,7 +29399,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -29322,7 +29645,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -29452,7 +29775,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -29683,7 +30006,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -29797,7 +30120,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -30045,7 +30368,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -30160,7 +30483,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -30391,7 +30714,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -30572,7 +30895,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -30803,7 +31126,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -30914,7 +31237,7 @@ paths:
                       type: string
                     work_order_number:
                       type: integer
-                    status:
+                    stage:
                       type: string
                     created_at:
                       type: string
@@ -30931,7 +31254,7 @@ paths:
                   - id
                   - type
                   - work_order_number
-                  - status
+                  - stage
                   - created_at
                   - closed_at
                   - services_summary
@@ -30994,7 +31317,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -31240,7 +31563,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -31712,7 +32035,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -31955,7 +32278,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -32695,7 +33018,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -32942,7 +33265,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -33055,7 +33378,7 @@ paths:
                     type: integer
                   work_order_number:
                     type: integer
-                  status:
+                  stage:
                     type: string
                   intake_method:
                     type: string
@@ -33302,7 +33625,7 @@ paths:
                 - type
                 - id
                 - work_order_number
-                - status
+                - stage
                 - intake_method
                 - scheduled_for
                 - authorized
@@ -36639,7 +36962,7 @@ components:
           type: string
         id:
           type: integer
-        status:
+        scheduling_status:
           type: string
         appointment_type:
           type: string
@@ -36829,7 +37152,7 @@ components:
       required:
       - type
       - id
-      - status
+      - scheduling_status
       - appointment_type
       - intake_method
       - all_day
@@ -37080,7 +37403,7 @@ components:
           type: integer
         counter_sale_number:
           type: integer
-        status:
+        sale_status:
           type: string
         walk_in_name:
           nullable: true
@@ -37140,7 +37463,7 @@ components:
       required:
       - id
       - counter_sale_number
-      - status
+      - sale_status
       - walk_in_name
       - notes
       - subtotal_cents
@@ -38644,16 +38967,16 @@ components:
         last_name:
           type: string
         company_name:
-          nullable: true
           type: string
+          nullable: true
           example: Acme Auto
         display_name:
           type: string
         initials:
           type: string
         fleet_identifier:
-          nullable: true
           type: string
+          nullable: true
         fleet_mode:
           type: string
         marketing_opt_in:
@@ -39260,6 +39583,13 @@ components:
           type: string
         contact_email:
           nullable: true
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        phones:
+          type: array
+          items: {}
         dock:
           type: array
           items:
@@ -39293,6 +39623,9 @@ components:
       - state
       - postal_code
       - contact_email
+      - created_at
+      - updated_at
+      - phones
       - dock
       - url
       - app_url
@@ -39511,7 +39844,7 @@ components:
           type: string
         po_number:
           type: integer
-        status:
+        receiving_status:
           type: string
         order_method:
           type: string
@@ -39647,7 +39980,7 @@ components:
       - id
       - type
       - po_number
-      - status
+      - receiving_status
       - order_method
       - payment_method
       - fulfillment_method
@@ -39722,7 +40055,7 @@ components:
           type: string
         return_number:
           type: integer
-        status:
+        return_status:
           type: string
         credit_method:
           nullable: true
@@ -39843,7 +40176,7 @@ components:
       - id
       - type
       - return_number
-      - status
+      - return_status
       - credit_method
       - reason_code
       - rma_number
@@ -40022,7 +40355,7 @@ components:
           type: integer
         statement_number:
           type: string
-        status:
+        billing_status:
           type: string
         statement_date:
           type: string
@@ -40084,7 +40417,7 @@ components:
       required:
       - id
       - statement_number
-      - status
+      - billing_status
       - statement_date
       - start_date
       - end_date
@@ -40974,11 +41307,11 @@ components:
         vehicle:
           type: object
           properties:
-            make:
+            odometer_unit:
               type: string
             vehicle_type:
               type: string
-            odometer_unit:
+            make:
               type: string
             model:
               type: string
@@ -41628,9 +41961,8 @@ components:
         work_order_number:
           type: integer
           example: WO-0042
-        status:
+        stage:
           type: string
-          example: in_progress
         intake_method:
           type: string
         scheduled_for:
@@ -41885,7 +42217,7 @@ components:
       - type
       - id
       - work_order_number
-      - status
+      - stage
       - intake_method
       - scheduled_for
       - authorized

@@ -2,7 +2,7 @@
   {
     "id": 1,
     "statement_number": "ST-0001",
-    "status": "sent",
+    "billing_status": "sent",
     "statement_date": "2026-08-01",
     "start_date": "2026-07-01",
     "end_date": "2026-07-31",

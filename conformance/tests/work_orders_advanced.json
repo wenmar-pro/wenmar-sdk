@@ -17,7 +17,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "open",
+          "stage": "open",
           "intake_method": "counter",
           "scheduled_for": null,
           "authorized": false,
@@ -137,7 +137,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "open",
+          "stage": "open",
           "intake_method": "counter",
           "scheduled_for": null,
           "authorized": false,
@@ -252,7 +252,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "closed",
+          "stage": "closed",
           "intake_method": "counter",
           "scheduled_for": null,
           "authorized": true,
@@ -347,7 +347,7 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": {
-        "path": "status",
+        "path": "stage",
         "equals": "closed"
       }
     }
@@ -367,7 +367,7 @@
           "id": 1,
           "type": "work_order",
           "work_order_number": 1001,
-          "status": "open",
+          "stage": "open",
           "intake_method": "counter",
           "scheduled_for": null,
           "authorized": true,
@@ -462,7 +462,7 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": {
-        "path": "status",
+        "path": "stage",
         "equals": "open"
       }
     }
@@ -483,7 +483,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "estimate"
+          "stage": "estimate"
         }
       }
     ],
@@ -536,7 +536,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "completed"
+          "stage": "completed"
         }
       }
     ],
@@ -558,7 +558,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "estimate"
+          "stage": "estimate"
         }
       }
     ],
@@ -580,7 +580,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "completed"
+          "stage": "completed"
         }
       }
     ],
@@ -602,7 +602,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "estimate"
+          "stage": "estimate"
         }
       }
     ],
@@ -659,7 +659,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "declined"
+          "stage": "declined"
         }
       }
     ],
@@ -667,7 +667,7 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": {
-        "path": "status",
+        "path": "stage",
         "equals": "declined"
       }
     }
@@ -688,7 +688,7 @@
         "status": 200,
         "body": {
           "id": 1,
-          "status": "voided"
+          "stage": "voided"
         }
       }
     ],
@@ -696,7 +696,7 @@
       "requestCount": 1,
       "noError": true,
       "responseBody": {
-        "path": "status",
+        "path": "stage",
         "equals": "voided"
       }
     }

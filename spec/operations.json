@@ -3956,7 +3956,7 @@
           "description": null
         },
         {
-          "name": "status",
+          "name": "scheduling_status",
           "type": "string",
           "required": false,
           "description": null
@@ -4421,29 +4421,6 @@
       "responseSchema": "Inspection",
       "responseBody": true,
       "summary": "index"
-    },
-    {
-      "id": "list_inventory_levels_barcode_lookup",
-      "method": "get",
-      "path": "/inventory_levels/barcode_lookup",
-      "tag": "inventory_levels",
-      "pathParams": [],
-      "pathParamTypes": {},
-      "queryParams": [
-        {
-          "name": "barcode",
-          "type": "string",
-          "required": false,
-          "description": null
-        }
-      ],
-      "requestSchema": null,
-      "requestShape": null,
-      "requestContentType": null,
-      "paginated": false,
-      "responseSchema": null,
-      "responseBody": true,
-      "summary": "barcode_lookup"
     },
     {
       "id": "list_labor_matrices",
@@ -5237,7 +5214,7 @@
       "pathParamTypes": {},
       "queryParams": [
         {
-          "name": "filter[status]",
+          "name": "filter[billing_status]",
           "type": "string",
           "required": false,
           "description": null

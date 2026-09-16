@@ -110,7 +110,7 @@ module Wenmar
     end
 
     def test_get_all_with_query_params_forwards_caller_values
-      stub_request(:get, "#{@base_url}/appointments?per_page=10&status=open")
+      stub_request(:get, "#{@base_url}/appointments?per_page=10&scheduling_status=open")
         .to_return(
           status: 200,
           body: [{ "id" => 1 }].to_json,
@@ -118,7 +118,7 @@ module Wenmar
         )
 
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.get_all_appointments(per_page: 10, status: "open")
+      result = client.get_all_appointments(per_page: 10, scheduling_status: "open")
       assert_equal 1, result.first["id"]
     end
 

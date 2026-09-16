@@ -30,11 +30,11 @@
       {
         "status": 200,
         "headers": { "Link": "<{server}/work_orders?page=2>; rel=\"next\"" },
-        "body": [ { "id": 1, "status": "open" } ]
+        "body": [ { "id": 1, "stage": "open" } ]
       },
       {
         "status": 200,
-        "body": [ { "id": 2, "status": "in_progress" } ]
+        "body": [ { "id": 2, "stage": "in_progress" } ]
       }
     ],
     "expect": {

@@ -385,7 +385,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `id` | integer | Yes |
 | `type` | string | Yes |
 | `po_number` | integer | Yes |
-| `status` | string | Yes |
+| `receiving_status` | string | Yes |
 | `order_method` | string | Yes |
 | `payment_method` | string | Yes |
 | `fulfillment_method` | string | Yes |

@@ -22,7 +22,7 @@ Create a work order tech assignment.
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |

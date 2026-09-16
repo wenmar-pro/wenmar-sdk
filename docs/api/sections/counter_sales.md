@@ -176,7 +176,7 @@ Create a counter sales payment.
 |---|---|---|
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
-| `status` | string | Yes |
+| `sale_status` | string | Yes |
 | `walk_in_name` | string \| null | Yes |
 | `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |
@@ -268,7 +268,7 @@ Update a counter sales reopen by ID.
 |---|---|---|
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
-| `status` | string | Yes |
+| `sale_status` | string | Yes |
 | `walk_in_name` | string \| null | Yes |
 | `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |
@@ -317,7 +317,7 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 |---|---|---|
 | `id` | integer | Yes |
 | `counter_sale_number` | integer | Yes |
-| `status` | string | Yes |
+| `sale_status` | string | Yes |
 | `walk_in_name` | string \| null | Yes |
 | `notes` | string \| null | Yes |
 | `subtotal_cents` | integer | Yes |

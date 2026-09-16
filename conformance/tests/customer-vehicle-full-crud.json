@@ -224,7 +224,7 @@
         "body": [
           {
             "id": 1,
-            "status": "in_progress"
+            "stage": "in_progress"
           }
         ]
       }
@@ -248,7 +248,7 @@
         "body": [
           {
             "id": 1,
-            "status": "in_progress"
+            "stage": "in_progress"
           }
         ]
       }

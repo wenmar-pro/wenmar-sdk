@@ -1221,9 +1221,9 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `vehicle` — object:
 | Field | Type | Required |
 |---|---|---|
-| `make` | string | No |
-| `vehicle_type` | string | No |
 | `odometer_unit` | string | No |
+| `vehicle_type` | string | No |
+| `make` | string | No |
 | `model` | string | No |
 | `year` | integer | No |
 | `vin` | string | No |
@@ -1264,7 +1264,7 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | `type` | string | Yes |
 | `id` | integer | Yes |
 | `work_order_number` | integer | Yes |
-| `status` | string | Yes |
+| `stage` | string | Yes |
 | `intake_method` | string | Yes |
 | `scheduled_for` | string \| null | Yes |
 | `authorized` | boolean | Yes |
