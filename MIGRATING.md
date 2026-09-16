@@ -4,6 +4,33 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.7 to v0.8
+
+v0.8 renames the domain-workflow `status` field on six resources to their
+reserved domain names (Rule 17). `status` is now reserved for lifecycle state
+(active/archived/trashed) and processing state (queued/sent) — no resource's
+business-process field uses it any more. The HTTP paths are unchanged; only the
+JSON field names, filter params, and generated SDK field/param names change.
+
+| Before (v0.7) | After (v0.8) |
+|---|---|
+| `WorkOrder.status` | `WorkOrder.stage` |
+| `Statement.status` | `Statement.billing_status` |
+| `PurchaseOrder.status` | `PurchaseOrder.receiving_status` |
+| `CounterSale.status` | `CounterSale.sale_status` |
+| `Appointment.status` | `Appointment.scheduling_status` |
+| `ReturnOrder.status` | `ReturnOrder.return_status` |
+
+Filter params follow the field names:
+
+| Before (v0.7) | After (v0.8) |
+|---|---|
+| `filter[status]` on `/reports/statements` | `filter[billing_status]` |
+| `?status=` on `/appointments` | `?scheduling_status=` |
+
+This is a breaking rename of generated struct fields, request/response bodies,
+and query params. Both SDKs report `0.8.0`.
+
 ## Migrating from v0.6 to v0.7
 
 v0.7 fixes a noun-singularization bug in the operationId generator. Several
