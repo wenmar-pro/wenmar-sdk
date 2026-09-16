@@ -6,7 +6,7 @@ module Wenmar
       error = Error.new(
         code: "validation_failed",
         message: "Validation failed",
-        field_errors: { "first_name" => ["can't be blank"], "email" => ["is invalid", "already taken"] },
+        field_errors: {"first_name" => ["can't be blank"], "email" => ["is invalid", "already taken"]},
         status: 422
       )
       fe = error.field_errors_by_field
@@ -18,7 +18,7 @@ module Wenmar
       error = Error.new(
         code: "validation_failed",
         message: "x",
-        field_errors: { "last_name" => "can't be blank" },
+        field_errors: {"last_name" => "can't be blank"},
         status: 422
       )
       assert_equal ["can't be blank"], error.field_errors_by_field["last_name"]
@@ -81,7 +81,7 @@ module Wenmar
     def test_from_response_507
       response = Faraday::Response.new(
         status: 507,
-        body: { error: { code: "limit_exceeded", message: "Account limit reached", field_errors: {} } }.to_json
+        body: {error: {code: "limit_exceeded", message: "Account limit reached", field_errors: {}}}.to_json
       )
       error = Error.from_response(response)
       assert_equal "limit_exceeded", error.code

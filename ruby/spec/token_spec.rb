@@ -69,7 +69,7 @@ class TokenTest < Wenmar::TestCase
   end
 
   def test_from_h_tolerates_symbol_keys
-    token = Wenmar::Token.from_h({ access_token: "abc", refresh_token: "rt" })
+    token = Wenmar::Token.from_h({access_token: "abc", refresh_token: "rt"})
     assert_equal "abc", token.access_token
     assert_equal "rt", token.refresh_token
   end

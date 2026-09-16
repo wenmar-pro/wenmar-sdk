@@ -3,7 +3,7 @@
 module Wenmar
   class Config
     attr_accessor :base_url, :access_token, :token_provider, :location_id,
-                  :timeout, :max_retries, :cache_enabled, :retry_options
+      :timeout, :max_retries, :cache_enabled, :retry_options
 
     def initialize(attrs = {})
       @base_url = attrs[:base_url] || "https://app.wenmarpro.com"

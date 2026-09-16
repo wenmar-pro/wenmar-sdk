@@ -84,7 +84,7 @@ module Wenmar
     def self.from_response(response, client)
       link_header = response.headers["Link"]
       next_url = parse_link_header(link_header, "next")
-      new(client, { "data" => [], "links" => { "next" => next_url }, "meta" => {} })
+      new(client, {"data" => [], "links" => {"next" => next_url}, "meta" => {}})
     end
   end
 end

@@ -18,9 +18,7 @@ module Wenmar
       @token = token
     end
 
-    def token
-      @token
-    end
+    attr_reader :token
   end
 
   # Reads a Wenmar::Token from a store, auto-refreshing via an AuthManager when
@@ -89,7 +87,7 @@ module Wenmar
     private
 
     def build_oauth_refresh(oauth)
-      oauth = { base_url: oauth } if oauth.is_a?(String)
+      oauth = {base_url: oauth} if oauth.is_a?(String)
       base_url = oauth[:base_url]
       client_id = oauth[:client_id] || OAuth::DEFAULT_CLIENT_ID
       return nil if base_url.nil? || base_url.empty?

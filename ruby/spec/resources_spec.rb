@@ -22,17 +22,17 @@ module Wenmar
 
     def test_create_customer_wraps_body
       stub_request(:post, "#{@base_url}/customers")
-        .with(body: { customer: { first_name: "Jane" } }.to_json)
-        .to_return(status: 201, body: { id: 1 }.to_json, headers: { "Content-Type" => "application/json" })
+        .with(body: {customer: {first_name: "Jane"}}.to_json)
+        .to_return(status: 201, body: {id: 1}.to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.create_customer(customer: { first_name: "Jane" })
+      result = client.create_customer(customer: {first_name: "Jane"})
       assert_equal 1, result["id"]
     end
 
     def test_merge_customer_wraps_body
       stub_request(:post, "#{@base_url}/customers/1/merges")
-        .with(body: { source_customer_id: 2 }.to_json)
-        .to_return(status: 200, body: { id: 1 }.to_json, headers: { "Content-Type" => "application/json" })
+        .with(body: {source_customer_id: 2}.to_json)
+        .to_return(status: 200, body: {id: 1}.to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.merge_customer(1, source_customer_id: 2)
       assert_equal 1, result["id"]

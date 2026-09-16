@@ -22,13 +22,13 @@ module Wenmar
       response = conn.post do |req|
         req.headers["Content-Type"] = "application/x-www-form-urlencoded"
         req.headers["Accept"] = "application/json"
-        req.body = URI.encode_www_form({ grant_type: "refresh_token", client_id: client_id, refresh_token: refresh_token })
+        req.body = URI.encode_www_form({grant_type: "refresh_token", client_id: client_id, refresh_token: refresh_token})
       end
 
       unless response.success?
         error = begin
           JSON.parse(response.body)["error"]
-        rescue StandardError
+        rescue
           nil
         end
         message = error ? "token refresh failed: #{error}" : "token refresh failed: HTTP #{response.status}"

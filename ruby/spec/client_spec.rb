@@ -13,7 +13,7 @@ module Wenmar
     end
 
     def test_list_customers
-      stub_api(:get, "/customers", [{ id: 1, full_name: "Jane" }])
+      stub_api(:get, "/customers", [{id: 1, full_name: "Jane"}])
       client = Client.new(token: "test", base_url: @base_url)
       result = client.list_customers
       assert_kind_of Array, result
@@ -21,35 +21,35 @@ module Wenmar
     end
 
     def test_show_customer
-      stub_api(:get, "/customers/1", { id: 1, full_name: "Jane" })
+      stub_api(:get, "/customers/1", {id: 1, full_name: "Jane"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.show_customer(1)
       assert_equal 1, result["id"]
     end
 
     def test_create_customer
-      stub_api(:post, "/customers", { id: 1, full_name: "Jane" }, status: 201)
+      stub_api(:post, "/customers", {id: 1, full_name: "Jane"}, status: 201)
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.create_customer(customer: { first_name: "Jane", last_name: "Doe" })
+      result = client.create_customer(customer: {first_name: "Jane", last_name: "Doe"})
       assert_equal "Jane", result["full_name"]
     end
 
     def test_update_customer
-      stub_api(:patch, "/customers/1", { id: 1, full_name: "Jane Doe" })
+      stub_api(:patch, "/customers/1", {id: 1, full_name: "Jane Doe"})
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.update_customer(1, customer: { first_name: "Jane" })
+      result = client.update_customer(1, customer: {first_name: "Jane"})
       assert_equal 1, result["id"]
     end
 
     def test_show_vehicle
-      stub_api(:get, "/vehicles/1", { id: 1, make: "Toyota", model: "Camry", year: 2020 })
+      stub_api(:get, "/vehicles/1", {id: 1, make: "Toyota", model: "Camry", year: 2020})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.show_vehicle(1)
       assert_equal "Toyota", result["make"]
     end
 
     def test_list_vehicles
-      stub_api(:get, "/vehicles", [{ id: 1, make: "Honda" }])
+      stub_api(:get, "/vehicles", [{id: 1, make: "Honda"}])
       client = Client.new(token: "test", base_url: @base_url)
       result = client.list_vehicles
       assert_kind_of Array, result
@@ -57,22 +57,22 @@ module Wenmar
     end
 
     def test_create_vehicle
-      stub_api(:post, "/vehicles", { id: 1, make: "Honda", model: "Civic", year: 2020 }, status: 201)
+      stub_api(:post, "/vehicles", {id: 1, make: "Honda", model: "Civic", year: 2020}, status: 201)
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.create_vehicle(vehicle: { make: "Honda", model: "Civic", year: 2020, customer_id: 1 })
+      result = client.create_vehicle(vehicle: {make: "Honda", model: "Civic", year: 2020, customer_id: 1})
       assert_equal "Honda", result["make"]
     end
 
     def test_update_vehicle
-      stub_api(:patch, "/vehicles/1", { id: 1, make: "Toyota" })
+      stub_api(:patch, "/vehicles/1", {id: 1, make: "Toyota"})
       client = Client.new(token: "test", base_url: @base_url)
-      result = client.update_vehicle(1, vehicle: { make: "Toyota" })
+      result = client.update_vehicle(1, vehicle: {make: "Toyota"})
       assert_equal "Toyota", result["make"]
     end
 
     def test_trash_vehicle
       stub_request(:patch, "#{@base_url}/vehicles/1/trash")
-        .to_return(status: 200, body: { id: 1, status: "trashed" }.to_json, headers: { "Content-Type" => "application/json" })
+        .to_return(status: 200, body: {id: 1, status: "trashed"}.to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.trash_vehicle(1)
       assert_equal "trashed", result["status"]
@@ -80,8 +80,8 @@ module Wenmar
 
     def test_decode_vin
       stub_request(:get, "#{@base_url}/vehicles/vin_decode")
-        .with(query: { vin: "1HGCM82633A004352" })
-        .to_return(status: 200, body: { make: "Honda", model: "Civic", vin: "1HGCM82633A004352" }.to_json, headers: { "Content-Type" => "application/json" })
+        .with(query: {vin: "1HGCM82633A004352"})
+        .to_return(status: 200, body: {make: "Honda", model: "Civic", vin: "1HGCM82633A004352"}.to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.decode_vin(vin: "1HGCM82633A004352")
       assert_equal "Honda", result["make"]
@@ -89,15 +89,15 @@ module Wenmar
 
     def test_check_vehicle_duplicate
       stub_request(:get, "#{@base_url}/vehicles/check_duplicate")
-        .with(query: { vin: "ABC123" })
-        .to_return(status: 200, body: { matches: [{ id: 1, display_name: "Toyota Camry", url: "/vehicles/1", reasons: ["vin"] }] }.to_json, headers: { "Content-Type" => "application/json" })
+        .with(query: {vin: "ABC123"})
+        .to_return(status: 200, body: {matches: [{id: 1, display_name: "Toyota Camry", url: "/vehicles/1", reasons: ["vin"]}]}.to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.check_vehicle_duplicate(vin: "ABC123")
       assert_equal 1, result["matches"].first["id"]
     end
 
     def test_show_customer_not_found
-      stub_api(:get, "/customers/999", { error: { code: "not_found", message: "Not found", field_errors: {} } }, status: 404)
+      stub_api(:get, "/customers/999", {error: {code: "not_found", message: "Not found", field_errors: {}}}, status: 404)
       client = Client.new(token: "test", base_url: @base_url)
       err = assert_raises(Wenmar::Error) { client.show_customer(999) }
       assert_equal "not_found", err.code
@@ -106,8 +106,8 @@ module Wenmar
 
     def test_sets_bearer_auth_header
       stub = stub_request(:get, "#{@base_url}/customers")
-             .with(headers: { "Authorization" => "Bearer my-token" })
-             .to_return(status: 200, body: [].to_json, headers: { "Content-Type" => "application/json" })
+        .with(headers: {"Authorization" => "Bearer my-token"})
+        .to_return(status: 200, body: [].to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "my-token", base_url: @base_url)
       client.list_customers
       assert_requested stub
@@ -115,8 +115,8 @@ module Wenmar
 
     def test_retry_after_is_honored_on_429
       stub_request(:get, "#{@base_url}/customers")
-        .to_return({ status: 429, body: { error: "rate_limited" }.to_json, headers: { "Retry-After" => "0" } },
-                   { status: 200, body: [].to_json })
+        .to_return({status: 429, body: {error: "rate_limited"}.to_json, headers: {"Retry-After" => "0"}},
+          {status: 200, body: [].to_json})
       client = Client.new(token: "my-token", base_url: @base_url)
       result = client.list_customers
       assert_kind_of Array, result
@@ -128,13 +128,13 @@ module Wenmar
         requests << 1
         {
           status: 500,
-          body: { error: { code: "internal_error", message: "fail", field_errors: {} } }.to_json,
-          headers: { "Content-Type" => "application/json" }
+          body: {error: {code: "internal_error", message: "fail", field_errors: {}}}.to_json,
+          headers: {"Content-Type" => "application/json"}
         }
       end
 
       client = Client.new(token: "my-token", base_url: @base_url)
-      assert_raises(Wenmar::Error) { client.create_customer(customer: { first_name: "Test" }) }
+      assert_raises(Wenmar::Error) { client.create_customer(customer: {first_name: "Test"}) }
       assert_equal 1, requests.size, "POST must not retry on 500 (got #{requests.size} requests)"
     end
 
@@ -145,31 +145,31 @@ module Wenmar
         if requests.size == 1
           {
             status: 429,
-            body: { error: { code: "rate_limited", message: "slow", field_errors: {} } }.to_json,
-            headers: { "Content-Type" => "application/json", "Retry-After" => "0" }
+            body: {error: {code: "rate_limited", message: "slow", field_errors: {}}}.to_json,
+            headers: {"Content-Type" => "application/json", "Retry-After" => "0"}
           }
         else
           {
             status: 201,
-            body: { id: 1 }.to_json,
-            headers: { "Content-Type" => "application/json" }
+            body: {id: 1}.to_json,
+            headers: {"Content-Type" => "application/json"}
           }
         end
       end
 
       client = Client.new(token: "my-token", base_url: @base_url)
-      result = client.create_customer(customer: { first_name: "Test" })
+      result = client.create_customer(customer: {first_name: "Test"})
       assert_equal 2, requests.size, "429 on POST should retry (got #{requests.size})"
       assert_equal 1, result["id"]
     end
 
     def test_conditional_get_returns_cached_body_on_304
-      body = { id: 1, full_name: "Jane" }.to_json
+      body = {id: 1, full_name: "Jane"}.to_json
       stub_request(:get, "#{@base_url}/customers/1")
-        .to_return(status: 200, body: body, headers: { "Content-Type" => "application/json", "ETag" => "\"abc123\"" })
+        .to_return(status: 200, body: body, headers: {"Content-Type" => "application/json", "ETag" => "\"abc123\""})
       stub_request(:get, "#{@base_url}/customers/1")
-        .with(headers: { "If-None-Match" => "\"abc123\"" })
-        .to_return(status: 304, headers: { "Content-Type" => "application/json" })
+        .with(headers: {"If-None-Match" => "\"abc123\""})
+        .to_return(status: 304, headers: {"Content-Type" => "application/json"})
 
       client = Client.new(token: "my-token", base_url: @base_url)
       first = client.show_customer(1)
@@ -178,11 +178,11 @@ module Wenmar
       second = client.show_customer(1)
       assert_equal 1, second["id"], "expected cached body returned on 304"
       assert_requested stub_request(:get, "#{@base_url}/customers/1")
-        .with(headers: { "If-None-Match" => "\"abc123\"" })
+        .with(headers: {"If-None-Match" => "\"abc123\""})
     end
 
     def test_list_account
-      stub_api(:get, "/account", { "id" => 1, "name" => "Main Shop" })
+      stub_api(:get, "/account", {"id" => 1, "name" => "Main Shop"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.list_account
       assert_equal 1, result["id"]
@@ -190,7 +190,7 @@ module Wenmar
     end
 
     def test_show_location
-      stub_api(:get, "/locations/1", { "id" => 1, "name" => "Bay 1" })
+      stub_api(:get, "/locations/1", {"id" => 1, "name" => "Bay 1"})
       client = Client.new(token: "test", base_url: @base_url)
       result = client.show_location("1")
       assert_equal 1, result["id"]
@@ -213,8 +213,8 @@ module Wenmar
 
     def test_for_location_injects_header
       stub = stub_request(:get, "#{@base_url}/customers")
-             .with(headers: { "X-Wenmar-Location" => "42" })
-             .to_return(status: 200, body: [].to_json, headers: { "Content-Type" => "application/json" })
+        .with(headers: {"X-Wenmar-Location" => "42"})
+        .to_return(status: 200, body: [].to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       scoped = client.for_location("42")
       scoped.list_customers
@@ -223,8 +223,8 @@ module Wenmar
 
     def test_for_location_does_not_mutate_parent
       stub = stub_request(:get, "#{@base_url}/customers")
-             .with { |req| req.headers["X-Wenmar-Location"].nil? }
-             .to_return(status: 200, body: [].to_json, headers: { "Content-Type" => "application/json" })
+        .with { |req| req.headers["X-Wenmar-Location"].nil? }
+        .to_return(status: 200, body: [].to_json, headers: {"Content-Type" => "application/json"})
       client = Client.new(token: "test", base_url: @base_url)
       _ = client.for_location("42")
       client.list_customers
@@ -235,17 +235,17 @@ module Wenmar
       stub_request(:post, "#{@base_url}/customers").to_raise(Faraday::ConnectionFailed.new("boom"))
 
       client = Client.new(token: "my-token", base_url: @base_url)
-      assert_raises(Faraday::ConnectionFailed) { client.create_customer(customer: { first_name: "Test" }) }
+      assert_raises(Faraday::ConnectionFailed) { client.create_customer(customer: {first_name: "Test"}) }
       assert_requested stub_request(:post, "#{@base_url}/customers"), times: 1
     end
 
     def test_for_location_clients_do_not_share_cached_bodies
       stub_request(:get, "#{@base_url}/customers")
-        .with(headers: { "X-Wenmar-Location" => "1" })
-        .to_return(status: 200, body: [{ id: 1 }].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"loc1\"" })
+        .with(headers: {"X-Wenmar-Location" => "1"})
+        .to_return(status: 200, body: [{id: 1}].to_json, headers: {"Content-Type" => "application/json", "ETag" => "\"loc1\""})
       stub_request(:get, "#{@base_url}/customers")
-        .with(headers: { "X-Wenmar-Location" => "2" })
-        .to_return(status: 200, body: [{ id: 2 }].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"loc2\"" })
+        .with(headers: {"X-Wenmar-Location" => "2"})
+        .to_return(status: 200, body: [{id: 2}].to_json, headers: {"Content-Type" => "application/json", "ETag" => "\"loc2\""})
 
       client = Client.new(token: "my-token", base_url: @base_url)
       one = client.for_location("1")
@@ -257,10 +257,10 @@ module Wenmar
 
     def test_cache_disabled_sends_no_conditional_headers
       first = stub_request(:get, "#{@base_url}/customers")
-              .with { |req| req.headers["If-None-Match"].nil? }
-              .to_return(status: 200, body: [].to_json, headers: { "Content-Type" => "application/json", "ETag" => "\"abc\"" })
+        .with { |req| req.headers["If-None-Match"].nil? }
+        .to_return(status: 200, body: [].to_json, headers: {"Content-Type" => "application/json", "ETag" => "\"abc\""})
 
-      client = Client.new({ cache_enabled: false }, token: "my-token", base_url: @base_url)
+      client = Client.new({cache_enabled: false}, token: "my-token", base_url: @base_url)
       client.list_customers
       client.list_customers
 
@@ -279,7 +279,7 @@ module Wenmar
     end
 
     def test_retry_options_from_config_reach_middleware
-      config = Config.new(retry_options: { interval_randomness: 0.1, max_interval: 7 })
+      config = Config.new(retry_options: {interval_randomness: 0.1, max_interval: 7})
       client = Client.new(config, token: "test", base_url: @base_url)
       retry_app = client.instance_variable_get(:@read_connection).builder.app
       # Walk the builder chain to find the Faraday::Retry::Middleware.
@@ -292,12 +292,12 @@ module Wenmar
 
     def test_304_preserves_cached_link_header
       link = '<https://api.example.com/customers?page=2>; rel="next"'
-      body = [{ id: 1 }].to_json
+      body = [{id: 1}].to_json
       stub_request(:get, "#{@base_url}/customers")
-        .to_return(status: 200, body: body, headers: { "Content-Type" => "application/json", "ETag" => "\"abc\"", "Link" => link })
+        .to_return(status: 200, body: body, headers: {"Content-Type" => "application/json", "ETag" => "\"abc\"", "Link" => link})
       stub_request(:get, "#{@base_url}/customers")
-        .with(headers: { "If-None-Match" => "\"abc\"" })
-        .to_return(status: 304, headers: { "Content-Type" => "application/json" })
+        .with(headers: {"If-None-Match" => "\"abc\""})
+        .to_return(status: 304, headers: {"Content-Type" => "application/json"})
 
       client = Client.new(token: "my-token", base_url: @base_url)
       first = client.list_customers
@@ -312,10 +312,10 @@ module Wenmar
     def test_last_modified_only_response_is_cached
       lm = "Wed, 21 Oct 2023 07:28:00 GMT"
       stub_request(:get, "#{@base_url}/customers")
-        .to_return(status: 200, body: [{ id: 1 }].to_json, headers: { "Content-Type" => "application/json", "Last-Modified" => lm })
+        .to_return(status: 200, body: [{id: 1}].to_json, headers: {"Content-Type" => "application/json", "Last-Modified" => lm})
       stub_request(:get, "#{@base_url}/customers")
-        .with(headers: { "If-Modified-Since" => lm })
-        .to_return(status: 304, headers: { "Content-Type" => "application/json" })
+        .with(headers: {"If-Modified-Since" => lm})
+        .to_return(status: 304, headers: {"Content-Type" => "application/json"})
 
       client = Client.new(token: "my-token", base_url: @base_url)
       first = client.list_customers
@@ -324,7 +324,7 @@ module Wenmar
       second = client.list_customers
       assert_equal 1, second.first["id"]
       assert_requested stub_request(:get, "#{@base_url}/customers")
-        .with(headers: { "If-Modified-Since" => lm })
+        .with(headers: {"If-Modified-Since" => lm})
     end
 
     private
@@ -344,7 +344,7 @@ module Wenmar
 
     def stub_api(method, path, body, status: 200)
       stub_request(method, "#{@base_url}#{path}")
-        .to_return(status: status, body: (body || "").to_json, headers: { "Content-Type" => "application/json" })
+        .to_return(status: status, body: (body || "").to_json, headers: {"Content-Type" => "application/json"})
     end
   end
 end

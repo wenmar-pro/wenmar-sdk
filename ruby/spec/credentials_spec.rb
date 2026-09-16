@@ -26,11 +26,11 @@ class CredentialStoreTest < Wenmar::TestCase
 
   def test_save_token_writes_0600
     @store.save_token(Wenmar::Token.new(access_token: "a"))
-    assert_equal 0600, File.stat(@path).mode & 0777
+    assert_equal 0o600, File.stat(@path).mode & 0o777
   end
 
   def test_save_token_accepts_hash
-    @store.save_token({ "access_token" => "a", "refresh_token" => "r" })
+    @store.save_token({"access_token" => "a", "refresh_token" => "r"})
     token = @store.get_token
     assert_equal "a", token.access_token
     assert_equal "r", token.refresh_token
@@ -41,14 +41,14 @@ class CredentialStoreTest < Wenmar::TestCase
   end
 
   def test_migrates_legacy_access_token_format
-    File.write(@path, JSON.generate({ "access_token" => "legacy" }))
+    File.write(@path, JSON.generate({"access_token" => "legacy"}))
     token = @store.get_token
     assert_equal "legacy", token.access_token
     assert_nil token.refresh_token
   end
 
   def test_migrates_legacy_token_format
-    File.write(@path, JSON.generate({ "token" => "legacy" }))
+    File.write(@path, JSON.generate({"token" => "legacy"}))
     token = @store.get_token
     assert_equal "legacy", token.access_token
   end
@@ -96,7 +96,7 @@ class KeychainStoreTest < Wenmar::TestCase
     end
 
     begin
-      store = Wenmar::KeychainStore.new
+      Wenmar::KeychainStore.new
       flunk "expected TokenError when keychain gem is unavailable"
     rescue Wenmar::TokenError => e
       assert_includes e.message, "ruby-keychain"

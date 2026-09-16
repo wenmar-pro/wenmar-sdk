@@ -15,7 +15,7 @@ class ConfigTest < Wenmar::TestCase
   end
 
   def test_custom_retry_options
-    config = Wenmar::Config.new(retry_options: { interval_randomness: 0.1, max_interval: 7 })
+    config = Wenmar::Config.new(retry_options: {interval_randomness: 0.1, max_interval: 7})
     assert_equal 0.1, config.retry_options[:interval_randomness]
     assert_equal 7, config.retry_options[:max_interval]
   end

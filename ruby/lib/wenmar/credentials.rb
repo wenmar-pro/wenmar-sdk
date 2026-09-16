@@ -45,7 +45,7 @@ module Wenmar
     def save_token(token)
       token = Token.from_h(token) if token.is_a?(Hash)
       FileUtils.mkdir_p(File.dirname(@path))
-      File.write(@path, JSON.pretty_generate(token.to_h), perm: 0600)
+      File.write(@path, JSON.pretty_generate(token.to_h), perm: 0o600)
     end
 
     def delete
@@ -91,8 +91,7 @@ module Wenmar
 
     def delete
       require_keychain
-      item = Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first
-      item.destroy if item
+      Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first&.destroy
     end
 
     private
@@ -118,8 +117,7 @@ module Wenmar
 
     def write_password(password)
       require_keychain
-      existing = Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first
-      existing.destroy if existing
+      Keychain.generic_passwords.where(service: SERVICE, account: ACCOUNT).first&.destroy
       Keychain.generic_passwords.create(service: SERVICE, account: ACCOUNT, password: password)
     end
   end

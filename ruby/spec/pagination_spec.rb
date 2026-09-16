@@ -5,13 +5,13 @@ module Wenmar
     def test_parse_link_header_next
       header = '<https://api.example.com/customers?page=2>; rel="next"'
       assert_equal "https://api.example.com/customers?page=2",
-                   Paginator.parse_link_header(header, "next")
+        Paginator.parse_link_header(header, "next")
     end
 
     def test_parse_link_header_prev
       header = '<https://api.example.com/customers?page=1>; rel="prev", <https://api.example.com/customers?page=3>; rel="next"'
       assert_equal "https://api.example.com/customers?page=1",
-                   Paginator.parse_link_header(header, "prev")
+        Paginator.parse_link_header(header, "prev")
     end
 
     def test_parse_link_header_empty
@@ -19,10 +19,10 @@ module Wenmar
     end
 
     def test_has_next
-      paginator = Paginator.new(nil, { "data" => [], "links" => { "next" => "https://api.example.com?page=2" }, "meta" => {} })
+      paginator = Paginator.new(nil, {"data" => [], "links" => {"next" => "https://api.example.com?page=2"}, "meta" => {}})
       assert paginator.has_next?
 
-      paginator = Paginator.new(nil, { "data" => [], "links" => {}, "meta" => {} })
+      paginator = Paginator.new(nil, {"data" => [], "links" => {}, "meta" => {}})
       refute paginator.has_next?
     end
 
@@ -39,15 +39,15 @@ module Wenmar
       stub_request(:get, "#{@base_url}/customers")
         .to_return(
           status: 200,
-          body: [{ "id" => 1, "name" => "Page1" }].to_json,
-          headers: { "Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\"" }
+          body: [{"id" => 1, "name" => "Page1"}].to_json,
+          headers: {"Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\""}
         )
 
       stub_request(:get, "#{@base_url}/customers?page=2")
         .to_return(
           status: 200,
-          body: [{ "id" => 2, "name" => "Page2" }].to_json,
-          headers: { "Content-Type" => "application/json" }
+          body: [{"id" => 2, "name" => "Page2"}].to_json,
+          headers: {"Content-Type" => "application/json"}
         )
 
       client = Client.new(token: "test", base_url: @base_url)
@@ -61,7 +61,7 @@ module Wenmar
     def test_next_page_rejects_cross_origin_url
       stub_request(:get, "#{@base_url}/customers").to_return(
         status: 200,
-        body: [{ id: 1 }].to_json,
+        body: [{id: 1}].to_json,
         headers: {
           "Content-Type" => "application/json",
           "Link" => '<https://attacker.example.com/customers?page=2>; rel="next"'
@@ -81,14 +81,14 @@ module Wenmar
       stub_request(:get, "#{@base_url}/customers")
         .to_return(
           status: 200,
-          body: [{ "id" => 1 }].to_json,
-          headers: { "Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\"" }
+          body: [{"id" => 1}].to_json,
+          headers: {"Content-Type" => "application/json", "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\""}
         )
       stub_request(:get, "#{@base_url}/customers?page=2")
         .to_return(
           status: 200,
-          body: [{ "id" => 2 }].to_json,
-          headers: { "Content-Type" => "application/json" }
+          body: [{"id" => 2}].to_json,
+          headers: {"Content-Type" => "application/json"}
         )
 
       client = Client.new(token: "test", base_url: @base_url)
@@ -100,8 +100,8 @@ module Wenmar
       stub_request(:get, "#{@base_url}/work_orders/5/concerns")
         .to_return(
           status: 200,
-          body: [{ "id" => 1, "name" => "brakes" }].to_json,
-          headers: { "Content-Type" => "application/json" }
+          body: [{"id" => 1, "name" => "brakes"}].to_json,
+          headers: {"Content-Type" => "application/json"}
         )
 
       client = Client.new(token: "test", base_url: @base_url)
@@ -113,8 +113,8 @@ module Wenmar
       stub_request(:get, "#{@base_url}/appointments?per_page=10&scheduling_status=open")
         .to_return(
           status: 200,
-          body: [{ "id" => 1 }].to_json,
-          headers: { "Content-Type" => "application/json" }
+          body: [{"id" => 1}].to_json,
+          headers: {"Content-Type" => "application/json"}
         )
 
       client = Client.new(token: "test", base_url: @base_url)
@@ -125,7 +125,7 @@ module Wenmar
     private
 
     def stub_api(method, path, body, status: 200, link: nil)
-      headers = { "Content-Type" => "application/json" }
+      headers = {"Content-Type" => "application/json"}
       headers["Link"] = link if link
       stub_request(method, "#{@base_url}#{path}")
         .to_return(status: status, body: body.to_json, headers: headers)

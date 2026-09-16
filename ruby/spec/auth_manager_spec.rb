@@ -106,11 +106,11 @@ class AuthManagerTest < Wenmar::TestCase
 
   def test_oauth_default_refresh
     stub_request(:post, "https://api.example.com/oauth/token")
-      .with(body: { grant_type: "refresh_token", client_id: "wenmar-cli", refresh_token: "rt" })
-      .to_return(status: 200, body: { access_token: "refreshed", expires_in: 7200 }.to_json)
+      .with(body: {grant_type: "refresh_token", client_id: "wenmar-cli", refresh_token: "rt"})
+      .to_return(status: 200, body: {access_token: "refreshed", expires_in: 7200}.to_json)
 
     @store.save_token(Wenmar::Token.new(access_token: "a", refresh_token: "rt"))
-    manager = Wenmar::AuthManager.new(store: @store, oauth: { base_url: "https://api.example.com", client_id: "wenmar-cli" })
+    manager = Wenmar::AuthManager.new(store: @store, oauth: {base_url: "https://api.example.com", client_id: "wenmar-cli"})
     manager.refresh
     assert_equal "refreshed", @store.get_token.access_token
   end
@@ -123,11 +123,11 @@ class AuthManagerTest < Wenmar::TestCase
 
   def test_oauth_defaults_client_id
     stub_request(:post, "https://api.example.com/oauth/token")
-      .with(body: { grant_type: "refresh_token", client_id: "wenmar-cli", refresh_token: "rt" })
-      .to_return(status: 200, body: { access_token: "refreshed", expires_in: 7200 }.to_json)
+      .with(body: {grant_type: "refresh_token", client_id: "wenmar-cli", refresh_token: "rt"})
+      .to_return(status: 200, body: {access_token: "refreshed", expires_in: 7200}.to_json)
 
     @store.save_token(Wenmar::Token.new(access_token: "a", refresh_token: "rt"))
-    manager = Wenmar::AuthManager.new(store: @store, oauth: { base_url: "https://api.example.com" })
+    manager = Wenmar::AuthManager.new(store: @store, oauth: {base_url: "https://api.example.com"})
     manager.refresh
     assert_equal "refreshed", @store.get_token.access_token
   end

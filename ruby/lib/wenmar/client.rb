@@ -67,8 +67,8 @@ module Wenmar
     def get(path, params = {})
       cache_key = cache_key(path, params)
       cached = if @config.cache_enabled
-                 @cache_mutex.synchronize { @cache[cache_key] }
-               end
+        @cache_mutex.synchronize { @cache[cache_key] }
+      end
 
       response = @read_connection.get(path, params) do |req|
         if cached

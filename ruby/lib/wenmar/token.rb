@@ -22,7 +22,7 @@ module Wenmar
     end
 
     def to_h
-      hash = { "access_token" => @access_token, "token_type" => @token_type }
+      hash = {"access_token" => @access_token, "token_type" => @token_type}
       hash["refresh_token"] = @refresh_token if @refresh_token
       hash["expires_at"] = @expires_at.utc.iso8601 if @expires_at
       hash
