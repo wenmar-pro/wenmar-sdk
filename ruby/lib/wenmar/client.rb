@@ -56,6 +56,17 @@ module Wenmar
 
     def for_location(location_id)
       scoped = dup
+      scoped_config = Config.new(
+        base_url: @config.base_url,
+        access_token: @config.access_token,
+        token_provider: @config.token_provider,
+        location_id: location_id,
+        timeout: @config.timeout,
+        max_retries: @config.max_retries,
+        cache_enabled: @config.cache_enabled,
+        retry_options: @config.retry_options&.dup
+      )
+      scoped.instance_variable_set(:@config, scoped_config)
       scoped.instance_variable_set(:@location_id, location_id)
       scoped.instance_variable_set(:@cache, {})
       scoped.instance_variable_set(:@cache_mutex, Mutex.new)

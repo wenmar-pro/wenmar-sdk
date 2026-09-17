@@ -27,7 +27,8 @@ module Wenmar
         base_url: ENV.fetch("WENMAR_BASE_URL", "https://app.wenmarpro.com"),
         timeout: ENV["WENMAR_TIMEOUT"]&.to_i || 30,
         max_retries: ENV["WENMAR_MAX_RETRIES"]&.to_i || 3,
-        cache_enabled: ENV["WENMAR_CACHE"] != "false"
+        cache_enabled: ENV["WENMAR_CACHE"] != "false",
+        location_id: ENV["WENMAR_LOCATION_ID"]
       )
     end
   end

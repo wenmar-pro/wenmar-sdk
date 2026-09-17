@@ -36,6 +36,13 @@ class ConfigTest < Wenmar::TestCase
     ENV.delete("WENMAR_MAX_RETRIES")
     ENV.delete("WENMAR_CACHE")
   end
+
+  def test_from_env_reads_location_id
+    ENV["WENMAR_LOCATION_ID"] = "77"
+    assert_equal "77", Wenmar::Config.from_env.location_id
+  ensure
+    ENV.delete("WENMAR_LOCATION_ID")
+  end
 end
 
 class AuthTest < Wenmar::TestCase

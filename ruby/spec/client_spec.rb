@@ -239,6 +239,14 @@ module Wenmar
       assert_requested stub_request(:post, "#{@base_url}/customers"), times: 1
     end
 
+    def test_for_location_does_not_share_config
+      client = Client.new(token: "t", base_url: @base_url)
+      scoped = client.for_location("42")
+      scoped.config.base_url = "https://mutated.example.com"
+      assert_equal @base_url, client.config.base_url
+      refute_same client.config, scoped.config
+    end
+
     def test_for_location_clients_do_not_share_cached_bodies
       stub_request(:get, "#{@base_url}/customers")
         .with(headers: {"X-Wenmar-Location" => "1"})
