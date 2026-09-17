@@ -55,6 +55,16 @@ cfg.Token = "YOUR_API_TOKEN" // used when no provider is passed
 client, err := wenmar.NewClient(cfg, nil)
 ```
 
+### Environment variables
+
+| Variable | Read by | Purpose |
+|---|---|---|
+| `WENMAR_URL` | CLI + `auth.LoadConfigFromEnv` | API base URL (also accepts `WENMAR_BASE_URL` as fallback) |
+| `WENMAR_BASE_URL` | `wenmar.LoadConfigFromEnv`, Ruby `Config.from_env` | API base URL |
+| `WENMAR_TOKEN` | CLI + `auth.LoadConfigFromEnv` | static bearer token |
+| `WENMAR_LOCATION_ID` | CLI + `auth.LoadConfigFromEnv`, Ruby `Config.from_env` | default location scope |
+| `WENMAR_TIMEOUT` / `WENMAR_MAX_RETRIES` / `WENMAR_CACHE` | `wenmar.LoadConfigFromEnv`, Ruby `Config.from_env` | client tuning |
+
 ## Location scoping
 
 Use `ForLocation` to scope every request to a specific location. The parent

@@ -90,14 +90,17 @@ Every paginated list also has a `get_all_*` variant that auto-paginates with a
 ## Pagination
 
 List endpoints paginate via the RFC 5988 `Link` header. Paginated list methods
-return a `Wenmar::Paginator`:
+return the page's items as an Array with a `.paginator` attached:
 
 ```ruby
 result = client.list_customers
-result.each { |customer| puts customer["full_name"] }
-```
 
-Or collect everything with `get_all_customers`.
+# Iterate all pages (page 1 included):
+result.paginator.each { |customer| puts customer["full_name"] }
+
+# Or collect everything with the generated helper:
+all = client.get_all_customers
+```
 
 ## Errors
 

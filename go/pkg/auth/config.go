@@ -18,14 +18,16 @@ func DefaultConfig() Config {
 	}
 }
 
-// LoadConfigFromEnv reads WENMAR_TOKEN, WENMAR_URL, and WENMAR_LOCATION_ID
-// environment variables.
+// LoadConfigFromEnv reads WENMAR_TOKEN, WENMAR_URL (or WENMAR_BASE_URL as a
+// fallback), and WENMAR_LOCATION_ID environment variables.
 func LoadConfigFromEnv() Config {
 	cfg := DefaultConfig()
 	if v := os.Getenv("WENMAR_TOKEN"); v != "" {
 		cfg.Token = v
 	}
 	if v := os.Getenv("WENMAR_URL"); v != "" {
+		cfg.BaseURL = v
+	} else if v := os.Getenv("WENMAR_BASE_URL"); v != "" {
 		cfg.BaseURL = v
 	}
 	if v := os.Getenv("WENMAR_LOCATION_ID"); v != "" {
