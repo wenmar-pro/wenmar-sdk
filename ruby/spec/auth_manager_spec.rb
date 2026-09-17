@@ -62,7 +62,7 @@ class CredentialStoreProviderTest < Wenmar::TestCase
     end
     provider = Wenmar::CredentialStoreProvider.new(store: @store, manager: manager, refresh_window: 300)
     @store.save_token(Wenmar::Token.new(access_token: "old", refresh_token: "r",
-                                        expires_at: Time.now + 1))
+      expires_at: Time.now + 1))
 
     threads = 8.times.map { Thread.new { provider.token } }
     threads.each(&:join)
