@@ -24,27 +24,6 @@ func TestDefaultConfig(t *testing.T) {
 	}
 }
 
-func TestLoadConfigFromEnv(t *testing.T) {
-	t.Setenv("WENMAR_BASE_URL", "https://staging.wenmarpro.com")
-	t.Setenv("WENMAR_TIMEOUT", "10s")
-	t.Setenv("WENMAR_MAX_RETRIES", "5")
-	t.Setenv("WENMAR_CACHE", "false")
-
-	cfg := LoadConfigFromEnv()
-	if cfg.BaseURL != "https://staging.wenmarpro.com" {
-		t.Errorf("expected staging BaseURL, got %q", cfg.BaseURL)
-	}
-	if cfg.Timeout != 10*time.Second {
-		t.Errorf("expected 10s timeout, got %v", cfg.Timeout)
-	}
-	if cfg.MaxRetries != 5 {
-		t.Errorf("expected 5 retries, got %d", cfg.MaxRetries)
-	}
-	if cfg.CacheEnabled {
-		t.Error("expected CacheEnabled=false")
-	}
-}
-
 func TestConfig_DeepCopy(t *testing.T) {
 	original := DefaultConfig()
 	copy := original

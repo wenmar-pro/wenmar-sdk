@@ -2,8 +2,6 @@ package wenmar
 
 import (
 	"net/http"
-	"os"
-	"strconv"
 	"time"
 )
 
@@ -39,32 +37,4 @@ func DefaultConfig() Config {
 		MaxRetries:   3,
 		CacheEnabled: true,
 	}
-}
-
-// LoadConfigFromEnv reads WENMAR_* environment variables, falling back to
-// DefaultConfig for any that are unset.
-//
-//	WENMAR_BASE_URL    - base URL (must be https or localhost)
-//	WENMAR_TIMEOUT     - request timeout (e.g. "30s", "1m")
-//	WENMAR_MAX_RETRIES - integer retry count
-//	WENMAR_CACHE       - "true" or "false"
-func LoadConfigFromEnv() Config {
-	cfg := DefaultConfig()
-	if v := os.Getenv("WENMAR_BASE_URL"); v != "" {
-		cfg.BaseURL = v
-	}
-	if v := os.Getenv("WENMAR_TIMEOUT"); v != "" {
-		if d, err := time.ParseDuration(v); err == nil {
-			cfg.Timeout = d
-		}
-	}
-	if v := os.Getenv("WENMAR_MAX_RETRIES"); v != "" {
-		if n, err := strconv.Atoi(v); err == nil {
-			cfg.MaxRetries = n
-		}
-	}
-	if v := os.Getenv("WENMAR_CACHE"); v != "" {
-		cfg.CacheEnabled = v == "true"
-	}
-	return cfg
 }
