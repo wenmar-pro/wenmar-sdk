@@ -433,5 +433,51 @@
       { "status": 200, "body": { "id": 1, "kind": "goodwill", "amount_cents": 5000, "balance_cents": 0, "reason": "Goodwill repair", "voided_at": "2026-09-15T12:00:00.000Z", "created_at": "2026-09-14T10:00:00.000Z", "updated_at": "2026-09-15T12:00:00.000Z", "voided_by": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "issued_by": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "source_payment": null, "location": { "id": 1, "name": "Downtown", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/store_credits/1", "app_url": "https://app.example.com/store_credits/1", "voids_url": "https://api.example.com/store_credits/1/voids" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "balance_cents", "equals": 0 } }
+  },
+  {
+    "name": "list_customers_store_credits_success",
+    "operation": "list_customers_store_credits",
+    "method": "GET",
+    "path": "/customers/10/store_credits",
+    "pathParams": { "customer_id": 10 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "kind": "cash", "amount_cents": 2500, "balance_cents": 2500, "reason": "Overpayment refund", "voided_at": null, "created_at": "2026-09-14T10:00:00.000Z", "updated_at": "2026-09-14T10:00:00.000Z", "voided_by": null, "issued_by": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "source_payment": null, "location": { "id": 1, "name": "Downtown", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/customers/10/store_credits/1", "app_url": "https://app.example.com/customers/10/store_credits/1", "voids_url": "https://api.example.com/store_credits/1/voids" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.kind", "equals": "cash" } }
+  },
+  {
+    "name": "show_customers_store_credit_success",
+    "operation": "show_customers_store_credit",
+    "method": "GET",
+    "path": "/customers/10/store_credits/1",
+    "pathParams": { "customer_id": 10, "id": 1 },
+    "mockResponses": [
+      { "status": 200, "body": { "id": 1, "kind": "cash", "amount_cents": 2500, "balance_cents": 2500, "reason": "Overpayment refund", "voided_at": null, "created_at": "2026-09-14T10:00:00.000Z", "updated_at": "2026-09-14T10:00:00.000Z", "voided_by": null, "issued_by": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "source_payment": null, "location": { "id": 1, "name": "Downtown", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/customers/10/store_credits/1", "app_url": "https://app.example.com/customers/10/store_credits/1", "voids_url": "https://api.example.com/store_credits/1/voids" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "balance_cents", "equals": 2500 } }
+  },
+  {
+    "name": "create_customers_store_credit_success",
+    "operation": "create_customers_store_credit",
+    "method": "POST",
+    "path": "/customers/10/store_credits",
+    "pathParams": { "customer_id": 10 },
+    "requestBody": { "store_credit": { "kind": "cash", "amount": "25.00" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 2, "kind": "cash", "amount_cents": 2500, "balance_cents": 2500, "reason": null, "voided_at": null, "created_at": "2026-09-15T09:00:00.000Z", "updated_at": "2026-09-15T09:00:00.000Z", "voided_by": null, "issued_by": { "id": 5, "name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "source_payment": { "id": 90, "url": "https://api.example.com/work_orders/42/payments/90" }, "location": { "id": 1, "name": "Downtown", "url": "https://api.example.com/locations/1" }, "url": "https://api.example.com/customers/10/store_credits/2", "app_url": "https://app.example.com/customers/10/store_credits/2", "voids_url": "https://api.example.com/store_credits/2/voids" } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "amount_cents", "equals": 2500 } }
+  },
+  {
+    "name": "create_store_credits_refund_success",
+    "operation": "create_store_credits_refund",
+    "method": "POST",
+    "path": "/store_credits/1/refunds",
+    "pathParams": { "store_credit_id": 1 },
+    "requestBody": { "refund": { "amount": "20.00", "method": "check" } },
+    "mockResponses": [
+      { "status": 201, "body": { "id": 99, "amount_cents": 2000, "currency": "CAD", "method": "check", "processor_status": null, "is_refund": true, "is_adjustment": false, "voided": false, "voided_at": null, "processed_at": "2026-09-15T12:00:00.000Z", "reference": null, "notes": "", "created_at": "2026-09-15T12:00:00.000Z", "updated_at": "2026-09-15T12:00:00.000Z", "customer_id": 10, "url": "https://api.example.com/store_credits/1/refunds/99", "app_url": "https://app.example.com/store_credits/1/refunds/99", "customer": { "id": 10, "full_name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "processed_by": { "id": 5, "full_name": "Jane Service", "url": "https://api.example.com/team/members/5" }, "location": { "id": 1, "name": "Downtown", "url": "https://api.example.com/locations/1" } } }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "is_refund", "equals": true } }
   }
 ]
