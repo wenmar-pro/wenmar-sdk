@@ -18,6 +18,20 @@ jobs:
         with:
           ruby-version: "3.3"
 
+      - name: Install gems
+        run: bundle install
+        working-directory: ruby
+
+      - name: Test
+        run: bundle exec rake test
+        working-directory: ruby
+
+      - name: Conformance
+        run: |
+          bundle install
+          bundle exec ruby conformance_spec.rb
+        working-directory: conformance/ruby
+
       - name: Build gem
         run: gem build wenmar.gemspec
         working-directory: ruby
