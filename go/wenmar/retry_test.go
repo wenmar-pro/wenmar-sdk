@@ -1,12 +1,14 @@
 package wenmar
 
 import (
+	"context"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"sync/atomic"
 	"testing"
+	"time"
 )
 
 func TestRetry_On500Then200(t *testing.T) {
@@ -215,5 +217,35 @@ func TestRetry_NoRetryOn4xx(t *testing.T) {
 	}
 	if calls != 1 {
 		t.Errorf("expected 1 call (no retry on 4xx), got %d", calls)
+	}
+}
+
+func TestRetry_BackoffCapsRetryAfter(t *testing.T) {
+	rt := newRetryTransportWithRetries(3, http.DefaultTransport)
+	resp := &http.Response{Header: http.Header{}}
+	resp.Header.Set("Retry-After", "999999")
+	got := rt.backoff(0, resp)
+	if got != maxRetryAfterDelay {
+		t.Errorf("expected Retry-After capped at %v, got %v", maxRetryAfterDelay, got)
+	}
+}
+
+func TestRetry_CtxCancelDuringBackoffReturnsQuickly(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Retry-After", "30")
+		w.WriteHeader(http.StatusServiceUnavailable)
+	}))
+	defer ts.Close()
+
+	c := newTestClient(t, ts.URL, "test-token")
+	ctx, cancel := context.WithTimeout(context.Background(), 150*time.Millisecond)
+	defer cancel()
+	start := time.Now()
+	_, err := c.ListCustomers(ctx, nil)
+	if err == nil {
+		t.Fatal("expected context error, got nil")
+	}
+	if time.Since(start) > 2*time.Second {
+		t.Errorf("cancellation honored too slowly: %v", time.Since(start))
 	}
 }

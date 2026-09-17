@@ -9,6 +9,10 @@ import (
 	"time"
 )
 
+// maxRetryAfterDelay bounds a server-supplied Retry-After so a hostile or
+// buggy header cannot stall the SDK indefinitely.
+const maxRetryAfterDelay = 2 * time.Minute
+
 // Retry policy:
 //
 //	429 Too Many Requests → retry all methods (idempotent throttle; honor Retry-After)
@@ -91,7 +95,7 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 				if resp != nil {
 					resp.Body.Close()
 				}
-				return resp, req.Context().Err()
+				return nil, req.Context().Err()
 			case <-time.After(delay):
 			}
 			// Close the response body before retrying
@@ -105,11 +109,18 @@ func (t *retryTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 func (t *retryTransport) backoff(attempt int, resp *http.Response) time.Duration {
 	if retryAfter := resp.Header.Get("Retry-After"); retryAfter != "" {
 		if seconds, err := strconv.Atoi(retryAfter); err == nil {
-			return time.Duration(seconds) * time.Second
+			d := time.Duration(seconds) * time.Second
+			if d > maxRetryAfterDelay {
+				return maxRetryAfterDelay
+			}
+			return d
 		}
 		if httpDate, err := http.ParseTime(retryAfter); err == nil {
 			delay := time.Until(httpDate)
 			if delay > 0 {
+				if delay > maxRetryAfterDelay {
+					return maxRetryAfterDelay
+				}
 				return delay
 			}
 			return 0
