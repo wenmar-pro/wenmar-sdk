@@ -2,6 +2,7 @@ package wenmar
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -220,5 +221,72 @@ func TestConditionalGet_CachesLastModifiedOnly(t *testing.T) {
 	}
 	if calls != 2 {
 		t.Errorf("expected 2 HTTP calls (200 + 304), got %d", calls)
+	}
+}
+
+// failingReadBody returns a few bytes, then a hard read error.
+type failingReadBody struct{ served bool }
+
+func (b *failingReadBody) Read(p []byte) (int, error) {
+	if b.served {
+		return 0, errors.New("connection reset mid-body")
+	}
+	b.served = true
+	return copy(p, `[{"id":1`), nil
+}
+func (b *failingReadBody) Close() error { return nil }
+
+// roundTripperFunc adapts a function to http.RoundTripper.
+type roundTripperFunc func(*http.Request) (*http.Response, error)
+
+func (f roundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) { return f(req) }
+
+func TestConditionalGet_ReadErrorNotCached(t *testing.T) {
+	base := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		h := http.Header{}
+		h.Set("ETag", `"etag-partial"`)
+		h.Set("Content-Type", "application/json")
+		return &http.Response{StatusCode: 200, Header: h, Body: &failingReadBody{}}, nil
+	})
+	ct := newCachingTransport(base)
+	req, _ := http.NewRequest("GET", "https://localhost/items", nil)
+
+	resp, err := ct.RoundTrip(req)
+	if err == nil {
+		t.Fatal("expected mid-body read error to surface, got nil")
+	}
+	if resp != nil {
+		t.Fatal("expected nil response alongside error (RoundTripper contract)")
+	}
+	ct.mu.Lock()
+	n := len(ct.cache)
+	ct.mu.Unlock()
+	if n != 0 {
+		t.Errorf("partial body must not be cached, got %d entries", n)
+	}
+}
+
+func TestConditionalGet_304ReplayCarriesRequest(t *testing.T) {
+	base := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		h := http.Header{}
+		h.Set("ETag", `"e"`)
+		h.Set("Content-Type", "application/json")
+		if req.Header.Get("If-None-Match") == `"e"` {
+			return &http.Response{StatusCode: 304, Header: h, Body: &bodyReadCloser{}}, nil
+		}
+		return &http.Response{StatusCode: 200, Header: h, Body: &bodyReadCloser{data: []byte(`[]`)}}, nil
+	})
+	ct := newCachingTransport(base)
+	req, _ := http.NewRequest("GET", "https://localhost/items", nil)
+	if _, err := ct.RoundTrip(req); err != nil {
+		t.Fatalf("first request: %v", err)
+	}
+	resp, err := ct.RoundTrip(req)
+	if err != nil {
+		t.Fatalf("second request: %v", err)
+	}
+	resp.Body.Close()
+	if resp.Request != req {
+		t.Error("expected 304 replay response to carry the originating *http.Request")
 	}
 }

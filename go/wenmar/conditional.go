@@ -1,6 +1,7 @@
 package wenmar
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"sync"
@@ -77,7 +78,7 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 	if isGet && resp.StatusCode == http.StatusNotModified && entry != nil {
 		resp.Body.Close()
-		cachedResp := cloneResponseWithBody(entry.Body, entry.Header)
+		cachedResp := cloneResponseWithBody(req, entry.Body, entry.Header)
 		return cachedResp, nil
 	}
 
@@ -85,10 +86,16 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 		etag := resp.Header.Get("ETag")
 		lastModified := resp.Header.Get("Last-Modified")
 		// Cache any 200 that carries a validator (ETag or Last-Modified) so a
-		// conditional revalidation can later return 304.
+		// conditional revalidation can later return 304. A mid-body read
+		// error aborts the request: partial bytes must never be cached
+		// or served.
 		if etag != "" || lastModified != "" {
-			body := readResponseBody(resp)
-			if body != nil {
+			body, readErr := io.ReadAll(resp.Body)
+			resp.Body.Close()
+			if readErr != nil {
+				return nil, fmt.Errorf("read response body: %w", readErr)
+			}
+			if len(body) > 0 {
 				t.mu.Lock()
 				t.cache[cacheKey(req)] = &cacheEntry{
 					ETag:         etag,
@@ -97,9 +104,9 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 					Body:         body,
 				}
 				t.mu.Unlock()
-				// Restore a readable body so downstream parsers still work.
-				resp.Body = &bodyReadCloser{data: body}
 			}
+			// Restore a readable body so downstream parsers still work.
+			resp.Body = &bodyReadCloser{data: body}
 		}
 	}
 
@@ -108,8 +115,9 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 // cloneResponseWithBody builds a 200 response around the cached body, carrying
 // the cached headers (so Link/X-Total-Count/X-Per-Page survive a 304). The
-// headers are deep-cloned to avoid mutating the shared cache entry.
-func cloneResponseWithBody(body []byte, headers http.Header) *http.Response {
+// headers are deep-cloned to avoid mutating the shared cache entry, and the
+// original request is attached so resp.Request works for callers.
+func cloneResponseWithBody(req *http.Request, body []byte, headers http.Header) *http.Response {
 	cloned := make(http.Header)
 	for k, vv := range headers {
 		cloned[k] = append([]string(nil), vv...)
@@ -122,25 +130,8 @@ func cloneResponseWithBody(body []byte, headers http.Header) *http.Response {
 		Status:     "200 OK",
 		Header:     cloned,
 		Body:       &bodyReadCloser{data: body},
-		Request:    nil,
+		Request:    req,
 	}
-}
-
-func readResponseBody(resp *http.Response) []byte {
-	body := make([]byte, 0, 1024)
-	buf := make([]byte, 4096)
-	for {
-		n, err := resp.Body.Read(buf)
-		body = append(body, buf[:n]...)
-		if err != nil {
-			break
-		}
-	}
-	resp.Body.Close()
-	if len(body) == 0 {
-		return nil
-	}
-	return body
 }
 
 type bodyReadCloser struct {
