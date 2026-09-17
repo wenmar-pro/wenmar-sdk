@@ -29,6 +29,12 @@ class CredentialStoreTest < Wenmar::TestCase
     assert_equal 0o600, File.stat(@path).mode & 0o777
   end
 
+  def test_save_token_leaves_no_tmp_file
+    @store.save_token(Wenmar::Token.new(access_token: "abc"))
+    leftover = Dir.glob(File.join(File.dirname(@path), "*.tmp.*"), File::FNM_DOTMATCH)
+    refute leftover.any?, "temporary credential files must be cleaned up: #{leftover.inspect}"
+  end
+
   def test_save_token_accepts_hash
     @store.save_token({"access_token" => "a", "refresh_token" => "r"})
     token = @store.get_token

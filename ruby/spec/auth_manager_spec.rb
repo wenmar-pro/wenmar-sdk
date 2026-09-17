@@ -51,6 +51,24 @@ class CredentialStoreProviderTest < Wenmar::TestCase
     provider = Wenmar::CredentialStoreProvider.new(store: @store, manager: manager, refresh_window: 300)
     assert_equal "fresh", provider.token
   end
+
+  def test_credential_store_provider_refreshes_once_under_concurrency
+    refresh_count = 0
+    manager = Wenmar::AuthManager.new(store: @store)
+    manager.set_refresh_fn do
+      refresh_count += 1
+      sleep 0.05
+      Wenmar::Token.new(access_token: "fresh-#{refresh_count}", refresh_token: "r")
+    end
+    provider = Wenmar::CredentialStoreProvider.new(store: @store, manager: manager, refresh_window: 300)
+    @store.save_token(Wenmar::Token.new(access_token: "old", refresh_token: "r",
+                                        expires_at: Time.now + 1))
+
+    threads = 8.times.map { Thread.new { provider.token } }
+    threads.each(&:join)
+
+    assert_equal 1, refresh_count, "expected a single refresh, got #{refresh_count}"
+  end
 end
 
 class AuthManagerTest < Wenmar::TestCase

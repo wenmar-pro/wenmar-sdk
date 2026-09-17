@@ -30,19 +30,22 @@ module Wenmar
       @store = store
       @manager = manager
       @refresh_window = refresh_window
+      @refresh_mutex = Mutex.new
     end
 
     def token
-      token = @store.get_token
-      return nil if token.nil? || token.access_token.nil? || token.access_token.empty?
+      @refresh_mutex.synchronize do
+        token = @store.get_token
+        return nil if token.nil? || token.access_token.nil? || token.access_token.empty?
 
-      if token.expired? || token.will_expire_within?(@refresh_window)
-        if @manager
-          @manager.refresh
-          token = @store.get_token
+        if token.expired? || token.will_expire_within?(@refresh_window)
+          if @manager
+            @manager.refresh
+            token = @store.get_token
+          end
         end
+        token&.access_token
       end
-      token&.access_token
     end
   end
 

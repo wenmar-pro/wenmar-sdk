@@ -44,8 +44,15 @@ module Wenmar
 
     def save_token(token)
       token = Token.from_h(token) if token.is_a?(Hash)
-      FileUtils.mkdir_p(File.dirname(@path))
-      File.write(@path, JSON.pretty_generate(token.to_h), perm: 0o600)
+      dir = File.dirname(@path)
+      FileUtils.mkdir_p(dir)
+      tmp = File.join(dir, ".#{File.basename(@path)}.tmp.#{Process.pid}.#{Thread.current.object_id}")
+      begin
+        File.write(tmp, JSON.pretty_generate(token.to_h), perm: 0o600)
+        File.rename(tmp, @path)
+      ensure
+        File.delete(tmp) if File.exist?(tmp)
+      end
     end
 
     def delete
