@@ -4,33 +4,17 @@ import (
 	"context"
 	"fmt"
 	"sync"
+
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/token"
 )
 
 // TokenProvider supplies an API token. Implementations may read from a static
 // value, the system keyring, or a credential file. The token is fetched per
 // request so providers can rotate or refresh tokens.
-type TokenProvider interface {
-	Token(ctx context.Context) (string, error)
-}
-
-// StaticTokenProvider wraps a fixed string. Used for the --token flag and
-// WENMAR_TOKEN env var.
-type StaticTokenProvider struct {
-	value string
-}
+type TokenProvider = token.Provider
 
 // NewStaticTokenProvider creates a provider that always returns the given token.
-func NewStaticTokenProvider(token string) *StaticTokenProvider {
-	return &StaticTokenProvider{value: token}
-}
-
-// Token returns the fixed token.
-func (p *StaticTokenProvider) Token(_ context.Context) (string, error) {
-	if p.value == "" {
-		return "", fmt.Errorf("token is empty")
-	}
-	return p.value, nil
-}
+func NewStaticTokenProvider(value string) *token.Static { return token.NewStatic(value) }
 
 // CredentialStoreProvider reads from a CredentialStore, auto-refreshing via
 // the AuthManager when the token is expired or near-expiry (5 min window).

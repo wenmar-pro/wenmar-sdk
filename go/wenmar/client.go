@@ -8,32 +8,16 @@ import (
 	"strings"
 
 	gen "github.com/wenmar-pro/wenmar-sdk/go/pkg/generated"
+	"github.com/wenmar-pro/wenmar-sdk/go/pkg/token"
 )
 
 // TokenProvider resolves a bearer token for a request. Implementations may
 // refresh or rotate the token; the provider is called per request.
-type TokenProvider interface {
-	Token(ctx context.Context) (string, error)
-}
-
-// StaticTokenProvider returns a fixed token. Suitable for simple scripts and
-// tests.
-type StaticTokenProvider struct {
-	token string
-}
+type TokenProvider = token.Provider
 
 // NewStaticTokenProvider creates a TokenProvider that always returns the
 // given token.
-func NewStaticTokenProvider(token string) *StaticTokenProvider {
-	return &StaticTokenProvider{token: token}
-}
-
-func (p *StaticTokenProvider) Token(context.Context) (string, error) {
-	if p.token == "" {
-		return "", fmt.Errorf("token is empty")
-	}
-	return p.token, nil
-}
+func NewStaticTokenProvider(t string) *token.Static { return token.NewStatic(t) }
 
 // Client is the hand-written SDK entry point. Operations are generated
 // into operations.gen.go and share the core request pipeline defined here.
