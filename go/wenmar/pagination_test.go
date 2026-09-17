@@ -125,6 +125,33 @@ func TestGetAllWithOptions_RespectsMaxItems(t *testing.T) {
 	}
 }
 
+func TestGetAllCustomers_ReportsTruncation(t *testing.T) {
+	var serverURL string
+	var calls int32
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		w.Header().Set("Content-Type", "application/json")
+		if calls < 3 {
+			w.Header().Set("Link", fmt.Sprintf(`<%s/customers?page=%d>; rel="next"`, serverURL, calls+1))
+		}
+		w.Write([]byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`))
+	}))
+	defer ts.Close()
+	serverURL = ts.URL
+
+	c := newTestClient(t, ts.URL, "test")
+	items, truncated, err := c.GetAllCustomers(context.Background(), nil, &GetAllOptions{MaxItems: 2})
+	if err != nil {
+		t.Fatalf("GetAllCustomers failed: %v", err)
+	}
+	if len(items) != 2 {
+		t.Errorf("expected 2 items, got %d", len(items))
+	}
+	if !truncated {
+		t.Error("expected truncated=true when MaxItems cap is hit")
+	}
+}
+
 func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	var serverURL string
 	var calls int32
@@ -140,7 +167,7 @@ func TestGetAllCustomers_FollowsLinkHeader(t *testing.T) {
 	serverURL = ts.URL
 
 	c := newTestClient(t, ts.URL, "test-token")
-	items, err := c.GetAllCustomers(ctx, nil, nil)
+	items, _, err := c.GetAllCustomers(ctx, nil, nil)
 	if err != nil {
 		t.Fatalf("GetAllCustomers failed: %v", err)
 	}
@@ -408,7 +435,7 @@ func TestGetAllCustomers_WithMaxItemsOption(t *testing.T) {
 	serverURL = ts.URL
 
 	c := newTestClient(t, ts.URL, "test")
-	items, err := c.GetAllCustomers(context.Background(), nil, &GetAllOptions{MaxItems: 1})
+	items, _, err := c.GetAllCustomers(context.Background(), nil, &GetAllOptions{MaxItems: 1})
 	if err != nil {
 		t.Fatalf("GetAllCustomers failed: %v", err)
 	}

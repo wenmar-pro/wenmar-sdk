@@ -4,6 +4,33 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.8 to v0.8.1
+
+v0.8.1 is a behavior-fix release with two breaking Go signature changes
+(pre-1.0; the Ruby gem API is unchanged):
+
+1. `GetAll*` now returns the truncation flag so callers can detect when the
+   `MaxItems`/`MaxPages` cap stopped collection:
+
+   ```go
+   // Before: items, err := client.GetAllCustomers(ctx, nil, nil)
+   items, truncated, err := client.GetAllCustomers(ctx, nil, nil)
+   ```
+
+2. `Client.ForLocation` returns `(*Client, error)` instead of swallowing the
+   client-construction error:
+
+   ```go
+   // Before: scoped := client.ForLocation("42")
+   scoped, err := client.ForLocation("42")
+   ```
+
+Behavioral fixes: typed `List*` methods now return an error when the response
+body cannot be parsed (previously they returned an empty result silently);
+OAuth refresh wraps transport failures in `TokenError` (Ruby); concurrent
+token refresh is single-flighted (both SDKs); credential writes are atomic
+(both SDKs). Both SDKs report `0.8.1`.
+
 ## Migrating from v0.7 to v0.8
 
 v0.8 renames the domain-workflow `status` field on six resources to their

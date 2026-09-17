@@ -97,7 +97,8 @@ Lifecycle-managed resources (customers, vehicles, vendors, …) support
 `Trash*`/`Archive*`/`Restore*` rather than `DELETE`.
 
 Every paginated list also has a `GetAll*` variant that auto-paginates with a
-1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil, nil)`.
+1,000-item safety cap, e.g. `GetAllCustomers(ctx, nil, nil)`. `GetAll*` returns
+`(items, truncated, err)` so callers can detect when the cap stopped collection.
 
 Every `List*` method also has a `ListXxxRaw` variant that returns the raw
 oapi-codegen response envelope for callers who need headers or status codes.
@@ -120,8 +121,8 @@ for result.HasNext() {
 Or collect everything with `GetAllCustomers`, configurable via `GetAllOptions`:
 
 ```go
-items, err := client.GetAllCustomers(ctx, nil, nil) // nil opts = default 1000 cap
-items, err := client.GetAllCustomers(ctx, nil, &wenmar.GetAllOptions{MaxItems: 50})
+items, truncated, err := client.GetAllCustomers(ctx, nil, nil) // nil opts = default 1000 cap
+items, truncated, err := client.GetAllCustomers(ctx, nil, &wenmar.GetAllOptions{MaxItems: 50})
 ```
 
 For raw access to the full response envelope (headers, status code), use

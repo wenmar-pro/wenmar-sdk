@@ -149,16 +149,17 @@ def build_get_all(op)
   <<~GO
     // GetAll#{base} auto-paginates #{op["id"]}, following the Link header.
     // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-    func (c *Client) GetAll#{base}(#{params.join(", ")}) ([]#{item}, error) {
+    // truncated reports whether a cap stopped collection before the last page.
+    func (c *Client) GetAll#{base}(#{params.join(", ")}) ([]#{item}, bool, error) {
     	first, err := c.#{list_method}(#{call_args.join(", ")})
     	if err != nil {
-    		return nil, err
+    		return nil, false, err
     	}
-    	items, _, err := getAll[#{item}](ctx, first, opts)
+    	items, truncated, err := getAll[#{item}](ctx, first, opts)
     	if err != nil {
-    		return nil, err
+    		return nil, false, err
     	}
-    	return items, nil
+    	return items, truncated, nil
     }
   GO
 end

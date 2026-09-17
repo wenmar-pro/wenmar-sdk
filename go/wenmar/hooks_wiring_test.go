@@ -183,7 +183,7 @@ func TestHooksWiring_Paginate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewClient: %v", err)
 	}
-	if _, err := c.GetAllCustomers(context.Background(), nil, nil); err != nil {
+	if _, _, err := c.GetAllCustomers(context.Background(), nil, nil); err != nil {
 		t.Fatalf("GetAllCustomers: %v", err)
 	}
 
@@ -217,7 +217,7 @@ func TestHooksWiring_NoopNoPanic(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewClient: %v", err)
 	}
-	if _, err := c.GetAllCustomers(context.Background(), nil, nil); err != nil {
+	if _, _, err := c.GetAllCustomers(context.Background(), nil, nil); err != nil {
 		t.Fatalf("GetAllCustomers: %v", err)
 	}
 }
