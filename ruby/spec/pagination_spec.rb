@@ -122,6 +122,58 @@ module Wenmar
       assert_equal 1, result.first["id"]
     end
 
+    def test_each_iterates_all_pages_from_first
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: [{"id" => 1}, {"id" => 2}].to_json,
+                  headers: {"Content-Type" => "application/json",
+                            "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\""})
+      stub_request(:get, "#{@base_url}/customers?page=2")
+        .to_return(status: 200, body: [{"id" => 3}].to_json,
+                  headers: {"Content-Type" => "application/json"})
+
+      client = Client.new(token: "test", base_url: @base_url)
+      seen = []
+      client.list_customers.paginator.each { |c| seen << c["id"] }
+      assert_equal [1, 2, 3], seen
+    end
+
+    def test_each_single_page_without_link
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: [{"id" => 9}].to_json,
+                  headers: {"Content-Type" => "application/json"})
+
+      client = Client.new(token: "test", base_url: @base_url)
+      seen = []
+      client.list_customers.paginator.each { |c| seen << c["id"] }
+      assert_equal [9], seen
+    end
+
+    def test_to_a_collects_all_pages_including_first
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: [{"id" => 1}, {"id" => 2}].to_json,
+                  headers: {"Content-Type" => "application/json",
+                            "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\""})
+      stub_request(:get, "#{@base_url}/customers?page=2")
+        .to_return(status: 200, body: [{"id" => 3}].to_json,
+                  headers: {"Content-Type" => "application/json"})
+
+      client = Client.new(token: "test", base_url: @base_url)
+      assert_equal [1, 2, 3], client.list_customers.paginator.to_a.map { |c| c["id"] }
+    end
+
+    def test_to_a_respects_max
+      stub_request(:get, "#{@base_url}/customers")
+        .to_return(status: 200, body: [{"id" => 1}, {"id" => 2}].to_json,
+                  headers: {"Content-Type" => "application/json",
+                            "Link" => "<#{@base_url}/customers?page=2>; rel=\"next\""})
+      stub_request(:get, "#{@base_url}/customers?page=2")
+        .to_return(status: 200, body: [{"id" => 3}, {"id" => 4}].to_json,
+                  headers: {"Content-Type" => "application/json"})
+
+      client = Client.new(token: "test", base_url: @base_url)
+      assert_equal [1, 2], client.list_customers.paginator.to_a(2).map { |c| c["id"] }
+    end
+
     private
 
     def stub_api(method, path, body, status: 200, link: nil)

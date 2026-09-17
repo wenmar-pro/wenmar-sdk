@@ -134,9 +134,8 @@ module Wenmar
     # paginator_to_a collects all pages from a paginated list result, up to
     # max items (default 1000). The returned array includes the initial page
     # (the response body) plus every subsequent page fetched via the Link
-    # header. We intentionally do NOT delegate to Paginator#to_a: that method
-    # starts from the paginator's own (empty) data and would drop the initial
-    # page.
+    # header. Paginator#to_a and this method share the same Link-following
+    # behavior; this helper is kept as part of the public API.
     def paginator_to_a(result, max = 1000)
       return result unless result.respond_to?(:paginator)
 
@@ -209,8 +208,8 @@ module Wenmar
 
       body = JSON.parse(body) if body.is_a?(String)
 
-      # Attach a paginator to list responses that carry a Link header.
-      if body.is_a?(Array) && response.headers["Link"]
+      # Attach a paginator to list responses (array bodies).
+      if body.is_a?(Array)
         client = self
         body.define_singleton_method(:paginator) do
           Paginator.from_response(response, client)
