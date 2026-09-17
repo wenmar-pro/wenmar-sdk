@@ -268,7 +268,7 @@ func (c *Client) fetchURL(ctx context.Context, url string) ([]byte, http.Header,
 
 	if resp.StatusCode >= 400 {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, nil, ParseErrorBodyWithRequest(body, resp.StatusCode, "GET", url)
+		return nil, nil, ParseErrorBody(body, resp.StatusCode, "GET", url, resp.Header.Get("X-Request-Id"))
 	}
 
 	body, err := io.ReadAll(resp.Body)

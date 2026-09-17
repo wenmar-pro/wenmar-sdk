@@ -198,7 +198,7 @@ func parseError(body []byte, statusCode int, hr *http.Response) error {
 	if hr != nil {
 		requestID = hr.Header.Get("X-Request-Id")
 	}
-	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, requestID)
+	return ParseErrorBody(body, statusCode, method, path, requestID)
 }
 
 // FetchPage fetches a pagination URL (from a Link header) through the same

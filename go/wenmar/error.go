@@ -34,25 +34,15 @@ func ParseError(resp *http.Response) *APIError {
 	if err != nil {
 		return &APIError{Code: "unknown", Message: "unreadable body", StatusCode: resp.StatusCode}
 	}
-	return ParseErrorBody(body, resp.StatusCode)
+	return ParseErrorBody(body, resp.StatusCode, "", "", "")
 }
 
-// ParseErrorBody parses the { "error": { code, message, field_errors } } envelope
-// from an already-read response body. The generated oapi-codegen client drains
-// the body into a byte slice, so callers pass that slice here.
-func ParseErrorBody(body []byte, statusCode int) *APIError {
-	return ParseErrorBodyWithRequest(body, statusCode, "", "")
-}
-
-// ParseErrorBodyWithRequest is like ParseErrorBody but also records the HTTP
-// method and request path that produced the error, for richer diagnostics.
-func ParseErrorBodyWithRequest(body []byte, statusCode int, method, path string) *APIError {
-	return ParseErrorBodyWithRequestAndID(body, statusCode, method, path, "")
-}
-
-// ParseErrorBodyWithRequestAndID is like ParseErrorBodyWithRequest but also
-// records the X-Request-Id header for support correlation.
-func ParseErrorBodyWithRequestAndID(body []byte, statusCode int, method, path, requestID string) *APIError {
+// ParseErrorBody parses the { "error": { code, message, field_errors } }
+// envelope from an already-read response body. The generated oapi-codegen
+// client drains the body into a byte slice, so callers pass that slice
+// here. method, path, and requestID (e.g. from the X-Request-Id response
+// header) are recorded for diagnostics; pass "" when unavailable.
+func ParseErrorBody(body []byte, statusCode int, method, path, requestID string) *APIError {
 	apiErr := &APIError{StatusCode: statusCode, Method: method, Path: path, RequestID: requestID}
 
 	if len(body) == 0 {

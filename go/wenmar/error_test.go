@@ -72,7 +72,7 @@ func TestAPIError_ErrorStringWithRequest(t *testing.T) {
 
 func TestParseErrorBodyWithRequest_SetsMethodAndPath(t *testing.T) {
 	body := `{"error":{"code":"unauthorized","message":"Invalid or missing API token","field_errors":{}}}`
-	apiErr := ParseErrorBodyWithRequest([]byte(body), http.StatusUnauthorized, "GET", "/customers")
+	apiErr := ParseErrorBody([]byte(body), http.StatusUnauthorized, "GET", "/customers", "")
 	if apiErr.Method != "GET" {
 		t.Errorf("expected method 'GET', got '%s'", apiErr.Method)
 	}
@@ -86,7 +86,7 @@ func TestParseErrorBodyWithRequest_SetsMethodAndPath(t *testing.T) {
 
 func TestParseErrorBody_LeavesMethodAndPathEmpty(t *testing.T) {
 	body := `{"error":{"code":"not_found","message":"Customer not found","field_errors":{}}}`
-	apiErr := ParseErrorBody([]byte(body), http.StatusNotFound)
+	apiErr := ParseErrorBody([]byte(body), http.StatusNotFound, "", "", "")
 	if apiErr.Method != "" {
 		t.Errorf("expected empty method, got '%s'", apiErr.Method)
 	}
@@ -191,7 +191,7 @@ func TestAPIError_RequestID(t *testing.T) {
 
 func TestParseError_507LimitExceeded(t *testing.T) {
 	body := []byte(`{"error":{"code":"limit_exceeded","message":"Account limit reached","field_errors":{}}}`)
-	apiErr := ParseErrorBody(body, 507)
+	apiErr := ParseErrorBody(body, 507, "", "", "")
 	if apiErr.Code != "limit_exceeded" {
 		t.Errorf("expected code 'limit_exceeded', got %q", apiErr.Code)
 	}
@@ -229,7 +229,7 @@ func TestStatusFallbackCode_CommonStatuses(t *testing.T) {
 }
 
 func TestParseError_507StatusFallback(t *testing.T) {
-	apiErr := ParseErrorBody([]byte{}, 507)
+	apiErr := ParseErrorBody([]byte{}, 507, "", "", "")
 	if apiErr.Code != "limit_exceeded" {
 		t.Errorf("expected code 'limit_exceeded' from status fallback, got %q", apiErr.Code)
 	}
