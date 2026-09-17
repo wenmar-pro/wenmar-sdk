@@ -12,6 +12,7 @@ type (
 	CounterSale = gen.CounterSale
 	Customer = gen.Customer
 	CustomerTag = gen.CustomerTag
+	StoreCredit = gen.StoreCredit
 	Driver = gen.Driver
 	Inspection = gen.Inspection
 	InspectionReport = gen.InspectionReport
@@ -71,6 +72,7 @@ type (
 	CreateCounterSalesPaymentResponse = gen.CreateCounterSalesPaymentResponse
 	CreateCustomerResponse = gen.CreateCustomerResponse
 	CreateCustomerTagResponse = gen.CreateCustomerTagResponse
+	CreateCustomersStoreCreditResponse = gen.CreateCustomersStoreCreditResponse
 	CreateDriverResponse = gen.CreateDriverResponse
 	CreateExpenseResponse = gen.CreateExpenseResponse
 	CreateInspectionResponse = gen.CreateInspectionResponse
@@ -105,6 +107,7 @@ type (
 	CreateShopFeesDuplicateResponse = gen.CreateShopFeesDuplicateResponse
 	CreateStatementsBulkSendResponse = gen.CreateStatementsBulkSendResponse
 	CreateStatementsGenerateResponse = gen.CreateStatementsGenerateResponse
+	CreateStoreCreditsRefundResponse = gen.CreateStoreCreditsRefundResponse
 	CreateStoreCreditsVoidResponse = gen.CreateStoreCreditsVoidResponse
 	CreateSubStatusResponse = gen.CreateSubStatusResponse
 	CreateSubletPackageResponse = gen.CreateSubletPackageResponse
@@ -221,8 +224,10 @@ type (
 	ListCurrentLocationResponse = gen.ListCurrentLocationResponse
 	ListCustomerTagsResponse = gen.ListCustomerTagsResponse
 	ListCustomersResponse = gen.ListCustomersResponse
+	ListCustomersConversationsResponse = gen.ListCustomersConversationsResponse
 	ListCustomersDriversResponse = gen.ListCustomersDriversResponse
 	ListCustomersStatementsResponse = gen.ListCustomersStatementsResponse
+	ListCustomersStoreCreditsResponse = gen.ListCustomersStoreCreditsResponse
 	ListCustomersVehiclesResponse = gen.ListCustomersVehiclesResponse
 	ListCustomersVehiclesHistoryResponse = gen.ListCustomersVehiclesHistoryResponse
 	ListCustomersWorkOrdersResponse = gen.ListCustomersWorkOrdersResponse
@@ -340,6 +345,7 @@ type (
 	ShowCounterSaleResponse = gen.ShowCounterSaleResponse
 	ShowCustomerResponse = gen.ShowCustomerResponse
 	ShowCustomerTagResponse = gen.ShowCustomerTagResponse
+	ShowCustomersStoreCreditResponse = gen.ShowCustomersStoreCreditResponse
 	ShowDriverResponse = gen.ShowDriverResponse
 	ShowExpenseResponse = gen.ShowExpenseResponse
 	ShowInspectionResponse = gen.ShowInspectionResponse
@@ -494,6 +500,7 @@ type (
 	CreateCounterSalesPaymentRequest = gen.CreateCounterSalesPaymentRequest
 	CreateCustomerRequest = gen.CreateCustomerRequest
 	CreateCustomerTagRequest = gen.CreateCustomerTagRequest
+	CreateCustomersStoreCreditRequest = gen.CreateCustomersStoreCreditRequest
 	CreateDriverRequest = gen.CreateDriverRequest
 	CreateExpenseRequest = gen.CreateExpenseRequest
 	CreateInspectionRequest = gen.CreateInspectionRequest
@@ -528,6 +535,7 @@ type (
 	CreateShopFeesDuplicateRequest = gen.CreateShopFeesDuplicateRequest
 	CreateStatementsBulkSendRequest = gen.CreateStatementsBulkSendRequest
 	CreateStatementsGenerateRequest = gen.CreateStatementsGenerateRequest
+	CreateStoreCreditsRefundRequest = gen.CreateStoreCreditsRefundRequest
 	CreateStoreCreditsVoidRequest = gen.CreateStoreCreditsVoidRequest
 	CreateSubStatusRequest = gen.CreateSubStatusRequest
 	CreateSubletPackageRequest = gen.CreateSubletPackageRequest

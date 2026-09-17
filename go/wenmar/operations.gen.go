@@ -602,6 +602,23 @@ func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagRe
 	return resp, nil
 }
 
+// CreateCustomersStoreCredit runs the create_customers_store_credit operation (POST /customers/{customer_id}/store_credits).
+func (c *Client) CreateCustomersStoreCredit(ctx context.Context, customerId int, body CreateCustomersStoreCreditRequest) (*CreateCustomersStoreCreditResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"})
+	resp, err := c.gen.CreateCustomersStoreCreditWithResponse(ctx, customerId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit"})
+	return resp, nil
+}
+
 // CreateDriver runs the create_driver operation (POST /customers/{customer_id}/drivers).
 func (c *Client) CreateDriver(ctx context.Context, customerId int, body CreateDriverRequest) (*CreateDriverResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateDriver"})
@@ -1177,6 +1194,23 @@ func (c *Client) CreateStatementsGenerate(ctx context.Context, body CreateStatem
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate"})
+	return resp, nil
+}
+
+// CreateStoreCreditsRefund runs the create_store_credits_refund operation (POST /store_credits/{store_credit_id}/refunds).
+func (c *Client) CreateStoreCreditsRefund(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundRequest) (*CreateStoreCreditsRefundResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"})
+	resp, err := c.gen.CreateStoreCreditsRefundWithResponse(ctx, storeCreditId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund"})
 	return resp, nil
 }
 
@@ -3152,6 +3186,23 @@ func (c *Client) ListCustomersRaw(ctx context.Context, params *ListCustomersPara
 	return resp, nil
 }
 
+// ListCustomersConversationsRaw runs the list_customers_conversations operation (GET /customers/{customer_id}/conversations).
+func (c *Client) ListCustomersConversationsRaw(ctx context.Context, customerId int) (*ListCustomersConversationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersConversations"})
+	resp, err := c.gen.ListCustomersConversationsWithResponse(ctx, customerId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations"})
+	return resp, nil
+}
+
 // ListCustomersDriversRaw runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
 func (c *Client) ListCustomersDriversRaw(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersDrivers"})
@@ -3183,6 +3234,23 @@ func (c *Client) ListCustomersStatementsRaw(ctx context.Context, customerId int)
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStatements"}, OperationResult{Operation: "ListCustomersStatements"})
+	return resp, nil
+}
+
+// ListCustomersStoreCreditsRaw runs the list_customers_store_credits operation (GET /customers/{customer_id}/store_credits).
+func (c *Client) ListCustomersStoreCreditsRaw(ctx context.Context, customerId int) (*ListCustomersStoreCreditsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"})
+	resp, err := c.gen.ListCustomersStoreCreditsWithResponse(ctx, customerId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits"})
 	return resp, nil
 }
 
@@ -5172,6 +5240,23 @@ func (c *Client) ShowCustomerTag(ctx context.Context, id int) (*ShowCustomerTagR
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag"})
+	return resp, nil
+}
+
+// ShowCustomersStoreCredit runs the show_customers_store_credit operation (GET /customers/{customer_id}/store_credits/{id}).
+func (c *Client) ShowCustomersStoreCredit(ctx context.Context, customerId int, id int) (*ShowCustomersStoreCreditResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"})
+	resp, err := c.gen.ShowCustomersStoreCreditWithResponse(ctx, customerId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit"})
 	return resp, nil
 }
 
@@ -7354,6 +7439,8 @@ func (c *Client) VoidWorkOrder(ctx context.Context, id int, body VoidWorkOrderRe
 
 
 
+
+
 // ListAppointments fetches a page of list_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsParams) (*ListResult[Appointment], error) {
@@ -7429,6 +7516,16 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams)
 	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
+// ListCustomersConversations fetches a page of list_customers_conversations results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersConversations(ctx context.Context, customerId int) (*ListResult[Conversation], error) {
+	resp, err := c.ListCustomersConversationsRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
 // ListCustomersDrivers fetches a page of list_customers_drivers results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*ListResult[Driver], error) {
@@ -7447,6 +7544,16 @@ func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*
 		return nil, err
 	}
 	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+// ListCustomersStoreCredits fetches a page of list_customers_store_credits results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersStoreCredits(ctx context.Context, customerId int) (*ListResult[StoreCredit], error) {
+	resp, err := c.ListCustomersStoreCreditsRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[StoreCredit](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCustomersVehicles fetches a page of list_customers_vehicles results as a typed ListResult.
@@ -8091,6 +8198,9 @@ func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int
 
 
 
+
+
+
 // GetAllAppointments auto-paginates list_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointmentsParams, opts *GetAllOptions) ([]Appointment, error) {
@@ -8194,6 +8304,20 @@ func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParam
 	return items, nil
 }
 
+// GetAllCustomersConversations auto-paginates list_customers_conversations, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersConversations(ctx context.Context, customerId int, opts *GetAllOptions) ([]Conversation, error) {
+	first, err := c.ListCustomersConversations(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	items, _, err := getAll[Conversation](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 // GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opts *GetAllOptions) ([]Driver, error) {
@@ -8216,6 +8340,20 @@ func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int, 
 		return nil, err
 	}
 	items, _, err := getAll[Statement](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+// GetAllCustomersStoreCredits auto-paginates list_customers_store_credits, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersStoreCredits(ctx context.Context, customerId int, opts *GetAllOptions) ([]StoreCredit, error) {
+	first, err := c.ListCustomersStoreCredits(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	items, _, err := getAll[StoreCredit](ctx, first, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -8640,6 +8778,7 @@ func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId i
 	}
 	return items, nil
 }
+
 
 
 

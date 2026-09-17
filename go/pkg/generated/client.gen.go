@@ -437,6 +437,14 @@ type CreateCustomerTagRequest struct {
 	Name string `json:"name"`
 }
 
+// CreateCustomersStoreCreditRequest defines model for CreateCustomersStoreCreditRequest.
+type CreateCustomersStoreCreditRequest struct {
+	StoreCredit struct {
+		Amount string `json:"amount"`
+		Kind   string `json:"kind"`
+	} `json:"store_credit"`
+}
+
 // CreateDriverRequest defines model for CreateDriverRequest.
 type CreateDriverRequest struct {
 	Driver struct {
@@ -672,6 +680,14 @@ type CreateStatementsBulkSendRequest struct {
 
 // CreateStatementsGenerateRequest defines model for CreateStatementsGenerateRequest.
 type CreateStatementsGenerateRequest = map[string]interface{}
+
+// CreateStoreCreditsRefundRequest defines model for CreateStoreCreditsRefundRequest.
+type CreateStoreCreditsRefundRequest struct {
+	Refund struct {
+		Amount string `json:"amount"`
+		Method string `json:"method"`
+	} `json:"refund"`
+}
 
 // CreateStoreCreditsVoidRequest defines model for CreateStoreCreditsVoidRequest.
 type CreateStoreCreditsVoidRequest = map[string]interface{}
@@ -1071,10 +1087,11 @@ type Customer struct {
 	AppUrl string `json:"app_url"`
 
 	// CompanyName Example: Acme Auto
-	CompanyName *string `json:"company_name"`
-	CreatedAt   string  `json:"created_at"`
-	Currency    *string `json:"currency,omitempty"`
-	DisplayName string  `json:"display_name"`
+	CompanyName      *string `json:"company_name"`
+	ConversationsUrl string  `json:"conversations_url"`
+	CreatedAt        string  `json:"created_at"`
+	Currency         *string `json:"currency,omitempty"`
+	DisplayName      string  `json:"display_name"`
 
 	// Emails Example: [{"address":"jane@acmeauto.com","id":42,"label":"work","primary":true}]
 	Emails *[]struct {
@@ -1118,7 +1135,8 @@ type Customer struct {
 	PrimaryPhoneFormatted *string `json:"primary_phone_formatted"`
 	StatementsCount       *int    `json:"statements_count,omitempty"`
 	Status                string  `json:"status"`
-	StoreCreditCents      *int    `json:"store_credit_cents,omitempty"`
+	StoreCreditCents      int     `json:"store_credit_cents"`
+	StoreCreditsUrl       string  `json:"store_credits_url"`
 	TaxExempt             bool    `json:"tax_exempt"`
 	TotalRevenueCents     *int    `json:"total_revenue_cents,omitempty"`
 	TrashedAt             *string `json:"trashed_at"`
@@ -1669,6 +1687,33 @@ type Statement struct {
 	UpdatedAt string  `json:"updated_at"`
 	Url       string  `json:"url"`
 	ViewedAt  *string `json:"viewed_at"`
+}
+
+// StoreCredit defines model for StoreCredit.
+type StoreCredit struct {
+	AmountCents  int    `json:"amount_cents"`
+	AppUrl       string `json:"app_url"`
+	BalanceCents int    `json:"balance_cents"`
+	CreatedAt    string `json:"created_at"`
+	Id           int    `json:"id"`
+	IssuedBy     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"issued_by"`
+	Kind     string `json:"kind"`
+	Location struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Reason        string      `json:"reason"`
+	SourcePayment interface{} `json:"source_payment"`
+	UpdatedAt     string      `json:"updated_at"`
+	Url           string      `json:"url"`
+	VoidedAt      *string     `json:"voided_at"`
+	VoidedBy      interface{} `json:"voided_by"`
+	VoidsUrl      string      `json:"voids_url"`
 }
 
 // SubStatusType defines model for SubStatusType.
@@ -2871,6 +2916,9 @@ type CreateDriverJSONRequestBody = CreateDriverRequest
 // UpdateDriverJSONRequestBody defines body for UpdateDriver for application/json ContentType.
 type UpdateDriverJSONRequestBody = UpdateDriverRequest
 
+// CreateCustomersStoreCreditJSONRequestBody defines body for CreateCustomersStoreCredit for application/json ContentType.
+type CreateCustomersStoreCreditJSONRequestBody = CreateCustomersStoreCreditRequest
+
 // UpdateCustomerJSONRequestBody defines body for UpdateCustomer for application/json ContentType.
 type UpdateCustomerJSONRequestBody = UpdateCustomerRequest
 
@@ -3140,6 +3188,9 @@ type CreateStatementsBulkSendJSONRequestBody = CreateStatementsBulkSendRequest
 
 // CreateStatementsGenerateJSONRequestBody defines body for CreateStatementsGenerate for application/json ContentType.
 type CreateStatementsGenerateJSONRequestBody = CreateStatementsGenerateRequest
+
+// CreateStoreCreditsRefundJSONRequestBody defines body for CreateStoreCreditsRefund for application/json ContentType.
+type CreateStoreCreditsRefundJSONRequestBody = CreateStoreCreditsRefundRequest
 
 // CreateStoreCreditsVoidJSONRequestBody defines body for CreateStoreCreditsVoid for application/json ContentType.
 type CreateStoreCreditsVoidJSONRequestBody = CreateStoreCreditsVoidRequest
@@ -4436,6 +4487,13 @@ type ClientInterface interface {
 	// Corresponds with GET /customers/check_duplicate (the `CheckCustomerDuplicate` operationId).
 	CheckCustomerDuplicate(ctx context.Context, params *CheckCustomerDuplicateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListCustomersConversations index
+	//
+	// List all customers conversations, paginated via the Link header.
+	//
+	// Corresponds with GET /customers/{customer_id}/conversations (the `ListCustomersConversations` operationId).
+	ListCustomersConversations(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListCustomersDrivers index
 	//
 	// List all customers drivers, paginated via the Link header.
@@ -4499,6 +4557,38 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /customers/{customer_id}/statements (the `ListCustomersStatements` operationId).
 	ListCustomersStatements(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListCustomersStoreCredits index
+	//
+	// List all customers store credits, paginated via the Link header.
+	//
+	// Corresponds with GET /customers/{customer_id}/store_credits (the `ListCustomersStoreCredits` operationId).
+	ListCustomersStoreCredits(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomersStoreCreditWithBody create
+	//
+	// Create a customers store credit.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+	CreateCustomersStoreCreditWithBody(ctx context.Context, customerId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateCustomersStoreCredit create
+	//
+	// Create a customers store credit.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+	CreateCustomersStoreCredit(ctx context.Context, customerId int, body CreateCustomersStoreCreditJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ShowCustomersStoreCredit show
+	//
+	// Show a customers store credit by ID.
+	//
+	// Corresponds with GET /customers/{customer_id}/store_credits/{id} (the `ShowCustomersStoreCredit` operationId).
+	ShowCustomersStoreCredit(ctx context.Context, customerId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListCustomersVehicles index
 	//
@@ -6610,6 +6700,24 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /statements/{statement_id}/payments (the `ListStatementsPayments` operationId).
 	ListStatementsPayments(ctx context.Context, statementId int, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStoreCreditsRefundWithBody create
+	//
+	// Create a store credits refund.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+	CreateStoreCreditsRefundWithBody(ctx context.Context, storeCreditId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateStoreCreditsRefund create
+	//
+	// Create a store credits refund.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+	CreateStoreCreditsRefund(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateStoreCreditsVoidWithBody create
 	//
@@ -10840,6 +10948,23 @@ func (c *Client) CheckCustomerDuplicate(ctx context.Context, params *CheckCustom
 	return c.Client.Do(req)
 }
 
+// ListCustomersConversations index
+//
+// List all customers conversations, paginated via the Link header.
+//
+// Corresponds with GET /customers/{customer_id}/conversations (the `ListCustomersConversations` operationId).
+func (c *Client) ListCustomersConversations(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomersConversationsRequest(c.Server, customerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListCustomersDrivers index
 //
 // List all customers drivers, paginated via the Link header.
@@ -10974,6 +11099,78 @@ func (c *Client) UpdateDriver(ctx context.Context, customerId int, id int, body 
 // Corresponds with GET /customers/{customer_id}/statements (the `ListCustomersStatements` operationId).
 func (c *Client) ListCustomersStatements(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListCustomersStatementsRequest(c.Server, customerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListCustomersStoreCredits index
+//
+// List all customers store credits, paginated via the Link header.
+//
+// Corresponds with GET /customers/{customer_id}/store_credits (the `ListCustomersStoreCredits` operationId).
+func (c *Client) ListCustomersStoreCredits(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListCustomersStoreCreditsRequest(c.Server, customerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateCustomersStoreCreditWithBody create
+//
+// Create a customers store credit.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+func (c *Client) CreateCustomersStoreCreditWithBody(ctx context.Context, customerId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomersStoreCreditRequestWithBody(c.Server, customerId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateCustomersStoreCredit create
+//
+// Create a customers store credit.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+func (c *Client) CreateCustomersStoreCredit(ctx context.Context, customerId int, body CreateCustomersStoreCreditJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateCustomersStoreCreditRequest(c.Server, customerId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ShowCustomersStoreCredit show
+//
+// Show a customers store credit by ID.
+//
+// Corresponds with GET /customers/{customer_id}/store_credits/{id} (the `ShowCustomersStoreCredit` operationId).
+func (c *Client) ShowCustomersStoreCredit(ctx context.Context, customerId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewShowCustomersStoreCreditRequest(c.Server, customerId, id)
 	if err != nil {
 		return nil, err
 	}
@@ -15735,6 +15932,44 @@ func (c *Client) ShowStatement(ctx context.Context, id int, reqEditors ...Reques
 // Corresponds with GET /statements/{statement_id}/payments (the `ListStatementsPayments` operationId).
 func (c *Client) ListStatementsPayments(ctx context.Context, statementId int, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListStatementsPaymentsRequest(c.Server, statementId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStoreCreditsRefundWithBody create
+//
+// Create a store credits refund.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+func (c *Client) CreateStoreCreditsRefundWithBody(ctx context.Context, storeCreditId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStoreCreditsRefundRequestWithBody(c.Server, storeCreditId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateStoreCreditsRefund create
+//
+// Create a store credits refund.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+func (c *Client) CreateStoreCreditsRefund(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateStoreCreditsRefundRequest(c.Server, storeCreditId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -23722,6 +23957,40 @@ func NewCheckCustomerDuplicateRequest(server string, params *CheckCustomerDuplic
 	return req, nil
 }
 
+// NewListCustomersConversationsRequest constructs an http.Request for the ListCustomersConversations method
+func NewListCustomersConversationsRequest(server string, customerId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/conversations", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListCustomersDriversRequest constructs an http.Request for the ListCustomersDrivers method
 func NewListCustomersDriversRequest(server string, customerId int) (*http.Request, error) {
 	var err error
@@ -23956,6 +24225,128 @@ func NewListCustomersStatementsRequest(server string, customerId int) (*http.Req
 	}
 
 	operationPath := fmt.Sprintf("/customers/%s/statements", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListCustomersStoreCreditsRequest constructs an http.Request for the ListCustomersStoreCredits method
+func NewListCustomersStoreCreditsRequest(server string, customerId int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/store_credits", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateCustomersStoreCreditRequest calls the generic CreateCustomersStoreCredit builder with application/json body
+func NewCreateCustomersStoreCreditRequest(server string, customerId int, body CreateCustomersStoreCreditJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateCustomersStoreCreditRequestWithBody(server, customerId, "application/json", bodyReader)
+}
+
+// NewCreateCustomersStoreCreditRequestWithBody constructs an http.Request for the CreateCustomersStoreCredit method, with any body, and a specified content type
+func NewCreateCustomersStoreCreditRequestWithBody(server string, customerId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/store_credits", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewShowCustomersStoreCreditRequest constructs an http.Request for the ShowCustomersStoreCredit method
+func NewShowCustomersStoreCreditRequest(server string, customerId int, id int) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "customer_id", customerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/customers/%s/store_credits/%s", pathParam0, pathParam1)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -31166,6 +31557,53 @@ func NewListStatementsPaymentsRequest(server string, statementId int) (*http.Req
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewCreateStoreCreditsRefundRequest calls the generic CreateStoreCreditsRefund builder with application/json body
+func NewCreateStoreCreditsRefundRequest(server string, storeCreditId int, body CreateStoreCreditsRefundJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateStoreCreditsRefundRequestWithBody(server, storeCreditId, "application/json", bodyReader)
+}
+
+// NewCreateStoreCreditsRefundRequestWithBody constructs an http.Request for the CreateStoreCreditsRefund method, with any body, and a specified content type
+func NewCreateStoreCreditsRefundRequestWithBody(server string, storeCreditId int, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "store_credit_id", storeCreditId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/store_credits/%s/refunds", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -39895,6 +40333,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /customers/check_duplicate (the `CheckCustomerDuplicate` operationId).
 	CheckCustomerDuplicateWithResponse(ctx context.Context, params *CheckCustomerDuplicateParams, reqEditors ...RequestEditorFn) (*CheckCustomerDuplicateResponse, error)
 
+	// ListCustomersConversationsWithResponse index
+	//
+	// List all customers conversations, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/conversations (the `ListCustomersConversations` operationId).
+	ListCustomersConversationsWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*ListCustomersConversationsResponse, error)
+
 	// ListCustomersDriversWithResponse index
 	//
 	// List all customers drivers, paginated via the Link header.
@@ -39966,6 +40413,42 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /customers/{customer_id}/statements (the `ListCustomersStatements` operationId).
 	ListCustomersStatementsWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*ListCustomersStatementsResponse, error)
+
+	// ListCustomersStoreCreditsWithResponse index
+	//
+	// List all customers store credits, paginated via the Link header.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/store_credits (the `ListCustomersStoreCredits` operationId).
+	ListCustomersStoreCreditsWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*ListCustomersStoreCreditsResponse, error)
+
+	// CreateCustomersStoreCreditWithBodyWithResponse create
+	//
+	// Create a customers store credit.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+	CreateCustomersStoreCreditWithBodyWithResponse(ctx context.Context, customerId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomersStoreCreditResponse, error)
+
+	// CreateCustomersStoreCreditWithResponse create
+	//
+	// Create a customers store credit.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+	CreateCustomersStoreCreditWithResponse(ctx context.Context, customerId int, body CreateCustomersStoreCreditJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomersStoreCreditResponse, error)
+
+	// ShowCustomersStoreCreditWithResponse show
+	//
+	// Show a customers store credit by ID.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /customers/{customer_id}/store_credits/{id} (the `ShowCustomersStoreCredit` operationId).
+	ShowCustomersStoreCreditWithResponse(ctx context.Context, customerId int, id int, reqEditors ...RequestEditorFn) (*ShowCustomersStoreCreditResponse, error)
 
 	// ListCustomersVehiclesWithResponse index
 	//
@@ -42249,6 +42732,24 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /statements/{statement_id}/payments (the `ListStatementsPayments` operationId).
 	ListStatementsPaymentsWithResponse(ctx context.Context, statementId int, reqEditors ...RequestEditorFn) (*ListStatementsPaymentsResponse, error)
+
+	// CreateStoreCreditsRefundWithBodyWithResponse create
+	//
+	// Create a store credits refund.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+	CreateStoreCreditsRefundWithBodyWithResponse(ctx context.Context, storeCreditId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStoreCreditsRefundResponse, error)
+
+	// CreateStoreCreditsRefundWithResponse create
+	//
+	// Create a store credits refund.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+	CreateStoreCreditsRefundWithResponse(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStoreCreditsRefundResponse, error)
 
 	// CreateStoreCreditsVoidWithBodyWithResponse create
 	//
@@ -49969,6 +50470,56 @@ func (r CheckCustomerDuplicateResponse) ContentType() string {
 	return ""
 }
 
+// ListCustomersConversationsResponse200Headers the declared response headers of an HTTP 200 response for ListCustomersConversations
+type ListCustomersConversationsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListCustomersConversationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]Conversation
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListCustomersConversationsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListCustomersConversationsResponse) GetJSON200() *[]Conversation {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ListCustomersConversationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListCustomersConversationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListCustomersConversationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListCustomersConversationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // ListCustomersDriversResponse200Headers the declared response headers of an HTTP 200 response for ListCustomersDrivers
 type ListCustomersDriversResponse200Headers struct {
 	Link        *string
@@ -50270,6 +50821,171 @@ func (r ListCustomersStatementsResponse) ContentType() string {
 	return ""
 }
 
+// ListCustomersStoreCreditsResponse200Headers the declared response headers of an HTTP 200 response for ListCustomersStoreCredits
+type ListCustomersStoreCreditsResponse200Headers struct {
+	Link        *string
+	XPerPage    *int
+	XTotalCount *int
+}
+
+type ListCustomersStoreCreditsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *[]StoreCredit
+	// JSON404 the response for an HTTP 404 `application/json` response
+	JSON404 *struct {
+		Error Error `json:"error"`
+	}
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListCustomersStoreCreditsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListCustomersStoreCreditsResponse) GetJSON200() *[]StoreCredit {
+	return r.JSON200
+}
+
+// GetJSON404 returns the response for an HTTP 404 `application/json` response
+func (r ListCustomersStoreCreditsResponse) GetJSON404() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListCustomersStoreCreditsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListCustomersStoreCreditsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListCustomersStoreCreditsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListCustomersStoreCreditsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateCustomersStoreCreditResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *StoreCredit
+	// JSON403 the response for an HTTP 403 `application/json` response
+	JSON403 *struct {
+		Error Error `json:"error"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateCustomersStoreCreditResponse) GetJSON201() *StoreCredit {
+	return r.JSON201
+}
+
+// GetJSON403 returns the response for an HTTP 403 `application/json` response
+func (r CreateCustomersStoreCreditResponse) GetJSON403() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON403
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateCustomersStoreCreditResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateCustomersStoreCreditResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateCustomersStoreCreditResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateCustomersStoreCreditResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateCustomersStoreCreditResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ShowCustomersStoreCreditResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *StoreCredit
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ShowCustomersStoreCreditResponse) GetJSON200() *StoreCredit {
+	return r.JSON200
+}
+
+// GetBody returns the raw response body bytes
+func (r ShowCustomersStoreCreditResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ShowCustomersStoreCreditResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ShowCustomersStoreCreditResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ShowCustomersStoreCreditResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // ListCustomersVehiclesResponse200Headers the declared response headers of an HTTP 200 response for ListCustomersVehicles
 type ListCustomersVehiclesResponse200Headers struct {
 	Link        *string
@@ -50520,13 +51236,14 @@ type ArchiveCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Addresses   []interface{} `json:"addresses"`
-		AppUrl      string        `json:"app_url"`
-		CompanyName *string       `json:"company_name"`
-		CreatedAt   string        `json:"created_at"`
-		Currency    string        `json:"currency"`
-		DisplayName string        `json:"display_name"`
-		Emails      []struct {
+		Addresses        []interface{} `json:"addresses"`
+		AppUrl           string        `json:"app_url"`
+		CompanyName      *string       `json:"company_name"`
+		ConversationsUrl string        `json:"conversations_url"`
+		CreatedAt        string        `json:"created_at"`
+		Currency         string        `json:"currency"`
+		DisplayName      string        `json:"display_name"`
+		Emails           []struct {
 			Address string `json:"address"`
 			Id      int    `json:"id"`
 			Label   string `json:"label"`
@@ -50564,6 +51281,7 @@ type ArchiveCustomerResponse struct {
 		StatementsCount       int     `json:"statements_count"`
 		Status                string  `json:"status"`
 		StoreCreditCents      int     `json:"store_credit_cents"`
+		StoreCreditsUrl       string  `json:"store_credits_url"`
 		TaxExempt             bool    `json:"tax_exempt"`
 		TotalRevenueCents     int     `json:"total_revenue_cents"`
 		TrashedAt             *string `json:"trashed_at"`
@@ -50578,13 +51296,14 @@ type ArchiveCustomerResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ArchiveCustomerResponse) GetJSON200() *struct {
-	Addresses   []interface{} `json:"addresses"`
-	AppUrl      string        `json:"app_url"`
-	CompanyName *string       `json:"company_name"`
-	CreatedAt   string        `json:"created_at"`
-	Currency    string        `json:"currency"`
-	DisplayName string        `json:"display_name"`
-	Emails      []struct {
+	Addresses        []interface{} `json:"addresses"`
+	AppUrl           string        `json:"app_url"`
+	CompanyName      *string       `json:"company_name"`
+	ConversationsUrl string        `json:"conversations_url"`
+	CreatedAt        string        `json:"created_at"`
+	Currency         string        `json:"currency"`
+	DisplayName      string        `json:"display_name"`
+	Emails           []struct {
 		Address string `json:"address"`
 		Id      int    `json:"id"`
 		Label   string `json:"label"`
@@ -50622,6 +51341,7 @@ func (r ArchiveCustomerResponse) GetJSON200() *struct {
 	StatementsCount       int     `json:"statements_count"`
 	Status                string  `json:"status"`
 	StoreCreditCents      int     `json:"store_credit_cents"`
+	StoreCreditsUrl       string  `json:"store_credits_url"`
 	TaxExempt             bool    `json:"tax_exempt"`
 	TotalRevenueCents     int     `json:"total_revenue_cents"`
 	TrashedAt             *string `json:"trashed_at"`
@@ -50669,13 +51389,14 @@ type MergeCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Addresses   []interface{} `json:"addresses"`
-		AppUrl      string        `json:"app_url"`
-		CompanyName *string       `json:"company_name"`
-		CreatedAt   string        `json:"created_at"`
-		Currency    string        `json:"currency"`
-		DisplayName string        `json:"display_name"`
-		Emails      []struct {
+		Addresses        []interface{} `json:"addresses"`
+		AppUrl           string        `json:"app_url"`
+		CompanyName      *string       `json:"company_name"`
+		ConversationsUrl string        `json:"conversations_url"`
+		CreatedAt        string        `json:"created_at"`
+		Currency         string        `json:"currency"`
+		DisplayName      string        `json:"display_name"`
+		Emails           []struct {
 			Address string `json:"address"`
 			Id      int    `json:"id"`
 			Label   string `json:"label"`
@@ -50713,6 +51434,7 @@ type MergeCustomerResponse struct {
 		StatementsCount       int     `json:"statements_count"`
 		Status                string  `json:"status"`
 		StoreCreditCents      int     `json:"store_credit_cents"`
+		StoreCreditsUrl       string  `json:"store_credits_url"`
 		TaxExempt             bool    `json:"tax_exempt"`
 		TotalRevenueCents     int     `json:"total_revenue_cents"`
 		TrashedAt             *string `json:"trashed_at"`
@@ -50735,13 +51457,14 @@ type MergeCustomerResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r MergeCustomerResponse) GetJSON200() *struct {
-	Addresses   []interface{} `json:"addresses"`
-	AppUrl      string        `json:"app_url"`
-	CompanyName *string       `json:"company_name"`
-	CreatedAt   string        `json:"created_at"`
-	Currency    string        `json:"currency"`
-	DisplayName string        `json:"display_name"`
-	Emails      []struct {
+	Addresses        []interface{} `json:"addresses"`
+	AppUrl           string        `json:"app_url"`
+	CompanyName      *string       `json:"company_name"`
+	ConversationsUrl string        `json:"conversations_url"`
+	CreatedAt        string        `json:"created_at"`
+	Currency         string        `json:"currency"`
+	DisplayName      string        `json:"display_name"`
+	Emails           []struct {
 		Address string `json:"address"`
 		Id      int    `json:"id"`
 		Label   string `json:"label"`
@@ -50779,6 +51502,7 @@ func (r MergeCustomerResponse) GetJSON200() *struct {
 	StatementsCount       int     `json:"statements_count"`
 	Status                string  `json:"status"`
 	StoreCreditCents      int     `json:"store_credit_cents"`
+	StoreCreditsUrl       string  `json:"store_credits_url"`
 	TaxExempt             bool    `json:"tax_exempt"`
 	TotalRevenueCents     int     `json:"total_revenue_cents"`
 	TrashedAt             *string `json:"trashed_at"`
@@ -50840,13 +51564,14 @@ type RestoreCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Addresses   []interface{} `json:"addresses"`
-		AppUrl      string        `json:"app_url"`
-		CompanyName *string       `json:"company_name"`
-		CreatedAt   string        `json:"created_at"`
-		Currency    string        `json:"currency"`
-		DisplayName string        `json:"display_name"`
-		Emails      []struct {
+		Addresses        []interface{} `json:"addresses"`
+		AppUrl           string        `json:"app_url"`
+		CompanyName      *string       `json:"company_name"`
+		ConversationsUrl string        `json:"conversations_url"`
+		CreatedAt        string        `json:"created_at"`
+		Currency         string        `json:"currency"`
+		DisplayName      string        `json:"display_name"`
+		Emails           []struct {
 			Address string `json:"address"`
 			Id      int    `json:"id"`
 			Label   string `json:"label"`
@@ -50884,6 +51609,7 @@ type RestoreCustomerResponse struct {
 		StatementsCount       int     `json:"statements_count"`
 		Status                string  `json:"status"`
 		StoreCreditCents      int     `json:"store_credit_cents"`
+		StoreCreditsUrl       string  `json:"store_credits_url"`
 		TaxExempt             bool    `json:"tax_exempt"`
 		TotalRevenueCents     int     `json:"total_revenue_cents"`
 		TrashedAt             *string `json:"trashed_at"`
@@ -50898,13 +51624,14 @@ type RestoreCustomerResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r RestoreCustomerResponse) GetJSON200() *struct {
-	Addresses   []interface{} `json:"addresses"`
-	AppUrl      string        `json:"app_url"`
-	CompanyName *string       `json:"company_name"`
-	CreatedAt   string        `json:"created_at"`
-	Currency    string        `json:"currency"`
-	DisplayName string        `json:"display_name"`
-	Emails      []struct {
+	Addresses        []interface{} `json:"addresses"`
+	AppUrl           string        `json:"app_url"`
+	CompanyName      *string       `json:"company_name"`
+	ConversationsUrl string        `json:"conversations_url"`
+	CreatedAt        string        `json:"created_at"`
+	Currency         string        `json:"currency"`
+	DisplayName      string        `json:"display_name"`
+	Emails           []struct {
 		Address string `json:"address"`
 		Id      int    `json:"id"`
 		Label   string `json:"label"`
@@ -50942,6 +51669,7 @@ func (r RestoreCustomerResponse) GetJSON200() *struct {
 	StatementsCount       int     `json:"statements_count"`
 	Status                string  `json:"status"`
 	StoreCreditCents      int     `json:"store_credit_cents"`
+	StoreCreditsUrl       string  `json:"store_credits_url"`
 	TaxExempt             bool    `json:"tax_exempt"`
 	TotalRevenueCents     int     `json:"total_revenue_cents"`
 	TrashedAt             *string `json:"trashed_at"`
@@ -50989,13 +51717,14 @@ type TrashCustomerResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *struct {
-		Addresses   []interface{} `json:"addresses"`
-		AppUrl      string        `json:"app_url"`
-		CompanyName *string       `json:"company_name"`
-		CreatedAt   string        `json:"created_at"`
-		Currency    string        `json:"currency"`
-		DisplayName string        `json:"display_name"`
-		Emails      []struct {
+		Addresses        []interface{} `json:"addresses"`
+		AppUrl           string        `json:"app_url"`
+		CompanyName      *string       `json:"company_name"`
+		ConversationsUrl string        `json:"conversations_url"`
+		CreatedAt        string        `json:"created_at"`
+		Currency         string        `json:"currency"`
+		DisplayName      string        `json:"display_name"`
+		Emails           []struct {
 			Address string `json:"address"`
 			Id      int    `json:"id"`
 			Label   string `json:"label"`
@@ -51033,6 +51762,7 @@ type TrashCustomerResponse struct {
 		StatementsCount       int    `json:"statements_count"`
 		Status                string `json:"status"`
 		StoreCreditCents      int    `json:"store_credit_cents"`
+		StoreCreditsUrl       string `json:"store_credits_url"`
 		TaxExempt             bool   `json:"tax_exempt"`
 		TotalRevenueCents     int    `json:"total_revenue_cents"`
 		TrashedAt             string `json:"trashed_at"`
@@ -51055,13 +51785,14 @@ type TrashCustomerResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r TrashCustomerResponse) GetJSON200() *struct {
-	Addresses   []interface{} `json:"addresses"`
-	AppUrl      string        `json:"app_url"`
-	CompanyName *string       `json:"company_name"`
-	CreatedAt   string        `json:"created_at"`
-	Currency    string        `json:"currency"`
-	DisplayName string        `json:"display_name"`
-	Emails      []struct {
+	Addresses        []interface{} `json:"addresses"`
+	AppUrl           string        `json:"app_url"`
+	CompanyName      *string       `json:"company_name"`
+	ConversationsUrl string        `json:"conversations_url"`
+	CreatedAt        string        `json:"created_at"`
+	Currency         string        `json:"currency"`
+	DisplayName      string        `json:"display_name"`
+	Emails           []struct {
 		Address string `json:"address"`
 		Id      int    `json:"id"`
 		Label   string `json:"label"`
@@ -51099,6 +51830,7 @@ func (r TrashCustomerResponse) GetJSON200() *struct {
 	StatementsCount       int    `json:"statements_count"`
 	Status                string `json:"status"`
 	StoreCreditCents      int    `json:"store_credit_cents"`
+	StoreCreditsUrl       string `json:"store_credits_url"`
 	TaxExempt             bool   `json:"tax_exempt"`
 	TotalRevenueCents     int    `json:"total_revenue_cents"`
 	TrashedAt             string `json:"trashed_at"`
@@ -51668,20 +52400,21 @@ type ListFleetsResponse struct {
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
 	JSON200 *[]struct {
-		AppUrl          string `json:"app_url"`
-		CompanyName     string `json:"company_name"`
-		CreatedAt       string `json:"created_at"`
-		DisplayName     string `json:"display_name"`
-		EmailsCount     int    `json:"emails_count"`
-		FirstName       string `json:"first_name"`
-		FleetIdentifier string `json:"fleet_identifier"`
-		FleetMode       string `json:"fleet_mode"`
-		FullName        string `json:"full_name"`
-		HomeLocationId  int    `json:"home_location_id"`
-		Id              int    `json:"id"`
-		Initials        string `json:"initials"`
-		LastName        string `json:"last_name"`
-		Location        struct {
+		AppUrl           string `json:"app_url"`
+		CompanyName      string `json:"company_name"`
+		ConversationsUrl string `json:"conversations_url"`
+		CreatedAt        string `json:"created_at"`
+		DisplayName      string `json:"display_name"`
+		EmailsCount      int    `json:"emails_count"`
+		FirstName        string `json:"first_name"`
+		FleetIdentifier  string `json:"fleet_identifier"`
+		FleetMode        string `json:"fleet_mode"`
+		FullName         string `json:"full_name"`
+		HomeLocationId   int    `json:"home_location_id"`
+		Id               int    `json:"id"`
+		Initials         string `json:"initials"`
+		LastName         string `json:"last_name"`
+		Location         struct {
 			Id   int    `json:"id"`
 			Name string `json:"name"`
 			Url  string `json:"url"`
@@ -51694,6 +52427,8 @@ type ListFleetsResponse struct {
 		PrimaryPhone          string  `json:"primary_phone"`
 		PrimaryPhoneFormatted string  `json:"primary_phone_formatted"`
 		Status                string  `json:"status"`
+		StoreCreditCents      int     `json:"store_credit_cents"`
+		StoreCreditsUrl       string  `json:"store_credits_url"`
 		TaxExempt             bool    `json:"tax_exempt"`
 		TrashedAt             *string `json:"trashed_at"`
 		Type                  string  `json:"type"`
@@ -51713,20 +52448,21 @@ type ListFleetsResponse struct {
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
 func (r ListFleetsResponse) GetJSON200() *[]struct {
-	AppUrl          string `json:"app_url"`
-	CompanyName     string `json:"company_name"`
-	CreatedAt       string `json:"created_at"`
-	DisplayName     string `json:"display_name"`
-	EmailsCount     int    `json:"emails_count"`
-	FirstName       string `json:"first_name"`
-	FleetIdentifier string `json:"fleet_identifier"`
-	FleetMode       string `json:"fleet_mode"`
-	FullName        string `json:"full_name"`
-	HomeLocationId  int    `json:"home_location_id"`
-	Id              int    `json:"id"`
-	Initials        string `json:"initials"`
-	LastName        string `json:"last_name"`
-	Location        struct {
+	AppUrl           string `json:"app_url"`
+	CompanyName      string `json:"company_name"`
+	ConversationsUrl string `json:"conversations_url"`
+	CreatedAt        string `json:"created_at"`
+	DisplayName      string `json:"display_name"`
+	EmailsCount      int    `json:"emails_count"`
+	FirstName        string `json:"first_name"`
+	FleetIdentifier  string `json:"fleet_identifier"`
+	FleetMode        string `json:"fleet_mode"`
+	FullName         string `json:"full_name"`
+	HomeLocationId   int    `json:"home_location_id"`
+	Id               int    `json:"id"`
+	Initials         string `json:"initials"`
+	LastName         string `json:"last_name"`
+	Location         struct {
 		Id   int    `json:"id"`
 		Name string `json:"name"`
 		Url  string `json:"url"`
@@ -51739,6 +52475,8 @@ func (r ListFleetsResponse) GetJSON200() *[]struct {
 	PrimaryPhone          string  `json:"primary_phone"`
 	PrimaryPhoneFormatted string  `json:"primary_phone_formatted"`
 	Status                string  `json:"status"`
+	StoreCreditCents      int     `json:"store_credit_cents"`
+	StoreCreditsUrl       string  `json:"store_credits_url"`
 	TaxExempt             bool    `json:"tax_exempt"`
 	TrashedAt             *string `json:"trashed_at"`
 	Type                  string  `json:"type"`
@@ -62719,13 +63457,129 @@ func (r ListStatementsPaymentsResponse) ContentType() string {
 	return ""
 }
 
+type CreateStoreCreditsRefundResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *struct {
+		AmountCents int    `json:"amount_cents"`
+		AppUrl      string `json:"app_url"`
+		CreatedAt   string `json:"created_at"`
+		Currency    string `json:"currency"`
+		Customer    struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"customer"`
+		CustomerId   int  `json:"customer_id"`
+		Id           int  `json:"id"`
+		IsAdjustment bool `json:"is_adjustment"`
+		IsRefund     bool `json:"is_refund"`
+		Location     struct {
+			Id   int    `json:"id"`
+			Name string `json:"name"`
+			Url  string `json:"url"`
+		} `json:"location"`
+		Method      string `json:"method"`
+		Notes       string `json:"notes"`
+		ProcessedAt string `json:"processed_at"`
+		ProcessedBy struct {
+			FullName string `json:"full_name"`
+			Id       int    `json:"id"`
+			Url      string `json:"url"`
+		} `json:"processed_by"`
+		ProcessorStatus *string `json:"processor_status"`
+		Reference       *string `json:"reference"`
+		UpdatedAt       string  `json:"updated_at"`
+		Url             string  `json:"url"`
+		Voided          bool    `json:"voided"`
+		VoidedAt        *string `json:"voided_at"`
+	}
+	// JSON422 the response for an HTTP 422 `application/json` response
+	JSON422 *struct {
+		Error Error `json:"error"`
+	}
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateStoreCreditsRefundResponse) GetJSON201() *struct {
+	AmountCents int    `json:"amount_cents"`
+	AppUrl      string `json:"app_url"`
+	CreatedAt   string `json:"created_at"`
+	Currency    string `json:"currency"`
+	Customer    struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"customer"`
+	CustomerId   int  `json:"customer_id"`
+	Id           int  `json:"id"`
+	IsAdjustment bool `json:"is_adjustment"`
+	IsRefund     bool `json:"is_refund"`
+	Location     struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+		Url  string `json:"url"`
+	} `json:"location"`
+	Method      string `json:"method"`
+	Notes       string `json:"notes"`
+	ProcessedAt string `json:"processed_at"`
+	ProcessedBy struct {
+		FullName string `json:"full_name"`
+		Id       int    `json:"id"`
+		Url      string `json:"url"`
+	} `json:"processed_by"`
+	ProcessorStatus *string `json:"processor_status"`
+	Reference       *string `json:"reference"`
+	UpdatedAt       string  `json:"updated_at"`
+	Url             string  `json:"url"`
+	Voided          bool    `json:"voided"`
+	VoidedAt        *string `json:"voided_at"`
+} {
+	return r.JSON201
+}
+
+// GetJSON422 returns the response for an HTTP 422 `application/json` response
+func (r CreateStoreCreditsRefundResponse) GetJSON422() *struct {
+	Error Error `json:"error"`
+} {
+	return r.JSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateStoreCreditsRefundResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateStoreCreditsRefundResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateStoreCreditsRefundResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateStoreCreditsRefundResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateStoreCreditsVoidResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *struct {
-		Status string `json:"status"`
-	}
+	JSON200 *StoreCredit
 	// JSON403 the response for an HTTP 403 `application/json` response
 	JSON403 *struct {
 		Error Error `json:"error"`
@@ -62737,9 +63591,7 @@ type CreateStoreCreditsVoidResponse struct {
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r CreateStoreCreditsVoidResponse) GetJSON200() *struct {
-	Status string `json:"status"`
-} {
+func (r CreateStoreCreditsVoidResponse) GetJSON200() *StoreCredit {
 	return r.JSON200
 }
 
@@ -78227,6 +79079,21 @@ func (c *ClientWithResponses) CheckCustomerDuplicateWithResponse(ctx context.Con
 	return ParseCheckCustomerDuplicateResponse(rsp)
 }
 
+// ListCustomersConversationsWithResponse index
+//
+// List all customers conversations, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/conversations (the `ListCustomersConversations` operationId).
+func (c *ClientWithResponses) ListCustomersConversationsWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*ListCustomersConversationsResponse, error) {
+	rsp, err := c.ListCustomersConversations(ctx, customerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListCustomersConversationsResponse(rsp)
+}
+
 // ListCustomersDriversWithResponse index
 //
 // List all customers drivers, paginated via the Link header.
@@ -78345,6 +79212,66 @@ func (c *ClientWithResponses) ListCustomersStatementsWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseListCustomersStatementsResponse(rsp)
+}
+
+// ListCustomersStoreCreditsWithResponse index
+//
+// List all customers store credits, paginated via the Link header.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/store_credits (the `ListCustomersStoreCredits` operationId).
+func (c *ClientWithResponses) ListCustomersStoreCreditsWithResponse(ctx context.Context, customerId int, reqEditors ...RequestEditorFn) (*ListCustomersStoreCreditsResponse, error) {
+	rsp, err := c.ListCustomersStoreCredits(ctx, customerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListCustomersStoreCreditsResponse(rsp)
+}
+
+// CreateCustomersStoreCreditWithBodyWithResponse create
+//
+// Create a customers store credit.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+func (c *ClientWithResponses) CreateCustomersStoreCreditWithBodyWithResponse(ctx context.Context, customerId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCustomersStoreCreditResponse, error) {
+	rsp, err := c.CreateCustomersStoreCreditWithBody(ctx, customerId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomersStoreCreditResponse(rsp)
+}
+
+// CreateCustomersStoreCreditWithResponse create
+//
+// Create a customers store credit.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /customers/{customer_id}/store_credits (the `CreateCustomersStoreCredit` operationId).
+func (c *ClientWithResponses) CreateCustomersStoreCreditWithResponse(ctx context.Context, customerId int, body CreateCustomersStoreCreditJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCustomersStoreCreditResponse, error) {
+	rsp, err := c.CreateCustomersStoreCredit(ctx, customerId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateCustomersStoreCreditResponse(rsp)
+}
+
+// ShowCustomersStoreCreditWithResponse show
+//
+// Show a customers store credit by ID.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /customers/{customer_id}/store_credits/{id} (the `ShowCustomersStoreCredit` operationId).
+func (c *ClientWithResponses) ShowCustomersStoreCreditWithResponse(ctx context.Context, customerId int, id int, reqEditors ...RequestEditorFn) (*ShowCustomersStoreCreditResponse, error) {
+	rsp, err := c.ShowCustomersStoreCredit(ctx, customerId, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseShowCustomersStoreCreditResponse(rsp)
 }
 
 // ListCustomersVehiclesWithResponse index
@@ -82218,6 +83145,36 @@ func (c *ClientWithResponses) ListStatementsPaymentsWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseListStatementsPaymentsResponse(rsp)
+}
+
+// CreateStoreCreditsRefundWithBodyWithResponse create
+//
+// Create a store credits refund.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+func (c *ClientWithResponses) CreateStoreCreditsRefundWithBodyWithResponse(ctx context.Context, storeCreditId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateStoreCreditsRefundResponse, error) {
+	rsp, err := c.CreateStoreCreditsRefundWithBody(ctx, storeCreditId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStoreCreditsRefundResponse(rsp)
+}
+
+// CreateStoreCreditsRefundWithResponse create
+//
+// Create a store credits refund.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /store_credits/{store_credit_id}/refunds (the `CreateStoreCreditsRefund` operationId).
+func (c *ClientWithResponses) CreateStoreCreditsRefundWithResponse(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateStoreCreditsRefundResponse, error) {
+	rsp, err := c.CreateStoreCreditsRefund(ctx, storeCreditId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateStoreCreditsRefundResponse(rsp)
 }
 
 // CreateStoreCreditsVoidWithBodyWithResponse create
@@ -89590,6 +90547,59 @@ func ParseCheckCustomerDuplicateResponse(rsp *http.Response) (*CheckCustomerDupl
 	return response, nil
 }
 
+// ParseListCustomersConversationsResponse parses an HTTP response from a ListCustomersConversationsWithResponse call
+func ParseListCustomersConversationsResponse(rsp *http.Response) (*ListCustomersConversationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListCustomersConversationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []Conversation
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListCustomersConversationsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseListCustomersDriversResponse parses an HTTP response from a ListCustomersDriversWithResponse call
 func ParseListCustomersDriversResponse(rsp *http.Response) (*ListCustomersDriversResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -89832,6 +90842,138 @@ func ParseListCustomersStatementsResponse(rsp *http.Response) (*ListCustomersSta
 	return response, nil
 }
 
+// ParseListCustomersStoreCreditsResponse parses an HTTP response from a ListCustomersStoreCreditsWithResponse call
+func ParseListCustomersStoreCreditsResponse(rsp *http.Response) (*ListCustomersStoreCreditsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListCustomersStoreCreditsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []StoreCredit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListCustomersStoreCreditsResponse200Headers
+		if values := rsp.Header.Values("Link"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Link", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.Link = &value
+		}
+		if values := rsp.Header.Values("X-Per-Page"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Per-Page", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XPerPage = &value
+		}
+		if values := rsp.Header.Values("X-Total-Count"); len(values) > 0 {
+			var value int
+			if err := runtime.BindStyledParameterWithOptions("simple", "X-Total-Count", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.XTotalCount = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseCreateCustomersStoreCreditResponse parses an HTTP response from a CreateCustomersStoreCreditWithResponse call
+func ParseCreateCustomersStoreCreditResponse(rsp *http.Response) (*CreateCustomersStoreCreditResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateCustomersStoreCreditResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest StoreCredit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseShowCustomersStoreCreditResponse parses an HTTP response from a ShowCustomersStoreCreditWithResponse call
+func ParseShowCustomersStoreCreditResponse(rsp *http.Response) (*ShowCustomersStoreCreditResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ShowCustomersStoreCreditResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest StoreCredit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListCustomersVehiclesResponse parses an HTTP response from a ListCustomersVehiclesWithResponse call
 func ParseListCustomersVehiclesResponse(rsp *http.Response) (*ListCustomersVehiclesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -90050,13 +91192,14 @@ func ParseArchiveCustomerResponse(rsp *http.Response) (*ArchiveCustomerResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Addresses   []interface{} `json:"addresses"`
-			AppUrl      string        `json:"app_url"`
-			CompanyName *string       `json:"company_name"`
-			CreatedAt   string        `json:"created_at"`
-			Currency    string        `json:"currency"`
-			DisplayName string        `json:"display_name"`
-			Emails      []struct {
+			Addresses        []interface{} `json:"addresses"`
+			AppUrl           string        `json:"app_url"`
+			CompanyName      *string       `json:"company_name"`
+			ConversationsUrl string        `json:"conversations_url"`
+			CreatedAt        string        `json:"created_at"`
+			Currency         string        `json:"currency"`
+			DisplayName      string        `json:"display_name"`
+			Emails           []struct {
 				Address string `json:"address"`
 				Id      int    `json:"id"`
 				Label   string `json:"label"`
@@ -90094,6 +91237,7 @@ func ParseArchiveCustomerResponse(rsp *http.Response) (*ArchiveCustomerResponse,
 			StatementsCount       int     `json:"statements_count"`
 			Status                string  `json:"status"`
 			StoreCreditCents      int     `json:"store_credit_cents"`
+			StoreCreditsUrl       string  `json:"store_credits_url"`
 			TaxExempt             bool    `json:"tax_exempt"`
 			TotalRevenueCents     int     `json:"total_revenue_cents"`
 			TrashedAt             *string `json:"trashed_at"`
@@ -90130,13 +91274,14 @@ func ParseMergeCustomerResponse(rsp *http.Response) (*MergeCustomerResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Addresses   []interface{} `json:"addresses"`
-			AppUrl      string        `json:"app_url"`
-			CompanyName *string       `json:"company_name"`
-			CreatedAt   string        `json:"created_at"`
-			Currency    string        `json:"currency"`
-			DisplayName string        `json:"display_name"`
-			Emails      []struct {
+			Addresses        []interface{} `json:"addresses"`
+			AppUrl           string        `json:"app_url"`
+			CompanyName      *string       `json:"company_name"`
+			ConversationsUrl string        `json:"conversations_url"`
+			CreatedAt        string        `json:"created_at"`
+			Currency         string        `json:"currency"`
+			DisplayName      string        `json:"display_name"`
+			Emails           []struct {
 				Address string `json:"address"`
 				Id      int    `json:"id"`
 				Label   string `json:"label"`
@@ -90174,6 +91319,7 @@ func ParseMergeCustomerResponse(rsp *http.Response) (*MergeCustomerResponse, err
 			StatementsCount       int     `json:"statements_count"`
 			Status                string  `json:"status"`
 			StoreCreditCents      int     `json:"store_credit_cents"`
+			StoreCreditsUrl       string  `json:"store_credits_url"`
 			TaxExempt             bool    `json:"tax_exempt"`
 			TotalRevenueCents     int     `json:"total_revenue_cents"`
 			TrashedAt             *string `json:"trashed_at"`
@@ -90228,13 +91374,14 @@ func ParseRestoreCustomerResponse(rsp *http.Response) (*RestoreCustomerResponse,
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Addresses   []interface{} `json:"addresses"`
-			AppUrl      string        `json:"app_url"`
-			CompanyName *string       `json:"company_name"`
-			CreatedAt   string        `json:"created_at"`
-			Currency    string        `json:"currency"`
-			DisplayName string        `json:"display_name"`
-			Emails      []struct {
+			Addresses        []interface{} `json:"addresses"`
+			AppUrl           string        `json:"app_url"`
+			CompanyName      *string       `json:"company_name"`
+			ConversationsUrl string        `json:"conversations_url"`
+			CreatedAt        string        `json:"created_at"`
+			Currency         string        `json:"currency"`
+			DisplayName      string        `json:"display_name"`
+			Emails           []struct {
 				Address string `json:"address"`
 				Id      int    `json:"id"`
 				Label   string `json:"label"`
@@ -90272,6 +91419,7 @@ func ParseRestoreCustomerResponse(rsp *http.Response) (*RestoreCustomerResponse,
 			StatementsCount       int     `json:"statements_count"`
 			Status                string  `json:"status"`
 			StoreCreditCents      int     `json:"store_credit_cents"`
+			StoreCreditsUrl       string  `json:"store_credits_url"`
 			TaxExempt             bool    `json:"tax_exempt"`
 			TotalRevenueCents     int     `json:"total_revenue_cents"`
 			TrashedAt             *string `json:"trashed_at"`
@@ -90308,13 +91456,14 @@ func ParseTrashCustomerResponse(rsp *http.Response) (*TrashCustomerResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest struct {
-			Addresses   []interface{} `json:"addresses"`
-			AppUrl      string        `json:"app_url"`
-			CompanyName *string       `json:"company_name"`
-			CreatedAt   string        `json:"created_at"`
-			Currency    string        `json:"currency"`
-			DisplayName string        `json:"display_name"`
-			Emails      []struct {
+			Addresses        []interface{} `json:"addresses"`
+			AppUrl           string        `json:"app_url"`
+			CompanyName      *string       `json:"company_name"`
+			ConversationsUrl string        `json:"conversations_url"`
+			CreatedAt        string        `json:"created_at"`
+			Currency         string        `json:"currency"`
+			DisplayName      string        `json:"display_name"`
+			Emails           []struct {
 				Address string `json:"address"`
 				Id      int    `json:"id"`
 				Label   string `json:"label"`
@@ -90352,6 +91501,7 @@ func ParseTrashCustomerResponse(rsp *http.Response) (*TrashCustomerResponse, err
 			StatementsCount       int    `json:"statements_count"`
 			Status                string `json:"status"`
 			StoreCreditCents      int    `json:"store_credit_cents"`
+			StoreCreditsUrl       string `json:"store_credits_url"`
 			TaxExempt             bool   `json:"tax_exempt"`
 			TotalRevenueCents     int    `json:"total_revenue_cents"`
 			TrashedAt             string `json:"trashed_at"`
@@ -90745,20 +91895,21 @@ func ParseListFleetsResponse(rsp *http.Response) (*ListFleetsResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest []struct {
-			AppUrl          string `json:"app_url"`
-			CompanyName     string `json:"company_name"`
-			CreatedAt       string `json:"created_at"`
-			DisplayName     string `json:"display_name"`
-			EmailsCount     int    `json:"emails_count"`
-			FirstName       string `json:"first_name"`
-			FleetIdentifier string `json:"fleet_identifier"`
-			FleetMode       string `json:"fleet_mode"`
-			FullName        string `json:"full_name"`
-			HomeLocationId  int    `json:"home_location_id"`
-			Id              int    `json:"id"`
-			Initials        string `json:"initials"`
-			LastName        string `json:"last_name"`
-			Location        struct {
+			AppUrl           string `json:"app_url"`
+			CompanyName      string `json:"company_name"`
+			ConversationsUrl string `json:"conversations_url"`
+			CreatedAt        string `json:"created_at"`
+			DisplayName      string `json:"display_name"`
+			EmailsCount      int    `json:"emails_count"`
+			FirstName        string `json:"first_name"`
+			FleetIdentifier  string `json:"fleet_identifier"`
+			FleetMode        string `json:"fleet_mode"`
+			FullName         string `json:"full_name"`
+			HomeLocationId   int    `json:"home_location_id"`
+			Id               int    `json:"id"`
+			Initials         string `json:"initials"`
+			LastName         string `json:"last_name"`
+			Location         struct {
 				Id   int    `json:"id"`
 				Name string `json:"name"`
 				Url  string `json:"url"`
@@ -90771,6 +91922,8 @@ func ParseListFleetsResponse(rsp *http.Response) (*ListFleetsResponse, error) {
 			PrimaryPhone          string  `json:"primary_phone"`
 			PrimaryPhoneFormatted string  `json:"primary_phone_formatted"`
 			Status                string  `json:"status"`
+			StoreCreditCents      int     `json:"store_credit_cents"`
+			StoreCreditsUrl       string  `json:"store_credits_url"`
 			TaxExempt             bool    `json:"tax_exempt"`
 			TrashedAt             *string `json:"trashed_at"`
 			Type                  string  `json:"type"`
@@ -97810,6 +98963,74 @@ func ParseListStatementsPaymentsResponse(rsp *http.Response) (*ListStatementsPay
 	return response, nil
 }
 
+// ParseCreateStoreCreditsRefundResponse parses an HTTP response from a CreateStoreCreditsRefundWithResponse call
+func ParseCreateStoreCreditsRefundResponse(rsp *http.Response) (*CreateStoreCreditsRefundResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateStoreCreditsRefundResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest struct {
+			AmountCents int    `json:"amount_cents"`
+			AppUrl      string `json:"app_url"`
+			CreatedAt   string `json:"created_at"`
+			Currency    string `json:"currency"`
+			Customer    struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"customer"`
+			CustomerId   int  `json:"customer_id"`
+			Id           int  `json:"id"`
+			IsAdjustment bool `json:"is_adjustment"`
+			IsRefund     bool `json:"is_refund"`
+			Location     struct {
+				Id   int    `json:"id"`
+				Name string `json:"name"`
+				Url  string `json:"url"`
+			} `json:"location"`
+			Method      string `json:"method"`
+			Notes       string `json:"notes"`
+			ProcessedAt string `json:"processed_at"`
+			ProcessedBy struct {
+				FullName string `json:"full_name"`
+				Id       int    `json:"id"`
+				Url      string `json:"url"`
+			} `json:"processed_by"`
+			ProcessorStatus *string `json:"processor_status"`
+			Reference       *string `json:"reference"`
+			UpdatedAt       string  `json:"updated_at"`
+			Url             string  `json:"url"`
+			Voided          bool    `json:"voided"`
+			VoidedAt        *string `json:"voided_at"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest struct {
+			Error Error `json:"error"`
+		}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateStoreCreditsVoidResponse parses an HTTP response from a CreateStoreCreditsVoidWithResponse call
 func ParseCreateStoreCreditsVoidResponse(rsp *http.Response) (*CreateStoreCreditsVoidResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -97825,9 +99046,7 @@ func ParseCreateStoreCreditsVoidResponse(rsp *http.Response) (*CreateStoreCredit
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Status string `json:"status"`
-		}
+		var dest StoreCredit
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

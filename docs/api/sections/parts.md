@@ -217,13 +217,13 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `part_number` | string | Yes |
 | `description` | string | Yes |
 | `brand` | string | Yes |
-| `part_type` | string | No |
 | `stocked` | boolean | Yes |
 | `initial_quantity` | integer | Yes |
+| `taxable` | boolean | No |
 | `cost` | string | Yes |
 | `sell` | string | Yes |
-| `taxable` | boolean | No |
 | `vendor_id` | integer | No |
+| `part_type` | string | No |
 
 ---
 

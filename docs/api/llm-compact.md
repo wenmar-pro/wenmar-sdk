@@ -114,21 +114,25 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **GET /customers** ?customer_tag_id,has_balance,has_vehicle,last_visit_months,page,per_page,q,status,type -> 200: array of Customer | 401: error envelope
 - **POST /customers** -> 201: Customer | 403: error envelope | 422: error envelope
 - **GET /customers/check_duplicate** ?email,first_name,last_name,phone -> 200: object{matches} | 403: error envelope
+- **GET /customers/{customer_id}/conversations** ?customer_id -> 200: array of Conversation
 - **GET /customers/{customer_id}/drivers** ?customer_id -> 200: array of Driver | 401: error envelope
 - **POST /customers/{customer_id}/drivers** ?customer_id -> 201: Driver | 401: error envelope | 422: error envelope
 - **DELETE /customers/{customer_id}/drivers/{id}** ?customer_id,id -> no content | 401: error envelope
 - **GET /customers/{customer_id}/drivers/{id}** ?customer_id,id -> 200: Driver
 - **PATCH /customers/{customer_id}/drivers/{id}** ?customer_id,id -> 200: Driver
 - **GET /customers/{customer_id}/statements** ?customer_id -> 200: array of Statement
+- **GET /customers/{customer_id}/store_credits** ?customer_id -> 200: array of StoreCredit | 404: error envelope
+- **POST /customers/{customer_id}/store_credits** ?customer_id -> 201: StoreCredit | 403: error envelope | 422: error envelope
+- **GET /customers/{customer_id}/store_credits/{id}** ?customer_id,id -> 200: StoreCredit
 - **GET /customers/{customer_id}/vehicles** ?customer_id -> 200: array of Vehicle
 - **GET /customers/{customer_id}/vehicles/{vehicle_id}/history** ?customer_id,vehicle_id -> 200: Vehicle | 404: error envelope
 - **GET /customers/{customer_id}/work_orders** ?customer_id -> 200: array of WorkOrder
 - **GET /customers/{id}** ?id -> 200: Customer | 404: error envelope
 - **PATCH /customers/{id}** ?id -> 200: Customer
-- **PATCH /customers/{id}/archive** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,url,app_url,location,statements_count,currency}
-- **POST /customers/{id}/merges** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,url,app_url,location,statements_count,currency} | 403: error envelope | 422: error envelope
-- **PATCH /customers/{id}/restore** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,url,app_url,location,statements_count,currency}
-- **PATCH /customers/{id}/trash** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,url,app_url,location,statements_count,currency} | 403: error envelope | 422: error envelope
+- **PATCH /customers/{id}/archive** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,store_credits_url,conversations_url,url,app_url,location,statements_count,currency}
+- **POST /customers/{id}/merges** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,store_credits_url,conversations_url,url,app_url,location,statements_count,currency} | 403: error envelope | 422: error envelope
+- **PATCH /customers/{id}/restore** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,store_credits_url,conversations_url,url,app_url,location,statements_count,currency}
+- **PATCH /customers/{id}/trash** ?id -> 200: object{type,id,name,full_name,first_name,last_name,company_name,display_name,initials,fleet_identifier,fleet_mode,marketing_opt_in,tax_exempt,notes,status,trashed_at,created_at,updated_at,primary_phone,primary_phone_formatted,primary_email,home_location_id,vehicles_count,emails_count,phones_count,emails,phones,addresses,outstanding_balance_cents,total_revenue_cents,store_credit_cents,last_visit_at,vehicles_url,work_orders_url,store_credits_url,conversations_url,url,app_url,location,statements_count,currency} | 403: error envelope | 422: error envelope
 
 ## Drivers
 
@@ -249,7 +253,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /messages** ?conversation_id -> 200: array of object
 - **GET /messages/{id}** ?id -> 200: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
-- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url,sender}
+- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
 
 ## Notifications
 
@@ -370,7 +374,8 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Store Credits
 
-- **POST /store_credits/{store_credit_id}/voids** ?store_credit_id -> 200: object{status} | 403: error envelope | 422: error envelope
+- **POST /store_credits/{store_credit_id}/refunds** ?store_credit_id -> 201: object{id,amount_cents,currency,method,processor_status,is_refund,is_adjustment,voided,voided_at,processed_at,reference,notes,created_at,updated_at,customer_id,url,app_url,customer,processed_by,location} | 422: error envelope
+- **POST /store_credits/{store_credit_id}/voids** ?store_credit_id -> 200: StoreCredit | 403: error envelope | 422: error envelope
 
 ## Sub Statuses
 
@@ -615,6 +620,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateCounterSalesPaymentRequest**: {payment*:object{method,amount_cents}}
 - **CreateCustomerRequest**: {customer*:object{first_name,last_name,company_name,fleet_identifier,billing_terms,credit_limit_cents,tax_exempt,tax_exempt_number,notes,marketing_opt_in,discount_percent,po_required,customer_tag_id,emails_attributes,phones_attributes,addresses_attributes}}
 - **CreateCustomerTagRequest**: {name*:string}
+- **CreateCustomersStoreCreditRequest**: {store_credit*:object{kind,amount}}
 - **CreateDriverRequest**: {driver*:object{full_name,phone}}
 - **CreateExpenseRequest**: {expense*:object{payee,category,description,amount,expense_date,payment_method}}
 - **CreateInspectionReportRequest**: {}
@@ -635,7 +641,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateOrdersReturnOrdersRefundCompletionRequest**: {}
 - **CreatePackageRequest**: {package*:object{name,description}}
 - **CreatePackagesDuplicateRequest**: {}
-- **CreatePartRequest**: {part*:object{part_number,description,brand,part_type,stocked,initial_quantity,cost,sell,taxable,vendor_id}}
+- **CreatePartRequest**: {part*:object{part_number,description,brand,stocked,initial_quantity,taxable,cost,sell,vendor_id,part_type}}
 - **CreatePartsMatrixRequest**: {parts_matrix*:object{name,is_default,active}}
 - **CreatePaymentsCancellationRequest**: {}
 - **CreatePaymentsConfirmationRequest**: {}
@@ -649,6 +655,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateShopFeesDuplicateRequest**: {}
 - **CreateStatementsBulkSendRequest**: {statement_ids*:array of integer, cc_emails*:string, include_invoice_pdfs*:string, body*:string}
 - **CreateStatementsGenerateRequest**: {}
+- **CreateStoreCreditsRefundRequest**: {refund*:object{amount,method}}
 - **CreateStoreCreditsVoidRequest**: {}
 - **CreateSubStatusRequest**: {sub_status_type*:object{name,color,status_scope}}
 - **CreateSubletPackageRequest**: {sublet_package*:object{name,description,active}}
@@ -664,7 +671,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateUsersSendConfirmationRequest**: {}
 - **CreateUsersSendPasswordResetRequest**: {}
 - **CreateUsersUnlockRequest**: {}
-- **CreateVehicleRequest**: {vehicle*:object{vehicle_type,year,make,model,license_plate,customer_id,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate_state,odometer_reading,odometer_unit,unit_number,fleet_identifier,notes,production_date}}
+- **CreateVehicleRequest**: {vehicle*:object{customer_id,vin,year,make,model,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,odometer_unit,unit_number,fleet_identifier,notes,production_date,vehicle_type}}
 - **CreateVendorRequest**: {vendor*:object{name,vendor_type,payment_terms}}
 - **CreateWorkOrderPaymentRequest**: {payment*:object{method,amount_cents}}
 - **CreateWorkOrderRequest**: {work_order*:object{customer_id,vehicle_id}}
@@ -703,7 +710,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateWorkOrdersServicesTimeEntryRequest**: {}
 - **CreateWorkOrdersTireStorageRequest**: {tire_storage_slot*:object{slot_label,season,tire_set_description,notes}}
 - **CreateWorkOrdersVoidRequest**: {payment_id*:integer}
-- **Customer**: {type*:string, id*:integer, name*:string, full_name*:string, first_name*:string, last_name*:string, company_name*:string, display_name*:string, initials*:string, fleet_identifier*:string, fleet_mode*:string, marketing_opt_in*:boolean, tax_exempt*:boolean, notes*:string, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, primary_phone*:string, primary_phone_formatted*:string, primary_email*:string, home_location_id*:integer, vehicles_count*:integer, emails_count*:integer, phones_count*:integer, vehicles_url*:string, work_orders_url*:string, url*:string, app_url*:string, location*:object{id,name,url}, emails:array of object, phones:array of object, addresses:array of object, outstanding_balance_cents:integer, total_revenue_cents:integer, store_credit_cents:integer, last_visit_at:string, statements_count:integer, currency:string}
+- **Customer**: {type*:string, id*:integer, name*:string, full_name*:string, first_name*:string, last_name*:string, company_name*:string, display_name*:string, initials*:string, fleet_identifier*:string, fleet_mode*:string, marketing_opt_in*:boolean, tax_exempt*:boolean, notes*:string, status*:string, trashed_at*:string, created_at*:string, updated_at*:string, primary_phone*:string, primary_phone_formatted*:string, primary_email*:string, home_location_id*:integer, vehicles_count*:integer, emails_count*:integer, phones_count*:integer, vehicles_url*:string, work_orders_url*:string, store_credits_url*:string, conversations_url*:string, store_credit_cents*:integer, url*:string, app_url*:string, location*:object{id,name,url}, emails:array of object, phones:array of object, addresses:array of object, outstanding_balance_cents:integer, total_revenue_cents:integer, last_visit_at:string, statements_count:integer, currency:string}
 - **CustomerTag**: {id*:integer, name*:string, color*:string, color_hex*:string, color_class*:string, bubble_classes*:string, status*:string, trashed_at*:string}
 - **DeclineAllWorkOrderConcernsRequest**: {decline_reason*:string}
 - **DeclineWorkOrderRequest**: {closure_reason*:string}
@@ -752,6 +759,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **ShopFee**: {id*:integer, name*:string, fee_type*:string, amount_cents*:integer, percentage*:number, active*:boolean, applies_to*:string, is_taxable*:boolean, created_at*:string, updated_at*:string, url*:string, app_url*:string}
 - **StartWorkOrderRequest**: {}
 - **Statement**: {id*:integer, statement_number*:string, billing_status*:string, statement_date*:string, start_date*:string, end_date*:string, due_date*:string, totals*:object{previous_balance_cents,new_charges_cents,payments_received_cents,credits_cents,balance_due_cents,currency}, sent_at*:string, viewed_at*:string, customer*:object{id,full_name,url}, created_at*:string, updated_at*:string, url*:string, app_url*:string}
+- **StoreCredit**: {id*:integer, kind*:string, amount_cents*:integer, balance_cents*:integer, reason*:string, voided_at*:string, created_at*:string, updated_at*:string, voided_by*:any, issued_by*:object{id,name,url}, source_payment*:any, location*:object{id,name,url}, url*:string, app_url*:string, voids_url*:string}
 - **SubStatusType**: {id*:integer, name*:string, color*:string, status_scope*:string, active*:boolean, is_default*:boolean, position*:integer, created_at*:string, updated_at*:string, url*:string, app_url*:string}
 - **SubletOrder**: {id*:integer, type*:string, sublet_number*:integer, title*:string, payment_status*:string, payment_method*:string, total_cents*:integer, total_cost_cents*:integer, margin_cents*:integer, margin_percentage*:integer, sent_to_ap*:boolean, vendor_paid_at*:string, created_at*:string, updated_at*:string, url*:string, app_url*:string, vendor:object{id,name,url}, work_order:object{id,number,url}, work_order_service*:object{id,name}, location*:object{id,name,url}, fulfillment_status:string, notes:string, vendor_invoice_number:any}
 - **TransferVehicleRequest**: {customer_id*:integer, mode*:string}
@@ -816,9 +824,9 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UpdateTireRequest**: {tire*:object{brand}}
 - **UpdateTireStorageSlotRequest**: {tire_storage_slot*:object{tire_set_description}}
 - **UpdateUserRequest**: {user*:object{full_name}}
-- **UpdateVehicleRequest**: {vehicle*:object{odometer_unit,vehicle_type,make,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,notes}, confirm_unit_change:string, convert_odometer:string}
+- **UpdateVehicleRequest**: {vehicle*:object{make,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,odometer_unit,notes,vehicle_type}, confirm_unit_change:string, convert_odometer:string}
 - **UpdateVendorRequest**: {vendor*:object{name}}
-- **UpdateWorkOrderRequest**: {work_order*:object{saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,work_order_tag_id,payer_customer_id,sub_status_type_id,services_visible_to_customer}}
+- **UpdateWorkOrderRequest**: {work_order*:object{work_order_tag_id,saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,payer_customer_id,sub_status_type_id,services_visible_to_customer}}
 - **UpdateWorkOrderTagRequest**: {name*:string}
 - **UpdateWorkOrderTagsArchiveRequest**: {}
 - **UpdateWorkOrdersConcernRequest**: {concern*:object{body}}
