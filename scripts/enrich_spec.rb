@@ -442,13 +442,14 @@ module EnrichSpec
       segments = path.split("/").reject(&:empty?)
 
       # Resolve the resource + schema name. Top-level resource paths
-      # (e.g. /customers, /customers/{id}) map directly. Nested sub-resource
-      # paths (e.g. /customers/{customer_id}/drivers) resolve to the LAST
-      # segment when that segment is a registered resource (drivers,
-      # statements, vendors). Sub-collection/action paths (vehicles,
-      # work_orders, history, estimate, wip, inspection, parts, payments)
-      # are handled by their top-level paths and must not pollute the parent
-      # schema.
+      # (e.g. /customers, /customers/{id}) map directly. The `orders`
+      # namespace (e.g. /orders/purchase_orders) prefixes the resource, so
+      # segments[1] is the resource. Nested sub-resource paths
+      # (e.g. /customers/{customer_id}/vehicles) resolve to the nested
+      # segment when it's a registered resource. Sub-collection/action paths
+      # (vehicles, work_orders, history, estimate, wip, inspection, parts,
+      # payments) are handled by their top-level paths and must not pollute
+      # the parent schema.
       namespace = segments[0] == "orders" && !RESOURCE_SCHEMAS.key?(segments[0])
       if namespace
         # orders namespace: resource is the second segment
