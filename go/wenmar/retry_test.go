@@ -230,6 +230,36 @@ func TestRetry_BackoffCapsRetryAfter(t *testing.T) {
 	}
 }
 
+func TestRetry_BackoffCapsRetryAfterHTTPDate(t *testing.T) {
+	rt := newRetryTransportWithRetries(3, http.DefaultTransport)
+	resp := &http.Response{Header: http.Header{}}
+	resp.Header.Set("Retry-After", time.Now().Add(24*time.Hour).UTC().Format(http.TimeFormat))
+	got := rt.backoff(0, resp)
+	if got != maxRetryAfterDelay {
+		t.Errorf("expected HTTP-date Retry-After capped at %v, got %v", maxRetryAfterDelay, got)
+	}
+}
+
+func TestRetry_CtxCancelReturnsNilResponse(t *testing.T) {
+	base := roundTripperFunc(func(req *http.Request) (*http.Response, error) {
+		h := http.Header{}
+		h.Set("Retry-After", "30")
+		return &http.Response{StatusCode: http.StatusServiceUnavailable, Header: h, Body: &bodyReadCloser{}}, nil
+	})
+	rt := newRetryTransportWithRetries(3, base)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
+	req, _ := http.NewRequestWithContext(ctx, "GET", "https://localhost/items", nil)
+
+	resp, err := rt.RoundTrip(req)
+	if err == nil {
+		t.Fatal("expected context error, got nil")
+	}
+	if resp != nil {
+		t.Errorf("RoundTripper contract: expected nil response alongside error, got %#v", resp)
+	}
+}
+
 func TestRetry_CtxCancelDuringBackoffReturnsQuickly(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Retry-After", "30")
