@@ -58,7 +58,8 @@ module EnrichSpec
     "sublet_orders" => "SubletOrder",
     "inspections" => "Inspection",
     "inspection_reports" => "InspectionReport",
-    "campaigns" => "BroadcastCampaign"
+    "campaigns" => "BroadcastCampaign",
+    "store_credits" => "StoreCredit"
   }.freeze
 
     # Collection sub-actions that are NOT standard CRUD on a resource. The key is
@@ -136,6 +137,9 @@ module EnrichSpec
       # Campaign lifecycle.
       "post /campaigns/{id}/send_campaign" => "send_campaign",
       "post /campaigns/{id}/duplicate"     => "duplicate_campaign",
+      # Store-credit refunds return the Payment resource, not the credit; skip
+      # component hoisting so the response stays inline (2026-09-17 v0.9.0).
+      "post /store_credits/{store_credit_id}/refunds" => "create_store_credits_refund",
     }.freeze
 
   # Explicit operationIds for nested/sub-resource endpoints whose auto-derived
