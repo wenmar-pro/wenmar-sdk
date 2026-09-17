@@ -3,30 +3,6 @@
 <!-- AUTO-GENERATED from spec/openapi.enriched.yaml. Do not edit.
      Run: make docs -->
 
-## Create inventory level extraction
-
-```
-POST /inventory_levels/extractions
-```
-
-Create a inventory level extraction.
-
-**Response 202**
-
-| Field | Type | Required |
-|---|---|---|
-| `status` | string | Yes |
-| `stream_id` | string | Yes |
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Response 422** — [Error](#error-schema) error envelope
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/extractions.json
-```
-
 ## Show inventory level
 
 ```
@@ -162,27 +138,6 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 
 ---
 
-### CreateInventoryLevelExtractionRequest schema {#createinventorylevelextractionrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `text` | string | Yes |
-| `extraction_id` | string | Yes |
-
----
-
-### Error schema {#error-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `code` | string | Yes |
-| `message` | string | Yes |
-| `field_errors` | object | Yes |
-
-`field_errors` — object:
-
----
-
 ### UpdateInventoryLevelRequest schema {#updateinventorylevelrequest-schema}
 
 | Field | Type | Required |
@@ -209,4 +164,16 @@ curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_T
 |---|---|---|
 | `quantity_delta` | integer | Yes |
 | `reason` | string | Yes |
+
+---
+
+### Error schema {#error-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `code` | string | Yes |
+| `message` | string | Yes |
+| `field_errors` | object | Yes |
+
+`field_errors` — object:
 

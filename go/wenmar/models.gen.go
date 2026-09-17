@@ -81,7 +81,6 @@ type (
 	CreateInspectionsGroupResponse                             = gen.CreateInspectionsGroupResponse
 	CreateInspectionsItemResponse                              = gen.CreateInspectionsItemResponse
 	CreateInspectionsPresetResponse                            = gen.CreateInspectionsPresetResponse
-	CreateInventoryLevelExtractionResponse                     = gen.CreateInventoryLevelExtractionResponse
 	CreateInventoryLevelsAdjustResponse                        = gen.CreateInventoryLevelsAdjustResponse
 	CreateLaborMatrixResponse                                  = gen.CreateLaborMatrixResponse
 	CreateLaborRateResponse                                    = gen.CreateLaborRateResponse
@@ -151,7 +150,6 @@ type (
 	CreateWorkOrdersServicesCommentResponse                    = gen.CreateWorkOrdersServicesCommentResponse
 	CreateWorkOrdersServicesCompletionResponse                 = gen.CreateWorkOrdersServicesCompletionResponse
 	CreateWorkOrdersServicesCopyResponse                       = gen.CreateWorkOrdersServicesCopyResponse
-	CreateWorkOrdersServicesExtractionResponse                 = gen.CreateWorkOrdersServicesExtractionResponse
 	CreateWorkOrdersServicesLineItemResponse                   = gen.CreateWorkOrdersServicesLineItemResponse
 	CreateWorkOrdersServicesLineItemsCopyResponse              = gen.CreateWorkOrdersServicesLineItemsCopyResponse
 	CreateWorkOrdersServicesLineItemsInventoryAdditionResponse = gen.CreateWorkOrdersServicesLineItemsInventoryAdditionResponse
@@ -509,7 +507,6 @@ type (
 	CreateInspectionsGroupRequest                             = gen.CreateInspectionsGroupRequest
 	CreateInspectionsItemRequest                              = gen.CreateInspectionsItemRequest
 	CreateInspectionsPresetRequest                            = gen.CreateInspectionsPresetRequest
-	CreateInventoryLevelExtractionRequest                     = gen.CreateInventoryLevelExtractionRequest
 	CreateInventoryLevelsAdjustRequest                        = gen.CreateInventoryLevelsAdjustRequest
 	CreateLaborMatrixRequest                                  = gen.CreateLaborMatrixRequest
 	CreateLaborRateRequest                                    = gen.CreateLaborRateRequest
@@ -579,7 +576,6 @@ type (
 	CreateWorkOrdersServicesCommentRequest                    = gen.CreateWorkOrdersServicesCommentRequest
 	CreateWorkOrdersServicesCompletionRequest                 = gen.CreateWorkOrdersServicesCompletionRequest
 	CreateWorkOrdersServicesCopyRequest                       = gen.CreateWorkOrdersServicesCopyRequest
-	CreateWorkOrdersServicesExtractionRequest                 = gen.CreateWorkOrdersServicesExtractionRequest
 	CreateWorkOrdersServicesLineItemRequest                   = gen.CreateWorkOrdersServicesLineItemRequest
 	CreateWorkOrdersServicesLineItemsCopyRequest              = gen.CreateWorkOrdersServicesLineItemsCopyRequest
 	CreateWorkOrdersServicesLineItemsInventoryAdditionRequest = gen.CreateWorkOrdersServicesLineItemsInventoryAdditionRequest

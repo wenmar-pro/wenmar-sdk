@@ -355,14 +355,6 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
-"create_inventory_level_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateInventoryLevelExtraction(ctx, buildFlat[wenmar.CreateInventoryLevelExtractionRequest](args["requestBody"].(map[string]interface{})))
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
 "create_inventory_levels_adjust": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateInventoryLevelsAdjust(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"), buildWrapper[wenmar.CreateInventoryLevelsAdjustRequest]("adjustment", args["requestBody"].(map[string]interface{})))
 	if err != nil {
@@ -909,14 +901,6 @@ var dispatch = map[string]operationFunc{
 
 "create_work_orders_services_copy": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateWorkOrdersServicesCopy(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "id"), wenmar.CreateWorkOrdersServicesCopyRequest{})
-	if err != nil {
-		return nil, err
-	}
-	return decodeBody(resp.Body)
-},
-
-"create_work_orders_services_extraction": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
-	resp, err := c.CreateWorkOrdersServicesExtraction(ctx, intArg(args["pathParams"].(map[string]interface{}), "work_order_id"), intArg(args["pathParams"].(map[string]interface{}), "service_id"), buildFlat[wenmar.CreateWorkOrdersServicesExtractionRequest](args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -3539,7 +3523,6 @@ var allOperations = []string{
 	"create_inspections_group",
 	"create_inspections_item",
 	"create_inspections_preset",
-	"create_inventory_level_extraction",
 	"create_inventory_levels_adjust",
 	"create_labor_matrix",
 	"create_labor_rate",
@@ -3609,7 +3592,6 @@ var allOperations = []string{
 	"create_work_orders_services_comment",
 	"create_work_orders_services_completion",
 	"create_work_orders_services_copy",
-	"create_work_orders_services_extraction",
 	"create_work_orders_services_line_item",
 	"create_work_orders_services_line_items_copy",
 	"create_work_orders_services_line_items_inventory_addition",

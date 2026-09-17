@@ -176,7 +176,6 @@ module EnrichSpec
     "patch /users/permission_groups/{id}"       => "update_permission_group",
     # Phase A additions (2026-09-12 parity review).
     "get /work_orders/{work_order_id}/services" => "list_work_order_services",
-    "post /inventory_levels/extractions"        => "create_inventory_level_extraction",
     "post /tech_assignments"                    => "create_work_order_tech_assignment",
     "get /reports/statements"                   => "list_reports_statements",
     "get /reports/tax_periods"                  => "list_reports_tax_periods",

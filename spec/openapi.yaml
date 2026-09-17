@@ -3843,6 +3843,22 @@ paths:
           type: integer
       requestBody:
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    body:
+                      type: string
+                    channel:
+                      type: string
+                  required:
+                  - body
+                  - channel
+              required:
+              - message
           multipart/form-data:
             schema:
               type: object
@@ -3865,22 +3881,6 @@ paths:
               required:
               - message
               - files
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: object
-                  properties:
-                    body:
-                      type: string
-                    channel:
-                      type: string
-                  required:
-                  - body
-                  - channel
-              required:
-              - message
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -9900,63 +9900,6 @@ paths:
                 - app_url
       description: PATCH /inspections/{inspection_id}/presets/{id}
       operationId: PATCH_inspections_inspection_id_presets_id_
-  "/inventory_levels/extractions":
-    post:
-      summary: create
-      tags:
-      - Shop::Inventory::Extraction
-      responses:
-        '202':
-          description: POST /inventory_levels/extractions -> 202
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  stream_id:
-                    type: string
-                required:
-                - status
-                - stream_id
-        '403':
-          description: POST /inventory_levels/extractions -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /inventory_levels/extractions -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                text:
-                  type: string
-                extraction_id:
-                  type: string
-              required:
-              - text
-              - extraction_id
-      description: POST /inventory_levels/extractions
-      operationId: POST_inventory_levels_extractions
   "/inventory_levels/{id}":
     get:
       summary: show
@@ -12829,8 +12772,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        nullable: true
                         type: string
+                        nullable: true
                       role:
                         type: string
                       confirmed:
@@ -13207,19 +13150,6 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -13242,6 +13172,19 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                 required:
                 - id
                 - conversation_id
@@ -14651,6 +14594,37 @@ paths:
       summary: index
       tags:
       - Shop::Part
+      parameters:
+      - name: brand
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stock_status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stocked
+        in: query
+        required: false
+        schema:
+          type: boolean
       responses:
         '200':
           description: GET /parts -> 200
@@ -14740,82 +14714,12 @@ paths:
               schema:
                 type: integer
               description: Records per page
-      parameters:
-      - name: brand
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: q
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stock_status
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stocked
-        in: query
-        required: false
-        schema:
-          type: boolean
       description: GET /parts
       operationId: GET_parts
     post:
       summary: create
       tags:
       - Shop::Part
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                part:
-                  type: object
-                  properties:
-                    part_number:
-                      type: string
-                    description:
-                      type: string
-                    brand:
-                      type: string
-                    stocked:
-                      type: boolean
-                    initial_quantity:
-                      type: integer
-                    taxable:
-                      type: boolean
-                    cost:
-                      type: string
-                    sell:
-                      type: string
-                    vendor_id:
-                      type: integer
-                    part_type:
-                      type: string
-                  required:
-                  - part_number
-                  - description
-                  - brand
-                  - stocked
-                  - initial_quantity
-                  - cost
-                  - sell
-              required:
-              - part
       responses:
         '201':
           description: POST /parts -> 201
@@ -14846,6 +14750,7 @@ paths:
                   taxable:
                     type: boolean
                   vendor:
+                    nullable: true
                     type: object
                     properties:
                       id:
@@ -14858,10 +14763,9 @@ paths:
                     - id
                     - name
                     - url
-                    nullable: true
                   vendor_id:
-                    type: integer
                     nullable: true
+                    type: integer
                   core_charge_cents:
                     type: integer
                   on_hand:
@@ -14923,6 +14827,45 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                part:
+                  type: object
+                  properties:
+                    part_number:
+                      type: string
+                    description:
+                      type: string
+                    brand:
+                      type: string
+                    part_type:
+                      type: string
+                    stocked:
+                      type: boolean
+                    initial_quantity:
+                      type: integer
+                    cost:
+                      type: string
+                    sell:
+                      type: string
+                    taxable:
+                      type: boolean
+                    vendor_id:
+                      type: integer
+                  required:
+                  - part_number
+                  - description
+                  - brand
+                  - stocked
+                  - initial_quantity
+                  - cost
+                  - sell
+              required:
+              - part
       description: POST /parts
       operationId: POST_parts
   "/parts/{id}":
@@ -15106,8 +15049,8 @@ paths:
                     nullable: true
                     type: integer
                   bin_location:
-                    nullable: true
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -23692,35 +23635,6 @@ paths:
       summary: create
       tags:
       - Shop::Vehicle
-      responses:
-        '201':
-          description: POST /vehicles -> 201
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Vehicle"
-        '403':
-          description: POST /vehicles -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /vehicles -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
       requestBody:
         content:
           application/json:
@@ -23776,6 +23690,35 @@ paths:
                   - year
               required:
               - vehicle
+      responses:
+        '201':
+          description: POST /vehicles -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Vehicle"
+        '403':
+          description: POST /vehicles -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /vehicles -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
       description: POST /vehicles
       operationId: POST_vehicles
   "/vehicles/check_duplicate":
@@ -26183,19 +26126,19 @@ paths:
                   properties:
                     work_order_tag_id:
                       type: string
-                    saved_for_later:
-                      type: boolean
-                    vehicle_arrived_at:
-                      type: string
-                    intake_method:
-                      type: string
-                    waiting_for_customer:
-                      type: boolean
                     payer_customer_id:
                       type: integer
+                    vehicle_arrived_at:
+                      type: string
                     sub_status_type_id:
                       type: integer
+                    intake_method:
+                      type: string
                     services_visible_to_customer:
+                      type: boolean
+                    saved_for_later:
+                      type: boolean
+                    waiting_for_customer:
                       type: boolean
               required:
               - work_order
@@ -39875,89 +39818,6 @@ paths:
             -> 204
       description: DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id}
       operationId: DELETE_work_orders_work_order_id_services_service_id_comments_id_
-  "/work_orders/{work_order_id}/services/{service_id}/extractions":
-    post:
-      summary: create
-      tags:
-      - Shop::WorkOrderLineItemExtraction
-      parameters:
-      - name: service_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: work_order_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                text:
-                  type: string
-                extraction_id:
-                  type: string
-              required:
-              - text
-              - extraction_id
-      responses:
-        '202':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 202
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  stream_id:
-                    type: string
-                required:
-                - status
-                - stream_id
-        '403':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '404':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 404
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-      operationId: POST_work_orders_work_order_id_services_service_id_extractions
   "/work_orders/{work_order_id}/services/{service_id}/line_items":
     get:
       summary: index

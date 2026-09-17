@@ -21,7 +21,6 @@
     "create_work_orders_quick_intake",
     "create_work_orders_services_bulk_pull",
     "create_work_orders_services_comment",
-    "create_work_orders_services_extraction",
     "create_work_orders_services_line_items_reorder",
     "create_work_orders_tire_storage",
     "delete_calendar_blocked_time",

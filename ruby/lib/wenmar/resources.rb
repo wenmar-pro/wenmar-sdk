@@ -223,11 +223,6 @@ module Wenmar
       post("/inspections/#{inspection_id}/presets", {inspection_preset: inspection_preset}, params.compact)
     end
 
-    # Runs create_inventory_level_extraction (POST /inventory_levels/extractions).
-    def create_inventory_level_extraction(text:, extraction_id:)
-      post("/inventory_levels/extractions", {text: text, extraction_id: extraction_id})
-    end
-
     # Runs create_inventory_levels_adjust (POST /inventory_levels/{id}/adjust).
     def create_inventory_levels_adjust(id, adjustment:)
       post("/inventory_levels/#{id}/adjust", {adjustment: adjustment})
@@ -572,11 +567,6 @@ module Wenmar
     # Runs create_work_orders_services_copy (POST /work_orders/{work_order_id}/services/{id}/copies).
     def create_work_orders_services_copy(work_order_id, id)
       post("/work_orders/#{work_order_id}/services/#{id}/copies")
-    end
-
-    # Runs create_work_orders_services_extraction (POST /work_orders/{work_order_id}/services/{service_id}/extractions).
-    def create_work_orders_services_extraction(work_order_id, service_id, text:, extraction_id:)
-      post("/work_orders/#{work_order_id}/services/#{service_id}/extractions", {text: text, extraction_id: extraction_id})
     end
 
     # Runs create_work_orders_services_line_item (POST /work_orders/{work_order_id}/services/{service_id}/line_items).

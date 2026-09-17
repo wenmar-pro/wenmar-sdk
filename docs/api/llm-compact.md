@@ -186,7 +186,6 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 ## Inventory Levels
 
-- **POST /inventory_levels/extractions** -> 202: object{status,stream_id} | 403: error envelope | 422: error envelope
 - **GET /inventory_levels/{id}** ?id -> 200: object{id,part_id,location_id,on_hand,available_quantity,quantity_on_order,bin_location,reorder_point,max_stock,stock_status,created_at,updated_at,part,recent_movements,url,app_url}
 - **PATCH /inventory_levels/{id}** ?id -> 200: object{id,part_id,location_id,on_hand,available_quantity,quantity_on_order,bin_location,reorder_point,max_stock,stock_status,created_at,updated_at,part,recent_movements,url,app_url}
 - **POST /inventory_levels/{id}/adjust** ?id -> 200: object{id,part_id,location_id,on_hand,available_quantity,quantity_on_order,bin_location,reorder_point,max_stock,stock_status,created_at,updated_at,part,recent_movements,url,app_url} | 422: error envelope
@@ -253,7 +252,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 
 - **GET /messages** ?conversation_id -> 200: array of object
 - **GET /messages/{id}** ?id -> 200: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
-- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sender,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url}
+- **POST /messages/{message_id}/resends** ?message_id -> 201: object{id,conversation_id,direction,channel,status,body,recipient_phone,recipient_email,work_order_id,statement_id,appointment_id,failure_reason,attachment_count,sent_at,delivered_at,read_at,failed_at,created_at,updated_at,conversation_url,url,app_url,sender}
 
 ## Notifications
 
@@ -551,7 +550,6 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **GET /work_orders/{work_order_id}/services/{service_id}/comments** ?service_id,work_order_id -> 200: array of object | 404: error envelope
 - **POST /work_orders/{work_order_id}/services/{service_id}/comments** ?service_id,work_order_id -> 201: WorkOrder | 422: error envelope
 - **DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id}** ?id,service_id,work_order_id -> no content
-- **POST /work_orders/{work_order_id}/services/{service_id}/extractions** ?service_id,work_order_id -> 202: WorkOrder | 403: error envelope | 404: error envelope | 422: error envelope
 - **GET /work_orders/{work_order_id}/services/{service_id}/line_items** ?service_id,work_order_id -> 200: array of object
 - **POST /work_orders/{work_order_id}/services/{service_id}/line_items** ?service_id,work_order_id -> 201: WorkOrder | 422: error envelope
 - **DELETE /work_orders/{work_order_id}/services/{service_id}/line_items/{id}** ?id,service_id,work_order_id -> no content
@@ -628,7 +626,6 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateInspectionsGroupRequest**: {inspection_group*:object{name}}
 - **CreateInspectionsItemRequest**: {inspection_item*:object{name,requires_measurement,measurement_unit}, group_id*:integer}
 - **CreateInspectionsPresetRequest**: {inspection_preset*:object{title,color_rating}}
-- **CreateInventoryLevelExtractionRequest**: {text*:string, extraction_id*:string}
 - **CreateInventoryLevelsAdjustRequest**: {adjustment*:object{quantity_delta,reason}}
 - **CreateLaborMatrixRequest**: {labor_matrix*:object{name,matrix_type,active}}
 - **CreateLaborRateRequest**: {labor_rate*:object{name,rate,is_default}}
@@ -641,7 +638,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateOrdersReturnOrdersRefundCompletionRequest**: {}
 - **CreatePackageRequest**: {package*:object{name,description}}
 - **CreatePackagesDuplicateRequest**: {}
-- **CreatePartRequest**: {part*:object{part_number,description,brand,stocked,initial_quantity,taxable,cost,sell,vendor_id,part_type}}
+- **CreatePartRequest**: {part*:object{part_number,description,brand,part_type,stocked,initial_quantity,cost,sell,taxable,vendor_id}}
 - **CreatePartsMatrixRequest**: {parts_matrix*:object{name,is_default,active}}
 - **CreatePaymentsCancellationRequest**: {}
 - **CreatePaymentsConfirmationRequest**: {}
@@ -698,7 +695,6 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **CreateWorkOrdersServicesCommentRequest**: {service_comment*:object{body}}
 - **CreateWorkOrdersServicesCompletionRequest**: {}
 - **CreateWorkOrdersServicesCopyRequest**: {}
-- **CreateWorkOrdersServicesExtractionRequest**: {text*:string, extraction_id*:string}
 - **CreateWorkOrdersServicesLineItemRequest**: {work_order_line_item*:object{item_type,description,hours,labor_rate_id,total,unit_price,quantity}}
 - **CreateWorkOrdersServicesLineItemsCopyRequest**: {}
 - **CreateWorkOrdersServicesLineItemsInventoryAdditionRequest**: {}
@@ -826,7 +822,7 @@ Responses: bare objects/arrays, no envelope. Errors: `{ "error": { code, message
 - **UpdateUserRequest**: {user*:object{full_name}}
 - **UpdateVehicleRequest**: {vehicle*:object{make,model,year,vin,submodel,body_style,engine,transmission,drivetrain,color,license_plate,license_plate_state,odometer_reading,odometer_unit,notes,vehicle_type}, confirm_unit_change:string, convert_odometer:string}
 - **UpdateVendorRequest**: {vendor*:object{name}}
-- **UpdateWorkOrderRequest**: {work_order*:object{work_order_tag_id,saved_for_later,vehicle_arrived_at,intake_method,waiting_for_customer,payer_customer_id,sub_status_type_id,services_visible_to_customer}}
+- **UpdateWorkOrderRequest**: {work_order*:object{work_order_tag_id,payer_customer_id,vehicle_arrived_at,sub_status_type_id,intake_method,services_visible_to_customer,saved_for_later,waiting_for_customer}}
 - **UpdateWorkOrderTagRequest**: {name*:string}
 - **UpdateWorkOrderTagsArchiveRequest**: {}
 - **UpdateWorkOrdersConcernRequest**: {concern*:object{body}}

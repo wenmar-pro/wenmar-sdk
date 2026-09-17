@@ -4264,6 +4264,9 @@ paths:
           type: integer
       requestBody:
         content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
           multipart/form-data:
             schema:
               type: object
@@ -4286,9 +4289,6 @@ paths:
               required:
               - message
               - files
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -10215,69 +10215,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/inventory_levels/extractions":
-    post:
-      summary: create
-      tags:
-      - inventory_levels
-      responses:
-        '202':
-          description: POST /inventory_levels/extractions -> 202
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  stream_id:
-                    type: string
-                required:
-                - status
-                - stream_id
-        '403':
-          description: POST /inventory_levels/extractions -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /inventory_levels/extractions -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateInventoryLevelExtractionRequest"
-      description: Create a inventory level extraction.
-      operationId: create_inventory_level_extraction
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/inventory_levels/extractions.json
-      x-wenmar-request-schema: CreateInventoryLevelExtractionRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/inventory_levels/{id}":
     get:
       summary: show
@@ -13463,8 +13400,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        nullable: true
                         type: string
+                        nullable: true
                       role:
                         type: string
                       confirmed:
@@ -13877,19 +13814,6 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -13912,6 +13836,19 @@ paths:
                     type: string
                   app_url:
                     type: string
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                 required:
                 - id
                 - conversation_id
@@ -15218,6 +15155,37 @@ paths:
       summary: index
       tags:
       - parts
+      parameters:
+      - name: brand
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stock_status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stocked
+        in: query
+        required: false
+        schema:
+          type: boolean
       responses:
         '200':
           description: GET /parts -> 200
@@ -15307,37 +15275,6 @@ paths:
               schema:
                 type: integer
               description: Records per page
-      parameters:
-      - name: brand
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: q
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stock_status
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stocked
-        in: query
-        required: false
-        schema:
-          type: boolean
       description: List all parts, paginated via the Link header.
       operationId: list_parts
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -15356,11 +15293,6 @@ paths:
       summary: create
       tags:
       - parts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreatePartRequest"
       responses:
         '201':
           description: POST /parts -> 201
@@ -15391,6 +15323,7 @@ paths:
                   taxable:
                     type: boolean
                   vendor:
+                    nullable: true
                     type: object
                     properties:
                       id:
@@ -15403,10 +15336,9 @@ paths:
                     - id
                     - name
                     - url
-                    nullable: true
                   vendor_id:
-                    type: integer
                     nullable: true
+                    type: integer
                   core_charge_cents:
                     type: integer
                   on_hand:
@@ -15468,6 +15400,11 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePartRequest"
       description: Create a part.
       operationId: create_part
       x-curl-example: |-
@@ -15679,8 +15616,8 @@ paths:
                     nullable: true
                     type: integer
                   bin_location:
-                    nullable: true
                     type: string
+                    nullable: true
                   created_at:
                     type: string
                   updated_at:
@@ -25017,6 +24954,11 @@ paths:
       summary: create
       tags:
       - vehicles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateVehicleRequest"
       responses:
         '201':
           description: POST /vehicles -> 201
@@ -25046,11 +24988,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateVehicleRequest"
       description: Create a vehicle.
       operationId: create_vehicle
       x-curl-example: |-
@@ -35797,87 +35734,6 @@ paths:
         - 503
         - 504
         method-gated: true
-  "/work_orders/{work_order_id}/services/{service_id}/extractions":
-    post:
-      summary: create
-      tags:
-      - work_orders
-      parameters:
-      - name: service_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: work_order_id
-        in: path
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateWorkOrdersServicesExtractionRequest"
-      responses:
-        '202':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 202
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/WorkOrder"
-        '403':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 403
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '404':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 404
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-        '422':
-          description: POST /work_orders/{work_order_id}/services/{service_id}/extractions
-            -> 422
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    "$ref": "#/components/schemas/Error"
-                required:
-                - error
-      description: Create a work orders services extraction.
-      operationId: create_work_orders_services_extraction
-      x-curl-example: |-
-        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-             -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/services/{service_id}/extractions.json
-      x-wenmar-request-schema: CreateWorkOrdersServicesExtractionRequest
-      x-retry:
-        max: 3
-        backoff: exponential
-        retry-on:
-        - 429
-        - 500
-        - 502
-        - 503
-        - 504
-        method-gated: true
   "/work_orders/{work_order_id}/services/{service_id}/line_items":
     get:
       summary: index
@@ -38312,16 +38168,6 @@ components:
           - color_rating
       required:
       - inspection_preset
-    CreateInventoryLevelExtractionRequest:
-      type: object
-      properties:
-        text:
-          type: string
-        extraction_id:
-          type: string
-      required:
-      - text
-      - extraction_id
     CreateInventoryLevelsAdjustRequest:
       type: object
       properties:
@@ -38478,20 +38324,20 @@ components:
               type: string
             brand:
               type: string
+            part_type:
+              type: string
             stocked:
               type: boolean
             initial_quantity:
               type: integer
-            taxable:
-              type: boolean
             cost:
               type: string
             sell:
               type: string
+            taxable:
+              type: boolean
             vendor_id:
               type: integer
-            part_type:
-              type: string
           required:
           - part_number
           - description
@@ -39256,16 +39102,6 @@ components:
     CreateWorkOrdersServicesCopyRequest:
       type: object
       properties: {}
-    CreateWorkOrdersServicesExtractionRequest:
-      type: object
-      properties:
-        text:
-          type: string
-        extraction_id:
-          type: string
-      required:
-      - text
-      - extraction_id
     CreateWorkOrdersServicesLineItemRequest:
       type: object
       properties:
@@ -41852,19 +41688,19 @@ components:
           properties:
             work_order_tag_id:
               type: string
-            saved_for_later:
-              type: boolean
-            vehicle_arrived_at:
-              type: string
-            intake_method:
-              type: string
-            waiting_for_customer:
-              type: boolean
             payer_customer_id:
               type: integer
+            vehicle_arrived_at:
+              type: string
             sub_status_type_id:
               type: integer
+            intake_method:
+              type: string
             services_visible_to_customer:
+              type: boolean
+            saved_for_later:
+              type: boolean
+            waiting_for_customer:
               type: boolean
       required:
       - work_order

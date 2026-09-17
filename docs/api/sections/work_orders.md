@@ -4026,32 +4026,6 @@ Delete a work orders services comment by ID.
 curl -X DELETE -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/work_orders/<id>.json
 ```
 
-## Create work orders services extraction
-
-```
-POST /work_orders/{work_order_id}/services/{service_id}/extractions
-```
-
-Create a work orders services extraction.
-
-| Param | Type | Required |
-|---|---|---|
-| `service_id` | integer | Yes |
-| `work_order_id` | integer | Yes |
-
-**Response 202** — [WorkOrder](#workorder-schema)
-
-**Response 403** — [Error](#error-schema) error envelope
-
-**Response 404** — [Error](#error-schema) error envelope
-
-**Response 422** — [Error](#error-schema) error envelope
-
-```bash
-curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
-     -d '{"...":"..."}' https://app.wenmarpro.com/work_orders/{work_order_id}/services/{service_id}/extractions.json
-```
-
 ## List work orders services line items
 
 ```
@@ -4913,13 +4887,13 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `work_order_tag_id` | string | No |
-| `saved_for_later` | boolean | No |
-| `vehicle_arrived_at` | string | No |
-| `intake_method` | string | No |
-| `waiting_for_customer` | boolean | No |
 | `payer_customer_id` | integer | No |
+| `vehicle_arrived_at` | string | No |
 | `sub_status_type_id` | integer | No |
+| `intake_method` | string | No |
 | `services_visible_to_customer` | boolean | No |
+| `saved_for_later` | boolean | No |
+| `waiting_for_customer` | boolean | No |
 
 ---
 
@@ -5457,15 +5431,6 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 | Field | Type | Required |
 |---|---|---|
 | `body` | string | Yes |
-
----
-
-### CreateWorkOrdersServicesExtractionRequest schema {#createworkordersservicesextractionrequest-schema}
-
-| Field | Type | Required |
-|---|---|---|
-| `text` | string | Yes |
-| `extraction_id` | string | Yes |
 
 ---
 

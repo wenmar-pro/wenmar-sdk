@@ -500,12 +500,6 @@ type CreateInspectionsPresetRequest struct {
 	} `json:"inspection_preset"`
 }
 
-// CreateInventoryLevelExtractionRequest defines model for CreateInventoryLevelExtractionRequest.
-type CreateInventoryLevelExtractionRequest struct {
-	ExtractionId string `json:"extraction_id"`
-	Text         string `json:"text"`
-}
-
 // CreateInventoryLevelsAdjustRequest defines model for CreateInventoryLevelsAdjustRequest.
 type CreateInventoryLevelsAdjustRequest struct {
 	Adjustment struct {
@@ -1005,12 +999,6 @@ type CreateWorkOrdersServicesCompletionRequest = map[string]interface{}
 
 // CreateWorkOrdersServicesCopyRequest defines model for CreateWorkOrdersServicesCopyRequest.
 type CreateWorkOrdersServicesCopyRequest = map[string]interface{}
-
-// CreateWorkOrdersServicesExtractionRequest defines model for CreateWorkOrdersServicesExtractionRequest.
-type CreateWorkOrdersServicesExtractionRequest struct {
-	ExtractionId string `json:"extraction_id"`
-	Text         string `json:"text"`
-}
 
 // CreateWorkOrdersServicesLineItemRequest defines model for CreateWorkOrdersServicesLineItemRequest.
 type CreateWorkOrdersServicesLineItemRequest struct {
@@ -3003,9 +2991,6 @@ type CreateInspectionsPresetJSONRequestBody = CreateInspectionsPresetRequest
 // UpdateInspectionsPresetJSONRequestBody defines body for UpdateInspectionsPreset for application/json ContentType.
 type UpdateInspectionsPresetJSONRequestBody = UpdateInspectionsPresetRequest
 
-// CreateInventoryLevelExtractionJSONRequestBody defines body for CreateInventoryLevelExtraction for application/json ContentType.
-type CreateInventoryLevelExtractionJSONRequestBody = CreateInventoryLevelExtractionRequest
-
 // UpdateInventoryLevelJSONRequestBody defines body for UpdateInventoryLevel for application/json ContentType.
 type UpdateInventoryLevelJSONRequestBody = UpdateInventoryLevelRequest
 
@@ -3452,9 +3437,6 @@ type UpdateWorkOrdersServicesUpdateCategoryJSONRequestBody = UpdateWorkOrdersSer
 
 // CreateWorkOrdersServicesCommentJSONRequestBody defines body for CreateWorkOrdersServicesComment for application/json ContentType.
 type CreateWorkOrdersServicesCommentJSONRequestBody = CreateWorkOrdersServicesCommentRequest
-
-// CreateWorkOrdersServicesExtractionJSONRequestBody defines body for CreateWorkOrdersServicesExtraction for application/json ContentType.
-type CreateWorkOrdersServicesExtractionJSONRequestBody = CreateWorkOrdersServicesExtractionRequest
 
 // CreateWorkOrdersServicesLineItemJSONRequestBody defines body for CreateWorkOrdersServicesLineItem for application/json ContentType.
 type CreateWorkOrdersServicesLineItemJSONRequestBody = CreateWorkOrdersServicesLineItemRequest
@@ -5141,24 +5123,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 	UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateInventoryLevelExtractionWithBody create
-	//
-	// Create a inventory level extraction.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-	CreateInventoryLevelExtractionWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateInventoryLevelExtraction create
-	//
-	// Create a inventory level extraction.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-	CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ShowInventoryLevel show
 	//
@@ -8588,24 +8552,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id} (the `DeleteWorkOrdersServicesComment` operationId).
 	DeleteWorkOrdersServicesComment(ctx context.Context, workOrderId int, serviceId int, id int, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateWorkOrdersServicesExtractionWithBody create
-	//
-	// Create a work orders services extraction.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-	CreateWorkOrdersServicesExtractionWithBody(ctx context.Context, workOrderId int, serviceId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateWorkOrdersServicesExtraction create
-	//
-	// Create a work orders services extraction.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-	CreateWorkOrdersServicesExtraction(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListWorkOrdersServicesLineItems index
 	//
@@ -12443,44 +12389,6 @@ func (c *Client) UpdateInspectionsPresetWithBody(ctx context.Context, inspection
 // Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 func (c *Client) UpdateInspectionsPreset(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateInspectionsPresetRequest(c.Server, inspectionId, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateInventoryLevelExtractionWithBody create
-//
-// Create a inventory level extraction.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-func (c *Client) CreateInventoryLevelExtractionWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateInventoryLevelExtractionRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateInventoryLevelExtraction create
-//
-// Create a inventory level extraction.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-func (c *Client) CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateInventoryLevelExtractionRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -20150,44 +20058,6 @@ func (c *Client) DeleteWorkOrdersServicesComment(ctx context.Context, workOrderI
 	return c.Client.Do(req)
 }
 
-// CreateWorkOrdersServicesExtractionWithBody create
-//
-// Create a work orders services extraction.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-func (c *Client) CreateWorkOrdersServicesExtractionWithBody(ctx context.Context, workOrderId int, serviceId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesExtractionRequestWithBody(c.Server, workOrderId, serviceId, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateWorkOrdersServicesExtraction create
-//
-// Create a work orders services extraction.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-func (c *Client) CreateWorkOrdersServicesExtraction(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateWorkOrdersServicesExtractionRequest(c.Server, workOrderId, serviceId, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // ListWorkOrdersServicesLineItems index
 //
 // List all work orders services line items, paginated via the Link header.
@@ -26399,46 +26269,6 @@ func NewUpdateInspectionsPresetRequestWithBody(server string, inspectionId int, 
 	}
 
 	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewCreateInventoryLevelExtractionRequest calls the generic CreateInventoryLevelExtraction builder with application/json body
-func NewCreateInventoryLevelExtractionRequest(server string, body CreateInventoryLevelExtractionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateInventoryLevelExtractionRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateInventoryLevelExtractionRequestWithBody constructs an http.Request for the CreateInventoryLevelExtraction method, with any body, and a specified content type
-func NewCreateInventoryLevelExtractionRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/inventory_levels/extractions")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
 	if err != nil {
 		return nil, err
 	}
@@ -37986,60 +37816,6 @@ func NewDeleteWorkOrdersServicesCommentRequest(server string, workOrderId int, s
 	return req, nil
 }
 
-// NewCreateWorkOrdersServicesExtractionRequest calls the generic CreateWorkOrdersServicesExtraction builder with application/json body
-func NewCreateWorkOrdersServicesExtractionRequest(server string, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateWorkOrdersServicesExtractionRequestWithBody(server, workOrderId, serviceId, "application/json", bodyReader)
-}
-
-// NewCreateWorkOrdersServicesExtractionRequestWithBody constructs an http.Request for the CreateWorkOrdersServicesExtraction method, with any body, and a specified content type
-func NewCreateWorkOrdersServicesExtractionRequestWithBody(server string, workOrderId int, serviceId int, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "work_order_id", workOrderId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	var pathParam1 string
-
-	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "service_id", serviceId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: ""})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/work_orders/%s/services/%s/extractions", pathParam0, pathParam1)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListWorkOrdersServicesLineItemsRequest constructs an http.Request for the ListWorkOrdersServicesLineItems method
 func NewListWorkOrdersServicesLineItemsRequest(server string, workOrderId int, serviceId int) (*http.Request, error) {
 	var err error
@@ -41035,24 +40811,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /inspections/{inspection_id}/presets/{id} (the `UpdateInspectionsPreset` operationId).
 	UpdateInspectionsPresetWithResponse(ctx context.Context, inspectionId int, id int, body UpdateInspectionsPresetJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateInspectionsPresetResponse, error)
-
-	// CreateInventoryLevelExtractionWithBodyWithResponse create
-	//
-	// Create a inventory level extraction.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-	CreateInventoryLevelExtractionWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error)
-
-	// CreateInventoryLevelExtractionWithResponse create
-	//
-	// Create a inventory level extraction.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-	CreateInventoryLevelExtractionWithResponse(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error)
 
 	// ShowInventoryLevelWithResponse show
 	//
@@ -44732,24 +44490,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with DELETE /work_orders/{work_order_id}/services/{service_id}/comments/{id} (the `DeleteWorkOrdersServicesComment` operationId).
 	DeleteWorkOrdersServicesCommentWithResponse(ctx context.Context, workOrderId int, serviceId int, id int, reqEditors ...RequestEditorFn) (*DeleteWorkOrdersServicesCommentResponse, error)
-
-	// CreateWorkOrdersServicesExtractionWithBodyWithResponse create
-	//
-	// Create a work orders services extraction.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-	CreateWorkOrdersServicesExtractionWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesExtractionResponse, error)
-
-	// CreateWorkOrdersServicesExtractionWithResponse create
-	//
-	// Create a work orders services extraction.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-	CreateWorkOrdersServicesExtractionWithResponse(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesExtractionResponse, error)
 
 	// ListWorkOrdersServicesLineItemsWithResponse index
 	//
@@ -54092,75 +53832,6 @@ func (r UpdateInspectionsPresetResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateInspectionsPresetResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type CreateInventoryLevelExtractionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON202 the response for an HTTP 202 `application/json` response
-	JSON202 *struct {
-		Status   string `json:"status"`
-		StreamId string `json:"stream_id"`
-	}
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-	// JSON422 the response for an HTTP 422 `application/json` response
-	JSON422 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON202 returns the response for an HTTP 202 `application/json` response
-func (r CreateInventoryLevelExtractionResponse) GetJSON202() *struct {
-	Status   string `json:"status"`
-	StreamId string `json:"stream_id"`
-} {
-	return r.JSON202
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateInventoryLevelExtractionResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetJSON422 returns the response for an HTTP 422 `application/json` response
-func (r CreateInventoryLevelExtractionResponse) GetJSON422() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON422
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateInventoryLevelExtractionResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateInventoryLevelExtractionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateInventoryLevelExtractionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateInventoryLevelExtractionResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -76127,80 +75798,6 @@ func (r DeleteWorkOrdersServicesCommentResponse) ContentType() string {
 	return ""
 }
 
-type CreateWorkOrdersServicesExtractionResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON202 the response for an HTTP 202 `application/json` response
-	JSON202 *WorkOrder
-	// JSON403 the response for an HTTP 403 `application/json` response
-	JSON403 *struct {
-		Error Error `json:"error"`
-	}
-	// JSON404 the response for an HTTP 404 `application/json` response
-	JSON404 *struct {
-		Error Error `json:"error"`
-	}
-	// JSON422 the response for an HTTP 422 `application/json` response
-	JSON422 *struct {
-		Error Error `json:"error"`
-	}
-}
-
-// GetJSON202 returns the response for an HTTP 202 `application/json` response
-func (r CreateWorkOrdersServicesExtractionResponse) GetJSON202() *WorkOrder {
-	return r.JSON202
-}
-
-// GetJSON403 returns the response for an HTTP 403 `application/json` response
-func (r CreateWorkOrdersServicesExtractionResponse) GetJSON403() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON403
-}
-
-// GetJSON404 returns the response for an HTTP 404 `application/json` response
-func (r CreateWorkOrdersServicesExtractionResponse) GetJSON404() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON404
-}
-
-// GetJSON422 returns the response for an HTTP 422 `application/json` response
-func (r CreateWorkOrdersServicesExtractionResponse) GetJSON422() *struct {
-	Error Error `json:"error"`
-} {
-	return r.JSON422
-}
-
-// GetBody returns the raw response body bytes
-func (r CreateWorkOrdersServicesExtractionResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateWorkOrdersServicesExtractionResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateWorkOrdersServicesExtractionResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateWorkOrdersServicesExtractionResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 // ListWorkOrdersServicesLineItemsResponse200Headers the declared response headers of an HTTP 200 response for ListWorkOrdersServicesLineItems
 type ListWorkOrdersServicesLineItemsResponse200Headers struct {
 	Link        *string
@@ -80290,36 +79887,6 @@ func (c *ClientWithResponses) UpdateInspectionsPresetWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseUpdateInspectionsPresetResponse(rsp)
-}
-
-// CreateInventoryLevelExtractionWithBodyWithResponse create
-//
-// Create a inventory level extraction.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-func (c *ClientWithResponses) CreateInventoryLevelExtractionWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error) {
-	rsp, err := c.CreateInventoryLevelExtractionWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateInventoryLevelExtractionResponse(rsp)
-}
-
-// CreateInventoryLevelExtractionWithResponse create
-//
-// Create a inventory level extraction.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /inventory_levels/extractions (the `CreateInventoryLevelExtraction` operationId).
-func (c *ClientWithResponses) CreateInventoryLevelExtractionWithResponse(ctx context.Context, body CreateInventoryLevelExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInventoryLevelExtractionResponse, error) {
-	rsp, err := c.CreateInventoryLevelExtraction(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateInventoryLevelExtractionResponse(rsp)
 }
 
 // ShowInventoryLevelWithResponse show
@@ -86537,36 +86104,6 @@ func (c *ClientWithResponses) DeleteWorkOrdersServicesCommentWithResponse(ctx co
 		return nil, err
 	}
 	return ParseDeleteWorkOrdersServicesCommentResponse(rsp)
-}
-
-// CreateWorkOrdersServicesExtractionWithBodyWithResponse create
-//
-// Create a work orders services extraction.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesExtractionWithBodyWithResponse(ctx context.Context, workOrderId int, serviceId int, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesExtractionResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesExtractionWithBody(ctx, workOrderId, serviceId, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateWorkOrdersServicesExtractionResponse(rsp)
-}
-
-// CreateWorkOrdersServicesExtractionWithResponse create
-//
-// Create a work orders services extraction.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /work_orders/{work_order_id}/services/{service_id}/extractions (the `CreateWorkOrdersServicesExtraction` operationId).
-func (c *ClientWithResponses) CreateWorkOrdersServicesExtractionWithResponse(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkOrdersServicesExtractionResponse, error) {
-	rsp, err := c.CreateWorkOrdersServicesExtraction(ctx, workOrderId, serviceId, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateWorkOrdersServicesExtractionResponse(rsp)
 }
 
 // ListWorkOrdersServicesLineItemsWithResponse index
@@ -92924,53 +92461,6 @@ func ParseUpdateInspectionsPresetResponse(rsp *http.Response) (*UpdateInspection
 			return nil, err
 		}
 		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateInventoryLevelExtractionResponse parses an HTTP response from a CreateInventoryLevelExtractionWithResponse call
-func ParseCreateInventoryLevelExtractionResponse(rsp *http.Response) (*CreateInventoryLevelExtractionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateInventoryLevelExtractionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
-		var dest struct {
-			Status   string `json:"status"`
-			StreamId string `json:"stream_id"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON202 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
 
 	}
 
@@ -106781,59 +106271,6 @@ func ParseDeleteWorkOrdersServicesCommentResponse(rsp *http.Response) (*DeleteWo
 	response := &DeleteWorkOrdersServicesCommentResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
-	}
-
-	return response, nil
-}
-
-// ParseCreateWorkOrdersServicesExtractionResponse parses an HTTP response from a CreateWorkOrdersServicesExtractionWithResponse call
-func ParseCreateWorkOrdersServicesExtractionResponse(rsp *http.Response) (*CreateWorkOrdersServicesExtractionResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateWorkOrdersServicesExtractionResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
-		var dest WorkOrder
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON202 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
-		var dest struct {
-			Error Error `json:"error"`
-		}
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON422 = &dest
-
 	}
 
 	return response, nil

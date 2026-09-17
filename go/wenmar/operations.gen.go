@@ -738,23 +738,6 @@ func (c *Client) CreateInspectionsPreset(ctx context.Context, inspectionId int, 
 	return resp, nil
 }
 
-// CreateInventoryLevelExtraction runs the create_inventory_level_extraction operation (POST /inventory_levels/extractions).
-func (c *Client) CreateInventoryLevelExtraction(ctx context.Context, body CreateInventoryLevelExtractionRequest) (*CreateInventoryLevelExtractionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"})
-	resp, err := c.gen.CreateInventoryLevelExtractionWithResponse(ctx, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateInventoryLevelExtraction"}, OperationResult{Operation: "CreateInventoryLevelExtraction"})
-	return resp, nil
-}
-
 // CreateInventoryLevelsAdjust runs the create_inventory_levels_adjust operation (POST /inventory_levels/{id}/adjust).
 func (c *Client) CreateInventoryLevelsAdjust(ctx context.Context, id int, body CreateInventoryLevelsAdjustRequest) (*CreateInventoryLevelsAdjustResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateInventoryLevelsAdjust"})
@@ -1925,23 +1908,6 @@ func (c *Client) CreateWorkOrdersServicesCopy(ctx context.Context, workOrderId i
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesCopy"}, OperationResult{Operation: "CreateWorkOrdersServicesCopy"})
-	return resp, nil
-}
-
-// CreateWorkOrdersServicesExtraction runs the create_work_orders_services_extraction operation (POST /work_orders/{work_order_id}/services/{service_id}/extractions).
-func (c *Client) CreateWorkOrdersServicesExtraction(ctx context.Context, workOrderId int, serviceId int, body CreateWorkOrdersServicesExtractionRequest) (*CreateWorkOrdersServicesExtractionResponse, error) {
-	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"})
-	resp, err := c.gen.CreateWorkOrdersServicesExtractionWithResponse(ctx, workOrderId, serviceId, body)
-	if err != nil {
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: err})
-		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
-		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction", Err: perr})
-		return nil, perr
-	}
-	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateWorkOrdersServicesExtraction"}, OperationResult{Operation: "CreateWorkOrdersServicesExtraction"})
 	return resp, nil
 }
 

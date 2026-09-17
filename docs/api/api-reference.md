@@ -137,7 +137,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/inspections/{inspection_id}/presets` | `create_inspections_preset` | Create a inspections preset. |
 | DELETE | `/inspections/{inspection_id}/presets/{id}` | `delete_inspections_preset` | Delete a inspections preset by ID. |
 | PATCH | `/inspections/{inspection_id}/presets/{id}` | `update_inspections_preset` | Update a inspections preset by ID. |
-| POST | `/inventory_levels/extractions` | `create_inventory_level_extraction` | Create a inventory level extraction. |
 | GET | `/inventory_levels/{id}` | `show_inventory_level` | Show a inventory level by ID. |
 | PATCH | `/inventory_levels/{id}` | `update_inventory_level` | Update a inventory level by ID. |
 | POST | `/inventory_levels/{id}/adjust` | `create_inventory_levels_adjust` | Create a inventory levels adjust. |
@@ -412,7 +411,6 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/work_orders/{work_order_id}/services/{service_id}/comments` | `list_work_orders_services_comments` | List all work orders services comments, paginated via the Link header. |
 | POST | `/work_orders/{work_order_id}/services/{service_id}/comments` | `create_work_orders_services_comment` | Create a work orders services comment. |
 | DELETE | `/work_orders/{work_order_id}/services/{service_id}/comments/{id}` | `delete_work_orders_services_comment` | Delete a work orders services comment by ID. |
-| POST | `/work_orders/{work_order_id}/services/{service_id}/extractions` | `create_work_orders_services_extraction` | Create a work orders services extraction. |
 | GET | `/work_orders/{work_order_id}/services/{service_id}/line_items` | `list_work_orders_services_line_items` | List all work orders services line items, paginated via the Link header. |
 | POST | `/work_orders/{work_order_id}/services/{service_id}/line_items` | `create_work_orders_services_line_item` | Create a work orders services line item. |
 | DELETE | `/work_orders/{work_order_id}/services/{service_id}/line_items/{id}` | `delete_work_orders_services_line_item` | Delete a work orders services line item by ID. |
