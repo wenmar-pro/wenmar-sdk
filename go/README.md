@@ -57,13 +57,17 @@ client, err := wenmar.NewClient(cfg, nil)
 
 ### Environment variables
 
-| Variable | Read by | Purpose |
-|---|---|---|
-| `WENMAR_URL` | CLI + `auth.LoadConfigFromEnv` | API base URL (also accepts `WENMAR_BASE_URL` as fallback) |
-| `WENMAR_BASE_URL` | `wenmar.LoadConfigFromEnv`, Ruby `Config.from_env` | API base URL |
-| `WENMAR_TOKEN` | CLI + `auth.LoadConfigFromEnv` | static bearer token |
-| `WENMAR_LOCATION_ID` | CLI + `auth.LoadConfigFromEnv`, Ruby `Config.from_env` | default location scope |
-| `WENMAR_TIMEOUT` / `WENMAR_MAX_RETRIES` / `WENMAR_CACHE` | `wenmar.LoadConfigFromEnv`, Ruby `Config.from_env` | client tuning |
+The Go SDK does not read environment variables — build the `Config` in code
+(`wenmar.DefaultConfig()`, override fields). The Ruby SDK reads these via
+`Config.from_env`:
+
+| Variable | Purpose |
+|---|---|
+| `WENMAR_BASE_URL` | API base URL (default `https://app.wenmarpro.com`) |
+| `WENMAR_LOCATION_ID` | default location scope |
+| `WENMAR_TIMEOUT` | request timeout in seconds (default 30) |
+| `WENMAR_MAX_RETRIES` | retry count (default 3) |
+| `WENMAR_CACHE` | `"false"` disables the response cache |
 
 ## Location scoping
 
@@ -151,13 +155,22 @@ resp, err := client.ListCustomersRaw(ctx, nil)
 Non-2xx responses return a `*wenmar.APIError`:
 
 ```go
-resp, err := client.ShowCustomer(ctx, 999)
+import (
+    "errors"
+    "fmt"
+
+    "github.com/wenmar-pro/wenmar-sdk/go/wenmar"
+)
+
+_, err := client.ShowCustomer(ctx, 999)
 if err != nil {
-    apiErr := err.(*wenmar.APIError)
-    apiErr.Code         // => "not_found"
-    apiErr.StatusCode   // => 404
-    apiErr.Message
-    apiErr.FieldErrorsMap
+    var apiErr *wenmar.APIError
+    if errors.As(err, &apiErr) {
+        fmt.Println(apiErr.Code)         // => "not_found"
+        fmt.Println(apiErr.StatusCode)   // => 404
+        fmt.Println(apiErr.Message)
+        fmt.Println(apiErr.FieldErrorsMap)
+    }
 }
 ```
 

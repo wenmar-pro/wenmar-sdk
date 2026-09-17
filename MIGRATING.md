@@ -4,6 +4,66 @@ This document describes the breaking changes introduced in the v0.2 SDK
 restructure. The SDK is pre-release, so no version bump was made — but the
 public API changed and existing callers must update.
 
+## Migrating from v0.8.1 to v0.9.0
+
+v0.9.0 is a production-readiness release for the Go SDK. It removes unused
+public surface, tightens the `GetAll*` default, and centralizes the token
+provider. The Ruby gem API is unchanged. Breaking changes:
+
+1. `wenmar.DefaultGetAllOptions` is removed. It was a mutable package-level
+   `var` that `GetAll*` reused when you passed `nil` opts. It is replaced by an
+   unexported constant (1,000-item safety cap). The `GetAll*` signature and
+   behavior are unchanged — `nil` opts still caps at 1,000 and returns the
+   `truncated` flag — but callers who mutated the old var can no longer do so.
+
+   ```go
+   // Before: wenmar.DefaultGetAllOptions.MaxItems = 5000
+   // After:  pass explicit opts per call
+   items, truncated, err := client.GetAllCustomers(ctx, nil, &wenmar.GetAllOptions{MaxItems: 5000})
+   // Want unlimited? Pass an explicit &GetAllOptions{} (MaxItems stays 0 = unlimited).
+   items, _, err := client.GetAllCustomers(ctx, nil, &wenmar.GetAllOptions{})
+   ```
+
+2. `wenmar.ParseErrorBody` now takes full request context:
+   `ParseErrorBody(body, statusCode, method, path, requestID)`.
+   `ParseErrorBodyWithRequest` and `ParseErrorBodyWithRequestAndID` are
+   removed.
+
+   ```go
+   // Before: wenmar.ParseErrorBody(body, statusCode)
+   // After:
+   apiErr := wenmar.ParseErrorBody(body, statusCode, method, path, requestID)
+   ```
+
+3. `wenmar.LoadConfigFromEnv` is removed. The Go SDK no longer reads
+   `WENMAR_*` environment variables; build the `Config` in code via
+   `wenmar.DefaultConfig()` and override the fields you need. (Ruby still
+   reads env vars through `Config.from_env`.)
+
+   ```go
+   // Before: cfg := wenmar.LoadConfigFromEnv()
+   // After:
+   cfg := wenmar.DefaultConfig()
+   cfg.BaseURL = "https://app.wenmarpro.com"
+   ```
+
+4. `pkg/auth.Config`, `pkg/auth.DefaultConfig`, and
+   `pkg/auth.LoadConfigFromEnv` are removed (unused). Consumers read env vars
+   themselves.
+
+5. The canonical `TokenProvider` interface now lives in `pkg/token`
+   (`token.Provider`, `token.NewStatic`). `wenmar.TokenProvider` and
+   `wenmar.NewStaticTokenProvider` remain and work unchanged via type aliases;
+   `auth.TokenProvider` is aliased to the same interface. No caller changes
+   required, but new code may import `github.com/wenmar-pro/wenmar-sdk/go/pkg/token`
+   directly.
+
+Behavioral fixes shipped with this release (no API change): token refresh is
+single-flighted; `Retry-After` is capped at 2m and the RoundTripper error
+contract is honored; the conditional-GET cache is capped at 128 entries (FIFO
+eviction); caller-supplied `http.Client` is copied before wrapping; and partial
+response bodies are never cached or replayed. Both SDKs report `0.9.0`.
+
 ## Migrating from v0.8 to v0.8.1
 
 v0.8.1 is a behavior-fix release with two breaking Go signature changes
