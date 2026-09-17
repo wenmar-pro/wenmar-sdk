@@ -138,7 +138,7 @@ module EnrichSpec
       "post /campaigns/{id}/send_campaign" => "send_campaign",
       "post /campaigns/{id}/duplicate"     => "duplicate_campaign",
       # Store-credit refunds return the Payment resource, not the credit; skip
-      # component hoisting so the response stays inline (2026-09-17 v0.9.0).
+      # component hoisting so the response stays inline (2026-09-17 v0.8.1).
       "post /store_credits/{store_credit_id}/refunds" => "create_store_credits_refund",
     }.freeze
 
