@@ -110,7 +110,7 @@ def build_typed_list(op)
     	if err != nil {
     		return nil, err
     	}
-    	return newListResultFromResponse[#{item}](resp.Body, resp.HTTPResponse.Header, c), nil
+    	return newListResultFromResponse[#{item}](resp.Body, resp.HTTPResponse.Header, c)
     }
   GO
 end

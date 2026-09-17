@@ -45,7 +45,10 @@ func TestNewListResultFromResponse_ExtractsItemsAndMeta(t *testing.T) {
 	body := []byte(`[{"id":1,"type":"Customer","first_name":"A","last_name":"B","url":"x","app_url":"y","created_at":"t","updated_at":"t"}]`)
 
 	client := newTestClient(t, "https://api.example.com", "test")
-	result := newListResultFromResponse[Customer](body, headers, client)
+	result, err := newListResultFromResponse[Customer](body, headers, client)
+	if err != nil {
+		t.Fatalf("newListResultFromResponse failed: %v", err)
+	}
 
 	if len(result.Items) != 1 {
 		t.Fatalf("expected 1 item, got %d", len(result.Items))
@@ -64,6 +67,20 @@ func TestNewListResultFromResponse_ExtractsItemsAndMeta(t *testing.T) {
 	}
 	if !result.HasNext() {
 		t.Error("expected HasNext()=true")
+	}
+}
+
+func TestNewListResultFromResponse_MalformedBodyReturnsError(t *testing.T) {
+	headers := make(http.Header)
+	headers.Set("Content-Type", "application/json")
+
+	client := newTestClient(t, "https://api.example.com", "test")
+	result, err := newListResultFromResponse[Customer]([]byte("not json"), headers, client)
+	if err == nil {
+		t.Fatal("expected error for malformed list body, got nil")
+	}
+	if result != nil {
+		t.Errorf("expected nil result on error, got %+v", result)
 	}
 }
 
@@ -88,11 +105,14 @@ func TestGetAllWithOptions_RespectsMaxItems(t *testing.T) {
 	headers := make(http.Header)
 	headers.Set("Link", fmt.Sprintf(`<%s/items?page=2>; rel="next"`, serverURL))
 	headers.Set("Content-Type", "application/json")
-	first := newListResultFromResponse[map[string]any](
+	first, err := newListResultFromResponse[map[string]any](
 		[]byte(`[{"id":1},{"id":2},{"id":3}]`),
 		headers,
 		c,
 	)
+	if err != nil {
+		t.Fatalf("newListResultFromResponse failed: %v", err)
+	}
 	items, truncated, err := getAll[map[string]any](context.Background(), first, &GetAllOptions{MaxItems: 2})
 	if err != nil {
 		t.Fatalf("getAll failed: %v", err)
@@ -146,7 +166,10 @@ func TestGetAllCustomers_CapsAtMax(t *testing.T) {
 	headers := make(http.Header)
 	headers.Set("Link", fmt.Sprintf(`<%s/customers?page=next>; rel="next"`, serverURL))
 	headers.Set("Content-Type", "application/json")
-	first := newListResultFromResponse[Customer]([]byte(`[]`), headers, c)
+	first, err := newListResultFromResponse[Customer]([]byte(`[]`), headers, c)
+	if err != nil {
+		t.Fatalf("newListResultFromResponse failed: %v", err)
+	}
 	items, truncated, err := getAll[Customer](ctx, first, &GetAllOptions{MaxItems: 2})
 	if err != nil {
 		t.Fatalf("getAll failed: %v", err)

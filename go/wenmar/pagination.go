@@ -3,6 +3,7 @@ package wenmar
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -106,11 +107,12 @@ func parseListResponse[T any](body []byte) ([]T, error) {
 
 // newListResultFromResponse builds a typed ListResult from a raw response
 // body and headers. It is the bridge between the oapi-codegen response
-// envelope and the typed pagination API.
-func newListResultFromResponse[T any](body []byte, headers http.Header, c *Client) *ListResult[T] {
+// envelope and the typed pagination API. A body that is not a JSON array of
+// the expected item type is an error, never an empty result.
+func newListResultFromResponse[T any](body []byte, headers http.Header, c *Client) (*ListResult[T], error) {
 	items, err := parseListResponse[T](body)
 	if err != nil {
-		return &ListResult[T]{Items: nil, Meta: PaginationMeta{}}
+		return nil, fmt.Errorf("parse list response: %w", err)
 	}
 	meta, nextURL := extractPaginationMetaFromHeaders(headers)
 	result := &ListResult[T]{
@@ -124,7 +126,7 @@ func newListResultFromResponse[T any](body []byte, headers http.Header, c *Clien
 			return c.fetchNextPage[T](ctx, nextURLCopy, 2)
 		}
 	}
-	return result
+	return result, nil
 }
 
 // extractPaginationMetaFromHeaders reads X-Total-Count, X-Per-Page, and the

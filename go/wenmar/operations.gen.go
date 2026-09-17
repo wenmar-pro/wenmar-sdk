@@ -7361,7 +7361,7 @@ func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsP
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7372,7 +7372,7 @@ func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampai
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7383,7 +7383,7 @@ func (c *Client) ListConversations(ctx context.Context) (*ListResult[Conversatio
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7394,7 +7394,7 @@ func (c *Client) ListCoreTaxRules(ctx context.Context) (*ListResult[CoreTaxRule]
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CoreTaxRule](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[CoreTaxRule](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListCounterSales fetches a page of list_counter_sales results as a typed ListResult.
@@ -7404,7 +7404,7 @@ func (c *Client) ListCounterSales(ctx context.Context) (*ListResult[CounterSale]
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CounterSale](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[CounterSale](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7416,7 +7416,7 @@ func (c *Client) ListCustomerTags(ctx context.Context, params *ListCustomerTagsP
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CustomerTag](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[CustomerTag](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListCustomers fetches a page of list_customers results as a typed ListResult.
@@ -7426,7 +7426,7 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListCustomersDrivers fetches a page of list_customers_drivers results as a typed ListResult.
@@ -7436,7 +7436,7 @@ func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*Lis
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListCustomersStatements fetches a page of list_customers_statements results as a typed ListResult.
@@ -7446,7 +7446,7 @@ func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListCustomersVehicles fetches a page of list_customers_vehicles results as a typed ListResult.
@@ -7456,7 +7456,7 @@ func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*Li
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7467,7 +7467,7 @@ func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListDrivers fetches a page of list_drivers results as a typed ListResult.
@@ -7477,7 +7477,7 @@ func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*L
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7489,7 +7489,7 @@ func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsPar
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListLaborMatrices fetches a page of list_labor_matrices results as a typed ListResult.
@@ -7499,7 +7499,7 @@ func (c *Client) ListLaborMatrices(ctx context.Context) (*ListResult[LaborMatrix
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborMatrix](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[LaborMatrix](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListLaborRates fetches a page of list_labor_rates results as a typed ListResult.
@@ -7509,7 +7509,7 @@ func (c *Client) ListLaborRates(ctx context.Context) (*ListResult[LaborRate], er
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListLaborTemplates fetches a page of list_labor_templates results as a typed ListResult.
@@ -7519,7 +7519,7 @@ func (c *Client) ListLaborTemplates(ctx context.Context) (*ListResult[LaborTempl
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborTemplate](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[LaborTemplate](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListLeadSources fetches a page of list_lead_sources results as a typed ListResult.
@@ -7529,7 +7529,7 @@ func (c *Client) ListLeadSources(ctx context.Context) (*ListResult[LeadSource], 
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LeadSource](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[LeadSource](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7551,7 +7551,7 @@ func (c *Client) ListNotifications(ctx context.Context, params *ListNotification
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Notification](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Notification](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListOrdersPurchaseOrders fetches a page of list_orders_purchase_orders results as a typed ListResult.
@@ -7561,7 +7561,7 @@ func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrder
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListOrdersReturnOrders fetches a page of list_orders_return_orders results as a typed ListResult.
@@ -7571,7 +7571,7 @@ func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListResult[Return
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListOrdersSubletOrders fetches a page of list_orders_sublet_orders results as a typed ListResult.
@@ -7581,7 +7581,7 @@ func (c *Client) ListOrdersSubletOrders(ctx context.Context) (*ListResult[Sublet
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListPackages fetches a page of list_packages results as a typed ListResult.
@@ -7591,7 +7591,7 @@ func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7602,7 +7602,7 @@ func (c *Client) ListPartsMatrices(ctx context.Context) (*ListResult[PartsMatrix
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PartsMatrix](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[PartsMatrix](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7634,7 +7634,7 @@ func (c *Client) ListServiceCategories(ctx context.Context) (*ListResult[Service
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListShopDiscounts fetches a page of list_shop_discounts results as a typed ListResult.
@@ -7644,7 +7644,7 @@ func (c *Client) ListShopDiscounts(ctx context.Context) (*ListResult[ShopDiscoun
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ShopDiscount](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[ShopDiscount](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListShopFees fetches a page of list_shop_fees results as a typed ListResult.
@@ -7654,7 +7654,7 @@ func (c *Client) ListShopFees(ctx context.Context) (*ListResult[ShopFee], error)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7665,7 +7665,7 @@ func (c *Client) ListSubStatuses(ctx context.Context) (*ListResult[SubStatusType
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubStatusType](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[SubStatusType](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7679,7 +7679,7 @@ func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams) (*ListR
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[User](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[User](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7690,7 +7690,7 @@ func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7701,7 +7701,7 @@ func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*Li
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListVendors fetches a page of list_vendors results as a typed ListResult.
@@ -7711,7 +7711,7 @@ func (c *Client) ListVendors(ctx context.Context) (*ListResult[Vendor], error) {
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 // ListVendorsPurchaseOrders fetches a page of list_vendors_purchase_orders results as a typed ListResult.
@@ -7721,7 +7721,7 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7733,7 +7733,7 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7744,7 +7744,7 @@ func (c *Client) ListWorkOrdersAppointments(ctx context.Context, id int) (*ListR
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
@@ -7761,7 +7761,7 @@ func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
+	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
 
