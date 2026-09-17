@@ -196,5 +196,13 @@ content << <<~'RUBY'
   end
 RUBY
 
-File.write("ruby/lib/wenmar/resources.rb", content)
+path = "ruby/lib/wenmar/resources.rb"
+File.write(path, content)
+
+# The method templates are emitted without surrounding indentation or blank
+# separators for simplicity; run Standard on the result so the generated file
+# matches the project style and stays lint-clean (CI runs standard on ruby/lib).
+gemfile = File.expand_path("../ruby/Gemfile", __dir__)
+system({"BUNDLE_GEMFILE" => gemfile}, "bundle", "exec", "standardrb", "--fix", path) or
+  raise "standardrb failed on generated Ruby resources"
 puts "Wrote ruby/lib/wenmar/resources.rb (#{OPS.size} operations)"
