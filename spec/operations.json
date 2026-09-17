@@ -41,6 +41,7 @@
     "CreateCounterSalesPaymentRequest",
     "CreateCustomerRequest",
     "CreateCustomerTagRequest",
+    "CreateCustomersStoreCreditRequest",
     "CreateDriverRequest",
     "CreateExpenseRequest",
     "CreateInspectionReportRequest",
@@ -75,6 +76,7 @@
     "CreateShopFeesDuplicateRequest",
     "CreateStatementsBulkSendRequest",
     "CreateStatementsGenerateRequest",
+    "CreateStoreCreditsRefundRequest",
     "CreateStoreCreditsVoidRequest",
     "CreateSubStatusRequest",
     "CreateSubletPackageRequest",
@@ -178,6 +180,7 @@
     "ShopFee",
     "StartWorkOrderRequest",
     "Statement",
+    "StoreCredit",
     "SubStatusType",
     "SubletOrder",
     "TransferVehicleRequest",
@@ -1014,6 +1017,28 @@
       "summary": "create"
     },
     {
+      "id": "create_customers_store_credit",
+      "method": "post",
+      "path": "/customers/{customer_id}/store_credits",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateCustomersStoreCreditRequest",
+      "requestShape": {
+        "wrapper": "store_credit"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "StoreCredit",
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "create_driver",
       "method": "post",
       "path": "/customers/{customer_id}/drivers",
@@ -1713,6 +1738,28 @@
       "summary": "generate"
     },
     {
+      "id": "create_store_credits_refund",
+      "method": "post",
+      "path": "/store_credits/{store_credit_id}/refunds",
+      "tag": "store_credits",
+      "pathParams": [
+        "store_credit_id"
+      ],
+      "pathParamTypes": {
+        "store_credit_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": "CreateStoreCreditsRefundRequest",
+      "requestShape": {
+        "wrapper": "refund"
+      },
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": null,
+      "responseBody": true,
+      "summary": "create"
+    },
+    {
       "id": "create_store_credits_void",
       "method": "post",
       "path": "/store_credits/{store_credit_id}/voids",
@@ -1730,7 +1777,7 @@
       },
       "requestContentType": null,
       "paginated": false,
-      "responseSchema": null,
+      "responseSchema": "StoreCredit",
       "responseBody": true,
       "summary": "create"
     },
@@ -4237,6 +4284,26 @@
       "summary": "index"
     },
     {
+      "id": "list_customers_conversations",
+      "method": "get",
+      "path": "/customers/{customer_id}/conversations",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": "Conversation",
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
       "id": "list_customers_drivers",
       "method": "get",
       "path": "/customers/{customer_id}/drivers",
@@ -4273,6 +4340,26 @@
       "requestContentType": null,
       "paginated": true,
       "responseSchema": "Statement",
+      "responseBody": true,
+      "summary": "index"
+    },
+    {
+      "id": "list_customers_store_credits",
+      "method": "get",
+      "path": "/customers/{customer_id}/store_credits",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id"
+      ],
+      "pathParamTypes": {
+        "customer_id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": true,
+      "responseSchema": "StoreCredit",
       "responseBody": true,
       "summary": "index"
     },
@@ -6691,6 +6778,28 @@
       "requestContentType": null,
       "paginated": false,
       "responseSchema": "CustomerTag",
+      "responseBody": true,
+      "summary": "show"
+    },
+    {
+      "id": "show_customers_store_credit",
+      "method": "get",
+      "path": "/customers/{customer_id}/store_credits/{id}",
+      "tag": "customers",
+      "pathParams": [
+        "customer_id",
+        "id"
+      ],
+      "pathParamTypes": {
+        "customer_id": "integer",
+        "id": "integer"
+      },
+      "queryParams": [],
+      "requestSchema": null,
+      "requestShape": null,
+      "requestContentType": null,
+      "paginated": false,
+      "responseSchema": "StoreCredit",
       "responseBody": true,
       "summary": "show"
     },

@@ -4912,11 +4912,11 @@ curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" ht
 `work_order` — object:
 | Field | Type | Required |
 |---|---|---|
+| `work_order_tag_id` | string | No |
 | `saved_for_later` | boolean | No |
 | `vehicle_arrived_at` | string | No |
 | `intake_method` | string | No |
 | `waiting_for_customer` | boolean | No |
-| `work_order_tag_id` | string | No |
 | `payer_customer_id` | integer | No |
 | `sub_status_type_id` | integer | No |
 | `services_visible_to_customer` | boolean | No |

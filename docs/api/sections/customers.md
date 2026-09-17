@@ -63,6 +63,8 @@ List all customers, paginated via the Link header.
     "addresses": [],
     "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
     "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+    "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+    "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/customers/1.json",
@@ -122,6 +124,8 @@ List all customers, paginated via the Link header.
     "addresses": [],
     "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=2",
     "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=2",
+    "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=2",
+    "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=2",
     "created_at": "2026-08-27T12:00:00.000-04:00",
     "updated_at": "2026-08-27T12:00:00.000-04:00",
     "url": "https://app.wenmarpro.com/customers/2.json",
@@ -205,6 +209,8 @@ Create a customer.
   "addresses": [],
   "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
   "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+  "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+  "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/customers/1.json",
@@ -264,6 +270,24 @@ Check duplicate
 
 ```bash
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/check_duplicate.json
+```
+
+## List customers conversations
+
+```
+GET /customers/{customer_id}/conversations
+```
+
+List all customers conversations, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+
+**Response 200** — array of [Conversation](#conversation-schema)
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/conversations.json
 ```
 
 ## List customers drivers
@@ -529,6 +553,68 @@ List all customers statements, paginated via the Link header.
 curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/statements.json
 ```
 
+## List customers store credits
+
+```
+GET /customers/{customer_id}/store_credits
+```
+
+List all customers store credits, paginated via the Link header.
+
+| Param | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+
+**Response 200** — array of [StoreCredit](#storecredit-schema)
+
+**Response 404** — [Error](#error-schema) error envelope
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/store_credits.json
+```
+
+## Create customers store credit
+
+```
+POST /customers/{customer_id}/store_credits
+```
+
+Create a customers store credit.
+
+| Param | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+
+**Response 201** — [StoreCredit](#storecredit-schema)
+
+**Response 403** — [Error](#error-schema) error envelope
+
+**Response 422** — [Error](#error-schema) error envelope
+
+```bash
+curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+     -d '{"...":"..."}' https://app.wenmarpro.com/customers/{customer_id}/store_credits.json
+```
+
+## Show customers store credit
+
+```
+GET /customers/{customer_id}/store_credits/{id}
+```
+
+Show a customers store credit by ID.
+
+| Param | Type | Required |
+|---|---|---|
+| `customer_id` | integer | Yes |
+| `id` | integer | Yes |
+
+**Response 200** — [StoreCredit](#storecredit-schema)
+
+```bash
+curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json
+```
+
 ## List customers vehicles
 
 ```
@@ -637,6 +723,8 @@ Show a customer by ID.
   "addresses": [],
   "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
   "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+  "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+  "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/customers/1.json",
@@ -719,6 +807,8 @@ Update a customer by ID.
   "addresses": [],
   "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
   "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+  "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+  "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/customers/1.json",
@@ -803,6 +893,8 @@ Archive
 | `last_visit_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
@@ -871,6 +963,8 @@ Create
 | `last_visit_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
@@ -923,6 +1017,8 @@ Create
   "addresses": [],
   "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
   "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+  "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+  "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/customers/1.json",
@@ -1007,6 +1103,8 @@ Restore
 | `last_visit_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
@@ -1075,6 +1173,8 @@ Trash
 | `last_visit_at` | string \| null | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
@@ -1130,6 +1230,9 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `phones_count` | integer | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
+| `store_credit_cents` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |
@@ -1138,7 +1241,6 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `addresses` | array of object | No |
 | `outstanding_balance_cents` | integer | No |
 | `total_revenue_cents` | integer | No |
-| `store_credit_cents` | integer | No |
 | `last_visit_at` | string \| null | No |
 | `statements_count` | integer | No |
 | `currency` | string | No |
@@ -1189,6 +1291,40 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `emails_attributes` | array of object | No |
 | `phones_attributes` | array of object | No |
 | `addresses_attributes` | array of object | No |
+
+---
+
+### Conversation schema {#conversation-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `status` | string | Yes |
+| `reply_state` | string | Yes |
+| `channel` | string | Yes |
+| `from_number` | any | Yes |
+| `from_email` | any | Yes |
+| `last_message_preview` | any | Yes |
+| `messages_count` | integer | Yes |
+| `has_failed_message` | boolean | Yes |
+| `unread_count` | integer | Yes |
+| `last_message_at` | string \| null | Yes |
+| `customer_last_read_at` | string \| null | Yes |
+| `driver_last_read_at` | string \| null | Yes |
+| `oldest_unanswered_inbound_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `customer` | object | Yes |
+| `messages_url` | string | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+
+`customer` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
 
 ---
 
@@ -1280,6 +1416,56 @@ curl -X PATCH -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_
 | `id` | integer | Yes |
 | `full_name` | string | Yes |
 | `url` | string | Yes |
+
+---
+
+### StoreCredit schema {#storecredit-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `kind` | string | Yes |
+| `amount_cents` | integer | Yes |
+| `balance_cents` | integer | Yes |
+| `reason` | string | Yes |
+| `voided_at` | string \| null | Yes |
+| `created_at` | string | Yes |
+| `updated_at` | string | Yes |
+| `voided_by` | any | Yes |
+| `issued_by` | object | Yes |
+| `source_payment` | any | Yes |
+| `location` | object | Yes |
+| `url` | string | Yes |
+| `app_url` | string | Yes |
+| `voids_url` | string | Yes |
+
+`issued_by` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+`location` — object:
+| Field | Type | Required |
+|---|---|---|
+| `id` | integer | Yes |
+| `name` | string | Yes |
+| `url` | string | Yes |
+
+---
+
+### CreateCustomersStoreCreditRequest schema {#createcustomersstorecreditrequest-schema}
+
+| Field | Type | Required |
+|---|---|---|
+| `store_credit` | object | Yes |
+
+`store_credit` — object:
+| Field | Type | Required |
+|---|---|---|
+| `kind` | string | Yes |
+| `amount` | string | Yes |
 
 ---
 

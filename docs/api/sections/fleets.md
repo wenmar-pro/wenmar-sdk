@@ -42,6 +42,9 @@ List all fleets, paginated via the Link header.
 | `phones_count` | integer | Yes |
 | `vehicles_url` | string | Yes |
 | `work_orders_url` | string | Yes |
+| `store_credits_url` | string | Yes |
+| `conversations_url` | string | Yes |
+| `store_credit_cents` | integer | Yes |
 | `url` | string | Yes |
 | `app_url` | string | Yes |
 | `location` | object | Yes |

@@ -30,6 +30,8 @@
   "addresses": [],
   "vehicles_url": "https://app.wenmarpro.com/vehicles.json?customer_id=1",
   "work_orders_url": "https://app.wenmarpro.com/work_orders.json?customer_id=1",
+  "store_credits_url": "https://app.wenmarpro.com/store_credits.json?customer_id=1",
+  "conversations_url": "https://app.wenmarpro.com/conversations.json?customer_id=1",
   "created_at": "2026-08-27T12:00:00.000-04:00",
   "updated_at": "2026-08-27T12:00:00.000-04:00",
   "url": "https://app.wenmarpro.com/customers/1.json",

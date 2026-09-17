@@ -602,6 +602,23 @@ func (c *Client) CreateCustomerTag(ctx context.Context, body CreateCustomerTagRe
 	return resp, nil
 }
 
+// CreateCustomersStoreCredit runs the create_customers_store_credit operation (POST /customers/{customer_id}/store_credits).
+func (c *Client) CreateCustomersStoreCredit(ctx context.Context, customerId int, body CreateCustomersStoreCreditRequest) (*CreateCustomersStoreCreditResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"})
+	resp, err := c.gen.CreateCustomersStoreCreditWithResponse(ctx, customerId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateCustomersStoreCredit"}, OperationResult{Operation: "CreateCustomersStoreCredit"})
+	return resp, nil
+}
+
 // CreateDriver runs the create_driver operation (POST /customers/{customer_id}/drivers).
 func (c *Client) CreateDriver(ctx context.Context, customerId int, body CreateDriverRequest) (*CreateDriverResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateDriver"})
@@ -1177,6 +1194,23 @@ func (c *Client) CreateStatementsGenerate(ctx context.Context, body CreateStatem
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStatementsGenerate"}, OperationResult{Operation: "CreateStatementsGenerate"})
+	return resp, nil
+}
+
+// CreateStoreCreditsRefund runs the create_store_credits_refund operation (POST /store_credits/{store_credit_id}/refunds).
+func (c *Client) CreateStoreCreditsRefund(ctx context.Context, storeCreditId int, body CreateStoreCreditsRefundRequest) (*CreateStoreCreditsRefundResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"})
+	resp, err := c.gen.CreateStoreCreditsRefundWithResponse(ctx, storeCreditId, body)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "CreateStoreCreditsRefund"}, OperationResult{Operation: "CreateStoreCreditsRefund"})
 	return resp, nil
 }
 
@@ -3152,6 +3186,23 @@ func (c *Client) ListCustomersRaw(ctx context.Context, params *ListCustomersPara
 	return resp, nil
 }
 
+// ListCustomersConversationsRaw runs the list_customers_conversations operation (GET /customers/{customer_id}/conversations).
+func (c *Client) ListCustomersConversationsRaw(ctx context.Context, customerId int) (*ListCustomersConversationsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersConversations"})
+	resp, err := c.gen.ListCustomersConversationsWithResponse(ctx, customerId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersConversations"}, OperationResult{Operation: "ListCustomersConversations"})
+	return resp, nil
+}
+
 // ListCustomersDriversRaw runs the list_customers_drivers operation (GET /customers/{customer_id}/drivers).
 func (c *Client) ListCustomersDriversRaw(ctx context.Context, customerId int) (*ListCustomersDriversResponse, error) {
 	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersDrivers"})
@@ -3183,6 +3234,23 @@ func (c *Client) ListCustomersStatementsRaw(ctx context.Context, customerId int)
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStatements"}, OperationResult{Operation: "ListCustomersStatements"})
+	return resp, nil
+}
+
+// ListCustomersStoreCreditsRaw runs the list_customers_store_credits operation (GET /customers/{customer_id}/store_credits).
+func (c *Client) ListCustomersStoreCreditsRaw(ctx context.Context, customerId int) (*ListCustomersStoreCreditsResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"})
+	resp, err := c.gen.ListCustomersStoreCreditsWithResponse(ctx, customerId)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ListCustomersStoreCredits"}, OperationResult{Operation: "ListCustomersStoreCredits"})
 	return resp, nil
 }
 
@@ -5172,6 +5240,23 @@ func (c *Client) ShowCustomerTag(ctx context.Context, id int) (*ShowCustomerTagR
 		return nil, perr
 	}
 	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomerTag"}, OperationResult{Operation: "ShowCustomerTag"})
+	return resp, nil
+}
+
+// ShowCustomersStoreCredit runs the show_customers_store_credit operation (GET /customers/{customer_id}/store_credits/{id}).
+func (c *Client) ShowCustomersStoreCredit(ctx context.Context, customerId int, id int) (*ShowCustomersStoreCreditResponse, error) {
+	ctx = c.hooks.OnOperationStart(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"})
+	resp, err := c.gen.ShowCustomersStoreCreditWithResponse(ctx, customerId, id)
+	if err != nil {
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit", Err: err})
+		return nil, err
+	}
+	if resp.StatusCode() >= 400 {
+		perr := parseError(resp.Body, resp.StatusCode(), resp.HTTPResponse)
+		c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit", Err: perr})
+		return nil, perr
+	}
+	c.hooks.OnOperationEnd(ctx, OperationInfo{Operation: "ShowCustomersStoreCredit"}, OperationResult{Operation: "ShowCustomersStoreCredit"})
 	return resp, nil
 }
 
@@ -7181,6 +7266,181 @@ func (c *Client) VoidWorkOrder(ctx context.Context, id int, body VoidWorkOrderRe
 	return resp, nil
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ListAppointments fetches a page of list_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsParams) (*ListResult[Appointment], error) {
@@ -7188,8 +7448,9 @@ func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsP
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListCampaigns fetches a page of list_campaigns results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7198,8 +7459,9 @@ func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampai
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListConversations fetches a page of list_conversations results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7208,8 +7470,9 @@ func (c *Client) ListConversations(ctx context.Context) (*ListResult[Conversatio
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListCoreTaxRules fetches a page of list_core_tax_rules results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7218,7 +7481,7 @@ func (c *Client) ListCoreTaxRules(ctx context.Context) (*ListResult[CoreTaxRule]
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CoreTaxRule](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[CoreTaxRule](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCounterSales fetches a page of list_counter_sales results as a typed ListResult.
@@ -7228,8 +7491,10 @@ func (c *Client) ListCounterSales(ctx context.Context) (*ListResult[CounterSale]
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CounterSale](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[CounterSale](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
 
 // ListCustomerTags fetches a page of list_customer_tags results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7238,7 +7503,7 @@ func (c *Client) ListCustomerTags(ctx context.Context, params *ListCustomerTagsP
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[CustomerTag](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[CustomerTag](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCustomers fetches a page of list_customers results as a typed ListResult.
@@ -7248,7 +7513,17 @@ func (c *Client) ListCustomers(ctx context.Context, params *ListCustomersParams)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Customer](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+// ListCustomersConversations fetches a page of list_customers_conversations results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersConversations(ctx context.Context, customerId int) (*ListResult[Conversation], error) {
+	resp, err := c.ListCustomersConversationsRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCustomersDrivers fetches a page of list_customers_drivers results as a typed ListResult.
@@ -7258,7 +7533,7 @@ func (c *Client) ListCustomersDrivers(ctx context.Context, customerId int) (*Lis
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCustomersStatements fetches a page of list_customers_statements results as a typed ListResult.
@@ -7268,7 +7543,17 @@ func (c *Client) ListCustomersStatements(ctx context.Context, customerId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Statement](resp.Body, resp.HTTPResponse.Header, c), nil
+}
+
+// ListCustomersStoreCredits fetches a page of list_customers_store_credits results as a typed ListResult.
+// Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
+func (c *Client) ListCustomersStoreCredits(ctx context.Context, customerId int) (*ListResult[StoreCredit], error) {
+	resp, err := c.ListCustomersStoreCreditsRaw(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	return newListResultFromResponse[StoreCredit](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListCustomersVehicles fetches a page of list_customers_vehicles results as a typed ListResult.
@@ -7278,8 +7563,9 @@ func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*Li
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListCustomersWorkOrders fetches a page of list_customers_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7288,7 +7574,7 @@ func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListDrivers fetches a page of list_drivers results as a typed ListResult.
@@ -7298,8 +7584,10 @@ func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*L
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
 
 // ListInspections fetches a page of list_inspections results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7308,7 +7596,7 @@ func (c *Client) ListInspections(ctx context.Context, params *ListInspectionsPar
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Inspection](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListLaborMatrices fetches a page of list_labor_matrices results as a typed ListResult.
@@ -7318,7 +7606,7 @@ func (c *Client) ListLaborMatrices(ctx context.Context) (*ListResult[LaborMatrix
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborMatrix](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[LaborMatrix](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListLaborRates fetches a page of list_labor_rates results as a typed ListResult.
@@ -7328,7 +7616,7 @@ func (c *Client) ListLaborRates(ctx context.Context) (*ListResult[LaborRate], er
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[LaborRate](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListLaborTemplates fetches a page of list_labor_templates results as a typed ListResult.
@@ -7338,7 +7626,7 @@ func (c *Client) ListLaborTemplates(ctx context.Context) (*ListResult[LaborTempl
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LaborTemplate](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[LaborTemplate](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListLeadSources fetches a page of list_lead_sources results as a typed ListResult.
@@ -7348,8 +7636,20 @@ func (c *Client) ListLeadSources(ctx context.Context) (*ListResult[LeadSource], 
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[LeadSource](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[LeadSource](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ListNotifications fetches a page of list_notifications results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7358,7 +7658,7 @@ func (c *Client) ListNotifications(ctx context.Context, params *ListNotification
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Notification](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Notification](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListOrdersPurchaseOrders fetches a page of list_orders_purchase_orders results as a typed ListResult.
@@ -7368,7 +7668,7 @@ func (c *Client) ListOrdersPurchaseOrders(ctx context.Context, params *ListOrder
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListOrdersReturnOrders fetches a page of list_orders_return_orders results as a typed ListResult.
@@ -7378,7 +7678,7 @@ func (c *Client) ListOrdersReturnOrders(ctx context.Context) (*ListResult[Return
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[ReturnOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListOrdersSubletOrders fetches a page of list_orders_sublet_orders results as a typed ListResult.
@@ -7388,7 +7688,7 @@ func (c *Client) ListOrdersSubletOrders(ctx context.Context) (*ListResult[Sublet
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListPackages fetches a page of list_packages results as a typed ListResult.
@@ -7398,8 +7698,9 @@ func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListPartsMatrices fetches a page of list_parts_matrices results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7408,8 +7709,30 @@ func (c *Client) ListPartsMatrices(ctx context.Context) (*ListResult[PartsMatrix
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PartsMatrix](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[PartsMatrix](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ListServiceCategories fetches a page of list_service_categories results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7418,7 +7741,7 @@ func (c *Client) ListServiceCategories(ctx context.Context) (*ListResult[Service
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[ServiceCategory](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListShopDiscounts fetches a page of list_shop_discounts results as a typed ListResult.
@@ -7428,7 +7751,7 @@ func (c *Client) ListShopDiscounts(ctx context.Context) (*ListResult[ShopDiscoun
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ShopDiscount](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[ShopDiscount](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListShopFees fetches a page of list_shop_fees results as a typed ListResult.
@@ -7438,8 +7761,9 @@ func (c *Client) ListShopFees(ctx context.Context) (*ListResult[ShopFee], error)
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListSubStatuses fetches a page of list_sub_statuses results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7448,8 +7772,12 @@ func (c *Client) ListSubStatuses(ctx context.Context) (*ListResult[SubStatusType
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubStatusType](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[SubStatusType](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
+
+
 
 // ListUsers fetches a page of list_users results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7458,8 +7786,9 @@ func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams) (*ListR
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[User](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[User](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListVehicles fetches a page of list_vehicles results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7468,8 +7797,9 @@ func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListVehiclesWorkOrders fetches a page of list_vehicles_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7478,7 +7808,7 @@ func (c *Client) ListVehiclesWorkOrders(ctx context.Context, vehicleId int) (*Li
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListVendors fetches a page of list_vendors results as a typed ListResult.
@@ -7488,7 +7818,7 @@ func (c *Client) ListVendors(ctx context.Context) (*ListResult[Vendor], error) {
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Vendor](resp.Body, resp.HTTPResponse.Header, c), nil
 }
 
 // ListVendorsPurchaseOrders fetches a page of list_vendors_purchase_orders results as a typed ListResult.
@@ -7498,8 +7828,10 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
 
 // ListWorkOrders fetches a page of list_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7508,8 +7840,9 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
 
 // ListWorkOrdersAppointments fetches a page of list_work_orders_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7518,8 +7851,15 @@ func (c *Client) ListWorkOrdersAppointments(ctx context.Context, id int) (*ListR
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
+
+
+
+
+
 
 // ListWorkOrdersSubletOrders fetches a page of list_work_orders_sublet_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7528,530 +7868,1068 @@ func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int
 	if err != nil {
 		return nil, err
 	}
-	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c)
+	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c), nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // GetAllAppointments auto-paginates list_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointmentsParams, opts *GetAllOptions) ([]Appointment, bool, error) {
+func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointmentsParams, opts *GetAllOptions) ([]Appointment, error) {
 	first, err := c.ListAppointments(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Appointment](ctx, first, opts)
+	items, _, err := getAll[Appointment](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllCampaigns auto-paginates list_campaigns, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCampaigns(ctx context.Context, opts *GetAllOptions) ([]BroadcastCampaign, bool, error) {
+func (c *Client) GetAllCampaigns(ctx context.Context, opts *GetAllOptions) ([]BroadcastCampaign, error) {
 	first, err := c.ListCampaigns(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[BroadcastCampaign](ctx, first, opts)
+	items, _, err := getAll[BroadcastCampaign](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllConversations auto-paginates list_conversations, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllConversations(ctx context.Context, opts *GetAllOptions) ([]Conversation, bool, error) {
+func (c *Client) GetAllConversations(ctx context.Context, opts *GetAllOptions) ([]Conversation, error) {
 	first, err := c.ListConversations(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Conversation](ctx, first, opts)
+	items, _, err := getAll[Conversation](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllCoreTaxRules auto-paginates list_core_tax_rules, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCoreTaxRules(ctx context.Context, opts *GetAllOptions) ([]CoreTaxRule, bool, error) {
+func (c *Client) GetAllCoreTaxRules(ctx context.Context, opts *GetAllOptions) ([]CoreTaxRule, error) {
 	first, err := c.ListCoreTaxRules(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[CoreTaxRule](ctx, first, opts)
+	items, _, err := getAll[CoreTaxRule](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllCounterSales auto-paginates list_counter_sales, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCounterSales(ctx context.Context, opts *GetAllOptions) ([]CounterSale, bool, error) {
+func (c *Client) GetAllCounterSales(ctx context.Context, opts *GetAllOptions) ([]CounterSale, error) {
 	first, err := c.ListCounterSales(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[CounterSale](ctx, first, opts)
+	items, _, err := getAll[CounterSale](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
 
 // GetAllCustomerTags auto-paginates list_customer_tags, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomerTags(ctx context.Context, params *ListCustomerTagsParams, opts *GetAllOptions) ([]CustomerTag, bool, error) {
+func (c *Client) GetAllCustomerTags(ctx context.Context, params *ListCustomerTagsParams, opts *GetAllOptions) ([]CustomerTag, error) {
 	first, err := c.ListCustomerTags(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[CustomerTag](ctx, first, opts)
+	items, _, err := getAll[CustomerTag](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllCustomers auto-paginates list_customers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParams, opts *GetAllOptions) ([]Customer, bool, error) {
+func (c *Client) GetAllCustomers(ctx context.Context, params *ListCustomersParams, opts *GetAllOptions) ([]Customer, error) {
 	first, err := c.ListCustomers(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Customer](ctx, first, opts)
+	items, _, err := getAll[Customer](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
+}
+
+// GetAllCustomersConversations auto-paginates list_customers_conversations, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersConversations(ctx context.Context, customerId int, opts *GetAllOptions) ([]Conversation, error) {
+	first, err := c.ListCustomersConversations(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	items, _, err := getAll[Conversation](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 // GetAllCustomersDrivers auto-paginates list_customers_drivers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opts *GetAllOptions) ([]Driver, bool, error) {
+func (c *Client) GetAllCustomersDrivers(ctx context.Context, customerId int, opts *GetAllOptions) ([]Driver, error) {
 	first, err := c.ListCustomersDrivers(ctx, customerId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Driver](ctx, first, opts)
+	items, _, err := getAll[Driver](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllCustomersStatements auto-paginates list_customers_statements, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int, opts *GetAllOptions) ([]Statement, bool, error) {
+func (c *Client) GetAllCustomersStatements(ctx context.Context, customerId int, opts *GetAllOptions) ([]Statement, error) {
 	first, err := c.ListCustomersStatements(ctx, customerId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Statement](ctx, first, opts)
+	items, _, err := getAll[Statement](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
+}
+
+// GetAllCustomersStoreCredits auto-paginates list_customers_store_credits, following the Link header.
+// Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
+func (c *Client) GetAllCustomersStoreCredits(ctx context.Context, customerId int, opts *GetAllOptions) ([]StoreCredit, error) {
+	first, err := c.ListCustomersStoreCredits(ctx, customerId)
+	if err != nil {
+		return nil, err
+	}
+	items, _, err := getAll[StoreCredit](ctx, first, opts)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 // GetAllCustomersVehicles auto-paginates list_customers_vehicles, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int, opts *GetAllOptions) ([]Vehicle, bool, error) {
+func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int, opts *GetAllOptions) ([]Vehicle, error) {
 	first, err := c.ListCustomersVehicles(ctx, customerId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Vehicle](ctx, first, opts)
+	items, _, err := getAll[Vehicle](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllCustomersWorkOrders auto-paginates list_customers_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int, opts *GetAllOptions) ([]WorkOrder, bool, error) {
+func (c *Client) GetAllCustomersWorkOrders(ctx context.Context, customerId int, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListCustomersWorkOrders(ctx, customerId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[WorkOrder](ctx, first, opts)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllDrivers auto-paginates list_drivers, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, opts *GetAllOptions) ([]Driver, bool, error) {
+func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, opts *GetAllOptions) ([]Driver, error) {
 	first, err := c.ListDrivers(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Driver](ctx, first, opts)
+	items, _, err := getAll[Driver](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
 
 // GetAllInspections auto-paginates list_inspections, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsParams, opts *GetAllOptions) ([]Inspection, bool, error) {
+func (c *Client) GetAllInspections(ctx context.Context, params *ListInspectionsParams, opts *GetAllOptions) ([]Inspection, error) {
 	first, err := c.ListInspections(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Inspection](ctx, first, opts)
+	items, _, err := getAll[Inspection](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllLaborMatrices auto-paginates list_labor_matrices, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllLaborMatrices(ctx context.Context, opts *GetAllOptions) ([]LaborMatrix, bool, error) {
+func (c *Client) GetAllLaborMatrices(ctx context.Context, opts *GetAllOptions) ([]LaborMatrix, error) {
 	first, err := c.ListLaborMatrices(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[LaborMatrix](ctx, first, opts)
+	items, _, err := getAll[LaborMatrix](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllLaborRates auto-paginates list_labor_rates, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllLaborRates(ctx context.Context, opts *GetAllOptions) ([]LaborRate, bool, error) {
+func (c *Client) GetAllLaborRates(ctx context.Context, opts *GetAllOptions) ([]LaborRate, error) {
 	first, err := c.ListLaborRates(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[LaborRate](ctx, first, opts)
+	items, _, err := getAll[LaborRate](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllLaborTemplates auto-paginates list_labor_templates, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllLaborTemplates(ctx context.Context, opts *GetAllOptions) ([]LaborTemplate, bool, error) {
+func (c *Client) GetAllLaborTemplates(ctx context.Context, opts *GetAllOptions) ([]LaborTemplate, error) {
 	first, err := c.ListLaborTemplates(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[LaborTemplate](ctx, first, opts)
+	items, _, err := getAll[LaborTemplate](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllLeadSources auto-paginates list_lead_sources, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllLeadSources(ctx context.Context, opts *GetAllOptions) ([]LeadSource, bool, error) {
+func (c *Client) GetAllLeadSources(ctx context.Context, opts *GetAllOptions) ([]LeadSource, error) {
 	first, err := c.ListLeadSources(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[LeadSource](ctx, first, opts)
+	items, _, err := getAll[LeadSource](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 // GetAllNotifications auto-paginates list_notifications, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllNotifications(ctx context.Context, params *ListNotificationsParams, opts *GetAllOptions) ([]Notification, bool, error) {
+func (c *Client) GetAllNotifications(ctx context.Context, params *ListNotificationsParams, opts *GetAllOptions) ([]Notification, error) {
 	first, err := c.ListNotifications(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Notification](ctx, first, opts)
+	items, _, err := getAll[Notification](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllOrdersPurchaseOrders auto-paginates list_orders_purchase_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams, opts *GetAllOptions) ([]PurchaseOrder, bool, error) {
+func (c *Client) GetAllOrdersPurchaseOrders(ctx context.Context, params *ListOrdersPurchaseOrdersParams, opts *GetAllOptions) ([]PurchaseOrder, error) {
 	first, err := c.ListOrdersPurchaseOrders(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[PurchaseOrder](ctx, first, opts)
+	items, _, err := getAll[PurchaseOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllOrdersReturnOrders auto-paginates list_orders_return_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllOrdersReturnOrders(ctx context.Context, opts *GetAllOptions) ([]ReturnOrder, bool, error) {
+func (c *Client) GetAllOrdersReturnOrders(ctx context.Context, opts *GetAllOptions) ([]ReturnOrder, error) {
 	first, err := c.ListOrdersReturnOrders(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[ReturnOrder](ctx, first, opts)
+	items, _, err := getAll[ReturnOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllOrdersSubletOrders auto-paginates list_orders_sublet_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllOrdersSubletOrders(ctx context.Context, opts *GetAllOptions) ([]SubletOrder, bool, error) {
+func (c *Client) GetAllOrdersSubletOrders(ctx context.Context, opts *GetAllOptions) ([]SubletOrder, error) {
 	first, err := c.ListOrdersSubletOrders(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[SubletOrder](ctx, first, opts)
+	items, _, err := getAll[SubletOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllPackages auto-paginates list_packages, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Package, bool, error) {
+func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Package, error) {
 	first, err := c.ListPackages(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Package](ctx, first, opts)
+	items, _, err := getAll[Package](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllPartsMatrices auto-paginates list_parts_matrices, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllPartsMatrices(ctx context.Context, opts *GetAllOptions) ([]PartsMatrix, bool, error) {
+func (c *Client) GetAllPartsMatrices(ctx context.Context, opts *GetAllOptions) ([]PartsMatrix, error) {
 	first, err := c.ListPartsMatrices(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[PartsMatrix](ctx, first, opts)
+	items, _, err := getAll[PartsMatrix](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // GetAllServiceCategories auto-paginates list_service_categories, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllServiceCategories(ctx context.Context, opts *GetAllOptions) ([]ServiceCategory, bool, error) {
+func (c *Client) GetAllServiceCategories(ctx context.Context, opts *GetAllOptions) ([]ServiceCategory, error) {
 	first, err := c.ListServiceCategories(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[ServiceCategory](ctx, first, opts)
+	items, _, err := getAll[ServiceCategory](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllShopDiscounts auto-paginates list_shop_discounts, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllShopDiscounts(ctx context.Context, opts *GetAllOptions) ([]ShopDiscount, bool, error) {
+func (c *Client) GetAllShopDiscounts(ctx context.Context, opts *GetAllOptions) ([]ShopDiscount, error) {
 	first, err := c.ListShopDiscounts(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[ShopDiscount](ctx, first, opts)
+	items, _, err := getAll[ShopDiscount](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllShopFees auto-paginates list_shop_fees, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllShopFees(ctx context.Context, opts *GetAllOptions) ([]ShopFee, bool, error) {
+func (c *Client) GetAllShopFees(ctx context.Context, opts *GetAllOptions) ([]ShopFee, error) {
 	first, err := c.ListShopFees(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[ShopFee](ctx, first, opts)
+	items, _, err := getAll[ShopFee](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllSubStatuses auto-paginates list_sub_statuses, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllSubStatuses(ctx context.Context, opts *GetAllOptions) ([]SubStatusType, bool, error) {
+func (c *Client) GetAllSubStatuses(ctx context.Context, opts *GetAllOptions) ([]SubStatusType, error) {
 	first, err := c.ListSubStatuses(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[SubStatusType](ctx, first, opts)
+	items, _, err := getAll[SubStatusType](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
+
+
 
 // GetAllUsers auto-paginates list_users, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllUsers(ctx context.Context, params *ListUsersParams, opts *GetAllOptions) ([]User, bool, error) {
+func (c *Client) GetAllUsers(ctx context.Context, params *ListUsersParams, opts *GetAllOptions) ([]User, error) {
 	first, err := c.ListUsers(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[User](ctx, first, opts)
+	items, _, err := getAll[User](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllVehicles auto-paginates list_vehicles, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams, opts *GetAllOptions) ([]Vehicle, bool, error) {
+func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams, opts *GetAllOptions) ([]Vehicle, error) {
 	first, err := c.ListVehicles(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Vehicle](ctx, first, opts)
+	items, _, err := getAll[Vehicle](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int, opts *GetAllOptions) ([]WorkOrder, bool, error) {
+func (c *Client) GetAllVehiclesWorkOrders(ctx context.Context, vehicleId int, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListVehiclesWorkOrders(ctx, vehicleId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[WorkOrder](ctx, first, opts)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllVendors auto-paginates list_vendors, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllVendors(ctx context.Context, opts *GetAllOptions) ([]Vendor, bool, error) {
+func (c *Client) GetAllVendors(ctx context.Context, opts *GetAllOptions) ([]Vendor, error) {
 	first, err := c.ListVendors(ctx)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Vendor](ctx, first, opts)
+	items, _, err := getAll[Vendor](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
 
 // GetAllVendorsPurchaseOrders auto-paginates list_vendors_purchase_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, opts *GetAllOptions) ([]PurchaseOrder, bool, error) {
+func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, opts *GetAllOptions) ([]PurchaseOrder, error) {
 	first, err := c.ListVendorsPurchaseOrders(ctx, vendorId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[PurchaseOrder](ctx, first, opts)
+	items, _, err := getAll[PurchaseOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
 
 // GetAllWorkOrders auto-paginates list_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersParams, opts *GetAllOptions) ([]WorkOrder, bool, error) {
+func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersParams, opts *GetAllOptions) ([]WorkOrder, error) {
 	first, err := c.ListWorkOrders(ctx, params)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[WorkOrder](ctx, first, opts)
+	items, _, err := getAll[WorkOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
 
 // GetAllWorkOrdersAppointments auto-paginates list_work_orders_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllWorkOrdersAppointments(ctx context.Context, id int, opts *GetAllOptions) ([]Appointment, bool, error) {
+func (c *Client) GetAllWorkOrdersAppointments(ctx context.Context, id int, opts *GetAllOptions) ([]Appointment, error) {
 	first, err := c.ListWorkOrdersAppointments(ctx, id)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[Appointment](ctx, first, opts)
+	items, _, err := getAll[Appointment](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
+
+
+
+
+
 
 // GetAllWorkOrdersSubletOrders auto-paginates list_work_orders_sublet_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
-// truncated reports whether a cap stopped collection before the last page.
-func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId int, opts *GetAllOptions) ([]SubletOrder, bool, error) {
+func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId int, opts *GetAllOptions) ([]SubletOrder, error) {
 	first, err := c.ListWorkOrdersSubletOrders(ctx, workOrderId)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	items, truncated, err := getAll[SubletOrder](ctx, first, opts)
+	items, _, err := getAll[SubletOrder](ctx, first, opts)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
-	return items, truncated, nil
+	return items, nil
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

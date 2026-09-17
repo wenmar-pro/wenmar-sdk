@@ -291,6 +291,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"create_customers_store_credit": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateCustomersStoreCredit(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), buildWrapper[wenmar.CreateCustomersStoreCreditRequest]("store_credit", args["requestBody"].(map[string]interface{})))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "create_driver": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateDriver(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), buildWrapper[wenmar.CreateDriverRequest]("driver", args["requestBody"].(map[string]interface{})))
 	if err != nil {
@@ -557,6 +565,14 @@ var dispatch = map[string]operationFunc{
 
 "create_statements_generate": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.CreateStatementsGenerate(ctx, wenmar.CreateStatementsGenerateRequest{})
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"create_store_credits_refund": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.CreateStoreCreditsRefund(ctx, intArg(args["pathParams"].(map[string]interface{}), "store_credit_id"), buildWrapper[wenmar.CreateStoreCreditsRefundRequest]("refund", args["requestBody"].(map[string]interface{})))
 	if err != nil {
 		return nil, err
 	}
@@ -1491,6 +1507,14 @@ var dispatch = map[string]operationFunc{
 	return decodeBody(resp.Body)
 },
 
+"list_customers_conversations": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCustomersConversationsRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
 "list_customers_drivers": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListCustomersDriversRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
@@ -1501,6 +1525,14 @@ var dispatch = map[string]operationFunc{
 
 "list_customers_statements": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ListCustomersStatementsRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"list_customers_store_credits": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ListCustomersStoreCreditsRaw(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"))
 	if err != nil {
 		return nil, err
 	}
@@ -2437,6 +2469,14 @@ var dispatch = map[string]operationFunc{
 
 "show_customer_tag": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
 	resp, err := c.ShowCustomerTag(ctx, intArg(args["pathParams"].(map[string]interface{}), "id"))
+	if err != nil {
+		return nil, err
+	}
+	return decodeBody(resp.Body)
+},
+
+"show_customers_store_credit": func(ctx context.Context, t *testing.T, c *wenmar.Client, args map[string]interface{}) (interface{}, error) {
+	resp, err := c.ShowCustomersStoreCredit(ctx, intArg(args["pathParams"].(map[string]interface{}), "customer_id"), intArg(args["pathParams"].(map[string]interface{}), "id"))
 	if err != nil {
 		return nil, err
 	}
@@ -3491,6 +3531,7 @@ var allOperations = []string{
 	"create_counter_sales_payment",
 	"create_customer",
 	"create_customer_tag",
+	"create_customers_store_credit",
 	"create_driver",
 	"create_expense",
 	"create_inspection",
@@ -3525,6 +3566,7 @@ var allOperations = []string{
 	"create_shop_fees_duplicate",
 	"create_statements_bulk_send",
 	"create_statements_generate",
+	"create_store_credits_refund",
 	"create_store_credits_void",
 	"create_sub_status",
 	"create_sublet_package",
@@ -3641,8 +3683,10 @@ var allOperations = []string{
 	"list_current_location",
 	"list_customer_tags",
 	"list_customers",
+	"list_customers_conversations",
 	"list_customers_drivers",
 	"list_customers_statements",
+	"list_customers_store_credits",
 	"list_customers_vehicles",
 	"list_customers_vehicles_history",
 	"list_customers_work_orders",
@@ -3760,6 +3804,7 @@ var allOperations = []string{
 	"show_counter_sale",
 	"show_customer",
 	"show_customer_tag",
+	"show_customers_store_credit",
 	"show_driver",
 	"show_expense",
 	"show_inspection",

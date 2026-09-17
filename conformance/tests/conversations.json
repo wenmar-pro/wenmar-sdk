@@ -98,5 +98,16 @@
       { "status": 200, "body": { "id": 5, "conversation_id": 1, "body": "Hello", "channel": "sms", "direction": "outbound", "status": "queued", "created_at": "2026-01-01T00:00:00Z" } }
     ],
     "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "id", "equals": 5 } }
+  },
+  {
+    "name": "list_customers_conversations_success",
+    "operation": "list_customers_conversations",
+    "method": "GET",
+    "path": "/customers/10/conversations",
+    "pathParams": { "customer_id": 10 },
+    "mockResponses": [
+      { "status": 200, "body": [ { "id": 1, "status": "open", "reply_state": "awaiting_reply", "channel": "sms", "from_number": "+14165550132", "from_email": null, "last_message_preview": "When will my car be ready?", "messages_count": 2, "has_failed_message": false, "unread_count": 1, "last_message_at": "2026-09-14T09:30:00.000Z", "customer_last_read_at": null, "driver_last_read_at": null, "oldest_unanswered_inbound_at": "2026-09-14T09:30:00.000Z", "created_at": "2026-09-14T09:00:00.000Z", "updated_at": "2026-09-14T09:30:00.000Z", "customer": { "id": 10, "name": "Jane Doe", "url": "https://api.example.com/customers/10" }, "messages_url": "https://api.example.com/conversations/1/messages", "url": "https://api.example.com/customers/10/conversations/1", "app_url": "https://app.example.com/customers/10/conversations/1" } ] }
+    ],
+    "expect": { "requestCount": 1, "noError": true, "responseBody": { "path": "0.status", "equals": "open" } }
   }
 ]

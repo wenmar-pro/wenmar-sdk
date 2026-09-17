@@ -4264,9 +4264,6 @@ paths:
           type: integer
       requestBody:
         content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
           multipart/form-data:
             schema:
               type: object
@@ -4289,6 +4286,9 @@ paths:
               required:
               - message
               - files
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateConversationsMessageRequest"
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -6158,6 +6158,53 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/customers/{customer_id}/conversations":
+    get:
+      summary: index
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/conversations -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Conversation"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+      description: List all customers conversations, paginated via the Link header.
+      operationId: list_customers_conversations
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/conversations.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/customers/{customer_id}/drivers":
     get:
       summary: index
@@ -6436,6 +6483,161 @@ paths:
       operationId: list_customers_statements
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
         $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/statements.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{customer_id}/store_credits":
+    get:
+      summary: index
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/store_credits -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/StoreCredit"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '404':
+          description: GET /customers/{customer_id}/store_credits -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: List all customers store credits, paginated via the Link header.
+      operationId: list_customers_store_credits
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customers/{customer_id}/store_credits.json'
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+    post:
+      summary: create
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateCustomersStoreCreditRequest"
+      responses:
+        '201':
+          description: POST /customers/{customer_id}/store_credits -> 201
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StoreCredit"
+        '403':
+          description: POST /customers/{customer_id}/store_credits -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /customers/{customer_id}/store_credits -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a customers store credit.
+      operationId: create_customers_store_credit
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/customers/{customer_id}/store_credits.json
+      x-wenmar-request-schema: CreateCustomersStoreCreditRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
+  "/customers/{customer_id}/store_credits/{id}":
+    get:
+      summary: show
+      tags:
+      - customers
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/store_credits/{id} -> 200
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/StoreCredit"
+      description: Show a customers store credit by ID.
+      operationId: show_customers_store_credit
+      x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
+        $WENMAR_TOKEN" https://app.wenmarpro.com/customers/<id>.json'
       x-retry:
         max: 3
         backoff: exponential
@@ -6801,6 +7003,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -6857,6 +7063,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -7003,6 +7211,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -7059,6 +7271,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -7237,6 +7451,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -7293,6 +7511,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -7447,6 +7667,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -7503,6 +7727,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -8178,6 +8404,12 @@ paths:
                       type: string
                     work_orders_url:
                       type: string
+                    store_credits_url:
+                      type: string
+                    conversations_url:
+                      type: string
+                    store_credit_cents:
+                      type: integer
                     url:
                       type: string
                     app_url:
@@ -8223,6 +8455,9 @@ paths:
                   - phones_count
                   - vehicles_url
                   - work_orders_url
+                  - store_credits_url
+                  - conversations_url
+                  - store_credit_cents
                   - url
                   - app_url
                   - location
@@ -13228,8 +13463,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        type: string
                         nullable: true
+                        type: string
                       role:
                         type: string
                       confirmed:
@@ -13642,6 +13877,19 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -13664,19 +13912,6 @@ paths:
                     type: string
                   app_url:
                     type: string
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                 required:
                 - id
                 - conversation_id
@@ -14983,37 +15218,6 @@ paths:
       summary: index
       tags:
       - parts
-      parameters:
-      - name: brand
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: q
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stock_status
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stocked
-        in: query
-        required: false
-        schema:
-          type: boolean
       responses:
         '200':
           description: GET /parts -> 200
@@ -15103,6 +15307,37 @@ paths:
               schema:
                 type: integer
               description: Records per page
+      parameters:
+      - name: brand
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stock_status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stocked
+        in: query
+        required: false
+        schema:
+          type: boolean
       description: List all parts, paginated via the Link header.
       operationId: list_parts
       x-curl-example: 'curl -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer
@@ -15121,6 +15356,11 @@ paths:
       summary: create
       tags:
       - parts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePartRequest"
       responses:
         '201':
           description: POST /parts -> 201
@@ -15151,7 +15391,6 @@ paths:
                   taxable:
                     type: boolean
                   vendor:
-                    nullable: true
                     type: object
                     properties:
                       id:
@@ -15164,9 +15403,10 @@ paths:
                     - id
                     - name
                     - url
-                  vendor_id:
                     nullable: true
+                  vendor_id:
                     type: integer
+                    nullable: true
                   core_charge_cents:
                     type: integer
                   on_hand:
@@ -15228,11 +15468,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreatePartRequest"
       description: Create a part.
       operationId: create_part
       x-curl-example: |-
@@ -15444,8 +15679,8 @@ paths:
                     nullable: true
                     type: integer
                   bin_location:
-                    type: string
                     nullable: true
+                    type: string
                   created_at:
                     type: string
                   updated_at:
@@ -20058,6 +20293,154 @@ paths:
         - 503
         - 504
         method-gated: true
+  "/store_credits/{store_credit_id}/refunds":
+    post:
+      summary: create
+      tags:
+      - store_credits
+      parameters:
+      - name: store_credit_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateStoreCreditsRefundRequest"
+      responses:
+        '201':
+          description: POST /store_credits/{store_credit_id}/refunds -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  amount_cents:
+                    type: integer
+                  currency:
+                    type: string
+                  method:
+                    type: string
+                  processor_status:
+                    nullable: true
+                    type: string
+                  is_refund:
+                    type: boolean
+                  is_adjustment:
+                    type: boolean
+                  voided:
+                    type: boolean
+                  voided_at:
+                    nullable: true
+                    type: string
+                  processed_at:
+                    type: string
+                  reference:
+                    nullable: true
+                    type: string
+                  notes:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  customer_id:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  processed_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - id
+                - amount_cents
+                - currency
+                - method
+                - processor_status
+                - is_refund
+                - is_adjustment
+                - voided
+                - voided_at
+                - processed_at
+                - reference
+                - notes
+                - created_at
+                - updated_at
+                - customer_id
+                - url
+                - app_url
+                - customer
+                - processed_by
+                - location
+        '422':
+          description: POST /store_credits/{store_credit_id}/refunds -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: Create a store credits refund.
+      operationId: create_store_credits_refund
+      x-curl-example: |-
+        curl -X POST -H "User-Agent: wenmar-cli/0.2" -H "Authorization: Bearer $WENMAR_TOKEN" -H "Content-Type: application/json" \
+             -d '{"...":"..."}' https://app.wenmarpro.com/store_credits/{store_credit_id}/refunds.json
+      x-wenmar-request-schema: CreateStoreCreditsRefundRequest
+      x-retry:
+        max: 3
+        backoff: exponential
+        retry-on:
+        - 429
+        - 500
+        - 502
+        - 503
+        - 504
+        method-gated: true
   "/store_credits/{store_credit_id}/voids":
     post:
       summary: create
@@ -20080,12 +20463,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                required:
-                - status
+                "$ref": "#/components/schemas/StoreCredit"
         '403':
           description: POST /store_credits/{store_credit_id}/voids -> 403
           content:
@@ -37814,6 +38192,21 @@ components:
           type: string
       required:
       - name
+    CreateCustomersStoreCreditRequest:
+      type: object
+      properties:
+        store_credit:
+          type: object
+          properties:
+            kind:
+              type: string
+            amount:
+              type: string
+          required:
+          - kind
+          - amount
+      required:
+      - store_credit
     CreateDriverRequest:
       type: object
       properties:
@@ -38085,20 +38478,20 @@ components:
               type: string
             brand:
               type: string
-            part_type:
-              type: string
             stocked:
               type: boolean
             initial_quantity:
               type: integer
+            taxable:
+              type: boolean
             cost:
               type: string
             sell:
               type: string
-            taxable:
-              type: boolean
             vendor_id:
               type: integer
+            part_type:
+              type: string
           required:
           - part_number
           - description
@@ -38254,6 +38647,21 @@ components:
     CreateStatementsGenerateRequest:
       type: object
       properties: {}
+    CreateStoreCreditsRefundRequest:
+      type: object
+      properties:
+        refund:
+          type: object
+          properties:
+            amount:
+              type: string
+            method:
+              type: string
+          required:
+          - amount
+          - method
+      required:
+      - refund
     CreateStoreCreditsVoidRequest:
       type: object
       properties: {}
@@ -38425,19 +38833,15 @@ components:
         vehicle:
           type: object
           properties:
-            vehicle_type:
+            customer_id:
+              type: integer
+            vin:
               type: string
             year:
               type: integer
             make:
               type: string
             model:
-              type: string
-            license_plate:
-              type: string
-            customer_id:
-              type: integer
-            vin:
               type: string
             submodel:
               type: string
@@ -38450,6 +38854,8 @@ components:
             drivetrain:
               type: string
             color:
+              type: string
+            license_plate:
               type: string
             license_plate_state:
               type: string
@@ -38465,10 +38871,12 @@ components:
               type: string
             production_date:
               type: string
+            vehicle_type:
+              type: string
           required:
-          - year
           - make
           - model
+          - year
       required:
       - vehicle
     CreateVendorRequest:
@@ -39016,6 +39424,12 @@ components:
           type: string
         work_orders_url:
           type: string
+        store_credits_url:
+          type: string
+        conversations_url:
+          type: string
+        store_credit_cents:
+          type: integer
         url:
           type: string
         app_url:
@@ -39115,8 +39529,6 @@ components:
           type: integer
         total_revenue_cents:
           type: integer
-        store_credit_cents:
-          type: integer
         last_visit_at:
           nullable: true
           type: string
@@ -39152,6 +39564,9 @@ components:
       - phones_count
       - vehicles_url
       - work_orders_url
+      - store_credits_url
+      - conversations_url
+      - store_credit_cents
       - url
       - app_url
       - location
@@ -40430,6 +40845,78 @@ components:
       - updated_at
       - url
       - app_url
+    StoreCredit:
+      type: object
+      properties:
+        id:
+          type: integer
+        kind:
+          type: string
+        amount_cents:
+          type: integer
+        balance_cents:
+          type: integer
+        reason:
+          type: string
+        voided_at:
+          nullable: true
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        voided_by:
+          nullable: true
+        issued_by:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+          required:
+          - id
+          - name
+          - url
+        source_payment:
+          nullable: true
+        location:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            url:
+              type: string
+          required:
+          - id
+          - name
+          - url
+        url:
+          type: string
+        app_url:
+          type: string
+        voids_url:
+          type: string
+      required:
+      - id
+      - kind
+      - amount_cents
+      - balance_cents
+      - reason
+      - voided_at
+      - created_at
+      - updated_at
+      - voided_by
+      - issued_by
+      - source_payment
+      - location
+      - url
+      - app_url
+      - voids_url
     SubStatusType:
       type: object
       properties:
@@ -41307,10 +41794,6 @@ components:
         vehicle:
           type: object
           properties:
-            odometer_unit:
-              type: string
-            vehicle_type:
-              type: string
             make:
               type: string
             model:
@@ -41337,7 +41820,11 @@ components:
               type: string
             odometer_reading:
               type: integer
+            odometer_unit:
+              type: string
             notes:
+              type: string
+            vehicle_type:
               type: string
         confirm_unit_change:
           type: string
@@ -41363,6 +41850,8 @@ components:
         work_order:
           type: object
           properties:
+            work_order_tag_id:
+              type: string
             saved_for_later:
               type: boolean
             vehicle_arrived_at:
@@ -41371,8 +41860,6 @@ components:
               type: string
             waiting_for_customer:
               type: boolean
-            work_order_tag_id:
-              type: string
             payer_customer_id:
               type: integer
             sub_status_type_id:

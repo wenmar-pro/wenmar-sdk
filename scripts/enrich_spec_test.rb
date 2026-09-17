@@ -189,6 +189,37 @@ class EnrichSpecTest < Minitest::Test
     assert_equal "list_vehicles_work_orders", result["paths"]["/vehicles/{vehicle_id}/work_orders"]["get"]["operationId"]
   end
 
+  def test_nested_customer_store_credits_hoist_to_store_credit_component
+    result = enrich(make_spec_with(
+      "/customers/{customer_id}/store_credits" => {
+        "get" => { "responses" => { "200" => json_response(
+          "type" => "array",
+          "items" => { "type" => "object", "properties" => { "id" => { "type" => "integer" }, "kind" => { "type" => "string" } } }
+        ) } }
+      }
+    ))
+
+    items_schema = result.dig("paths", "/customers/{customer_id}/store_credits", "get", "responses", "200", "content", "application/json", "schema", "items")
+    assert_equal "#/components/schemas/StoreCredit", items_schema["$ref"]
+    assert result.dig("components", "schemas", "StoreCredit"), "StoreCredit component must be extracted"
+  end
+
+  def test_store_credit_refund_is_pinned_sub_action_with_inline_response
+    result = enrich(make_spec_with(
+      "/store_credits/{store_credit_id}/refunds" => {
+        "post" => { "responses" => { "201" => json_response(
+          "type" => "object",
+          "properties" => { "id" => { "type" => "integer" }, "amount_cents" => { "type" => "integer" }, "is_refund" => { "type" => "boolean" } }
+        ) } }
+      }
+    ))
+
+    op = result.dig("paths", "/store_credits/{store_credit_id}/refunds", "post")
+    assert_equal "create_store_credits_refund", op["operationId"]
+    schema = op.dig("responses", "201", "content", "application/json", "schema")
+    assert schema["properties"], "refund response must stay inline (it is a Payment, not a StoreCredit)"
+  end
+
   def test_adds_curl_example_to_each_operation
     result = enrich(@input)
     get_example = result["paths"]["/customers"]["get"]["x-curl-example"]

@@ -3843,22 +3843,6 @@ paths:
           type: integer
       requestBody:
         content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  type: object
-                  properties:
-                    body:
-                      type: string
-                    channel:
-                      type: string
-                  required:
-                  - body
-                  - channel
-              required:
-              - message
           multipart/form-data:
             schema:
               type: object
@@ -3881,6 +3865,22 @@ paths:
               required:
               - message
               - files
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: object
+                  properties:
+                    body:
+                      type: string
+                    channel:
+                      type: string
+                  required:
+                  - body
+                  - channel
+              required:
+              - message
       responses:
         '201':
           description: POST /conversations/{conversation_id}/messages -> 201
@@ -5585,6 +5585,41 @@ paths:
                 - error
       description: GET /customers/check_duplicate
       operationId: GET_customers_check_duplicate
+  "/customers/{customer_id}/conversations":
+    get:
+      summary: index
+      tags:
+      - Shop::Conversation
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/conversations -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Conversation"
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+      description: GET /customers/{customer_id}/conversations
+      operationId: GET_customers_customer_id_conversations
   "/customers/{customer_id}/drivers":
     get:
       summary: index
@@ -5916,6 +5951,354 @@ paths:
               description: Records per page
       description: GET /customers/{customer_id}/statements
       operationId: GET_customers_customer_id_statements
+  "/customers/{customer_id}/store_credits":
+    get:
+      summary: index
+      tags:
+      - Shop::Customers::StoreCredit
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/store_credits -> 200
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    kind:
+                      type: string
+                    amount_cents:
+                      type: integer
+                    balance_cents:
+                      type: integer
+                    reason:
+                      type: string
+                    voided_at:
+                      nullable: true
+                      type: string
+                    created_at:
+                      type: string
+                    updated_at:
+                      type: string
+                    voided_by:
+                      nullable: true
+                    issued_by:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    source_payment:
+                      nullable: true
+                    location:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        url:
+                          type: string
+                      required:
+                      - id
+                      - name
+                      - url
+                    url:
+                      type: string
+                    app_url:
+                      type: string
+                    voids_url:
+                      type: string
+                  required:
+                  - id
+                  - kind
+                  - amount_cents
+                  - balance_cents
+                  - reason
+                  - voided_at
+                  - created_at
+                  - updated_at
+                  - voided_by
+                  - issued_by
+                  - source_payment
+                  - location
+                  - url
+                  - app_url
+                  - voids_url
+          headers:
+            Link:
+              schema:
+                type: string
+              description: RFC 5988 pagination links
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total matching records
+            X-Per-Page:
+              schema:
+                type: integer
+              description: Records per page
+        '404':
+          description: GET /customers/{customer_id}/store_credits -> 404
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: GET /customers/{customer_id}/store_credits
+      operationId: GET_customers_customer_id_store_credits
+    post:
+      summary: create
+      tags:
+      - Shop::Customers::StoreCredit
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store_credit:
+                  type: object
+                  properties:
+                    kind:
+                      type: string
+                    amount:
+                      type: string
+                  required:
+                  - kind
+                  - amount
+              required:
+              - store_credit
+      responses:
+        '201':
+          description: POST /customers/{customer_id}/store_credits -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  kind:
+                    type: string
+                  amount_cents:
+                    type: integer
+                  balance_cents:
+                    type: integer
+                  reason:
+                    nullable: true
+                  voided_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  voided_by:
+                    nullable: true
+                  issued_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  source_payment:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  voids_url:
+                    type: string
+                required:
+                - id
+                - kind
+                - amount_cents
+                - balance_cents
+                - reason
+                - voided_at
+                - created_at
+                - updated_at
+                - voided_by
+                - issued_by
+                - source_payment
+                - location
+                - url
+                - app_url
+                - voids_url
+        '403':
+          description: POST /customers/{customer_id}/store_credits -> 403
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+        '422':
+          description: POST /customers/{customer_id}/store_credits -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: POST /customers/{customer_id}/store_credits
+      operationId: POST_customers_customer_id_store_credits
+  "/customers/{customer_id}/store_credits/{id}":
+    get:
+      summary: show
+      tags:
+      - Shop::Customers::StoreCredit
+      parameters:
+      - name: customer_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: GET /customers/{customer_id}/store_credits/{id} -> 200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  kind:
+                    type: string
+                  amount_cents:
+                    type: integer
+                  balance_cents:
+                    type: integer
+                  reason:
+                    type: string
+                  voided_at:
+                    nullable: true
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  voided_by:
+                    nullable: true
+                  issued_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  source_payment:
+                    nullable: true
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  voids_url:
+                    type: string
+                required:
+                - id
+                - kind
+                - amount_cents
+                - balance_cents
+                - reason
+                - voided_at
+                - created_at
+                - updated_at
+                - voided_by
+                - issued_by
+                - source_payment
+                - location
+                - url
+                - app_url
+                - voids_url
+      description: GET /customers/{customer_id}/store_credits/{id}
+      operationId: GET_customers_customer_id_store_credits_id_
   "/customers/{customer_id}/vehicles":
     get:
       summary: index
@@ -6472,6 +6855,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -6528,6 +6915,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -6660,6 +7049,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -6716,6 +7109,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -6886,6 +7281,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -6942,6 +7341,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -7083,6 +7484,10 @@ paths:
                     type: string
                   work_orders_url:
                     type: string
+                  store_credits_url:
+                    type: string
+                  conversations_url:
+                    type: string
                   url:
                     type: string
                   app_url:
@@ -7139,6 +7544,8 @@ paths:
                 - last_visit_at
                 - vehicles_url
                 - work_orders_url
+                - store_credits_url
+                - conversations_url
                 - url
                 - app_url
                 - location
@@ -7759,6 +8166,12 @@ paths:
                       type: string
                     work_orders_url:
                       type: string
+                    store_credits_url:
+                      type: string
+                    conversations_url:
+                      type: string
+                    store_credit_cents:
+                      type: integer
                     url:
                       type: string
                     app_url:
@@ -7804,6 +8217,9 @@ paths:
                   - phones_count
                   - vehicles_url
                   - work_orders_url
+                  - store_credits_url
+                  - conversations_url
+                  - store_credit_cents
                   - url
                   - app_url
                   - location
@@ -12413,8 +12829,8 @@ paths:
                       full_name:
                         type: string
                       email:
-                        type: string
                         nullable: true
+                        type: string
                       role:
                         type: string
                       confirmed:
@@ -12791,6 +13207,19 @@ paths:
                     type: string
                   attachment_count:
                     type: integer
+                  sender:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      type:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - type
+                    - name
                   sent_at:
                     nullable: true
                     type: string
@@ -12813,19 +13242,6 @@ paths:
                     type: string
                   app_url:
                     type: string
-                  sender:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      type:
-                        type: string
-                      name:
-                        type: string
-                    required:
-                    - id
-                    - type
-                    - name
                 required:
                 - id
                 - conversation_id
@@ -14235,37 +14651,6 @@ paths:
       summary: index
       tags:
       - Shop::Part
-      parameters:
-      - name: brand
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        required: false
-        schema:
-          type: integer
-      - name: q
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stock_status
-        in: query
-        required: false
-        schema:
-          type: string
-      - name: stocked
-        in: query
-        required: false
-        schema:
-          type: boolean
       responses:
         '200':
           description: GET /parts -> 200
@@ -14355,12 +14740,82 @@ paths:
               schema:
                 type: integer
               description: Records per page
+      parameters:
+      - name: brand
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stock_status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: stocked
+        in: query
+        required: false
+        schema:
+          type: boolean
       description: GET /parts
       operationId: GET_parts
     post:
       summary: create
       tags:
       - Shop::Part
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                part:
+                  type: object
+                  properties:
+                    part_number:
+                      type: string
+                    description:
+                      type: string
+                    brand:
+                      type: string
+                    stocked:
+                      type: boolean
+                    initial_quantity:
+                      type: integer
+                    taxable:
+                      type: boolean
+                    cost:
+                      type: string
+                    sell:
+                      type: string
+                    vendor_id:
+                      type: integer
+                    part_type:
+                      type: string
+                  required:
+                  - part_number
+                  - description
+                  - brand
+                  - stocked
+                  - initial_quantity
+                  - cost
+                  - sell
+              required:
+              - part
       responses:
         '201':
           description: POST /parts -> 201
@@ -14391,7 +14846,6 @@ paths:
                   taxable:
                     type: boolean
                   vendor:
-                    nullable: true
                     type: object
                     properties:
                       id:
@@ -14404,9 +14858,10 @@ paths:
                     - id
                     - name
                     - url
-                  vendor_id:
                     nullable: true
+                  vendor_id:
                     type: integer
+                    nullable: true
                   core_charge_cents:
                     type: integer
                   on_hand:
@@ -14468,45 +14923,6 @@ paths:
                     "$ref": "#/components/schemas/Error"
                 required:
                 - error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                part:
-                  type: object
-                  properties:
-                    part_number:
-                      type: string
-                    description:
-                      type: string
-                    brand:
-                      type: string
-                    part_type:
-                      type: string
-                    stocked:
-                      type: boolean
-                    initial_quantity:
-                      type: integer
-                    cost:
-                      type: string
-                    sell:
-                      type: string
-                    taxable:
-                      type: boolean
-                    vendor_id:
-                      type: integer
-                  required:
-                  - part_number
-                  - description
-                  - brand
-                  - stocked
-                  - initial_quantity
-                  - cost
-                  - sell
-              required:
-              - part
       description: POST /parts
       operationId: POST_parts
   "/parts/{id}":
@@ -14690,8 +15106,8 @@ paths:
                     nullable: true
                     type: integer
                   bin_location:
-                    type: string
                     nullable: true
+                    type: string
                   created_at:
                     type: string
                   updated_at:
@@ -18814,6 +19230,153 @@ paths:
               description: Records per page
       description: GET /statements/{statement_id}/payments
       operationId: GET_statements_statement_id_payments
+  "/store_credits/{store_credit_id}/refunds":
+    post:
+      summary: create
+      tags:
+      - Shop::StoreCredits::Refund
+      parameters:
+      - name: store_credit_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refund:
+                  type: object
+                  properties:
+                    amount:
+                      type: string
+                    method:
+                      type: string
+                  required:
+                  - amount
+                  - method
+              required:
+              - refund
+      responses:
+        '201':
+          description: POST /store_credits/{store_credit_id}/refunds -> 201
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  amount_cents:
+                    type: integer
+                  currency:
+                    type: string
+                  method:
+                    type: string
+                  processor_status:
+                    nullable: true
+                    type: string
+                  is_refund:
+                    type: boolean
+                  is_adjustment:
+                    type: boolean
+                  voided:
+                    type: boolean
+                  voided_at:
+                    nullable: true
+                    type: string
+                  processed_at:
+                    type: string
+                  reference:
+                    nullable: true
+                    type: string
+                  notes:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  customer_id:
+                    type: integer
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  processed_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - url
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                required:
+                - id
+                - amount_cents
+                - currency
+                - method
+                - processor_status
+                - is_refund
+                - is_adjustment
+                - voided
+                - voided_at
+                - processed_at
+                - reference
+                - notes
+                - created_at
+                - updated_at
+                - customer_id
+                - url
+                - app_url
+                - customer
+                - processed_by
+                - location
+        '422':
+          description: POST /store_credits/{store_credit_id}/refunds -> 422
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    "$ref": "#/components/schemas/Error"
+                required:
+                - error
+      description: POST /store_credits/{store_credit_id}/refunds
+      operationId: POST_store_credits_store_credit_id_refunds
   "/store_credits/{store_credit_id}/voids":
     post:
       summary: create
@@ -18839,10 +19402,85 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
+                  id:
+                    type: integer
+                  kind:
+                    type: string
+                  amount_cents:
+                    type: integer
+                  balance_cents:
+                    type: integer
+                  reason:
+                    type: string
+                  voided_at:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  voided_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  issued_by:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  source_payment:
+                    nullable: true
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - url
+                  url:
+                    type: string
+                  app_url:
+                    type: string
+                  voids_url:
                     type: string
                 required:
-                - status
+                - id
+                - kind
+                - amount_cents
+                - balance_cents
+                - reason
+                - voided_at
+                - created_at
+                - updated_at
+                - voided_by
+                - issued_by
+                - source_payment
+                - location
+                - url
+                - app_url
+                - voids_url
         '403':
           description: POST /store_credits/{store_credit_id}/voids -> 403
           content:
@@ -23092,19 +23730,15 @@ paths:
                 vehicle:
                   type: object
                   properties:
-                    vehicle_type:
+                    customer_id:
+                      type: integer
+                    vin:
                       type: string
                     year:
                       type: integer
                     make:
                       type: string
                     model:
-                      type: string
-                    license_plate:
-                      type: string
-                    customer_id:
-                      type: integer
-                    vin:
                       type: string
                     submodel:
                       type: string
@@ -23117,6 +23751,8 @@ paths:
                     drivetrain:
                       type: string
                     color:
+                      type: string
+                    license_plate:
                       type: string
                     license_plate_state:
                       type: string
@@ -23132,10 +23768,12 @@ paths:
                       type: string
                     production_date:
                       type: string
+                    vehicle_type:
+                      type: string
                   required:
-                  - year
                   - make
                   - model
+                  - year
               required:
               - vehicle
       description: POST /vehicles
@@ -23384,10 +24022,6 @@ paths:
                 vehicle:
                   type: object
                   properties:
-                    odometer_unit:
-                      type: string
-                    vehicle_type:
-                      type: string
                     make:
                       type: string
                     model:
@@ -23414,7 +24048,11 @@ paths:
                       type: string
                     odometer_reading:
                       type: integer
+                    odometer_unit:
+                      type: string
                     notes:
+                      type: string
+                    vehicle_type:
                       type: string
                 confirm_unit_change:
                   type: string
@@ -25543,6 +26181,8 @@ paths:
                 work_order:
                   type: object
                   properties:
+                    work_order_tag_id:
+                      type: string
                     saved_for_later:
                       type: boolean
                     vehicle_arrived_at:
@@ -25551,8 +26191,6 @@ paths:
                       type: string
                     waiting_for_customer:
                       type: boolean
-                    work_order_tag_id:
-                      type: string
                     payer_customer_id:
                       type: integer
                     sub_status_type_id:
@@ -43178,6 +43816,12 @@ components:
           type: string
         work_orders_url:
           type: string
+        store_credits_url:
+          type: string
+        conversations_url:
+          type: string
+        store_credit_cents:
+          type: integer
         url:
           type: string
         app_url:
@@ -43272,8 +43916,6 @@ components:
           type: integer
         total_revenue_cents:
           type: integer
-        store_credit_cents:
-          type: integer
         last_visit_at:
           nullable: true
           type: string
@@ -43309,6 +43951,9 @@ components:
       - phones_count
       - vehicles_url
       - work_orders_url
+      - store_credits_url
+      - conversations_url
+      - store_credit_cents
       - url
       - app_url
       - location

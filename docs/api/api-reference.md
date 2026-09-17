@@ -83,12 +83,16 @@ For detailed per-resource docs, see [sections/](sections/).
 | GET | `/customers` | `list_customers` | List all customers, paginated via the Link header. |
 | POST | `/customers` | `create_customer` | Create a customer. |
 | GET | `/customers/check_duplicate` | `check_customer_duplicate` | Check duplicate |
+| GET | `/customers/{customer_id}/conversations` | `list_customers_conversations` | List all customers conversations, paginated via the Link header. |
 | GET | `/customers/{customer_id}/drivers` | `list_customers_drivers` | List all customers drivers, paginated via the Link header. |
 | POST | `/customers/{customer_id}/drivers` | `create_driver` | Create a driver. |
 | DELETE | `/customers/{customer_id}/drivers/{id}` | `delete_driver` | Delete a driver by ID. |
 | GET | `/customers/{customer_id}/drivers/{id}` | `show_driver` | Show a driver by ID. |
 | PATCH | `/customers/{customer_id}/drivers/{id}` | `update_driver` | Update a driver by ID. |
 | GET | `/customers/{customer_id}/statements` | `list_customers_statements` | List all customers statements, paginated via the Link header. |
+| GET | `/customers/{customer_id}/store_credits` | `list_customers_store_credits` | List all customers store credits, paginated via the Link header. |
+| POST | `/customers/{customer_id}/store_credits` | `create_customers_store_credit` | Create a customers store credit. |
+| GET | `/customers/{customer_id}/store_credits/{id}` | `show_customers_store_credit` | Show a customers store credit by ID. |
 | GET | `/customers/{customer_id}/vehicles` | `list_customers_vehicles` | List all customers vehicles, paginated via the Link header. |
 | GET | `/customers/{customer_id}/vehicles/{vehicle_id}/history` | `list_customers_vehicles_history` | List all customers vehicles history, paginated via the Link header. |
 | GET | `/customers/{customer_id}/work_orders` | `list_customers_work_orders` | List all customers work orders, paginated via the Link header. |
@@ -264,6 +268,7 @@ For detailed per-resource docs, see [sections/](sections/).
 | POST | `/statements/generate` | `create_statements_generate` | Create a statements generate. |
 | GET | `/statements/{id}` | `show_statement` | Show a statement by ID. |
 | GET | `/statements/{statement_id}/payments` | `list_statements_payments` | List all statements payments, paginated via the Link header. |
+| POST | `/store_credits/{store_credit_id}/refunds` | `create_store_credits_refund` | Create a store credits refund. |
 | POST | `/store_credits/{store_credit_id}/voids` | `create_store_credits_void` | Create a store credits void. |
 | GET | `/sub_statuses` | `list_sub_statuses` | List all sub statuses, paginated via the Link header. |
 | POST | `/sub_statuses` | `create_sub_status` | Create a sub status. |
