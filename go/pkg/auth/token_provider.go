@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	"fmt"
+	"sync"
 )
 
 // TokenProvider supplies an API token. Implementations may read from a static
@@ -36,6 +37,44 @@ func (p *StaticTokenProvider) Token(_ context.Context) (string, error) {
 type CredentialStoreProvider struct {
 	Store   CredentialStore
 	Manager *AuthManager
+
+	mu       sync.Mutex
+	inflight *refreshCall
+}
+
+type refreshCall struct {
+	done chan struct{}
+	err  error
+}
+
+// refresh refreshes the stored token with single-flight semantics:
+// concurrent callers share the first refresh's result instead of each
+// hitting the token endpoint (prevents refresh storms).
+func (p *CredentialStoreProvider) refresh(ctx context.Context) error {
+	p.mu.Lock()
+	if p.inflight != nil {
+		call := p.inflight
+		p.mu.Unlock()
+		select {
+		case <-call.done:
+			return call.err
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}
+	call := &refreshCall{done: make(chan struct{})}
+	p.inflight = call
+	p.mu.Unlock()
+
+	call.err = p.Manager.Refresh(ctx)
+
+	p.mu.Lock()
+	if p.inflight == call {
+		p.inflight = nil
+	}
+	p.mu.Unlock()
+	close(call.done) // happens-before: call.err is visible to waiters
+	return call.err
 }
 
 // Token returns the current access token, refreshing it if it is expired or
@@ -50,7 +89,7 @@ func (p *CredentialStoreProvider) Token(ctx context.Context) (string, error) {
 	}
 	if tok.IsExpired() || tok.WillExpireWithin(refreshWindow) {
 		if p.Manager != nil {
-			if err := p.Manager.Refresh(ctx); err != nil {
+			if err := p.refresh(ctx); err != nil {
 				return "", err
 			}
 			tok, err = p.Store.GetToken(ctx)
