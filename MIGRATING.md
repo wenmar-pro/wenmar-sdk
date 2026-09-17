@@ -62,7 +62,8 @@ Behavioral fixes shipped with this release (no API change): token refresh is
 single-flighted; `Retry-After` is capped at 2m and the RoundTripper error
 contract is honored; the conditional-GET cache is capped at 128 entries (FIFO
 eviction); caller-supplied `http.Client` is copied before wrapping; and partial
-response bodies are never cached or replayed. Both SDKs report `0.9.0`.
+response bodies are never cached or replayed. The Go SDK reports `0.9.0`;
+the Ruby SDK version is unchanged and independent (`0.8.1`).
 
 ## Migrating from v0.8 to v0.8.1
 
