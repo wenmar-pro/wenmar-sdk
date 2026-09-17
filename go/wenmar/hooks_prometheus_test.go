@@ -9,9 +9,22 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+func TestNewPrometheusHooks_DuplicateRegistrationDoesNotPanic(t *testing.T) {
+	reg := prometheus.NewRegistry()
+	if _, err := NewPrometheusHooks(reg, nil); err != nil {
+		t.Fatalf("first registration failed: %v", err)
+	}
+	if _, err := NewPrometheusHooks(reg, nil); err != nil {
+		t.Fatalf("duplicate registration failed: %v", err)
+	}
+}
+
 func TestPrometheusHooks_CountsOperations(t *testing.T) {
 	reg := prometheus.NewRegistry()
-	hooks := NewPrometheusHooks(reg, reg)
+	hooks, err := NewPrometheusHooks(reg, reg)
+	if err != nil {
+		t.Fatalf("NewPrometheusHooks: %v", err)
+	}
 	cfg := DefaultConfig()
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")

@@ -7181,179 +7181,6 @@ func (c *Client) VoidWorkOrder(ctx context.Context, id int, body VoidWorkOrderRe
 	return resp, nil
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ListAppointments fetches a page of list_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsParams) (*ListResult[Appointment], error) {
@@ -7363,7 +7190,6 @@ func (c *Client) ListAppointments(ctx context.Context, params *ListAppointmentsP
 	}
 	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
 }
-
 
 // ListCampaigns fetches a page of list_campaigns results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7375,7 +7201,6 @@ func (c *Client) ListCampaigns(ctx context.Context) (*ListResult[BroadcastCampai
 	return newListResultFromResponse[BroadcastCampaign](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
 // ListConversations fetches a page of list_conversations results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListConversations(ctx context.Context) (*ListResult[Conversation], error) {
@@ -7385,7 +7210,6 @@ func (c *Client) ListConversations(ctx context.Context) (*ListResult[Conversatio
 	}
 	return newListResultFromResponse[Conversation](resp.Body, resp.HTTPResponse.Header, c)
 }
-
 
 // ListCoreTaxRules fetches a page of list_core_tax_rules results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7406,8 +7230,6 @@ func (c *Client) ListCounterSales(ctx context.Context) (*ListResult[CounterSale]
 	}
 	return newListResultFromResponse[CounterSale](resp.Body, resp.HTTPResponse.Header, c)
 }
-
-
 
 // ListCustomerTags fetches a page of list_customer_tags results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7459,7 +7281,6 @@ func (c *Client) ListCustomersVehicles(ctx context.Context, customerId int) (*Li
 	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
 // ListCustomersWorkOrders fetches a page of list_customers_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListCustomersWorkOrders(ctx context.Context, customerId int) (*ListResult[WorkOrder], error) {
@@ -7479,8 +7300,6 @@ func (c *Client) ListDrivers(ctx context.Context, params *ListDriversParams) (*L
 	}
 	return newListResultFromResponse[Driver](resp.Body, resp.HTTPResponse.Header, c)
 }
-
-
 
 // ListInspections fetches a page of list_inspections results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7532,18 +7351,6 @@ func (c *Client) ListLeadSources(ctx context.Context) (*ListResult[LeadSource], 
 	return newListResultFromResponse[LeadSource](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // ListNotifications fetches a page of list_notifications results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListNotifications(ctx context.Context, params *ListNotificationsParams) (*ListResult[Notification], error) {
@@ -7594,7 +7401,6 @@ func (c *Client) ListPackages(ctx context.Context) (*ListResult[Package], error)
 	return newListResultFromResponse[Package](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
 // ListPartsMatrices fetches a page of list_parts_matrices results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListPartsMatrices(ctx context.Context) (*ListResult[PartsMatrix], error) {
@@ -7604,28 +7410,6 @@ func (c *Client) ListPartsMatrices(ctx context.Context) (*ListResult[PartsMatrix
 	}
 	return newListResultFromResponse[PartsMatrix](resp.Body, resp.HTTPResponse.Header, c)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // ListServiceCategories fetches a page of list_service_categories results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7657,7 +7441,6 @@ func (c *Client) ListShopFees(ctx context.Context) (*ListResult[ShopFee], error)
 	return newListResultFromResponse[ShopFee](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
 // ListSubStatuses fetches a page of list_sub_statuses results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListSubStatuses(ctx context.Context) (*ListResult[SubStatusType], error) {
@@ -7667,10 +7450,6 @@ func (c *Client) ListSubStatuses(ctx context.Context) (*ListResult[SubStatusType
 	}
 	return newListResultFromResponse[SubStatusType](resp.Body, resp.HTTPResponse.Header, c)
 }
-
-
-
-
 
 // ListUsers fetches a page of list_users results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7682,7 +7461,6 @@ func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams) (*ListR
 	return newListResultFromResponse[User](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
 // ListVehicles fetches a page of list_vehicles results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (*ListResult[Vehicle], error) {
@@ -7692,7 +7470,6 @@ func (c *Client) ListVehicles(ctx context.Context, params *ListVehiclesParams) (
 	}
 	return newListResultFromResponse[Vehicle](resp.Body, resp.HTTPResponse.Header, c)
 }
-
 
 // ListVehiclesWorkOrders fetches a page of list_vehicles_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7724,8 +7501,6 @@ func (c *Client) ListVendorsPurchaseOrders(ctx context.Context, vendorId int) (*
 	return newListResultFromResponse[PurchaseOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
-
 // ListWorkOrders fetches a page of list_work_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParams) (*ListResult[WorkOrder], error) {
@@ -7735,7 +7510,6 @@ func (c *Client) ListWorkOrders(ctx context.Context, params *ListWorkOrdersParam
 	}
 	return newListResultFromResponse[WorkOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
-
 
 // ListWorkOrdersAppointments fetches a page of list_work_orders_appointments results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
@@ -7747,13 +7521,6 @@ func (c *Client) ListWorkOrdersAppointments(ctx context.Context, id int) (*ListR
 	return newListResultFromResponse[Appointment](resp.Body, resp.HTTPResponse.Header, c)
 }
 
-
-
-
-
-
-
-
 // ListWorkOrdersSubletOrders fetches a page of list_work_orders_sublet_orders results as a typed ListResult.
 // Use .Items for the current page, .HasNext() / .Next(ctx) to paginate.
 func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int) (*ListResult[SubletOrder], error) {
@@ -7763,333 +7530,6 @@ func (c *Client) ListWorkOrdersSubletOrders(ctx context.Context, workOrderId int
 	}
 	return newListResultFromResponse[SubletOrder](resp.Body, resp.HTTPResponse.Header, c)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // GetAllAppointments auto-paginates list_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8106,7 +7546,6 @@ func (c *Client) GetAllAppointments(ctx context.Context, params *ListAppointment
 	return items, truncated, nil
 }
 
-
 // GetAllCampaigns auto-paginates list_campaigns, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8122,7 +7561,6 @@ func (c *Client) GetAllCampaigns(ctx context.Context, opts *GetAllOptions) ([]Br
 	return items, truncated, nil
 }
 
-
 // GetAllConversations auto-paginates list_conversations, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8137,7 +7575,6 @@ func (c *Client) GetAllConversations(ctx context.Context, opts *GetAllOptions) (
 	}
 	return items, truncated, nil
 }
-
 
 // GetAllCoreTaxRules auto-paginates list_core_tax_rules, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8168,8 +7605,6 @@ func (c *Client) GetAllCounterSales(ctx context.Context, opts *GetAllOptions) ([
 	}
 	return items, truncated, nil
 }
-
-
 
 // GetAllCustomerTags auto-paginates list_customer_tags, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8246,7 +7681,6 @@ func (c *Client) GetAllCustomersVehicles(ctx context.Context, customerId int, op
 	return items, truncated, nil
 }
 
-
 // GetAllCustomersWorkOrders auto-paginates list_customers_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8276,8 +7710,6 @@ func (c *Client) GetAllDrivers(ctx context.Context, params *ListDriversParams, o
 	}
 	return items, truncated, nil
 }
-
-
 
 // GetAllInspections auto-paginates list_inspections, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8354,18 +7786,6 @@ func (c *Client) GetAllLeadSources(ctx context.Context, opts *GetAllOptions) ([]
 	return items, truncated, nil
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 // GetAllNotifications auto-paginates list_notifications, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8441,7 +7861,6 @@ func (c *Client) GetAllPackages(ctx context.Context, opts *GetAllOptions) ([]Pac
 	return items, truncated, nil
 }
 
-
 // GetAllPartsMatrices auto-paginates list_parts_matrices, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8456,28 +7875,6 @@ func (c *Client) GetAllPartsMatrices(ctx context.Context, opts *GetAllOptions) (
 	}
 	return items, truncated, nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // GetAllServiceCategories auto-paginates list_service_categories, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8524,7 +7921,6 @@ func (c *Client) GetAllShopFees(ctx context.Context, opts *GetAllOptions) ([]Sho
 	return items, truncated, nil
 }
 
-
 // GetAllSubStatuses auto-paginates list_sub_statuses, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8539,10 +7935,6 @@ func (c *Client) GetAllSubStatuses(ctx context.Context, opts *GetAllOptions) ([]
 	}
 	return items, truncated, nil
 }
-
-
-
-
 
 // GetAllUsers auto-paginates list_users, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8559,7 +7951,6 @@ func (c *Client) GetAllUsers(ctx context.Context, params *ListUsersParams, opts 
 	return items, truncated, nil
 }
 
-
 // GetAllVehicles auto-paginates list_vehicles, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8574,7 +7965,6 @@ func (c *Client) GetAllVehicles(ctx context.Context, params *ListVehiclesParams,
 	}
 	return items, truncated, nil
 }
-
 
 // GetAllVehiclesWorkOrders auto-paginates list_vehicles_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8621,8 +8011,6 @@ func (c *Client) GetAllVendorsPurchaseOrders(ctx context.Context, vendorId int, 
 	return items, truncated, nil
 }
 
-
-
 // GetAllWorkOrders auto-paginates list_work_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8637,7 +8025,6 @@ func (c *Client) GetAllWorkOrders(ctx context.Context, params *ListWorkOrdersPar
 	}
 	return items, truncated, nil
 }
-
 
 // GetAllWorkOrdersAppointments auto-paginates list_work_orders_appointments, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
@@ -8654,13 +8041,6 @@ func (c *Client) GetAllWorkOrdersAppointments(ctx context.Context, id int, opts 
 	return items, truncated, nil
 }
 
-
-
-
-
-
-
-
 // GetAllWorkOrdersSubletOrders auto-paginates list_work_orders_sublet_orders, following the Link header.
 // Pass opts.MaxItems or opts.MaxPages to cap collection (default 1000).
 // truncated reports whether a cap stopped collection before the last page.
@@ -8675,157 +8055,3 @@ func (c *Client) GetAllWorkOrdersSubletOrders(ctx context.Context, workOrderId i
 	}
 	return items, truncated, nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

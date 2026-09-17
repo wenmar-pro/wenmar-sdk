@@ -2,6 +2,8 @@ package wenmar
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -13,7 +15,7 @@ type PrometheusHook struct {
 	retryTotal *prometheus.CounterVec
 }
 
-func NewPrometheusHooks(reg prometheus.Registerer, _ prometheus.Gatherer) *PrometheusHook {
+func NewPrometheusHooks(reg prometheus.Registerer, _ prometheus.Gatherer) (*PrometheusHook, error) {
 	h := &PrometheusHook{
 		opsTotal: prometheus.NewCounterVec(prometheus.CounterOpts{
 			Name: "wenmar_operations_total",
@@ -28,8 +30,27 @@ func NewPrometheusHooks(reg prometheus.Registerer, _ prometheus.Gatherer) *Prome
 			Help: "Total retries by the Wenmar SDK",
 		}, []string{"method"}),
 	}
-	reg.MustRegister(h.opsTotal, h.httpTotal, h.retryTotal)
-	return h
+	// Register tolerates duplicate registration (e.g. two SDK clients sharing
+	// one process-wide registry): only an unexpected error is fatal.
+	if err := reg.Register(h.opsTotal); err != nil {
+		var are prometheus.AlreadyRegisteredError
+		if !errors.As(err, &are) {
+			return nil, fmt.Errorf("register wenmar_operations_total: %w", err)
+		}
+	}
+	if err := reg.Register(h.httpTotal); err != nil {
+		var are prometheus.AlreadyRegisteredError
+		if !errors.As(err, &are) {
+			return nil, fmt.Errorf("register wenmar_http_requests_total: %w", err)
+		}
+	}
+	if err := reg.Register(h.retryTotal); err != nil {
+		var are prometheus.AlreadyRegisteredError
+		if !errors.As(err, &are) {
+			return nil, fmt.Errorf("register wenmar_retry_total: %w", err)
+		}
+	}
+	return h, nil
 }
 
 func (h *PrometheusHook) OnOperationStart(ctx context.Context, _ OperationInfo) context.Context {
