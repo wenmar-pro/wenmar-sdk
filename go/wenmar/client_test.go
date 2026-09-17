@@ -427,3 +427,19 @@ func TestForLocation_DoesNotMutateParent(t *testing.T) {
 func TestForLocation_Signature(t *testing.T) {
 	var _ func(*Client, string) (*Client, error) = (*Client).ForLocation
 }
+
+func TestNewClient_DoesNotMutateCallerHTTPClient(t *testing.T) {
+	shared := &http.Client{Transport: http.DefaultTransport}
+	cfg := DefaultConfig()
+	cfg.HTTPClient = shared
+	c, err := NewClient(cfg, NewStaticTokenProvider("tok"))
+	if err != nil {
+		t.Fatalf("NewClient: %v", err)
+	}
+	if shared.Transport != http.DefaultTransport {
+		t.Errorf("caller's transport mutated: %#v", shared.Transport)
+	}
+	if shared == c.http {
+		t.Error("expected SDK to use a copy, not the caller's http.Client")
+	}
+}

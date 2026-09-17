@@ -8,9 +8,11 @@ import "net/http"
 // yields exactly one OnRequestStart/OnRequestEnd pair, while internal retry
 // attempts are reported separately via OnRetry from the retryTransport.
 //
-// Only the SDK-built transport stack (NewClient when cfg.HTTPClient is nil)
-// is wrapped; callers that supply a custom cfg.HTTPClient bypass the SDK
-// stack and therefore do not get request-level callbacks.
+// Every client gets this wrapper — including caller-supplied
+// cfg.HTTPClient values, which NewClient shallow-copies before wrapping so
+// the caller's client is never mutated. Retry/caching transports exist only
+// in the SDK-built stack; custom clients keep their own transport below the
+// hooks wrapper.
 type hooksTransport struct {
 	transport http.RoundTripper
 	hooks     Hooks

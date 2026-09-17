@@ -93,6 +93,13 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 			Timeout:       cfgCopy.Timeout,
 			CheckRedirect: stripAuthOnCrossOriginRedirect,
 		}
+	} else {
+		// Shallow-copy so wrapping the transport with hooksTransport never
+		// mutates the caller's client. The caller's Timeout and
+		// CheckRedirect are honored as-is; retry/caching are not added to
+		// custom clients.
+		cp := *httpClient
+		httpClient = &cp
 	}
 
 	c := &Client{
