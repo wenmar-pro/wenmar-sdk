@@ -48,6 +48,8 @@ module Wenmar
       )
     rescue JSON::ParserError => e
       raise TokenError, "parse refresh response: #{e.message}"
+    rescue Faraday::Error => e
+      raise TokenError, "token refresh request failed: #{e.message}"
     end
   end
 end
