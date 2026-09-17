@@ -290,3 +290,23 @@ func TestConditionalGet_304ReplayCarriesRequest(t *testing.T) {
 		t.Error("expected 304 replay response to carry the originating *http.Request")
 	}
 }
+
+func TestCacheEviction_CapsEntries(t *testing.T) {
+	ct := newCachingTransport(http.DefaultTransport)
+	h := http.Header{}
+	for i := 0; i < 300; i++ {
+		ct.store(fmt.Sprintf("GET /items/%d", i), &cacheEntry{ETag: `"e"`, Header: h, Body: []byte(`[]`)})
+	}
+	ct.mu.Lock()
+	n := len(ct.cache)
+	ct.mu.Unlock()
+	if n != maxCacheEntries {
+		t.Errorf("expected cache capped at %d entries, got %d", maxCacheEntries, n)
+	}
+	ct.mu.Lock()
+	_, oldest := ct.cache["GET /items/0"]
+	ct.mu.Unlock()
+	if oldest {
+		t.Error("expected oldest entry evicted")
+	}
+}

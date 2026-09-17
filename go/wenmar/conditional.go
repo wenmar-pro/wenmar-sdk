@@ -27,12 +27,34 @@ type cachingTransport struct {
 	transport http.RoundTripper
 	mu        sync.Mutex
 	cache     map[string]*cacheEntry
+	order     []string // insertion order, for FIFO eviction
 }
 
 func newCachingTransport(transport http.RoundTripper) *cachingTransport {
 	return &cachingTransport{
 		transport: transport,
 		cache:     make(map[string]*cacheEntry),
+		order:     make([]string, 0, maxCacheEntries),
+	}
+}
+
+// maxCacheEntries bounds the conditional-GET cache so long-running
+// processes (watch pollers, TUIs) cannot grow it without limit.
+const maxCacheEntries = 128
+
+// store writes a cache entry, evicting the oldest entries (FIFO) beyond
+// maxCacheEntries. Re-writing an existing key keeps its position.
+func (t *cachingTransport) store(key string, entry *cacheEntry) {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	if _, exists := t.cache[key]; !exists {
+		t.order = append(t.order, key)
+	}
+	t.cache[key] = entry
+	for len(t.order) > maxCacheEntries {
+		oldest := t.order[0]
+		t.order = t.order[1:]
+		delete(t.cache, oldest)
 	}
 }
 
@@ -96,14 +118,12 @@ func (t *cachingTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 				return nil, fmt.Errorf("read response body: %w", readErr)
 			}
 			if len(body) > 0 {
-				t.mu.Lock()
-				t.cache[cacheKey(req)] = &cacheEntry{
+				t.store(cacheKey(req), &cacheEntry{
 					ETag:         etag,
 					LastModified: lastModified,
 					Header:       resp.Header.Clone(),
 					Body:         body,
-				}
-				t.mu.Unlock()
+				})
 			}
 			// Restore a readable body so downstream parsers still work.
 			resp.Body = &bodyReadCloser{data: body}
