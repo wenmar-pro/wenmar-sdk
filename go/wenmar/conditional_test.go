@@ -85,8 +85,14 @@ func TestConditionalGet_CacheKeyIsLocationAware(t *testing.T) {
 	c := newTestClient(t, ts.URL, "test-token")
 
 	// Two scoped clients must not share cache entries across locations.
-	scopedA := c.ForLocation("1")
-	scopedB := c.ForLocation("2")
+	scopedA, err := c.ForLocation("1")
+	if err != nil {
+		t.Fatalf("scoped A creation failed: %v", err)
+	}
+	scopedB, err := c.ForLocation("2")
+	if err != nil {
+		t.Fatalf("scoped B creation failed: %v", err)
+	}
 
 	if _, err := scopedA.ListCustomers(context.Background(), nil); err != nil {
 		t.Fatalf("scoped A call failed: %v", err)

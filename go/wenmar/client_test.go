@@ -386,7 +386,10 @@ func TestForLocation_InjectsHeader(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	scoped := c.ForLocation("42")
+	scoped, err := c.ForLocation("42")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 	if _, err := scoped.ListCustomers(ctx, nil); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -406,11 +409,21 @@ func TestForLocation_DoesNotMutateParent(t *testing.T) {
 	defer ts.Close()
 
 	c := newTestClient(t, ts.URL, "test-token")
-	_ = c.ForLocation("42")
+	if _, err := c.ForLocation("42"); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 	if _, err := c.ListCustomers(ctx, nil); err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if capturedLoc != "" {
 		t.Errorf("parent client should not carry location header, got %q", capturedLoc)
 	}
+}
+
+// TestForLocation_Signature pins the two-value return form so the signature
+// can't silently regress. Construction of the scoped client cannot fail in
+// practice because BaseURL is already validated at NewClient, so we assert
+// the contract at the type level rather than forcing a synthetic error path.
+func TestForLocation_Signature(t *testing.T) {
+	var _ func(*Client, string) (*Client, error) = (*Client).ForLocation
 }

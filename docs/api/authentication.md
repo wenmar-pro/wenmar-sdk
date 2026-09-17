@@ -52,7 +52,13 @@ location-scoped sub-client that injects this header on every request.
 cfg := wenmar.DefaultConfig()
 cfg.BaseURL = "https://app.wenmarpro.com"
 client, err := wenmar.NewClient(cfg, wenmar.NewStaticTokenProvider("YOUR_API_TOKEN"))
-scoped := client.ForLocation("42")
+if err != nil {
+    // handle error
+}
+scoped, err := client.ForLocation("42")
+if err != nil {
+    // handle error
+}
 ```
 
 **Ruby**

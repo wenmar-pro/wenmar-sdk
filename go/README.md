@@ -61,7 +61,10 @@ Use `ForLocation` to scope every request to a specific location. The parent
 client is not mutated:
 
 ```go
-shop := client.ForLocation("42")
+shop, err := client.ForLocation("42")
+if err != nil {
+    return err
+}
 resp, err := shop.ListCustomers(ctx, nil) // sends X-Wenmar-Location: 42
 ```
 

@@ -179,9 +179,9 @@ func stripAuthOnCrossOriginRedirect(req *http.Request, via []*http.Request) erro
 
 // ForLocation returns a scoped client that injects X-Wenmar-Location on every
 // request. The parent client is not mutated.
-func (c *Client) ForLocation(locationID string) *Client {
+func (c *Client) ForLocation(locationID string) (*Client, error) {
 	if locationID == "" {
-		return c
+		return c, nil
 	}
 	child := *c
 	child.location = locationID
@@ -191,10 +191,11 @@ func (c *Client) ForLocation(locationID string) *Client {
 		gen.WithHTTPClient(child.http),
 		gen.WithRequestEditorFn(child.requestEditor),
 	)
-	if err == nil {
-		child.gen = genClient
+	if err != nil {
+		return nil, fmt.Errorf("create location-scoped client: %w", err)
 	}
-	return &child
+	child.gen = genClient
+	return &child, nil
 }
 
 // parseError converts a failed generated response into an *APIError using the
