@@ -64,17 +64,17 @@ type GetAllOptions struct {
 	MaxPages int // Stop after this many pages (0 = no cap)
 }
 
-// DefaultGetAllOptions is used by getAll when a caller passes nil opts. It
-// enforces a 1,000-item safety cap so a malicious or non-terminating Link
-// chain cannot loop unbounded. Callers wanting an unlimited collection must
-// pass an explicit &GetAllOptions{} (MaxItems stays 0 = unlimited).
-var DefaultGetAllOptions = GetAllOptions{MaxItems: 1000}
+// defaultGetAllMaxItems is the safety cap applied when opts is nil, so a
+// malicious or non-terminating Link chain cannot loop unbounded. Callers
+// wanting unlimited collection pass an explicit &GetAllOptions{}
+// (MaxItems stays 0 = unlimited).
+const defaultGetAllMaxItems = 1000
 
 // getAll auto-paginates and collects all items into a single slice.
 // If MaxItems or MaxPages is hit, truncated is true.
 func getAll[T any](ctx context.Context, first *ListResult[T], opts *GetAllOptions) (items []T, truncated bool, err error) {
 	if opts == nil {
-		opts = &DefaultGetAllOptions
+		opts = &GetAllOptions{MaxItems: defaultGetAllMaxItems}
 	}
 	items = append(items, first.Items...)
 	pages := 1

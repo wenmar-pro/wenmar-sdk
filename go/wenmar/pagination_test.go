@@ -478,8 +478,8 @@ func TestGetAll_NilOptsAppliesDefaultCap(t *testing.T) {
 	if err != nil {
 		t.Fatalf("getAll failed: %v", err)
 	}
-	if len(items) != DefaultGetAllOptions.MaxItems {
-		t.Errorf("expected %d items (default cap), got %d", DefaultGetAllOptions.MaxItems, len(items))
+	if len(items) != defaultGetAllMaxItems {
+		t.Errorf("expected %d items (default cap), got %d", defaultGetAllMaxItems, len(items))
 	}
 	if !truncated {
 		t.Error("expected truncated=true when the default cap is hit")
