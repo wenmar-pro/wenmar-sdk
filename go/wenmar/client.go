@@ -23,7 +23,6 @@ func NewStaticTokenProvider(t string) *token.Static { return token.NewStatic(t) 
 // into operations.gen.go and share the core request pipeline defined here.
 type Client struct {
 	BaseURL  string
-	cfg      Config
 	tp       TokenProvider
 	http     *http.Client
 	gen      *gen.ClientWithResponses
@@ -32,8 +31,8 @@ type Client struct {
 }
 
 // NewClient creates a Wenmar API client from the given Config and optional
-// TokenProvider. The Config is deep-copied so callers cannot mutate the
-// client's configuration after construction.
+// TokenProvider. NewClient copies Config by value; interface fields
+// (TokenProvider, Hooks) are shared, so treat the passed Config as immutable.
 //
 // The token provider is resolved in this order:
 //  1. the tp argument, if non-nil (it takes precedence over cfg fields)
@@ -88,7 +87,6 @@ func NewClient(cfg Config, tp TokenProvider, opts ...ClientOption) (*Client, err
 
 	c := &Client{
 		BaseURL: cfgCopy.BaseURL,
-		cfg:     cfgCopy,
 		tp:      tp,
 		http:    httpClient,
 		hooks:   NoopHooks{},

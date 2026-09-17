@@ -60,15 +60,6 @@ func TestConditionalGet_ReturnsCachedBodyOn304(t *testing.T) {
 	}
 }
 
-func containsStr(s, substr string) bool {
-	for i := 0; i+len(substr) <= len(s); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
-}
-
 func TestConditionalGet_CacheKeyIsLocationAware(t *testing.T) {
 	var calls int32
 	var lastLoc string

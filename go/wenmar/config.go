@@ -5,9 +5,9 @@ import (
 	"time"
 )
 
-// Config holds all SDK configuration. Pass it to NewClient. The struct is
-// deep-copied by NewClient so callers cannot mutate the client's config
-// after construction.
+// Config holds all SDK configuration. Pass it to NewClient. NewClient
+// copies Config by value; interface fields (TokenProvider, Hooks) are
+// shared, so treat Config as immutable once passed to NewClient.
 type Config struct {
 	// BaseURL is the API root, e.g. "https://app.wenmarpro.com".
 	BaseURL string
