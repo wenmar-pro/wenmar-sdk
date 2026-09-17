@@ -253,14 +253,6 @@ func intPtr(m map[string]interface{}, key string) *int {
 	return nil
 }
 
-// flatVal extracts a scalar value for a flat request body field.
-func flatVal(m map[string]interface{}, key string) interface{} {
-	if m == nil {
-		return nil
-	}
-	return m[key]
-}
-
 // buildWrapper builds a request struct whose single required field is a
 // wrapper (e.g. CreateCustomerRequest.Customer). It sets the wrapper field
 // from the requestBody map.

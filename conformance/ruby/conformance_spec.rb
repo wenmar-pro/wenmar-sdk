@@ -77,12 +77,7 @@ module Conformance
       assert_request_count(tc) if tc.dig("expect", "requestCount")
       assert_no_outbound_request(tc) if tc.dig("expect", "assertNoOutboundRequest")
       assert_request_headers(tc, captured_headers) if tc.dig("expect", "requestHeaders")
-    end
-
-    # buildArgs is used by the generated dispatch lambdas to reconstruct the
-    # SDK call arguments from the conformance test case.
-    def buildArgs(client, args)
-      args
+      assert_request_headers_present(tc, captured_headers) if tc.dig("expect", "requestHeadersPresent")
     end
 
     def assert_no_outbound_request(tc)
