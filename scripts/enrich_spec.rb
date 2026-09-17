@@ -113,21 +113,16 @@ module EnrichSpec
       "post /work_orders/{id}/send_invoice_summary"             => "send_work_order_invoice_summary",
       "post /work_orders/{id}/post_to_account"                  => "post_work_order_to_account",
       "post /work_orders/{work_order_id}/concerns/decline_all"  => "decline_all_work_order_concerns",
-      "patch /work_orders/{id}/return_to_board"                 => "return_work_order_to_board",
-      "patch /work_orders/{id}/save_for_later"                  => "save_work_order_for_later",
       "get /work_orders/{id}/service_history"                   => "show_work_order_service_history",
       "get /work_orders/{id}/declined_services"                 => "show_work_order_declined_services",
       "post /work_orders/{work_order_id}/payments/send_to_ar"   => "send_work_order_payment_to_ar",
       "delete /work_orders/{work_order_id}/payments/reverse_ar" => "reverse_work_order_payment_ar",
       # Inspections lifecycle (state-change sub-actions, 2026-09-01).
-      "patch /inspections/{id}/toggle"       => "toggle_inspection",
       "patch /inspections/{id}/set_default"  => "set_default_inspection",
       "patch /inspections/{id}/remove_default" => "remove_default_inspection",
       # Inspection reports lifecycle + nested group/mark_all.
       "patch /inspection_reports/{id}/complete"   => "complete_inspection_report",
       "patch /inspection_reports/{id}/reopen"     => "reopen_inspection_report",
-      "patch /inspection_reports/{id}/publish"    => "publish_inspection_report",
-      "patch /inspection_reports/{id}/unpublish"  => "unpublish_inspection_report",
       "patch /inspection_reports/{id}/reset"      => "reset_inspection_report",
       "patch /inspection_reports/{id}/reassign"   => "reassign_inspection_report",
       "get /inspection_reports/{id}/group"        => "show_inspection_report_group",
@@ -159,32 +154,22 @@ module EnrichSpec
     "get /work_orders/{work_order_id}/payments"          => "show_work_order_payments",
     "post /work_orders/{work_order_id}/payments"         => "create_work_order_payment",
     # Full CRUD expansion (2026-08-28): tags, lookup/prefill
-    "get /settings/tags"                                  => "list_tags",
-    "patch /settings/tags"                                => "update_tags",
     "get /vehicles/prefill"                               => "prefill_vehicle",
     "get /customers/{customer_id}/vehicles"               => "list_customers_vehicles",
     "get /customers/{customer_id}/work_orders"            => "list_customers_work_orders",
     "get /vehicles/{vehicle_id}/work_orders"              => "list_vehicles_work_orders",
     # Authorization endpoints (synced 2026-08-29; paths unchanged 2026-08-31)
-    "post /work_orders/{work_order_id}/authorization"                => "create_work_order_authorization",
-    "post /work_orders/{work_order_id}/authorization/update_decisions" => "update_work_order_authorization_decisions",
     # Work order service line-item sub-actions (synced 2026-08-31): the
     # auto-derived id for these deeply-nested paths would all collapse to
     # "patch_work_orders_service_line_items", so pin stable, distinct ids.
-    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/add_to_inventory" => "add_work_order_service_line_item_to_inventory",
-    "post /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/duplicate"          => "duplicate_work_order_service_line_item",
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/pull"              => "pull_work_order_service_line_item",
-    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/refresh_price"     => "refresh_work_order_service_line_item_price",
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_pull"         => "undo_pull_work_order_service_line_item",
     "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/undo_return"       => "undo_return_work_order_service_line_item",
-    "patch /work_orders/{work_order_id}/services/{service_id}/line_items/{id}/update_part_status" => "update_work_order_service_line_item_part_status",
     # Permission groups (retired /team namespace, 2026-09-01): the auto-derived
     # id would be list_users_permission_groups; pin the semantic names.
     "get /users/permission_groups"              => "list_permission_groups",
     "post /users/permission_groups"             => "create_permission_group",
-    "get /users/permission_groups/{id}"         => "show_permission_group",
     "patch /users/permission_groups/{id}"       => "update_permission_group",
-    "delete /users/permission_groups/{id}"       => "delete_permission_group",
     # Phase A additions (2026-09-12 parity review).
     "get /work_orders/{work_order_id}/services" => "list_work_order_services",
     "post /inventory_levels/extractions"        => "create_inventory_level_extraction",
@@ -464,15 +449,6 @@ module EnrichSpec
       # work_orders, history, estimate, wip, inspection, parts, payments)
       # are handled by their top-level paths and must not pollute the parent
       # schema.
-      # Resolve the resource + schema name. Top-level resource paths
-      # (e.g. /customers, /customers/{id}) map directly. The `orders`
-      # namespace (e.g. /orders/purchase_orders) prefixes the resource, so
-      # segments[1] is the resource. Nested sub-resource paths
-      # (e.g. /customers/{customer_id}/vehicles) resolve to the nested
-      # segment when it's a registered resource. Sub-collection/action paths
-      # (vehicles, work_orders, history, estimate, wip, inspection, parts,
-      # payments) are handled by their top-level paths and must not pollute
-      # the parent schema.
       namespace = segments[0] == "orders" && !RESOURCE_SCHEMAS.key?(segments[0])
       if namespace
         # orders namespace: resource is the second segment
